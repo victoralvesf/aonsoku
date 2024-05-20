@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
-import { httpClient } from '../api/httpClient';
-import { AlbumListResponse } from '../types/responses/album';
+import { httpClient } from '@/api/httpClient';
+import { AlbumListResponse } from '@/types/responses/album';
 
 export default function RecentlyAddedAlbums() {
   const [recentSongs, setRecentSongs] = useState({})

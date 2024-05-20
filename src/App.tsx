@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import AppContext from './contexts/app-context'
-import ServerConfig from './components/server-config'
-import RecentlyAddedAlbums from './pages/recently-added-albums'
+import AppContext from './app/contexts/app-context'
+import ServerConfig from './app/components/server-config'
+import RecentlyAddedAlbums from './app/pages/recently-added-albums'
 
 function App() {
   const {

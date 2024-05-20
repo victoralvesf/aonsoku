@@ -2,9 +2,9 @@ import { ReactNode, createContext, useEffect, useState } from "react"
 import { Store } from "tauri-plugin-store-api";
 import MD5 from 'crypto-js/md5'
 import { toast } from 'react-toastify'
-import { IAppContext, IServerConfig } from "../types/serverConfig";
-import { pingServer } from "../api/pingServer";
-import { saveToLocalStorage } from "../utils/persistDataLayer";
+import { IAppContext, IServerConfig } from "@/types/serverConfig";
+import { pingServer } from "@/api/pingServer";
+import { saveToLocalStorage } from "@/utils/persistDataLayer";
 
 const store = new Store(".settings.dat");
 
