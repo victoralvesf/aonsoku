@@ -7,12 +7,15 @@ import App from "@/App"
 
 import "@/index.css"
 import 'react-toastify/dist/ReactToastify.css'
+import { ThemeProvider } from "./app/contexts/theme-context"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <AppContextProvider>
-      <App />
-      <ToastContainer theme="colored" />
+      <ThemeProvider>
+        <App />
+        <ToastContainer theme="colored" />
+      </ThemeProvider>
     </AppContextProvider>
   </React.StrictMode>,
 );

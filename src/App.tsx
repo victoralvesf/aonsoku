@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import AppContext from './app/contexts/app-context'
 import ServerConfig from './app/components/server-config'
 import RecentlyAddedAlbums from './app/pages/recently-added-albums'
+import BaseLayout from './app/layout/base'
 
 function App() {
   const {
@@ -21,7 +22,7 @@ function App() {
   }
 
   return (
-    <RecentlyAddedAlbums />
+    <BaseLayout />
   )
 }
 
