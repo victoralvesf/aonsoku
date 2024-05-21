@@ -24,7 +24,7 @@ export default function BaseLayout() {
       <div className="border-t h-[calc(100%-140px)]">
         <div className="bg-background h-full">
           <div className="flex h-full">
-            <Sidebar className="hidden lg:block w-[280px] min-w-[280px] border-r h-full overflow-hidden" />
+            <Sidebar className="hidden lg:block w-[280px] min-w-[280px] max-w-[280px] border-r h-full overflow-hidden" />
             <ScrollArea className="w-full">
               <div className="px-4 py-6 lg:px-8">
                 {/* Routes */}

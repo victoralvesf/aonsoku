@@ -1,6 +1,5 @@
 import {
   LayoutGrid,
-  Library,
   ListMusic,
   Mic2,
   Music2,
@@ -13,14 +12,12 @@ import {
   Repeat2
 } from "lucide-react"
 
-import { Link } from 'react-router-dom'
-
 import { cn } from "@/lib/utils"
-import { Button } from "@/app/components/ui/button"
 import { ScrollArea } from "@/app/components/ui/scroll-area"
 import { ReactNode, useEffect, useState } from "react"
 import { Playlist } from "@/types/responses/playlist"
-import { getPlaylists } from "@/service/getPlaylists"
+import { SidebarGenerator, SidebarPlaylistGenerator } from "../components/sidebar-generator"
+import { subsonic } from "@/service/subsonic"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
@@ -29,7 +26,7 @@ export function Sidebar({ className }: SidebarProps) {
 
   useEffect(() => {
     const fetchPlaylists = async () => {
-      const response = await getPlaylists()
+      const response = await subsonic.playlists.getAll()
       response ? setPlaylists(response) : setPlaylists([])
     }
     fetchPlaylists()
@@ -38,72 +35,67 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <div className={cn(className)}>
       <ScrollArea className="h-full">
-        <div className="space-y-4 py-4 w-[90%]">
+        <div className="space-y-4 py-4 min-w-[275px] max-w-[275px]">
           <SidebarSection>
-            <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
-              Albums
-            </h2>
+            <SectionTitle>Albums</SectionTitle>
             <div className="space-y-1">
-              {albumsItems.map((item, index) => (
-                <Link to={item.route}>
-                  <Button key={index} variant="ghost" size="sm" className="w-full justify-start">
-                    {item.icon}
-                    {item.title}
-                  </Button>
-                </Link>
-              ))}
+              <SidebarGenerator list={albumsItems} />
             </div>
           </SidebarSection>
           <SidebarSection>
-            <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
-              Library
-            </h2>
+            <SectionTitle>Library</SectionTitle>
             <div className="space-y-1">
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                <Mic2 className="mr-2 h-4 w-4" />
-                Artists
-              </Button>
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                <Music2 className="mr-2 h-4 w-4" />
-                Songs
-              </Button>
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                <Library className="mr-2 h-4 w-4" />
-                Albums
-              </Button>
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                <Radio className="mr-2 h-4 w-4" />
-                Radios
-              </Button>
+              <SidebarGenerator list={libraryItems} />
             </div>
           </SidebarSection>
-          <SidebarSection>
-            <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
-              Playlists
-            </h2>
-            <div className="space-y-1 flex flex-col">
-              {playlists?.map((playlist) => (
-                <Button
-                  key={playlist.id}
-                  variant="ghost"
-                  size="sm"
-                  className="w-full justify-start"
-                >
-                  <ListMusic className="mr-2 h-4 w-4" />
-                  <span className="w-full truncate text-left">{playlist.name}</span>
-                </Button>
-              ))}
-            </div>
-          </SidebarSection>
+          {playlists.length > 0 && (
+            <SidebarSection>
+              <SectionTitle>Playlists</SectionTitle>
+              <div className="space-y-1">
+                <SidebarPlaylistGenerator playlists={playlists} />
+              </div>
+            </SidebarSection>
+          )}
         </div>
       </ScrollArea>
     </div>
   )
 }
 
+function SidebarSection({ children }: { children: ReactNode }) {
+  return (
+    <div className="px-4 py-2">
+      {children}
+    </div>
+  )
+}
+
+function SectionTitle({ children }: { children: ReactNode }) {
+  return (
+    <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+      {children}
+    </h2>
+  )
+}
+
 const iconClassName = "mr-2 h-4 w-4"
 
 const albumsItems = [
+  {
+    title: 'Recently Played',
+    route: '/albums/recently-played',
+    icon: <PlayCircle className={iconClassName} />
+  },
+  {
+    title: 'Recently Added',
+    route: '/albums/recently-added',
+    icon: <SquarePlus className={iconClassName} />
+  },
+  {
+    title: 'Most Played',
+    route: '/albums/most-played',
+    icon: <Repeat2 className={iconClassName} />
+  },
   {
     title: 'All',
     route: '/albums/all',
@@ -124,27 +116,27 @@ const albumsItems = [
     route: '/albums/top-rated',
     icon: <Star className={iconClassName} />
   },
-  {
-    title: 'Recently Added',
-    route: '/albums/recently-added',
-    icon: <SquarePlus className={iconClassName} />
-  },
-  {
-    title: 'Recently Played',
-    route: '/albums/recently-played',
-    icon: <PlayCircle className={iconClassName} />
-  },
-  {
-    title: 'Most Played',
-    route: '/albums/most-played',
-    icon: <Repeat2 className={iconClassName} />
-  },
 ]
 
-function SidebarSection({ children }: { children: ReactNode }) {
-  return (
-    <div className="px-4 py-2">
-      {children}
-    </div>
-  )
-}
+const libraryItems = [
+  {
+    title: 'Artists',
+    route: '/library/artists',
+    icon: <Mic2 className={iconClassName} />
+  },
+  {
+    title: 'Songs',
+    route: '/library/songs',
+    icon: <Music2 className={iconClassName} />
+  },
+  {
+    title: 'Playlists',
+    route: '/library/playlists',
+    icon: <ListMusic className={iconClassName} />
+  },
+  {
+    title: 'Radios',
+    route: '/library/radios',
+    icon: <Radio className={iconClassName} />
+  },
+]
