@@ -1,19 +1,13 @@
 import { useContext } from 'react'
+import { RouterProvider } from "react-router-dom"
 import AppContext from './app/contexts/app-context'
 import ServerConfig from './app/components/server-config'
-import RecentlyAddedAlbums from './app/pages/recently-added-albums'
-import BaseLayout from './app/layout/base'
+import { router } from './routes/router'
 
 function App() {
   const {
-    isServerConfigured,
-    // handleRemoveServerConfig
+    isServerConfigured
   } = useContext(AppContext)
-
-  // async function handleRemoveConfig(e: MouseEvent<HTMLButtonElement>) {
-  //   e.preventDefault()
-  //   await handleRemoveServerConfig()
-  // }
 
   if (!isServerConfigured) {
     return (
@@ -22,7 +16,7 @@ function App() {
   }
 
   return (
-    <BaseLayout />
+    <RouterProvider router={router} />
   )
 }
 

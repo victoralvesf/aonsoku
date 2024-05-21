@@ -1,3 +1,4 @@
+import { Outlet } from 'react-router-dom'
 import { ThemeToggle } from "../components/theme-toggle";
 import { Menu } from "./menu";
 import { Sidebar } from "./sidebar";
@@ -14,20 +15,11 @@ export default function BaseLayout() {
       <div className="border-t h-[calc(100%-140px)]">
         <div className="bg-background h-full">
           <div className="flex h-full">
-            <Sidebar className="hidden lg:block w-[340px] border-r h-full overflow-y-auto" />
-            {/* Content Here */}
+            <Sidebar className="hidden lg:block w-[280px] min-w-[280px] border-r h-full overflow-hidden" />
             <div className="w-full overflow-y-auto">
               <div className="px-4 py-6 lg:px-8">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <h2 className="text-2xl font-semibold tracking-tight">
-                      Listen Now
-                    </h2>
-                    <p className="text-sm text-muted-foreground">
-                      Recently played albums.
-                    </p>
-                  </div>
-                </div>
+                {/* Routes */}
+                <Outlet />
               </div>
             </div>
           </div>

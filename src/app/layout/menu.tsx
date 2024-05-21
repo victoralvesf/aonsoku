@@ -1,5 +1,5 @@
 import { Globe, Mic, LogOut } from "lucide-react"
-import { useContext } from "react"
+import { MouseEvent, useContext } from "react"
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -17,7 +17,14 @@ import {
 import AppContext from "../contexts/app-context"
 
 export function Menu() {
-  const { serverUsername, serverUrl } = useContext(AppContext)
+  const { serverUsername, serverUrl, handleRemoveServerConfig } = useContext(AppContext)
+
+
+  async function handleRemoveConfig(e: MouseEvent<HTMLDivElement>) {
+    e.preventDefault()
+    await handleRemoveServerConfig()
+  }
+
 
   return (
     <Menubar className="rounded-none border-b border-none px-2 lg:px-4">
@@ -156,7 +163,7 @@ export function Menu() {
           <MenubarLabel className="capitalize font-normal">{serverUsername}</MenubarLabel>
           <MenubarLabel>{serverUrl}</MenubarLabel>
           <MenubarSeparator />
-          <MenubarItem>
+          <MenubarItem onClick={handleRemoveConfig}>
             Logout{" "}
             <MenubarShortcut>
               <LogOut className="h-4 w-4" />

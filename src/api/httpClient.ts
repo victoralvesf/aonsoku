@@ -18,20 +18,27 @@ function getStoredConfig() {
   }
 }
 
+function queryParams() {
+  const { username, token, salt } = getStoredConfig()
+  return {
+    u: username ?? '',
+    t: token ?? '',
+    s: salt ?? '',
+    v: '1.16.0',
+    c: 'Subsonic-Player',
+    f: 'json'
+  }
+}
+
 export async function httpClient<T>(path: string, options: FetchOptions): Promise<T | undefined> {
   try {
-    const { url, username, token, salt } = getStoredConfig()
+    const { url } = getStoredConfig()
   
     const response: any = await fetch(`${url}/rest${path}`, {
       ...options,
       query: {
         ...options.query,
-        u: username,
-        t: token,
-        s: salt,
-        v: '1.16.0',
-        c: 'Subsonic-Player',
-        f: 'json'
+        ...queryParams()        
       }
     })
 
@@ -42,4 +49,21 @@ export async function httpClient<T>(path: string, options: FetchOptions): Promis
     console.log('Error on httpClient request', error)
     return undefined
   }
+}
+
+export function getCoverArtUrl(id: string, size = '300') {
+  const { url } = getStoredConfig()
+  const baseUrl = `${url}/rest/getCoverArt`
+
+  const params = {
+    ...queryParams(),
+    id,
+    size
+  }
+
+  const queryString = new URLSearchParams(params).toString()
+
+  const fullUrl = `${baseUrl}?${queryString}`
+
+  return fullUrl
 }
