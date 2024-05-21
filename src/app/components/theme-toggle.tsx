@@ -7,15 +7,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu"
+import { cn } from "@/lib/utils"
 import { useTheme } from "../contexts/theme-context"
 
-export function ThemeToggle() {
+interface ThemeToggleProps extends React.HTMLAttributes<HTMLDivElement> { }
+
+export function ThemeToggle({ className }: ThemeToggleProps) {
   const { setTheme } = useTheme()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="py-1">
-        <Button variant="link" size="icon" className="mr-4 outline-none drop-shadow-none">
+        <Button variant="link" size="icon" className={cn(className, "outline-none drop-shadow-none")}>
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>

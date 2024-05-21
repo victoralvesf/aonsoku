@@ -6,6 +6,8 @@ export interface IServerConfig {
 
 export interface IAppContext {
   isServerConfigured: boolean
+  serverProtocol: string
+  setServerProtocol: (value: React.SetStateAction<string>) => void
   serverUrl: string
   setServerUrl: (value: React.SetStateAction<string>) => void
   serverUsername: string

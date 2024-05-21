@@ -4,7 +4,7 @@ import MD5 from 'crypto-js/md5'
 import { toast } from 'react-toastify'
 import { IAppContext, IServerConfig } from "@/types/serverConfig";
 import { pingServer } from "@/api/pingServer";
-import { saveToLocalStorage } from "@/utils/persistDataLayer";
+import { removeFromLocalStorage, saveToLocalStorage } from "@/utils/persistDataLayer";
 
 const store = new Store(".settings.dat");
 
@@ -14,6 +14,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const saltWord = '5ub50n1cPl4y3r'
 
   const [isServerConfigured, setIsServerConfigured] = useState(false)
+  const [serverProtocol, setServerProtocol] = useState('http://')
   const [serverUrl, setServerUrl] = useState('')
   const [serverUsername, setServerUsername] = useState('')
   const [serverPassword, setServerPassword] = useState('')
@@ -46,12 +47,13 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   async function handleSaveServerConfig() {
     const token = MD5(`${serverPassword}${saltWord}`).toString()
+    const fullUrl = `${serverProtocol}${serverUrl}`
 
-    const canConnect = await pingServer(serverUrl, serverUsername, token, saltWord)
+    const canConnect = await pingServer(fullUrl, serverUsername, token, saltWord)
 
     if (canConnect) {
       const config = {
-        url: serverUrl,
+        url: fullUrl,
         username: serverUsername,
         password: token
       }
@@ -65,6 +67,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         salt: saltWord
       })
 
+      setServerUrl(fullUrl)
       setServerPassword(token)
       setIsServerConfigured(true)
 
@@ -76,6 +79,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   }
 
   async function handleRemoveServerConfig() {
+    removeFromLocalStorage()
     await store.delete("server-config")
     await store.save()
     setIsServerConfigured(false)
@@ -83,6 +87,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   const providerProps: IAppContext = {
     isServerConfigured,
+    serverProtocol,
+    setServerProtocol,
     serverUrl,
     setServerUrl,
     serverUsername,
