@@ -13,7 +13,7 @@ const AppContext = createContext({} as IAppContext)
 export function AppContextProvider({ children }: { children: ReactNode }) {
   const saltWord = '5ub50n1cPl4y3r'
 
-  const [isServerConfigured, setIsServerConfigured] = useState(false)
+  const [isServerConfigured, setIsServerConfigured] = useState(true)
   const [serverProtocol, setServerProtocol] = useState('http://')
   const [serverUrl, setServerUrl] = useState('')
   const [serverUsername, setServerUsername] = useState('')
@@ -34,10 +34,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         token: serverConfig.password,
         salt: saltWord
       })
-      console.log(serverConfig)
     } else {
       setIsServerConfigured(false)
-      console.log('No server configuration');
     }
   }
 
