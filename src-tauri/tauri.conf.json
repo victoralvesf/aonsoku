@@ -23,6 +23,9 @@
           "http://*",
           "https://*"
         ]
+      },
+      "os": {
+        "all": true
       }
     },
     "windows": [

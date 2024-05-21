@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom'
 import { cn } from "@/lib/utils"
 import { Button } from "@/app/components/ui/button"
 import { ScrollArea } from "@/app/components/ui/scroll-area"
-import { useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { Playlist } from "@/types/responses/playlist"
 import { getPlaylists } from "@/service/getPlaylists"
 
@@ -39,44 +39,22 @@ export function Sidebar({ className }: SidebarProps) {
     <div className={cn(className)}>
       <ScrollArea className="h-full">
         <div className="space-y-4 py-4 w-[90%]">
-          <div className="px-4 py-2">
+          <SidebarSection>
             <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
               Albums
             </h2>
             <div className="space-y-1">
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                <LayoutGrid className="mr-2 h-4 w-4" />
-                All
-              </Button>
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                <Shuffle className="mr-2 h-4 w-4" />
-                Random
-              </Button>
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                <Heart className="mr-2 h-4 w-4" />
-                Favourites
-              </Button>
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                <Star className="mr-2 h-4 w-4" />
-                Top Rated
-              </Button>
-              <Link to={'/recently-added'}>
-                <Button variant="ghost" size="sm" className="w-full justify-start">
-                  <SquarePlus className="mr-2 h-4 w-4" />
-                  Recently Added
-                </Button>
-              </Link>
-              <Button variant="secondary" size="sm" className="w-full justify-start">
-                <PlayCircle className="mr-2 h-4 w-4" />
-                Recently Played
-              </Button>
-              <Button variant="ghost" size="sm" className="w-full justify-start">
-                <Repeat2 className="mr-2 h-4 w-4" />
-                Most Played
-              </Button>
+              {albumsItems.map((item, index) => (
+                <Link to={item.route}>
+                  <Button key={index} variant="ghost" size="sm" className="w-full justify-start">
+                    {item.icon}
+                    {item.title}
+                  </Button>
+                </Link>
+              ))}
             </div>
-          </div>
-          <div className="px-4 py-2">
+          </SidebarSection>
+          <SidebarSection>
             <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
               Library
             </h2>
@@ -98,8 +76,8 @@ export function Sidebar({ className }: SidebarProps) {
                 Radios
               </Button>
             </div>
-          </div>
-          <div className="px-4 py-2">
+          </SidebarSection>
+          <SidebarSection>
             <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
               Playlists
             </h2>
@@ -116,9 +94,57 @@ export function Sidebar({ className }: SidebarProps) {
                 </Button>
               ))}
             </div>
-          </div>
+          </SidebarSection>
         </div>
       </ScrollArea>
+    </div>
+  )
+}
+
+const iconClassName = "mr-2 h-4 w-4"
+
+const albumsItems = [
+  {
+    title: 'All',
+    route: '/albums/all',
+    icon: <LayoutGrid className={iconClassName} />
+  },
+  {
+    title: 'Random',
+    route: '/albums/random',
+    icon: <Shuffle className={iconClassName} />
+  },
+  {
+    title: 'Favourites',
+    route: '/albums/favourites',
+    icon: <Heart className={iconClassName} />
+  },
+  {
+    title: 'Top Rated',
+    route: '/albums/top-rated',
+    icon: <Star className={iconClassName} />
+  },
+  {
+    title: 'Recently Added',
+    route: '/albums/recently-added',
+    icon: <SquarePlus className={iconClassName} />
+  },
+  {
+    title: 'Recently Played',
+    route: '/albums/recently-played',
+    icon: <PlayCircle className={iconClassName} />
+  },
+  {
+    title: 'Most Played',
+    route: '/albums/most-played',
+    icon: <Repeat2 className={iconClassName} />
+  },
+]
+
+function SidebarSection({ children }: { children: ReactNode }) {
+  return (
+    <div className="px-4 py-2">
+      {children}
     </div>
   )
 }

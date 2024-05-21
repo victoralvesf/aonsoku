@@ -1,14 +1,23 @@
+import { useContext } from 'react';
 import { Outlet } from 'react-router-dom'
+import { clsx } from 'clsx/lite'
 import { ThemeToggle } from "../components/theme-toggle";
 import { Menu } from "./menu";
 import { Sidebar } from "./sidebar";
+import { ScrollArea } from '../components/ui/scroll-area';
+import AppContext from '../contexts/app-context';
 
 export default function BaseLayout() {
+  const { osType } = useContext(AppContext)
+  const isMacOS = osType === 'Darwin'
+
   return (
     <div className="hidden md:block h-screen overflow-hidden">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <Menu />
+      <div className={clsx('flex', 'items-center', isMacOS && 'justify-end', !isMacOS && 'justify-between')}>
+        {!isMacOS && (
+          <Menu />
+        )}
         <ThemeToggle />
       </div>
       {/* Middle */}
@@ -16,12 +25,12 @@ export default function BaseLayout() {
         <div className="bg-background h-full">
           <div className="flex h-full">
             <Sidebar className="hidden lg:block w-[280px] min-w-[280px] border-r h-full overflow-hidden" />
-            <div className="w-full overflow-y-auto">
+            <ScrollArea className="w-full">
               <div className="px-4 py-6 lg:px-8">
                 {/* Routes */}
                 <Outlet />
               </div>
-            </div>
+            </ScrollArea>
           </div>
         </div>
       </div>

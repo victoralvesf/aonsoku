@@ -2,6 +2,7 @@ import { ReactNode, createContext, useEffect, useState } from "react"
 import { Store } from "tauri-plugin-store-api";
 import MD5 from 'crypto-js/md5'
 import { toast } from 'react-toastify'
+import { os } from '@tauri-apps/api'
 import { IAppContext, IServerConfig } from "@/types/serverConfig";
 import { pingServer } from "@/api/pingServer";
 import { removeFromLocalStorage, saveToLocalStorage } from "@/utils/persistDataLayer";
@@ -13,6 +14,7 @@ const AppContext = createContext({} as IAppContext)
 export function AppContextProvider({ children }: { children: ReactNode }) {
   const saltWord = '5ub50n1cPl4y3r'
 
+  const [osType, setOsType] = useState('')
   const [isServerConfigured, setIsServerConfigured] = useState(true)
   const [serverProtocol, setServerProtocol] = useState('http://')
   const [serverUrl, setServerUrl] = useState('')
@@ -41,6 +43,11 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     getServerConfig();
+
+    const getOsType = async () => {
+      setOsType(await os.type())
+    }
+    getOsType()
   }, [])
 
   async function handleSaveServerConfig() {
@@ -85,6 +92,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   const providerProps: IAppContext = {
     isServerConfigured,
+    osType,
     serverProtocol,
     setServerProtocol,
     serverUrl,
