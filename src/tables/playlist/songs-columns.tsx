@@ -3,15 +3,22 @@ import { PlaylistSong } from "@/types/responses/playlist"
 import { ColumnDef } from "@tanstack/react-table"
 import dateTime from "@/utils/dateTime"
 import { getCoverArtUrl } from "@/api/httpClient"
+import Image from "@/app/components/image"
 
 export const playlistSongsColumns: ColumnDef<PlaylistSong>[] = [
   {
     accessorKey: "index",
-    header: "#",
+    header: () => {
+      return <div className="text-center">#</div>
+    },
     cell: ({ row }) => {
       const trackNumber = row.index + 1
-      return trackNumber
-    }
+      return (
+        <div className="text-center">
+          {trackNumber}
+        </div>
+      )
+    },
   },
   {
     accessorKey: "title",
@@ -22,12 +29,12 @@ export const playlistSongsColumns: ColumnDef<PlaylistSong>[] = [
 
       return (
         <div className="flex gap-2 items-center">
-          <img
-            src={getCoverArtUrl(coverArt, '100')}
+          <Image
+            src={getCoverArtUrl(coverArt, '80')}
             alt={title}
-            width={50}
-            height={50}
-            className="rounded-lg shadow-md"
+            width={40}
+            height={40}
+            className="rounded shadow-md"
           />
           {title}
         </div>

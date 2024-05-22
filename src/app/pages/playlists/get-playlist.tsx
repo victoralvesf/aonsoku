@@ -4,6 +4,7 @@ import { getCoverArtUrl } from '@/api/httpClient';
 import { playlistSongsColumns } from '@/tables/playlist/songs-columns';
 import { DataTable } from '@/app/components/ui/data-table';
 import { formatPlaylistDuration } from '@/utils/dateTime';
+import Image from '@/app/components/image';
 
 export default function GetPlaylist() {
   const playlist = useLoaderData() as PlaylistWithEntries;
@@ -13,9 +14,15 @@ export default function GetPlaylist() {
   return (
     <main>
       <div className="space-y-1 mb-8 flex">
-        <img src={getCoverArtUrl(playlist.coverArt)} alt={playlist.name} width={250} height={250} className="rounded-lg shadow-md" />
+        <Image
+          src={getCoverArtUrl(playlist.coverArt)}
+          alt={playlist.name}
+          width={250}
+          height={250}
+          className="rounded-lg shadow-md resize-none"
+        />
         <div className="ml-6">
-          <p className="text-sm text-muted-foreground mt-6">
+          <p className="text-sm text-muted-foreground mt-4">
             Playlist
           </p>
           <h2 className="text-6xl font-bold tracking-tight mt-2 mb-4">
@@ -32,7 +39,7 @@ export default function GetPlaylist() {
         </div>
       </div>
 
-      <DataTable columns={playlistSongsColumns} data={playlist.entry} />
+      <DataTable columns={playlistSongsColumns} data={playlist.entry} onRowClick={(row) => console.log(row.original)} />
     </main>
   )
 }
