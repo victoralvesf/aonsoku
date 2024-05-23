@@ -1,26 +1,9 @@
-import { useLayoutEffect, useState } from 'react';
-import { getCoverArtUrl, httpClient } from '@/api/httpClient';
-import { Album, AlbumListResponse } from '@/types/responses/album';
+import { getCoverArtUrl } from '@/api/httpClient';
+import { Album } from '@/types/responses/album';
+import { useLoaderData } from 'react-router-dom';
 
 export default function RecentlyAddedAlbums() {
-  const [recentSongs, setRecentSongs] = useState<Album[]>([])
-
-  async function getRecentSongs() {
-    const response = await httpClient<AlbumListResponse>('/getAlbumList', {
-      method: 'GET',
-      query: {
-        type: 'newest',
-        size: '30',
-        offset: '0'
-      }
-    })
-
-    response ? setRecentSongs(response.albumList.album) : setRecentSongs([])
-  }
-
-  useLayoutEffect(() => {
-    getRecentSongs()
-  }, [])
+  const recentSongs = useLoaderData() as Album[];
 
   return (
     <main>

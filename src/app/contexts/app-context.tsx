@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react"
+import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 import { Store } from "tauri-plugin-store-api";
 import MD5 from 'crypto-js/md5'
 import { toast } from 'react-toastify'
@@ -112,4 +112,6 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   )
 }
 
-export default AppContext
+export const useApp = () => {
+  return useContext(AppContext)
+}

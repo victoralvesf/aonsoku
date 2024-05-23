@@ -1,5 +1,5 @@
 import { Globe, Mic, LogOut } from "lucide-react"
-import { useContext, useState } from "react"
+import { useState } from "react"
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -14,11 +14,11 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/app/components/ui/menubar"
-import AppContext from "../contexts/app-context"
+import { useApp } from "../contexts/app-context"
 import { LogoutConfirmDialog } from "../components/logout-confirm"
 
 export function Menu() {
-  const { serverUsername, serverUrl } = useContext(AppContext)
+  const { serverUsername, serverUrl } = useApp()
   const [openDialog, setOpenDialog] = useState(false)
 
   return (
@@ -34,7 +34,7 @@ export function Menu() {
               Preferences... <MenubarShortcut>⌘,</MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
-              Quit Music <MenubarShortcut>⌘Q</MenubarShortcut>
+              Quit <MenubarShortcut>⌘Q</MenubarShortcut>
             </MenubarItem>
           </MenubarContent>
         </MenubarMenu>

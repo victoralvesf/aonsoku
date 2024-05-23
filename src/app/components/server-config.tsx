@@ -17,8 +17,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select"
-import { FormEvent, useContext } from "react"
-import AppContext from "../contexts/app-context"
+import { FormEvent } from "react"
+import { useApp } from "../contexts/app-context"
 
 export function ServerConfig() {
   const {
@@ -28,7 +28,7 @@ export function ServerConfig() {
     setServerUsername,
     setServerPassword,
     handleSaveServerConfig
-  } = useContext(AppContext)
+  } = useApp()
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()

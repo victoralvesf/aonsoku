@@ -8,8 +8,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/app/components/ui/alert-dialog"
-import { MouseEvent, useContext } from "react"
-import AppContext from "../contexts/app-context"
+import { MouseEvent } from "react"
+import { useApp } from "../contexts/app-context"
 
 interface AlertDialogProps {
   openDialog: boolean
@@ -17,7 +17,7 @@ interface AlertDialogProps {
 }
 
 export function LogoutConfirmDialog({ openDialog, setOpenDialog }: AlertDialogProps) {
-  const { handleRemoveServerConfig } = useContext(AppContext)
+  const { handleRemoveServerConfig } = useApp()
 
   async function handleRemoveConfig(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()

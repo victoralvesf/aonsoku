@@ -1,14 +1,13 @@
 import { PlaylistWithEntries } from '@/types/responses/playlist';
 import { useLoaderData } from 'react-router-dom';
 import { getCoverArtUrl } from '@/api/httpClient';
-import { playlistSongsColumns } from '@/tables/playlist/songs-columns';
+import { playlistSongsColumns } from '@/app/tables/playlist/songs-columns';
 import { DataTable } from '@/app/components/ui/data-table';
 import { formatPlaylistDuration } from '@/utils/dateTime';
 import Image from '@/app/components/image';
 
 export default function GetPlaylist() {
   const playlist = useLoaderData() as PlaylistWithEntries;
-
   const playlistDuration = formatPlaylistDuration(playlist.duration)
 
   return (
@@ -22,16 +21,16 @@ export default function GetPlaylist() {
           className="rounded-lg shadow-md resize-none"
         />
         <div className="ml-6">
-          <p className="text-sm text-muted-foreground mt-4">
+          <p className="text-sm text-muted-foreground">
             Playlist
           </p>
-          <h2 className="text-6xl font-bold tracking-tight mt-2 mb-4">
+          <h2 className="text-6xl font-bold tracking-tight mt-2">
             {playlist.name}
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground mt-2">
             {playlist.comment}
           </p>
-          <div className="flex gap-1 mt-4 text-muted-foreground text-sm">
+          <div className="flex gap-1 mt-2 text-muted-foreground text-sm">
             <span className="">{playlist.songCount} songs</span>
             <span className="">•</span>
             <span className="">about {playlistDuration}</span>
@@ -39,7 +38,12 @@ export default function GetPlaylist() {
         </div>
       </div>
 
-      <DataTable columns={playlistSongsColumns} data={playlist.entry} onRowClick={(row) => console.log(row.original)} />
+      <DataTable
+        columns={playlistSongsColumns}
+        data={playlist.entry}
+        onRowClick={(row) => console.log(row.original)}
+        handlePlaySong={(row) => console.log(row.original)}
+      />
     </main>
   )
 }
