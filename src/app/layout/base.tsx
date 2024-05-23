@@ -5,6 +5,7 @@ import { Menu } from "./menu";
 import { Sidebar } from "./sidebar";
 import { ScrollArea } from '../components/ui/scroll-area';
 import { useApp } from '../contexts/app-context';
+import { Player } from '../components/player';
 
 export default function BaseLayout() {
   const { osType } = useApp()
@@ -40,9 +41,7 @@ export default function BaseLayout() {
         </div>
       </div>
       {/* Player */}
-      <div className="border-t h-[100px]">
-        Player
-      </div>
+      <Player />
     </div>
   )
 }
