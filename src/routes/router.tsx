@@ -12,6 +12,11 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        id: 'home',
+        path: '/',
+        element: <h1>Teste</h1>
+      },
+      {
         id: 'recently-added',
         path: 'albums/recently-added',
         loader: subsonic.albums.getRecentlyAdded,

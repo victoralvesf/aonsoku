@@ -6,6 +6,7 @@ import dateTime from "@/utils/dateTime"
 import { getCoverArtUrl } from "@/api/httpClient"
 import Image from "@/app/components/image"
 import { Button } from "@/app/components/ui/button"
+import { Link } from 'react-router-dom'
 
 export const playlistSongsColumns: ColumnDef<PlaylistSong>[] = [
   {
@@ -61,10 +62,24 @@ export const playlistSongsColumns: ColumnDef<PlaylistSong>[] = [
   {
     accessorKey: "album",
     header: "Album",
+    cell: ({ row }) => {
+      return (
+        <Link to={`/album/${row.original.albumId}`} className="hover:underline">
+          {row.original.album}
+        </Link>
+      )
+    }
   },
   {
     accessorKey: "artist",
     header: "Artist",
+    cell: ({ row }) => {
+      return (
+        <Link to={`/album/${row.original.artistId}`} className="hover:underline">
+          {row.original.artist}
+        </Link>
+      )
+    }
   },
   {
     accessorKey: "duration",
