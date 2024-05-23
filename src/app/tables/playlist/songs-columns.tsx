@@ -7,6 +7,7 @@ import { getCoverArtUrl } from "@/api/httpClient"
 import Image from "@/app/components/image"
 import { Button } from "@/app/components/ui/button"
 import { Link } from 'react-router-dom'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 
 export const playlistSongsColumns: ColumnDef<PlaylistSong>[] = [
   {
@@ -16,23 +17,27 @@ export const playlistSongsColumns: ColumnDef<PlaylistSong>[] = [
     },
     cell: ({ row, table }) => {
       const trackNumber = row.index + 1
+      const song = row.original
+
       return (
         <div className="text-center text-foreground flex justify-center">
           <div className="group-hover/tablerow:hidden w-8">
             {trackNumber}
           </div>
           <div className="hidden group-hover/tablerow:flex justify-center">
-            <Button
-              className="w-8 h-8 rounded-full hover:bg-white dark:hover:bg-slate-950"
-              size="icon"
-              variant="outline"
-              onClick={(e) => {
-                e.stopPropagation()
-                table.options.meta?.handlePlaySong?.(row)
-              }}
-            >
-              <PlayIcon className="w-3 h-3 opacity-80 fill-inherit dark:fill-slate-50" strokeWidth={4} />
-            </Button>
+            <SimpleTooltip text={`Play ${song.title} by ${song.artist}`}>
+              <Button
+                className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
+                size="icon"
+                variant="outline"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  table.options.meta?.handlePlaySong?.(row)
+                }}
+              >
+                <PlayIcon className="w-3 h-3 opacity-80 group-hover:opacity-100 fill-inherit dark:fill-slate-50" strokeWidth={4} />
+              </Button>
+            </SimpleTooltip>
           </div>
         </div>
       )

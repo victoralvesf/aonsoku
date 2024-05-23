@@ -2,7 +2,7 @@ import BaseLayout from '@/app/layout/base'
 import ErrorPage from '@/app/pages/error-page'
 import RecentlyAddedAlbums from '@/app/pages/albums/recently-added'
 import { createBrowserRouter } from 'react-router-dom'
-import GetPlaylist from '@/app/pages/playlists/get-playlist'
+import Playlist from '@/app/pages/playlists/playlist'
 import { subsonic } from '@/service/subsonic'
 
 export const router = createBrowserRouter([
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
             return await subsonic.playlists.getOne(params.playlistId)
           }
         },
-        element: <GetPlaylist />
+        element: <Playlist />
       }
     ]
   }
