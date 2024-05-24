@@ -1,15 +1,15 @@
 import { PlayIcon } from 'lucide-react'
 import { Badge } from "@/app/components/ui/badge"
-import { PlaylistSong } from "@/types/responses/playlist"
+import { ISong } from "@/types/responses/song"
 import { ColumnDef } from "@tanstack/react-table"
-import dateTime from "@/utils/dateTime"
+import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { getCoverArtUrl } from "@/api/httpClient"
 import Image from "@/app/components/image"
 import { Button } from "@/app/components/ui/button"
 import { Link } from 'react-router-dom'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 
-export const playlistSongsColumns: ColumnDef<PlaylistSong>[] = [
+export const playlistSongsColumns: ColumnDef<ISong>[] = [
   {
     accessorKey: "index",
     header: () => {
@@ -91,7 +91,7 @@ export const playlistSongsColumns: ColumnDef<PlaylistSong>[] = [
     header: "Duration",
     cell: ({ row }) => {
       const duration = parseInt(row.getValue('duration'))
-      const formattedDuration = dateTime.duration(duration, 'seconds').format('mm:ss')
+      const formattedDuration = convertSecondsToTime(duration)
 
       return formattedDuration
     }

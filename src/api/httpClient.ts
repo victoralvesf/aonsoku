@@ -62,7 +62,24 @@ export function getCoverArtUrl(id: string, size = '300') {
   }
 
   const queryString = new URLSearchParams(params).toString()
+  const fullUrl = `${baseUrl}?${queryString}`
 
+  return fullUrl
+}
+
+export function getSongStreamUrl(id: string) {
+  const { url } = getStoredConfig()
+  const baseUrl = `${url}/rest/stream`
+
+  const params = {
+    ...queryParams(),
+    id,
+    maxBitRate: '0',
+    format: 'raw',
+    estimateContentLength: 'true'
+  }
+
+  const queryString = new URLSearchParams(params).toString()
   const fullUrl = `${baseUrl}?${queryString}`
 
   return fullUrl

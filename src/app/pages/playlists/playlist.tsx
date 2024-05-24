@@ -9,10 +9,13 @@ import { Button } from '@/app/components/ui/button';
 import { EllipsisVertical, Play, Shuffle } from 'lucide-react';
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip';
 import { Badge } from '@/app/components/ui/badge';
+import { usePlayer } from '@/app/contexts/player-context';
 
 export default function Playlist() {
   const playlist = useLoaderData() as PlaylistWithEntries;
   const playlistDuration = formatPlaylistDuration(playlist.duration)
+
+  const player = usePlayer()
 
   return (
     <main>
@@ -43,7 +46,11 @@ export default function Playlist() {
 
       <div className="w-full mt-6 mb-6 flex items-center gap-4">
         <SimpleTooltip text={`Play ${playlist.name}`}>
-          <Button className="rounded-full w-14 h-14 hover:scale-[0.97] transform-gpu" variant="default">
+          <Button
+            className="rounded-full w-14 h-14 hover:scale-[0.97] transform-gpu"
+            variant="default"
+            onClick={() => player.setSongList(playlist.entry, 0)}
+          >
             <Play className="w-4 h-4 fill-slate-50 text-slate-50" strokeWidth={6} />
           </Button>
         </SimpleTooltip>
@@ -64,7 +71,6 @@ export default function Playlist() {
       <DataTable
         columns={playlistSongsColumns}
         data={playlist.entry}
-        handlePlaySong={(row) => console.log(row.original)}
       />
     </main>
   )
