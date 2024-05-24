@@ -1,13 +1,15 @@
-import { PlayIcon } from 'lucide-react'
+import { PauseIcon, PlayIcon } from 'lucide-react'
 import { Badge } from "@/app/components/ui/badge"
 import { ISong } from "@/types/responses/song"
-import { ColumnDef } from "@tanstack/react-table"
+import { CellContext, ColumnDef } from "@tanstack/react-table"
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { getCoverArtUrl } from "@/api/httpClient"
 import Image from "@/app/components/image"
 import { Button } from "@/app/components/ui/button"
 import { Link } from 'react-router-dom'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import { usePlayer } from '@/app/contexts/player-context'
+import clsx from 'clsx'
 
 export const playlistSongsColumns: ColumnDef<ISong>[] = [
   {
@@ -15,32 +17,8 @@ export const playlistSongsColumns: ColumnDef<ISong>[] = [
     header: () => {
       return <div className="text-center">#</div>
     },
-    cell: ({ row, table }) => {
-      const trackNumber = row.index + 1
-      const song = row.original
-
-      return (
-        <div className="text-center text-foreground flex justify-center">
-          <div className="group-hover/tablerow:hidden w-8">
-            {trackNumber}
-          </div>
-          <div className="hidden group-hover/tablerow:flex justify-center">
-            <SimpleTooltip text={`Play ${song.title} by ${song.artist}`}>
-              <Button
-                className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
-                size="icon"
-                variant="outline"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  table.options.meta?.handlePlaySong?.(row)
-                }}
-              >
-                <PlayIcon className="w-3 h-3 opacity-80 group-hover:opacity-100 fill-inherit dark:fill-slate-50" strokeWidth={4} />
-              </Button>
-            </SimpleTooltip>
-          </div>
-        </div>
-      )
+    cell: (cell) => {
+      return <PlaySongButton cell={cell} />
     },
   },
   {
@@ -49,6 +27,8 @@ export const playlistSongsColumns: ColumnDef<ISong>[] = [
     cell: ({ row }) => {
       const coverArt = row.original.coverArt
       const title = row.original.title
+
+      const player = usePlayer()
 
       return (
         <div className="flex gap-2 items-center">
@@ -59,7 +39,7 @@ export const playlistSongsColumns: ColumnDef<ISong>[] = [
             height={40}
             className="rounded shadow-md"
           />
-          {title}
+          <p className={clsx(player.checkActiveSong(row.original.id) && "text-primary")}>{title}</p>
         </div>
       )
     }
@@ -107,3 +87,64 @@ export const playlistSongsColumns: ColumnDef<ISong>[] = [
     }
   },
 ]
+
+interface PlaySongButtonProps {
+  cell: CellContext<ISong, unknown>
+}
+
+function PlaySongButton({ cell }: PlaySongButtonProps) {
+  const trackNumber = cell.row.index + 1
+  const song = cell.row.original
+
+  const player = usePlayer()
+
+  return (
+    <div className="text-center text-foreground flex justify-center">
+      {player.checkActiveSong(song.id) ? (
+        <>
+          <div className="group-hover/tablerow:hidden w-8 flex items-center">
+            <div className="w-8 h-8 overflow-hidden rounded-full">
+              <Image src="/sound-motion.gif" className="ml-[3px] mt-[3px] dark:invert w-6 h-6" />
+            </div>
+          </div>
+          <div className="hidden group-hover/tablerow:flex justify-center">
+            <SimpleTooltip text={`Pause ${song.title} by ${song.artist}`}>
+              <Button
+                className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
+                size="icon"
+                variant="outline"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  player.togglePlayPause()
+                }}
+              >
+                <PauseIcon className="w-4 h-4 opacity-80 group-hover:opacity-100 fill-inherit dark:fill-slate-50" strokeWidth={1} />
+              </Button>
+            </SimpleTooltip>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="group-hover/tablerow:hidden w-8">
+            {trackNumber}
+          </div>
+          <div className="hidden group-hover/tablerow:flex justify-center">
+            <SimpleTooltip text={`Play ${song.title} by ${song.artist}`}>
+              <Button
+                className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
+                size="icon"
+                variant="outline"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  cell.table.options.meta?.handlePlaySong?.(cell.row)
+                }}
+              >
+                <PlayIcon className="w-3 h-3 opacity-80 group-hover:opacity-100 fill-inherit dark:fill-slate-50" strokeWidth={4} />
+              </Button>
+            </SimpleTooltip>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}

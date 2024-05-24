@@ -75,6 +75,7 @@ export default function Playlist() {
       <DataTable
         columns={playlistSongsColumns}
         data={playlist.entry}
+        handlePlaySong={(row) => player.setSongList(playlist.entry, row.index)}
       />
     </main>
   )
