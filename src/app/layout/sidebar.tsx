@@ -1,15 +1,11 @@
 import {
-  LayoutGrid,
   ListMusic,
   Mic2,
   Music2,
-  PlayCircle,
   Radio,
-  Shuffle,
-  Heart,
-  Star,
-  SquarePlus,
-  Repeat2
+  Home,
+  Search,
+  Library
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -37,9 +33,8 @@ export function Sidebar({ className }: SidebarProps) {
       <ScrollArea className="h-full">
         <div className="space-y-4 py-4 min-w-[275px] max-w-[275px]">
           <SidebarSection>
-            <SectionTitle>Albums</SectionTitle>
             <div className="space-y-1">
-              <SidebarGenerator list={albumsItems} />
+              <SidebarGenerator list={mainMenuItems} />
             </div>
           </SidebarSection>
           <SidebarSection>
@@ -80,41 +75,16 @@ function SectionTitle({ children }: { children: ReactNode }) {
 
 const iconClassName = "mr-2 h-4 w-4"
 
-const albumsItems = [
+const mainMenuItems = [
   {
-    title: 'Recently Played',
-    route: '/albums/recently-played',
-    icon: <PlayCircle className={iconClassName} />
+    title: 'Home',
+    route: '/',
+    icon: <Home className={iconClassName} />
   },
   {
-    title: 'Recently Added',
-    route: '/albums/recently-added',
-    icon: <SquarePlus className={iconClassName} />
-  },
-  {
-    title: 'Most Played',
-    route: '/albums/most-played',
-    icon: <Repeat2 className={iconClassName} />
-  },
-  {
-    title: 'All',
-    route: '/albums/all',
-    icon: <LayoutGrid className={iconClassName} />
-  },
-  {
-    title: 'Random',
-    route: '/albums/random',
-    icon: <Shuffle className={iconClassName} />
-  },
-  {
-    title: 'Favourites',
-    route: '/albums/favourites',
-    icon: <Heart className={iconClassName} />
-  },
-  {
-    title: 'Top Rated',
-    route: '/albums/top-rated',
-    icon: <Star className={iconClassName} />
+    title: 'Search',
+    route: '/search',
+    icon: <Search className={iconClassName} />
   },
 ]
 
@@ -128,6 +98,11 @@ const libraryItems = [
     title: 'Songs',
     route: '/library/songs',
     icon: <Music2 className={iconClassName} />
+  },
+  {
+    title: 'Albums',
+    route: '/library/albums',
+    icon: <Library className={iconClassName} />
   },
   {
     title: 'Playlists',

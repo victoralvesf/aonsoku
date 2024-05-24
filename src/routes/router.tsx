@@ -17,8 +17,8 @@ export const router = createBrowserRouter([
         element: <h1>Teste</h1>
       },
       {
-        id: 'recently-added',
-        path: 'albums/recently-added',
+        id: 'albums',
+        path: 'library/albums',
         loader: subsonic.albums.getRecentlyAdded,
         element: <RecentlyAddedAlbums />
       },
