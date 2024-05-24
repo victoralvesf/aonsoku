@@ -56,7 +56,11 @@ export default function Playlist() {
         </SimpleTooltip>
 
         <SimpleTooltip text={`Play ${playlist.name} in shuffle mode`}>
-          <Button className="rounded-full w-12 h-12" variant="ghost">
+          <Button
+            className="rounded-full w-12 h-12"
+            variant="ghost"
+            onClick={() => player.setSongList(playlist.entry, 0, true)}
+          >
             <Shuffle className="w-4 h-4" strokeWidth={3} />
           </Button>
         </SimpleTooltip>

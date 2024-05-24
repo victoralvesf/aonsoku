@@ -30,16 +30,18 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     setOriginalSongList(songlist)
     setOriginalSongIndex(index)
 
-    const shuffledList = shuffleSongList(songlist, index)
-    setShuffledSongList(shuffledList)
 
     if (shuffle) {
+      const shuffledList = shuffleSongList(songlist, index, true)
+      setShuffledSongList(shuffledList)
+
       setCurrentSongList(shuffledList)
       setCurrentSongIndex(0)
       setIsShuffleActive(true)
     } else {
       setCurrentSongList(songlist)
       setCurrentSongIndex(index)
+      if (isShuffleActive) setIsShuffleActive(false)
     }
 
     setIsPlaying(true)

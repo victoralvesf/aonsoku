@@ -14,6 +14,7 @@ let isSeeking = false
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [progress, setProgress] = useState(0)
+  const [currentDuration, setCurrentDuration] = useState(0)
   const [volume, setVolume] = useState(100)
 
   const player = usePlayer()
@@ -34,6 +35,13 @@ export function Player() {
 
   function setupProgressListener() {
     audioRef.current!.currentTime = 0
+
+    const audioDuration = parseInt(audioRef.current!.duration.toFixed())
+
+    if (currentDuration !== audioDuration) {
+      song.duration = audioDuration
+      setCurrentDuration(audioDuration)
+    }
 
     audioRef.current!.addEventListener('timeupdate', () => {
       if (!isSeeking) {
@@ -146,7 +154,7 @@ export function Player() {
             </small>
             {song ? (
               <Slider
-                defaultValue={[0]}
+                defaultValue={[progress]}
                 value={[progress]}
                 max={song.duration}
                 step={1}
@@ -165,7 +173,7 @@ export function Player() {
               />
             )}
             <small className="text-xs text-muted-foreground">
-              {convertSecondsToTime(song?.duration ?? 0)}
+              {convertSecondsToTime(currentDuration ?? 0)}
             </small>
           </div>
         </div>
