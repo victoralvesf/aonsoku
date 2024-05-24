@@ -100,7 +100,24 @@ function PlaySongButton({ cell }: PlaySongButtonProps) {
 
   return (
     <div className="text-center text-foreground flex justify-center">
-      {player.checkActiveSong(song.id) ? (
+      {(player.checkActiveSong(song.id) && !player.isPlaying) && (
+        <div className="w-8 flex items-center">
+          <SimpleTooltip text={`Pause ${song.title} by ${song.artist}`}>
+            <Button
+              className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
+              size="icon"
+              variant="outline"
+              onClick={(e) => {
+                e.stopPropagation()
+                player.togglePlayPause()
+              }}
+            >
+              <PlayIcon className="w-3 h-3 opacity-80 group-hover:opacity-100 fill-inherit dark:fill-slate-50" strokeWidth={4} />
+            </Button>
+          </SimpleTooltip>
+        </div>
+      )}
+      {(player.checkActiveSong(song.id) && player.isPlaying) && (
         <>
           <div className="group-hover/tablerow:hidden w-8 flex items-center">
             <div className="w-8 h-8 overflow-hidden rounded-full">
@@ -123,7 +140,8 @@ function PlaySongButton({ cell }: PlaySongButtonProps) {
             </SimpleTooltip>
           </div>
         </>
-      ) : (
+      )}
+      {!player.checkActiveSong(song.id) && (
         <>
           <div className="group-hover/tablerow:hidden w-8">
             {trackNumber}

@@ -39,7 +39,6 @@ export function Player() {
     const audioDuration = parseInt(audioRef.current!.duration.toFixed())
 
     if (currentDuration !== audioDuration) {
-      song.duration = audioDuration
       setCurrentDuration(audioDuration)
     }
 
@@ -58,9 +57,14 @@ export function Player() {
     }
   }
 
+  function handleStartedSeeking() {
+    isSeeking = true
+  }
+
   function handleSeeking(amount: number) {
     isSeeking = true
     setProgress(amount)
+    console.log('onSeeking Amount:', amount)
   }
 
   function handleSeeked(amount: number) {
@@ -68,6 +72,7 @@ export function Player() {
 
     audioRef.current!.currentTime = amount
     setProgress(amount)
+    console.log('onSeeked Amount:', amount)
   }
 
   function handleChangeVolume(volume: number) {
@@ -154,12 +159,12 @@ export function Player() {
             </small>
             {song ? (
               <Slider
-                defaultValue={[progress]}
+                defaultValue={[0]}
                 value={[progress]}
-                max={song.duration}
+                max={currentDuration}
                 step={1}
                 className="cursor-pointer w-[32rem]"
-                thumbmousedown={() => isSeeking = true}
+                thumbmousedown={() => handleStartedSeeking()}
                 onValueChange={([value]) => handleSeeking(value)}
                 onValueCommit={([value]) => handleSeeked(value)}
               />
