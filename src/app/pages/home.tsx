@@ -1,24 +1,45 @@
 import { ISong } from "@/types/responses/song"
 import { useLoaderData } from "react-router-dom"
 import HomeHeader from "../components/home/header"
-import RecentlyAddedPreview from "../components/home/recently-added-preview"
+import PreviewList from "../components/home/preview-list"
 import { Albums } from "@/types/responses/album"
 
 interface HomeLoaderData {
   randomSongs: ISong[]
-  recentlyAdded: Albums[]
+  newestAlbums: Albums[]
+  frequentAlbums: Albums[]
+  recentAlbums: Albums[]
+  randomAlbums: Albums[]
 }
 
 export default function Home() {
-  const { randomSongs, recentlyAdded } = useLoaderData() as HomeLoaderData
+  const {
+    randomSongs,
+    frequentAlbums,
+    newestAlbums,
+    recentAlbums,
+    randomAlbums
+  } = useLoaderData() as HomeLoaderData
 
-  console.log(recentlyAdded)
+  const homeSections = [
+    { title: 'Recently Played', route: '/library/albums/recently-played', list: recentAlbums },
+    { title: 'Recently Added', route: '/library/albums/recently-added', list: newestAlbums },
+    { title: 'Most Played', route: '/library/albums/most-played', list: frequentAlbums },
+    { title: 'Explore', route: '/library/albums/random', list: randomAlbums }
+  ]
 
   return (
     <div className="w-full">
       <HomeHeader songs={randomSongs} />
 
-      <RecentlyAddedPreview recentlyAdded={recentlyAdded} />
+      {homeSections.map(section => (
+        <PreviewList
+          key={section.title}
+          title={section.title}
+          moreRoute={section.route}
+          list={section.list}
+        />
+      ))}
     </div>
   )
 }

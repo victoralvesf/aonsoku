@@ -16,11 +16,17 @@ export const router = createBrowserRouter([
         path: '/',
         loader: async () => {
           const randomSongs = await subsonic.songs.getRandomSongs()
-          const recentlyAdded = await subsonic.albums.getRecentlyAdded('16')
+          const newestAlbums = await subsonic.albums.getAlbumList({ size: '10' })
+          const frequentAlbums = await subsonic.albums.getAlbumList({ size: '10', type: 'frequent' })
+          const recentAlbums = await subsonic.albums.getAlbumList({ size: '10', type: 'recent' })
+          const randomAlbums = await subsonic.albums.getAlbumList({ size: '10', type: 'random' })
 
           return {
             randomSongs,
-            recentlyAdded
+            newestAlbums,
+            frequentAlbums,
+            recentAlbums,
+            randomAlbums
           }
         },
         element: <Home />
@@ -28,7 +34,7 @@ export const router = createBrowserRouter([
       {
         id: 'albums',
         path: 'library/albums',
-        loader: async () => await subsonic.albums.getRecentlyAdded(),
+        loader: async () => await subsonic.albums.getAlbumList(),
         element: <RecentlyAddedAlbums />
       },
       {

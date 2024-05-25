@@ -1,13 +1,34 @@
 import { httpClient } from "@/api/httpClient";
 import { AlbumListResponse, GetAlbumResponse } from "@/types/responses/album";
 
-async function getRecentlyAdded(size = '30') {
+interface AlbumListParams {
+  size?: string
+  type: 'random' | 'newest' | 'highest' | 'frequent' | 'recent'
+  offset?: string
+  fromYear?: string
+  toYear?: string
+  genre?: string
+}
+
+async function getAlbumList(params: Partial<AlbumListParams> = {}) {
+  const {
+    type = 'newest',
+    size = '30',
+    offset = '0',
+    fromYear,
+    toYear,
+    genre
+  } = params
+
   const response = await httpClient<AlbumListResponse>('/getAlbumList', {
     method: 'GET',
     query: {
-      type: 'newest',
+      type,
       size,
-      offset: '0'
+      offset,
+      fromYear,
+      toYear,
+      genre
     }
   })
 
@@ -26,6 +47,6 @@ async function getOne(id: string) {
 }
 
 export const albums = {
-  getRecentlyAdded,
+  getAlbumList,
   getOne
 }
