@@ -1,12 +1,15 @@
+import { IReplayGain, ISong } from "./song"
 import { SubsonicResponse } from "./subsonicResponse"
 
 export interface AlbumList {
-  album: Album[]
+  album: Albums[]
 }
 
 export interface AlbumListResponse extends SubsonicResponse<{ albumList: AlbumList }> {}
 
-export interface Album {
+export interface GetAlbumResponse extends SubsonicResponse<{ album: SingleAlbum }> {}
+
+export interface Albums {
   id: string
   parent: string
   isDir: boolean
@@ -30,7 +33,38 @@ export interface Album {
   mediaType: string
   musicBrainzId: string
   genres: any[]
-  replayGain: ReplayGain
+  replayGain: IReplayGain
 }
 
-export interface ReplayGain {}
+export interface SingleAlbum {
+  id: string
+  name: string
+  artist: string
+  artistId: string
+  coverArt: string
+  songCount: number
+  duration: number
+  playCount: number
+  created: string
+  year: number
+  genre: string
+  played: string
+  userRating: number
+  genres: Genre[]
+  musicBrainzId: string
+  isCompilation: boolean
+  sortName: string
+  discTitles: DiscTitle[]
+  originalReleaseDate: OriginalReleaseDate
+  song: ISong[]
+}
+
+export interface Genre {
+  name: string
+}
+
+export interface DiscTitle {
+  disc: number
+}
+
+export interface OriginalReleaseDate {}

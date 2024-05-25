@@ -4,22 +4,31 @@ import RecentlyAddedAlbums from '@/app/pages/albums/recently-added'
 import { createBrowserRouter } from 'react-router-dom'
 import Playlist from '@/app/pages/playlists/playlist'
 import { subsonic } from '@/service/subsonic'
+import Home from '@/app/pages/home'
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <BaseLayout />,
-    errorElement: <ErrorPage />,
     children: [
       {
         id: 'home',
         path: '/',
-        element: <h1>Teste</h1>
+        loader: async () => {
+          const randomSongs = await subsonic.songs.getRandomSongs()
+          const recentlyAdded = await subsonic.albums.getRecentlyAdded('16')
+
+          return {
+            randomSongs,
+            recentlyAdded
+          }
+        },
+        element: <Home />
       },
       {
         id: 'albums',
         path: 'library/albums',
-        loader: subsonic.albums.getRecentlyAdded,
+        loader: async () => await subsonic.albums.getRecentlyAdded(),
         element: <RecentlyAddedAlbums />
       },
       {
@@ -31,6 +40,11 @@ export const router = createBrowserRouter([
           }
         },
         element: <Playlist />
+      },
+      {
+        id: 'error',
+        path: '*',
+        element: <ErrorPage />
       }
     ]
   }

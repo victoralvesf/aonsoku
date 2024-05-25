@@ -20,13 +20,13 @@ export default function BaseLayout() {
   return (
     <div className="hidden md:block h-screen overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        {!isMacOS ? (
+      <div className="flex items-center justify-between h-[40px]">
+        {isMacOS ? (
           <h1 className="text-sm font-bold py-1.5 px-3 ml-4">Subsonic Player</h1>
         ) : (
           <Menu />
         )}
-        <ThemeToggle />
+        <ThemeToggle className="mr-8" />
       </div>
       {/* Middle */}
       <div className="border-t h-[calc(100%-140px)]">

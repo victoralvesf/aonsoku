@@ -73,6 +73,9 @@ module.exports = {
       },
       gridTemplateColumns: {
         "player": "minmax(400px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(400px, 1fr)",
+      },
+      flexBasis: {
+        "1/8": "12.5%"
       }
     },
   },

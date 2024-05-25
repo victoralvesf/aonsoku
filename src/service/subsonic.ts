@@ -1,12 +1,9 @@
-import { getRecentlyAdded } from "./albums";
-import { getAllPlaylists, getOnePlaylist } from "./playlists";
+import { albums } from "./albums";
+import { playlists } from "./playlists";
+import { songs } from "./songs";
 
 export const subsonic = {
-  albums: {
-    getRecentlyAdded: () => getRecentlyAdded()
-  },
-  playlists: {
-    getAll: () => getAllPlaylists(),
-    getOne: (id: string) => getOnePlaylist(id)
-  }
+  albums,
+  songs,
+  playlists
 }

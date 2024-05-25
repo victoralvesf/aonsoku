@@ -18,7 +18,7 @@ export default function Playlist() {
   const player = usePlayer()
 
   return (
-    <main>
+    <main className="w-full">
       <div className="flex">
         <Image
           src={getCoverArtUrl(playlist.coverArt)}

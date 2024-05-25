@@ -1,3 +1,11 @@
+import { SubsonicResponse } from "./subsonicResponse"
+
+export interface SongList {
+  song: ISong[]
+}
+
+export interface RandomSongsResponse extends SubsonicResponse<{ randomSongs: SongList }> {}
+
 export interface ISong {
   id: string
   parent: string

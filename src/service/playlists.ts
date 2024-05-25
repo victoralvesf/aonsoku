@@ -1,7 +1,7 @@
 import { httpClient } from "@/api/httpClient"
 import { PlaylistWithEntriesResponse, PlaylistsResponse } from "@/types/responses/playlist"
 
-export async function getAllPlaylists() {
+async function getAll() {
   const response = await httpClient<PlaylistsResponse>('/getPlaylists', {
     method: 'GET'
   })
@@ -9,7 +9,7 @@ export async function getAllPlaylists() {
   return response?.playlists.playlist
 }
 
-export async function getOnePlaylist(id: string) {
+async function getOne(id: string) {
   const response = await httpClient<PlaylistWithEntriesResponse>('/getPlaylist', {
     method: 'GET',
     query: {
@@ -18,4 +18,9 @@ export async function getOnePlaylist(id: string) {
   })
 
   return response?.playlist
+}
+
+export const playlists = {
+  getAll,
+  getOne
 }

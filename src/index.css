@@ -58,3 +58,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+#main-scroll-area #scroll-viewport > div {
+  display: flex !important;
+}
