@@ -5,6 +5,8 @@ import { Play } from "lucide-react";
 import { usePlayer } from "@/app/contexts/player-context";
 import { subsonic } from "@/service/subsonic";
 import { Link } from "react-router-dom";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import HomeSongCard from "./song-card";
 
 interface PreviewListProps {
   list: Albums[]
@@ -23,6 +25,10 @@ export default function PreviewList({ list, title, moreRoute }: PreviewListProps
     }
   }
 
+  const halfSize = list.length / 2
+  const leftSide = [...list].slice(0, halfSize)
+  const rightSide = [...list].slice(halfSize)
+
   return (
     <div className="w-full flex flex-col mb-4">
       <div className="my-4 flex justify-between items-center">
@@ -38,8 +44,30 @@ export default function PreviewList({ list, title, moreRoute }: PreviewListProps
         </div>
       </div>
 
-      <div className="flex w-full gap-4">
-        {list.map((album) => (
+      <div className="flex w-full">
+        <Carousel className="w-full">
+          <CarouselContent className="ml-0 flex">
+            <CarouselItem className="pl-0 basis-full flex gap-4 pr-4">
+              {leftSide.map((album) => (
+                <HomeSongCard
+                  key={album.id}
+                  album={album}
+                  onButtonClick={(album) => handlePlayAlbum(album)}
+                />
+              ))}
+            </CarouselItem>
+            <CarouselItem className="pl-0 basis-full flex gap-4">
+              {rightSide.map((album) => (
+                <HomeSongCard
+                  key={album.id}
+                  album={album}
+                  onButtonClick={(album) => handlePlayAlbum(album)}
+                />
+              ))}
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+        {/* {list.map((album) => (
           <div key={album.id} className="basis-1/8 flex-1 min-w-0 grow-0">
             <div className="cursor-pointer">
               <Link to={`/album/${album.id}`}>
@@ -76,7 +104,7 @@ export default function PreviewList({ list, title, moreRoute }: PreviewListProps
               </div>
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   )
