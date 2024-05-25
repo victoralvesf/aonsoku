@@ -64,7 +64,6 @@ export function Player() {
   function handleSeeking(amount: number) {
     isSeeking = true
     setProgress(amount)
-    console.log('onSeeking Amount:', amount)
   }
 
   function handleSeeked(amount: number) {
@@ -72,7 +71,6 @@ export function Player() {
 
     audioRef.current!.currentTime = amount
     setProgress(amount)
-    console.log('onSeeked Amount:', amount)
   }
 
   function handleChangeVolume(volume: number) {
