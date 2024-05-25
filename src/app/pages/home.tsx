@@ -23,8 +23,8 @@ export default function Home() {
 
   const homeSections = [
     { title: 'Recently Played', route: '/library/albums/recently-played', list: recentAlbums },
-    { title: 'Recently Added', route: '/library/albums/recently-added', list: newestAlbums },
     { title: 'Most Played', route: '/library/albums/most-played', list: frequentAlbums },
+    { title: 'Recently Added', route: '/library/albums/recently-added', list: newestAlbums },
     { title: 'Explore', route: '/library/albums/random', list: randomAlbums }
   ]
 

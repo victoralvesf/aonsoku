@@ -63,7 +63,7 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
                       <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
                         <Button
                           className="opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-full w-14 h-14"
-                          variant="secondary"
+                          variant="outline"
                           onClick={() => handlePlaySongAlbum(song)}
                         >
                           <Play className="fill-foreground" />

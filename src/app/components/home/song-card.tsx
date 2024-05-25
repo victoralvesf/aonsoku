@@ -16,12 +16,12 @@ export default function HomeSongCard({ album, onButtonClick }: HomeSongCardProps
         <Link to={`/album/${album.id}`}>
           <div
             className="group flex-1 aspect-square rounded bg-cover bg-center"
-            style={{ backgroundImage: `url(${getCoverArtUrl(album.coverArt, '220')})` }}
+            style={{ backgroundImage: `url(${getCoverArtUrl(album.coverArt, '250')})` }}
           >
             <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
               <Button
-                className="opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-full w-14 h-14 z-20"
-                variant="secondary"
+                className="opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-full w-12 h-12 z-20"
+                variant="outline"
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
