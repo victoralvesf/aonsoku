@@ -10,15 +10,28 @@ import { CarouselButton } from "../ui/carousel-button";
 interface PreviewListProps {
   list: Albums[]
   title: string
+  moreTitle?: string
   moreRoute: string
 }
 
-export default function PreviewList({ list, title, moreRoute }: PreviewListProps) {
+export default function PreviewList({
+  list,
+  title,
+  moreTitle = 'See more',
+  moreRoute,
+}: PreviewListProps) {
   const [api, setApi] = useState<CarouselApi>()
   const [canScrollPrev, setCanScrollPrev] = useState<boolean>()
   const [canScrollNext, setCanScrollNext] = useState<boolean>()
+  let split = true
 
   const player = usePlayer()
+
+  if (list.length <= 8) split = false
+
+  if (list.length > 16) {
+    list = list.slice(0, 16)
+  }
 
   async function handlePlayAlbum(album: Albums) {
     const response = await subsonic.albums.getOne(album.id)
@@ -55,45 +68,61 @@ export default function PreviewList({ list, title, moreRoute }: PreviewListProps
         <div className="flex items-center gap-4">
           <Link to={moreRoute}>
             <p className="leading-7 text-sm truncate hover:underline text-muted-foreground hover:text-primary">
-              See more
+              {moreTitle}
             </p>
           </Link>
-          <div className="flex gap-2">
-            <CarouselButton
-              direction="prev"
-              disabled={!canScrollPrev}
-              onClick={() => api?.scrollPrev()}
-            />
-            <CarouselButton
-              direction="next"
-              disabled={!canScrollNext}
-              onClick={() => api?.scrollNext()}
-            />
-          </div>
+          {split && (
+            <div className="flex gap-2">
+              <CarouselButton
+                direction="prev"
+                disabled={!canScrollPrev}
+                onClick={() => api?.scrollPrev()}
+              />
+              <CarouselButton
+                direction="next"
+                disabled={!canScrollNext}
+                onClick={() => api?.scrollNext()}
+              />
+            </div>
+          )}
         </div>
       </div>
 
       <div className="flex w-full">
         <Carousel className="w-full" setApi={setApi}>
           <CarouselContent className="flex">
-            <CarouselItem className="basis-full flex gap-4">
-              {leftSide.map((album) => (
-                <HomeSongCard
-                  key={album.id}
-                  album={album}
-                  onButtonClick={(album) => handlePlayAlbum(album)}
-                />
-              ))}
-            </CarouselItem>
-            <CarouselItem className="basis-full flex gap-4">
-              {rightSide.map((album) => (
-                <HomeSongCard
-                  key={album.id}
-                  album={album}
-                  onButtonClick={(album) => handlePlayAlbum(album)}
-                />
-              ))}
-            </CarouselItem>
+            {split ? (
+              <>
+                <CarouselItem className="basis-full flex gap-4">
+                  {leftSide.map((album) => (
+                    <HomeSongCard
+                      key={album.id}
+                      album={album}
+                      onButtonClick={(album) => handlePlayAlbum(album)}
+                    />
+                  ))}
+                </CarouselItem>
+                <CarouselItem className="basis-full flex gap-4">
+                  {rightSide.map((album) => (
+                    <HomeSongCard
+                      key={album.id}
+                      album={album}
+                      onButtonClick={(album) => handlePlayAlbum(album)}
+                    />
+                  ))}
+                </CarouselItem>
+              </>
+            ) : (
+              <CarouselItem className="basis-full flex gap-4">
+                {list.map((album) => (
+                  <HomeSongCard
+                    key={album.id}
+                    album={album}
+                    onButtonClick={(album) => handlePlayAlbum(album)}
+                  />
+                ))}
+              </CarouselItem>
+            )}
           </CarouselContent>
         </Carousel>
       </div>

@@ -1,5 +1,7 @@
+import PreviewList from "@/app/components/home/preview-list";
 import ImageHeader from "@/app/components/image-header";
-import { Badge } from "@/app/components/ui/badge";
+import ListWrapper from "@/app/components/list-wrapper";
+import PlayButtons from "@/app/components/play-buttons";
 import { IArtist } from "@/types/responses/artist";
 import { useLoaderData } from "react-router-dom";
 
@@ -39,17 +41,30 @@ export default function Artist() {
         type="Artist"
         title={artist.name}
         coverArtId={artist.coverArt}
-        coverArtSize="350"
+        coverArtSize="700"
         coverArtAlt={artist.name}
-      >
-        <>
-          {badges.map((badge) => (
-            <>
-              {badge !== null && <Badge variant="secondary">{badge}</Badge>}
-            </>
-          ))}
-        </>
-      </ImageHeader>
+        badges={badges}
+      />
+
+      <ListWrapper>
+        <PlayButtons
+          playButtonTooltip={`Play ${artist.name} radio`}
+          handlePlayButton={() => console.log('haha')}
+          shuffleButtonTooltip={`Play ${artist.name} radio in shuffle mode`}
+          handleShuffleButton={() => console.log('haha')}
+          optionsTooltip={`More options for ${artist.name}`}
+          showLikeButton={true}
+          likeState={artist.starred}
+          contentId={artist.id}
+        />
+
+        <PreviewList
+          title="Recent Albums"
+          list={artist.album}
+          moreTitle="Artist Discography"
+          moreRoute="/kk"
+        />
+      </ListWrapper>
     </div>
   )
 }

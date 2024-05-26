@@ -23,6 +23,7 @@ export interface Albums {
   duration: number
   playCount?: number
   created: string
+  starred?: string
   artistId: string
   songCount: number
   isVideo: boolean
@@ -50,6 +51,7 @@ export interface SingleAlbum {
   duration: number
   playCount: number
   created: string
+  starred?: string
   year: number
   genre: string
   played: string

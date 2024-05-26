@@ -6,6 +6,7 @@ export interface IArtist {
   name: string
   coverArt: string
   albumCount: number
+  starred?: string
   artistImageUrl: string
   album: IArtistAlbum[]
 }

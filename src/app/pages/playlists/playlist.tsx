@@ -4,12 +4,12 @@ import { getCoverArtUrl } from '@/api/httpClient';
 import { playlistSongsColumns } from '@/app/tables/playlist/songs-columns';
 import { DataTable } from '@/app/components/ui/data-table';
 import Image from '@/app/components/image';
-import { Button } from '@/app/components/ui/button';
-import { EllipsisVertical, Play, Shuffle } from 'lucide-react';
-import { SimpleTooltip } from '@/app/components/ui/simple-tooltip';
 import { Badge } from '@/app/components/ui/badge';
 import { usePlayer } from '@/app/contexts/player-context';
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime';
+import PlayButtons from '@/app/components/play-buttons';
+import { cn } from '@/lib/utils';
+import { getTextSizeClass } from '@/utils/getTextSizeClass';
 
 export default function Playlist() {
   const playlist = useLoaderData() as PlaylistWithEntries;
@@ -31,7 +31,7 @@ export default function Playlist() {
           <p className="text-sm mb-2">
             Playlist
           </p>
-          <h2 className="text-6xl font-bold tracking-tight">
+          <h2 className={cn("scroll-m-20 font-extrabold tracking-tight antialiased", getTextSizeClass(playlist.name))}>
             {playlist.name}
           </h2>
           <p className="text-sm text-muted-foreground mt-2">
@@ -44,33 +44,13 @@ export default function Playlist() {
         </div>
       </div>
 
-      <div className="w-full mt-6 mb-6 flex items-center gap-4">
-        <SimpleTooltip text={`Play ${playlist.name}`}>
-          <Button
-            className="rounded-full w-14 h-14 hover:scale-[0.97] transform-gpu"
-            variant="default"
-            onClick={() => player.setSongList(playlist.entry, 0)}
-          >
-            <Play className="w-4 h-4 fill-slate-50 text-slate-50" strokeWidth={6} />
-          </Button>
-        </SimpleTooltip>
-
-        <SimpleTooltip text={`Play ${playlist.name} in shuffle mode`}>
-          <Button
-            className="rounded-full w-12 h-12"
-            variant="ghost"
-            onClick={() => player.setSongList(playlist.entry, 0, true)}
-          >
-            <Shuffle className="w-4 h-4" strokeWidth={3} />
-          </Button>
-        </SimpleTooltip>
-
-        <SimpleTooltip text={`More options for ${playlist.name}`}>
-          <Button className="rounded-full w-12 h-12" variant="ghost">
-            <EllipsisVertical className="w-4 h-4" strokeWidth={3} />
-          </Button>
-        </SimpleTooltip>
-      </div>
+      <PlayButtons
+        playButtonTooltip={`Play ${playlist.name}`}
+        handlePlayButton={() => player.setSongList(playlist.entry, 0)}
+        shuffleButtonTooltip={`Play ${playlist.name} in shuffle mode`}
+        handleShuffleButton={() => player.setSongList(playlist.entry, 0, true)}
+        optionsTooltip={`More options for ${playlist.name}`}
+      />
 
       <DataTable
         columns={playlistSongsColumns}

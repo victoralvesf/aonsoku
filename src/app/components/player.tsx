@@ -84,7 +84,7 @@ export function Player() {
         <div className="flex items-center gap-2">
           {song ? (
             <>
-              <Image src={getCoverArtUrl(song.coverArt, "100")} width={60} className="rounded" />
+              <Image src={getCoverArtUrl(song.coverArt, "140")} width={70} className="rounded shadow-md" />
               <div className="flex flex-col justify-center">
                 <span className="text-sm font-medium">{song.title}</span>
                 <span className="text-xs font-light text-muted-foreground">{song.artist}</span>

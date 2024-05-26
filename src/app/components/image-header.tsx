@@ -1,10 +1,12 @@
-import { ReactNode, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { FastAverageColorResult } from 'fast-average-color'
 
 import { cn } from "@/lib/utils"
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { Skeleton } from './ui/skeleton'
+import { Badge } from './ui/badge'
+import { getTextSizeClass } from '@/utils/getTextSizeClass'
 
 const bgGradient = "bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50"
 
@@ -15,7 +17,7 @@ interface ImageHeaderProps {
   coverArtId: string
   coverArtSize: string
   coverArtAlt: string
-  children: ReactNode
+  badges: (string | number | null)[]
 }
 
 export default function ImageHeader({
@@ -25,7 +27,7 @@ export default function ImageHeader({
   coverArtId,
   coverArtSize,
   coverArtAlt,
-  children
+  badges
 }: ImageHeaderProps) {
   const imageRef = useRef<HTMLImageElement>(null)
   const [loaded, setLoaded] = useState(false)
@@ -46,7 +48,7 @@ export default function ImageHeader({
         className={cn("w-full px-4 py-6 lg:px-8 flex gap-4", bgGradient, !loaded ? "hidden" : "visible")}
         style={{ backgroundColor: bgColor?.hex }}
       >
-        <div className="w-[250px] h-[250px] overflow-clip relative rounded shadow-lg">
+        <div className="w-[250px] h-[250px] min-w-[250px] min-h-[250px] aspect-square overflow-clip relative rounded shadow-lg">
           <img
             crossOrigin="anonymous"
             ref={imageRef}
@@ -60,20 +62,28 @@ export default function ImageHeader({
         </div>
 
         <div className="flex flex-col justify-end">
-          <p className="text-sm mb-2">
+          <p className="text-sm mb-2 font-medium">
             {type}
           </p>
-          <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-2">
+          <h1
+            className={cn("scroll-m-20 font-extrabold tracking-tight mb-2 antialiased", getTextSizeClass(title))}
+          >
             {title}
           </h1>
           {subtitle && (
-            <h4 className="scroll-m-20 text-lg font-medium tracking-tight opacity-60">
+            <h4 className="scroll-m-20 text-lg font-medium tracking-tight opacity-70">
               {subtitle}
             </h4>
           )}
 
           <div className="flex gap-2 mt-2">
-            {children}
+            <>
+              {badges.map((badge) => (
+                <>
+                  {badge !== null && <Badge variant="secondary">{badge}</Badge>}
+                </>
+              ))}
+            </>
           </div>
         </div>
       </div>
