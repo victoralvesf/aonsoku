@@ -1,10 +1,12 @@
+import { createBrowserRouter } from 'react-router-dom'
+import { subsonic } from '@/service/subsonic'
+
 import BaseLayout from '@/app/layout/base'
 import ErrorPage from '@/app/pages/error-page'
 import RecentlyAddedAlbums from '@/app/pages/albums/recently-added'
-import { createBrowserRouter } from 'react-router-dom'
 import Playlist from '@/app/pages/playlists/playlist'
-import { subsonic } from '@/service/subsonic'
 import Home from '@/app/pages/home'
+import Album from '@/app/pages/albums/album'
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +48,16 @@ export const router = createBrowserRouter([
           }
         },
         element: <Playlist />
+      },
+      {
+        id: 'album_info',
+        path: 'library/albums/:albumId',
+        loader: async ({ params }) => {
+          if (params.albumId) {
+            return await subsonic.albums.getOne(params.albumId)
+          }
+        },
+        element: <Album />
       },
       {
         id: 'error',

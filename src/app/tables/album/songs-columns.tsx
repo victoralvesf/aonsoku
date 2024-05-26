@@ -7,9 +7,10 @@ import Image from "@/app/components/image"
 import { Link } from 'react-router-dom'
 import { usePlayer } from '@/app/contexts/player-context'
 import clsx from 'clsx'
-import PlaySongButton from '@/app/components/table/play-button'
+import PlaySongButton from "@/app/components/table/play-button"
+import dateTime from "@/utils/dateTime"
 
-export const playlistSongsColumns: ColumnDef<ISong>[] = [
+export const albumSongsColumns: ColumnDef<ISong>[] = [
   {
     accessorKey: "index",
     header: () => {
@@ -43,22 +44,11 @@ export const playlistSongsColumns: ColumnDef<ISong>[] = [
     }
   },
   {
-    accessorKey: "album",
-    header: "Album",
-    cell: ({ row }) => {
-      return (
-        <Link to={`/library/albums/${row.original.albumId}`} className="hover:underline">
-          {row.original.album}
-        </Link>
-      )
-    }
-  },
-  {
     accessorKey: "artist",
     header: "Artist",
     cell: ({ row }) => {
       return (
-        <Link to={`/library/artists/${row.original.artistId}`} className="hover:underline">
+        <Link to={`/album/${row.original.artistId}`} className="hover:underline">
           {row.original.artist}
         </Link>
       )
@@ -72,6 +62,29 @@ export const playlistSongsColumns: ColumnDef<ISong>[] = [
       const formattedDuration = convertSecondsToTime(duration)
 
       return formattedDuration
+    }
+  },
+  {
+    accessorKey: "playCount",
+    header: "Plays",
+    cell: ({ row }) => {
+      const playCount = row.original.playCount
+
+      return playCount ? playCount : 0
+    }
+  },
+  {
+    accessorKey: "played",
+    header: "Last Played",
+    cell: ({ row }) => {
+      const { played } = row.original
+
+      if (played) {
+        const lastPlayed = dateTime().from(dateTime(played), true)
+        return `${lastPlayed} ago`
+      }
+
+      return ''
     }
   },
   {

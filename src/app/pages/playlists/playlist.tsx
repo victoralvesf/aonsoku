@@ -3,17 +3,17 @@ import { useLoaderData } from 'react-router-dom';
 import { getCoverArtUrl } from '@/api/httpClient';
 import { playlistSongsColumns } from '@/app/tables/playlist/songs-columns';
 import { DataTable } from '@/app/components/ui/data-table';
-import { formatPlaylistDuration } from '@/utils/dateTime';
 import Image from '@/app/components/image';
 import { Button } from '@/app/components/ui/button';
 import { EllipsisVertical, Play, Shuffle } from 'lucide-react';
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip';
 import { Badge } from '@/app/components/ui/badge';
 import { usePlayer } from '@/app/contexts/player-context';
+import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime';
 
 export default function Playlist() {
   const playlist = useLoaderData() as PlaylistWithEntries;
-  const playlistDuration = formatPlaylistDuration(playlist.duration)
+  const playlistDuration = convertSecondsToHumanRead(playlist.duration)
 
   const player = usePlayer()
 
@@ -27,8 +27,8 @@ export default function Playlist() {
           height={250}
           className="rounded-lg shadow-md resize-none"
         />
-        <div className="ml-6 w-full flex flex-col justify-start">
-          <p className="text-sm text-muted-foreground mb-2">
+        <div className="ml-4 w-full flex flex-col justify-end">
+          <p className="text-sm mb-2">
             Playlist
           </p>
           <h2 className="text-6xl font-bold tracking-tight">
@@ -38,8 +38,8 @@ export default function Playlist() {
             {playlist.comment}
           </p>
           <div className="flex gap-1 mt-2 text-muted-foreground text-sm">
-            <Badge className="font-medium hover:bg-primary">{playlist.songCount} songs</Badge>
-            <Badge className="font-medium hover:bg-primary">about {playlistDuration}</Badge>
+            <Badge variant="secondary">{playlist.songCount} songs</Badge>
+            <Badge variant="secondary">about {playlistDuration}</Badge>
           </div>
         </div>
       </div>
