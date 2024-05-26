@@ -24,7 +24,6 @@
     "@tauri-apps/api": "^1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "colorthief": "^2.4.0",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.11",
     "embla-carousel-autoplay": "^8.1.3",

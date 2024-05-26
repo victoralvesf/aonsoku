@@ -7,6 +7,7 @@ import RecentlyAddedAlbums from '@/app/pages/albums/recently-added'
 import Playlist from '@/app/pages/playlists/playlist'
 import Home from '@/app/pages/home'
 import Album from '@/app/pages/albums/album'
+import Artist from '@/app/pages/artists/artist'
 
 export const router = createBrowserRouter([
   {
@@ -50,7 +51,7 @@ export const router = createBrowserRouter([
         element: <Playlist />
       },
       {
-        id: 'album_info',
+        id: 'album',
         path: 'library/albums/:albumId',
         loader: async ({ params }) => {
           if (params.albumId) {
@@ -58,6 +59,16 @@ export const router = createBrowserRouter([
           }
         },
         element: <Album />
+      },
+      {
+        id: 'artist',
+        path: 'library/artists/:artistId',
+        loader: async ({ params }) => {
+          if (params.artistId) {
+            return await subsonic.artists.getOne(params.artistId)
+          }
+        },
+        element: <Artist />
       },
       {
         id: 'error',

@@ -15,7 +15,7 @@ export default function BaseLayout() {
   const location = useLocation() as Location
   const matches = useMatches() as UIMatch[]
 
-  const isShowingAlbum = matches[1].id === 'album_info'
+  const isShowingAlbum = matches[1].id === 'album' || matches[1].id === 'artist'
 
   useEffect(() => {
     document.querySelector('#main-scroll-area #scroll-viewport')?.scrollTo({ top: 0 })

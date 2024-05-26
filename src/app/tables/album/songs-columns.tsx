@@ -48,7 +48,7 @@ export const albumSongsColumns: ColumnDef<ISong>[] = [
     header: "Artist",
     cell: ({ row }) => {
       return (
-        <Link to={`/album/${row.original.artistId}`} className="hover:underline">
+        <Link to={`/library/artists/${row.original.artistId}`} className="hover:underline">
           {row.original.artist}
         </Link>
       )

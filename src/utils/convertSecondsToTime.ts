@@ -10,15 +10,15 @@ export function convertSecondsToHumanRead(seconds: number, showSeconds = false) 
   const minutes = dur.minutes();
   const secs = dur.seconds()
 
-  const formattedHours = `${String(hours).padStart(2, '0')} hr`
-  const formattedMinutes = `${String(minutes).padStart(2, '0')} min`
+  const formattedHours = `${String(hours).padStart(2, '0')} hr `
+  const formattedMinutes = `${String(minutes).padStart(2, '0')} min `
   const formattedSeconds = `${String(secs).padStart(2, '0')} sec`
 
   let finalText = ''
 
   if (hours > 0) finalText = formattedHours
-  if (minutes > 0) finalText = `${finalText} ${formattedMinutes}`
-  if (showSeconds) finalText = `${finalText} ${formattedSeconds}`
+  if (minutes > 0) finalText += formattedMinutes
+  if (showSeconds) finalText += formattedSeconds
   
-  return finalText;
+  return finalText.trim();
 }

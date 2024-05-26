@@ -36,6 +36,10 @@ export interface Albums {
   replayGain: IReplayGain
 }
 
+export interface IArtistAlbum extends Albums {
+  starred?: string
+}
+
 export interface SingleAlbum {
   id: string
   name: string
