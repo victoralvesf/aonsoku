@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, ReactNode } from 'react'
+import { createContext, useState, useContext, ReactNode, useEffect } from 'react'
 import { IPlayerContext } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { shuffleSongList } from '@/utils/shuffleArray'
@@ -14,6 +14,14 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isLoopActive, setIsLoopActive] = useState(false)
   const [isShuffleActive, setIsShuffleActive] = useState(false)
+  const [isSongStarred, setIsSongStarred] = useState(false)
+
+  useEffect(() => {
+    if (currentSongList.length > 0) {
+      const starred = currentSongList[currentSongIndex].starred ? true : false
+      setIsSongStarred(starred)
+    }
+  }, [currentSongList, currentSongIndex])
 
   function playSong(song: ISong) {
     if (checkActiveSong(song.id) && !isPlaying) {
@@ -117,6 +125,8 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     isLoopActive,
     isShuffleActive,
     isPlayingOneSong,
+    isSongStarred,
+    setIsSongStarred,
     playSong,
     setPlayingState,
     setSongList,

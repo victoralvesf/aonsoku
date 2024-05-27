@@ -8,18 +8,52 @@ import { Slider } from "@/app/components/ui/slider"
 import { Button } from "@/app/components/ui/button"
 import { usePlayer } from "@/app/contexts/player-context"
 import { convertSecondsToTime } from "@/utils/convertSecondsToTime"
+import { subsonic } from "@/service/subsonic"
 
 let isSeeking = false
 
 export function Player() {
+  const player = usePlayer()
   const audioRef = useRef<HTMLAudioElement>(null)
+  const togglePlayPauseRef = useRef(player.togglePlayPause)
+  const currentSongListRef = useRef(player.currentSongList)
   const [progress, setProgress] = useState(0)
   const [currentDuration, setCurrentDuration] = useState(0)
   const [volume, setVolume] = useState(100)
 
-  const player = usePlayer()
-
   const song = player.currentSongList[player.currentSongIndex]
+
+  useEffect(() => {
+    togglePlayPauseRef.current = player.togglePlayPause
+  }, [player.togglePlayPause])
+
+  useEffect(() => {
+    currentSongListRef.current = player.currentSongList
+  }, [player.currentSongList])
+
+  useEffect(() => {
+    function handleKeyPress(event: KeyboardEvent) {
+      if (event.code === 'Space') {
+        const { tagName, contentEditable } = document.activeElement as HTMLElement;
+
+        const isNotInput = !['INPUT', 'TEXTAREA'].includes(tagName)
+        const isNotContentEditable = contentEditable !== "true"
+
+        if (isNotInput && isNotContentEditable) {
+          event.preventDefault()
+          if (currentSongListRef.current.length > 0) {
+            togglePlayPauseRef.current()
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [])
 
   useEffect(() => {
     if (!audioRef.current) return
@@ -77,6 +111,11 @@ export function Player() {
     setVolume(volume)
   }
 
+  async function handleLikeButton() {
+    await subsonic.star.handleStarItem(song.id, player.isSongStarred)
+    player.setIsSongStarred(!player.isSongStarred)
+  }
+
   return (
     <div className="border-t h-[100px] w-full flex items-center">
       <div className="w-full h-full grid grid-cols-player gap-2 px-4">
@@ -93,7 +132,7 @@ export function Player() {
           ) : (
             <>
               <div className="w-[60px] h-[60px] flex justify-center items-center bg-muted rounded">
-                <AudioLines className="text-foreground" />
+                <AudioLines />
               </div>
               <div className="flex flex-col justify-center">
                 <span className="text-sm font-medium">No song playing</span>
@@ -110,7 +149,7 @@ export function Player() {
               disabled={!song || player.isPlayingOneSong}
               onClick={player.toggleShuffle}
             >
-              <Shuffle className={clsx("w-10 h-10 text-foreground", player.isShuffleActive && "text-primary")} />
+              <Shuffle className={clsx("w-10 h-10", player.isShuffleActive && "text-primary")} />
             </Button>
             <Button
               variant="ghost"
@@ -118,7 +157,7 @@ export function Player() {
               disabled={!song || !player.hasPrevSong}
               onClick={player.playPrevSong}
             >
-              <SkipBack className="w-10 h-10 text-foreground" />
+              <SkipBack className="w-10 h-10" />
             </Button>
 
             <Button
@@ -139,7 +178,7 @@ export function Player() {
               disabled={!song || !player.hasNextSong}
               onClick={player.playNextSong}
             >
-              <SkipForward className="w-10 h-10 text-foreground" />
+              <SkipForward className="w-10 h-10" />
             </Button>
             <Button
               variant="ghost"
@@ -147,7 +186,7 @@ export function Player() {
               disabled={!song}
               onClick={player.toggleLoop}
             >
-              <Repeat className={clsx("w-10 h-10 text-foreground", player.isLoopActive && "text-primary")} />
+              <Repeat className={clsx("w-10 h-10", player.isLoopActive && "text-primary")} />
             </Button>
           </div>
 
@@ -187,8 +226,9 @@ export function Player() {
               variant="ghost"
               className="rounded-full w-10 h-10 p-3"
               disabled={!song}
+              onClick={handleLikeButton}
             >
-              <Heart className="w-5 h-5 text-foreground" />
+              <Heart className={clsx("w-5 h-5", player.isSongStarred && "text-red-500 fill-red-500")} />
             </Button>
 
             <Button
@@ -196,12 +236,12 @@ export function Player() {
               className="rounded-full w-10 h-10 p-2"
               disabled={!song || player.isPlayingOneSong}
             >
-              <ListVideo className="w-4 h-4 text-foreground" />
+              <ListVideo className="w-4 h-4" />
             </Button>
 
             <div className="flex gap-2 ml-2">
               <Volume2
-                className={clsx("w-4 h-4 text-foreground", !song && "opacity-50")}
+                className={clsx("w-4 h-4", !song && "opacity-50")}
               />
               <Slider
                 defaultValue={[100]}

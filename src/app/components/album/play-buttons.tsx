@@ -34,13 +34,8 @@ export default function PlayButtons({
   async function handleLikeButton() {
     if (!contentId) return
 
-    if (isStarred) {
-      await subsonic.star.unstarItem(contentId)
-      setIsStarred(false)
-    } else {
-      await subsonic.star.starItem(contentId)
-      setIsStarred(true)
-    }
+    await subsonic.star.handleStarItem(contentId, isStarred)
+    setIsStarred(!isStarred)
   }
 
   return (

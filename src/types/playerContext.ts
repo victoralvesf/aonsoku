@@ -9,6 +9,8 @@ export interface IPlayerContext {
   isLoopActive: boolean
   isShuffleActive: boolean
   isPlayingOneSong: boolean
+  isSongStarred: boolean
+  setIsSongStarred: (starred: boolean) => void 
   playSong: (song: ISong) => void
   setPlayingState: (state: boolean) => void
   setSongList: (songlist: ISong[], index: number, shuffle?: boolean) => void

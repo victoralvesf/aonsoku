@@ -19,7 +19,16 @@ async function unstarItem(id: string) {
   })
 }
 
+async function handleStarItem(id: string, starred: boolean) {
+  if (starred) {
+    await unstarItem(id)
+  } else {
+    await starItem(id)
+  }
+}
+
 export const star = {
   starItem,
-  unstarItem
+  unstarItem,
+  handleStarItem
 }

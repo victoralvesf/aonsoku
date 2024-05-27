@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Heart } from "lucide-react"
 import { Link } from 'react-router-dom'
 import { ColumnDef } from "@tanstack/react-table"
@@ -155,16 +155,23 @@ export const songsColumns: ColumnDef<ISong>[] = [
     maxSize: 40,
     cell: ({ row }) => {
       const { starred, id } = row.original
-      const [isStarred, setIsStarred] = useState(starred ? true : false)
+      const [isStarredLocal, setIsStarredLocal] = useState(starred ? true : false)
+      const { checkActiveSong, isSongStarred, setIsSongStarred } = usePlayer()
+
+      useEffect(() => {
+        const isSongPlaying = checkActiveSong(id)
+
+        if (isSongPlaying) setIsStarredLocal(isSongStarred)
+      }, [isSongStarred])
 
       async function handleStarred() {
-        if (isStarred) {
-          await subsonic.star.unstarItem(id)
-          setIsStarred(false)
-        } else {
-          await subsonic.star.starItem(id)
-          setIsStarred(true)
-        }
+        const state = !isStarredLocal
+
+        await subsonic.star.handleStarItem(id, isStarredLocal)
+        setIsStarredLocal(state)
+
+        const isSongPlaying = checkActiveSong(id)
+        if (isSongPlaying) setIsSongStarred(state)
       }
 
       return (
@@ -173,7 +180,7 @@ export const songsColumns: ColumnDef<ISong>[] = [
           className="rounded-full w-8 h-8 p-1 hover:border hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
           onClick={handleStarred}
         >
-          <Heart className={clsx("w-4 h-4", isStarred && "text-red-500 fill-red-500")} strokeWidth={2} />
+          <Heart className={clsx("w-4 h-4", isStarredLocal && "text-red-500 fill-red-500")} strokeWidth={2} />
         </Button>
       )
     }
