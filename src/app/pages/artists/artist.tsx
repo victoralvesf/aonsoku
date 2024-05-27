@@ -19,7 +19,8 @@ export default function Artist() {
   const { artist, artistInfo, topSongs } = useLoaderData() as ILoaderData
 
   function getSongCount() {
-    if (artist.albumCount === 0) return null
+    if (artist?.albumCount === undefined) return null
+    if (artist?.albumCount === 0) return null
 
     let count = 0
     artist.album.forEach((album) => {
@@ -33,7 +34,7 @@ export default function Artist() {
   }
 
   function formatAlbumCount() {
-    if (!artist.albumCount) return null
+    if (artist?.albumCount === undefined) return null
 
     let albumCount = `${artist.albumCount} album`
     if (artist.albumCount > 1) albumCount += 's'

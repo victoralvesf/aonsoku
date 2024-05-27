@@ -14,6 +14,7 @@ import { Button } from "../ui/button";
 import { Play } from "lucide-react";
 import { usePlayer } from "@/app/contexts/player-context";
 import { subsonic } from "@/service/subsonic";
+import { Link } from "react-router-dom";
 
 interface HomeHeaderProps {
   songs: ISong[]
@@ -70,9 +71,17 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
                     <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-2">
                       {song.title}
                     </h1>
-                    <h4 className="scroll-m-20 text-xl font-semibold tracking-tight opacity-60">
-                      {song.artist}
-                    </h4>
+                    {!song.artistId ? (
+                      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight opacity-60">
+                        {song.artist}
+                      </h4>
+                    ) : (
+                      <Link to={`/library/artists/${song.artistId}`}>
+                        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight opacity-60 hover:underline">
+                          {song.artist}
+                        </h4>
+                      </Link>
+                    )}
                     <div className="flex gap-2 mt-2">
                       {song.genre !== undefined && (
                         <Badge variant="secondary" className="border">{song.genre}</Badge>

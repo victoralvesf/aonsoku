@@ -55,6 +55,8 @@ export const songsColumns: ColumnDef<ISong>[] = [
     accessorKey: "artist",
     header: "Artist",
     cell: ({ row }) => {
+      if (!row.original.artistId) return row.original.artist
+
       return (
         <Link to={`/library/artists/${row.original.artistId}`} className="hover:underline">
           {row.original.artist}

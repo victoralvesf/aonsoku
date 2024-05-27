@@ -7,6 +7,7 @@ import { getCoverArtUrl } from '@/api/httpClient'
 import { Skeleton } from './ui/skeleton'
 import { Badge } from './ui/badge'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
+import { Link } from 'react-router-dom'
 
 const bgGradient = "bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50"
 
@@ -14,6 +15,7 @@ interface ImageHeaderProps {
   type: string
   title: string
   subtitle?: string
+  artistId?: string
   coverArtId: string
   coverArtSize: string
   coverArtAlt: string
@@ -24,6 +26,7 @@ export default function ImageHeader({
   type,
   title,
   subtitle,
+  artistId,
   coverArtId,
   coverArtSize,
   coverArtAlt,
@@ -75,10 +78,12 @@ export default function ImageHeader({
           >
             {title}
           </h1>
-          {subtitle && (
-            <h4 className="scroll-m-20 text-lg font-medium tracking-tight opacity-70">
-              {subtitle}
-            </h4>
+          {subtitle && artistId && (
+            <Link to={`/library/artists/${artistId}`}>
+              <h4 className="scroll-m-20 text-lg font-medium tracking-tight opacity-70 hover:underline">
+                {subtitle}
+              </h4>
+            </Link>
           )}
 
           <div className="flex gap-2 mt-2">

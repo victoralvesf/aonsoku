@@ -41,9 +41,8 @@ export default function PreviewList({
     }
   }
 
-  const halfSize = list.length / 2
-  const leftSide = [...list].slice(0, halfSize)
-  const rightSide = [...list].slice(halfSize)
+  const leftSide = split ? [...list].slice(0, 8) : []
+  const rightSide = split ? [...list].slice(8) : []
 
   useEffect(() => {
     if (!api) {
