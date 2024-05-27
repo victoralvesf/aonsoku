@@ -1,10 +1,10 @@
-import { SimpleTooltip } from "./ui/simple-tooltip";
-import LastFmIcon from "./icons/last-fm";
-import MusicbrainzIcon from "./icons/musicbrainz";
-import { Skeleton } from "./ui/skeleton";
+import { useAsyncValue } from "react-router-dom";
+import { SimpleTooltip } from "@/app/components/ui/simple-tooltip";
+import LastFmIcon from "@/app/components/icons/last-fm";
+import MusicbrainzIcon from "@/app/components/icons/musicbrainz";
+import { Skeleton } from "@/app/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { IArtistInfo } from "@/types/responses/artist";
-import { useAsyncValue } from "react-router-dom";
 
 interface ArtistInfoProps {
   artistName: string

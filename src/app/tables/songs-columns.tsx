@@ -1,18 +1,19 @@
+import { useState } from "react"
+import { Heart } from "lucide-react"
+import { Link } from 'react-router-dom'
+import { ColumnDef } from "@tanstack/react-table"
+import clsx from 'clsx'
+
 import { Badge } from "@/app/components/ui/badge"
 import { ISong } from "@/types/responses/song"
-import { ColumnDef } from "@tanstack/react-table"
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { getCoverArtUrl } from "@/api/httpClient"
 import Image from "@/app/components/image"
-import { Link } from 'react-router-dom'
 import { usePlayer } from '@/app/contexts/player-context'
-import clsx from 'clsx'
 import PlaySongButton from "@/app/components/table/play-button"
 import dateTime from "@/utils/dateTime"
 import { Button } from "@/app/components/ui/button"
-import { Heart } from "lucide-react"
 import { subsonic } from "@/service/subsonic"
-import { useState } from "react"
 
 export const songsColumns: ColumnDef<ISong>[] = [
   {

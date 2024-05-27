@@ -1,5 +1,5 @@
-import { Globe, Mic, LogOut } from "lucide-react"
 import { useState } from "react"
+import { Globe, Mic, LogOut } from "lucide-react"
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -14,8 +14,8 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/app/components/ui/menubar"
-import { useApp } from "../contexts/app-context"
-import { LogoutConfirmDialog } from "../components/logout-confirm"
+import { useApp } from "@/app/contexts/app-context"
+import { LogoutConfirmDialog } from "@/app/components/logout-confirm"
 
 export function Menu() {
   const { serverUsername, serverUrl } = useApp()

@@ -1,8 +1,8 @@
-import { Albums } from "@/types/responses/album"
-import { Button } from "../ui/button"
 import { Link } from "react-router-dom"
-import { getCoverArtUrl } from "@/api/httpClient"
 import { Play } from "lucide-react"
+import { Albums } from "@/types/responses/album"
+import { Button } from "@/app/components/ui/button"
+import { getCoverArtUrl } from "@/api/httpClient"
 
 interface HomeSongCardProps {
   album: Albums,

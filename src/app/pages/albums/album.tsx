@@ -4,8 +4,8 @@ import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { DataTable } from '@/app/components/ui/data-table'
 import { usePlayer } from '@/app/contexts/player-context'
 import { songsColumns } from '@/app/tables/songs-columns'
-import ImageHeader from '@/app/components/image-header'
-import PlayButtons from "@/app/components/play-buttons"
+import ImageHeader from '@/app/components/album/image-header'
+import PlayButtons from "@/app/components/album/play-buttons"
 import ListWrapper from "@/app/components/list-wrapper"
 import { ColumnFilter } from "@/types/columnFilter"
 

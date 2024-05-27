@@ -1,15 +1,16 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Albums } from "@/types/responses/album";
 import { usePlayer } from "@/app/contexts/player-context";
 import { subsonic } from "@/service/subsonic";
-import { Link } from "react-router-dom";
-import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from "../ui/carousel";
-import HomeSongCard from "./song-card";
-import { useEffect, useState } from "react";
-import { CarouselButton } from "../ui/carousel-button";
+import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from "@/app/components/ui/carousel";
+import HomeSongCard from "@/app/components/home/song-card";
+import { CarouselButton } from "@/app/components/ui/carousel-button";
 
 interface PreviewListProps {
   list: Albums[]
   title: string
+  showMore?: boolean
   moreTitle?: string
   moreRoute: string
 }
@@ -17,6 +18,7 @@ interface PreviewListProps {
 export default function PreviewList({
   list,
   title,
+  showMore = true,
   moreTitle = 'See more',
   moreRoute,
 }: PreviewListProps) {
@@ -65,11 +67,13 @@ export default function PreviewList({
           {title}
         </h3>
         <div className="flex items-center gap-4">
-          <Link to={moreRoute}>
-            <p className="leading-7 text-sm truncate hover:underline text-muted-foreground hover:text-primary">
-              {moreTitle}
-            </p>
-          </Link>
+          {showMore && (
+            <Link to={moreRoute}>
+              <p className="leading-7 text-sm truncate hover:underline text-muted-foreground hover:text-primary">
+                {moreTitle}
+              </p>
+            </Link>
+          )}
           {split && (
             <div className="flex gap-2">
               <CarouselButton

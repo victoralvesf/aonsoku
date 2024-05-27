@@ -5,7 +5,7 @@ import { usePlayer } from "@/app/contexts/player-context"
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { Button } from "@/app/components/ui/button"
 import { ISong } from "@/types/responses/song"
-import Image from "../image"
+import Image from "@/app/components/image"
 
 interface PlaySongButtonProps {
   cell: CellContext<ISong, unknown>

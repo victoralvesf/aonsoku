@@ -1,5 +1,6 @@
-import { ISong } from "@/types/responses/song";
+import { Link } from "react-router-dom";
 import Autoplay from "embla-carousel-autoplay"
+import { Play } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -8,13 +9,12 @@ import {
   CarouselPrevious
 } from "@/app/components/ui/carousel"
 import { getCoverArtUrl } from "@/api/httpClient";
-import { Badge } from "../ui/badge";
+import { Badge } from "@/app/components/ui/badge";
 import { convertSecondsToTime } from "@/utils/convertSecondsToTime";
-import { Button } from "../ui/button";
-import { Play } from "lucide-react";
+import { Button } from "@/app/components/ui/button";
 import { usePlayer } from "@/app/contexts/player-context";
 import { subsonic } from "@/service/subsonic";
-import { Link } from "react-router-dom";
+import { ISong } from "@/types/responses/song";
 
 interface HomeHeaderProps {
   songs: ISong[]

@@ -1,7 +1,7 @@
-import { ISong } from "@/types/responses/song"
 import { useLoaderData } from "react-router-dom"
-import HomeHeader from "../components/home/header"
-import PreviewList from "../components/home/preview-list"
+import { ISong } from "@/types/responses/song"
+import HomeHeader from "@/app/components/home/header"
+import PreviewList from "@/app/components/home/preview-list"
 import { Albums } from "@/types/responses/album"
 
 interface HomeLoaderData {

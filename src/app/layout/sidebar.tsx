@@ -1,3 +1,4 @@
+import { ReactNode, useEffect, useState } from "react"
 import {
   ListMusic,
   Mic2,
@@ -10,9 +11,8 @@ import {
 
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/app/components/ui/scroll-area"
-import { ReactNode, useEffect, useState } from "react"
 import { Playlist } from "@/types/responses/playlist"
-import { SidebarGenerator, SidebarPlaylistGenerator } from "../components/sidebar-generator"
+import { SidebarGenerator, SidebarPlaylistGenerator } from "@/app/components/sidebar-generator"
 import { subsonic } from "@/service/subsonic"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }

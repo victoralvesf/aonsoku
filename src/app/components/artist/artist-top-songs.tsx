@@ -1,9 +1,9 @@
 import { useAsyncValue } from "react-router-dom";
-import { DataTable } from "./ui/data-table";
+import { DataTable } from "@/app/components/ui/data-table";
 import { ISong } from "@/types/responses/song";
-import { songsColumns } from "../tables/songs-columns";
-import { usePlayer } from "../contexts/player-context";
-import { Skeleton } from "./ui/skeleton";
+import { songsColumns } from "@/app/tables/songs-columns";
+import { usePlayer } from "@/app/contexts/player-context";
+import { Skeleton } from "@/app/components/ui/skeleton";
 import { ColumnFilter } from "@/types/columnFilter";
 
 export default function ArtistTopSongs() {

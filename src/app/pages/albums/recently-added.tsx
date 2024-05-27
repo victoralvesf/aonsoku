@@ -1,9 +1,9 @@
 import { getCoverArtUrl } from '@/api/httpClient';
-import { Album } from '@/types/responses/album';
+import { Albums } from '@/types/responses/album';
 import { useLoaderData } from 'react-router-dom';
 
 export default function RecentlyAddedAlbums() {
-  const recentSongs = useLoaderData() as Album[];
+  const recentSongs = useLoaderData() as Albums[];
 
   return (
     <main>

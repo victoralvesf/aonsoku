@@ -1,3 +1,4 @@
+import { FormEvent } from "react"
 import { Button } from "@/app/components/ui/button"
 import {
   Card,
@@ -9,7 +10,7 @@ import {
 } from "@/app/components/ui/card"
 import { Input } from "@/app/components/ui/input"
 import { Label } from "@/app/components/ui/label"
-import { ThemeToggle } from "./theme-toggle"
+import { ThemeToggle } from "@/app/components/theme-toggle"
 import {
   Select,
   SelectContent,
@@ -17,8 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select"
-import { FormEvent } from "react"
-import { useApp } from "../contexts/app-context"
+import { useApp } from "@/app/contexts/app-context"
 
 export function ServerConfig() {
   const {

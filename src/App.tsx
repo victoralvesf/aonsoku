@@ -1,8 +1,8 @@
 import { RouterProvider } from "react-router-dom"
-import { useApp } from './app/contexts/app-context'
-import { ServerConfig } from './app/components/server-config'
-import { router } from './routes/router'
-import { PlayerContextProvider } from "./app/contexts/player-context"
+import { useApp } from '@/app/contexts/app-context'
+import { ServerConfig } from '@/app/components/server-config'
+import { router } from '@/routes/router'
+import { PlayerContextProvider } from "@/app/contexts/player-context"
 
 function App() {
   const {

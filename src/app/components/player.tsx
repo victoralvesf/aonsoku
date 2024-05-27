@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import { AudioLines, Heart, ListVideo, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume2 } from "lucide-react"
+import clsx from "clsx"
 
 import { getCoverArtUrl, getSongStreamUrl } from "@/api/httpClient"
-import Image from "./image"
-import { Slider } from "./ui/slider"
-import { Button } from "./ui/button"
-import { usePlayer } from "../contexts/player-context"
+import Image from "@/app/components/image"
+import { Slider } from "@/app/components/ui/slider"
+import { Button } from "@/app/components/ui/button"
+import { usePlayer } from "@/app/contexts/player-context"
 import { convertSecondsToTime } from "@/utils/convertSecondsToTime"
-import clsx from "clsx"
 
 let isSeeking = false
 

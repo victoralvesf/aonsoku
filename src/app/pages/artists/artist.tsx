@@ -1,13 +1,13 @@
 import { Suspense } from "react";
 import { Await, useLoaderData } from "react-router-dom";
-import ArtistInfo, { ArtistInfoFallback } from "@/app/components/artist-info";
+import ArtistInfo, { ArtistInfoFallback } from "@/app/components/artist/artist-info";
 import PreviewList from "@/app/components/home/preview-list";
-import ImageHeader from "@/app/components/image-header";
+import ImageHeader from "@/app/components/album/image-header";
 import ListWrapper from "@/app/components/list-wrapper";
-import PlayButtons from "@/app/components/play-buttons";
+import PlayButtons from "@/app/components/album/play-buttons";
 import { IArtist, IArtistInfo } from "@/types/responses/artist";
 import { ISong } from "@/types/responses/song";
-import ArtistTopSongs, { ArtistTopSongsFallback } from "@/app/components/artist-top-songs";
+import ArtistTopSongs, { ArtistTopSongsFallback } from "@/app/components/artist/artist-top-songs";
 
 interface ILoaderData {
   artist: IArtist

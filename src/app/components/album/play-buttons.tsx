@@ -1,8 +1,9 @@
-import { EllipsisVertical, Heart, Play, Shuffle } from "lucide-react";
-import { Button } from "./ui/button";
-import { SimpleTooltip } from "./ui/simple-tooltip";
-import clsx from "clsx";
 import { useState } from "react";
+import clsx from "clsx";
+import { EllipsisVertical, Heart, Play, Shuffle } from "lucide-react";
+
+import { Button } from "@/app/components/ui/button";
+import { SimpleTooltip } from "@/app/components/ui/simple-tooltip";
 import { subsonic } from "@/service/subsonic";
 
 interface PlayButtonsProps {

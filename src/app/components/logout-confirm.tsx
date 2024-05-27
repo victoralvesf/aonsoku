@@ -1,3 +1,4 @@
+import { MouseEvent } from "react"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,8 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/app/components/ui/alert-dialog"
-import { MouseEvent } from "react"
-import { useApp } from "../contexts/app-context"
+import { useApp } from "@/app/contexts/app-context"
 
 interface AlertDialogProps {
   openDialog: boolean

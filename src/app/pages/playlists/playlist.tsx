@@ -7,7 +7,7 @@ import Image from '@/app/components/image';
 import { Badge } from '@/app/components/ui/badge';
 import { usePlayer } from '@/app/contexts/player-context';
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime';
-import PlayButtons from '@/app/components/play-buttons';
+import PlayButtons from '@/app/components/album/play-buttons';
 import { cn } from '@/lib/utils';
 import { getTextSizeClass } from '@/utils/getTextSizeClass';
 import { ColumnFilter } from '@/types/columnFilter';

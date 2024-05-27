@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation, Location, useMatches, UIMatch } from 'react-router-dom'
-import { ThemeToggle } from "../components/theme-toggle";
-import { Menu } from "./menu";
-import { Sidebar } from "./sidebar";
-import { ScrollArea } from '../components/ui/scroll-area';
-import { useApp } from '../contexts/app-context';
-import { Player } from '../components/player';
 import clsx from 'clsx';
+
+import { ThemeToggle } from "@/app/components/theme-toggle";
+import { Menu } from "@/app/layout/menu";
+import { Sidebar } from "@/app/layout/sidebar";
+import { ScrollArea } from '@/app/components/ui/scroll-area';
+import { useApp } from '@/app/contexts/app-context';
+import { Player } from '@/app/components/player';
 
 export default function BaseLayout() {
   const { osType } = useApp()
