@@ -13,7 +13,7 @@ interface PlayButtonsProps {
   handleShuffleButton: () => void
   optionsTooltip: string
   showLikeButton?: boolean
-  likeButtonTooltip?: string
+  likeTooltipResource?: string
   likeState?: string
   contentId?: string
 }
@@ -25,7 +25,7 @@ export default function PlayButtons({
   handleShuffleButton,
   optionsTooltip,
   showLikeButton = false,
-  likeButtonTooltip,
+  likeTooltipResource,
   likeState,
   contentId
 }: PlayButtonsProps) {
@@ -65,8 +65,8 @@ export default function PlayButtons({
         </Button>
       </SimpleTooltip>
 
-      {showLikeButton && likeButtonTooltip && (
-        <SimpleTooltip text={likeButtonTooltip}>
+      {showLikeButton && likeTooltipResource && (
+        <SimpleTooltip text={`${isStarred ? 'Remove like from' : 'Like'} ${likeTooltipResource}`}>
           <Button
             className="rounded-full w-12 h-12"
             variant="ghost"

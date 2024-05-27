@@ -81,7 +81,7 @@ export default function Artist() {
           handleShuffleButton={() => handlePlayArtistRadio(true)}
           optionsTooltip={`More options for ${artist.name}`}
           showLikeButton={true}
-          likeButtonTooltip={`Like ${artist.name}`}
+          likeTooltipResource={artist.name}
           likeState={artist.starred}
           contentId={artist.id}
         />
