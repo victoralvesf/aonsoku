@@ -41,6 +41,8 @@ export default function ImageHeader({
     setLoaded(true)
   }
 
+  const imageUrl = getCoverArtUrl(coverArtId, coverArtSize)
+
   return (
     <>
       {!loaded && <HeaderFallback />}
@@ -48,13 +50,16 @@ export default function ImageHeader({
         className={cn("w-full px-4 py-6 lg:px-8 flex gap-4", bgGradient, !loaded ? "hidden" : "visible")}
         style={{ backgroundColor: bgColor?.hex }}
       >
-        <div className="w-[250px] h-[250px] min-w-[250px] min-h-[250px] aspect-square overflow-clip relative rounded shadow-lg">
+        <div
+          className="w-[250px] h-[250px] min-w-[250px] min-h-[250px] aspect-square bg-cover bg-center rounded shadow-lg"
+          style={{ backgroundImage: `url(${imageUrl})` }}
+        >
           <img
             crossOrigin="anonymous"
             ref={imageRef}
-            src={getCoverArtUrl(coverArtId, coverArtSize)}
+            src={imageUrl}
             alt={coverArtAlt}
-            className="rounded absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            className="hidden"
             width={250}
             height={250}
             onLoad={handleLoadImage}
@@ -93,8 +98,8 @@ export default function ImageHeader({
 
 function HeaderFallback() {
   return (
-    <div className={cn("w-full p-6 bg-muted-foreground flex gap-4", bgGradient)}>
-      <Skeleton className="w-[250px] h-[250px] rounded shadow-lg" />
+    <div className={cn("w-full px-4 py-6 lg:px-8 bg-muted-foreground flex gap-4", bgGradient)}>
+      <Skeleton className="w-[250px] h-[250px] min-w-[250px] min-h-[250px] rounded shadow-lg" />
       <div className="flex flex-col justify-end">
         <Skeleton className="h-[20px] w-16 mb-2" />
         <Skeleton className="h-12 w-[260px] mb-2" />
