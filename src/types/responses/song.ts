@@ -39,7 +39,7 @@ export interface ISong {
   sortName: string
   mediaType: string
   musicBrainzId: string
-  genres: any[]
+  genres: IGenre[]
   replayGain: IReplayGain
 }
 
@@ -47,4 +47,8 @@ export interface IReplayGain {
   trackGain: number
   trackPeak: number
   albumPeak: number
+}
+
+export interface IGenre {
+  name: string
 }

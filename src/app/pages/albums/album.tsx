@@ -53,6 +53,7 @@ export default function Album() {
           handleShuffleButton={() => player.setSongList(album.song, 0, true)}
           optionsTooltip={`More options for ${album.name}`}
           showLikeButton={true}
+          likeButtonTooltip={`Like ${album.name}`}
           likeState={album.starred}
           contentId={album.id}
         />

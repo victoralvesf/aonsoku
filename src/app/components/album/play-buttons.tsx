@@ -13,6 +13,7 @@ interface PlayButtonsProps {
   handleShuffleButton: () => void
   optionsTooltip: string
   showLikeButton?: boolean
+  likeButtonTooltip?: string
   likeState?: string
   contentId?: string
 }
@@ -24,6 +25,7 @@ export default function PlayButtons({
   handleShuffleButton,
   optionsTooltip,
   showLikeButton = false,
+  likeButtonTooltip,
   likeState,
   contentId
 }: PlayButtonsProps) {
@@ -63,17 +65,19 @@ export default function PlayButtons({
         </Button>
       </SimpleTooltip>
 
-      {showLikeButton && (
-        <Button
-          className="rounded-full w-12 h-12"
-          variant="ghost"
-          onClick={handleLikeButton}
-        >
-          <Heart
-            className={clsx("w-4 h-4", isStarred && "text-red-500 fill-red-500")}
-            strokeWidth={2}
-          />
-        </Button>
+      {showLikeButton && likeButtonTooltip && (
+        <SimpleTooltip text={likeButtonTooltip}>
+          <Button
+            className="rounded-full w-12 h-12"
+            variant="ghost"
+            onClick={handleLikeButton}
+          >
+            <Heart
+              className={clsx("w-4 h-4", isStarred && "text-red-500 fill-red-500")}
+              strokeWidth={2}
+            />
+          </Button>
+        </SimpleTooltip>
       )}
 
       <SimpleTooltip text={optionsTooltip}>

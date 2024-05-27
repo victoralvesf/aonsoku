@@ -8,6 +8,8 @@ import PlayButtons from "@/app/components/album/play-buttons";
 import { IArtist, IArtistInfo } from "@/types/responses/artist";
 import { ISong } from "@/types/responses/song";
 import ArtistTopSongs, { ArtistTopSongsFallback } from "@/app/components/artist/artist-top-songs";
+import { subsonic } from "@/service/subsonic";
+import { usePlayer } from "@/app/contexts/player-context";
 
 interface ILoaderData {
   artist: IArtist
@@ -16,19 +18,20 @@ interface ILoaderData {
 }
 
 export default function Artist() {
+  const player = usePlayer()
   const { artist, artistInfo, topSongs } = useLoaderData() as ILoaderData
+  let artistSongCount = 0
 
   function getSongCount() {
     if (artist?.albumCount === undefined) return null
     if (artist?.albumCount === 0) return null
 
-    let count = 0
     artist.album.forEach((album) => {
-      count += album.songCount
+      artistSongCount += album.songCount
     })
 
-    let songCount = `${count} song`
-    if (count > 1) songCount += 's'
+    let songCount = `${artistSongCount} song`
+    if (artistSongCount > 1) songCount += 's'
 
     return songCount
   }
@@ -46,6 +49,19 @@ export default function Artist() {
     getSongCount()
   ]
 
+  async function handlePlayArtistRadio(shuffle = false) {
+    const response = await subsonic.search.get({
+      query: artist.name,
+      songCount: artistSongCount,
+      albumCount: 0,
+      artistCount: 0
+    })
+
+    if (response?.song) {
+      player.setSongList(response.song, 0, shuffle)
+    }
+  }
+
   return (
     <div className="w-full">
       <ImageHeader
@@ -60,11 +76,12 @@ export default function Artist() {
       <ListWrapper>
         <PlayButtons
           playButtonTooltip={`Play ${artist.name} radio`}
-          handlePlayButton={() => console.log('haha')}
+          handlePlayButton={() => handlePlayArtistRadio()}
           shuffleButtonTooltip={`Play ${artist.name} radio in shuffle mode`}
-          handleShuffleButton={() => console.log('haha')}
+          handleShuffleButton={() => handlePlayArtistRadio(true)}
           optionsTooltip={`More options for ${artist.name}`}
           showLikeButton={true}
+          likeButtonTooltip={`Like ${artist.name}`}
           likeState={artist.starred}
           contentId={artist.id}
         />
