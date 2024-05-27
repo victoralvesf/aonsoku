@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, defer } from 'react-router-dom'
 import { subsonic } from '@/service/subsonic'
 
 import BaseLayout from '@/app/layout/base'
@@ -65,7 +65,13 @@ export const router = createBrowserRouter([
         path: 'library/artists/:artistId',
         loader: async ({ params }) => {
           if (params.artistId) {
-            return await subsonic.artists.getOne(params.artistId)
+            const artistPromise = subsonic.artists.getOne(params.artistId)
+            const artistInfoPromise = subsonic.artists.getInfo(params.artistId)
+
+            return defer({
+              artist: await artistPromise,
+              artistInfo: artistInfoPromise
+            })
           }
         },
         element: <Artist />

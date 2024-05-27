@@ -71,3 +71,7 @@ img {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+
+#artist-biography > p > a {
+  @apply text-primary hover:underline;
+}

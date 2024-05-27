@@ -1,12 +1,19 @@
+import { Suspense } from "react";
+import { Await, useLoaderData } from "react-router-dom";
+import ArtistInfo, { ArtistInfoFallback } from "@/app/components/artist-info";
 import PreviewList from "@/app/components/home/preview-list";
 import ImageHeader from "@/app/components/image-header";
 import ListWrapper from "@/app/components/list-wrapper";
 import PlayButtons from "@/app/components/play-buttons";
-import { IArtist } from "@/types/responses/artist";
-import { useLoaderData } from "react-router-dom";
+import { IArtist, IArtistInfo } from "@/types/responses/artist";
+
+interface ILoaderData {
+  artist: IArtist
+  artistInfo: Promise<IArtistInfo>
+}
 
 export default function Artist() {
-  const artist = useLoaderData() as IArtist
+  const { artist, artistInfo } = useLoaderData() as ILoaderData
 
   function getSongCount() {
     if (artist.albumCount === 0) return null
@@ -57,6 +64,13 @@ export default function Artist() {
           likeState={artist.starred}
           contentId={artist.id}
         />
+
+        <Suspense fallback={<ArtistInfoFallback />}>
+          <Await resolve={artistInfo}>
+            <ArtistInfo artistName={artist.name} />
+          </Await>
+        </Suspense>
+
 
         <PreviewList
           title="Recent Albums"
