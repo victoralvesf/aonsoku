@@ -62,7 +62,7 @@ export default function PlayButtons({
         </Button>
       </SimpleTooltip>
 
-      {showLikeButton !== undefined && (
+      {showLikeButton && (
         <Button
           className="rounded-full w-12 h-12"
           variant="ghost"

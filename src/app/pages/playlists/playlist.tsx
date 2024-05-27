@@ -62,6 +62,7 @@ export default function Playlist() {
         shuffleButtonTooltip={`Play ${playlist.name} in shuffle mode`}
         handleShuffleButton={() => player.setSongList(playlist.entry, 0, true)}
         optionsTooltip={`More options for ${playlist.name}`}
+        showLikeButton={false}
       />
 
       <DataTable
