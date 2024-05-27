@@ -3,10 +3,11 @@ import { SingleAlbum } from "@/types/responses/album"
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { DataTable } from '@/app/components/ui/data-table'
 import { usePlayer } from '@/app/contexts/player-context'
-import { albumSongsColumns } from '@/app/tables/album/songs-columns'
+import { songsColumns } from '@/app/tables/songs-columns'
 import ImageHeader from '@/app/components/image-header'
 import PlayButtons from "@/app/components/play-buttons"
 import ListWrapper from "@/app/components/list-wrapper"
+import { ColumnFilter } from "@/types/columnFilter"
 
 export default function Album() {
   const player = usePlayer()
@@ -17,6 +18,18 @@ export default function Album() {
     album.genre || null,
     album.songCount ? `${album.songCount} songs` : null,
     album.duration ? convertSecondsToHumanRead(album.duration, true) : null,
+  ]
+
+  const columnsToShow: ColumnFilter[] = [
+    'index',
+    'title',
+    'artist',
+    'duration',
+    'playCount',
+    'played',
+    'bitRate',
+    'contentType',
+    'starred'
   ]
 
   return (
@@ -44,9 +57,10 @@ export default function Album() {
         />
 
         <DataTable
-          columns={albumSongsColumns}
+          columns={songsColumns}
           data={album.song}
           handlePlaySong={(row) => player.setSongList(album.song, row.index)}
+          columnFilter={columnsToShow}
         />
       </ListWrapper>
     </div>

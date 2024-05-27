@@ -6,6 +6,8 @@ export interface SongList {
 
 export interface RandomSongsResponse extends SubsonicResponse<{ randomSongs: SongList }> {}
 
+export interface TopSongsResponse extends SubsonicResponse<{ topSongs: SongList }> {}
+
 export interface ISong {
   id: string
   parent: string
@@ -32,6 +34,7 @@ export interface ISong {
   isVideo: boolean
   played: string
   bpm: number
+  starred?: string
   comment: string
   sortName: string
   mediaType: string

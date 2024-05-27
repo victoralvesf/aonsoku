@@ -6,14 +6,17 @@ import ImageHeader from "@/app/components/image-header";
 import ListWrapper from "@/app/components/list-wrapper";
 import PlayButtons from "@/app/components/play-buttons";
 import { IArtist, IArtistInfo } from "@/types/responses/artist";
+import { ISong } from "@/types/responses/song";
+import ArtistTopSongs, { ArtistTopSongsFallback } from "@/app/components/artist-top-songs";
 
 interface ILoaderData {
   artist: IArtist
   artistInfo: Promise<IArtistInfo>
+  topSongs: Promise<ISong[]>
 }
 
 export default function Artist() {
-  const { artist, artistInfo } = useLoaderData() as ILoaderData
+  const { artist, artistInfo, topSongs } = useLoaderData() as ILoaderData
 
   function getSongCount() {
     if (artist.albumCount === 0) return null
@@ -66,11 +69,16 @@ export default function Artist() {
         />
 
         <Suspense fallback={<ArtistInfoFallback />}>
-          <Await resolve={artistInfo}>
+          <Await resolve={artistInfo} errorElement={<></>}>
             <ArtistInfo artistName={artist.name} />
           </Await>
         </Suspense>
 
+        <Suspense fallback={<ArtistTopSongsFallback />}>
+          <Await resolve={topSongs} errorElement={<></>}>
+            <ArtistTopSongs />
+          </Await>
+        </Suspense>
 
         <PreviewList
           title="Recent Albums"

@@ -1,0 +1,1 @@
+export type ColumnFilter = "index" | "title" | "artist" | "album" | "year" | "duration" | "playCount" | "played" | "bpm" | "bitRate" | "contentType" | "starred"

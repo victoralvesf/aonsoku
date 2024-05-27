@@ -83,11 +83,9 @@ export default function ImageHeader({
 
           <div className="flex gap-2 mt-2">
             <>
-              {badges.map((badge) => (
-                <>
-                  {badge !== null && <Badge variant="secondary">{badge}</Badge>}
-                </>
-              ))}
+              {badges.map((badge, index) => {
+                if (badge !== null) return <Badge key={index} variant="secondary">{badge}</Badge>
+              })}
             </>
           </div>
         </div>

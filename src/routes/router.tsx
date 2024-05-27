@@ -65,12 +65,14 @@ export const router = createBrowserRouter([
         path: 'library/artists/:artistId',
         loader: async ({ params }) => {
           if (params.artistId) {
-            const artistPromise = subsonic.artists.getOne(params.artistId)
+            const artist = await subsonic.artists.getOne(params.artistId)
             const artistInfoPromise = subsonic.artists.getInfo(params.artistId)
+            const topSongsPromise = subsonic.songs.getTopSongs(artist?.name || '')
 
             return defer({
-              artist: await artistPromise,
-              artistInfo: artistInfoPromise
+              artist,
+              artistInfo: artistInfoPromise,
+              topSongs: topSongsPromise
             })
           }
         },

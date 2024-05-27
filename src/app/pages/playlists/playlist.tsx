@@ -1,7 +1,7 @@
 import { PlaylistWithEntries } from '@/types/responses/playlist';
 import { useLoaderData } from 'react-router-dom';
 import { getCoverArtUrl } from '@/api/httpClient';
-import { playlistSongsColumns } from '@/app/tables/playlist/songs-columns';
+import { songsColumns } from '@/app/tables/songs-columns';
 import { DataTable } from '@/app/components/ui/data-table';
 import Image from '@/app/components/image';
 import { Badge } from '@/app/components/ui/badge';
@@ -10,12 +10,24 @@ import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime';
 import PlayButtons from '@/app/components/play-buttons';
 import { cn } from '@/lib/utils';
 import { getTextSizeClass } from '@/utils/getTextSizeClass';
+import { ColumnFilter } from '@/types/columnFilter';
 
 export default function Playlist() {
   const playlist = useLoaderData() as PlaylistWithEntries;
   const playlistDuration = convertSecondsToHumanRead(playlist.duration)
 
   const player = usePlayer()
+
+  const columnsToShow: ColumnFilter[] = [
+    'index',
+    'title',
+    'artist',
+    'album',
+    'duration',
+    'playCount',
+    'contentType',
+    'starred'
+  ]
 
   return (
     <main className="w-full">
@@ -53,9 +65,10 @@ export default function Playlist() {
       />
 
       <DataTable
-        columns={playlistSongsColumns}
+        columns={songsColumns}
         data={playlist.entry}
         handlePlaySong={(row) => player.setSongList(playlist.entry, row.index)}
+        columnFilter={columnsToShow}
       />
     </main>
   )
