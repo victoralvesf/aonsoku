@@ -9,6 +9,7 @@ import { ISong } from "@/types/responses/song";
 import ArtistInfo, { ArtistInfoFallback } from "@/app/components/artist/artist-info";
 import ArtistTopSongs, { ArtistTopSongsFallback } from "@/app/components/artist/artist-top-songs";
 import RelatedArtistsList from "@/app/components/artist/related-artists";
+import PreviewListFallback from "@/app/components/preview-list-fallback";
 import { subsonic } from "@/service/subsonic";
 import { usePlayer } from "@/app/contexts/player-context";
 
@@ -106,7 +107,7 @@ export default function Artist() {
           moreRoute={`/library/albums/artist/${artist.id}`}
         />
 
-        <Suspense>
+        <Suspense fallback={<PreviewListFallback />}>
           <Await resolve={artistInfo} errorElement={<></>}>
             <RelatedArtistsList title="Related Artists" />
           </Await>

@@ -19,18 +19,26 @@ export const router = createBrowserRouter([
         id: 'home',
         path: '/',
         loader: async () => {
-          const randomSongs = await subsonic.songs.getRandomSongs()
-          const newestAlbums = await subsonic.albums.getAlbumList({ size: '16' })
-          const frequentAlbums = await subsonic.albums.getAlbumList({ size: '16', type: 'frequent' })
-          const recentAlbums = await subsonic.albums.getAlbumList({ size: '16', type: 'recent' })
-          const randomAlbums = await subsonic.albums.getAlbumList({ size: '16', type: 'random' })
+          const randomSongs = subsonic.songs.getRandomSongs()
+          const newestAlbums = subsonic.albums.getAlbumList({ size: 16 })
+          const frequentAlbums = subsonic.albums.getAlbumList({ size: 16, type: 'frequent' })
+          const recentAlbums = subsonic.albums.getAlbumList({ size: 16, type: 'recent' })
+          const randomAlbums = subsonic.albums.getAlbumList({ size: 16, type: 'random' })
 
-          return {
+          const results = await Promise.all([
             randomSongs,
             newestAlbums,
             frequentAlbums,
             recentAlbums,
             randomAlbums
+          ])
+
+          return {
+            randomSongs: results[0],
+            newestAlbums: results[1],
+            frequentAlbums: results[2],
+            recentAlbums: results[3],
+            randomAlbums: results[4]
           }
         },
         element: <Home />
@@ -56,7 +64,34 @@ export const router = createBrowserRouter([
         path: 'library/albums/:albumId',
         loader: async ({ params }) => {
           if (params.albumId) {
-            return await subsonic.albums.getOne(params.albumId)
+            const album = await subsonic.albums.getOne(params.albumId)
+            const searchAlbumsPromise = subsonic.search.get({
+              query: album?.artist!,
+              albumCount: 16,
+              songCount: 0,
+              artistCount: 0
+            })
+
+
+            if (album?.genre) {
+              console.log('GENRE:', album.genre)
+              const randomGenreAlbumsPromise = subsonic.albums.getAlbumList({
+                type: 'byGenre',
+                genre: album?.genre,
+                size: 16
+              })
+
+              return defer({
+                album,
+                artistAlbums: searchAlbumsPromise,
+                randomGenreAlbums: randomGenreAlbumsPromise
+              })
+            }
+
+            return defer({
+              album,
+              artistAlbums: searchAlbumsPromise
+            })
           }
         },
         element: <Album />

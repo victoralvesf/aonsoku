@@ -2,9 +2,9 @@ import { httpClient } from "@/api/httpClient";
 import { AlbumListResponse, GetAlbumResponse } from "@/types/responses/album";
 
 interface AlbumListParams {
-  size?: string
-  type: 'random' | 'newest' | 'highest' | 'frequent' | 'recent'
-  offset?: string
+  type: 'random' | 'newest' | 'highest' | 'frequent' | 'recent' | 'byGenre' | 'alphabeticalByName' | 'alphabeticalByArtist' | 'starred' | 'byYear' | 'byGenre'
+  size?: number
+  offset?: number
   fromYear?: string
   toYear?: string
   genre?: string
@@ -13,8 +13,8 @@ interface AlbumListParams {
 async function getAlbumList(params: Partial<AlbumListParams> = {}) {
   const {
     type = 'newest',
-    size = '30',
-    offset = '0',
+    size = 30,
+    offset = 0,
     fromYear,
     toYear,
     genre
@@ -24,8 +24,8 @@ async function getAlbumList(params: Partial<AlbumListParams> = {}) {
     method: 'GET',
     query: {
       type,
-      size,
-      offset,
+      size: size.toString(),
+      offset: offset.toString(),
       fromYear,
       toYear,
       genre

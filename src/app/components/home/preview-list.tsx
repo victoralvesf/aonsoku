@@ -12,7 +12,7 @@ interface PreviewListProps {
   title: string
   showMore?: boolean
   moreTitle?: string
-  moreRoute: string
+  moreRoute?: string
 }
 
 export default function PreviewList({
@@ -60,7 +60,7 @@ export default function PreviewList({
           {title}
         </h3>
         <div className="flex items-center gap-4">
-          {showMore && (
+          {showMore && moreRoute && (
             <Link to={moreRoute}>
               <p className="leading-7 text-sm truncate hover:underline text-muted-foreground hover:text-primary">
                 {moreTitle}
