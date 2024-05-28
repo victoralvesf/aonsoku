@@ -2,6 +2,7 @@ import { createContext, useState, useContext, ReactNode, useEffect } from 'react
 import { IPlayerContext } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { shuffleSongList } from '@/utils/shuffleArray'
+import { subsonic } from '@/service/subsonic'
 
 const PlayerContext = createContext({} as IPlayerContext)
 
@@ -18,10 +19,16 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (currentSongList.length > 0) {
-      const starred = currentSongList[currentSongIndex].starred ? true : false
-      setIsSongStarred(starred)
+      const { starred, id } = currentSongList[currentSongIndex]
+      const starredStatus = starred ? true : false
+      setIsSongStarred(starredStatus)
+      sendScrobble(id)
     }
   }, [currentSongList, currentSongIndex])
+
+  async function sendScrobble(songId: string) {
+    await subsonic.scrobble.send(songId)
+  }
 
   function playSong(song: ISong) {
     if (checkActiveSong(song.id) && !isPlaying) {

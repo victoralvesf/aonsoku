@@ -74,7 +74,6 @@ export const router = createBrowserRouter([
             })
 
             if (album?.genre) {
-              console.log('GENRE:', album.genre)
               const randomGenreAlbumsPromise = subsonic.albums.getAlbumList({
                 type: 'byGenre',
                 genre: album?.genre,
