@@ -40,7 +40,7 @@ export default function PlaySongButton({ cell }: PlaySongButtonProps) {
         <>
           <div className="group-hover/tablerow:hidden w-8 flex items-center">
             <div className="w-8 h-8 overflow-hidden rounded-full">
-              <Image src="/sound-motion.gif" className="ml-[3px] mt-[7px] dark:invert w-6 h-4" />
+              <Image src="/sound-motion.gif" className="ml-[3px] mt-[7px] dark:invert w-6 h-4 opacity-70" />
             </div>
           </div>
           <div className="hidden group-hover/tablerow:flex justify-center">
