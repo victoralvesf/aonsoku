@@ -1,27 +1,22 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Albums } from "@/types/responses/album";
+import { useAsyncValue } from "react-router-dom";
 import { usePlayer } from "@/app/contexts/player-context";
 import { subsonic } from "@/service/subsonic";
 import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from "@/app/components/ui/carousel";
-import HomeSongCard from "@/app/components/home/song-card";
+import ArtistCard from "@/app/components/artist/artist-card";
 import { CarouselButton } from "@/app/components/ui/carousel-button";
+import { IArtistInfo, ISimilarArtist } from "@/types/responses/artist";
 
-interface PreviewListProps {
-  list: Albums[]
+interface RelatedArtistsListProps {
   title: string
-  showMore?: boolean
-  moreTitle?: string
-  moreRoute: string
 }
 
-export default function PreviewList({
-  list,
+export default function RelatedArtistsList({
   title,
-  showMore = true,
-  moreTitle = 'See more',
-  moreRoute,
-}: PreviewListProps) {
+}: RelatedArtistsListProps) {
+  const data = useAsyncValue() as IArtistInfo
+  let list = data.similarArtist!
+
   const [api, setApi] = useState<CarouselApi>()
   const [canScrollPrev, setCanScrollPrev] = useState<boolean>()
   const [canScrollNext, setCanScrollNext] = useState<boolean>()
@@ -31,11 +26,22 @@ export default function PreviewList({
     list = list.slice(0, 16)
   }
 
-  async function handlePlayAlbum(album: Albums) {
-    const response = await subsonic.albums.getOne(album.id)
+  async function handlePlayArtistRadio(artist: ISimilarArtist) {
+    const response = await subsonic.artists.getOne(artist.id)
 
     if (response) {
-      player.setSongList(response.song, 0)
+      let count = 0
+
+      response.album.forEach((album) => {
+        count += album.songCount
+      })
+
+      const searchResult = await subsonic.search.get({
+        query: artist.name,
+        songCount: count
+      })
+
+      if (searchResult?.song) player.setSongList(searchResult?.song, 0)
     }
   }
 
@@ -59,26 +65,17 @@ export default function PreviewList({
         <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
           {title}
         </h3>
-        <div className="flex items-center gap-4">
-          {showMore && (
-            <Link to={moreRoute}>
-              <p className="leading-7 text-sm truncate hover:underline text-muted-foreground hover:text-primary">
-                {moreTitle}
-              </p>
-            </Link>
-          )}
-          <div className="flex gap-2">
-            <CarouselButton
-              direction="prev"
-              disabled={!canScrollPrev}
-              onClick={() => api?.scrollPrev()}
-            />
-            <CarouselButton
-              direction="next"
-              disabled={!canScrollNext}
-              onClick={() => api?.scrollNext()}
-            />
-          </div>
+        <div className="flex gap-2">
+          <CarouselButton
+            direction="prev"
+            disabled={!canScrollPrev}
+            onClick={() => api?.scrollPrev()}
+          />
+          <CarouselButton
+            direction="next"
+            disabled={!canScrollNext}
+            onClick={() => api?.scrollNext()}
+          />
         </div>
       </div>
 
@@ -86,16 +83,16 @@ export default function PreviewList({
         <Carousel
           opts={{
             align: 'start',
-            slidesToScroll: 'auto',
+            slidesToScroll: 'auto'
           }}
           setApi={setApi}
         >
           <CarouselContent>
-            {list.map((album) => (
-              <CarouselItem key={album.id} className="basis-1/8">
-                <HomeSongCard
-                  album={album}
-                  onButtonClick={(album) => handlePlayAlbum(album)}
+            {list.map((artist) => (
+              <CarouselItem key={artist.id} className="basis-1/8">
+                <ArtistCard
+                  artist={artist}
+                  onButtonClick={(artist) => handlePlayArtistRadio(artist)}
                 />
               </CarouselItem>
             ))}

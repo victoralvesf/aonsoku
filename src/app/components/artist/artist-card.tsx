@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom"
 import { Play } from "lucide-react"
-import { Albums } from "@/types/responses/album"
 import { Button } from "@/app/components/ui/button"
 import { getCoverArtUrl } from "@/api/httpClient"
+import { ISimilarArtist } from "@/types/responses/artist"
 
-interface HomeSongCardProps {
-  album: Albums,
-  onButtonClick: (album: Albums) => void
+interface ArtistCardProps {
+  artist: ISimilarArtist,
+  onButtonClick: (artist: ISimilarArtist) => void
 }
 
-export default function HomeSongCard({ album, onButtonClick }: HomeSongCardProps) {
+export default function ArtistCard({ artist, onButtonClick }: ArtistCardProps) {
   return (
     <div className="cursor-pointer">
-      <Link to={`/library/albums/${album.id}`}>
+      <Link to={`/library/artists/${artist.id}`}>
         <div
           className="group flex-1 aspect-square rounded bg-cover bg-center"
-          style={{ backgroundImage: `url(${getCoverArtUrl(album.coverArt, '250')})` }}
+          style={{ backgroundImage: `url(${getCoverArtUrl(artist.coverArt, '250')})` }}
         >
           <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
             <Button
@@ -24,7 +24,7 @@ export default function HomeSongCard({ album, onButtonClick }: HomeSongCardProps
               onClick={(e) => {
                 e.stopPropagation()
                 e.preventDefault()
-                onButtonClick(album)
+                onButtonClick(artist)
               }}
             >
               <Play className="fill-foreground" />
@@ -33,14 +33,9 @@ export default function HomeSongCard({ album, onButtonClick }: HomeSongCardProps
         </div>
       </Link>
       <div className="flex flex-col cursor-default">
-        <Link to={`/library/albums/${album.id}`}>
+        <Link to={`/library/artists/${artist.id}`}>
           <p className="leading-7 text-sm font-semibold truncate hover:underline">
-            {album.title}
-          </p>
-        </Link>
-        <Link to={`/library/artists/${album.artistId}`}>
-          <p className="truncate text-xs text-muted-foreground -mt-1 hover:underline">
-            {album.artist}
+            {artist.name}
           </p>
         </Link>
       </div>

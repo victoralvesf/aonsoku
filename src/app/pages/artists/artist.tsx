@@ -1,13 +1,14 @@
 import { Suspense } from "react";
 import { Await, useLoaderData } from "react-router-dom";
-import ArtistInfo, { ArtistInfoFallback } from "@/app/components/artist/artist-info";
 import PreviewList from "@/app/components/home/preview-list";
 import ImageHeader from "@/app/components/album/image-header";
 import ListWrapper from "@/app/components/list-wrapper";
 import PlayButtons from "@/app/components/album/play-buttons";
 import { IArtist, IArtistInfo } from "@/types/responses/artist";
 import { ISong } from "@/types/responses/song";
+import ArtistInfo, { ArtistInfoFallback } from "@/app/components/artist/artist-info";
 import ArtistTopSongs, { ArtistTopSongsFallback } from "@/app/components/artist/artist-top-songs";
+import RelatedArtistsList from "@/app/components/artist/related-artists";
 import { subsonic } from "@/service/subsonic";
 import { usePlayer } from "@/app/contexts/player-context";
 
@@ -102,8 +103,14 @@ export default function Artist() {
           title="Recent Albums"
           list={artist.album}
           moreTitle="Artist Discography"
-          moreRoute="/kk"
+          moreRoute={`/library/albums/artist/${artist.id}`}
         />
+
+        <Suspense>
+          <Await resolve={artistInfo} errorElement={<></>}>
+            <RelatedArtistsList title="Related Artists" />
+          </Await>
+        </Suspense>
       </ListWrapper>
     </div>
   )
