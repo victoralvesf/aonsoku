@@ -9,51 +9,18 @@ import { Button } from "@/app/components/ui/button"
 import { usePlayer } from "@/app/contexts/player-context"
 import { convertSecondsToTime } from "@/utils/convertSecondsToTime"
 import { subsonic } from "@/service/subsonic"
+import HandlePressedKeys from "@/app/components/handle-pressed-keys"
 
 let isSeeking = false
 
 export function Player() {
   const player = usePlayer()
   const audioRef = useRef<HTMLAudioElement>(null)
-  const togglePlayPauseRef = useRef(player.togglePlayPause)
-  const currentSongListRef = useRef(player.currentSongList)
   const [progress, setProgress] = useState(0)
   const [currentDuration, setCurrentDuration] = useState(0)
   const [volume, setVolume] = useState(100)
 
   const song = player.currentSongList[player.currentSongIndex]
-
-  useEffect(() => {
-    togglePlayPauseRef.current = player.togglePlayPause
-  }, [player.togglePlayPause])
-
-  useEffect(() => {
-    currentSongListRef.current = player.currentSongList
-  }, [player.currentSongList])
-
-  useEffect(() => {
-    function handleKeyPress(event: KeyboardEvent) {
-      if (event.code === 'Space') {
-        const { tagName, contentEditable } = document.activeElement as HTMLElement;
-
-        const isNotInput = !['INPUT', 'TEXTAREA'].includes(tagName)
-        const isNotContentEditable = contentEditable !== "true"
-
-        if (isNotInput && isNotContentEditable) {
-          event.preventDefault()
-          if (currentSongListRef.current.length > 0) {
-            togglePlayPauseRef.current()
-          }
-        }
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyPress)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress)
-    }
-  }, [])
 
   useEffect(() => {
     if (!audioRef.current) return
@@ -269,6 +236,8 @@ export function Player() {
           onEnded={handleSongEnded}
         />
       )}
+
+      <HandlePressedKeys />
     </div>
   )
 }
