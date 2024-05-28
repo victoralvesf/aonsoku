@@ -65,13 +65,13 @@ export const router = createBrowserRouter([
         loader: async ({ params }) => {
           if (params.albumId) {
             const album = await subsonic.albums.getOne(params.albumId)
+            const albumInfoPromise = subsonic.albums.getInfo(album?.id!)
             const searchAlbumsPromise = subsonic.search.get({
               query: album?.artist!,
               albumCount: 16,
               songCount: 0,
               artistCount: 0
             })
-
 
             if (album?.genre) {
               console.log('GENRE:', album.genre)
@@ -84,13 +84,15 @@ export const router = createBrowserRouter([
               return defer({
                 album,
                 artistAlbums: searchAlbumsPromise,
+                albumInfo: albumInfoPromise,
                 randomGenreAlbums: randomGenreAlbumsPromise
               })
             }
 
             return defer({
               album,
-              artistAlbums: searchAlbumsPromise
+              artistAlbums: searchAlbumsPromise,
+              albumInfo: albumInfoPromise,
             })
           }
         },

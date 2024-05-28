@@ -1,5 +1,5 @@
 import { httpClient } from "@/api/httpClient";
-import { AlbumListResponse, GetAlbumResponse } from "@/types/responses/album";
+import { AlbumInfoResponse, AlbumListResponse, GetAlbumResponse } from "@/types/responses/album";
 
 interface AlbumListParams {
   type: 'random' | 'newest' | 'highest' | 'frequent' | 'recent' | 'byGenre' | 'alphabeticalByName' | 'alphabeticalByArtist' | 'starred' | 'byYear' | 'byGenre'
@@ -46,7 +46,19 @@ async function getOne(id: string) {
   return response?.album
 }
 
+async function getInfo(id: string) {
+  const response = await httpClient<AlbumInfoResponse>('/getAlbumInfo', {
+    method: 'GET',
+    query: {
+      id
+    }
+  })
+
+  return response?.albumInfo
+}
+
 export const albums = {
   getAlbumList,
-  getOne
+  getOne,
+  getInfo
 }

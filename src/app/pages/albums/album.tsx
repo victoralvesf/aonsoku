@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Await, useLoaderData } from "react-router-dom"
-import { Albums, SingleAlbum } from "@/types/responses/album"
+import { Albums, IAlbumInfo, SingleAlbum } from "@/types/responses/album"
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { DataTable } from '@/app/components/ui/data-table'
 import { usePlayer } from '@/app/contexts/player-context'
@@ -12,16 +12,18 @@ import { ColumnFilter } from "@/types/columnFilter"
 import { Search } from "@/types/responses/search"
 import PreviewList from "@/app/components/home/preview-list"
 import PreviewListFallback from "@/app/components/preview-list-fallback"
+import AlbumInfo, { AlbumInfoFallback } from "@/app/components/album/album-info"
 
 interface ILoaderData {
   album: SingleAlbum
   artistAlbums: Promise<Search>
+  albumInfo: Promise<IAlbumInfo>
   randomGenreAlbums?: Promise<Albums[]>
 }
 
 export default function Album() {
   const player = usePlayer()
-  const { album, artistAlbums, randomGenreAlbums } = useLoaderData() as ILoaderData
+  const { album, artistAlbums, albumInfo, randomGenreAlbums } = useLoaderData() as ILoaderData
 
   const badges = [
     album.year || null,
@@ -75,6 +77,14 @@ export default function Album() {
           likeState={album.starred}
           contentId={album.id}
         />
+
+        <div className="mb-6">
+          <Suspense fallback={<AlbumInfoFallback />}>
+            <Await resolve={albumInfo} errorElement={<></>}>
+              <AlbumInfo albumName={album.name} />
+            </Await>
+          </Suspense>
+        </div>
 
         <DataTable
           columns={songsColumns}

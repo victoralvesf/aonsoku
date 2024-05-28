@@ -74,3 +74,13 @@ export interface DiscTitle {
 }
 
 export interface OriginalReleaseDate {}
+
+export interface IAlbumInfo {
+  notes?: string
+  lastFmUrl?: string
+  smallImageUrl?: string
+  mediumImageUrl?: string
+  largeImageUrl?: string
+}
+
+export interface AlbumInfoResponse extends SubsonicResponse<{ albumInfo: IAlbumInfo }> {}
