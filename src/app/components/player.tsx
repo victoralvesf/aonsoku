@@ -10,6 +10,8 @@ import { usePlayer } from "@/app/contexts/player-context"
 import { convertSecondsToTime } from "@/utils/convertSecondsToTime"
 import { subsonic } from "@/service/subsonic"
 import HandlePressedKeys from "@/app/components/handle-pressed-keys"
+import { Link } from "react-router-dom"
+import { cn } from "@/lib/utils"
 
 let isSeeking = false
 
@@ -93,7 +95,13 @@ export function Player() {
               <Image src={getCoverArtUrl(song.coverArt, "140")} width={70} className="rounded shadow-md" />
               <div className="flex flex-col justify-center">
                 <span className="text-sm font-medium">{song.title}</span>
-                <span className="text-xs font-light text-muted-foreground">{song.artist}</span>
+                <Link to={`/library/artists/${song.artistId}`} className={cn(!song.artistId && "pointer-events-none")}>
+                  <span
+                    className={cn("text-xs font-light text-muted-foreground", song.artistId && "hover:underline")}
+                  >
+                    {song.artist}
+                  </span>
+                </Link>
               </div>
             </>
           ) : (

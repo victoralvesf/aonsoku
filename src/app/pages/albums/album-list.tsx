@@ -12,11 +12,14 @@ import {
 } from "@/app/components/ui/dropdown-menu"
 import { ListFilter } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
+import debounce from 'lodash/debounce';
+import { usePlayer } from '@/app/contexts/player-context';
 
 export default function AlbumList() {
   const defaultOffset = 32
   const toYear = new Date().getFullYear().toString()
   const scrollDivRef = useRef<HTMLDivElement | null>(null);
+  const { setSongList } = usePlayer()
 
   const recentSongs = useLoaderData() as Albums[];
   const [items, setItems] = useState<Albums[]>([])
@@ -27,7 +30,7 @@ export default function AlbumList() {
   useEffect(() => {
     setItems(recentSongs)
     scrollDivRef.current = document.querySelector('#main-scroll-area #scroll-viewport') as HTMLDivElement
-  }, [])
+  }, [recentSongs])
 
   const fetchMoreData = useCallback(async () => {
     const response = await subsonic.albums.getAlbumList({
@@ -38,12 +41,15 @@ export default function AlbumList() {
     })
 
     if (response) {
-      setItems((prevItems) => [...prevItems, ...response])
-      response.length < defaultOffset ? setHasMore(false) : setHasMore(true)
+      setItems((prevItems) => {
+        const newItems = response.filter(album => !prevItems.some(item => item.id === album.id));
+        return [...prevItems, ...newItems];
+      })
+      setHasMore(response.length >= defaultOffset)
     }
 
     setOffset((prevOffset) => prevOffset + defaultOffset)
-  }, [offset, currentFilter])
+  }, [offset, currentFilter, defaultOffset, toYear])
 
   const resetList = useCallback(async () => {
     setOffset(defaultOffset);
@@ -57,32 +63,39 @@ export default function AlbumList() {
     });
 
     if (response) {
-      setItems([])
       setItems(response);
       scrollDivRef.current?.scrollTo(0, 0)
     }
-  }, [currentFilter]);
+  }, [currentFilter, defaultOffset, toYear]);
 
   useEffect(() => {
     resetList()
   }, [currentFilter, resetList])
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = debounce(() => {
       if (!scrollDivRef.current) return;
 
       const { scrollTop, clientHeight, scrollHeight } = scrollDivRef.current
       if (scrollTop + clientHeight >= scrollHeight - 40) {
         if (hasMore) fetchMoreData()
       }
-    };
+    }, 200);
 
     const scrollElement = scrollDivRef.current;
     scrollElement?.addEventListener("scroll", handleScroll);
     return () => {
       scrollElement?.removeEventListener("scroll", handleScroll);
     };
-  }, [fetchMoreData]);
+  }, [fetchMoreData, hasMore]);
+
+  async function handlePlayAlbum(albumId: string) {
+    const album = await subsonic.albums.getOne(albumId)
+
+    if (album) {
+      setSongList(album.song, 0)
+    }
+  }
 
   return (
     <main className="w-full h-full">
@@ -101,15 +114,15 @@ export default function AlbumList() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                {Object.keys(filterList).map((filter, index) => {
+                {Object.entries(filterList).map(([key, label], index) => {
                   return (
                     <DropdownMenuCheckboxItem
                       key={index}
-                      checked={filter === currentFilter}
-                      onCheckedChange={() => setCurrentFilter(filter as keyof typeof filterList)}
+                      checked={key === currentFilter}
+                      onCheckedChange={() => setCurrentFilter(key as AlbumListType)}
                       className="cursor-pointer"
                     >
-                      {filterList[filter as keyof typeof filterList]}
+                      {label}
                     </DropdownMenuCheckboxItem>
                   )
                 })}
@@ -123,10 +136,10 @@ export default function AlbumList() {
         <div className="grid grid-cols-8 gap-4 h-full">
           {items && items.map((album) => (
             <HomeSongCard
-              key={album.id}
+              key={`album-${album.id}`}
               album={album}
               coverArtSize={300}
-              onButtonClick={() => console.log('yip')}
+              onButtonClick={(album) => handlePlayAlbum(album.id)}
             />
           ))}
         </div>
@@ -139,7 +152,7 @@ const filterList = {
   alphabeticalByArtist: 'Artist',
   byGenre: 'Genre',
   highest: 'Highest',
-  starred: 'Liked',
+  starred: 'Favourites',
   frequent: 'Most Played',
   alphabeticalByName: 'Name',
   random: 'Random',
@@ -147,4 +160,3 @@ const filterList = {
   recent: 'Recently Played',
   byYear: 'Release Year'
 }
-
