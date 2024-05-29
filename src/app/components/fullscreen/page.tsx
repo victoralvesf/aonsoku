@@ -20,7 +20,6 @@ import { Card } from "@/app/components/ui/card"
 import { usePlayer } from "@/app/contexts/player-context"
 import { useTheme } from "@/app/contexts/theme-context"
 import { getCoverArtUrl } from "@/api/httpClient"
-import Image from "@/app/components/image"
 import { ScrollArea } from "@/app/components/ui/scroll-area"
 import { convertSecondsToTime } from "@/utils/convertSecondsToTime"
 import { cn } from "@/lib/utils"
@@ -77,7 +76,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
           }}
         >
           <div className="w-full flex-1 h-full inset-0 bg-background/30 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/30">
-            <div className="px-8 pt-12 pb-36 w-full h-full">
+            <div className="p-8 w-full h-full grid grid-rows-[40px_minmax(300px,_1fr)_200px] gap-4">
               <div className="flex justify-between items-center">
                 <DrawerClose asChild>
                   <Button
@@ -100,32 +99,32 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
                   )}
                 </Button>
               </div>
-              <div className="mx-auto w-full h-full flex justify-center items-center">
-                <div className="flex gap-12">
-                  <div className="flex flex-col gap-4 max-w-[500px]">
-                    <Image
-                      src={songCoverArtUrl}
-                      width={500}
-                      height={500}
-                      alt={song.title}
-                      className="aspect-square rounded-2xl shadow-lg shadows-4 shadow-opacity-5 shadow-y-[3px] shadows-scale-3"
-                    />
 
-                    <h2 className="scroll-m-20 text-3xl font-bold tracking-tight text-center">
-                      {song.title}
-                    </h2>
-                    <p className="leading-7 -mt-2 text-lg text-foreground/70 text-center">
-                      {song.artist}
-                    </p>
+              <div className="flex flex-col">
+                <div className="grid grid-cols-12 min-h-[300px]">
+                  <div className="col-start-2 col-span-4 max-w-full">
+                    <div className="flex flex-col items-center">
+                      <div
+                        className="w-[60%] 2xl:w-[80%] bg-contain bg-center aspect-square rounded-2xl shadow-lg shadows-4 shadow-opacity-5 shadow-y-[3px] shadows-scale-3"
+                        style={{ backgroundImage: `url(${songCoverArtUrl})` }}
+                      />
+
+                      <h2 className="scroll-m-20 text-xl 2xl:text-4xl mt-4 font-bold tracking-tight text-center">
+                        {song.title}
+                      </h2>
+                      <p className="leading-7 mt-2 text-base 2xl:text-lg text-foreground/70 text-center">
+                        {song.artist}
+                      </p>
+                    </div>
                   </div>
 
-                  <Card className="w-[800px] h-[600px] rounded-2xl p-6 shadow-lg shadows-4 shadow-opacity-5 shadow-y-[3px] shadows-scale-3">
+                  <Card className="overflow-hidden col-start-7 col-span-5 rounded-2xl p-6 shadow-lg shadows-4 shadow-opacity-5 shadow-y-[3px] shadows-scale-3">
                     <Tabs defaultValue="queue" className="w-full h-full">
                       <TabsList className="w-full">
                         <TabsTrigger value="queue" className="w-full">Queue</TabsTrigger>
                         <TabsTrigger value="lyrics" className="w-full">Lyrics</TabsTrigger>
                       </TabsList>
-                      <ScrollArea className="mt-4 h-[90%]">
+                      <ScrollArea className="mt-4 h-[calc(100%-60px)]">
                         <TabsContent value="queue" className="mt-0 pr-3">
                           <Table className="h-full mb-1">
                             <TableBody className="rounded-md">
@@ -147,7 +146,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
                         </TabsContent>
                         <TabsContent value="lyrics" className="mt-0 pr-3">
                           {currentLyrics && (
-                            <div className="text-center font-bold text-xl">
+                            <div className="text-center font-medium text-base 2xl:text-xl">
                               <TextWithBreaks text={currentLyrics} />
                             </div>
                           )}
@@ -156,6 +155,10 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
                     </Tabs>
                   </Card>
                 </div>
+              </div>
+
+              <div className="flex justify-center items-center">
+                <p>PLAYER</p>
               </div>
             </div>
           </div>

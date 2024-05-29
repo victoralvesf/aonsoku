@@ -1,15 +1,16 @@
 import React from "react"
-import { LazyLoadImage, trackWindowScroll, ScrollPosition } from 'react-lazy-load-image-component'
+import { LazyLoadImage, trackWindowScroll, ScrollPosition, Effect } from 'react-lazy-load-image-component'
 
 interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   scrollPosition: ScrollPosition
+  effect?: Effect
 }
 
-const Image = (({ scrollPosition, ...props }: ImageProps) => {
+const Image = (({ scrollPosition, effect = "black-and-white", ...props }: ImageProps) => {
   return (
     <div className="flex items-center">
       <LazyLoadImage
-        effect="black-and-white"
+        effect={effect}
         {...props}
         scrollPosition={scrollPosition}
       />

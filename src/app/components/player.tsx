@@ -1,5 +1,17 @@
 import { useEffect, useRef, useState } from "react"
-import { AudioLines, Heart, ListVideo, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume2 } from "lucide-react"
+import {
+  AudioLines,
+  Heart,
+  ListVideo,
+  Maximize2,
+  Pause,
+  Play,
+  Repeat,
+  Shuffle,
+  SkipBack,
+  SkipForward,
+  Volume2
+} from "lucide-react"
 import { Link } from "react-router-dom"
 import clsx from "clsx"
 
@@ -12,7 +24,8 @@ import { convertSecondsToTime } from "@/utils/convertSecondsToTime"
 import { subsonic } from "@/service/subsonic"
 import HandlePressedKeys from "@/app/components/handle-pressed-keys"
 import { cn } from "@/lib/utils"
-import FullscreenMode from "@/app/components/fullscreen-mode"
+import FullscreenMode from "@/app/components/fullscreen/page"
+import { SimpleTooltip } from "./ui/simple-tooltip"
 
 let isSeeking = false
 
@@ -93,7 +106,18 @@ export function Player() {
         <div className="flex items-center gap-2">
           {song ? (
             <>
-              <Image src={getCoverArtUrl(song.coverArt, "140")} width={70} className="rounded shadow-md" />
+              <div className="group relative">
+                <Image src={getCoverArtUrl(song.coverArt, "140")} width={70} className="rounded shadow-md" />
+                <FullscreenMode>
+                  <Button variant="secondary" size="icon" className="cursor-pointer w-8 h-8 shadow-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity ease-in-out absolute top-1 right-1">
+                    <SimpleTooltip text="Switch to Fullscreen">
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Maximize2 className="w-4 h-4" />
+                      </div>
+                    </SimpleTooltip>
+                  </Button>
+                </FullscreenMode>
+              </div>
               <div className="flex flex-col justify-center">
                 <span className="text-sm font-medium">{song.title}</span>
                 <Link to={`/library/artists/${song.artistId}`} className={cn(!song.artistId && "pointer-events-none")}>
@@ -207,15 +231,13 @@ export function Player() {
               <Heart className={clsx("w-5 h-5", player.isSongStarred && "text-red-500 fill-red-500")} />
             </Button>
 
-            <FullscreenMode>
-              <Button
-                variant="ghost"
-                className="rounded-full w-10 h-10 p-2"
-                disabled={!song}
-              >
-                <ListVideo className="w-4 h-4" />
-              </Button>
-            </FullscreenMode>
+            <Button
+              variant="ghost"
+              className="rounded-full w-10 h-10 p-2"
+              disabled={!song}
+            >
+              <ListVideo className="w-4 h-4" />
+            </Button>
 
             <div className="flex gap-2 ml-2">
               <Volume2
