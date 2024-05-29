@@ -5,17 +5,22 @@ import { Button } from "@/app/components/ui/button"
 import { getCoverArtUrl } from "@/api/httpClient"
 
 interface HomeSongCardProps {
-  album: Albums,
+  album: Albums
+  coverArtSize?: number
   onButtonClick: (album: Albums) => void
 }
 
-export default function HomeSongCard({ album, onButtonClick }: HomeSongCardProps) {
+export default function HomeSongCard({
+  album,
+  coverArtSize = 250,
+  onButtonClick
+}: HomeSongCardProps) {
   return (
     <div className="cursor-pointer">
       <Link to={`/library/albums/${album.id}`}>
         <div
-          className="group flex-1 aspect-square rounded bg-cover bg-center"
-          style={{ backgroundImage: `url(${getCoverArtUrl(album.coverArt, '250')})` }}
+          className="group flex-1 aspect-square rounded bg-cover bg-center bg-border"
+          style={{ backgroundImage: `url(${getCoverArtUrl(album.coverArt, coverArtSize.toString())})` }}
         >
           <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
             <Button

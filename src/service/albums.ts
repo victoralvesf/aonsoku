@@ -1,8 +1,8 @@
 import { httpClient } from "@/api/httpClient";
-import { AlbumInfoResponse, AlbumListResponse, GetAlbumResponse } from "@/types/responses/album";
+import { AlbumInfoResponse, AlbumListResponse, AlbumListType, GetAlbumResponse } from "@/types/responses/album";
 
 interface AlbumListParams {
-  type: 'random' | 'newest' | 'highest' | 'frequent' | 'recent' | 'byGenre' | 'alphabeticalByName' | 'alphabeticalByArtist' | 'starred' | 'byYear' | 'byGenre'
+  type: AlbumListType
   size?: number
   offset?: number
   fromYear?: string

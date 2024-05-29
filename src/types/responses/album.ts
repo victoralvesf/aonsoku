@@ -84,3 +84,5 @@ export interface IAlbumInfo {
 }
 
 export interface AlbumInfoResponse extends SubsonicResponse<{ albumInfo: IAlbumInfo }> {}
+
+export type AlbumListType = 'random' | 'newest' | 'highest' | 'frequent' | 'recent' | 'byGenre' | 'alphabeticalByName' | 'alphabeticalByArtist' | 'starred' | 'byYear'

@@ -4,7 +4,7 @@ import { subsonic } from '@/service/subsonic'
 
 import BaseLayout from '@/app/layout/base'
 import ErrorPage from '@/app/pages/error-page'
-import RecentlyAddedAlbums from '@/app/pages/albums/recently-added'
+import AlbumList from '@/app/pages/albums/album-list'
 import Playlist from '@/app/pages/playlists/playlist'
 import Home from '@/app/pages/home'
 import Album from '@/app/pages/albums/album'
@@ -46,8 +46,8 @@ export const router = createBrowserRouter([
       {
         id: 'albums',
         path: 'library/albums',
-        loader: async () => await subsonic.albums.getAlbumList(),
-        element: <RecentlyAddedAlbums />
+        loader: async () => await subsonic.albums.getAlbumList({ type: 'newest', size: 32 }),
+        element: <AlbumList />
       },
       {
         id: 'playlist',

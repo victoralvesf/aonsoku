@@ -35,6 +35,8 @@
     "react-lazy-load-image-component": "^1.6.0",
     "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
+    "tailwind-extended-shadows": "^0.4.0",
+    "tailwind-extended-shadows-merge": "^0.2.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#v1"

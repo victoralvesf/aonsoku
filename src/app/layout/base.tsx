@@ -16,7 +16,8 @@ export default function BaseLayout() {
   const location = useLocation() as Location
   const matches = useMatches() as UIMatch[]
 
-  const isShowingAlbum = matches[1].id === 'album' || matches[1].id === 'artist'
+  const locationsWithoutPadding = ['album', 'albums', 'artist']
+  const addPadding = !locationsWithoutPadding.includes(matches[1].id)
 
   useEffect(() => {
     document.querySelector('#main-scroll-area #scroll-viewport')?.scrollTo({ top: 0 })
@@ -38,7 +39,7 @@ export default function BaseLayout() {
         <div className="bg-background h-full">
           <div className="flex h-full">
             <Sidebar className="hidden lg:block w-[280px] min-w-[280px] max-w-[280px] border-r h-full" />
-            <ScrollArea id="main-scroll-area" className={clsx("w-full", !isShowingAlbum && "px-4 py-6 lg:px-8")}>
+            <ScrollArea id="main-scroll-area" className={clsx("w-full", addPadding && "px-4 py-6 lg:px-8")}>
               {/* Routes */}
               <Outlet />
             </ScrollArea>

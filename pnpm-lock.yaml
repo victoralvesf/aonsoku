@@ -80,6 +80,12 @@ dependencies:
   react-toastify:
     specifier: ^10.0.5
     version: 10.0.5(react-dom@18.3.1)(react@18.3.1)
+  tailwind-extended-shadows:
+    specifier: ^0.4.0
+    version: 0.4.0(tailwindcss@3.4.3)
+  tailwind-extended-shadows-merge:
+    specifier: ^0.2.1
+    version: 0.2.1(tailwind-extended-shadows@0.4.0)(tailwind-merge@2.3.0)(tailwindcss@3.4.3)
   tailwind-merge:
     specifier: ^2.3.0
     version: 2.3.0
@@ -2691,6 +2697,26 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  /tailwind-extended-shadows-merge@0.2.1(tailwind-extended-shadows@0.4.0)(tailwind-merge@2.3.0)(tailwindcss@3.4.3):
+    resolution: {integrity: sha512-g4hAQtUljN8DW5H4Ns4pwJZUubH+aMCVlw5nRkLoHGPuTyqJIKjGm16ADofOF4z+06QrFF5WAUZXlTc38AcsZA==}
+    peerDependencies:
+      tailwind-extended-shadows: '>=0.4.0'
+      tailwind-merge: '>=2.2.0'
+      tailwindcss: '>=3.0.0'
+    dependencies:
+      tailwind-extended-shadows: 0.4.0(tailwindcss@3.4.3)
+      tailwind-merge: 2.3.0
+      tailwindcss: 3.4.3
+    dev: false
+
+  /tailwind-extended-shadows@0.4.0(tailwindcss@3.4.3):
+    resolution: {integrity: sha512-v8YSvNLVMVHRTCoq9SgE4bNWedBcrsxKy7z8DEj2Z+HoFkjMX2POBLuND6JS3pnJoWcRhvxYVGa9C/3tOfa8EQ==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0'
+    dependencies:
+      tailwindcss: 3.4.3
+    dev: false
 
   /tailwind-merge@2.3.0:
     resolution: {integrity: sha512-vkYrLpIP+lgR0tQCG6AP7zZXCTLc1Lnv/CCRT3BqJ9CZ3ui2++GPaGb1x/ILsINIMSYqqvrpqjUFsMNLlW99EA==}
