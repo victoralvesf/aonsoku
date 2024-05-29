@@ -8,6 +8,9 @@ dependencies:
   '@radix-ui/react-alert-dialog':
     specifier: ^1.0.5
     version: 1.0.5(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
+  '@radix-ui/react-dialog':
+    specifier: ^1.0.5
+    version: 1.0.5(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
   '@radix-ui/react-dropdown-menu':
     specifier: ^2.0.6
     version: 2.0.6(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
@@ -32,6 +35,9 @@ dependencies:
   '@radix-ui/react-slot':
     specifier: ^1.0.2
     version: 1.0.2(@types/react@18.3.2)(react@18.3.1)
+  '@radix-ui/react-tabs':
+    specifier: ^1.0.4
+    version: 1.0.4(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
   '@radix-ui/react-tooltip':
     specifier: ^1.0.7
     version: 1.0.7(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
@@ -98,6 +104,9 @@ dependencies:
   tauri-plugin-store-api:
     specifier: github:tauri-apps/tauri-plugin-store#v1
     version: github.com/tauri-apps/tauri-plugin-store/b1ce9b38662a2990dddb30de1af88509a45e4625
+  vaul:
+    specifier: ^0.9.1
+    version: 0.9.1(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
 
 devDependencies:
   '@tauri-apps/cli':
@@ -1283,6 +1292,34 @@ packages:
       '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.3.2)(react@18.3.1)
       '@types/react': 18.3.2
       react: 18.3.1
+    dev: false
+
+  /@radix-ui/react-tabs@1.0.4(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-egZfYY/+wRNCflXNHx+dePvnz9FbmssDTJBtgRfDY7e8SE5oIo3Py2eCB1ckAbh1Q7cQ/6yJZThJ++sgbxibog==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.24.5
+      '@radix-ui/primitive': 1.0.1
+      '@radix-ui/react-context': 1.0.1(@types/react@18.3.2)(react@18.3.1)
+      '@radix-ui/react-direction': 1.0.1(@types/react@18.3.2)(react@18.3.1)
+      '@radix-ui/react-id': 1.0.1(@types/react@18.3.2)(react@18.3.1)
+      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
+      '@radix-ui/react-roving-focus': 1.0.4(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
+      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.3.2)(react@18.3.1)
+      '@types/react': 18.3.2
+      '@types/react-dom': 18.3.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /@radix-ui/react-tooltip@1.0.7(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1):
@@ -2859,6 +2896,20 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  /vaul@0.9.1(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-fAhd7i4RNMinx+WEm6pF3nOl78DFkAazcN04ElLPFF9BMCNGbY/kou8UMhIcicm0rJCNePJP0Yyza60gGOD0Jw==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      '@radix-ui/react-dialog': 1.0.5(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@18.3.1)(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+    dev: false
 
   /vite@5.2.11(@types/node@20.12.12):
     resolution: {integrity: sha512-HndV31LWW05i1BLPMUCE1B9E9GFbOu1MbenhS58FuK6owSO5qHm7GiCotrNY1YE5rMeQSFBGmT5ZaLEjFizgiQ==}

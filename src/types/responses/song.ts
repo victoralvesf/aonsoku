@@ -52,3 +52,11 @@ export interface IReplayGain {
 export interface IGenre {
   name: string
 }
+
+export interface ILyric {
+  artist?: string
+  title?: string
+  value?: string
+}
+
+export interface LyricsResponse extends SubsonicResponse <{ lyrics: ILyric }> {}

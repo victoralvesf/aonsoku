@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { AudioLines, Heart, ListVideo, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume2 } from "lucide-react"
+import { Link } from "react-router-dom"
 import clsx from "clsx"
 
 import { getCoverArtUrl, getSongStreamUrl } from "@/api/httpClient"
@@ -10,8 +11,8 @@ import { usePlayer } from "@/app/contexts/player-context"
 import { convertSecondsToTime } from "@/utils/convertSecondsToTime"
 import { subsonic } from "@/service/subsonic"
 import HandlePressedKeys from "@/app/components/handle-pressed-keys"
-import { Link } from "react-router-dom"
 import { cn } from "@/lib/utils"
+import FullscreenMode from "@/app/components/fullscreen-mode"
 
 let isSeeking = false
 
@@ -206,13 +207,15 @@ export function Player() {
               <Heart className={clsx("w-5 h-5", player.isSongStarred && "text-red-500 fill-red-500")} />
             </Button>
 
-            <Button
-              variant="ghost"
-              className="rounded-full w-10 h-10 p-2"
-              disabled={!song || player.isPlayingOneSong}
-            >
-              <ListVideo className="w-4 h-4" />
-            </Button>
+            <FullscreenMode>
+              <Button
+                variant="ghost"
+                className="rounded-full w-10 h-10 p-2"
+                disabled={!song}
+              >
+                <ListVideo className="w-4 h-4" />
+              </Button>
+            </FullscreenMode>
 
             <div className="flex gap-2 ml-2">
               <Volume2
