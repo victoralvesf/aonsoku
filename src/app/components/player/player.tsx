@@ -1,9 +1,7 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useCallback, memo } from "react"
 import {
-  AudioLines,
   Heart,
   ListVideo,
-  Maximize2,
   Pause,
   Play,
   Repeat,
@@ -12,22 +10,20 @@ import {
   SkipForward,
   Volume2
 } from "lucide-react"
-import { Link } from "react-router-dom"
 import clsx from "clsx"
 
-import { getCoverArtUrl, getSongStreamUrl } from "@/api/httpClient"
-import Image from "@/app/components/image"
+import { getSongStreamUrl } from "@/api/httpClient"
 import { Slider } from "@/app/components/ui/slider"
 import { Button } from "@/app/components/ui/button"
 import { usePlayer } from "@/app/contexts/player-context"
 import { convertSecondsToTime } from "@/utils/convertSecondsToTime"
 import { subsonic } from "@/service/subsonic"
 import HandlePressedKeys from "@/app/components/handle-pressed-keys"
-import { cn } from "@/lib/utils"
-import FullscreenMode from "@/app/components/fullscreen/page"
-import { SimpleTooltip } from "./ui/simple-tooltip"
+import { TrackInfo } from "@/app/components/player/track-info"
 
 let isSeeking = false
+
+const MemoizedTrackInfo = memo(TrackInfo)
 
 export function Player() {
   const player = usePlayer()
@@ -48,95 +44,69 @@ export function Player() {
     audioRef.current.volume = volume / 100
   }, [volume])
 
-  function setupProgressListener() {
-    audioRef.current!.currentTime = 0
+  const setupProgressListener = useCallback(() => {
+    const audio = audioRef.current
+    if (!audio) return
 
-    const audioDuration = parseInt(audioRef.current!.duration.toFixed())
+    audio.currentTime = 0
+    const audioDuration = Math.floor(audio.duration)
 
     if (player.currentDuration !== audioDuration) {
       player.setCurrentDuration(audioDuration)
     }
 
-    audioRef.current!.addEventListener('timeupdate', () => {
+    const handleTimeUpdate = () => {
       if (!isSeeking) {
-        player.setProgress(Math.floor(audioRef.current!.currentTime))
+        player.setProgress(Math.floor(audio.currentTime))
       }
-    })
-  }
+    }
 
-  function handleSongEnded() {
+    audio.addEventListener('timeupdate', handleTimeUpdate)
+    return () => {
+      audio.removeEventListener('timeupdate', handleTimeUpdate)
+    }
+  }, [player])
+
+  const handleSongEnded = useCallback(() => {
     if (player.hasNextSong) {
       player.playNextSong()
     } else {
       player.clearPlayerState()
     }
-  }
+  }, [player])
 
-  function handleStartedSeeking() {
+  const handleStartedSeeking = useCallback(() => {
     isSeeking = true
-  }
+  }, [])
 
-  function handleSeeking(amount: number) {
+  const handleSeeking = useCallback((amount: number) => {
     isSeeking = true
     player.setProgress(amount)
-  }
+  }, [player])
 
-  function handleSeeked(amount: number) {
+  const handleSeeked = useCallback((amount: number) => {
     isSeeking = false
+    if (audioRef.current) {
+      audioRef.current.currentTime = amount
+      player.setProgress(amount)
+    }
+  }, [player])
 
-    audioRef.current!.currentTime = amount
-    player.setProgress(amount)
-  }
-
-  function handleChangeVolume(volume: number) {
+  const handleChangeVolume = useCallback((volume: number) => {
     setVolume(volume)
-  }
+  }, [])
 
-  async function handleLikeButton() {
+  const handleLikeButton = useCallback(async () => {
     await subsonic.star.handleStarItem(song.id, player.isSongStarred)
     player.setIsSongStarred(!player.isSongStarred)
-  }
+  }, [song, player])
 
   return (
     <div className="border-t h-[100px] w-full flex items-center">
       <div className="w-full h-full grid grid-cols-player gap-2 px-4">
         {/* Track Info */}
         <div className="flex items-center gap-2">
-          {song ? (
-            <>
-              <div className="group relative">
-                <Image src={getCoverArtUrl(song.coverArt, "140")} width={70} className="rounded shadow-md" />
-                <FullscreenMode>
-                  <Button variant="secondary" size="icon" className="cursor-pointer w-8 h-8 shadow-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity ease-in-out absolute top-1 right-1">
-                    <SimpleTooltip text="Switch to Fullscreen">
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Maximize2 className="w-4 h-4" />
-                      </div>
-                    </SimpleTooltip>
-                  </Button>
-                </FullscreenMode>
-              </div>
-              <div className="flex flex-col justify-center">
-                <span className="text-sm font-medium">{song.title}</span>
-                <Link to={`/library/artists/${song.artistId}`} className={cn(!song.artistId && "pointer-events-none")}>
-                  <span
-                    className={cn("text-xs font-light text-muted-foreground", song.artistId && "hover:underline")}
-                  >
-                    {song.artist}
-                  </span>
-                </Link>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="w-[60px] h-[60px] flex justify-center items-center bg-muted rounded">
-                <AudioLines />
-              </div>
-              <div className="flex flex-col justify-center">
-                <span className="text-sm font-medium">No song playing</span>
-              </div>
-            </>
-          )}
+          <MemoizedTrackInfo song={song} />
         </div>
         {/* Main Controls */}
         <div className="col-span-2 flex flex-col justify-center items-center px-4 gap-1">

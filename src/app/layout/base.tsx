@@ -7,7 +7,7 @@ import { Menu } from "@/app/layout/menu";
 import { Sidebar } from "@/app/layout/sidebar";
 import { ScrollArea } from '@/app/components/ui/scroll-area';
 import { useApp } from '@/app/contexts/app-context';
-import { Player } from '@/app/components/player';
+import { Player } from '@/app/components/player/player';
 
 export default function BaseLayout() {
   const { osType } = useApp()
