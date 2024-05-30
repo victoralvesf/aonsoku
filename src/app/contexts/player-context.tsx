@@ -16,6 +16,8 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
   const [isLoopActive, setIsLoopActive] = useState(false)
   const [isShuffleActive, setIsShuffleActive] = useState(false)
   const [isSongStarred, setIsSongStarred] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [currentDuration, setCurrentDuration] = useState(0)
 
   useEffect(() => {
     if (currentSongList.length > 0) {
@@ -97,6 +99,8 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     setIsPlaying(false)
     setIsLoopActive(false)
     setIsShuffleActive(false)
+    setProgress(0)
+    setCurrentDuration(0)
   }
 
   const hasNextSong = isShuffleActive || currentSongIndex + 1 < currentSongList.length
@@ -146,6 +150,10 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     clearPlayerState,
     hasNextSong,
     hasPrevSong,
+    progress,
+    setProgress,
+    currentDuration,
+    setCurrentDuration
   }
 
   return (

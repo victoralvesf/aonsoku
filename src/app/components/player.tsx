@@ -32,8 +32,6 @@ let isSeeking = false
 export function Player() {
   const player = usePlayer()
   const audioRef = useRef<HTMLAudioElement>(null)
-  const [progress, setProgress] = useState(0)
-  const [currentDuration, setCurrentDuration] = useState(0)
   const [volume, setVolume] = useState(100)
 
   const song = player.currentSongList[player.currentSongIndex]
@@ -55,13 +53,13 @@ export function Player() {
 
     const audioDuration = parseInt(audioRef.current!.duration.toFixed())
 
-    if (currentDuration !== audioDuration) {
-      setCurrentDuration(audioDuration)
+    if (player.currentDuration !== audioDuration) {
+      player.setCurrentDuration(audioDuration)
     }
 
     audioRef.current!.addEventListener('timeupdate', () => {
       if (!isSeeking) {
-        setProgress(Math.floor(audioRef.current!.currentTime))
+        player.setProgress(Math.floor(audioRef.current!.currentTime))
       }
     })
   }
@@ -80,14 +78,14 @@ export function Player() {
 
   function handleSeeking(amount: number) {
     isSeeking = true
-    setProgress(amount)
+    player.setProgress(amount)
   }
 
   function handleSeeked(amount: number) {
     isSeeking = false
 
     audioRef.current!.currentTime = amount
-    setProgress(amount)
+    player.setProgress(amount)
   }
 
   function handleChangeVolume(volume: number) {
@@ -192,13 +190,13 @@ export function Player() {
 
           <div className="flex w-full gap-2 justify-center items-center">
             <small className="text-xs text-muted-foreground">
-              {convertSecondsToTime(progress)}
+              {convertSecondsToTime(player.progress)}
             </small>
             {song ? (
               <Slider
                 defaultValue={[0]}
-                value={[progress]}
-                max={currentDuration}
+                value={[player.progress]}
+                max={player.currentDuration}
                 step={1}
                 className="cursor-pointer w-[32rem]"
                 thumbmousedown={() => handleStartedSeeking()}
@@ -215,7 +213,7 @@ export function Player() {
               />
             )}
             <small className="text-xs text-muted-foreground">
-              {convertSecondsToTime(currentDuration ?? 0)}
+              {convertSecondsToTime(player.currentDuration ?? 0)}
             </small>
           </div>
         </div>

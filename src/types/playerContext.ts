@@ -23,4 +23,8 @@ export interface IPlayerContext {
   clearPlayerState: () => void
   hasNextSong: boolean
   hasPrevSong: boolean
+  progress: number
+  setProgress: (progress: number) => void
+  currentDuration: number
+  setCurrentDuration: (duration: number) => void
 }
