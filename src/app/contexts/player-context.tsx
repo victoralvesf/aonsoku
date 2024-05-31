@@ -1,8 +1,9 @@
-import { createContext, useState, useContext, ReactNode, useEffect } from 'react'
+import { createContext, useState, useContext, ReactNode, useEffect, useRef } from 'react'
 import { IPlayerContext } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { shuffleSongList } from '@/utils/shuffleArray'
 import { subsonic } from '@/service/subsonic'
+import { manageMediaSession } from '@/utils/setMediaSession'
 
 const PlayerContext = createContext({} as IPlayerContext)
 
@@ -18,15 +19,32 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
   const [isSongStarred, setIsSongStarred] = useState(false)
   const [progress, setProgress] = useState(0)
   const [currentDuration, setCurrentDuration] = useState(0)
+  const isScrobbleSentRef = useRef(false)
 
   useEffect(() => {
     if (currentSongList.length > 0) {
-      const { starred, id } = currentSongList[currentSongIndex]
-      const starredStatus = starred ? true : false
+      isScrobbleSentRef.current = false
+
+      const currentSong = getCurrentSong()
+      const starredStatus = currentSong.starred ? true : false
       setIsSongStarred(starredStatus)
-      sendScrobble(id)
+
+      manageMediaSession.setMediaSession(currentSong)
     }
   }, [currentSongList, currentSongIndex])
+
+  useEffect(() => {
+    manageMediaSession.setPlaybackState(isPlaying)
+  }, [isPlaying])
+
+  useEffect(() => {
+    const progressPercentage = (progress / currentDuration) * 100
+
+    if (progressPercentage >= 50 && !isScrobbleSentRef.current) {
+      sendScrobble(getCurrentSong().id)
+      isScrobbleSentRef.current = true
+    }
+  }, [progress, currentDuration])
 
   async function sendScrobble(songId: string) {
     await subsonic.scrobble.send(songId)
@@ -101,6 +119,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     setIsShuffleActive(false)
     setProgress(0)
     setCurrentDuration(0)
+    manageMediaSession.setPlaybackState(null)
   }
 
   const hasNextSong = isShuffleActive || currentSongIndex + 1 < currentSongList.length
@@ -119,12 +138,21 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  manageMediaSession.setHandlers({
+    playPrev: playPrevSong,
+    playNext: playNextSong
+  })
+
   function setPlayingState(state: boolean) {
     setIsPlaying(state)
   }
 
+  function getCurrentSong() {
+    return currentSongList[currentSongIndex]
+  }
+
   function checkActiveSong(id: string) {
-    return id === currentSongList[currentSongIndex]?.id
+    return id === getCurrentSong()?.id
   }
 
   const value: IPlayerContext = {
