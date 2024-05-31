@@ -19,26 +19,32 @@ export const router = createBrowserRouter([
         id: 'home',
         path: '/',
         loader: async () => {
-          const randomSongs = subsonic.songs.getRandomSongs()
-          const newestAlbums = subsonic.albums.getAlbumList({ size: 16 })
-          const frequentAlbums = subsonic.albums.getAlbumList({ size: 16, type: 'frequent' })
-          const recentAlbums = subsonic.albums.getAlbumList({ size: 16, type: 'recent' })
-          const randomAlbums = subsonic.albums.getAlbumList({ size: 16, type: 'random' })
+          const randomSongsPromise = subsonic.songs.getRandomSongs()
+          const newestAlbumsPromise = subsonic.albums.getAlbumList({ size: 16 })
+          const frequentAlbumsPromise = subsonic.albums.getAlbumList({ size: 16, type: 'frequent' })
+          const recentAlbumsPromise = subsonic.albums.getAlbumList({ size: 16, type: 'recent' })
+          const randomAlbumsPromise = subsonic.albums.getAlbumList({ size: 16, type: 'random' })
 
-          const results = await Promise.all([
+          const [
             randomSongs,
             newestAlbums,
             frequentAlbums,
             recentAlbums,
-            randomAlbums
+            randomAlbums,
+          ] = await Promise.all([
+            randomSongsPromise,
+            newestAlbumsPromise,
+            frequentAlbumsPromise,
+            recentAlbumsPromise,
+            randomAlbumsPromise
           ])
 
           return {
-            randomSongs: results[0],
-            newestAlbums: results[1],
-            frequentAlbums: results[2],
-            recentAlbums: results[3],
-            randomAlbums: results[4]
+            randomSongs,
+            newestAlbums,
+            frequentAlbums,
+            recentAlbums,
+            randomAlbums,
           }
         },
         element: <Home />
