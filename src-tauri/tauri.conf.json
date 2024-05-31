@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "subsonic-player",
+    "productName": "Subsonic Player",
     "version": "0.0.0"
   },
   "tauri": {

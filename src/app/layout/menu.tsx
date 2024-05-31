@@ -21,23 +21,28 @@ export function Menu() {
   const { serverUsername, serverUrl } = useApp()
   const [openDialog, setOpenDialog] = useState(false)
 
+  const { osType } = useApp()
+  const isMacOS = osType === 'Darwin'
+
   return (
     <>
       <LogoutConfirmDialog openDialog={openDialog} setOpenDialog={setOpenDialog} />
       <Menubar className="rounded-none border-b border-none px-2 lg:px-4">
-        <MenubarMenu>
-          <MenubarTrigger className="font-bold">Subsonic Player</MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem>About Subsonic Player</MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem>
-              Preferences... <MenubarShortcut>⌘,</MenubarShortcut>
-            </MenubarItem>
-            <MenubarItem>
-              Quit <MenubarShortcut>⌘Q</MenubarShortcut>
-            </MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
+        {!isMacOS && (
+          <MenubarMenu>
+            <MenubarTrigger className="font-bold">Subsonic Player</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>About Subsonic Player</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>
+                Preferences... <MenubarShortcut>⌘,</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>
+                Quit <MenubarShortcut>⌘Q</MenubarShortcut>
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        )}
         <MenubarMenu>
           <MenubarTrigger className="relative">File</MenubarTrigger>
           <MenubarContent>
