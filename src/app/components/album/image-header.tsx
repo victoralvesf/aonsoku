@@ -74,7 +74,7 @@ export default function ImageHeader({
             {type}
           </p>
           <h1
-            className={cn("scroll-m-20 font-extrabold tracking-tight mb-2 antialiased", getTextSizeClass(title))}
+            className={cn("scroll-m-20 font-bold tracking-tight mb-2 antialiased", getTextSizeClass(title))}
           >
             {title}
           </h1>

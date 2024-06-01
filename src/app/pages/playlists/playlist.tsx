@@ -43,7 +43,7 @@ export default function Playlist() {
           <p className="text-sm mb-2">
             Playlist
           </p>
-          <h2 className={cn("scroll-m-20 font-extrabold tracking-tight antialiased", getTextSizeClass(playlist.name))}>
+          <h2 className={cn("scroll-m-20 font-bold tracking-tight antialiased", getTextSizeClass(playlist.name))}>
             {playlist.name}
           </h2>
           <p className="text-sm text-muted-foreground mt-2">

@@ -68,7 +68,7 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
                     </div>
                   </div>
                   <div className="flex min-h-[252px] h-[252px] flex-col justify-end">
-                    <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-2">
+                    <h1 className="scroll-m-20 text-4xl font-bold tracking-tight lg:text-5xl mb-2">
                       {song.title}
                     </h1>
                     {!song.artistId ? (
