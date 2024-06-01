@@ -1,26 +1,20 @@
 import { RouterProvider } from "react-router-dom"
-import { useApp } from '@/app/contexts/app-context'
-import { ServerConfig } from '@/app/components/server-config'
+import { ToastContainer } from "react-toastify";
 import { router } from '@/routes/router'
 import { PlayerContextProvider } from "@/app/contexts/player-context"
+import { AppContextProvider } from "@/app/contexts/app-context";
+import { ThemeProvider } from "@/app/contexts/theme-context";
 
 function App() {
-  const {
-    isServerConfigured
-  } = useApp()
-
-  if (!isServerConfigured) {
-    return (
-      <div className="flex w-screen h-screen justify-center items-center">
-        <ServerConfig />
-      </div>
-    )
-  }
-
   return (
-    <PlayerContextProvider>
-      <RouterProvider router={router} />
-    </PlayerContextProvider>
+    <AppContextProvider>
+      <ThemeProvider>
+        <PlayerContextProvider>
+          <RouterProvider router={router} />
+          <ToastContainer theme="colored" />
+        </PlayerContextProvider>
+      </ThemeProvider>
+    </AppContextProvider>
   )
 }
 

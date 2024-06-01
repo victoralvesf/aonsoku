@@ -19,8 +19,9 @@ import {
   SelectValue,
 } from "@/app/components/ui/select"
 import { useApp } from "@/app/contexts/app-context"
+import { useNavigate } from "react-router-dom"
 
-export function ServerConfig() {
+export function LoginForm() {
   const {
     serverProtocol,
     setServerProtocol,
@@ -29,10 +30,14 @@ export function ServerConfig() {
     setServerPassword,
     handleSaveServerConfig
   } = useApp()
+  const navigate = useNavigate()
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    await handleSaveServerConfig()
+    const status = await handleSaveServerConfig()
+    if (status) {
+      navigate('/')
+    }
   }
 
   return (

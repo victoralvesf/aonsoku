@@ -15,6 +15,6 @@ export interface IAppContext {
   setServerUsername: (value: React.SetStateAction<string>) => void
   serverPassword: string
   setServerPassword: (value: React.SetStateAction<string>) => void
-  handleSaveServerConfig: () => Promise<void>
+  handleSaveServerConfig: () => Promise<boolean>
   handleRemoveServerConfig: () => Promise<void>
 }

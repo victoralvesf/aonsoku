@@ -15,7 +15,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const saltWord = '5ub50n1cPl4y3r'
 
   const [osType, setOsType] = useState('')
-  const [isServerConfigured, setIsServerConfigured] = useState(true)
+  const [isServerConfigured, setIsServerConfigured] = useState(false)
   const [serverProtocol, setServerProtocol] = useState('http://')
   const [serverUrl, setServerUrl] = useState('')
   const [serverUsername, setServerUsername] = useState('')
@@ -77,9 +77,11 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
       setIsServerConfigured(true)
 
       toast.success('Server configuration saved successfully!')
+      return true
     } else {
       setIsServerConfigured(false)
       toast.error('Server communication failed!')
+      return false
     }
   }
 

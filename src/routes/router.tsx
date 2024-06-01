@@ -1,4 +1,4 @@
-import { createBrowserRouter, defer } from 'react-router-dom'
+import { createBrowserRouter, defer, redirect } from 'react-router-dom'
 
 import { subsonic } from '@/service/subsonic'
 
@@ -9,6 +9,7 @@ import Playlist from '@/app/pages/playlists/playlist'
 import Home from '@/app/pages/home'
 import Album from '@/app/pages/albums/album'
 import Artist from '@/app/pages/artists/artist'
+import Login from '@/app/pages/login'
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,9 @@ export const router = createBrowserRouter([
         id: 'home',
         path: '/',
         loader: async () => {
+          const serverUrl = localStorage.getItem("server-url")
+          if (!serverUrl) return redirect('/server-config')
+
           const randomSongsPromise = subsonic.songs.getRandomSongs()
           const newestAlbumsPromise = subsonic.albums.getAlbumList({ size: 16 })
           const frequentAlbumsPromise = subsonic.albums.getAlbumList({ size: 16, type: 'frequent' })
@@ -127,5 +131,10 @@ export const router = createBrowserRouter([
         element: <ErrorPage />
       }
     ]
+  },
+  {
+    id: 'login',
+    path: '/server-config',
+    element: <Login />
   }
 ])
