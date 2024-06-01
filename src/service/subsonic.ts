@@ -1,5 +1,6 @@
 import { albums } from "./albums";
 import { artists } from "./artists";
+import { ping } from "./ping";
 import { playlists } from "./playlists";
 import { scrobble } from "./scrobble";
 import { search } from "./search";
@@ -13,5 +14,6 @@ export const subsonic = {
   playlists,
   star,
   search,
-  scrobble
+  scrobble,
+  ping
 }

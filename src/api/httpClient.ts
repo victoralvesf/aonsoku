@@ -49,7 +49,7 @@ export async function httpClient<T>(path: string, options: FetchOptions): Promis
       }
     }
   } catch (error) {
-    console.log('Error on httpClient request', error)
+    console.error('Error on httpClient request', error)
     return undefined
   }
 }

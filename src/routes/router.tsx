@@ -13,7 +13,7 @@ import { homeLoader } from '@/routes/loaders/home'
 import { albumsListLoader, singleAlbumLoader } from '@/routes/loaders/albums'
 import { playlistLoader } from '@/routes/loaders/playlists'
 import { singleArtistLoader } from '@/routes/loaders/artists'
-import { ROUTES } from './routesList'
+import { ROUTES } from '@/routes/routesList'
 
 export const router = createBrowserRouter([
   {
