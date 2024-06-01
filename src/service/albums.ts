@@ -32,7 +32,10 @@ async function getAlbumList(params: Partial<AlbumListParams> = {}) {
     }
   })
 
-  return response?.albumList.album
+  return {
+    albumsCount: response?.count,
+    list: response?.data.albumList.album
+  }
 }
 
 async function getOne(id: string) {
@@ -43,7 +46,7 @@ async function getOne(id: string) {
     }
   })
 
-  return response?.album
+  return response?.data.album
 }
 
 async function getInfo(id: string) {
@@ -54,7 +57,7 @@ async function getInfo(id: string) {
     }
   })
 
-  return response?.albumInfo
+  return response?.data.albumInfo
 }
 
 export const albums = {

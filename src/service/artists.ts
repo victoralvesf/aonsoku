@@ -9,7 +9,7 @@ async function getOne(id: string) {
     }
   })
 
-  return response?.artist
+  return response?.data.artist
 }
 
 async function getInfo(id: string) {
@@ -20,7 +20,7 @@ async function getInfo(id: string) {
     }
   })
 
-  return response?.artistInfo
+  return response?.data.artistInfo
 }
 
 export const artists = {

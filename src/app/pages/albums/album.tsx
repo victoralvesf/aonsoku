@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Await, useLoaderData } from "react-router-dom"
-import { Albums, IAlbumInfo, SingleAlbum } from "@/types/responses/album"
+import { Albums, AlbumsListData, IAlbumInfo, SingleAlbum } from "@/types/responses/album"
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { DataTable } from '@/app/components/ui/data-table'
 import { usePlayer } from '@/app/contexts/player-context'
@@ -18,7 +18,7 @@ interface ILoaderData {
   album: SingleAlbum
   artistAlbums: Promise<Search>
   albumInfo: Promise<IAlbumInfo>
-  randomGenreAlbums?: Promise<Albums[]>
+  randomGenreAlbums?: Promise<AlbumsListData>
 }
 
 export default function Album() {
@@ -119,9 +119,9 @@ export default function Album() {
               <Await
                 resolve={randomGenreAlbums}
                 errorElement={<></>}
-                children={(result: Albums[]) => (
+                children={({ list }: AlbumsListData) => (
                   <PreviewList
-                    list={result}
+                    list={list}
                     showMore={false}
                     title={`More from ${album.genre}`}
                   />

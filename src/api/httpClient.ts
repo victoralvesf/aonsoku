@@ -30,7 +30,7 @@ function queryParams() {
   }
 }
 
-export async function httpClient<T>(path: string, options: FetchOptions): Promise<T | undefined> {
+export async function httpClient<T>(path: string, options: FetchOptions): Promise<{ count: number, data: T } | undefined> {
   try {
     const { url } = getStoredConfig()
   
@@ -43,7 +43,10 @@ export async function httpClient<T>(path: string, options: FetchOptions): Promis
     })
 
     if (response.ok) {
-      return response.data['subsonic-response'] as T
+      return {
+        count: response.headers['x-total-count'] || 0,
+        data: response.data['subsonic-response'] as T
+      }
     }
   } catch (error) {
     console.log('Error on httpClient request', error)

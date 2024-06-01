@@ -33,7 +33,7 @@ async function get({
     }
   })
 
-  return response?.searchResult2
+  return response?.data.searchResult2
 }
 
 export const search = {

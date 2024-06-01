@@ -6,7 +6,7 @@ async function getAll() {
     method: 'GET'
   })
 
-  return response?.playlists.playlist
+  return response?.data.playlists.playlist
 }
 
 async function getOne(id: string) {
@@ -17,7 +17,7 @@ async function getOne(id: string) {
     }
   })
 
-  return response?.playlist
+  return response?.data.playlist
 }
 
 export const playlists = {

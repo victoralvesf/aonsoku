@@ -9,7 +9,7 @@ async function getRandomSongs(size = 10) {
     }
   })
 
-  return response?.randomSongs.song
+  return response?.data.randomSongs.song
 }
 
 async function getTopSongs(artistName: string) {
@@ -20,7 +20,7 @@ async function getTopSongs(artistName: string) {
     }
   })
 
-  return response?.topSongs.song
+  return response?.data.topSongs.song
 }
 
 async function getLyrics(artistName: string, songName: string) {
@@ -32,7 +32,7 @@ async function getLyrics(artistName: string, songName: string) {
     }
   })
 
-  return response?.lyrics
+  return response?.data.lyrics
 }
 
 export const songs = {

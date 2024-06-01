@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router-dom';
 import HomeSongCard from '@/app/components/home/song-card';
 import ListWrapper from '@/app/components/list-wrapper';
 import { subsonic } from '@/service/subsonic';
-import { AlbumListType, Albums } from '@/types/responses/album';
+import { AlbumListType, Albums, AlbumsListData } from '@/types/responses/album';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -14,6 +14,7 @@ import { ListFilter } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import debounce from 'lodash/debounce';
 import { usePlayer } from '@/app/contexts/player-context';
+import { Badge } from '@/app/components/ui/badge';
 
 export default function AlbumList() {
   const defaultOffset = 32
@@ -21,16 +22,18 @@ export default function AlbumList() {
   const scrollDivRef = useRef<HTMLDivElement | null>(null);
   const { setSongList } = usePlayer()
 
-  const recentSongs = useLoaderData() as Albums[];
+  const { albumsCount, list: recentAlbums } = useLoaderData() as AlbumsListData;
   const [items, setItems] = useState<Albums[]>([])
+  const [itemsCount, setItemsCount] = useState(0)
   const [hasMore, setHasMore] = useState(true)
   const [offset, setOffset] = useState(defaultOffset)
   const [currentFilter, setCurrentFilter] = useState<AlbumListType>('newest')
 
   useEffect(() => {
-    setItems(recentSongs)
+    setItems(recentAlbums)
+    setItemsCount(albumsCount)
     scrollDivRef.current = document.querySelector('#main-scroll-area #scroll-viewport') as HTMLDivElement
-  }, [recentSongs])
+  }, [recentAlbums])
 
   const fetchMoreData = useCallback(async () => {
     const response = await subsonic.albums.getAlbumList({
@@ -42,10 +45,11 @@ export default function AlbumList() {
 
     if (response) {
       setItems((prevItems) => {
-        const newItems = response.filter(album => !prevItems.some(item => item.id === album.id));
+        const newItems = response.list!.filter(album => !prevItems.some(item => item.id === album.id));
         return [...prevItems, ...newItems];
       })
-      setHasMore(response.length >= defaultOffset)
+      setItemsCount(response.albumsCount!)
+      setHasMore(response.list!.length >= defaultOffset)
     }
 
     setOffset((prevOffset) => prevOffset + defaultOffset)
@@ -63,7 +67,8 @@ export default function AlbumList() {
     });
 
     if (response) {
-      setItems(response);
+      setItems(response.list!)
+      setItemsCount(response.albumsCount!)
       scrollDivRef.current?.scrollTo(0, 0)
     }
   }, [currentFilter, defaultOffset, toYear]);
@@ -100,35 +105,34 @@ export default function AlbumList() {
   return (
     <main className="w-full h-full">
       <div className="flex items-center justify-start px-8 py-4 sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg shadow-b-2 -shadow-spread-2">
-        <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold tracking-tight">
+        <div className="flex gap-2 items-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm">
+                <ListFilter className="w-4 h-4 mr-2" />
+                {filterList[currentFilter]}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {Object.entries(filterList).map(([key, label], index) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={index}
+                    checked={key === currentFilter}
+                    onCheckedChange={() => setCurrentFilter(key as AlbumListType)}
+                    className="cursor-pointer"
+                  >
+                    {label}
+                  </DropdownMenuCheckboxItem>
+                )
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <h2 className="text-2xl ml-2 font-semibold tracking-tight">
             Albums
           </h2>
-
-          <div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <ListFilter className="w-4 h-4 mr-2" />
-                  {filterList[currentFilter]}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {Object.entries(filterList).map(([key, label], index) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={index}
-                      checked={key === currentFilter}
-                      onCheckedChange={() => setCurrentFilter(key as AlbumListType)}
-                      className="cursor-pointer"
-                    >
-                      {label}
-                    </DropdownMenuCheckboxItem>
-                  )
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <Badge variant="secondary" className="text-foreground/70">{itemsCount}</Badge>
         </div>
       </div>
 
