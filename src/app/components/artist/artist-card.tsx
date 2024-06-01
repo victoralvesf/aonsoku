@@ -34,7 +34,7 @@ export default function ArtistCard({ artist, onButtonClick }: ArtistCardProps) {
       </Link>
       <div className="flex flex-col cursor-default">
         <Link to={`/library/artists/${artist.id}`}>
-          <p className="leading-7 text-sm font-semibold truncate hover:underline">
+          <p className="leading-7 text-xs text-muted-foreground truncate hover:underline">
             {artist.name}
           </p>
         </Link>
