@@ -6,6 +6,7 @@ import { subsonic } from "@/service/subsonic";
 import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from "@/app/components/ui/carousel";
 import HomeSongCard from "@/app/components/home/song-card";
 import { CarouselButton } from "@/app/components/ui/carousel-button";
+import { useTranslation } from "react-i18next";
 
 interface PreviewListProps {
   list: Albums[]
@@ -19,13 +20,16 @@ export default function PreviewList({
   list,
   title,
   showMore = true,
-  moreTitle = 'See more',
+  moreTitle,
   moreRoute,
 }: PreviewListProps) {
   const [api, setApi] = useState<CarouselApi>()
   const [canScrollPrev, setCanScrollPrev] = useState<boolean>()
   const [canScrollNext, setCanScrollNext] = useState<boolean>()
   const player = usePlayer()
+  const { t } = useTranslation()
+
+  moreTitle = t('generic.seeMore')
 
   if (list.length > 16) {
     list = list.slice(0, 16)

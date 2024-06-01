@@ -3,17 +3,20 @@ import { Moon, Sun } from "lucide-react"
 import { Button } from "@/app/components/ui/button"
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/app/contexts/theme-context"
+import { useTranslation } from "react-i18next"
 
 interface ThemeToggleProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
+  const { t } = useTranslation()
 
   return (
     <DropdownMenu>
@@ -29,15 +32,24 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
+        <DropdownMenuCheckboxItem
+          onClick={() => setTheme("light")}
+          checked={theme === 'light'}
+        >
+          {t('theme.light')}
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          onClick={() => setTheme("dark")}
+          checked={theme === 'dark'}
+        >
+          {t('theme.dark')}
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          onClick={() => setTheme("system")}
+          checked={theme === 'system'}
+        >
+          {t('theme.system')}
+        </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

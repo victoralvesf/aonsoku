@@ -68,6 +68,12 @@ dependencies:
   fast-average-color:
     specifier: ^9.4.0
     version: 9.4.0
+  i18next:
+    specifier: ^23.11.5
+    version: 23.11.5
+  i18next-browser-languagedetector:
+    specifier: ^8.0.0
+    version: 8.0.0
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
@@ -80,6 +86,9 @@ dependencies:
   react-dom:
     specifier: ^18.2.0
     version: 18.3.1(react@18.3.1)
+  react-i18next:
+    specifier: ^14.1.2
+    version: 14.1.2(i18next@23.11.5)(react-dom@18.3.1)(react@18.3.1)
   react-lazy-load-image-component:
     specifier: ^1.6.0
     version: 1.6.0(react-dom@18.3.1)(react@18.3.1)
@@ -2224,6 +2233,24 @@ packages:
     dependencies:
       function-bind: 1.1.2
 
+  /html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+    dependencies:
+      void-elements: 3.1.0
+    dev: false
+
+  /i18next-browser-languagedetector@8.0.0:
+    resolution: {integrity: sha512-zhXdJXTTCoG39QsrOCiOabnWj2jecouOqbchu3EfhtSHxIB5Uugnm9JaizenOy39h7ne3+fLikIjeW88+rgszw==}
+    dependencies:
+      '@babel/runtime': 7.24.5
+    dev: false
+
+  /i18next@23.11.5:
+    resolution: {integrity: sha512-41pvpVbW9rhZPk5xjCX2TPJi2861LEig/YRhUkY+1FQ2IQPS0bKUDYnEqY8XPPbB48h1uIwLnP9iiEfuSl20CA==}
+    dependencies:
+      '@babel/runtime': 7.24.5
+    dev: false
+
   /invariant@2.2.4:
     resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
     dependencies:
@@ -2498,6 +2525,26 @@ packages:
       loose-envify: 1.4.0
       react: 18.3.1
       scheduler: 0.23.2
+    dev: false
+
+  /react-i18next@14.1.2(i18next@23.11.5)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-FSIcJy6oauJbGEXfhUgVeLzvWBhIBIS+/9c6Lj4niwKZyGaGb4V4vUbATXSlsHJDXXB+ociNxqFNiFuV1gmoqg==}
+    peerDependencies:
+      i18next: '>= 23.2.3'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.24.5
+      html-parse-stringify: 3.0.1
+      i18next: 23.11.5
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /react-lazy-load-image-component@1.6.0(react-dom@18.3.1)(react@18.3.1):
@@ -2946,6 +2993,11 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
+
+  /void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}

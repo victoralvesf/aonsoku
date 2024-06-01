@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Globe, Mic, LogOut } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -16,13 +17,18 @@ import {
 } from "@/app/components/ui/menubar"
 import { useApp } from "@/app/contexts/app-context"
 import { LogoutConfirmDialog } from "@/app/components/logout-confirm"
+import { currentLanguages } from "@/i18n/languages"
+import { useLang } from "@/app/contexts/lang-context"
 
 export function Menu() {
   const { serverUsername, serverUrl } = useApp()
   const [openDialog, setOpenDialog] = useState(false)
+  const { t } = useTranslation()
 
   const { osType } = useApp()
   const isMacOS = osType === 'Darwin'
+
+  const { langCode, setLang } = useLang()
 
   return (
     <>
@@ -160,13 +166,27 @@ export function Menu() {
           </MenubarContent>
         </MenubarMenu>
         <MenubarMenu>
-          <MenubarTrigger className="hidden md:block">Server</MenubarTrigger>
-          <MenubarContent forceMount>
+          <MenubarTrigger>{t('menu.language')}</MenubarTrigger>
+          <MenubarContent>
+            {Object.entries(currentLanguages).map(([lang, value]) => (
+              <MenubarCheckboxItem
+                key={lang}
+                onClick={() => setLang(lang)}
+                checked={lang === langCode}
+              >
+                {value.nativeName}
+              </MenubarCheckboxItem>
+            ))}
+          </MenubarContent>
+        </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger>{t('menu.server')}</MenubarTrigger>
+          <MenubarContent>
             <MenubarLabel className="capitalize font-normal">{serverUsername}</MenubarLabel>
             <MenubarLabel>{serverUrl}</MenubarLabel>
             <MenubarSeparator />
             <MenubarItem onClick={() => setOpenDialog(!openDialog)}>
-              Logout{" "}
+              {t('menu.serverLogout')}
               <MenubarShortcut>
                 <LogOut className="h-4 w-4" />
               </MenubarShortcut>

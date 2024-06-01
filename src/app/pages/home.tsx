@@ -1,4 +1,6 @@
 import { useLoaderData } from "react-router-dom"
+import { useTranslation } from 'react-i18next'
+
 import { ISong } from "@/types/responses/song"
 import HomeHeader from "@/app/components/home/header"
 import PreviewList from "@/app/components/home/preview-list"
@@ -22,11 +24,13 @@ export default function Home() {
     randomAlbums
   } = useLoaderData() as HomeLoaderData
 
+  const { t } = useTranslation()
+
   const homeSections = [
-    { title: 'Recently Played', list: recentAlbums.list },
-    { title: 'Most Played', list: frequentAlbums.list },
-    { title: 'Recently Added', list: newestAlbums.list },
-    { title: 'Explore', list: randomAlbums.list }
+    { title: t('home.recentlyPlayed'), list: recentAlbums.list },
+    { title: t('home.mostPlayed'), list: frequentAlbums.list },
+    { title: t('home.recentlyAdded'), list: newestAlbums.list },
+    { title: t('home.explore'), list: randomAlbums.list }
   ]
 
   return (

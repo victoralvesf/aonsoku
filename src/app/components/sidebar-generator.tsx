@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
 import { ListMusic } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import { Button } from "@/app/components/ui/button"
 import { Playlist } from "@/types/responses/playlist"
 import { ROUTES } from "@/routes/routesList"
@@ -12,22 +13,20 @@ interface ISidebarItem {
 
 export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
   const location = useLocation()
+  const { t } = useTranslation()
+
+  function isButtonActive(route: string) {
+    return location.pathname === route ? 'secondary' : 'ghost'
+  }
 
   return (
     <>
       {list.map((item, index) => (
         <Link to={item.route} key={index}>
-          {location.pathname === item.route ? (
-            <Button variant="secondary" size="sm" className="w-full justify-start">
-              {item.icon}
-              {item.title}
-            </Button>
-          ) : (
-            <Button variant="ghost" size="sm" className="w-full justify-start">
-              {item.icon}
-              {item.title}
-            </Button>
-          )}
+          <Button variant={isButtonActive(item.route)} size="sm" className="w-full justify-start">
+            {item.icon}
+            {t(item.title)}
+          </Button>
         </Link>
       ))}
     </>

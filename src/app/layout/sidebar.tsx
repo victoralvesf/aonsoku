@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useState } from "react"
+import { useTranslation } from 'react-i18next'
 import {
   ListMusic,
   Mic2,
@@ -20,6 +21,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function Sidebar({ className }: SidebarProps) {
   const [playlists, setPlaylists] = useState<Playlist[]>([])
+  const { t } = useTranslation()
 
   useEffect(() => {
     const fetchPlaylists = async () => {
@@ -39,14 +41,14 @@ export function Sidebar({ className }: SidebarProps) {
             </div>
           </SidebarSection>
           <SidebarSection>
-            <SectionTitle>Library</SectionTitle>
+            <SectionTitle>{t('sidebar.library')}</SectionTitle>
             <div className="space-y-1">
               <SidebarGenerator list={libraryItems} />
             </div>
           </SidebarSection>
           {playlists.length > 0 && (
             <SidebarSection>
-              <SectionTitle>Playlists</SectionTitle>
+              <SectionTitle>{t('sidebar.playlists')}</SectionTitle>
               <div className="space-y-1">
                 <SidebarPlaylistGenerator playlists={playlists} />
               </div>
@@ -78,12 +80,12 @@ const iconClassName = "mr-2 h-4 w-4"
 
 const mainMenuItems = [
   {
-    title: 'Home',
+    title: 'sidebar.home',
     route: ROUTES.LIBRARY.HOME,
     icon: <Home className={iconClassName} />
   },
   {
-    title: 'Search',
+    title: 'sidebar.search',
     route: '/search',
     icon: <Search className={iconClassName} />
   },
@@ -91,27 +93,27 @@ const mainMenuItems = [
 
 const libraryItems = [
   {
-    title: 'Artists',
+    title: 'sidebar.artists',
     route: ROUTES.LIBRARY.ARTISTS,
     icon: <Mic2 className={iconClassName} />
   },
   {
-    title: 'Songs',
+    title: 'sidebar.songs',
     route: ROUTES.LIBRARY.SONGS,
     icon: <Music2 className={iconClassName} />
   },
   {
-    title: 'Albums',
+    title: 'sidebar.albums',
     route: ROUTES.LIBRARY.ALBUMS,
     icon: <Library className={iconClassName} />
   },
   {
-    title: 'Playlists',
+    title: 'sidebar.playlists',
     route: ROUTES.LIBRARY.PLAYLISTS,
     icon: <ListMusic className={iconClassName} />
   },
   {
-    title: 'Radios',
+    title: 'sidebar.radios',
     route: ROUTES.LIBRARY.RADIOS,
     icon: <Radio className={iconClassName} />
   },

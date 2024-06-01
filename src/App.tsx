@@ -4,17 +4,20 @@ import { router } from '@/routes/router'
 import { PlayerContextProvider } from "@/app/contexts/player-context"
 import { AppContextProvider } from "@/app/contexts/app-context";
 import { ThemeProvider } from "@/app/contexts/theme-context";
+import { LangProvider } from "@/app/contexts/lang-context";
 
 function App() {
   return (
-    <AppContextProvider>
-      <ThemeProvider>
-        <PlayerContextProvider>
-          <RouterProvider router={router} />
-          <ToastContainer theme="colored" />
-        </PlayerContextProvider>
-      </ThemeProvider>
-    </AppContextProvider>
+    <LangProvider>
+      <AppContextProvider>
+        <ThemeProvider>
+          <PlayerContextProvider>
+            <RouterProvider router={router} />
+            <ToastContainer theme="colored" />
+          </PlayerContextProvider>
+        </ThemeProvider>
+      </AppContextProvider>
+    </LangProvider>
   )
 }
 
