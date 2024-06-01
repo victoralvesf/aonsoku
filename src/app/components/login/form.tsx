@@ -20,6 +20,7 @@ import {
 } from "@/app/components/ui/select"
 import { useApp } from "@/app/contexts/app-context"
 import { useNavigate } from "react-router-dom"
+import { ROUTES } from "@/routes/routesList"
 
 export function LoginForm() {
   const {
@@ -36,7 +37,7 @@ export function LoginForm() {
     e.preventDefault()
     const status = await handleSaveServerConfig()
     if (status) {
-      navigate('/')
+      navigate(ROUTES.LIBRARY.HOME)
     }
   }
 

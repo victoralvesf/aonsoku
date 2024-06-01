@@ -8,6 +8,7 @@ import { getCoverArtUrl } from '@/api/httpClient'
 import { Skeleton } from '@/app/components/ui/skeleton'
 import { Badge } from '@/app/components/ui/badge'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
+import { ROUTES } from '@/routes/routesList'
 
 const bgGradient = "bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50"
 
@@ -79,7 +80,7 @@ export default function ImageHeader({
             {title}
           </h1>
           {subtitle && artistId && (
-            <Link to={`/library/artists/${artistId}`}>
+            <Link to={ROUTES.ARTIST.PAGE(artistId)}>
               <h4 className="scroll-m-20 text-lg font-medium tracking-tight opacity-70 hover:underline">
                 {subtitle}
               </h4>

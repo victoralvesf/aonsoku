@@ -7,6 +7,7 @@ import FullscreenMode from "@/app/components/fullscreen/page";
 import { Button } from "@/app/components/ui/button";
 import { SimpleTooltip } from "../ui/simple-tooltip";
 import { cn } from "@/lib/utils";
+import { ROUTES } from "@/routes/routesList";
 
 export function TrackInfo({ song }: { song: ISong }) {
   return song ? (
@@ -25,7 +26,7 @@ export function TrackInfo({ song }: { song: ISong }) {
       </div>
       <div className="flex flex-col justify-center">
         <span className="text-sm font-medium">{song.title}</span>
-        <Link to={`/library/artists/${song.artistId}`} className={cn(!song.artistId && "pointer-events-none")}>
+        <Link to={ROUTES.ARTIST.PAGE(song.artistId!)} className={cn(!song.artistId && "pointer-events-none")}>
           <span
             className={cn("text-xs font-light text-muted-foreground", song.artistId && "hover:underline")}
           >

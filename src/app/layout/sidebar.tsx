@@ -14,6 +14,7 @@ import { ScrollArea } from "@/app/components/ui/scroll-area"
 import { Playlist } from "@/types/responses/playlist"
 import { SidebarGenerator, SidebarPlaylistGenerator } from "@/app/components/sidebar-generator"
 import { subsonic } from "@/service/subsonic"
+import { ROUTES } from "@/routes/routesList"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
@@ -78,7 +79,7 @@ const iconClassName = "mr-2 h-4 w-4"
 const mainMenuItems = [
   {
     title: 'Home',
-    route: '/',
+    route: ROUTES.LIBRARY.HOME,
     icon: <Home className={iconClassName} />
   },
   {
@@ -91,27 +92,27 @@ const mainMenuItems = [
 const libraryItems = [
   {
     title: 'Artists',
-    route: '/library/artists',
+    route: ROUTES.LIBRARY.ARTISTS,
     icon: <Mic2 className={iconClassName} />
   },
   {
     title: 'Songs',
-    route: '/library/songs',
+    route: ROUTES.LIBRARY.SONGS,
     icon: <Music2 className={iconClassName} />
   },
   {
     title: 'Albums',
-    route: '/library/albums',
+    route: ROUTES.LIBRARY.ALBUMS,
     icon: <Library className={iconClassName} />
   },
   {
     title: 'Playlists',
-    route: '/library/playlists',
+    route: ROUTES.LIBRARY.PLAYLISTS,
     icon: <ListMusic className={iconClassName} />
   },
   {
     title: 'Radios',
-    route: '/library/radios',
+    route: ROUTES.LIBRARY.RADIOS,
     icon: <Radio className={iconClassName} />
   },
 ]

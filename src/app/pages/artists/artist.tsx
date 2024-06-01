@@ -12,6 +12,7 @@ import RelatedArtistsList from "@/app/components/artist/related-artists";
 import PreviewListFallback from "@/app/components/preview-list-fallback";
 import { subsonic } from "@/service/subsonic";
 import { usePlayer } from "@/app/contexts/player-context";
+import { ROUTES } from "@/routes/routesList";
 
 interface ILoaderData {
   artist: IArtist
@@ -104,7 +105,7 @@ export default function Artist() {
           title="Recent Albums"
           list={artist.album}
           moreTitle="Artist Discography"
-          moreRoute={`/library/albums/artist/${artist.id}`}
+          moreRoute={ROUTES.ARTIST.ALBUMS(artist.id)}
         />
 
         <Suspense fallback={<PreviewListFallback />}>

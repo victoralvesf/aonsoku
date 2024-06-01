@@ -15,6 +15,7 @@ import { Button } from "@/app/components/ui/button";
 import { usePlayer } from "@/app/contexts/player-context";
 import { subsonic } from "@/service/subsonic";
 import { ISong } from "@/types/responses/song";
+import { ROUTES } from "@/routes/routesList";
 
 interface HomeHeaderProps {
   songs: ISong[]
@@ -76,7 +77,7 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
                         {song.artist}
                       </h4>
                     ) : (
-                      <Link to={`/library/artists/${song.artistId}`}>
+                      <Link to={ROUTES.ARTIST.PAGE(song.artistId)}>
                         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight opacity-60 hover:underline">
                           {song.artist}
                         </h4>

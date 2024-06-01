@@ -11,6 +11,7 @@ import {
 } from "@/app/components/ui/alert-dialog"
 import { useApp } from "@/app/contexts/app-context"
 import { useNavigate } from "react-router-dom"
+import { ROUTES } from "@/routes/routesList"
 
 interface AlertDialogProps {
   openDialog: boolean
@@ -24,7 +25,7 @@ export function LogoutConfirmDialog({ openDialog, setOpenDialog }: AlertDialogPr
   async function handleRemoveConfig(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     await handleRemoveServerConfig()
-    navigate('/server-config')
+    navigate(ROUTES.SERVER_CONFIG)
   }
 
   return (

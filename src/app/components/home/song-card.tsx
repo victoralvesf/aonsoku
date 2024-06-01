@@ -3,6 +3,7 @@ import { Play } from "lucide-react"
 import { Albums } from "@/types/responses/album"
 import { Button } from "@/app/components/ui/button"
 import { getCoverArtUrl } from "@/api/httpClient"
+import { ROUTES } from "@/routes/routesList"
 
 interface HomeSongCardProps {
   album: Albums
@@ -17,7 +18,7 @@ export default function HomeSongCard({
 }: HomeSongCardProps) {
   return (
     <div className="cursor-pointer">
-      <Link to={`/library/albums/${album.id}`}>
+      <Link to={ROUTES.ALBUM.PAGE(album.id)}>
         <div
           className="group flex-1 aspect-square rounded bg-cover bg-center bg-border"
           style={{ backgroundImage: `url(${getCoverArtUrl(album.coverArt, coverArtSize.toString())})` }}
@@ -38,12 +39,12 @@ export default function HomeSongCard({
         </div>
       </Link>
       <div className="flex flex-col cursor-default">
-        <Link to={`/library/albums/${album.id}`}>
+        <Link to={ROUTES.ALBUM.PAGE(album.id)}>
           <p className="leading-7 text-sm font-semibold truncate hover:underline">
             {album.title}
           </p>
         </Link>
-        <Link to={`/library/artists/${album.artistId}`}>
+        <Link to={ROUTES.ARTIST.PAGE(album.artistId)}>
           <p className="truncate text-xs text-muted-foreground -mt-1 hover:underline">
             {album.artist}
           </p>

@@ -3,6 +3,7 @@ import { Play } from "lucide-react"
 import { Button } from "@/app/components/ui/button"
 import { getCoverArtUrl } from "@/api/httpClient"
 import { ISimilarArtist } from "@/types/responses/artist"
+import { ROUTES } from "@/routes/routesList"
 
 interface ArtistCardProps {
   artist: ISimilarArtist,
@@ -12,7 +13,7 @@ interface ArtistCardProps {
 export default function ArtistCard({ artist, onButtonClick }: ArtistCardProps) {
   return (
     <div className="cursor-pointer">
-      <Link to={`/library/artists/${artist.id}`}>
+      <Link to={ROUTES.ARTIST.PAGE(artist.id)}>
         <div
           className="group flex-1 aspect-square rounded bg-cover bg-center"
           style={{ backgroundImage: `url(${getCoverArtUrl(artist.coverArt, '250')})` }}
@@ -33,7 +34,7 @@ export default function ArtistCard({ artist, onButtonClick }: ArtistCardProps) {
         </div>
       </Link>
       <div className="flex flex-col cursor-default">
-        <Link to={`/library/artists/${artist.id}`}>
+        <Link to={ROUTES.ARTIST.PAGE(artist.id)}>
           <p className="leading-7 text-xs text-muted-foreground truncate hover:underline">
             {artist.name}
           </p>

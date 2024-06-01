@@ -13,39 +13,40 @@ import { homeLoader } from '@/routes/loaders/home'
 import { albumsListLoader, singleAlbumLoader } from '@/routes/loaders/albums'
 import { playlistLoader } from '@/routes/loaders/playlists'
 import { singleArtistLoader } from '@/routes/loaders/artists'
+import { ROUTES } from './routesList'
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.LIBRARY.HOME,
     element: <BaseLayout />,
     children: [
       {
         id: 'home',
-        path: '/',
+        path: ROUTES.LIBRARY.HOME,
         loader: homeLoader,
         element: <Home />
       },
       {
         id: 'albums',
-        path: 'library/albums',
+        path: ROUTES.LIBRARY.ALBUMS,
         loader: albumsListLoader,
         element: <AlbumList />
       },
       {
         id: 'playlist',
-        path: 'playlist/:playlistId',
+        path: ROUTES.PLAYLIST.PATH,
         loader: playlistLoader,
         element: <Playlist />
       },
       {
         id: 'album',
-        path: 'library/albums/:albumId',
+        path: ROUTES.ALBUM.PATH,
         loader: singleAlbumLoader,
         element: <Album />
       },
       {
         id: 'artist',
-        path: 'library/artists/:artistId',
+        path: ROUTES.ARTIST.PATH,
         loader: singleArtistLoader,
         element: <Artist />
       },
@@ -58,7 +59,7 @@ export const router = createBrowserRouter([
   },
   {
     id: 'login',
-    path: '/server-config',
+    path: ROUTES.SERVER_CONFIG,
     element: <Login />
   }
 ])

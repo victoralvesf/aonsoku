@@ -13,6 +13,7 @@ import { Search } from "@/types/responses/search"
 import PreviewList from "@/app/components/home/preview-list"
 import PreviewListFallback from "@/app/components/preview-list-fallback"
 import AlbumInfo, { AlbumInfoFallback } from "@/app/components/album/album-info"
+import { ROUTES } from "@/routes/routesList"
 
 interface ILoaderData {
   album: SingleAlbum
@@ -107,7 +108,7 @@ export default function Album() {
                     showMore={true}
                     title="More from this artist"
                     moreTitle="Artist Discography"
-                    moreRoute={`/library/albums/artist/${album.artistId}`}
+                    moreRoute={ROUTES.ARTIST.ALBUMS(album.artistId)}
                   />
                 )
               }}

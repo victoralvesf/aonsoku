@@ -14,6 +14,7 @@ import PlaySongButton from "@/app/components/table/play-button"
 import dateTime from "@/utils/dateTime"
 import { Button } from "@/app/components/ui/button"
 import { subsonic } from "@/service/subsonic"
+import { ROUTES } from "@/routes/routesList"
 
 export const songsColumns: ColumnDef<ISong>[] = [
   {
@@ -59,7 +60,7 @@ export const songsColumns: ColumnDef<ISong>[] = [
       if (!row.original.artistId) return row.original.artist
 
       return (
-        <Link to={`/library/artists/${row.original.artistId}`} className="hover:underline">
+        <Link to={ROUTES.ARTIST.PAGE(row.original.artistId)} className="hover:underline">
           {row.original.artist}
         </Link>
       )
@@ -71,7 +72,7 @@ export const songsColumns: ColumnDef<ISong>[] = [
     header: "Album",
     cell: ({ row }) => {
       return (
-        <Link to={`/library/albums/${row.original.albumId}`} className="hover:underline">
+        <Link to={ROUTES.ALBUM.PAGE(row.original.albumId)} className="hover:underline">
           {row.original.album}
         </Link>
       )

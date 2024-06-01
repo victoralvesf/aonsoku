@@ -3,6 +3,7 @@ import { ISong } from "@/types/responses/song"
 import HomeHeader from "@/app/components/home/header"
 import PreviewList from "@/app/components/home/preview-list"
 import { AlbumsListData } from "@/types/responses/album"
+import { ROUTES } from "@/routes/routesList"
 
 interface HomeLoaderData {
   randomSongs: ISong[]
@@ -22,10 +23,10 @@ export default function Home() {
   } = useLoaderData() as HomeLoaderData
 
   const homeSections = [
-    { title: 'Recently Played', route: '/library/albums/recently-played', list: recentAlbums.list },
-    { title: 'Most Played', route: '/library/albums/most-played', list: frequentAlbums.list },
-    { title: 'Recently Added', route: '/library/albums/recently-added', list: newestAlbums.list },
-    { title: 'Explore', route: '/library/albums/random', list: randomAlbums.list }
+    { title: 'Recently Played', list: recentAlbums.list },
+    { title: 'Most Played', list: frequentAlbums.list },
+    { title: 'Recently Added', list: newestAlbums.list },
+    { title: 'Explore', list: randomAlbums.list }
   ]
 
   return (
@@ -36,7 +37,7 @@ export default function Home() {
         <PreviewList
           key={section.title}
           title={section.title}
-          moreRoute={section.route}
+          moreRoute={ROUTES.LIBRARY.ALBUMS}
           list={section.list}
         />
       ))}

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import Error404Icon from "../components/icons/error-404-icon";
+import { ROUTES } from "@/routes/routesList";
 
 export default function ErrorPage() {
   return (
@@ -15,7 +16,7 @@ export default function ErrorPage() {
           Page not found!
         </p>
 
-        <Link to={'/'}>
+        <Link to={ROUTES.LIBRARY.HOME}>
           <Button className="mt-6">Back to home</Button>
         </Link>
       </div>
