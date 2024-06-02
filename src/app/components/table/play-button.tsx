@@ -6,6 +6,7 @@ import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { Button } from "@/app/components/ui/button"
 import { ISong } from "@/types/responses/song"
 import Image from "@/app/components/image"
+import { useTranslation } from "react-i18next"
 
 interface PlaySongButtonProps {
   cell: CellContext<ISong, unknown>
@@ -14,14 +15,14 @@ interface PlaySongButtonProps {
 export default function PlaySongButton({ cell }: PlaySongButtonProps) {
   const trackNumber = cell.row.index + 1
   const song = cell.row.original
-
+  const { t } = useTranslation()
   const player = usePlayer()
 
   return (
     <div className="text-center text-foreground flex justify-center">
       {(player.checkActiveSong(song.id) && !player.isPlaying) && (
         <div className="w-8 flex items-center">
-          <SimpleTooltip text={`Pause ${song.title} by ${song.artist}`}>
+          <SimpleTooltip text={t('table.buttons.pause', { title: song.title, artist: song.artist })}>
             <Button
               className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
               size="icon"
@@ -44,7 +45,7 @@ export default function PlaySongButton({ cell }: PlaySongButtonProps) {
             </div>
           </div>
           <div className="hidden group-hover/tablerow:flex justify-center">
-            <SimpleTooltip text={`Pause ${song.title} by ${song.artist}`}>
+            <SimpleTooltip text={t('table.buttons.pause', { title: song.title, artist: song.artist })}>
               <Button
                 className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
                 size="icon"
@@ -66,7 +67,7 @@ export default function PlaySongButton({ cell }: PlaySongButtonProps) {
             {trackNumber}
           </div>
           <div className="hidden group-hover/tablerow:flex justify-center">
-            <SimpleTooltip text={`Play ${song.title} by ${song.artist}`}>
+            <SimpleTooltip text={t('table.buttons.play', { title: song.title, artist: song.artist })}>
               <Button
                 className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
                 size="icon"

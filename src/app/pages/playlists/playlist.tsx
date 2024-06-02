@@ -11,11 +11,12 @@ import PlayButtons from '@/app/components/album/play-buttons';
 import { cn } from '@/lib/utils';
 import { getTextSizeClass } from '@/utils/getTextSizeClass';
 import { ColumnFilter } from '@/types/columnFilter';
+import { useTranslation } from 'react-i18next';
 
 export default function Playlist() {
   const playlist = useLoaderData() as PlaylistWithEntries;
   const playlistDuration = convertSecondsToHumanRead(playlist.duration)
-
+  const { t } = useTranslation()
   const player = usePlayer()
 
   const columnsToShow: ColumnFilter[] = [
@@ -29,6 +30,12 @@ export default function Playlist() {
     'starred'
   ]
 
+  const buttonsTooltips = {
+    play: t('playlist.buttons.play', { name: playlist.name }),
+    shuffle: t('playlist.buttons.shuffle', { name: playlist.name }),
+    options: t('playlist.buttons.options', { name: playlist.name })
+  }
+
   return (
     <main className="w-full">
       <div className="flex">
@@ -41,7 +48,7 @@ export default function Playlist() {
         />
         <div className="ml-4 w-full flex flex-col justify-end">
           <p className="text-sm mb-2">
-            Playlist
+            {t('playlist.headline')}
           </p>
           <h2 className={cn("scroll-m-20 font-bold tracking-tight antialiased", getTextSizeClass(playlist.name))}>
             {playlist.name}
@@ -50,18 +57,22 @@ export default function Playlist() {
             {playlist.comment}
           </p>
           <div className="flex gap-1 mt-2 text-muted-foreground text-sm">
-            <Badge variant="secondary">{playlist.songCount} songs</Badge>
-            <Badge variant="secondary">about {playlistDuration}</Badge>
+            <Badge variant="secondary">
+              {t('playlist.songCount', { count: playlist.songCount })}
+            </Badge>
+            <Badge variant="secondary">
+              {t('playlist.duration', { duration: playlistDuration })}
+            </Badge>
           </div>
         </div>
       </div>
 
       <PlayButtons
-        playButtonTooltip={`Play ${playlist.name}`}
+        playButtonTooltip={buttonsTooltips.play}
         handlePlayButton={() => player.setSongList(playlist.entry, 0)}
-        shuffleButtonTooltip={`Play ${playlist.name} in shuffle mode`}
+        shuffleButtonTooltip={buttonsTooltips.shuffle}
         handleShuffleButton={() => player.setSongList(playlist.entry, 0, true)}
-        optionsTooltip={`More options for ${playlist.name}`}
+        optionsTooltip={buttonsTooltips.options}
         showLikeButton={false}
       />
 

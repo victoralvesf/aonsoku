@@ -5,6 +5,7 @@ import MusicbrainzIcon from "@/app/components/icons/musicbrainz";
 import { Skeleton } from "@/app/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { IArtistInfo } from "@/types/responses/artist";
+import { useTranslation } from "react-i18next";
 
 interface ArtistInfoProps {
   artistName: string
@@ -14,17 +15,20 @@ const containerClasses = "flex flex-col items-start gap-2 rounded-lg border p-3 
 
 export default function ArtistInfo({ artistName }: ArtistInfoProps) {
   const artistInfo = useAsyncValue() as IArtistInfo
+  const { t } = useTranslation()
 
   if (!artistInfo.biography) return
 
   return (
     <div className={cn(containerClasses)} id="artist-biography">
-      <h3 className="scroll-m-20 mb-2 text-3xl font-semibold tracking-tight">About {artistName}</h3>
+      <h3 className="scroll-m-20 mb-2 text-3xl font-semibold tracking-tight">
+        {t('album.info.about', { name: artistName })}
+      </h3>
       <p dangerouslySetInnerHTML={{ __html: artistInfo?.biography! }} />
 
       <div className="flex w-full mt-2 gap-2">
         {artistInfo?.lastFmUrl && (
-          <SimpleTooltip text="Open in Last.fm">
+          <SimpleTooltip text={t('album.info.lastfm')}>
             <a
               target="_blank"
               rel="nofollow"
@@ -38,7 +42,7 @@ export default function ArtistInfo({ artistName }: ArtistInfoProps) {
         )}
 
         {artistInfo?.musicBrainzId && (
-          <SimpleTooltip text="Open in MusicBrainz">
+          <SimpleTooltip text={t('album.info.musicbrainz')}>
             <a
               target="_blank"
               rel="nofollow"

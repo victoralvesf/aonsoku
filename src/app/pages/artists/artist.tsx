@@ -13,6 +13,7 @@ import PreviewListFallback from "@/app/components/preview-list-fallback";
 import { subsonic } from "@/service/subsonic";
 import { usePlayer } from "@/app/contexts/player-context";
 import { ROUTES } from "@/routes/routesList";
+import { useTranslation } from "react-i18next";
 
 interface ILoaderData {
   artist: IArtist
@@ -22,6 +23,7 @@ interface ILoaderData {
 
 export default function Artist() {
   const player = usePlayer()
+  const { t } = useTranslation()
   const { artist, artistInfo, topSongs } = useLoaderData() as ILoaderData
   let artistSongCount = 0
 
@@ -33,18 +35,13 @@ export default function Artist() {
       artistSongCount += album.songCount
     })
 
-    let songCount = `${artistSongCount} song`
-    if (artistSongCount > 1) songCount += 's'
-
-    return songCount
+    return t('playlist.songCount', { count: artistSongCount })
   }
 
   function formatAlbumCount() {
     if (artist?.albumCount === undefined) return null
 
-    let albumCount = `${artist.albumCount} album`
-    if (artist.albumCount > 1) albumCount += 's'
-    return albumCount
+    return t('artist.info.albumsCount', { count: artist.albumCount })
   }
 
   const badges = [
@@ -65,10 +62,16 @@ export default function Artist() {
     }
   }
 
+  const buttonsTooltips = {
+    play: t('artist.buttons.play', { artist: artist.name }),
+    shuffle: t('artist.buttons.shuffle', { artist: artist.name }),
+    options: t('artist.buttons.options', { artist: artist.name }),
+  }
+
   return (
     <div className="w-full">
       <ImageHeader
-        type="Artist"
+        type={t('artist.headline')}
         title={artist.name}
         coverArtId={artist.coverArt}
         coverArtSize="700"
@@ -78,11 +81,11 @@ export default function Artist() {
 
       <ListWrapper>
         <PlayButtons
-          playButtonTooltip={`Play ${artist.name} radio`}
+          playButtonTooltip={buttonsTooltips.play}
           handlePlayButton={() => handlePlayArtistRadio()}
-          shuffleButtonTooltip={`Play ${artist.name} radio in shuffle mode`}
+          shuffleButtonTooltip={buttonsTooltips.shuffle}
           handleShuffleButton={() => handlePlayArtistRadio(true)}
-          optionsTooltip={`More options for ${artist.name}`}
+          optionsTooltip={buttonsTooltips.options}
           showLikeButton={true}
           likeTooltipResource={artist.name}
           likeState={artist.starred}
@@ -102,15 +105,15 @@ export default function Artist() {
         </Suspense>
 
         <PreviewList
-          title="Recent Albums"
+          title={t('artist.recentAlbums')}
           list={artist.album}
-          moreTitle="Artist Discography"
+          moreTitle={t('album.more.discography')}
           moreRoute={ROUTES.ARTIST.ALBUMS(artist.id)}
         />
 
         <Suspense fallback={<PreviewListFallback />}>
           <Await resolve={artistInfo} errorElement={<></>}>
-            <RelatedArtistsList title="Related Artists" />
+            <RelatedArtistsList title={t('artist.relatedArtists')} />
           </Await>
         </Suspense>
       </ListWrapper>

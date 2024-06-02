@@ -18,13 +18,16 @@ import { CloseFullscreenButton, SwitchThemeButton } from "./buttons"
 import { SongInfo } from "./song-info"
 import { FullscreenPlayer } from "./player"
 import { FullscreenTabs } from "./tabs"
+import { useTranslation } from "react-i18next"
 
 interface FullscreenModeProps {
   children: ReactNode
 }
 
 export default function FullscreenMode({ children }: FullscreenModeProps) {
-  const noLyricsFound = 'No lyrics found'
+  const { t } = useTranslation()
+
+  const noLyricsFound = t('fullscreen.noLyrics')
 
   const [currentLyrics, setCurrentLyrics] = useState(noLyricsFound)
   const {

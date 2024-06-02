@@ -1,4 +1,5 @@
 import { MouseEvent } from "react"
+import { useTranslation } from "react-i18next"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +22,7 @@ interface AlertDialogProps {
 export function LogoutConfirmDialog({ openDialog, setOpenDialog }: AlertDialogProps) {
   const { handleRemoveServerConfig } = useApp()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   async function handleRemoveConfig(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
@@ -32,12 +34,20 @@ export function LogoutConfirmDialog({ openDialog, setOpenDialog }: AlertDialogPr
     <AlertDialog open={openDialog}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Ready to say goodbye for now?</AlertDialogTitle>
-          <AlertDialogDescription>Confirm to log out.</AlertDialogDescription>
+          <AlertDialogTitle>
+            {t('logout.dialog.title')}
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            {t('logout.dialog.description')}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setOpenDialog(!openDialog)}>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleRemoveConfig}>Continue</AlertDialogAction>
+          <AlertDialogCancel onClick={() => setOpenDialog(!openDialog)}>
+            {t('logout.dialog.cancel')}
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleRemoveConfig}>
+            {t('logout.dialog.confirm')}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

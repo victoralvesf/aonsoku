@@ -6,6 +6,7 @@ import { os } from '@tauri-apps/api'
 import { IAppContext, IServerConfig } from "@/types/serverConfig";
 import { pingServer } from "@/api/pingServer";
 import { removeFromLocalStorage, saveToLocalStorage } from "@/utils/persistDataLayer";
+import { useTranslation } from "react-i18next";
 
 const store = new Store(".settings.dat");
 
@@ -20,6 +21,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const [serverUrl, setServerUrl] = useState('')
   const [serverUsername, setServerUsername] = useState('')
   const [serverPassword, setServerPassword] = useState('')
+
+  const { t } = useTranslation()
 
   async function getServerConfig() {
     const serverConfig = await store.get<IServerConfig>("server-config")
@@ -76,11 +79,11 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
       setServerPassword(token)
       setIsServerConfigured(true)
 
-      toast.success('Server configuration saved successfully!')
+      toast.success(t('toast.server.success'))
       return true
     } else {
       setIsServerConfigured(false)
-      toast.error('Server communication failed!')
+      toast.error(t('toast.server.error'))
       return false
     }
   }

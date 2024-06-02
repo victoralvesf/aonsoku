@@ -5,10 +5,12 @@ import { songsColumns } from "@/app/tables/songs-columns";
 import { usePlayer } from "@/app/contexts/player-context";
 import { Skeleton } from "@/app/components/ui/skeleton";
 import { ColumnFilter } from "@/types/columnFilter";
+import { useTranslation } from "react-i18next";
 
 export default function ArtistTopSongs() {
   let topSongs = useAsyncValue() as ISong[]
   const player = usePlayer()
+  const { t } = useTranslation()
 
   if (topSongs.length > 10) {
     topSongs = topSongs.slice(0, 10)
@@ -29,7 +31,7 @@ export default function ArtistTopSongs() {
   return (
     <div className="w-full mb-4">
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-4 mt-6">
-        Top Songs
+        {t('artist.topSongs')}
       </h3>
 
       <DataTable

@@ -1,9 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-
-import { english } from './languages/en';
-import { brazilianPortuguese } from './languages/pt-BR';
+import { languages } from './languages';
 
 i18n
   .use(LanguageDetector)
@@ -14,10 +12,7 @@ i18n
     interpolation: {
       escapeValue: false,
     },
-    resources: {
-      en: english,
-      'pt-BR': brazilianPortuguese
-    }
+    resources: languages
   });
 
 export default i18n;

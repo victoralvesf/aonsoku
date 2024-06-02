@@ -21,6 +21,7 @@ import {
 import { useApp } from "@/app/contexts/app-context"
 import { useNavigate } from "react-router-dom"
 import { ROUTES } from "@/routes/routesList"
+import { useTranslation } from "react-i18next"
 
 export function LoginForm() {
   const {
@@ -32,6 +33,7 @@ export function LoginForm() {
     handleSaveServerConfig
   } = useApp()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -46,15 +48,21 @@ export function LoginForm() {
       <form onSubmit={handleSubmit}>
         <CardHeader className="flex flex-row justify-between items-center space-y-0">
           <div>
-            <CardTitle>Server</CardTitle>
-            <CardDescription>Connect to your Subsonic Server.</CardDescription>
+            <CardTitle>
+              {t('login.form.server')}
+            </CardTitle>
+            <CardDescription>
+              {t('login.form.description')}
+            </CardDescription>
           </div>
           <ThemeToggle />
         </CardHeader>
         <CardContent>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="url">URL</Label>
+              <Label htmlFor="url">
+                {t('login.form.url')}
+              </Label>
               <div className="flex flex-row gap-2">
                 <Select onValueChange={setServerProtocol} value={serverProtocol}>
                   <SelectTrigger className="w-[110px]" >
@@ -68,7 +76,7 @@ export function LoginForm() {
                 <Input
                   id="url"
                   type="text"
-                  placeholder="Your server URL"
+                  placeholder={t('login.form.urlPlaceholder')}
                   autoCorrect="false"
                   autoCapitalize="false"
                   spellCheck="false"
@@ -77,11 +85,13 @@ export function LoginForm() {
               </div>
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">
+                {t('login.form.username')}
+              </Label>
               <Input
                 id="username"
                 type="text"
-                placeholder="Your username"
+                placeholder={t('login.form.usernamePlaceholder')}
                 autoCorrect="false"
                 autoCapitalize="false"
                 spellCheck="false"
@@ -89,7 +99,9 @@ export function LoginForm() {
               />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">
+                {t('login.form.password')}
+              </Label>
               <Input
                 id="password"
                 type="password"
@@ -99,7 +111,9 @@ export function LoginForm() {
           </div>
         </CardContent>
         <CardFooter className="flex">
-          <Button type="submit" className="w-full">Connect</Button>
+          <Button type="submit" className="w-full">
+            {t('login.form.connect')}
+          </Button>
         </CardFooter>
       </form>
     </Card>

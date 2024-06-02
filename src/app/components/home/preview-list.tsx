@@ -29,7 +29,7 @@ export default function PreviewList({
   const player = usePlayer()
   const { t } = useTranslation()
 
-  moreTitle = t('generic.seeMore')
+  moreTitle = moreTitle || t('generic.seeMore')
 
   if (list.length > 16) {
     list = list.slice(0, 16)

@@ -5,6 +5,7 @@ import { EllipsisVertical, Heart, Play, Shuffle } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import { SimpleTooltip } from "@/app/components/ui/simple-tooltip";
 import { subsonic } from "@/service/subsonic";
+import { useTranslation } from "react-i18next";
 
 interface PlayButtonsProps {
   playButtonTooltip: string
@@ -30,12 +31,22 @@ export default function PlayButtons({
   contentId
 }: PlayButtonsProps) {
   const [isStarred, setIsStarred] = useState(likeState ? true : false)
+  const { t } = useTranslation()
 
   async function handleLikeButton() {
     if (!contentId) return
 
     await subsonic.star.handleStarItem(contentId, isStarred)
     setIsStarred(!isStarred)
+  }
+
+  function likeTooltipText() {
+    const albumName = { name: likeTooltipResource }
+    if (isStarred) {
+      return t('album.buttons.dislike', albumName)
+    } else {
+      return t('album.buttons.like', albumName)
+    }
   }
 
   return (
@@ -61,7 +72,7 @@ export default function PlayButtons({
       </SimpleTooltip>
 
       {showLikeButton && likeTooltipResource && (
-        <SimpleTooltip text={`${isStarred ? 'Remove like from' : 'Like'} ${likeTooltipResource}`}>
+        <SimpleTooltip text={likeTooltipText()}>
           <Button
             className="rounded-full w-12 h-12"
             variant="ghost"

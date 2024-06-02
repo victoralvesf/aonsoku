@@ -12,7 +12,7 @@ export function convertSecondsToHumanRead(seconds: number, showSeconds = false) 
 
   const formattedHours = `${String(hours).padStart(2, '0')} hr `
   const formattedMinutes = `${String(minutes).padStart(2, '0')} min `
-  const formattedSeconds = `${String(secs).padStart(2, '0')} sec`
+  const formattedSeconds = `${String(secs).padStart(2, '0')} s`
 
   let finalText = ''
 

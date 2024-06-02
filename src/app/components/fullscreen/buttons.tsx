@@ -23,9 +23,9 @@ export function SwitchThemeButton() {
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       {theme === "dark" ? (
-        <Sun className="w-8 h-8 text-slate-800/80 hover:text-slate-800 dark:text-slate-100/80 dark:hover:text-slate-100" />
-      ) : (
         <Moon className="w-8 h-8 text-slate-800/80 hover:text-slate-800 dark:text-slate-100/80 dark:hover:text-slate-100" />
+      ) : (
+        <Sun className="w-8 h-8 text-slate-800/80 hover:text-slate-800 dark:text-slate-100/80 dark:hover:text-slate-100" />
       )}
     </Button>
   )

@@ -4,6 +4,7 @@ import LastFmIcon from "@/app/components/icons/last-fm";
 import { Skeleton } from "@/app/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { IAlbumInfo } from "@/types/responses/album";
+import { useTranslation } from "react-i18next";
 
 interface AlbumInfoProps {
   albumName: string
@@ -13,17 +14,20 @@ const containerClasses = "flex flex-col items-start gap-2 rounded-lg border p-3 
 
 export default function AlbumInfo({ albumName }: AlbumInfoProps) {
   const albumInfo = useAsyncValue() as IAlbumInfo
+  const { t } = useTranslation()
 
   if (!albumInfo.notes) return
 
   return (
     <div className={cn(containerClasses)} id="artist-biography">
-      <h3 className="scroll-m-20 mb-2 text-3xl font-semibold tracking-tight">About {albumName}</h3>
+      <h3 className="scroll-m-20 mb-2 text-3xl font-semibold tracking-tight">
+        {t('album.info.about', { name: albumName })}
+      </h3>
       <p dangerouslySetInnerHTML={{ __html: albumInfo?.notes! }} />
 
       <div className="flex w-full mt-2 gap-2">
         {albumInfo?.lastFmUrl && (
-          <SimpleTooltip text="Open in Last.fm">
+          <SimpleTooltip text={t('album.info.lastfm')}>
             <a
               target="_blank"
               rel="nofollow"

@@ -14,6 +14,7 @@ import PreviewList from "@/app/components/home/preview-list"
 import PreviewListFallback from "@/app/components/preview-list-fallback"
 import AlbumInfo, { AlbumInfoFallback } from "@/app/components/album/album-info"
 import { ROUTES } from "@/routes/routesList"
+import { useTranslation } from "react-i18next"
 
 interface ILoaderData {
   album: SingleAlbum
@@ -24,13 +25,16 @@ interface ILoaderData {
 
 export default function Album() {
   const player = usePlayer()
+  const { t } = useTranslation()
   const { album, artistAlbums, albumInfo, randomGenreAlbums } = useLoaderData() as ILoaderData
+
+  const albumDuration = album.duration ? convertSecondsToHumanRead(album.duration, true) : null
 
   const badges = [
     album.year || null,
     album.genre || null,
-    album.songCount ? `${album.songCount} songs` : null,
-    album.duration ? convertSecondsToHumanRead(album.duration, true) : null,
+    album.songCount ? t('playlist.songCount', { count: album.songCount }) : null,
+    albumDuration ? t('playlist.duration', { duration: albumDuration }) : null,
   ]
 
   const columnsToShow: ColumnFilter[] = [
@@ -53,10 +57,16 @@ export default function Album() {
     return list
   }
 
+  const buttonsTooltips = {
+    play: t('playlist.buttons.play', { name: album.name }),
+    shuffle: t('playlist.buttons.shuffle', { name: album.name }),
+    options: t('playlist.buttons.options', { name: album.name })
+  }
+
   return (
     <div className="w-full">
       <ImageHeader
-        type="Album"
+        type={t('album.headline')}
         title={album.name}
         subtitle={album.artist}
         artistId={album.artistId}
@@ -68,11 +78,11 @@ export default function Album() {
 
       <ListWrapper>
         <PlayButtons
-          playButtonTooltip={`Play ${album.name}`}
+          playButtonTooltip={buttonsTooltips.play}
           handlePlayButton={() => player.setSongList(album.song, 0)}
-          shuffleButtonTooltip={`Play ${album.name} in shuffle mode`}
+          shuffleButtonTooltip={buttonsTooltips.shuffle}
           handleShuffleButton={() => player.setSongList(album.song, 0, true)}
-          optionsTooltip={`More options for ${album.name}`}
+          optionsTooltip={buttonsTooltips.options}
           showLikeButton={true}
           likeTooltipResource={album.name}
           likeState={album.starred}
@@ -106,8 +116,8 @@ export default function Album() {
                   <PreviewList
                     list={list}
                     showMore={true}
-                    title="More from this artist"
-                    moreTitle="Artist Discography"
+                    title={t('album.more.listTitle')}
+                    moreTitle={t('album.more.discography')}
                     moreRoute={ROUTES.ARTIST.ALBUMS(album.artistId)}
                   />
                 )
@@ -124,7 +134,7 @@ export default function Album() {
                   <PreviewList
                     list={list}
                     showMore={false}
-                    title={`More from ${album.genre}`}
+                    title={t('album.more.genreTitle', { genre: album.genre })}
                   />
                 )}
               />
