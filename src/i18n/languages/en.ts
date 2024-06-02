@@ -8,7 +8,7 @@ export const english = {
     },
     sidebar: {
       home: 'Home',
-      search: 'Search',
+      search: 'Search...',
       library: 'Library',
       artists: 'Artists',
       songs: 'Songs',
@@ -25,6 +25,7 @@ export const english = {
       seeMore: 'See more'
     },
     theme: {
+      label: 'Theme',
       light: 'Light',
       dark: 'Dark',
       system: 'System'
@@ -135,6 +136,16 @@ export const english = {
         success: 'Server was saved successfully!',
         error: 'Server communication failed!',
       }
+    },
+    command: {
+      inputPlaceholder: 'Search for an album, artist or song',
+      noResults: 'No results found.',
+      commands: {
+        heading: 'Commands',
+        pages: 'Go to page',
+        theme: 'Change theme'
+      },
+      pages: 'Pages',
     },
     dayjs: {
       relativeTime: {

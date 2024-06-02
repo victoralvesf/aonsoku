@@ -66,6 +66,14 @@
   -ms-user-select: none;
 }
 
+input,
+textarea {
+  user-select: text;
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+}
+
 #main-scroll-area #scroll-viewport > div {
   display: flex !important;
 }
@@ -81,4 +89,25 @@ img {
 
 #artist-biography > p > a {
   @apply text-primary hover:underline;
+}
+
+/* Native Scroll Bar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-button {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 7px;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
 }

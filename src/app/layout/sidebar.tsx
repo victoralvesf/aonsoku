@@ -6,8 +6,7 @@ import {
   Music2,
   Radio,
   Home,
-  Search,
-  Library
+  Library,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -16,6 +15,7 @@ import { Playlist } from "@/types/responses/playlist"
 import { SidebarGenerator, SidebarPlaylistGenerator } from "@/app/components/sidebar-generator"
 import { subsonic } from "@/service/subsonic"
 import { ROUTES } from "@/routes/routesList"
+import CommandMenu from "@/app/components/command/command-menu"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
@@ -34,7 +34,10 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <div className={cn(className)}>
       <ScrollArea className="h-full">
-        <div className="space-y-4 py-4 min-w-[275px] max-w-[275px]">
+        <div className="px-4 sticky top-0 py-4 z-50 bg-background">
+          <CommandMenu />
+        </div>
+        <div className="space-y-4 py-4 pt-0 min-w-[275px] max-w-[275px]">
           <SidebarSection>
             <div className="space-y-1">
               <SidebarGenerator list={mainMenuItems} />
@@ -62,7 +65,7 @@ export function Sidebar({ className }: SidebarProps) {
 
 function SidebarSection({ children }: { children: ReactNode }) {
   return (
-    <div className="px-4 py-2">
+    <div className="px-4 py-2 pt-0">
       {children}
     </div>
   )
@@ -83,11 +86,6 @@ const mainMenuItems = [
     title: 'sidebar.home',
     route: ROUTES.LIBRARY.HOME,
     icon: <Home className={iconClassName} />
-  },
-  {
-    title: 'sidebar.search',
-    route: '/search',
-    icon: <Search className={iconClassName} />
   },
 ]
 

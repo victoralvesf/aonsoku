@@ -8,7 +8,7 @@ export const brazilianPortuguese = {
     },
     sidebar: {
       home: 'Início',
-      search: 'Pesquisar',
+      search: 'Pesquisar...',
       library: 'Biblioteca',
       artists: 'Artistas',
       songs: 'Músicas',
@@ -25,6 +25,7 @@ export const brazilianPortuguese = {
       seeMore: 'Ver mais'
     },
     theme: {
+      label: 'Tema',
       light: 'Claro',
       dark: 'Escuro',
       system: 'Sistema'
@@ -135,6 +136,16 @@ export const brazilianPortuguese = {
         success: 'Servidor foi salvo com sucesso!',
         error: 'Não foi possível se comunicar com o servidor!',
       }
+    },
+    command: {
+      inputPlaceholder: 'Pesquisar por álbum, artista ou música',
+      noResults: 'Nenhum resultado encontrado.',
+      commands: {
+        heading: 'Comandos',
+        pages: 'Ir para página',
+        theme: 'Mudar tema'
+      },
+      pages: 'Páginas',
     },
     dayjs: {
       relativeTime: {
