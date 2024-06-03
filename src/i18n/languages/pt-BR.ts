@@ -110,6 +110,7 @@ export const brazilianPortuguese = {
       noLyrics: 'Letra não encontrada',
       queue: 'Fila',
       lyrics: 'Letra',
+      switchButton: 'Switch to Fullscreen',
     },
     logout: {
       dialog: {
@@ -146,6 +147,9 @@ export const brazilianPortuguese = {
         theme: 'Mudar tema'
       },
       pages: 'Páginas',
+    },
+    player: {
+      noSongPlaying: 'Nenhuma música tocando',
     },
     dayjs: {
       relativeTime: {

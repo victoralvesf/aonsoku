@@ -16,6 +16,7 @@ import { SidebarGenerator, SidebarPlaylistGenerator } from "@/app/components/sid
 import { subsonic } from "@/service/subsonic"
 import { ROUTES } from "@/routes/routesList"
 import CommandMenu from "@/app/components/command/command-menu"
+import { NavigationButtons } from "../components/navigation/buttons"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
@@ -34,8 +35,9 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <div className={cn(className)}>
       <ScrollArea className="h-full">
-        <div className="px-4 sticky top-0 py-4 z-50 bg-background">
+        <div className="flex flex-col gap-2 px-4 sticky top-0 py-4 z-50 bg-background">
           <CommandMenu />
+          <NavigationButtons />
         </div>
         <div className="space-y-4 py-4 pt-0 min-w-[275px] max-w-[275px]">
           <SidebarSection>

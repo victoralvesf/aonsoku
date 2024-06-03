@@ -110,6 +110,7 @@ export const english = {
       noLyrics: 'No lyrics found',
       queue: 'Queue',
       lyrics: 'Lyrics',
+      switchButton: 'Switch to Fullscreen',
     },
     logout: {
       dialog: {
@@ -146,6 +147,9 @@ export const english = {
         theme: 'Change theme'
       },
       pages: 'Pages',
+    },
+    player: {
+      noSongPlaying: 'No song playing',
     },
     dayjs: {
       relativeTime: {
