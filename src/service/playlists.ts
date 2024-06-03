@@ -1,5 +1,6 @@
 import { httpClient } from "@/api/httpClient"
 import { PlaylistWithEntriesResponse, PlaylistsResponse } from "@/types/responses/playlist"
+import { SubsonicResponse } from "@/types/responses/subsonicResponse"
 
 async function getAll() {
   const response = await httpClient<PlaylistsResponse>('/getPlaylists', {
@@ -20,7 +21,17 @@ async function getOne(id: string) {
   return response?.data.playlist
 }
 
+async function remove(id: string) {
+  await httpClient<SubsonicResponse>('/deletePlaylist', {
+    method: 'DELETE',
+    query: {
+      id
+    }
+  })
+}
+
 export const playlists = {
   getAll,
-  getOne
+  getOne,
+  remove
 }

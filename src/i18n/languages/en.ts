@@ -32,6 +32,7 @@ export const english = {
     },
     playlist: {
       headline: 'Playlist',
+      songCount_zero: '{{count}} songs',
       songCount_one: '{{count}} song',
       songCount_other: '{{count}} songs',
       duration: 'about {{duration}}',
@@ -39,6 +40,15 @@ export const english = {
         play: 'Play {{name}}',
         shuffle: 'Play {{name}} in shuffle mode',
         options: 'More options for {{name}}',
+      },
+      noSongList: 'This playlist does not have any songs!',
+      removeDialog: {
+        title: 'Are you sure you want to delete this playlist?',
+        description: 'This action cannot be undone.',
+        toast: {
+          success: 'Playlist removed successfully!',
+          error: 'Failed to remove playlist!'
+        }
       }
     },
     album: {
@@ -80,6 +90,7 @@ export const english = {
         options: 'More options for {{artist}}'
       },
       info: {
+        albumsCount_zero: '{{count}} albums',
         albumsCount_one: '{{count}} album',
         albumsCount_other: '{{count}} albums',
       },
@@ -150,6 +161,15 @@ export const english = {
     },
     player: {
       noSongPlaying: 'No song playing',
+    },
+    options: {
+      playNext: 'Play next',
+      addLast: 'Add last',
+      download: 'Download',
+      playlist: {
+        edit: 'Edit playlist',
+        delete: 'Delete playlist'
+      }
     },
     dayjs: {
       relativeTime: {

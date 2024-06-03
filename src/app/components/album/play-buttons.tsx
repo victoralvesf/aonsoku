@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import clsx from "clsx";
 import { EllipsisVertical, Heart, Play, Shuffle } from "lucide-react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/app/components/ui/dropdown-menu"
 
 import { Button } from "@/app/components/ui/button";
 import { SimpleTooltip } from "@/app/components/ui/simple-tooltip";
@@ -10,25 +16,31 @@ import { useTranslation } from "react-i18next";
 interface PlayButtonsProps {
   playButtonTooltip: string
   handlePlayButton: () => void
+  disablePlayButton?: boolean
   shuffleButtonTooltip: string
   handleShuffleButton: () => void
+  disableShuffleButton?: boolean
   optionsTooltip: string
   showLikeButton?: boolean
   likeTooltipResource?: string
   likeState?: string
   contentId?: string
+  optionsMenuItems?: ReactNode
 }
 
 export default function PlayButtons({
   playButtonTooltip,
   handlePlayButton,
+  disablePlayButton = false,
   shuffleButtonTooltip,
   handleShuffleButton,
+  disableShuffleButton = false,
   optionsTooltip,
   showLikeButton = false,
   likeTooltipResource,
   likeState,
-  contentId
+  contentId,
+  optionsMenuItems
 }: PlayButtonsProps) {
   const [isStarred, setIsStarred] = useState(likeState ? true : false)
   const { t } = useTranslation()
@@ -56,6 +68,7 @@ export default function PlayButtons({
           className="rounded-full w-14 h-14 hover:scale-[0.97] transform-gpu"
           variant="default"
           onClick={handlePlayButton}
+          disabled={disablePlayButton}
         >
           <Play className="w-4 h-4 fill-slate-50 text-slate-50" strokeWidth={6} />
         </Button>
@@ -66,6 +79,7 @@ export default function PlayButtons({
           className="rounded-full w-12 h-12"
           variant="ghost"
           onClick={handleShuffleButton}
+          disabled={disableShuffleButton}
         >
           <Shuffle className="w-4 h-4" strokeWidth={2} />
         </Button>
@@ -86,11 +100,20 @@ export default function PlayButtons({
         </SimpleTooltip>
       )}
 
-      <SimpleTooltip text={optionsTooltip}>
-        <Button className="rounded-full w-12 h-12" variant="ghost">
-          <EllipsisVertical className="w-4 h-4" strokeWidth={2} />
-        </Button>
-      </SimpleTooltip>
+      <DropdownMenu>
+        <DropdownMenuTrigger className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-full w-12 h-12">
+          <SimpleTooltip text={optionsTooltip}>
+            <div className="min-w-12 h-12 rounded-full flex justify-center items-center">
+              <EllipsisVertical className="w-4 h-4" strokeWidth={2} />
+            </div>
+          </SimpleTooltip>
+        </DropdownMenuTrigger>
+        {optionsMenuItems && (
+          <DropdownMenuContent className="min-w-56" align="start">
+            {optionsMenuItems}
+          </DropdownMenuContent>
+        )}
+      </DropdownMenu>
     </div>
   )
 }

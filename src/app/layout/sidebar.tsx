@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react"
+import { ReactNode } from "react"
 import { useTranslation } from 'react-i18next'
 import {
   ListMusic,
@@ -11,26 +11,17 @@ import {
 
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/app/components/ui/scroll-area"
-import { Playlist } from "@/types/responses/playlist"
 import { SidebarGenerator, SidebarPlaylistGenerator } from "@/app/components/sidebar-generator"
-import { subsonic } from "@/service/subsonic"
 import { ROUTES } from "@/routes/routesList"
 import CommandMenu from "@/app/components/command/command-menu"
-import { NavigationButtons } from "../components/navigation/buttons"
+import { NavigationButtons } from "@/app/components/navigation/buttons"
+import { usePlaylists } from "@/app/contexts/playlists-context"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function Sidebar({ className }: SidebarProps) {
-  const [playlists, setPlaylists] = useState<Playlist[]>([])
   const { t } = useTranslation()
-
-  useEffect(() => {
-    const fetchPlaylists = async () => {
-      const response = await subsonic.playlists.getAll()
-      response ? setPlaylists(response) : setPlaylists([])
-    }
-    fetchPlaylists()
-  }, [])
+  const { playlists } = usePlaylists()
 
   return (
     <div className={cn(className)}>

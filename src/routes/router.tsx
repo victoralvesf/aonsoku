@@ -36,6 +36,7 @@ export const router = createBrowserRouter([
         id: 'playlist',
         path: ROUTES.PLAYLIST.PATH,
         loader: playlistLoader,
+        errorElement: <ErrorPage />,
         element: <Playlist />
       },
       {

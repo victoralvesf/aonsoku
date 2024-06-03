@@ -1,6 +1,6 @@
 import { subsonic } from "@/service/subsonic";
 
-export function usePlaylist() {
+export function useSongList() {
   async function getArtistSongCount(id: string) {
     const response = await subsonic.artists.getOne(id);
     let count = 0

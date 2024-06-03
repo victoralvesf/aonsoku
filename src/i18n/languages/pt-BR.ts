@@ -32,6 +32,7 @@ export const brazilianPortuguese = {
     },
     playlist: {
       headline: 'Playlist',
+      songCount_zero: '{{count}} músicas',
       songCount_one: '{{count}} música',
       songCount_other: '{{count}} músicas',
       duration: 'cerca de {{duration}}',
@@ -39,6 +40,15 @@ export const brazilianPortuguese = {
         play: 'Tocar {{name}}',
         shuffle: 'Tocar {{name}} no modo aleatório',
         options: 'Mais opções para {{name}}',
+      },
+      noSongList: 'Esta playlist não possui nenhuma música!',
+      removeDialog: {
+        title: 'Você tem certeza de que deseja excluir esta playlist?',
+        description: 'Essa ação não poderá ser desfeita.',
+        toast: {
+          success: 'Playlist excluída com sucesso!',
+          error: 'Falha ao excluir esta playlist!'
+        }
       }
     },
     album: {
@@ -80,6 +90,7 @@ export const brazilianPortuguese = {
         options: 'Mais opções para {{artist}}'
       },
       info: {
+        albumsCount_zero: '{{count}} álbuns',
         albumsCount_one: '{{count}} álbum',
         albumsCount_other: '{{count}} álbuns',
       },
@@ -150,6 +161,15 @@ export const brazilianPortuguese = {
     },
     player: {
       noSongPlaying: 'Nenhuma música tocando',
+    },
+    options: {
+      playNext: 'Tocar a seguir',
+      addLast: 'Adicionar ao final',
+      download: 'Download',
+      playlist: {
+        edit: 'Editar playlist',
+        delete: 'Excluir playlist'
+      }
     },
     dayjs: {
       relativeTime: {

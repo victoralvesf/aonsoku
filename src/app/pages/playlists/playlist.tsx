@@ -1,5 +1,7 @@
-import { PlaylistWithEntries } from '@/types/responses/playlist';
+import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { PlaylistWithEntries } from '@/types/responses/playlist';
 import { getCoverArtUrl } from '@/api/httpClient';
 import { songsColumns } from '@/app/tables/songs-columns';
 import { DataTable } from '@/app/components/ui/data-table';
@@ -11,11 +13,14 @@ import PlayButtons from '@/app/components/album/play-buttons';
 import { cn } from '@/lib/utils';
 import { getTextSizeClass } from '@/utils/getTextSizeClass';
 import { ColumnFilter } from '@/types/columnFilter';
-import { useTranslation } from 'react-i18next';
+import { PlaylistOptions } from '@/app/components/playlist/options';
+import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog';
 
 export default function Playlist() {
   const playlist = useLoaderData() as PlaylistWithEntries;
-  const playlistDuration = convertSecondsToHumanRead(playlist.duration)
+  const [removeDialogState, setRemoveDialogState] = useState(false)
+
+  const playlistDuration = playlist.duration > 0 ? convertSecondsToHumanRead(playlist.duration) : undefined;
   const { t } = useTranslation()
   const player = usePlayer()
 
@@ -60,9 +65,11 @@ export default function Playlist() {
             <Badge variant="secondary">
               {t('playlist.songCount', { count: playlist.songCount })}
             </Badge>
-            <Badge variant="secondary">
-              {t('playlist.duration', { duration: playlistDuration })}
-            </Badge>
+            {playlistDuration && (
+              <Badge variant="secondary">
+                {t('playlist.duration', { duration: playlistDuration })}
+              </Badge>
+            )}
           </div>
         </div>
       </div>
@@ -70,18 +77,43 @@ export default function Playlist() {
       <PlayButtons
         playButtonTooltip={buttonsTooltips.play}
         handlePlayButton={() => player.setSongList(playlist.entry, 0)}
+        disablePlayButton={!playlist.entry}
         shuffleButtonTooltip={buttonsTooltips.shuffle}
         handleShuffleButton={() => player.setSongList(playlist.entry, 0, true)}
+        disableShuffleButton={!playlist.entry}
         optionsTooltip={buttonsTooltips.options}
         showLikeButton={false}
+        optionsMenuItems={
+          <PlaylistOptions
+            playlist={playlist}
+            onRemovePlaylist={() => setRemoveDialogState(true)}
+            disablePlayNext={!playlist.entry}
+            disableAddLast={!playlist.entry}
+            disableDownload={!playlist.entry}
+          />
+        }
       />
 
-      <DataTable
-        columns={songsColumns}
-        data={playlist.entry}
-        handlePlaySong={(row) => player.setSongList(playlist.entry, row.index)}
-        columnFilter={columnsToShow}
+      <RemovePlaylistDialog
+        playlistId={playlist.id}
+        openDialog={removeDialogState}
+        setOpenDialog={setRemoveDialogState}
       />
+
+      {playlist.entry && playlist.entry.length > 0 ? (
+        <DataTable
+          columns={songsColumns}
+          data={playlist.entry}
+          handlePlaySong={(row) => player.setSongList(playlist.entry, row.index)}
+          columnFilter={columnsToShow}
+        />
+      ) : (
+        <div className="flex items-center pt-6">
+          <p className="text-lg text-muted-foreground">
+            {t('playlist.noSongList')}
+          </p>
+        </div>
+      )}
     </main>
   )
 }

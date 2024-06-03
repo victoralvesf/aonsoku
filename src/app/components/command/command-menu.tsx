@@ -18,11 +18,11 @@ import { ISong } from "@/types/responses/song";
 import { ROUTES } from "@/routes/routesList";
 import { useTheme } from "@/app/contexts/theme-context";
 import { useApp } from "@/app/contexts/app-context";
-import { Playlist } from "@/types/responses/playlist";
 import { ResultItem } from "@/app/components/command/result-item";
 import { Keyboard } from "@/app/components/command/keyboard-key";
-import { usePlaylist } from "@/app/hooks/use-set-playlist";
+import { useSongList } from "@/app/hooks/use-song-list";
 import { usePlayer } from "@/app/contexts/player-context";
+import { usePlaylists } from "@/app/contexts/playlists-context";
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS'
 
@@ -32,7 +32,6 @@ export default function CommandMenu() {
   const [albums, setAlbums] = useState<Albums[]>([])
   const [artists, setArtists] = useState<ISimilarArtist[]>([])
   const [songs, setSongs] = useState<ISong[]>([])
-  const [playlists, setPlaylists] = useState<Playlist[]>([])
 
   const [pages, setPages] = useState<CommandPages[]>(['HOME'])
   const activePage = pages[pages.length - 1]
@@ -42,7 +41,8 @@ export default function CommandMenu() {
   const { t } = useTranslation()
   const { setTheme } = useTheme()
   const { osType } = useApp()
-  const { getArtistAllSongs, getAlbumSongs } = usePlaylist()
+  const { getArtistAllSongs, getAlbumSongs } = useSongList()
+  const { playlists } = usePlaylists()
   const player = usePlayer()
 
   const isMacOS = osType === 'Darwin'
@@ -117,11 +117,6 @@ export default function CommandMenu() {
       setArtists(response.artist || [])
       setSongs(response.song || [])
     }
-  }
-
-  async function getPlaylists() {
-    const response = await subsonic.playlists.getAll()
-    response ? setPlaylists(response) : setPlaylists([])
   }
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
@@ -246,10 +241,7 @@ export default function CommandMenu() {
               <CommandItem onSelect={() => setPages([...pages, 'THEME'])}>
                 {t('command.commands.theme')}
               </CommandItem>
-              <CommandItem onSelect={async () => {
-                await getPlaylists()
-                setPages([...pages, 'PLAYLISTS'])
-              }}>
+              <CommandItem onSelect={() => setPages([...pages, 'PLAYLISTS'])}>
                 {t('sidebar.playlists')}
               </CommandItem>
             </CommandGroup>
