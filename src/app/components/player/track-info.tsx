@@ -29,7 +29,7 @@ export function TrackInfo({ song }: { song: ISong }) {
       </div>
       <div className="flex flex-col justify-center">
         <span className="text-sm font-medium">{song.title}</span>
-        <Link to={ROUTES.ARTIST.PAGE(song.artistId!)} className={cn(!song.artistId && "pointer-events-none")}>
+        <Link to={ROUTES.ARTIST.PAGE(song.artistId!)} className={cn("w-fit", !song.artistId && "pointer-events-none")}>
           <span
             className={cn("text-xs font-light text-muted-foreground", song.artistId && "hover:underline")}
           >

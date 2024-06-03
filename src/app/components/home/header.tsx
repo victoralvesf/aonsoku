@@ -77,7 +77,7 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
                         {song.artist}
                       </h4>
                     ) : (
-                      <Link to={ROUTES.ARTIST.PAGE(song.artistId)}>
+                      <Link to={ROUTES.ARTIST.PAGE(song.artistId)} className="w-fit">
                         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight opacity-60 hover:underline">
                           {song.artist}
                         </h4>
