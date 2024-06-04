@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import { Fragment, ReactNode } from "react"
 import { useTranslation } from 'react-i18next'
 import {
   ListMusic,
@@ -16,6 +16,8 @@ import { ROUTES } from "@/routes/routesList"
 import CommandMenu from "@/app/components/command/command-menu"
 import { NavigationButtons } from "@/app/components/navigation/buttons"
 import { usePlaylists } from "@/app/contexts/playlists-context"
+import { SidebarCreatePlaylistButton } from "@/app/components/playlist/sidebar-create-button"
+import { CreatePlaylistDialog } from "@/app/components/playlist/create-dialog"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
@@ -24,35 +26,48 @@ export function Sidebar({ className }: SidebarProps) {
   const { playlists } = usePlaylists()
 
   return (
-    <div className={cn(className)}>
-      <ScrollArea className="h-full">
-        <div className="flex flex-col gap-2 px-4 sticky top-0 py-4 z-50 bg-background">
-          <CommandMenu />
-          <NavigationButtons />
-        </div>
-        <div className="space-y-4 py-4 pt-0 min-w-[275px] max-w-[275px]">
-          <SidebarSection>
-            <div className="space-y-1">
-              <SidebarGenerator list={mainMenuItems} />
-            </div>
-          </SidebarSection>
-          <SidebarSection>
-            <SectionTitle>{t('sidebar.library')}</SectionTitle>
-            <div className="space-y-1">
-              <SidebarGenerator list={libraryItems} />
-            </div>
-          </SidebarSection>
-          {playlists.length > 0 && (
+    <Fragment>
+      <div className={cn(className)}>
+        <ScrollArea className="h-full">
+          <div className="flex flex-col gap-2 px-4 sticky top-0 py-4 z-50 bg-background">
+            <CommandMenu />
+            <NavigationButtons />
+          </div>
+          <div className="space-y-4 py-4 pt-0 min-w-[275px] max-w-[275px]">
             <SidebarSection>
-              <SectionTitle>{t('sidebar.playlists')}</SectionTitle>
               <div className="space-y-1">
-                <SidebarPlaylistGenerator playlists={playlists} />
+                <SidebarGenerator list={mainMenuItems} />
               </div>
             </SidebarSection>
-          )}
-        </div>
-      </ScrollArea>
-    </div>
+            <SidebarSection>
+              <SectionTitle>{t('sidebar.library')}</SectionTitle>
+              <div className="space-y-1">
+                <SidebarGenerator list={libraryItems} />
+              </div>
+            </SidebarSection>
+            <SidebarSection>
+              <SectionTitle>
+                <Fragment>
+                  {t('sidebar.playlists')}
+                  <SidebarCreatePlaylistButton />
+                </Fragment>
+              </SectionTitle>
+              <div className="space-y-1">
+                {playlists.length > 0 ? (
+                  <SidebarPlaylistGenerator playlists={playlists} />
+                ) : (
+                  <span className="w-full truncate text-left px-3 pt-2 text-sm">
+                    {t('sidebar.emptyPlaylist')}
+                  </span>
+                )}
+              </div>
+            </SidebarSection>
+          </div>
+        </ScrollArea>
+      </div>
+
+      <CreatePlaylistDialog />
+    </Fragment>
   )
 }
 
@@ -66,7 +81,7 @@ function SidebarSection({ children }: { children: ReactNode }) {
 
 function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+    <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight flex justify-between items-center">
       {children}
     </h2>
   )

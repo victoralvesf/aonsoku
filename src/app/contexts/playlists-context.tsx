@@ -7,11 +7,17 @@ import { toast } from "react-toastify";
 interface PlaylistContextState {
   playlists: Playlist[]
   removePlaylist: (id: string) => Promise<void>
+  playlistDialogState: boolean
+  setPlaylistDialogState: (state: boolean) => void
+  createPlaylistWithoutSongs: (name: string) => Promise<void>
 }
 
-const initialState = {
+const initialState: PlaylistContextState = {
   playlists: [],
-  removePlaylist: async () => { }
+  removePlaylist: async () => { },
+  playlistDialogState: false,
+  setPlaylistDialogState: () => { },
+  createPlaylistWithoutSongs: async () => { }
 }
 
 const PlaylistContext = createContext<PlaylistContextState>(initialState)
@@ -22,6 +28,7 @@ interface PlaylistProviderProps {
 
 export function PlaylistProvider({ children }: PlaylistProviderProps) {
   const [playlists, setPlaylists] = useState<Playlist[]>([])
+  const [playlistDialogState, setPlaylistDialogState] = useState(false)
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -54,9 +61,22 @@ export function PlaylistProvider({ children }: PlaylistProviderProps) {
     }
   }, [])
 
+  const createPlaylistWithoutSongs = useCallback(async (name: string) => {
+    try {
+      await subsonic.playlists.create(name)
+      await fetchPlaylists()
+      toast.success(t('playlist.createDialog.toast.success'))
+    } catch (_) {
+      toast.error(t('playlist.createDialog.toast.error'))
+    }
+  }, [])
+
   const value: PlaylistContextState = {
     playlists,
-    removePlaylist
+    removePlaylist,
+    playlistDialogState,
+    setPlaylistDialogState,
+    createPlaylistWithoutSongs
   }
 
   return (

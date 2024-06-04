@@ -7,6 +7,8 @@ export interface Playlists {
 
 export interface PlaylistsResponse extends SubsonicResponse<{ playlists: Playlists }> {}
 
+export interface SinglePlaylistResponse extends SubsonicResponse<{ playlist: Playlist }> {}
+
 export interface Playlist {
   id: string
   name: string

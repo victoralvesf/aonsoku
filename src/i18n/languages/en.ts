@@ -15,6 +15,7 @@ export const english = {
       albums: 'Albums',
       playlists: 'Playlists',
       radios: 'Radios',
+      emptyPlaylist: 'No playlists created yet',
     },
     menu: {
       language: 'Language',
@@ -48,6 +49,16 @@ export const english = {
         toast: {
           success: 'Playlist removed successfully!',
           error: 'Failed to remove playlist!'
+        }
+      },
+      createDialog: {
+        title: 'Create a new playlist',
+        nameLabel: 'Name',
+        namePlaceholder: 'Playlist name',
+        saveButton: 'Create',
+        toast: {
+          success: 'Playlist created successfully!',
+          error: 'Failed to create playlist!'
         }
       }
     },

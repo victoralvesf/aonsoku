@@ -1,5 +1,5 @@
 import { httpClient } from "@/api/httpClient"
-import { PlaylistWithEntriesResponse, PlaylistsResponse } from "@/types/responses/playlist"
+import { PlaylistWithEntriesResponse, PlaylistsResponse, SinglePlaylistResponse } from "@/types/responses/playlist"
 import { SubsonicResponse } from "@/types/responses/subsonicResponse"
 
 async function getAll() {
@@ -30,8 +30,24 @@ async function remove(id: string) {
   })
 }
 
+async function create(name: string, songs?: string[]) {
+  const query = new URLSearchParams()
+  query.append('name', name)
+
+  if (songs) {
+    songs.forEach(song => query.append('songId', song))
+  }
+
+  const response = await httpClient<SinglePlaylistResponse>(`/createPlaylist?${query.toString()}`, {
+    method: 'GET'
+  })
+
+  return response?.data.playlist
+}
+
 export const playlists = {
   getAll,
   getOne,
-  remove
+  remove,
+  create
 }

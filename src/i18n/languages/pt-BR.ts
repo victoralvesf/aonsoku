@@ -15,6 +15,7 @@ export const brazilianPortuguese = {
       albums: 'Álbuns',
       playlists: 'Playlists',
       radios: 'Rádios',
+      emptyPlaylist: 'Nenhuma playlist criada ainda',
     },
     menu: {
       language: 'Linguagem',
@@ -48,6 +49,16 @@ export const brazilianPortuguese = {
         toast: {
           success: 'Playlist excluída com sucesso!',
           error: 'Falha ao excluir esta playlist!'
+        }
+      },
+      createDialog: {
+        title: 'Criar uma playlist',
+        nameLabel: 'Nome',
+        namePlaceholder: 'Nome da playlist',
+        saveButton: 'Criar',
+        toast: {
+          success: 'Playlist criada com sucesso!',
+          error: 'Falha ao criar a playlist!'
         }
       }
     },
