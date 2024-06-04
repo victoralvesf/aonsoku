@@ -22,10 +22,10 @@ export default function ErrorPage() {
         </h1>
 
         <p className="leading-7 text-left mt-6">
-          Status Code: <strong className="font-semibold">{error.status}</strong>
+          Status Code: <strong className="font-semibold">{error?.status || 'None'}</strong>
         </p>
         <p className="leading-7 mt-2 text-left">
-          Description: <strong className="font-semibold">{error.data}</strong>
+          Description: <strong className="font-semibold">{error?.data || 'Unhandled Error'}</strong>
         </p>
 
         <Link to={ROUTES.LIBRARY.HOME}>

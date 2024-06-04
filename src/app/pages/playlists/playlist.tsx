@@ -49,7 +49,7 @@ export default function Playlist() {
           alt={playlist.name}
           width={250}
           height={250}
-          className="rounded-lg shadow-md resize-none"
+          className="rounded-lg shadow-md resize-none bg-background"
         />
         <div className="ml-4 w-full flex flex-col justify-end">
           <p className="text-sm mb-2">
