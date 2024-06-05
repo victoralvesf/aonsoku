@@ -37,6 +37,7 @@ export const english = {
       songCount_one: '{{count}} song',
       songCount_other: '{{count}} songs',
       duration: 'about {{duration}}',
+      refresh: 'Refresh playlists',
       buttons: {
         play: 'Play {{name}}',
         shuffle: 'Play {{name}} in shuffle mode',
@@ -54,7 +55,8 @@ export const english = {
       createDialog: {
         title: 'Create a new playlist',
         nameLabel: 'Name',
-        namePlaceholder: 'Playlist name',
+        commentLabel: 'Comment',
+        isPublicLabel: 'Public',
         saveButton: 'Create',
         toast: {
           success: 'Playlist created successfully!',

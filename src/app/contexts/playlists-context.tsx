@@ -6,14 +6,16 @@ import { toast } from "react-toastify";
 
 interface PlaylistContextState {
   playlists: Playlist[]
+  fetchPlaylists: () => Promise<void>
   removePlaylist: (id: string) => Promise<void>
   playlistDialogState: boolean
   setPlaylistDialogState: (state: boolean) => void
-  createPlaylistWithoutSongs: (name: string) => Promise<void>
+  createPlaylistWithoutSongs: (name: string, comment: string, isPublic: 'true' | 'false') => Promise<void>
 }
 
 const initialState: PlaylistContextState = {
   playlists: [],
+  fetchPlaylists: async () => { },
   removePlaylist: async () => { },
   playlistDialogState: false,
   setPlaylistDialogState: () => { },
@@ -61,9 +63,17 @@ export function PlaylistProvider({ children }: PlaylistProviderProps) {
     }
   }, [])
 
-  const createPlaylistWithoutSongs = useCallback(async (name: string) => {
+  const createPlaylistWithoutSongs = useCallback(async (name: string, comment: string, isPublic: 'true' | 'false') => {
     try {
-      await subsonic.playlists.create(name)
+      const playlist = await subsonic.playlists.create(name)
+      if (playlist) {
+        await subsonic.playlists.update({
+          playlistId: playlist.id,
+          comment,
+          isPublic
+        })
+      }
+
       await fetchPlaylists()
       toast.success(t('playlist.createDialog.toast.success'))
     } catch (_) {
@@ -73,6 +83,7 @@ export function PlaylistProvider({ children }: PlaylistProviderProps) {
 
   const value: PlaylistContextState = {
     playlists,
+    fetchPlaylists,
     removePlaylist,
     playlistDialogState,
     setPlaylistDialogState,

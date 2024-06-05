@@ -37,6 +37,7 @@ export const brazilianPortuguese = {
       songCount_one: '{{count}} música',
       songCount_other: '{{count}} músicas',
       duration: 'cerca de {{duration}}',
+      refresh: 'Atualizar playlists',
       buttons: {
         play: 'Tocar {{name}}',
         shuffle: 'Tocar {{name}} no modo aleatório',
@@ -54,7 +55,8 @@ export const brazilianPortuguese = {
       createDialog: {
         title: 'Criar uma playlist',
         nameLabel: 'Nome',
-        namePlaceholder: 'Nome da playlist',
+        commentLabel: 'Comentário',
+        isPublicLabel: 'Pública',
         saveButton: 'Criar',
         toast: {
           success: 'Playlist criada com sucesso!',

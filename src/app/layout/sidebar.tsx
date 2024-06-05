@@ -16,7 +16,7 @@ import { ROUTES } from "@/routes/routesList"
 import CommandMenu from "@/app/components/command/command-menu"
 import { NavigationButtons } from "@/app/components/navigation/buttons"
 import { usePlaylists } from "@/app/contexts/playlists-context"
-import { SidebarCreatePlaylistButton } from "@/app/components/playlist/sidebar-create-button"
+import { PlaylistOptionsButtons } from "@/app/components/playlist/options-buttons"
 import { CreatePlaylistDialog } from "@/app/components/playlist/create-dialog"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
@@ -49,7 +49,7 @@ export function Sidebar({ className }: SidebarProps) {
               <SectionTitle>
                 <Fragment>
                   {t('sidebar.playlists')}
-                  <SidebarCreatePlaylistButton />
+                  <PlaylistOptionsButtons />
                 </Fragment>
               </SectionTitle>
               <div className="space-y-1">

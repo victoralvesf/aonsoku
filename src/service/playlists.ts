@@ -45,9 +45,50 @@ async function create(name: string, songs?: string[]) {
   return response?.data.playlist
 }
 
+interface UpdateParams {
+  playlistId: string
+  name?: string
+  comment?: string
+  isPublic?: 'true' | 'false'
+  songIdToAdd?: string | string[]
+  songIndexToRemove?: string | string[]
+}
+
+async function update({ isPublic = 'true', ...params }: UpdateParams) {
+  const { playlistId, name, comment, songIdToAdd, songIndexToRemove } = params
+  const query = new URLSearchParams()
+
+  query.append('playlistId', playlistId)
+  query.append('public', isPublic)
+
+  if (name) query.append('name', name)
+  if (comment) query.append('comment', comment)
+
+  if (songIdToAdd) {
+    if (typeof songIdToAdd === 'string') {
+      query.append('songIdToAdd', songIdToAdd)
+    } else {
+      songIdToAdd.forEach(songId => query.append('songIdToAdd', songId))
+    }
+  }
+
+  if (songIndexToRemove) {
+    if (typeof songIndexToRemove === 'string') {
+      query.append('songIndexToRemove', songIndexToRemove)
+    } else {
+      songIndexToRemove.forEach(songIndex => query.append('songIndexToRemove', songIndex))
+    }
+  }
+
+  await httpClient<SubsonicResponse>(`/updatePlaylist?${query.toString()}`, {
+    method: 'GET'
+  })
+}
+
 export const playlists = {
   getAll,
   getOne,
   remove,
-  create
+  create,
+  update
 }
