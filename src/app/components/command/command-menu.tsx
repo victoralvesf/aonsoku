@@ -42,7 +42,7 @@ export default function CommandMenu() {
   const { setTheme } = useTheme()
   const { osType } = useApp()
   const { getArtistAllSongs, getAlbumSongs } = useSongList()
-  const { playlists } = usePlaylists()
+  const { playlists, setPlaylistDialogState } = usePlaylists()
   const player = usePlayer()
 
   const isMacOS = osType === 'Darwin'
@@ -243,6 +243,9 @@ export default function CommandMenu() {
               </CommandItem>
               <CommandItem onSelect={() => setPages([...pages, 'PLAYLISTS'])}>
                 {t('sidebar.playlists')}
+              </CommandItem>
+              <CommandItem onSelect={() => runCommand(() => setPlaylistDialogState(true))}>
+                {t('playlist.createDialog.title')}
               </CommandItem>
             </CommandGroup>
           )}
