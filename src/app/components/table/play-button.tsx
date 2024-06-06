@@ -1,28 +1,58 @@
-import { CellContext } from "@tanstack/react-table"
+import { useMemo } from 'react'
 import { PauseIcon, PlayIcon } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 import { usePlayer } from "@/app/contexts/player-context"
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { Button } from "@/app/components/ui/button"
-import { ISong } from "@/types/responses/song"
 import Image from "@/app/components/image"
-import { useTranslation } from "react-i18next"
 
 interface PlaySongButtonProps {
-  cell: CellContext<ISong, unknown>
+  trackNumber: number
+  trackId: string
+  handlePlayButton: () => void
+  type: 'song' | 'radio'
+  title: string
+  artist?: string
 }
 
-export default function PlaySongButton({ cell }: PlaySongButtonProps) {
-  const trackNumber = cell.row.index + 1
-  const song = cell.row.original
-  const { t } = useTranslation()
+interface Tooltips {
+  playTooltip: string
+  pauseTooltip: string
+}
+
+export default function PlaySongButton({
+  trackNumber,
+  trackId,
+  handlePlayButton,
+  type,
+  title,
+  artist = ''
+}: PlaySongButtonProps) {
   const player = usePlayer()
+  const { t } = useTranslation()
+  const isCurrentSongPlaying = player.checkActiveSong(trackId)
+
+  const tooltips = useMemo(() => {
+    const tooltips = {} as Tooltips
+
+    if (type === 'song') {
+      tooltips.playTooltip = t('table.buttons.play', { title: title, artist: artist })
+      tooltips.pauseTooltip = t('table.buttons.pause', { title: title, artist: artist })
+    } else {
+      tooltips.playTooltip = t('table.buttons.play', { title: title })
+      tooltips.pauseTooltip = t('table.buttons.pause', { title: title })
+    }
+
+    return tooltips
+  }, [player.currentSongList])
+
 
   return (
     <div className="text-center text-foreground flex justify-center">
-      {(player.checkActiveSong(song.id) && !player.isPlaying) && (
+      {(isCurrentSongPlaying && !player.isPlaying) && (
         <div className="w-8 flex items-center">
-          <SimpleTooltip text={t('table.buttons.pause', { title: song.title, artist: song.artist })}>
+          <SimpleTooltip text={tooltips.playTooltip}>
             <Button
               className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
               size="icon"
@@ -37,7 +67,7 @@ export default function PlaySongButton({ cell }: PlaySongButtonProps) {
           </SimpleTooltip>
         </div>
       )}
-      {(player.checkActiveSong(song.id) && player.isPlaying) && (
+      {(isCurrentSongPlaying && player.isPlaying) && (
         <>
           <div className="group-hover/tablerow:hidden w-8 flex items-center">
             <div className="w-8 h-8 overflow-hidden rounded-full">
@@ -45,7 +75,7 @@ export default function PlaySongButton({ cell }: PlaySongButtonProps) {
             </div>
           </div>
           <div className="hidden group-hover/tablerow:flex justify-center">
-            <SimpleTooltip text={t('table.buttons.pause', { title: song.title, artist: song.artist })}>
+            <SimpleTooltip text={tooltips.pauseTooltip}>
               <Button
                 className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
                 size="icon"
@@ -61,20 +91,20 @@ export default function PlaySongButton({ cell }: PlaySongButtonProps) {
           </div>
         </>
       )}
-      {!player.checkActiveSong(song.id) && (
+      {!isCurrentSongPlaying && (
         <>
           <div className="group-hover/tablerow:hidden w-8">
             {trackNumber}
           </div>
           <div className="hidden group-hover/tablerow:flex justify-center">
-            <SimpleTooltip text={t('table.buttons.play', { title: song.title, artist: song.artist })}>
+            <SimpleTooltip text={tooltips.playTooltip}>
               <Button
                 className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
                 size="icon"
                 variant="outline"
                 onClick={(e) => {
                   e.stopPropagation()
-                  cell.table.options.meta?.handlePlaySong?.(cell.row)
+                  handlePlayButton()
                 }}
               >
                 <PlayIcon className="w-3 h-3 opacity-80 group-hover:opacity-100 fill-inherit dark:fill-slate-50" strokeWidth={4} />

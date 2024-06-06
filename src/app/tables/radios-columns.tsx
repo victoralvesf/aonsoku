@@ -3,9 +3,10 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Radio } from "@/types/responses/radios"
 import i18n from '@/i18n'
 
-import { RadioActionButton } from "../components/radios/action-button"
+import { RadioActionButton } from "@/app/components/radios/action-button"
+import PlaySongButton from "@/app/components/table/play-button"
 
-function fillRadiosColumns(): ColumnDef<Radio>[] {
+export function fillRadiosColumns(): ColumnDef<Radio>[] {
   return [
     {
       id: "index",
@@ -13,11 +14,20 @@ function fillRadiosColumns(): ColumnDef<Radio>[] {
       header: () => {
         return <div className="text-center">#</div>
       },
-      cell: ({ row }) => (
-        <div className="text-center">
-          {row.index + 1}
-        </div>
-      )
+      cell: ({ row, table }) => {
+        const trackNumber = row.index + 1
+        const radio = row.original
+
+        return (
+          <PlaySongButton
+            type="radio"
+            trackNumber={trackNumber}
+            trackId={radio.id}
+            title={radio.name}
+            handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
+          />
+        )
+      }
     },
     {
       id: "name",
@@ -63,14 +73,4 @@ function fillRadiosColumns(): ColumnDef<Radio>[] {
       }
     }
   ]
-}
-
-let radioColumns = fillRadiosColumns()
-
-i18n.on('languageChanged', () => {
-  radioColumns = fillRadiosColumns()
-})
-
-export {
-  radioColumns
 }

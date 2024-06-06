@@ -1,20 +1,29 @@
 import { useAsyncValue } from "react-router-dom";
 import { DataTable } from "@/app/components/ui/data-table";
 import { ISong } from "@/types/responses/song";
-import { songsColumns } from "@/app/tables/songs-columns";
+import { fillSongsColumns } from "@/app/tables/songs-columns";
 import { usePlayer } from "@/app/contexts/player-context";
 import { Skeleton } from "@/app/components/ui/skeleton";
 import { ColumnFilter } from "@/types/columnFilter";
 import { useTranslation } from "react-i18next";
+import { useMemo } from "react";
+import { useLang } from "@/app/contexts/lang-context";
 
 export default function ArtistTopSongs() {
   let topSongs = useAsyncValue() as ISong[]
+  const { langCode } = useLang()
+
+  const memoizedSongsColumns = useMemo(() => fillSongsColumns(), [langCode])
+  const memoizedTopSongs = useMemo(() => {
+    if (topSongs.length > 10) {
+      return topSongs.slice(0, 10)
+    } else {
+      return topSongs
+    }
+  }, [topSongs])
+
   const player = usePlayer()
   const { t } = useTranslation()
-
-  if (topSongs.length > 10) {
-    topSongs = topSongs.slice(0, 10)
-  }
 
   const columnsToShow: ColumnFilter[] = [
     'index',
@@ -35,9 +44,9 @@ export default function ArtistTopSongs() {
       </h3>
 
       <DataTable
-        columns={songsColumns}
-        data={topSongs}
-        handlePlaySong={(row) => player.setSongList(topSongs, row.index)}
+        columns={memoizedSongsColumns}
+        data={memoizedTopSongs}
+        handlePlaySong={(row) => player.setSongList(memoizedTopSongs, row.index)}
         columnFilter={columnsToShow}
       />
     </div>

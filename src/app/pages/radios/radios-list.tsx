@@ -1,18 +1,24 @@
+import { useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import { PlusIcon } from "lucide-react"
 import { DataTable } from "@/app/components/ui/data-table"
-import { radioColumns } from "@/app/tables/radios-columns"
+import { fillRadiosColumns } from "@/app/tables/radios-columns"
 import ListWrapper from "@/app/components/list-wrapper"
 import { Button } from "@/app/components/ui/button"
-import { PlusIcon } from "lucide-react"
 import { ShadowHeader } from "@/app/components/shadow-header"
 import { RadioFormDialog } from "@/app/components/radios/form-dialog"
 import { useRadios } from "@/app/contexts/radios-context"
 import { RemoveRadioDialog } from "@/app/components/radios/remove-dialog"
 import { Radio } from "@/types/responses/radios"
-import { useTranslation } from "react-i18next"
+import { useLang } from "@/app/contexts/lang-context"
 
 export default function Radios() {
   const { radios, setDialogState, setData } = useRadios()
+  const { langCode } = useLang()
   const { t } = useTranslation()
+
+  const memoizedRadiosColumns = useMemo(() => fillRadiosColumns(), [langCode])
+  const memoizedRadios = useMemo(() => radios, [radios])
 
   function handleAddRadio() {
     setData({} as Radio)
@@ -43,8 +49,8 @@ export default function Radios() {
 
       <ListWrapper className="mt-8">
         <DataTable
-          columns={radioColumns}
-          data={radios}
+          columns={memoizedRadiosColumns}
+          data={memoizedRadios}
         />
       </ListWrapper>
 

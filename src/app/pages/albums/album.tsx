@@ -1,10 +1,11 @@
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
 import { Await, useLoaderData } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 import { Albums, AlbumsListData, IAlbumInfo, SingleAlbum } from "@/types/responses/album"
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { DataTable } from '@/app/components/ui/data-table'
 import { usePlayer } from '@/app/contexts/player-context'
-import { songsColumns } from '@/app/tables/songs-columns'
+import { fillSongsColumns } from '@/app/tables/songs-columns'
 import ImageHeader from '@/app/components/album/image-header'
 import PlayButtons from "@/app/components/album/play-buttons"
 import ListWrapper from "@/app/components/list-wrapper"
@@ -14,7 +15,7 @@ import PreviewList from "@/app/components/home/preview-list"
 import PreviewListFallback from "@/app/components/preview-list-fallback"
 import AlbumInfo, { AlbumInfoFallback } from "@/app/components/album/album-info"
 import { ROUTES } from "@/routes/routesList"
-import { useTranslation } from "react-i18next"
+import { useLang } from "@/app/contexts/lang-context"
 
 interface ILoaderData {
   album: SingleAlbum
@@ -24,16 +25,21 @@ interface ILoaderData {
 }
 
 export default function Album() {
-  const player = usePlayer()
-  const { t } = useTranslation()
   const { album, artistAlbums, albumInfo, randomGenreAlbums } = useLoaderData() as ILoaderData
 
-  const albumDuration = album.duration ? convertSecondsToHumanRead(album.duration, true) : null
+  const player = usePlayer()
+  const { t } = useTranslation()
+  const { langCode } = useLang()
+
+  const memoizedSongsColumns = useMemo(() => fillSongsColumns(), [langCode])
+  const memoizedAlbums = useMemo(() => album, [album])
+
+  const albumDuration = memoizedAlbums.duration ? convertSecondsToHumanRead(memoizedAlbums.duration, true) : null
 
   const badges = [
-    album.year || null,
-    album.genre || null,
-    album.songCount ? t('playlist.songCount', { count: album.songCount }) : null,
+    memoizedAlbums.year || null,
+    memoizedAlbums.genre || null,
+    memoizedAlbums.songCount ? t('playlist.songCount', { count: memoizedAlbums.songCount }) : null,
     albumDuration ? t('playlist.duration', { duration: albumDuration }) : null,
   ]
 
@@ -50,7 +56,7 @@ export default function Album() {
   ]
 
   function formatMoreFromArtist(moreAlbums: Albums[]) {
-    let list = moreAlbums.filter(item => item.id !== album.id)
+    let list = moreAlbums.filter(item => item.id !== memoizedAlbums.id)
 
     if (list.length > 16) list = list.slice(0, 16)
 
@@ -58,49 +64,49 @@ export default function Album() {
   }
 
   const buttonsTooltips = {
-    play: t('playlist.buttons.play', { name: album.name }),
-    shuffle: t('playlist.buttons.shuffle', { name: album.name }),
-    options: t('playlist.buttons.options', { name: album.name })
+    play: t('playlist.buttons.play', { name: memoizedAlbums.name }),
+    shuffle: t('playlist.buttons.shuffle', { name: memoizedAlbums.name }),
+    options: t('playlist.buttons.options', { name: memoizedAlbums.name })
   }
 
   return (
     <div className="w-full">
       <ImageHeader
         type={t('album.headline')}
-        title={album.name}
-        subtitle={album.artist}
-        artistId={album.artistId}
-        coverArtId={album.coverArt}
+        title={memoizedAlbums.name}
+        subtitle={memoizedAlbums.artist}
+        artistId={memoizedAlbums.artistId}
+        coverArtId={memoizedAlbums.coverArt}
         coverArtSize="350"
-        coverArtAlt={album.name}
+        coverArtAlt={memoizedAlbums.name}
         badges={badges}
       />
 
       <ListWrapper>
         <PlayButtons
           playButtonTooltip={buttonsTooltips.play}
-          handlePlayButton={() => player.setSongList(album.song, 0)}
+          handlePlayButton={() => player.setSongList(memoizedAlbums.song, 0)}
           shuffleButtonTooltip={buttonsTooltips.shuffle}
-          handleShuffleButton={() => player.setSongList(album.song, 0, true)}
+          handleShuffleButton={() => player.setSongList(memoizedAlbums.song, 0, true)}
           optionsTooltip={buttonsTooltips.options}
           showLikeButton={true}
-          likeTooltipResource={album.name}
-          likeState={album.starred}
-          contentId={album.id}
+          likeTooltipResource={memoizedAlbums.name}
+          likeState={memoizedAlbums.starred}
+          contentId={memoizedAlbums.id}
         />
 
         <div className="mb-6">
           <Suspense fallback={<AlbumInfoFallback />}>
             <Await resolve={albumInfo} errorElement={<></>}>
-              <AlbumInfo albumName={album.name} />
+              <AlbumInfo albumName={memoizedAlbums.name} />
             </Await>
           </Suspense>
         </div>
 
         <DataTable
-          columns={songsColumns}
-          data={album.song}
-          handlePlaySong={(row) => player.setSongList(album.song, row.index)}
+          columns={memoizedSongsColumns}
+          data={memoizedAlbums.song}
+          handlePlaySong={(row) => player.setSongList(memoizedAlbums.song, row.index)}
           columnFilter={columnsToShow}
         />
 
@@ -118,7 +124,7 @@ export default function Album() {
                     showMore={true}
                     title={t('album.more.listTitle')}
                     moreTitle={t('album.more.discography')}
-                    moreRoute={ROUTES.ARTIST.ALBUMS(album.artistId)}
+                    moreRoute={ROUTES.ARTIST.ALBUMS(memoizedAlbums.artistId)}
                   />
                 )
               }}
@@ -134,7 +140,7 @@ export default function Album() {
                   <PreviewList
                     list={list}
                     showMore={false}
-                    title={t('album.more.genreTitle', { genre: album.genre })}
+                    title={t('album.more.genreTitle', { genre: memoizedAlbums.genre })}
                   />
                 )}
               />

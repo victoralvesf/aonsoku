@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PlaylistWithEntries } from '@/types/responses/playlist';
 import { getCoverArtUrl } from '@/api/httpClient';
-import { songsColumns } from '@/app/tables/songs-columns';
+import { fillSongsColumns } from '@/app/tables/songs-columns';
 import { DataTable } from '@/app/components/ui/data-table';
 import Image from '@/app/components/image';
 import { Badge } from '@/app/components/ui/badge';
@@ -15,13 +15,19 @@ import { getTextSizeClass } from '@/utils/getTextSizeClass';
 import { ColumnFilter } from '@/types/columnFilter';
 import { PlaylistOptions } from '@/app/components/playlist/options';
 import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog';
+import { useLang } from '@/app/contexts/lang-context';
 
 export default function Playlist() {
+  const { t } = useTranslation()
+  const { langCode } = useLang()
+
   const playlist = useLoaderData() as PlaylistWithEntries;
+  const memoizedSongsColumns = useMemo(() => fillSongsColumns(), [langCode])
+  const memoizedPlaylist = useMemo(() => playlist, [playlist])
+
   const [removeDialogState, setRemoveDialogState] = useState(false)
 
-  const playlistDuration = playlist.duration > 0 ? convertSecondsToHumanRead(playlist.duration) : undefined;
-  const { t } = useTranslation()
+  const playlistDuration = memoizedPlaylist.duration > 0 ? convertSecondsToHumanRead(memoizedPlaylist.duration) : undefined;
   const player = usePlayer()
 
   const columnsToShow: ColumnFilter[] = [
@@ -36,17 +42,17 @@ export default function Playlist() {
   ]
 
   const buttonsTooltips = {
-    play: t('playlist.buttons.play', { name: playlist.name }),
-    shuffle: t('playlist.buttons.shuffle', { name: playlist.name }),
-    options: t('playlist.buttons.options', { name: playlist.name })
+    play: t('playlist.buttons.play', { name: memoizedPlaylist.name }),
+    shuffle: t('playlist.buttons.shuffle', { name: memoizedPlaylist.name }),
+    options: t('playlist.buttons.options', { name: memoizedPlaylist.name })
   }
 
   return (
     <main className="w-full">
       <div className="flex">
         <Image
-          src={getCoverArtUrl(playlist.coverArt)}
-          alt={playlist.name}
+          src={getCoverArtUrl(memoizedPlaylist.coverArt)}
+          alt={memoizedPlaylist.name}
           width={250}
           height={250}
           className="rounded-lg shadow-md resize-none bg-background"
@@ -55,15 +61,15 @@ export default function Playlist() {
           <p className="text-sm mb-2">
             {t('playlist.headline')}
           </p>
-          <h2 className={cn("scroll-m-20 font-bold tracking-tight antialiased", getTextSizeClass(playlist.name))}>
-            {playlist.name}
+          <h2 className={cn("scroll-m-20 font-bold tracking-tight antialiased", getTextSizeClass(memoizedPlaylist.name))}>
+            {memoizedPlaylist.name}
           </h2>
           <p className="text-sm text-muted-foreground mt-2">
-            {playlist.comment}
+            {memoizedPlaylist.comment}
           </p>
           <div className="flex gap-1 mt-2 text-muted-foreground text-sm">
             <Badge variant="secondary">
-              {t('playlist.songCount', { count: playlist.songCount })}
+              {t('playlist.songCount', { count: memoizedPlaylist.songCount })}
             </Badge>
             {playlistDuration && (
               <Badge variant="secondary">
@@ -76,35 +82,35 @@ export default function Playlist() {
 
       <PlayButtons
         playButtonTooltip={buttonsTooltips.play}
-        handlePlayButton={() => player.setSongList(playlist.entry, 0)}
-        disablePlayButton={!playlist.entry}
+        handlePlayButton={() => player.setSongList(memoizedPlaylist.entry, 0)}
+        disablePlayButton={!memoizedPlaylist.entry}
         shuffleButtonTooltip={buttonsTooltips.shuffle}
-        handleShuffleButton={() => player.setSongList(playlist.entry, 0, true)}
-        disableShuffleButton={!playlist.entry}
+        handleShuffleButton={() => player.setSongList(memoizedPlaylist.entry, 0, true)}
+        disableShuffleButton={!memoizedPlaylist.entry}
         optionsTooltip={buttonsTooltips.options}
         showLikeButton={false}
         optionsMenuItems={
           <PlaylistOptions
-            playlist={playlist}
+            playlist={memoizedPlaylist}
             onRemovePlaylist={() => setRemoveDialogState(true)}
-            disablePlayNext={!playlist.entry}
-            disableAddLast={!playlist.entry}
-            disableDownload={!playlist.entry}
+            disablePlayNext={!memoizedPlaylist.entry}
+            disableAddLast={!memoizedPlaylist.entry}
+            disableDownload={!memoizedPlaylist.entry}
           />
         }
       />
 
       <RemovePlaylistDialog
-        playlistId={playlist.id}
+        playlistId={memoizedPlaylist.id}
         openDialog={removeDialogState}
         setOpenDialog={setRemoveDialogState}
       />
 
-      {playlist.entry && playlist.entry.length > 0 ? (
+      {memoizedPlaylist.entry && memoizedPlaylist.entry.length > 0 ? (
         <DataTable
-          columns={songsColumns}
-          data={playlist.entry}
-          handlePlaySong={(row) => player.setSongList(playlist.entry, row.index)}
+          columns={memoizedSongsColumns}
+          data={memoizedPlaylist.entry}
+          handlePlaySong={(row) => player.setSongList(memoizedPlaylist.entry, row.index)}
           columnFilter={columnsToShow}
         />
       ) : (

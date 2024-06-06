@@ -17,7 +17,7 @@ import { subsonic } from "@/service/subsonic"
 import { ROUTES } from "@/routes/routesList"
 import i18n from '@/i18n'
 
-function fillSongsColumns(): ColumnDef<ISong>[] {
+export function fillSongsColumns(): ColumnDef<ISong>[] {
   return [
     {
       id: "index",
@@ -25,8 +25,20 @@ function fillSongsColumns(): ColumnDef<ISong>[] {
       header: () => {
         return <div className="text-center">#</div>
       },
-      cell: (cell) => {
-        return <PlaySongButton cell={cell} />
+      cell: ({ row, table }) => {
+        const trackNumber = row.index + 1
+        const song = row.original
+
+        return (
+          <PlaySongButton
+            type="song"
+            trackNumber={trackNumber}
+            trackId={song.id}
+            title={song.title}
+            artist={song.artist}
+            handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
+          />
+        )
       },
     },
     {
@@ -189,14 +201,4 @@ function fillSongsColumns(): ColumnDef<ISong>[] {
       }
     }
   ]
-}
-
-let songsColumns = fillSongsColumns()
-
-i18n.on('languageChanged', () => {
-  songsColumns = fillSongsColumns()
-})
-
-export {
-  songsColumns
 }

@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, ReactNode, useEffect, useRef } from 'react'
+import { createContext, useState, useContext, ReactNode, useEffect, useRef, useCallback, useMemo } from 'react'
 import { IPlayerContext } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { shuffleSongList } from '@/utils/shuffleArray'
@@ -46,11 +46,11 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     }
   }, [progress, currentDuration])
 
-  async function sendScrobble(songId: string) {
+  const sendScrobble = useCallback(async (songId: string) => {
     await subsonic.scrobble.send(songId)
-  }
+  }, [])
 
-  function playSong(song: ISong) {
+  const playSong = useCallback((song: ISong) => {
     if (checkActiveSong(song.id) && !isPlaying) {
       setIsPlaying(true)
       return
@@ -59,12 +59,11 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     setCurrentSongIndex(0)
     setIsShuffleActive(false)
     setIsPlaying(true)
-  }
+  }, [isPlaying])
 
-  function setSongList(songlist: ISong[], index: number, shuffle = false) {
+  const setSongList = useCallback((songlist: ISong[], index: number, shuffle = false) => {
     setOriginalSongList(songlist)
     setOriginalSongIndex(index)
-
 
     if (shuffle) {
       const shuffledList = shuffleSongList(songlist, index, true)
@@ -80,17 +79,17 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     }
 
     setIsPlaying(true)
-  }
+  }, [])
 
-  function togglePlayPause() {
-    setIsPlaying(!isPlaying)
-  }
+  const togglePlayPause = useCallback(() => {
+    setIsPlaying(prevState => !prevState)
+  }, [])
 
-  function toggleLoop() {
-    setIsLoopActive(!isLoopActive)
-  }
+  const toggleLoop = useCallback(() => {
+    setIsLoopActive(prevState => !prevState)
+  }, [])
 
-  function toggleShuffle() {
+  const toggleShuffle = useCallback(() => {
     if (isShuffleActive) {
       const currentSongId = currentSongList[currentSongIndex].id
       const index = originalSongList.findIndex(song => song.id === currentSongId)
@@ -105,10 +104,10 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
       setCurrentSongList(shuffledList)
       setCurrentSongIndex(0)
     }
-    setIsShuffleActive(!isShuffleActive)
-  }
+    setIsShuffleActive(prevState => !prevState)
+  }, [isShuffleActive, currentSongIndex, currentSongList, originalSongList])
 
-  function clearPlayerState() {
+  const clearPlayerState = useCallback(() => {
     setOriginalSongList([])
     setShuffledSongList([])
     setCurrentSongList([])
@@ -120,40 +119,50 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     setProgress(0)
     setCurrentDuration(0)
     manageMediaSession.setPlaybackState(null)
-  }
+  }, [])
 
-  const hasNextSong = isShuffleActive || currentSongIndex + 1 < currentSongList.length
-  const hasPrevSong = currentSongIndex > 0
-  const isPlayingOneSong = currentSongList.length === 1
+  const hasNextSong = useMemo(() => {
+    return isShuffleActive || currentSongIndex + 1 < currentSongList.length
+  }, [isShuffleActive, currentSongIndex, currentSongList.length])
 
-  function playNextSong() {
+  const hasPrevSong = useMemo(() => {
+    return currentSongIndex > 0
+  }, [currentSongIndex])
+
+  const isPlayingOneSong = useMemo(() => {
+    return currentSongList.length === 1
+  }, [currentSongList.length])
+
+  const playNextSong = useCallback(() => {
     if (hasNextSong) {
-      setCurrentSongIndex(currentSongIndex + 1)
+      setCurrentSongIndex(prevIndex => prevIndex + 1)
     }
-  }
+  }, [hasNextSong])
 
-  function playPrevSong() {
+  const playPrevSong = useCallback(() => {
     if (hasPrevSong) {
-      setCurrentSongIndex(currentSongIndex - 1)
+      setCurrentSongIndex(prevIndex => prevIndex - 1)
     }
-  }
+  }, [hasPrevSong])
 
-  manageMediaSession.setHandlers({
-    playPrev: playPrevSong,
-    playNext: playNextSong
-  })
+  useEffect(() => {
+    manageMediaSession.setHandlers({
+      playPrev: playPrevSong,
+      playNext: playNextSong
+    })
+  }, [playPrevSong, playNextSong])
 
-  function setPlayingState(state: boolean) {
+  const setPlayingState = useCallback((state: boolean) => {
     setIsPlaying(state)
-  }
+  }, [])
 
-  function getCurrentSong() {
+  const getCurrentSong = useCallback(() => {
     return currentSongList[currentSongIndex]
-  }
+  }, [currentSongList, currentSongIndex])
 
-  function checkActiveSong(id: string) {
+  const checkActiveSong = useCallback((id: string) => {
     return id === getCurrentSong()?.id
-  }
+  }, [getCurrentSong])
 
   const value: IPlayerContext = {
     shuffledSongList,
