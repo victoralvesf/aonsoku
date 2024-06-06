@@ -184,6 +184,44 @@ export const brazilianPortuguese = {
         delete: 'Excluir playlist'
       }
     },
+    radios: {
+      addRadio: 'Adicionar Rádio',
+      table: {
+        name: 'Nome',
+        homepage: 'URL da página inicial',
+        stream: 'URL de transmissão',
+        actions: {
+          edit: 'Editar rádio',
+          delete: 'Excluir rádio'
+        }
+      },
+      form: {
+        create: {
+          title: 'Adicionar Rádio',
+          button: 'Salvar',
+          toast: {
+            success: 'Rádio criado com sucesso!',
+            error: 'Falha ao criar este rádio!'
+          }
+        },
+        edit: {
+          title: 'Editar Rádio',
+          button: 'Atualizar',
+          toast: {
+            success: 'Rádio atualizado com sucesso!',
+            error: 'Falha ao atualizar este rádio!'
+          }
+        },
+        delete: {
+          title: 'Você tem certeza de que deseja excluir este rádio?',
+          description: 'Essa ação não poderá ser desfeita.',
+          toast: {
+            success: 'Rádio excluído com sucesso!',
+            error: 'Falha ao excluir este rádio!'
+          }
+        }
+      }
+    },
     dayjs: {
       relativeTime: {
         future: 'em %s',

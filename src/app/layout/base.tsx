@@ -12,7 +12,7 @@ export default function BaseLayout() {
   const location = useLocation() as Location
   const matches = useMatches() as UIMatch[]
 
-  const locationsWithoutPadding = ['album', 'albums', 'artist']
+  const locationsWithoutPadding = ['album', 'albums', 'artist', 'radios']
   const addPadding = !locationsWithoutPadding.includes(matches[1].id)
 
   useEffect(() => {

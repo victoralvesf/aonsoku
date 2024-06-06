@@ -8,6 +8,7 @@ import Home from '@/app/pages/home'
 import Album from '@/app/pages/albums/album'
 import Artist from '@/app/pages/artists/artist'
 import Login from '@/app/pages/login'
+import Radios from '@/app/pages/radios/radios-list'
 
 import { homeLoader } from '@/routes/loaders/home'
 import { albumsListLoader, singleAlbumLoader } from '@/routes/loaders/albums'
@@ -50,6 +51,11 @@ export const router = createBrowserRouter([
         path: ROUTES.ARTIST.PATH,
         loader: singleArtistLoader,
         element: <Artist />
+      },
+      {
+        id: 'radios',
+        path: ROUTES.LIBRARY.RADIOS,
+        element: <Radios />
       },
       {
         id: 'error',

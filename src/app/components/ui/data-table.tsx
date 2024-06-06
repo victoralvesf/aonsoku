@@ -29,7 +29,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
   onRowClick?: (row: Row<TData>) => void
   handlePlaySong?: (row: Row<TData>) => void
-  columnFilter: ColumnFilter[]
+  columnFilter?: ColumnFilter[]
 }
 
 export function DataTable<TData, TValue>({
@@ -40,12 +40,12 @@ export function DataTable<TData, TValue>({
   columnFilter
 }: DataTableProps<TData, TValue>) {
   const newColumns = columns.filter(column => {
-    return columnFilter.includes(column.id as ColumnFilter)
+    return columnFilter?.includes(column.id as ColumnFilter)
   })
 
   const table = useReactTable({
     data,
-    columns: newColumns,
+    columns: columnFilter ? newColumns : columns,
     getCoreRowModel: getCoreRowModel(),
     meta: {
       handlePlaySong
@@ -59,7 +59,7 @@ export function DataTable<TData, TValue>({
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
-                const smallerHeaders = ['index', 'starred']
+                const smallerHeaders = ['index', 'starred', 'actions']
                 return (
                   <TableHead key={header.id} className={clsx('p-2', smallerHeaders.includes(header.id) && 'w-8')}>
                     {header.isPlaceholder

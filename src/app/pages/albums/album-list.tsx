@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import HomeSongCard from '@/app/components/home/song-card';
 import ListWrapper from '@/app/components/list-wrapper';
 import { subsonic } from '@/service/subsonic';
@@ -15,7 +16,7 @@ import { Button } from '@/app/components/ui/button';
 import debounce from 'lodash/debounce';
 import { usePlayer } from '@/app/contexts/player-context';
 import { Badge } from '@/app/components/ui/badge';
-import { useTranslation } from 'react-i18next';
+import { ShadowHeader } from '@/app/components/shadow-header';
 
 export default function AlbumList() {
   const defaultOffset = 32
@@ -106,7 +107,7 @@ export default function AlbumList() {
 
   return (
     <main className="w-full h-full">
-      <div className="flex items-center justify-start px-8 py-4 sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg shadow-b-2 -shadow-spread-2">
+      <ShadowHeader>
         <div className="w-full flex justify-between">
           <div className="flex gap-2 items-center">
             <h2 className="text-2xl font-semibold tracking-tight">
@@ -138,7 +139,7 @@ export default function AlbumList() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-      </div>
+      </ShadowHeader>
 
       <ListWrapper className="pt-6 lg:pt-8">
         <div className="grid grid-cols-8 gap-4 h-full">

@@ -184,6 +184,44 @@ export const english = {
         delete: 'Delete playlist'
       }
     },
+    radios: {
+      addRadio: 'Add Radio',
+      table: {
+        name: 'Name',
+        homepage: 'Homepage URL',
+        stream: 'Stream URL',
+        actions: {
+          edit: 'Edit radio',
+          delete: 'Delete radio'
+        }
+      },
+      form: {
+        create: {
+          title: 'Add Radio',
+          button: 'Save',
+          toast: {
+            success: 'Radio created successfully!',
+            error: 'Failed to create radio!'
+          }
+        },
+        edit: {
+          title: 'Edit Radio',
+          button: 'Update',
+          toast: {
+            success: 'Radio updated successfully!',
+            error: 'Failed to update radio!'
+          }
+        },
+        delete: {
+          title: 'Are you sure you want to delete this radio station?',
+          description: 'This action cannot be undone.',
+          toast: {
+            success: 'Radio removed successfully!',
+            error: 'Failed to remove radio!'
+          }
+        }
+      }
+    },
     dayjs: {
       relativeTime: {
         future: "in %s",

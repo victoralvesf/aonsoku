@@ -1,10 +1,11 @@
+import { useEffect } from "react";
 import { useAsyncValue } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { SimpleTooltip } from "@/app/components/ui/simple-tooltip";
 import LastFmIcon from "@/app/components/icons/last-fm";
 import { Skeleton } from "@/app/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { IAlbumInfo } from "@/types/responses/album";
-import { useTranslation } from "react-i18next";
 
 interface AlbumInfoProps {
   albumName: string
@@ -16,14 +17,24 @@ export default function AlbumInfo({ albumName }: AlbumInfoProps) {
   const albumInfo = useAsyncValue() as IAlbumInfo
   const { t } = useTranslation()
 
-  if (!albumInfo.notes) return
+  if (!albumInfo.notes) return <></>
+
+  // In case the API returns a link without target blank and nofollow
+  useEffect(() => {
+    const links = document.querySelectorAll('#info-panel a');
+
+    links.forEach(link => {
+      link.setAttribute('target', '_blank')
+      link.setAttribute('rel', 'nofollow')
+    });
+  }, [])
 
   return (
     <div className={cn(containerClasses)} id="artist-biography">
       <h3 className="scroll-m-20 mb-2 text-3xl font-semibold tracking-tight">
         {t('album.info.about', { name: albumName })}
       </h3>
-      <p dangerouslySetInnerHTML={{ __html: albumInfo?.notes! }} />
+      <p id="info-panel" dangerouslySetInnerHTML={{ __html: albumInfo?.notes! }} />
 
       <div className="flex w-full mt-2 gap-2">
         {albumInfo?.lastFmUrl && (
