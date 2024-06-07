@@ -1,6 +1,8 @@
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { Globe, Mic, LogOut } from "lucide-react"
 import { useTranslation } from "react-i18next"
+import { exit } from "@tauri-apps/api/process"
+
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -22,33 +24,34 @@ import { useLang } from "@/app/contexts/lang-context"
 
 export function Menu() {
   const { serverUsername, serverUrl } = useApp()
-  const [openDialog, setOpenDialog] = useState(false)
+  const [logoutDialogState, setLogoutDialogState] = useState(false)
   const { t } = useTranslation()
-
-  const { osType } = useApp()
-  const isMacOS = osType === 'Darwin'
 
   const { langCode, setLang } = useLang()
 
+  async function handleQuit() {
+    await exit(0)
+  }
+
   return (
-    <>
-      <LogoutConfirmDialog openDialog={openDialog} setOpenDialog={setOpenDialog} />
+    <Fragment>
+      <LogoutConfirmDialog openDialog={logoutDialogState} setOpenDialog={setLogoutDialogState} />
       <Menubar className="rounded-none border-b border-none px-2 lg:px-4">
-        {!isMacOS && (
-          <MenubarMenu>
-            <MenubarTrigger className="font-bold">Subsonic Player</MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem>About Subsonic Player</MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>
-                Preferences... <MenubarShortcut>⌘,</MenubarShortcut>
-              </MenubarItem>
-              <MenubarItem>
-                Quit <MenubarShortcut>⌘Q</MenubarShortcut>
-              </MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-        )}
+        <MenubarMenu>
+          <MenubarTrigger className="font-bold antialiased">
+            Subsonic Player
+          </MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>About Subsonic Player</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>
+              Preferences... <MenubarShortcut>⌘,</MenubarShortcut>
+            </MenubarItem>
+            <MenubarItem onClick={() => handleQuit()}>
+              Quit <MenubarShortcut>⌘Q</MenubarShortcut>
+            </MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
         <MenubarMenu>
           <MenubarTrigger className="relative">File</MenubarTrigger>
           <MenubarContent>
@@ -185,7 +188,7 @@ export function Menu() {
             <MenubarLabel className="capitalize font-normal">{serverUsername}</MenubarLabel>
             <MenubarLabel>{serverUrl}</MenubarLabel>
             <MenubarSeparator />
-            <MenubarItem onClick={() => setOpenDialog(!openDialog)}>
+            <MenubarItem onClick={() => setLogoutDialogState(!logoutDialogState)}>
               {t('menu.serverLogout')}
               <MenubarShortcut>
                 <LogOut className="h-4 w-4" />
@@ -194,6 +197,6 @@ export function Menu() {
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
-    </>
+    </Fragment>
   )
 }

@@ -2,6 +2,7 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { SearchIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useHotkeys } from "react-hotkeys-hook"
 
 import { Button } from "@/app/components/ui/button";
 import {
@@ -51,26 +52,7 @@ export default function CommandMenu() {
   const showArtistGroup = Boolean(query && artists && artists.length > 0)
   const showSongGroup = Boolean(query && songs && songs.length > 0)
 
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if ((e.key === "k" && (e.metaKey || e.ctrlKey))) {
-        if (
-          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
-          e.target instanceof HTMLInputElement ||
-          e.target instanceof HTMLTextAreaElement ||
-          e.target instanceof HTMLSelectElement
-        ) {
-          return
-        }
-
-        e.preventDefault()
-        setOpen((open) => !open)
-      }
-    }
-
-    document.addEventListener("keydown", down)
-    return () => document.removeEventListener("keydown", down)
-  }, [])
+  useHotkeys('mod+k', () => setOpen(state => !state))
 
   const runCommand = useCallback((command: () => unknown) => {
     setOpen(false)
