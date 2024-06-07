@@ -15,11 +15,13 @@ import { albumsListLoader, singleAlbumLoader } from '@/routes/loaders/albums'
 import { playlistLoader } from '@/routes/loaders/playlists'
 import { singleArtistLoader } from '@/routes/loaders/artists'
 import { ROUTES } from '@/routes/routesList'
+import { protectedLoader } from '@/routes/loaders/protected'
 
 export const router = createBrowserRouter([
   {
     path: ROUTES.LIBRARY.HOME,
     element: <BaseLayout />,
+    loader: protectedLoader,
     children: [
       {
         id: 'home',
