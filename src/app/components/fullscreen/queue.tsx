@@ -23,7 +23,7 @@ export function FullscreenSongQueue() {
   )
 
   return (
-    <Table className="h-full mb-1">
+    <Table className="h-full mb-1 bg-transparent">
       <TableBody className="rounded-md">
         {queue.map((entry, index) => (
           <TableRow

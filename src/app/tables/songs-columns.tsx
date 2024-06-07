@@ -49,6 +49,7 @@ export function fillSongsColumns(): ColumnDef<ISong>[] {
       cell: ({ row }) => {
         const coverArt = row.original.coverArt
         const title = row.original.title
+        const artist = row.original.artist
 
         const player = usePlayer()
 
@@ -61,7 +62,21 @@ export function fillSongsColumns(): ColumnDef<ISong>[] {
               height={40}
               className="rounded shadow-md"
             />
-            <p className={clsx(player.checkActiveSong(row.original.id) && "text-primary")}>{title}</p>
+            <div className="flex flex-col justify-center">
+              <p className={clsx(
+                "font-medium",
+                player.checkActiveSong(row.original.id) && "underline underline-offset-1 text-primary dark:text-purple-500"
+              )}>
+                {title}
+              </p>
+              {row.original.artistId ? (
+                <Link to={ROUTES.ARTIST.PAGE(row.original.artistId)} className="hover:underline flex 2xl:hidden w-fit">
+                  <p className="text-xs text-muted-foreground">{artist}</p>
+                </Link>
+              ) : (
+                <p className="flex 2xl:hidden text-xs text-muted-foreground">{artist}</p>
+              )}
+            </div>
           </div>
         )
       }

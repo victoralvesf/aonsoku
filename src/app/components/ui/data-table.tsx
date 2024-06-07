@@ -61,7 +61,11 @@ export function DataTable<TData, TValue>({
               {headerGroup.headers.map((header) => {
                 const smallerHeaders = ['index', 'starred', 'actions']
                 return (
-                  <TableHead key={header.id} className={clsx('p-2', smallerHeaders.includes(header.id) && 'w-8')}>
+                  <TableHead key={header.id} className={clsx(
+                    'p-2',
+                    smallerHeaders.includes(header.id) && "w-8",
+                    header.id === 'artist' && "hidden 2xl:table-cell"
+                  )}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -84,7 +88,10 @@ export function DataTable<TData, TValue>({
                 className="group/tablerow"
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="p-2 max-w-[600px]">
+                  <TableCell key={cell.id} className={clsx(
+                    "p-2 max-w-[600px]",
+                    cell.column.id === 'artist' && "hidden 2xl:table-cell"
+                  )}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

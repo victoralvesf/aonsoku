@@ -10,12 +10,14 @@ interface LangProviderProps {
 interface LangProviderState {
   langCode: string
   langNativeName: string
+  flag: string
   setLang: (lang: string) => void
 }
 
 const initialState: LangProviderState = {
-  langCode: 'en',
+  langCode: 'en-US',
   langNativeName: 'English',
+  flag: 'US',
   setLang: () => null,
 }
 
@@ -24,28 +26,32 @@ const LangContext = createContext<LangProviderState>(initialState)
 export function LangProvider({ children }: LangProviderProps) {
   const { i18n } = useTranslation();
 
-  const [langCode, setLangCode] = useState<string>(initialState.langCode)
-  const [langNativeName, setLangNativeName] = useState<string>(initialState.langNativeName)
+  const [langCode, setLangCode] = useState(initialState.langCode)
+  const [langNativeName, setLangNativeName] = useState(initialState.langNativeName)
+  const [flag, setFlag] = useState(initialState.flag)
 
   useEffect(() => {
     const lang = i18n.resolvedLanguage
     if (lang) {
       setLangCode(lang)
-      const langKey = lang as keyof typeof currentLanguages
-      setLangNativeName(currentLanguages[langKey].nativeName)
+      const langObject = currentLanguages.filter(language => language.langCode === lang)[0]
+      setLangNativeName(langObject.nativeName)
+      setFlag(langObject.flag)
     }
   }, [])
 
   function setLang(lang: string) {
     i18n.changeLanguage(lang)
     setLangCode(lang)
-    const langKey = lang as keyof typeof currentLanguages
-    setLangNativeName(currentLanguages[langKey].nativeName)
+    const langObject = currentLanguages.filter(language => language.langCode === lang)[0]
+    setLangNativeName(langObject.nativeName)
+    setFlag(langObject.flag)
   }
 
   const value: LangProviderState = {
     langCode,
     langNativeName,
+    flag,
     setLang
   }
 

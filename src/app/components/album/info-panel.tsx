@@ -13,7 +13,7 @@ interface InfoPanelProps {
   musicBrainzId?: string
 }
 
-const containerClasses = "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all bg-muted"
+const containerClasses = "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all bg-background"
 
 export default function InfoPanel({
   title,

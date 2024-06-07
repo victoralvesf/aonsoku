@@ -1,12 +1,12 @@
 import { english } from "./en"
 import { brazilianPortuguese } from "./pt-BR"
 
-export const currentLanguages = {
-  en: { nativeName: 'English' },
-  'pt-BR': { nativeName: 'Português (Brasil)' },
-}
+export const currentLanguages = [
+  { nativeName: 'English (US)', langCode: 'en-US', flag: 'US' },
+  { nativeName: 'Português (Brasil)', langCode: 'pt-BR', flag: 'BR' },
+]
 
 export const languages = {
-  en: english,
+  'en-US': english,
   'pt-BR': brazilianPortuguese
 }

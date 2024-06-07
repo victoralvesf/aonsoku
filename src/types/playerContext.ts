@@ -27,4 +27,5 @@ export interface IPlayerContext {
   setProgress: (progress: number) => void
   currentDuration: number
   setCurrentDuration: (duration: number) => void
+  getCurrentSong: () => ISong
 }

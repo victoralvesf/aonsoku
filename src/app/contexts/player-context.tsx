@@ -190,7 +190,8 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     progress,
     setProgress,
     currentDuration,
-    setCurrentDuration
+    setCurrentDuration,
+    getCurrentSong
   }
 
   return (

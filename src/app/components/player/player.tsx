@@ -159,7 +159,7 @@ export function Player() {
           </div>
 
           <div className="flex w-full gap-2 justify-center items-center">
-            <small className="text-xs text-muted-foreground">
+            <small className="text-xs text-muted-foreground w-10 text-center">
               {convertSecondsToTime(player.progress)}
             </small>
             {song ? (
@@ -182,7 +182,7 @@ export function Player() {
                 className="cursor-pointer w-[32rem] pointer-events-none"
               />
             )}
-            <small className="text-xs text-muted-foreground">
+            <small className="text-xs text-muted-foreground w-10 text-center">
               {convertSecondsToTime(player.currentDuration ?? 0)}
             </small>
           </div>

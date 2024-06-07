@@ -14,7 +14,6 @@ import { ScrollArea } from "@/app/components/ui/scroll-area"
 import { SidebarGenerator, SidebarPlaylistGenerator } from "@/app/components/sidebar-generator"
 import { ROUTES } from "@/routes/routesList"
 import CommandMenu from "@/app/components/command/command-menu"
-import { NavigationButtons } from "@/app/components/navigation/buttons"
 import { usePlaylists } from "@/app/contexts/playlists-context"
 import { PlaylistOptionsButtons } from "@/app/components/playlist/options-buttons"
 import { CreatePlaylistDialog } from "@/app/components/playlist/create-dialog"
@@ -35,7 +34,6 @@ export function Sidebar({ className }: SidebarProps) {
         <ScrollArea className="h-full">
           <div className="flex flex-col gap-2 px-4 sticky top-0 py-4 z-50 bg-background">
             <CommandMenu />
-            <NavigationButtons />
           </div>
           <div className="space-y-4 py-4 pt-0 min-w-[275px] max-w-[275px]">
             <SidebarSection>
