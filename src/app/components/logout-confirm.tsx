@@ -32,7 +32,7 @@ export function LogoutConfirmDialog({ openDialog, setOpenDialog }: AlertDialogPr
     await handleRemoveServerConfig()
     await emit('user-logged-out', {})
     clearPlayerState()
-    navigate(ROUTES.SERVER_CONFIG)
+    navigate(ROUTES.SERVER_CONFIG, { replace: true })
   }
 
   return (

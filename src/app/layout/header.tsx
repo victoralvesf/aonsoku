@@ -36,7 +36,7 @@ export function Header() {
     const currentPosition = player.currentSongIndex + 1
     const listLength = player.currentSongList.length
 
-    return `(${currentPosition}/${listLength})`
+    return `[${currentPosition}/${listLength}]`
   }
 
   function getCurrentSongInfo() {
@@ -57,7 +57,7 @@ export function Header() {
         </div>
         <div className="col-span-2 flex justify-center items-center">
           <div className="flex w-full justify-center subpixel-antialiased font-medium text-sm text-foreground/80">
-            <p className="leading-7 mr-2">{formatSongCount()}</p>
+            <p className="leading-7 mr-1">{formatSongCount()}</p>
             <p className="leading-7 truncate">{getCurrentSongInfo()}</p>
           </div>
         </div>

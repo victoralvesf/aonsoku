@@ -37,8 +37,8 @@ fn main() {
                 });
 
                 app_handle.listen_global("user-logged-out", move |_event| {
-                    let _ = menu_handle_clone.get_item("user").set_title("No user");
-                    let _ = menu_handle_clone.get_item("url").set_title("No server");
+                    let _ = menu_handle_clone.get_item("user").set_title("Disconnected");
+                    let _ = menu_handle_clone.get_item("url").set_title("");
                     let _ = menu_handle_clone.get_item("logout").set_enabled(false);
                 });
             });

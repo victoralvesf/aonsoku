@@ -39,7 +39,7 @@ export function LoginForm() {
     e.preventDefault()
     const status = await handleSaveServerConfig()
     if (status) {
-      navigate(ROUTES.LIBRARY.HOME)
+      navigate(ROUTES.LIBRARY.HOME, { replace: true })
     }
   }
 
@@ -61,7 +61,7 @@ export function LoginForm() {
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="url">
-                {t('login.form.url')}
+                {t('login.form.url')} *
               </Label>
               <div className="flex flex-row gap-2">
                 <Select onValueChange={setServerProtocol} value={serverProtocol}>
@@ -80,13 +80,14 @@ export function LoginForm() {
                   autoCorrect="false"
                   autoCapitalize="false"
                   spellCheck="false"
+                  required
                   onChange={(e) => setServerUrl(e.currentTarget.value)}
                 />
               </div>
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="username">
-                {t('login.form.username')}
+                {t('login.form.username')} *
               </Label>
               <Input
                 id="username"
@@ -95,16 +96,18 @@ export function LoginForm() {
                 autoCorrect="false"
                 autoCapitalize="false"
                 spellCheck="false"
+                required
                 onChange={(e) => setServerUsername(e.currentTarget.value)}
               />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">
-                {t('login.form.password')}
+                {t('login.form.password')} *
               </Label>
               <Input
                 id="password"
                 type="password"
+                required
                 onChange={(e) => setServerPassword(e.currentTarget.value)}
               />
             </div>

@@ -6,8 +6,8 @@ pub fn create_menu() -> Menu {
     let server = Submenu::new(
         "Server",
         Menu::new()
-            .add_item(CustomMenuItem::new("user", "No user").disabled())
-            .add_item(CustomMenuItem::new("url", "No server").disabled())
+            .add_item(CustomMenuItem::new("user", "Disconnected").disabled())
+            .add_item(CustomMenuItem::new("url", "").disabled())
             .add_native_item(MenuItem::Separator)
             .add_item(CustomMenuItem::new("logout", "Logout")),
     );
