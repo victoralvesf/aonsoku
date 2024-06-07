@@ -1,7 +1,7 @@
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { Globe, Mic, LogOut } from "lucide-react"
 import { useTranslation } from "react-i18next"
-import { exit } from "@tauri-apps/api/process"
+import { UnlistenFn, listen } from "@tauri-apps/api/event"
 
 import {
   Menubar,
@@ -29,9 +29,22 @@ export function Menu() {
 
   const { langCode, setLang } = useLang()
 
-  async function handleQuit() {
-    await exit(0)
-  }
+  useEffect(() => {
+    let unlisten: UnlistenFn
+
+    const setupLogoutEventListener = async () => {
+      unlisten = await listen('user-asked-for-logout', () => {
+        setLogoutDialogState(true)
+      });
+    }
+    setupLogoutEventListener()
+
+    return () => {
+      if (unlisten) {
+        unlisten()
+      }
+    }
+  }, [])
 
   return (
     <Fragment>
@@ -47,7 +60,7 @@ export function Menu() {
             <MenubarItem>
               Preferences... <MenubarShortcut>⌘,</MenubarShortcut>
             </MenubarItem>
-            <MenubarItem onClick={() => handleQuit()}>
+            <MenubarItem>
               Quit <MenubarShortcut>⌘Q</MenubarShortcut>
             </MenubarItem>
           </MenubarContent>

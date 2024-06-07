@@ -1,6 +1,6 @@
 import { subsonic } from "@/service/subsonic";
 import { Playlist } from "@/types/responses/playlist";
-import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
@@ -32,10 +32,6 @@ export function PlaylistProvider({ children }: PlaylistProviderProps) {
   const [playlists, setPlaylists] = useState<Playlist[]>([])
   const [playlistDialogState, setPlaylistDialogState] = useState(false)
   const { t } = useTranslation()
-
-  useEffect(() => {
-    fetchPlaylists()
-  }, [])
 
   const fetchPlaylists = useCallback(async () => {
     try {

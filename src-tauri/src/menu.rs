@@ -1,29 +1,19 @@
-use tauri::{AboutMetadata, CustomMenuItem, Menu, MenuItem, Submenu};
+use tauri::{CustomMenuItem, Menu, MenuItem, Submenu};
 
 pub fn create_menu() -> Menu {
     let app_name = "Subsonic Player";
 
-    let preferences = CustomMenuItem::new("preferences", "Preferences");
+    let server = Submenu::new(
+        "Server",
+        Menu::new()
+            .add_item(CustomMenuItem::new("user", "No user").disabled())
+            .add_item(CustomMenuItem::new("url", "No server").disabled())
+            .add_native_item(MenuItem::Separator)
+            .add_item(CustomMenuItem::new("logout", "Logout")),
+    );
 
-    let default_menu = Menu::new()
-        .add_native_item(MenuItem::About(
-            app_name.to_string(),
-            AboutMetadata::default(),
-        ))
-        .add_native_item(MenuItem::Separator)
-        .add_item(preferences)
-        .add_native_item(MenuItem::Separator)
-        .add_native_item(MenuItem::Services)
-        .add_native_item(MenuItem::Separator)
-        .add_native_item(MenuItem::Hide)
-        .add_native_item(MenuItem::HideOthers)
-        .add_native_item(MenuItem::ShowAll)
-        .add_native_item(MenuItem::Separator)
-        .add_native_item(MenuItem::Quit);
+    let mut default_menu = Menu::os_default(app_name);
+    default_menu = default_menu.add_submenu(server);
 
-    let subsonic_player = Submenu::new(app_name, default_menu);
-
-    let menu = Menu::new().add_submenu(subsonic_player);
-
-    return menu;
+    return default_menu;
 }

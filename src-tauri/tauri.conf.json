@@ -43,6 +43,7 @@
     "windows": [
       {
         "title": "Subsonic Player",
+        "label": "main",
         "width": 1280,
         "minWidth": 1280,
         "height": 720,

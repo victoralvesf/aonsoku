@@ -1,4 +1,4 @@
-import { Fragment, ReactNode } from "react"
+import { Fragment, ReactNode, useEffect } from "react"
 import { useTranslation } from 'react-i18next'
 import {
   ListMusic,
@@ -23,7 +23,11 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function Sidebar({ className }: SidebarProps) {
   const { t } = useTranslation()
-  const { playlists } = usePlaylists()
+  const { playlists, fetchPlaylists } = usePlaylists()
+
+  useEffect(() => {
+    fetchPlaylists()
+  }, [])
 
   return (
     <Fragment>

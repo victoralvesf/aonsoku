@@ -1,5 +1,7 @@
 import { MouseEvent } from "react"
 import { useTranslation } from "react-i18next"
+import { useNavigate } from "react-router-dom"
+import { emit } from '@tauri-apps/api/event'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,7 +13,6 @@ import {
   AlertDialogTitle,
 } from "@/app/components/ui/alert-dialog"
 import { useApp } from "@/app/contexts/app-context"
-import { useNavigate } from "react-router-dom"
 import { ROUTES } from "@/routes/routesList"
 
 interface AlertDialogProps {
@@ -27,6 +28,7 @@ export function LogoutConfirmDialog({ openDialog, setOpenDialog }: AlertDialogPr
   async function handleRemoveConfig(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     await handleRemoveServerConfig()
+    await emit('user-logged-out', {})
     navigate(ROUTES.SERVER_CONFIG)
   }
 
