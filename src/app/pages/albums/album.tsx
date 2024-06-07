@@ -13,7 +13,7 @@ import { ColumnFilter } from "@/types/columnFilter"
 import { Search } from "@/types/responses/search"
 import PreviewList from "@/app/components/home/preview-list"
 import PreviewListFallback from "@/app/components/preview-list-fallback"
-import AlbumInfo, { AlbumInfoFallback } from "@/app/components/album/album-info"
+import InfoPanel, { InfoPanelFallback } from "@/app/components/album/info-panel"
 import { ROUTES } from "@/routes/routesList"
 import { useLang } from "@/app/contexts/lang-context"
 
@@ -96,10 +96,18 @@ export default function Album() {
         />
 
         <div className="mb-6">
-          <Suspense fallback={<AlbumInfoFallback />}>
-            <Await resolve={albumInfo} errorElement={<></>}>
-              <AlbumInfo albumName={memoizedAlbums.name} />
-            </Await>
+          <Suspense fallback={<InfoPanelFallback />}>
+            <Await
+              resolve={albumInfo}
+              errorElement={<></>}
+              children={(info: IAlbumInfo) => (
+                <InfoPanel
+                  title={memoizedAlbums.name}
+                  bio={info.notes}
+                  lastFmUrl={info.lastFmUrl}
+                />
+              )}
+            />
           </Suspense>
         </div>
 

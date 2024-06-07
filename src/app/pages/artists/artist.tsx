@@ -1,19 +1,19 @@
 import { Suspense } from "react";
 import { Await, useLoaderData } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PreviewList from "@/app/components/home/preview-list";
 import ImageHeader from "@/app/components/album/image-header";
 import ListWrapper from "@/app/components/list-wrapper";
 import PlayButtons from "@/app/components/album/play-buttons";
 import { IArtist, IArtistInfo } from "@/types/responses/artist";
 import { ISong } from "@/types/responses/song";
-import ArtistInfo, { ArtistInfoFallback } from "@/app/components/artist/artist-info";
 import ArtistTopSongs, { ArtistTopSongsFallback } from "@/app/components/artist/artist-top-songs";
 import RelatedArtistsList from "@/app/components/artist/related-artists";
 import PreviewListFallback from "@/app/components/preview-list-fallback";
 import { subsonic } from "@/service/subsonic";
 import { usePlayer } from "@/app/contexts/player-context";
 import { ROUTES } from "@/routes/routesList";
-import { useTranslation } from "react-i18next";
+import InfoPanel, { InfoPanelFallback } from "@/app/components/album/info-panel";
 
 interface ILoaderData {
   artist: IArtist
@@ -92,10 +92,19 @@ export default function Artist() {
           contentId={artist.id}
         />
 
-        <Suspense fallback={<ArtistInfoFallback />}>
-          <Await resolve={artistInfo} errorElement={<></>}>
-            <ArtistInfo artistName={artist.name} />
-          </Await>
+        <Suspense fallback={<InfoPanelFallback />}>
+          <Await
+            resolve={artistInfo}
+            errorElement={<></>}
+            children={(info: IArtistInfo) => (
+              <InfoPanel
+                title={artist.name}
+                bio={info.biography}
+                lastFmUrl={info.lastFmUrl}
+                musicBrainzId={info.musicBrainzId}
+              />
+            )}
+          />
         </Suspense>
 
         <Suspense fallback={<ArtistTopSongsFallback />}>
