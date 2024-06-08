@@ -11,14 +11,17 @@ import { useRadios } from "@/app/contexts/radios-context"
 import { RemoveRadioDialog } from "@/app/components/radios/remove-dialog"
 import { Radio } from "@/types/responses/radios"
 import { useLang } from "@/app/contexts/lang-context"
+import { usePlayer } from "@/app/contexts/player-context"
 
 export default function Radios() {
   const { radios, setDialogState, setData } = useRadios()
   const { langCode } = useLang()
   const { t } = useTranslation()
 
-  const memoizedRadiosColumns = useMemo(() => fillRadiosColumns(), [langCode])
+  const memoizedRadiosColumns = useMemo(() => fillRadiosColumns(), [langCode, radios])
   const memoizedRadios = useMemo(() => radios, [radios])
+
+  const player = usePlayer()
 
   function handleAddRadio() {
     setData({} as Radio)
@@ -51,6 +54,7 @@ export default function Radios() {
         <DataTable
           columns={memoizedRadiosColumns}
           data={memoizedRadios}
+          handlePlaySong={(row) => player.setPlayRadio(memoizedRadios, row.index)}
         />
       </ListWrapper>
 

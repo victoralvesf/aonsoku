@@ -1,3 +1,4 @@
+import { Radio } from "./responses/radios";
 import { ISong } from "./responses/song";
 
 export interface IPlayerContext {
@@ -28,4 +29,7 @@ export interface IPlayerContext {
   currentDuration: number
   setCurrentDuration: (duration: number) => void
   getCurrentSong: () => ISong
+  mediaType: 'song' | 'radio'
+  radioList: Radio[]
+  setPlayRadio: (list: Radio[], index: number) => void
 }

@@ -174,6 +174,7 @@ export const english = {
     },
     player: {
       noSongPlaying: 'No song playing',
+      noRadioPlaying: 'No radio playing',
     },
     options: {
       playNext: 'Play next',
@@ -185,6 +186,7 @@ export const english = {
       }
     },
     radios: {
+      label: 'Radio',
       addRadio: 'Add Radio',
       table: {
         name: 'Name',
@@ -193,7 +195,9 @@ export const english = {
         actions: {
           edit: 'Edit radio',
           delete: 'Delete radio'
-        }
+        },
+        playTooltip: 'Play {{name}} radio',
+        pauseTooltip: 'Pause {{name}} radio',
       },
       form: {
         create: {

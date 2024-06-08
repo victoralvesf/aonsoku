@@ -31,7 +31,15 @@ export default function PlaySongButton({
 }: PlaySongButtonProps) {
   const player = usePlayer()
   const { t } = useTranslation()
-  const isCurrentSongPlaying = player.checkActiveSong(trackId)
+
+  const isCurrentSongPlaying = () => {
+    if (player.mediaType === 'song') {
+      return player.checkActiveSong(trackId)
+    } else {
+      return player.radioList[player.currentSongIndex].id === trackId
+    }
+  }
+
 
   const tooltips = useMemo(() => {
     const tooltips = {} as Tooltips
@@ -40,8 +48,8 @@ export default function PlaySongButton({
       tooltips.playTooltip = t('table.buttons.play', { title: title, artist: artist })
       tooltips.pauseTooltip = t('table.buttons.pause', { title: title, artist: artist })
     } else {
-      tooltips.playTooltip = t('table.buttons.play', { title: title })
-      tooltips.pauseTooltip = t('table.buttons.pause', { title: title })
+      tooltips.playTooltip = t('radios.table.playTooltip', { name: title })
+      tooltips.pauseTooltip = t('radios.table.pauseTooltip', { name: title })
     }
 
     return tooltips
@@ -50,7 +58,7 @@ export default function PlaySongButton({
 
   return (
     <div className="text-center text-foreground flex justify-center">
-      {(isCurrentSongPlaying && !player.isPlaying) && (
+      {(isCurrentSongPlaying() && !player.isPlaying) && (
         <div className="w-8 flex items-center">
           <SimpleTooltip text={tooltips.playTooltip}>
             <Button
@@ -67,7 +75,7 @@ export default function PlaySongButton({
           </SimpleTooltip>
         </div>
       )}
-      {(isCurrentSongPlaying && player.isPlaying) && (
+      {(isCurrentSongPlaying() && player.isPlaying) && (
         <>
           <div className="group-hover/tablerow:hidden w-8 flex items-center">
             <div className="w-8 h-8 overflow-hidden rounded-full">
@@ -91,7 +99,7 @@ export default function PlaySongButton({
           </div>
         </>
       )}
-      {!isCurrentSongPlaying && (
+      {!isCurrentSongPlaying() && (
         <>
           <div className="group-hover/tablerow:hidden w-8">
             {trackNumber}

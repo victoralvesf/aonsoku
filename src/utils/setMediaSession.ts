@@ -27,6 +27,23 @@ function setMediaSession(song: ISong) {
   })
 }
 
+async function setRadioMediaSession(label: string, radioName: string) {
+  if (!navigator.mediaSession) return
+
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: radioName,
+    artist: label,
+    album: '',
+    artwork: [
+      {
+        src: '',
+        sizes: '',
+        type: ''
+      }
+    ]
+  })
+}
+
 function setPlaybackState(state: boolean | null) {
   if (!navigator.mediaSession.playbackState) return
 
@@ -40,19 +57,23 @@ function setPlaybackState(state: boolean | null) {
 }
 
 interface SetHandlerParams {
+  togglePlayPause: () => void
   playPrev: () => void
   playNext: () => void
 }
 
-function setHandlers({ playPrev, playNext }: SetHandlerParams) {
+function setHandlers({ playPrev, playNext, togglePlayPause }: SetHandlerParams) {
   if (!navigator.mediaSession) return
 
+  navigator.mediaSession.setActionHandler("play", () => togglePlayPause())
+  navigator.mediaSession.setActionHandler("pause", () => togglePlayPause())
   navigator.mediaSession.setActionHandler("previoustrack", () => playPrev());
   navigator.mediaSession.setActionHandler("nexttrack", () => playNext());
 }
 
 export const manageMediaSession = {
   setMediaSession,
+  setRadioMediaSession,
   setPlaybackState,
   setHandlers
 }

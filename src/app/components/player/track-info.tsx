@@ -40,7 +40,7 @@ export function TrackInfo({ song }: { song: ISong }) {
     </>
   ) : (
     <>
-      <div className="w-[60px] h-[60px] flex justify-center items-center bg-muted rounded">
+      <div className="w-[70px] h-[70px] flex justify-center items-center bg-muted rounded">
         <AudioLines />
       </div>
       <div className="flex flex-col justify-center">

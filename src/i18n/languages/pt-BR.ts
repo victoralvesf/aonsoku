@@ -174,6 +174,7 @@ export const brazilianPortuguese = {
     },
     player: {
       noSongPlaying: 'Nenhuma música tocando',
+      noRadioPlaying: 'Nenhum rádio tocando',
     },
     options: {
       playNext: 'Tocar a seguir',
@@ -185,6 +186,7 @@ export const brazilianPortuguese = {
       }
     },
     radios: {
+      label: 'Rádio',
       addRadio: 'Adicionar Rádio',
       table: {
         name: 'Nome',
@@ -193,7 +195,9 @@ export const brazilianPortuguese = {
         actions: {
           edit: 'Editar rádio',
           delete: 'Excluir rádio'
-        }
+        },
+        playTooltip: 'Tocar rádio {{name}}',
+        pauseTooltip: 'Pausar rádio {{name}}',
       },
       form: {
         create: {
