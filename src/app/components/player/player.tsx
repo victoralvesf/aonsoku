@@ -11,6 +11,7 @@ import {
   Volume2
 } from "lucide-react"
 import clsx from "clsx"
+import { useHotkeys } from "react-hotkeys-hook"
 
 import { getSongStreamUrl } from "@/api/httpClient"
 import { Slider } from "@/app/components/ui/slider"
@@ -18,7 +19,6 @@ import { Button } from "@/app/components/ui/button"
 import { usePlayer } from "@/app/contexts/player-context"
 import { convertSecondsToTime } from "@/utils/convertSecondsToTime"
 import { subsonic } from "@/service/subsonic"
-import HandlePressedKeys from "@/app/components/handle-pressed-keys"
 import { TrackInfo } from "@/app/components/player/track-info"
 
 let isSeeking = false
@@ -31,6 +31,12 @@ export function Player() {
   const [volume, setVolume] = useState(100)
 
   const song = player.currentSongList[player.currentSongIndex]
+
+  useHotkeys('space', () => {
+    if (player.currentSongList.length > 0) {
+      player.togglePlayPause()
+    }
+  })
 
   useEffect(() => {
     if (!audioRef.current) return
@@ -237,8 +243,6 @@ export function Player() {
           onEnded={handleSongEnded}
         />
       )}
-
-      <HandlePressedKeys />
     </div>
   )
 }

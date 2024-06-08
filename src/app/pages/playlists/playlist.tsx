@@ -68,11 +68,11 @@ export default function Playlist() {
             {memoizedPlaylist.comment}
           </p>
           <div className="flex gap-1 mt-2 text-muted-foreground text-sm">
-            <Badge variant="secondary">
+            <Badge variant="default" className="shadow">
               {t('playlist.songCount', { count: memoizedPlaylist.songCount })}
             </Badge>
             {playlistDuration && (
-              <Badge variant="secondary">
+              <Badge variant="default" className="shadow">
                 {t('playlist.duration', { duration: playlistDuration })}
               </Badge>
             )}
