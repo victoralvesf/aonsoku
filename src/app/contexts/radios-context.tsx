@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
@@ -9,6 +9,8 @@ interface RadiosContextState {
   data: Radio
   setData: (data: Radio) => void
   radios: Radio[]
+  setRadios: (radios: Radio[]) => void
+  fetchRadios: () => void
   dialogState: boolean
   setDialogState: (state: boolean) => void
   confirmDeleteState: boolean
@@ -27,10 +29,6 @@ export function RadiosProvider({ children }: { children: ReactNode }) {
   const [confirmDeleteState, setConfirmDeleteState] = useState(false)
 
   const { t } = useTranslation()
-
-  useEffect(() => {
-    fetchRadios()
-  }, [])
 
   const fetchRadios = useCallback(async () => {
     try {
@@ -76,6 +74,8 @@ export function RadiosProvider({ children }: { children: ReactNode }) {
     data,
     setData,
     radios,
+    setRadios,
+    fetchRadios,
     dialogState,
     setDialogState,
     confirmDeleteState,

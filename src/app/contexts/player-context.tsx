@@ -129,6 +129,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     setOriginalSongList([])
     setShuffledSongList([])
     setCurrentSongList([])
+    setRadioList([])
     setOriginalSongIndex(0)
     setCurrentSongIndex(0)
     setIsPlaying(false)

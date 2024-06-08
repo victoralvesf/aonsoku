@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { PlusIcon } from "lucide-react"
 import { DataTable } from "@/app/components/ui/data-table"
@@ -14,7 +14,7 @@ import { useLang } from "@/app/contexts/lang-context"
 import { usePlayer } from "@/app/contexts/player-context"
 
 export default function Radios() {
-  const { radios, setDialogState, setData } = useRadios()
+  const { radios, setDialogState, setData, fetchRadios } = useRadios()
   const { langCode } = useLang()
   const { t } = useTranslation()
 
@@ -27,6 +27,10 @@ export default function Radios() {
     setData({} as Radio)
     setDialogState(true)
   }
+
+  useEffect(() => {
+    fetchRadios()
+  }, [])
 
   return (
     <main className="w-full h-full">

@@ -15,6 +15,7 @@ import {
 import { useApp } from "@/app/contexts/app-context"
 import { ROUTES } from "@/routes/routesList"
 import { usePlayer } from "@/app/contexts/player-context"
+import { useRadios } from "../contexts/radios-context"
 
 interface AlertDialogProps {
   openDialog: boolean
@@ -25,12 +26,14 @@ export function LogoutConfirmDialog({ openDialog, setOpenDialog }: AlertDialogPr
   const { handleRemoveServerConfig } = useApp()
   const navigate = useNavigate()
   const { clearPlayerState } = usePlayer()
+  const { setRadios } = useRadios()
   const { t } = useTranslation()
 
   async function handleRemoveConfig(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     await handleRemoveServerConfig()
     await emit('user-logged-out', {})
+    setRadios([])
     clearPlayerState()
     navigate(ROUTES.SERVER_CONFIG, { replace: true })
   }
