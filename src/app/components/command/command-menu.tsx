@@ -24,6 +24,7 @@ import { Keyboard } from "@/app/components/command/keyboard-key";
 import { useSongList } from "@/app/hooks/use-song-list";
 import { usePlayer } from "@/app/contexts/player-context";
 import { usePlaylists } from "@/app/contexts/playlists-context";
+import { isTauri } from "@/utils/tauriTools";
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS'
 
@@ -47,7 +48,7 @@ export default function CommandMenu() {
   const player = usePlayer()
 
   const isMacOS = osType === 'Darwin'
-  const isBrowser = !window.__TAURI__
+  const isBrowser = !isTauri()
 
   const showAlbumGroup = Boolean(query && albums && albums.length > 0)
   const showArtistGroup = Boolean(query && artists && artists.length > 0)
@@ -113,7 +114,7 @@ export default function CommandMenu() {
   }
 
   const modifierKey = () => {
-    const keys = { mac: "⌘", win: "ctrl" }
+    const keys = { mac: "⌘", win: "⌃" }
 
     if (isBrowser || isMacOS) return keys.mac
     if (!isBrowser && !isMacOS) return keys.win

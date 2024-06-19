@@ -23,7 +23,7 @@ export function LangSelect() {
           <ReactCountryFlag countryCode={flag} svg />
         </SelectValue>
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent align="end">
         <SelectGroup>
           {currentLanguages.map((language) => (
             <SelectItem

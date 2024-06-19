@@ -50,6 +50,9 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   function getServerConfigBrowser() {
     const localConfig = getFromLocalStorage()
     if (localConfig.url && localConfig.username && localConfig.token) {
+      setServerUrl(localConfig.url)
+      setServerUsername(localConfig.username)
+      setServerPassword(localConfig.token)
       setIsServerConfigured(true)
     } else {
       setIsServerConfigured(false)
