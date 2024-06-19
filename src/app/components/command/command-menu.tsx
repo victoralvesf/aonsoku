@@ -24,6 +24,7 @@ import { Keyboard } from "@/app/components/command/keyboard-key";
 import { useSongList } from "@/app/hooks/use-song-list";
 import { usePlayer } from "@/app/contexts/player-context";
 import { usePlaylists } from "@/app/contexts/playlists-context";
+import { isTauri } from "@/utils/tauriTools";
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS'
 
@@ -47,6 +48,7 @@ export default function CommandMenu() {
   const player = usePlayer()
 
   const isMacOS = osType === 'Darwin'
+  const isBrowser = !isTauri()
 
   const showAlbumGroup = Boolean(query && albums && albums.length > 0)
   const showArtistGroup = Boolean(query && artists && artists.length > 0)
@@ -111,6 +113,13 @@ export default function CommandMenu() {
     if (albumSongs) player.setSongList(albumSongs, 0)
   }
 
+  const modifierKey = () => {
+    const keys = { mac: "⌘", win: "⌃" }
+
+    if (isBrowser || isMacOS) return keys.mac
+    if (!isBrowser && !isMacOS) return keys.win
+  }
+
   return (
     <>
       <Button
@@ -123,7 +132,7 @@ export default function CommandMenu() {
           {t('sidebar.search')}
         </span>
 
-        <Keyboard modifier={isMacOS ? "⌘" : "ctrl"} text="K" />
+        <Keyboard modifier={modifierKey()} text="K" />
       </Button>
       <CommandDialog
         open={open}
@@ -138,8 +147,9 @@ export default function CommandMenu() {
       >
         <input
           type="text"
+          id="search"
           placeholder={t('command.inputPlaceholder')}
-          className="px-4 py-3 bg-background border-b"
+          className="px-4 py-3 bg-background border-b outline-none focus:border-b-primary"
           value={query}
           autoCorrect="false"
           autoCapitalize="false"

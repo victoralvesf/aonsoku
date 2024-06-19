@@ -6,7 +6,7 @@ import { os, event } from '@tauri-apps/api'
 
 import { IAppContext, IServerConfig } from "@/types/serverConfig";
 import { pingServer } from "@/api/pingServer";
-import { removeFromLocalStorage, saveToLocalStorage } from "@/utils/persistDataLayer";
+import { getFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from "@/utils/persistDataLayer";
 import { useTranslation } from "react-i18next";
 
 const store = new Store(".settings.dat");
@@ -47,13 +47,29 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  useEffect(() => {
-    getServerConfig();
-
-    const getOsType = async () => {
-      setOsType(await os.type())
+  function getServerConfigBrowser() {
+    const localConfig = getFromLocalStorage()
+    if (localConfig.url && localConfig.username && localConfig.token) {
+      setServerUrl(localConfig.url)
+      setServerUsername(localConfig.username)
+      setServerPassword(localConfig.token)
+      setIsServerConfigured(true)
+    } else {
+      setIsServerConfigured(false)
     }
-    getOsType()
+  }
+
+  useEffect(() => {
+    if (window.__TAURI__) {
+      getServerConfig();
+
+      const getOsType = async () => {
+        setOsType(await os.type())
+      }
+      getOsType()
+    } else {
+      getServerConfigBrowser()
+    }
   }, [])
 
   async function handleSaveServerConfig() {
@@ -68,8 +84,10 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         username: serverUsername,
         password: token
       }
-      await store.set("server-config", config)
-      await store.save()
+      if (window.__TAURI__) {
+        await store.set("server-config", config)
+        await store.save()
+      }
 
       saveToLocalStorage({
         url: config.url,
@@ -82,7 +100,9 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
       setServerPassword(token)
       setIsServerConfigured(true)
 
-      await event.emit('user-logged-in', { user: config.username, server: config.url })
+      if (window.__TAURI__) {
+        await event.emit('user-logged-in', { user: config.username, server: config.url })
+      }
 
       toast.success(t('toast.server.success'))
       return true
@@ -95,8 +115,10 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   async function handleRemoveServerConfig() {
     removeFromLocalStorage()
-    await store.delete("server-config")
-    await store.save()
+    if (window.__TAURI__) {
+      await store.delete("server-config")
+      await store.save()
+    }
     setIsServerConfigured(false)
   }
 

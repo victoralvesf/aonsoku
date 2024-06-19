@@ -1,5 +1,7 @@
 import { FormEvent } from "react"
-import { Button } from "@/app/components/ui/button"
+import { useTranslation } from "react-i18next"
+import { useNavigate } from "react-router-dom"
+
 import {
   Card,
   CardContent,
@@ -8,9 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
-import { ThemeToggle } from "@/app/components/theme-toggle"
 import {
   Select,
   SelectContent,
@@ -18,10 +17,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select"
+
+import { Input } from "@/app/components/ui/input"
+import { Label } from "@/app/components/ui/label"
+import { ThemeToggle } from "@/app/components/header/theme-toggle"
+import { Button } from "@/app/components/ui/button"
 import { useApp } from "@/app/contexts/app-context"
-import { useNavigate } from "react-router-dom"
 import { ROUTES } from "@/routes/routesList"
-import { useTranslation } from "react-i18next"
+import { LangSelect } from "@/app/components/header/lang-select"
 
 export function LoginForm() {
   const {
@@ -46,16 +49,17 @@ export function LoginForm() {
   return (
     <Card className="w-[450px] bg-slate-100 dark:bg-slate-900">
       <form onSubmit={handleSubmit}>
-        <CardHeader className="flex flex-row justify-between items-center space-y-0">
-          <div>
-            <CardTitle>
-              {t('login.form.server')}
-            </CardTitle>
-            <CardDescription>
-              {t('login.form.description')}
-            </CardDescription>
-          </div>
-          <ThemeToggle />
+        <CardHeader className="flex">
+          <CardTitle className="flex flex-row justify-between items-center">
+            {t('login.form.server')}
+            <div className="flex gap-2 items-center">
+              <LangSelect />
+              <ThemeToggle />
+            </div>
+          </CardTitle>
+          <CardDescription>
+            {t('login.form.description')}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid w-full items-center gap-4">

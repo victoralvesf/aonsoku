@@ -16,6 +16,7 @@ import { useApp } from "@/app/contexts/app-context"
 import { ROUTES } from "@/routes/routesList"
 import { usePlayer } from "@/app/contexts/player-context"
 import { useRadios } from "../contexts/radios-context"
+import { isTauri } from "@/utils/tauriTools"
 
 interface AlertDialogProps {
   openDialog: boolean
@@ -32,7 +33,7 @@ export function LogoutConfirmDialog({ openDialog, setOpenDialog }: AlertDialogPr
   async function handleRemoveConfig(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     await handleRemoveServerConfig()
-    await emit('user-logged-out', {})
+    if (isTauri()) await emit('user-logged-out', {})
     setRadios([])
     clearPlayerState()
     navigate(ROUTES.SERVER_CONFIG, { replace: true })
