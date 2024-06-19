@@ -1,25 +1,10 @@
 import { FetchOptions, fetch as tauriFetch } from "@tauri-apps/api/http";
-
-function getStoredConfig() {
-  let url = localStorage.getItem("server-url")
-  if (url?.slice(-1) === "/") {
-    url = url.slice(0, -1)
-  }
-
-  const username = localStorage.getItem("server-username")
-  const token = localStorage.getItem("server-token")
-  const salt = localStorage.getItem("server-salt")
-  
-  return {
-    url,
-    username,
-    token,
-    salt
-  }
-}
+import { getFromLocalStorage } from "@/utils/persistDataLayer";
+import { SubsonicJsonResponse } from "@/types/responses/subsonicResponse";
+import { isTauri } from "@/utils/tauriTools";
 
 function queryParams() {
-  const { username, token, salt } = getStoredConfig()
+  const { username, token, salt } = getFromLocalStorage()
   return {
     u: username ?? '',
     t: token ?? '',
@@ -30,50 +15,68 @@ function queryParams() {
   }
 }
 
+async function browserFetch<T>(url: string, options: RequestInit): Promise<{ count: number, data: T } | undefined> {
+  try {
+    const response = await fetch(url, options);
+
+    if (response.ok) {
+      const data = await response.json();
+      return {
+        count: parseInt(response.headers.get('x-total-count') || '0', 10),
+        data: data['subsonic-response'] as T
+      };
+    }
+  } catch (error) {
+    console.error('Error on browserFetch request', error);
+    return undefined;
+  }
+}
+
+async function rustFetch<T>(url: string, options: FetchOptions): Promise<{ count: number, data: T } | undefined> {
+  try {
+    const response = await tauriFetch(url, {
+      ...options,
+      query: {
+        ...options.query,
+        ...queryParams()        
+      },
+      body: options.body || undefined
+    })
+    
+    if (response.ok) {
+      const data = response.data as SubsonicJsonResponse
+  
+      return {
+        count: parseInt(response.headers['x-total-count'] || '0', 10),
+        data: data['subsonic-response'] as T
+      }
+    }
+  } catch (error) {
+    console.error('Error on tauriFetch request', error);
+    return undefined;
+  }
+}
+
 export async function httpClient<T>(path: string, options: FetchOptions): Promise<{ count: number, data: T } | undefined> {
   try {
-    const { url } = getStoredConfig()
-  
-    let response: any
-    
-    if (window.__TAURI__) {
-      response = await tauriFetch(`${url}/rest${path}`, {
-        ...options,
-        query: {
-          ...options.query,
-          ...queryParams()        
-        }
-      })
+    const { url } = getFromLocalStorage()
+    let fullUrl = `${url}/rest${path}`
+      
+    if (isTauri()) {
+      return await rustFetch(fullUrl, { ...options })
     } else {
       const queries = new URLSearchParams({
         ...options.query,
         ...queryParams()
       }).toString()
 
-      let composedUrl = `${url}/rest${path}`
-      if (path.includes('?')) {
-        composedUrl += `&${queries}`
-      } else {
-        composedUrl += `?${queries}`
-      }
+      fullUrl += path.includes('?') ? `&${queries}` : `?${queries}`
 
-      const data = await fetch(composedUrl, { method: options.method })
-
-      response = {
-        ok: data.ok,
-        headers: {
-          'x-total-count': data.headers.get('x-total-count'),
-        },
-        data: await data.json()
-      }
-    }
-
-
-    if (response.ok) {
-      return {
-        count: response.headers['x-total-count'] || 0,
-        data: response.data['subsonic-response'] as T
-      }
+      return await browserFetch<T>(fullUrl, {
+        method: options.method,
+        headers: options.headers,
+        body: options.body ? JSON.stringify(options.body) : undefined
+      })
     }
   } catch (error) {
     console.error('Error on httpClient request', error)
@@ -82,7 +85,7 @@ export async function httpClient<T>(path: string, options: FetchOptions): Promis
 }
 
 export function getCoverArtUrl(id: string, size = '300') {
-  const { url } = getStoredConfig()
+  const { url } = getFromLocalStorage()
   const baseUrl = `${url}/rest/getCoverArt`
 
   const params = {
@@ -98,7 +101,7 @@ export function getCoverArtUrl(id: string, size = '300') {
 }
 
 export function getSongStreamUrl(id: string) {
-  const { url } = getStoredConfig()
+  const { url } = getFromLocalStorage()
   const baseUrl = `${url}/rest/stream`
 
   const params = {

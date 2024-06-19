@@ -1,4 +1,6 @@
 import { fetch as tauriFetch } from "@tauri-apps/api/http"
+import { SubsonicJsonResponse } from "@/types/responses/subsonicResponse"
+import { isTauri } from "@/utils/tauriTools"
 
 export async function pingServer(url: string, user: string, token: string, salt: string) {
   try {
@@ -12,7 +14,7 @@ export async function pingServer(url: string, user: string, token: string, salt:
       f: 'json'
     }
     
-    if (window.__TAURI__) {
+    if (isTauri()) {
       response = await tauriFetch(`${url}/rest/ping.view`, {
         method: 'GET',
         query
@@ -28,9 +30,10 @@ export async function pingServer(url: string, user: string, token: string, salt:
         data: await data.json()
       }
     }
-
-  
-    if (response.data['subsonic-response'].status === 'ok') {
+    
+    const data = response.data as SubsonicJsonResponse
+    
+    if (data['subsonic-response'].status === 'ok') {
       return true
     } else {
       return false

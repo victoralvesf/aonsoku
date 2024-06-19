@@ -6,4 +6,8 @@ interface SubsonicResponseBase {
   openSubsonic: boolean;
 }
 
+export interface SubsonicJsonResponse {
+  'subsonic-response': Record<string, string>
+}
+
 export type SubsonicResponse<T = {}> = SubsonicResponseBase & T;
