@@ -36,6 +36,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
       const starredStatus = currentSong.starred ? true : false
       setIsSongStarred(starredStatus)
 
+      document.title = `${currentSong.title} - ${currentSong.artist} - Subsonic Player`
       manageMediaSession.setMediaSession(currentSong)
     }
   }, [currentSongList, currentSongIndex])
@@ -43,6 +44,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (radioList.length > 0 && mediaType === 'radio') {
       const radioName = radioList[currentSongIndex].name
+      document.title = `${radioLabel} - ${radioName} - Subsonic Player`
       manageMediaSession.setRadioMediaSession(radioLabel, radioName)
     }
   }, [radioList, currentSongIndex])
@@ -138,6 +140,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     setProgress(0)
     setCurrentDuration(0)
     manageMediaSession.setPlaybackState(null)
+    document.title = 'Subsonic Player'
   }, [])
 
   const hasNextSong = useMemo(() => {
