@@ -1,7 +1,7 @@
 export interface IServerConfig {
-  url: string;
-  username: string;
-  password: string;
+  url: string
+  username: string
+  password: string
 }
 
 export interface IAppContext {

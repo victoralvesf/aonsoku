@@ -1,5 +1,5 @@
-import { IArtistAlbum } from "./album"
-import { SubsonicResponse } from "./subsonicResponse"
+import { IArtistAlbum } from './album'
+import { SubsonicResponse } from './subsonicResponse'
 
 export interface IArtist {
   id: string
@@ -9,6 +9,14 @@ export interface IArtist {
   starred?: string
   artistImageUrl: string
   album: IArtistAlbum[]
+}
+
+export interface ISimilarArtist {
+  id: string
+  name: string
+  albumCount: number
+  coverArt: string
+  artistImageUrl: string
 }
 
 export interface ArtistResponse extends SubsonicResponse<{ artist: IArtist }> {}
@@ -23,12 +31,5 @@ export interface IArtistInfo {
   similarArtist?: ISimilarArtist[]
 }
 
-export interface ArtistInfoResponse extends SubsonicResponse<{ artistInfo: IArtistInfo }> {}
-
-export interface ISimilarArtist {
-  id: string
-  name: string
-  albumCount: number
-  coverArt: string
-  artistImageUrl: string
-}
+export interface ArtistInfoResponse
+  extends SubsonicResponse<{ artistInfo: IArtistInfo }> {}

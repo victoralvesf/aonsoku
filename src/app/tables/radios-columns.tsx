@@ -1,16 +1,16 @@
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef } from '@tanstack/react-table'
 
-import { Radio } from "@/types/responses/radios"
+import { Radio } from '@/types/responses/radios'
 import i18n from '@/i18n'
 
-import { RadioActionButton } from "@/app/components/radios/action-button"
-import PlaySongButton from "@/app/components/table/play-button"
+import { RadioActionButton } from '@/app/components/radios/action-button'
+import PlaySongButton from '@/app/components/table/play-button'
 
 export function fillRadiosColumns(): ColumnDef<Radio>[] {
   return [
     {
-      id: "index",
-      accessorKey: "index",
+      id: 'index',
+      accessorKey: 'index',
       header: () => {
         return <div className="text-center">#</div>
       },
@@ -27,16 +27,16 @@ export function fillRadiosColumns(): ColumnDef<Radio>[] {
             handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
           />
         )
-      }
+      },
     },
     {
-      id: "name",
-      accessorKey: "name",
+      id: 'name',
+      accessorKey: 'name',
       header: i18n.t('radios.table.name'),
     },
     {
-      id: "homePageUrl",
-      accessorKey: "homePageUrl",
+      id: 'homePageUrl',
+      accessorKey: 'homePageUrl',
       header: i18n.t('radios.table.homepage'),
       cell: ({ row }) => {
         const { homePageUrl } = row.original
@@ -44,33 +44,36 @@ export function fillRadiosColumns(): ColumnDef<Radio>[] {
         if (!homePageUrl) return ''
 
         return (
-          <a href={homePageUrl} target="_blank" rel="nofollow" className="text-primary hover:underline">
+          <a
+            href={homePageUrl}
+            target="_blank"
+            rel="nofollow noreferrer"
+            className="text-primary hover:underline"
+          >
             {homePageUrl}
           </a>
         )
-      }
+      },
     },
     {
-      id: "streamUrl",
-      accessorKey: "streamUrl",
+      id: 'streamUrl',
+      accessorKey: 'streamUrl',
       header: i18n.t('radios.table.stream'),
       cell: ({ row }) => (
         <div className="max-w-[350px] 2xl:max-w-[600px]">
           <p className="truncate">{row.original.streamUrl}</p>
         </div>
-      )
+      ),
     },
     {
-      id: "actions",
-      accessorKey: "actions",
-      header: "",
+      id: 'actions',
+      accessorKey: 'actions',
+      header: '',
       size: 40,
       maxSize: 40,
       cell: ({ row }) => {
-        return (
-          <RadioActionButton row={row.original} />
-        )
-      }
-    }
+        return <RadioActionButton row={row.original} />
+      },
+    },
   ]
 }

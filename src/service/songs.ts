@@ -1,12 +1,16 @@
-import { httpClient } from "@/api/httpClient";
-import { LyricsResponse, RandomSongsResponse, TopSongsResponse } from "@/types/responses/song";
+import { httpClient } from '@/api/httpClient'
+import {
+  LyricsResponse,
+  RandomSongsResponse,
+  TopSongsResponse,
+} from '@/types/responses/song'
 
 async function getRandomSongs(size = 10) {
   const response = await httpClient<RandomSongsResponse>('/getRandomSongs', {
     method: 'GET',
     query: {
       size: size.toString(),
-    }
+    },
   })
 
   return response?.data.randomSongs.song
@@ -17,7 +21,7 @@ async function getTopSongs(artistName: string) {
     method: 'GET',
     query: {
       artist: artistName,
-    }
+    },
   })
 
   return response?.data.topSongs.song
@@ -28,8 +32,8 @@ async function getLyrics(artistName: string, songName: string) {
     method: 'GET',
     query: {
       artist: artistName,
-      title: songName
-    }
+      title: songName,
+    },
   })
 
   return response?.data.lyrics
@@ -38,5 +42,5 @@ async function getLyrics(artistName: string, songName: string) {
 export const songs = {
   getRandomSongs,
   getTopSongs,
-  getLyrics
+  getLyrics,
 }

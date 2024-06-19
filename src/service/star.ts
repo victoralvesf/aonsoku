@@ -1,12 +1,12 @@
-import { httpClient } from "@/api/httpClient";
-import { SubsonicResponse } from "@/types/responses/subsonicResponse";
+import { httpClient } from '@/api/httpClient'
+import { SubsonicResponse } from '@/types/responses/subsonicResponse'
 
 async function starItem(id: string) {
   await httpClient<SubsonicResponse>('/star', {
     method: 'GET',
     query: {
       id,
-    }
+    },
   })
 }
 
@@ -15,7 +15,7 @@ async function unstarItem(id: string) {
     method: 'GET',
     query: {
       id,
-    }
+    },
   })
 }
 
@@ -30,5 +30,5 @@ async function handleStarItem(id: string, starred: boolean) {
 export const star = {
   starItem,
   unstarItem,
-  handleStarItem
+  handleStarItem,
 }

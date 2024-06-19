@@ -1,7 +1,7 @@
-import { Link, useRouteError } from "react-router-dom";
-import { Button } from "../components/ui/button";
-import Error404Icon from "../components/icons/error-404-icon";
-import { ROUTES } from "@/routes/routesList";
+import { Link, useRouteError } from 'react-router-dom'
+import { Button } from '../components/ui/button'
+import Error404Icon from '../components/icons/error-404-icon'
+import { ROUTES } from '@/routes/routesList'
 
 interface IError {
   status?: number
@@ -22,10 +22,14 @@ export default function ErrorPage() {
         </h1>
 
         <p className="leading-7 text-left mt-6">
-          Status Code: <strong className="font-semibold">{error?.status || 'None'}</strong>
+          Status Code:{' '}
+          <strong className="font-semibold">{error?.status || 'None'}</strong>
         </p>
         <p className="leading-7 mt-2 text-left">
-          Description: <strong className="font-semibold">{error?.data || 'Unhandled Error'}</strong>
+          Description:{' '}
+          <strong className="font-semibold">
+            {error?.data || 'Unhandled Error'}
+          </strong>
         </p>
 
         <Link to={ROUTES.LIBRARY.HOME}>
@@ -33,5 +37,5 @@ export default function ErrorPage() {
         </Link>
       </div>
     </div>
-  );
+  )
 }

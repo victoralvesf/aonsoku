@@ -23,13 +23,13 @@ export const brazilianPortuguese = {
       serverLogout: 'Desconectar',
     },
     generic: {
-      seeMore: 'Ver mais'
+      seeMore: 'Ver mais',
     },
     theme: {
       label: 'Tema',
       light: 'Claro',
       dark: 'Escuro',
-      system: 'Sistema'
+      system: 'Sistema',
     },
     playlist: {
       headline: 'Playlist',
@@ -49,8 +49,8 @@ export const brazilianPortuguese = {
         description: 'Essa ação não poderá ser desfeita.',
         toast: {
           success: 'Playlist excluída com sucesso!',
-          error: 'Falha ao excluir esta playlist!'
-        }
+          error: 'Falha ao excluir esta playlist!',
+        },
       },
       createDialog: {
         title: 'Criar uma playlist',
@@ -60,15 +60,15 @@ export const brazilianPortuguese = {
         saveButton: 'Criar',
         toast: {
           success: 'Playlist criada com sucesso!',
-          error: 'Falha ao criar a playlist!'
-        }
-      }
+          error: 'Falha ao criar a playlist!',
+        },
+      },
     },
     album: {
       headline: 'Álbum',
       buttons: {
         like: 'Curtir {{name}}',
-        dislike: 'Remover curtida de {{name}}'
+        dislike: 'Remover curtida de {{name}}',
       },
       info: {
         about: 'Sobre {{name}}',
@@ -92,15 +92,15 @@ export const brazilianPortuguese = {
           recentlyAdded: 'Adicionados recentemente',
           recentlyPlayed: 'Reproduzidos recentemente',
           releaseYear: 'Ano de lançamento',
-        }
-      }
+        },
+      },
     },
     artist: {
       headline: 'Artista',
       buttons: {
         play: 'Tocar a rádio de {{artist}}',
         shuffle: 'Tocar a rádio de {{artist}} no modo aleatório',
-        options: 'Mais opções para {{artist}}'
+        options: 'Mais opções para {{artist}}',
       },
       info: {
         albumsCount_zero: '{{count}} álbuns',
@@ -128,7 +128,7 @@ export const brazilianPortuguese = {
         play: 'Tocar {{title}} por {{artist}}',
         pause: 'Pausar {{title}} por {{artist}}',
       },
-      lastPlayed: '{{date}} atrás'
+      lastPlayed: '{{date}} atrás',
     },
     fullscreen: {
       noLyrics: 'Letra não encontrada',
@@ -142,7 +142,7 @@ export const brazilianPortuguese = {
         description: 'Confirme para se desconectar.',
         cancel: 'Cancelar',
         confirm: 'Continuar',
-      }
+      },
     },
     login: {
       form: {
@@ -154,13 +154,13 @@ export const brazilianPortuguese = {
         usernamePlaceholder: 'Seu usuário',
         password: 'Senha',
         connect: 'Conectar',
-      }
+      },
     },
     toast: {
       server: {
         success: 'Servidor foi salvo com sucesso!',
         error: 'Não foi possível se comunicar com o servidor!',
-      }
+      },
     },
     command: {
       inputPlaceholder: 'Pesquisar por álbum, artista ou música',
@@ -168,7 +168,7 @@ export const brazilianPortuguese = {
       commands: {
         heading: 'Comandos',
         pages: 'Ir para página',
-        theme: 'Mudar tema'
+        theme: 'Mudar tema',
       },
       pages: 'Páginas',
     },
@@ -182,8 +182,8 @@ export const brazilianPortuguese = {
       download: 'Download',
       playlist: {
         edit: 'Editar playlist',
-        delete: 'Excluir playlist'
-      }
+        delete: 'Excluir playlist',
+      },
     },
     radios: {
       label: 'Rádio',
@@ -194,7 +194,7 @@ export const brazilianPortuguese = {
         stream: 'URL de transmissão',
         actions: {
           edit: 'Editar rádio',
-          delete: 'Excluir rádio'
+          delete: 'Excluir rádio',
         },
         playTooltip: 'Tocar rádio {{name}}',
         pauseTooltip: 'Pausar rádio {{name}}',
@@ -205,26 +205,26 @@ export const brazilianPortuguese = {
           button: 'Salvar',
           toast: {
             success: 'Rádio criado com sucesso!',
-            error: 'Falha ao criar este rádio!'
-          }
+            error: 'Falha ao criar este rádio!',
+          },
         },
         edit: {
           title: 'Editar Rádio',
           button: 'Atualizar',
           toast: {
             success: 'Rádio atualizado com sucesso!',
-            error: 'Falha ao atualizar este rádio!'
-          }
+            error: 'Falha ao atualizar este rádio!',
+          },
         },
         delete: {
           title: 'Você tem certeza de que deseja excluir este rádio?',
           description: 'Essa ação não poderá ser desfeita.',
           toast: {
             success: 'Rádio excluído com sucesso!',
-            error: 'Falha ao excluir este rádio!'
-          }
-        }
-      }
+            error: 'Falha ao excluir este rádio!',
+          },
+        },
+      },
     },
     dayjs: {
       relativeTime: {
@@ -240,8 +240,8 @@ export const brazilianPortuguese = {
         M: '1 mês',
         MM: '%d meses',
         y: '1 ano',
-        yy: '%d anos'
-      }
-    }
-  }
+        yy: '%d anos',
+      },
+    },
+  },
 }

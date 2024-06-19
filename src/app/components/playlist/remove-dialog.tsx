@@ -1,5 +1,5 @@
-import { MouseEvent } from "react"
-import { useTranslation } from "react-i18next"
+import { MouseEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,11 +9,11 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/app/components/ui/alert-dialog"
+} from '@/app/components/ui/alert-dialog'
 
-import { useNavigate } from "react-router-dom"
-import { ROUTES } from "@/routes/routesList"
-import { usePlaylists } from "@/app/contexts/playlists-context"
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '@/routes/routesList'
+import { usePlaylists } from '@/app/contexts/playlists-context'
 
 interface RemovePlaylistDialogProps {
   playlistId: string
@@ -21,7 +21,11 @@ interface RemovePlaylistDialogProps {
   setOpenDialog: (value: boolean) => void
 }
 
-export function RemovePlaylistDialog({ playlistId, openDialog, setOpenDialog }: RemovePlaylistDialogProps) {
+export function RemovePlaylistDialog({
+  playlistId,
+  openDialog,
+  setOpenDialog,
+}: RemovePlaylistDialogProps) {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { removePlaylist } = usePlaylists()

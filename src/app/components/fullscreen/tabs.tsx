@@ -1,7 +1,12 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs"
-import { ScrollArea } from "@/app/components/ui/scroll-area"
-import { FullscreenSongQueue } from "./queue"
-import { useTranslation } from "react-i18next"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/app/components/ui/tabs'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
+import { FullscreenSongQueue } from './queue'
+import { useTranslation } from 'react-i18next'
 
 export function FullscreenTabs({ lyrics }: { lyrics: string }) {
   const { t } = useTranslation()
@@ -9,10 +14,16 @@ export function FullscreenTabs({ lyrics }: { lyrics: string }) {
   return (
     <Tabs defaultValue="queue" className="w-full h-full">
       <TabsList className="w-full bg-muted/50">
-        <TabsTrigger value="queue" className="w-full data-[state=active]:bg-background/70">
+        <TabsTrigger
+          value="queue"
+          className="w-full data-[state=active]:bg-background/70"
+        >
           {t('fullscreen.queue')}
         </TabsTrigger>
-        <TabsTrigger value="lyrics" className="w-full data-[state=active]:bg-background/70">
+        <TabsTrigger
+          value="lyrics"
+          className="w-full data-[state=active]:bg-background/70"
+        >
           {t('fullscreen.lyrics')}
         </TabsTrigger>
       </TabsList>
@@ -33,12 +44,14 @@ export function FullscreenTabs({ lyrics }: { lyrics: string }) {
 }
 
 const TextWithBreaks = ({ text }: { text: string }) => {
-  const lines = text.split('\n');
+  const lines = text.split('\n')
   return (
     <div>
       {lines.map((line, index) => (
-        <p key={index} className="leading-10">{line}</p>
+        <p key={index} className="leading-10">
+          {line}
+        </p>
       ))}
     </div>
-  );
-};
+  )
+}

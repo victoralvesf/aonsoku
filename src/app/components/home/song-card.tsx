@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom"
-import { Play } from "lucide-react"
-import { Albums } from "@/types/responses/album"
-import { Button } from "@/app/components/ui/button"
-import { getCoverArtUrl } from "@/api/httpClient"
-import { ROUTES } from "@/routes/routesList"
+import { Link } from 'react-router-dom'
+import { Play } from 'lucide-react'
+import { Albums } from '@/types/responses/album'
+import { Button } from '@/app/components/ui/button'
+import { getCoverArtUrl } from '@/api/httpClient'
+import { ROUTES } from '@/routes/routesList'
 
 interface HomeSongCardProps {
   album: Albums
@@ -14,14 +14,16 @@ interface HomeSongCardProps {
 export default function HomeSongCard({
   album,
   coverArtSize = 250,
-  onButtonClick
+  onButtonClick,
 }: HomeSongCardProps) {
   return (
     <div className="cursor-pointer">
       <Link to={ROUTES.ALBUM.PAGE(album.id)}>
         <div
           className="group flex-1 aspect-square rounded bg-cover bg-center bg-border"
-          style={{ backgroundImage: `url(${getCoverArtUrl(album.coverArt, coverArtSize.toString())})` }}
+          style={{
+            backgroundImage: `url(${getCoverArtUrl(album.coverArt, coverArtSize.toString())})`,
+          }}
         >
           <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
             <Button

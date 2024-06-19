@@ -1,8 +1,14 @@
-import { subsonic } from "@/service/subsonic";
-import { Playlist } from "@/types/responses/playlist";
-import { ReactNode, createContext, useCallback, useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
+import { subsonic } from '@/service/subsonic'
+import { Playlist } from '@/types/responses/playlist'
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+} from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 interface PlaylistContextState {
   playlists: Playlist[]
@@ -10,16 +16,20 @@ interface PlaylistContextState {
   removePlaylist: (id: string) => Promise<void>
   playlistDialogState: boolean
   setPlaylistDialogState: (state: boolean) => void
-  createPlaylistWithoutSongs: (name: string, comment: string, isPublic: 'true' | 'false') => Promise<void>
+  createPlaylistWithoutSongs: (
+    name: string,
+    comment: string,
+    isPublic: 'true' | 'false',
+  ) => Promise<void>
 }
 
 const initialState: PlaylistContextState = {
   playlists: [],
-  fetchPlaylists: async () => { },
-  removePlaylist: async () => { },
+  fetchPlaylists: async () => {},
+  removePlaylist: async () => {},
   playlistDialogState: false,
-  setPlaylistDialogState: () => { },
-  createPlaylistWithoutSongs: async () => { }
+  setPlaylistDialogState: () => {},
+  createPlaylistWithoutSongs: async () => {},
 }
 
 const PlaylistContext = createContext<PlaylistContextState>(initialState)
@@ -37,45 +47,51 @@ export function PlaylistProvider({ children }: PlaylistProviderProps) {
     try {
       const response = await subsonic.playlists.getAll()
       response ? setPlaylists(response) : setPlaylists([])
-    } catch (_) { }
+    } catch (_) {}
   }, [])
 
-  const removePlaylist = useCallback(async (id: string) => {
-    try {
-      await subsonic.playlists.remove(id)
+  const removePlaylist = useCallback(
+    async (id: string) => {
+      try {
+        await subsonic.playlists.remove(id)
 
-      setPlaylists((list) => {
-        const indexToRemove = list.findIndex((playlist) => playlist.id === id)
+        setPlaylists((list) => {
+          const indexToRemove = list.findIndex((playlist) => playlist.id === id)
 
-        const newList = [...list]
-        newList.splice(indexToRemove, 1)
+          const newList = [...list]
+          newList.splice(indexToRemove, 1)
 
-        return newList
-      })
-
-      toast.success(t('playlist.removeDialog.toast.success'))
-    } catch (_) {
-      toast.error(t('playlist.removeDialog.toast.error'))
-    }
-  }, [])
-
-  const createPlaylistWithoutSongs = useCallback(async (name: string, comment: string, isPublic: 'true' | 'false') => {
-    try {
-      const playlist = await subsonic.playlists.create(name)
-      if (playlist) {
-        await subsonic.playlists.update({
-          playlistId: playlist.id,
-          comment,
-          isPublic
+          return newList
         })
-      }
 
-      await fetchPlaylists()
-      toast.success(t('playlist.createDialog.toast.success'))
-    } catch (_) {
-      toast.error(t('playlist.createDialog.toast.error'))
-    }
-  }, [])
+        toast.success(t('playlist.removeDialog.toast.success'))
+      } catch (_) {
+        toast.error(t('playlist.removeDialog.toast.error'))
+      }
+    },
+    [t],
+  )
+
+  const createPlaylistWithoutSongs = useCallback(
+    async (name: string, comment: string, isPublic: 'true' | 'false') => {
+      try {
+        const playlist = await subsonic.playlists.create(name)
+        if (playlist) {
+          await subsonic.playlists.update({
+            playlistId: playlist.id,
+            comment,
+            isPublic,
+          })
+        }
+
+        await fetchPlaylists()
+        toast.success(t('playlist.createDialog.toast.success'))
+      } catch (_) {
+        toast.error(t('playlist.createDialog.toast.error'))
+      }
+    },
+    [fetchPlaylists, t],
+  )
 
   const value: PlaylistContextState = {
     playlists,
@@ -83,7 +99,7 @@ export function PlaylistProvider({ children }: PlaylistProviderProps) {
     removePlaylist,
     playlistDialogState,
     setPlaylistDialogState,
-    createPlaylistWithoutSongs
+    createPlaylistWithoutSongs,
   }
 
   return (
@@ -97,7 +113,7 @@ export const usePlaylists = () => {
   const context = useContext(PlaylistContext)
 
   if (context === undefined)
-    throw new Error("usePlaylists must be used within a PlaylistProvider")
+    throw new Error('usePlaylists must be used within a PlaylistProvider')
 
   return context
 }

@@ -1,5 +1,5 @@
-import { MouseEvent } from "react"
-import { useTranslation } from "react-i18next"
+import { MouseEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,9 +9,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/app/components/ui/alert-dialog"
-import { useRadios } from "@/app/contexts/radios-context"
-import { Radio } from "@/types/responses/radios"
+} from '@/app/components/ui/alert-dialog'
+import { useRadios } from '@/app/contexts/radios-context'
+import { Radio } from '@/types/responses/radios'
 
 export function RemoveRadioDialog() {
   const { t } = useTranslation()
@@ -20,7 +20,7 @@ export function RemoveRadioDialog() {
     setData,
     confirmDeleteState,
     setConfirmDeleteState,
-    deleteRadio
+    deleteRadio,
   } = useRadios()
 
   async function handleRemoveRadio(e: MouseEvent<HTMLButtonElement>) {
@@ -34,9 +34,7 @@ export function RemoveRadioDialog() {
     <AlertDialog open={confirmDeleteState}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {t('radios.form.delete.title')}
-          </AlertDialogTitle>
+          <AlertDialogTitle>{t('radios.form.delete.title')}</AlertDialogTitle>
           <AlertDialogDescription>
             {t('radios.form.delete.description')}
           </AlertDialogDescription>

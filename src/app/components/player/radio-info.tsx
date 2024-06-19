@@ -1,7 +1,7 @@
-import { Radio } from "@/types/responses/radios";
-import { BoomBox } from "lucide-react";
-import { Fragment } from "react";
-import { useTranslation } from "react-i18next";
+import { Radio } from '@/types/responses/radios'
+import { BoomBox } from 'lucide-react'
+import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export function RadioInfo({ radio }: { radio: Radio }) {
   const { t } = useTranslation()
@@ -20,7 +20,9 @@ export function RadioInfo({ radio }: { radio: Radio }) {
             </span>
           </Fragment>
         ) : (
-          <span className="text-sm font-medium">{t('player.noRadioPlaying')}</span>
+          <span className="text-sm font-medium">
+            {t('player.noRadioPlaying')}
+          </span>
         )}
       </div>
     </Fragment>

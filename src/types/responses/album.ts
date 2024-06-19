@@ -1,13 +1,15 @@
-import { IReplayGain, ISong } from "./song"
-import { SubsonicResponse } from "./subsonicResponse"
+import { IReplayGain, ISong } from './song'
+import { SubsonicResponse } from './subsonicResponse'
 
-export interface AlbumList {
-  album: Albums[]
+export interface Genre {
+  name: string
 }
 
-export interface AlbumListResponse extends SubsonicResponse<{ albumList: AlbumList }> {}
+export interface DiscTitle {
+  disc: number
+}
 
-export interface GetAlbumResponse extends SubsonicResponse<{ album: SingleAlbum }> {}
+export interface OriginalReleaseDate {}
 
 export interface Albums {
   id: string
@@ -33,12 +35,8 @@ export interface Albums {
   sortName: string
   mediaType: string
   musicBrainzId: string
-  genres: any[]
+  genres: Genre[]
   replayGain: IReplayGain
-}
-
-export interface IArtistAlbum extends Albums {
-  starred?: string
 }
 
 export interface SingleAlbum {
@@ -65,15 +63,19 @@ export interface SingleAlbum {
   song: ISong[]
 }
 
-export interface Genre {
-  name: string
+export interface AlbumList {
+  album: Albums[]
 }
 
-export interface DiscTitle {
-  disc: number
-}
+export interface AlbumListResponse
+  extends SubsonicResponse<{ albumList: AlbumList }> {}
 
-export interface OriginalReleaseDate {}
+export interface GetAlbumResponse
+  extends SubsonicResponse<{ album: SingleAlbum }> {}
+
+export interface IArtistAlbum extends Albums {
+  starred?: string
+}
 
 export interface IAlbumInfo {
   notes?: string
@@ -83,9 +85,20 @@ export interface IAlbumInfo {
   largeImageUrl?: string
 }
 
-export interface AlbumInfoResponse extends SubsonicResponse<{ albumInfo: IAlbumInfo }> {}
+export interface AlbumInfoResponse
+  extends SubsonicResponse<{ albumInfo: IAlbumInfo }> {}
 
-export type AlbumListType = 'random' | 'newest' | 'highest' | 'frequent' | 'recent' | 'byGenre' | 'alphabeticalByName' | 'alphabeticalByArtist' | 'starred' | 'byYear'
+export type AlbumListType =
+  | 'random'
+  | 'newest'
+  | 'highest'
+  | 'frequent'
+  | 'recent'
+  | 'byGenre'
+  | 'alphabeticalByName'
+  | 'alphabeticalByArtist'
+  | 'starred'
+  | 'byYear'
 
 export interface AlbumsListData {
   albumsCount: number

@@ -1,9 +1,10 @@
-import * as React from "react"
-import * as SliderPrimitive from "@radix-ui/react-slider"
+import * as React from 'react'
+import * as SliderPrimitive from '@radix-ui/react-slider'
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 
-interface SliderProps extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> {
+interface SliderProps
+  extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> {
   showThumb?: boolean
   thumbmousedown?: React.MouseEventHandler<HTMLSpanElement>
   thumbmouseup?: React.MouseEventHandler<HTMLSpanElement>
@@ -16,8 +17,8 @@ const Slider = React.forwardRef<
   <SliderPrimitive.Root
     ref={ref}
     className={cn(
-      "relative flex w-full touch-none select-none items-center",
-      className
+      'relative flex w-full touch-none select-none items-center',
+      className,
     )}
     {...props}
   >

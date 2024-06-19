@@ -1,30 +1,30 @@
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { SearchIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { useHotkeys } from "react-hotkeys-hook"
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { SearchIcon } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useHotkeys } from 'react-hotkeys-hook'
 
-import { Button } from "@/app/components/ui/button";
+import { Button } from '@/app/components/ui/button'
 import {
   CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandItem,
   CommandList,
-} from "@/app/components/ui/command"
-import { subsonic } from "@/service/subsonic";
-import { Albums } from "@/types/responses/album";
-import { ISimilarArtist } from "@/types/responses/artist";
-import { ISong } from "@/types/responses/song";
-import { ROUTES } from "@/routes/routesList";
-import { useTheme } from "@/app/contexts/theme-context";
-import { useApp } from "@/app/contexts/app-context";
-import { ResultItem } from "@/app/components/command/result-item";
-import { Keyboard } from "@/app/components/command/keyboard-key";
-import { useSongList } from "@/app/hooks/use-song-list";
-import { usePlayer } from "@/app/contexts/player-context";
-import { usePlaylists } from "@/app/contexts/playlists-context";
-import { isTauri } from "@/utils/tauriTools";
+} from '@/app/components/ui/command'
+import { subsonic } from '@/service/subsonic'
+import { Albums } from '@/types/responses/album'
+import { ISimilarArtist } from '@/types/responses/artist'
+import { ISong } from '@/types/responses/song'
+import { ROUTES } from '@/routes/routesList'
+import { useTheme } from '@/app/contexts/theme-context'
+import { useApp } from '@/app/contexts/app-context'
+import { ResultItem } from '@/app/components/command/result-item'
+import { Keyboard } from '@/app/components/command/keyboard-key'
+import { useSongList } from '@/app/hooks/use-song-list'
+import { usePlayer } from '@/app/contexts/player-context'
+import { usePlaylists } from '@/app/contexts/playlists-context'
+import { isTauri } from '@/utils/tauriTools'
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS'
 
@@ -54,31 +54,7 @@ export default function CommandMenu() {
   const showArtistGroup = Boolean(query && artists && artists.length > 0)
   const showSongGroup = Boolean(query && songs && songs.length > 0)
 
-  useHotkeys('mod+k', () => setOpen(state => !state))
-
-  const runCommand = useCallback((command: () => unknown) => {
-    setOpen(false)
-    clear()
-    command()
-  }, [])
-
-  function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {
-    setQuery(event.target.value)
-  }
-
-  useEffect(() => {
-    if (query.length === 0) clear()
-
-    if (query.length >= 3) search(query)
-  }, [query])
-
-  const removeLastPage = useCallback(() => {
-    setPages((pages) => {
-      const tempPages = [...pages];
-      tempPages.splice(-1, 1);
-      return tempPages;
-    });
-  }, []);
+  useHotkeys('mod+k', () => setOpen((state) => !state))
 
   const clear = useCallback(() => {
     setQuery('')
@@ -88,12 +64,39 @@ export default function CommandMenu() {
     setPages(['HOME'])
   }, [])
 
+  const runCommand = useCallback(
+    (command: () => unknown) => {
+      setOpen(false)
+      clear()
+      command()
+    },
+    [clear],
+  )
+
+  function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {
+    setQuery(event.target.value)
+  }
+
+  useEffect(() => {
+    if (query.length === 0) clear()
+
+    if (query.length >= 3) search(query)
+  }, [query, clear])
+
+  const removeLastPage = useCallback(() => {
+    setPages((pages) => {
+      const tempPages = [...pages]
+      tempPages.splice(-1, 1)
+      return tempPages
+    })
+  }, [])
+
   async function search(searchQuery: string) {
     const response = await subsonic.search.get({
       query: searchQuery,
       albumCount: 4,
       artistCount: 4,
-      songCount: 4
+      songCount: 4,
     })
 
     if (response) {
@@ -114,7 +117,7 @@ export default function CommandMenu() {
   }
 
   const modifierKey = () => {
-    const keys = { mac: "⌘", win: "⌃" }
+    const keys = { mac: '⌘', win: '⌃' }
 
     if (isBrowser || isMacOS) return keys.mac
     if (!isBrowser && !isMacOS) return keys.win
@@ -161,67 +164,74 @@ export default function CommandMenu() {
 
           {showAlbumGroup && (
             <CommandGroup heading={t('sidebar.albums')}>
-              {albums.length > 0 && albums.map((album) => (
-                <CommandItem
-                  key={`album-${album.id}`}
-                  value={`album-${album.id}`}
-                  className="border mb-1"
-                  onSelect={() => {
-                    runCommand(() => navigate(ROUTES.ALBUM.PAGE(album.id)))
-                  }}
-                >
-                  <ResultItem
-                    coverArt={album.coverArt}
-                    title={album.title}
-                    artist={album.artist}
-                    onClick={() => handlePlayAlbum(album.id)}
-                  />
-                </CommandItem>
-              ))}
+              {albums.length > 0 &&
+                albums.map((album) => (
+                  <CommandItem
+                    key={`album-${album.id}`}
+                    value={`album-${album.id}`}
+                    className="border mb-1"
+                    onSelect={() => {
+                      runCommand(() => navigate(ROUTES.ALBUM.PAGE(album.id)))
+                    }}
+                  >
+                    <ResultItem
+                      coverArt={album.coverArt}
+                      title={album.title}
+                      artist={album.artist}
+                      onClick={() => handlePlayAlbum(album.id)}
+                    />
+                  </CommandItem>
+                ))}
             </CommandGroup>
           )}
 
           {showArtistGroup && (
             <CommandGroup heading={t('sidebar.artists')}>
-              {artists.length > 0 && artists.map((artist) => (
-                <CommandItem
-                  key={`artist-${artist.id}`}
-                  value={`artist-${artist.id}`}
-                  className="border mb-1"
-                  onSelect={() => {
-                    runCommand(() => navigate(ROUTES.ARTIST.PAGE(artist.id)))
-                  }}
-                >
-                  <ResultItem
-                    coverArt={artist.coverArt}
-                    title={artist.name}
-                    artist={t('artist.info.albumsCount', { count: artist.albumCount })}
-                    onClick={() => handlePlayArtistRadio(artist)}
-                  />
-                </CommandItem>
-              ))}
+              {artists.length > 0 &&
+                artists.map((artist) => (
+                  <CommandItem
+                    key={`artist-${artist.id}`}
+                    value={`artist-${artist.id}`}
+                    className="border mb-1"
+                    onSelect={() => {
+                      runCommand(() => navigate(ROUTES.ARTIST.PAGE(artist.id)))
+                    }}
+                  >
+                    <ResultItem
+                      coverArt={artist.coverArt}
+                      title={artist.name}
+                      artist={t('artist.info.albumsCount', {
+                        count: artist.albumCount,
+                      })}
+                      onClick={() => handlePlayArtistRadio(artist)}
+                    />
+                  </CommandItem>
+                ))}
             </CommandGroup>
           )}
 
           {showSongGroup && (
             <CommandGroup heading={t('sidebar.songs')}>
-              {songs.length > 0 && songs.map((song) => (
-                <CommandItem
-                  key={`song-${song.id}`}
-                  value={`song-${song.id}`}
-                  className="border mb-1"
-                  onSelect={() => {
-                    runCommand(() => navigate(ROUTES.ALBUM.PAGE(song.albumId)))
-                  }}
-                >
-                  <ResultItem
-                    coverArt={song.coverArt}
-                    title={song.title}
-                    artist={song.artist}
-                    onClick={() => player.playSong(song)}
-                  />
-                </CommandItem>
-              ))}
+              {songs.length > 0 &&
+                songs.map((song) => (
+                  <CommandItem
+                    key={`song-${song.id}`}
+                    value={`song-${song.id}`}
+                    className="border mb-1"
+                    onSelect={() => {
+                      runCommand(() =>
+                        navigate(ROUTES.ALBUM.PAGE(song.albumId)),
+                      )
+                    }}
+                  >
+                    <ResultItem
+                      coverArt={song.coverArt}
+                      title={song.title}
+                      artist={song.artist}
+                      onClick={() => player.playSong(song)}
+                    />
+                  </CommandItem>
+                ))}
             </CommandGroup>
           )}
 
@@ -236,7 +246,9 @@ export default function CommandMenu() {
               <CommandItem onSelect={() => setPages([...pages, 'PLAYLISTS'])}>
                 {t('sidebar.playlists')}
               </CommandItem>
-              <CommandItem onSelect={() => runCommand(() => setPlaylistDialogState(true))}>
+              <CommandItem
+                onSelect={() => runCommand(() => setPlaylistDialogState(true))}
+              >
                 {t('playlist.createDialog.title')}
               </CommandItem>
             </CommandGroup>
@@ -244,22 +256,44 @@ export default function CommandMenu() {
 
           {activePage === 'GOTO' && (
             <CommandGroup heading={t('command.pages')}>
-              <CommandItem onSelect={() => runCommand(() => navigate(ROUTES.LIBRARY.HOME))}>
+              <CommandItem
+                onSelect={() => runCommand(() => navigate(ROUTES.LIBRARY.HOME))}
+              >
                 {t('sidebar.home')}
               </CommandItem>
-              <CommandItem onSelect={() => runCommand(() => navigate(ROUTES.LIBRARY.ARTISTS))}>
+              <CommandItem
+                onSelect={() =>
+                  runCommand(() => navigate(ROUTES.LIBRARY.ARTISTS))
+                }
+              >
                 {t('sidebar.artists')}
               </CommandItem>
-              <CommandItem onSelect={() => runCommand(() => navigate(ROUTES.LIBRARY.SONGS))}>
+              <CommandItem
+                onSelect={() =>
+                  runCommand(() => navigate(ROUTES.LIBRARY.SONGS))
+                }
+              >
                 {t('sidebar.songs')}
               </CommandItem>
-              <CommandItem onSelect={() => runCommand(() => navigate(ROUTES.LIBRARY.ALBUMS))}>
+              <CommandItem
+                onSelect={() =>
+                  runCommand(() => navigate(ROUTES.LIBRARY.ALBUMS))
+                }
+              >
                 {t('sidebar.albums')}
               </CommandItem>
-              <CommandItem onSelect={() => runCommand(() => navigate(ROUTES.LIBRARY.PLAYLISTS))}>
+              <CommandItem
+                onSelect={() =>
+                  runCommand(() => navigate(ROUTES.LIBRARY.PLAYLISTS))
+                }
+              >
                 {t('sidebar.playlists')}
               </CommandItem>
-              <CommandItem onSelect={() => runCommand(() => navigate(ROUTES.LIBRARY.RADIOS))}>
+              <CommandItem
+                onSelect={() =>
+                  runCommand(() => navigate(ROUTES.LIBRARY.RADIOS))
+                }
+              >
                 {t('sidebar.radios')}
               </CommandItem>
             </CommandGroup>
@@ -273,7 +307,9 @@ export default function CommandMenu() {
               <CommandItem onSelect={() => runCommand(() => setTheme('dark'))}>
                 {t('theme.dark')}
               </CommandItem>
-              <CommandItem onSelect={() => runCommand(() => setTheme('system'))}>
+              <CommandItem
+                onSelect={() => runCommand(() => setTheme('system'))}
+              >
                 {t('theme.system')}
               </CommandItem>
             </CommandGroup>
@@ -281,18 +317,22 @@ export default function CommandMenu() {
 
           {activePage === 'PLAYLISTS' && (
             <CommandGroup heading={t('sidebar.playlists')}>
-              {playlists.length > 0 && playlists.map((playlist) => (
-                <CommandItem
-                  key={`playlist-${playlist.id}`}
-                  value={`playlist-${playlist.id}`}
-                  onSelect={() => runCommand(() => navigate(ROUTES.PLAYLIST.PAGE(playlist.id)))}
-                >
-                  {playlist.name}
-                </CommandItem>
-              ))}
+              {playlists.length > 0 &&
+                playlists.map((playlist) => (
+                  <CommandItem
+                    key={`playlist-${playlist.id}`}
+                    value={`playlist-${playlist.id}`}
+                    onSelect={() =>
+                      runCommand(() =>
+                        navigate(ROUTES.PLAYLIST.PAGE(playlist.id)),
+                      )
+                    }
+                  >
+                    {playlist.name}
+                  </CommandItem>
+                ))}
             </CommandGroup>
           )}
-
         </CommandList>
         <div className="flex justify-end p-2 h-10 gap-1 border-t relative">
           <Keyboard text="ESC" className="static text-sm" />

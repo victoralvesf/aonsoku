@@ -1,5 +1,5 @@
-import { httpClient } from "@/api/httpClient"
-import { ISearchResponse } from "@/types/responses/search"
+import { httpClient } from '@/api/httpClient'
+import { ISearchResponse } from '@/types/responses/search'
 
 interface SearchQueryOptions {
   query: string
@@ -30,7 +30,7 @@ async function get({
       albumOffset: albumOffset.toString(),
       songCount: songCount.toString(),
       songOffset: songOffset.toString(),
-    }
+    },
   })
 
   return response?.data.searchResult2

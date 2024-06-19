@@ -1,14 +1,7 @@
-import { getCoverArtUrl } from "@/api/httpClient";
-import { ISong } from "@/types/responses/song";
+import { getCoverArtUrl } from '@/api/httpClient'
+import { ISong } from '@/types/responses/song'
 
-const artworkSizes = [
-  '96',
-  '128',
-  '192',
-  '256',
-  '384',
-  '512',
-]
+const artworkSizes = ['96', '128', '192', '256', '384', '512']
 
 function setMediaSession(song: ISong) {
   if (!navigator.mediaSession) return
@@ -21,9 +14,9 @@ function setMediaSession(song: ISong) {
       return {
         src: getCoverArtUrl(song.coverArt, size),
         sizes: [size, size].join('x'),
-        type: 'image/jpeg'
+        type: 'image/jpeg',
       }
-    })
+    }),
   })
 }
 
@@ -38,9 +31,9 @@ async function setRadioMediaSession(label: string, radioName: string) {
       {
         src: '',
         sizes: '',
-        type: ''
-      }
-    ]
+        type: '',
+      },
+    ],
   })
 }
 
@@ -62,18 +55,22 @@ interface SetHandlerParams {
   playNext: () => void
 }
 
-function setHandlers({ playPrev, playNext, togglePlayPause }: SetHandlerParams) {
+function setHandlers({
+  playPrev,
+  playNext,
+  togglePlayPause,
+}: SetHandlerParams) {
   if (!navigator.mediaSession) return
 
-  navigator.mediaSession.setActionHandler("play", () => togglePlayPause())
-  navigator.mediaSession.setActionHandler("pause", () => togglePlayPause())
-  navigator.mediaSession.setActionHandler("previoustrack", () => playPrev());
-  navigator.mediaSession.setActionHandler("nexttrack", () => playNext());
+  navigator.mediaSession.setActionHandler('play', () => togglePlayPause())
+  navigator.mediaSession.setActionHandler('pause', () => togglePlayPause())
+  navigator.mediaSession.setActionHandler('previoustrack', () => playPrev())
+  navigator.mediaSession.setActionHandler('nexttrack', () => playNext())
 }
 
 export const manageMediaSession = {
   setMediaSession,
   setRadioMediaSession,
   setPlaybackState,
-  setHandlers
+  setHandlers,
 }

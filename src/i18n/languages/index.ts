@@ -1,9 +1,9 @@
-import { english } from "./en"
-import { brazilianPortuguese } from "./pt-BR"
+import { english } from './en'
+import { brazilianPortuguese } from './pt-BR'
 
 export const languages = {
   'en-US': english,
-  'pt-BR': brazilianPortuguese
+  'pt-BR': brazilianPortuguese,
 }
 
 export const currentLanguages = [

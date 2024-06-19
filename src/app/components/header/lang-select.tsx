@@ -1,4 +1,4 @@
-import ReactCountryFlag from "react-country-flag"
+import ReactCountryFlag from 'react-country-flag'
 import {
   Select,
   SelectContent,
@@ -6,18 +6,15 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/app/components/ui/select"
-import { currentLanguages } from "@/i18n/languages"
-import { useLang } from "@/app/contexts/lang-context"
+} from '@/app/components/ui/select'
+import { currentLanguages } from '@/i18n/languages'
+import { useLang } from '@/app/contexts/lang-context'
 
 export function LangSelect() {
   const { langCode, setLang, flag } = useLang()
 
   return (
-    <Select
-      value={langCode}
-      onValueChange={(lang) => setLang(lang)}
-    >
+    <Select value={langCode} onValueChange={(lang) => setLang(lang)}>
       <SelectTrigger className="w-[70px] h-7 ring-offset-transparent focus:ring-0">
         <SelectValue>
           <ReactCountryFlag countryCode={flag} svg />

@@ -1,22 +1,29 @@
-import { httpClient } from "@/api/httpClient"
-import { PlaylistWithEntriesResponse, PlaylistsResponse, SinglePlaylistResponse } from "@/types/responses/playlist"
-import { SubsonicResponse } from "@/types/responses/subsonicResponse"
+import { httpClient } from '@/api/httpClient'
+import {
+  PlaylistWithEntriesResponse,
+  PlaylistsResponse,
+  SinglePlaylistResponse,
+} from '@/types/responses/playlist'
+import { SubsonicResponse } from '@/types/responses/subsonicResponse'
 
 async function getAll() {
   const response = await httpClient<PlaylistsResponse>('/getPlaylists', {
-    method: 'GET'
+    method: 'GET',
   })
 
   return response?.data.playlists.playlist
 }
 
 async function getOne(id: string) {
-  const response = await httpClient<PlaylistWithEntriesResponse>('/getPlaylist', {
-    method: 'GET',
-    query: {
-      id
-    }
-  })
+  const response = await httpClient<PlaylistWithEntriesResponse>(
+    '/getPlaylist',
+    {
+      method: 'GET',
+      query: {
+        id,
+      },
+    },
+  )
 
   return response?.data.playlist
 }
@@ -25,8 +32,8 @@ async function remove(id: string) {
   await httpClient<SubsonicResponse>('/deletePlaylist', {
     method: 'DELETE',
     query: {
-      id
-    }
+      id,
+    },
   })
 }
 
@@ -35,12 +42,15 @@ async function create(name: string, songs?: string[]) {
   query.append('name', name)
 
   if (songs) {
-    songs.forEach(song => query.append('songId', song))
+    songs.forEach((song) => query.append('songId', song))
   }
 
-  const response = await httpClient<SinglePlaylistResponse>(`/createPlaylist?${query.toString()}`, {
-    method: 'GET'
-  })
+  const response = await httpClient<SinglePlaylistResponse>(
+    `/createPlaylist?${query.toString()}`,
+    {
+      method: 'GET',
+    },
+  )
 
   return response?.data.playlist
 }
@@ -68,7 +78,7 @@ async function update({ isPublic = 'true', ...params }: UpdateParams) {
     if (typeof songIdToAdd === 'string') {
       query.append('songIdToAdd', songIdToAdd)
     } else {
-      songIdToAdd.forEach(songId => query.append('songIdToAdd', songId))
+      songIdToAdd.forEach((songId) => query.append('songIdToAdd', songId))
     }
   }
 
@@ -76,12 +86,14 @@ async function update({ isPublic = 'true', ...params }: UpdateParams) {
     if (typeof songIndexToRemove === 'string') {
       query.append('songIndexToRemove', songIndexToRemove)
     } else {
-      songIndexToRemove.forEach(songIndex => query.append('songIndexToRemove', songIndex))
+      songIndexToRemove.forEach((songIndex) =>
+        query.append('songIndexToRemove', songIndex),
+      )
     }
   }
 
   await httpClient<SubsonicResponse>(`/updatePlaylist?${query.toString()}`, {
-    method: 'GET'
+    method: 'GET',
   })
 }
 
@@ -90,5 +102,5 @@ export const playlists = {
   getOne,
   remove,
   create,
-  update
+  update,
 }

@@ -1,12 +1,17 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Albums } from "@/types/responses/album";
-import { usePlayer } from "@/app/contexts/player-context";
-import { subsonic } from "@/service/subsonic";
-import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from "@/app/components/ui/carousel";
-import HomeSongCard from "@/app/components/home/song-card";
-import { CarouselButton } from "@/app/components/ui/carousel-button";
-import { useTranslation } from "react-i18next";
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Albums } from '@/types/responses/album'
+import { usePlayer } from '@/app/contexts/player-context'
+import { subsonic } from '@/service/subsonic'
+import {
+  Carousel,
+  type CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from '@/app/components/ui/carousel'
+import HomeSongCard from '@/app/components/home/song-card'
+import { CarouselButton } from '@/app/components/ui/carousel-button'
+import { useTranslation } from 'react-i18next'
 
 interface PreviewListProps {
   list: Albums[]
@@ -109,4 +114,3 @@ export default function PreviewList({
     </div>
   )
 }
-

@@ -1,24 +1,28 @@
-import { useEffect, useMemo } from "react"
-import { useTranslation } from "react-i18next"
-import { PlusIcon } from "lucide-react"
-import { DataTable } from "@/app/components/ui/data-table"
-import { fillRadiosColumns } from "@/app/tables/radios-columns"
-import ListWrapper from "@/app/components/list-wrapper"
-import { Button } from "@/app/components/ui/button"
-import { ShadowHeader } from "@/app/components/shadow-header"
-import { RadioFormDialog } from "@/app/components/radios/form-dialog"
-import { useRadios } from "@/app/contexts/radios-context"
-import { RemoveRadioDialog } from "@/app/components/radios/remove-dialog"
-import { Radio } from "@/types/responses/radios"
-import { useLang } from "@/app/contexts/lang-context"
-import { usePlayer } from "@/app/contexts/player-context"
+import { useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { PlusIcon } from 'lucide-react'
+import { DataTable } from '@/app/components/ui/data-table'
+import { fillRadiosColumns } from '@/app/tables/radios-columns'
+import ListWrapper from '@/app/components/list-wrapper'
+import { Button } from '@/app/components/ui/button'
+import { ShadowHeader } from '@/app/components/shadow-header'
+import { RadioFormDialog } from '@/app/components/radios/form-dialog'
+import { useRadios } from '@/app/contexts/radios-context'
+import { RemoveRadioDialog } from '@/app/components/radios/remove-dialog'
+import { Radio } from '@/types/responses/radios'
+import { useLang } from '@/app/contexts/lang-context'
+import { usePlayer } from '@/app/contexts/player-context'
 
 export default function Radios() {
   const { radios, setDialogState, setData, fetchRadios } = useRadios()
   const { langCode } = useLang()
   const { t } = useTranslation()
 
-  const memoizedRadiosColumns = useMemo(() => fillRadiosColumns(), [langCode, radios])
+  const memoizedRadiosColumns = useMemo(
+    () => fillRadiosColumns(),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [langCode, radios],
+  )
   const memoizedRadios = useMemo(() => radios, [radios])
 
   const player = usePlayer()
@@ -30,7 +34,7 @@ export default function Radios() {
 
   useEffect(() => {
     fetchRadios()
-  }, [])
+  }, [fetchRadios])
 
   return (
     <main className="w-full h-full">
@@ -47,9 +51,7 @@ export default function Radios() {
             onClick={handleAddRadio}
           >
             <PlusIcon className="w-5 h-5 -ml-[3px]" />
-            <span className="ml-2">
-              {t('radios.addRadio')}
-            </span>
+            <span className="ml-2">{t('radios.addRadio')}</span>
           </Button>
         </div>
       </ShadowHeader>
@@ -58,7 +60,9 @@ export default function Radios() {
         <DataTable
           columns={memoizedRadiosColumns}
           data={memoizedRadios}
-          handlePlaySong={(row) => player.setPlayRadio(memoizedRadios, row.index)}
+          handlePlaySong={(row) =>
+            player.setPlayRadio(memoizedRadios, row.index)
+          }
         />
       </ListWrapper>
 

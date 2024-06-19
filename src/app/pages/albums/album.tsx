@@ -1,21 +1,27 @@
-import { Suspense, useMemo } from "react"
-import { Await, useLoaderData } from "react-router-dom"
-import { useTranslation } from "react-i18next"
-import { Albums, AlbumsListData, IAlbumInfo, SingleAlbum } from "@/types/responses/album"
+/* eslint-disable react/no-children-prop */
+import { Suspense, useMemo } from 'react'
+import { Await, useLoaderData } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import {
+  Albums,
+  AlbumsListData,
+  IAlbumInfo,
+  SingleAlbum,
+} from '@/types/responses/album'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { DataTable } from '@/app/components/ui/data-table'
 import { usePlayer } from '@/app/contexts/player-context'
 import { fillSongsColumns } from '@/app/tables/songs-columns'
 import ImageHeader from '@/app/components/album/image-header'
-import PlayButtons from "@/app/components/album/play-buttons"
-import ListWrapper from "@/app/components/list-wrapper"
-import { ColumnFilter } from "@/types/columnFilter"
-import { Search } from "@/types/responses/search"
-import PreviewList from "@/app/components/home/preview-list"
-import PreviewListFallback from "@/app/components/preview-list-fallback"
-import InfoPanel, { InfoPanelFallback } from "@/app/components/album/info-panel"
-import { ROUTES } from "@/routes/routesList"
-import { useLang } from "@/app/contexts/lang-context"
+import PlayButtons from '@/app/components/album/play-buttons'
+import ListWrapper from '@/app/components/list-wrapper'
+import { ColumnFilter } from '@/types/columnFilter'
+import { Search } from '@/types/responses/search'
+import PreviewList from '@/app/components/home/preview-list'
+import PreviewListFallback from '@/app/components/preview-list-fallback'
+import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
+import { ROUTES } from '@/routes/routesList'
+import { useLang } from '@/app/contexts/lang-context'
 
 interface ILoaderData {
   album: SingleAlbum
@@ -25,21 +31,27 @@ interface ILoaderData {
 }
 
 export default function Album() {
-  const { album, artistAlbums, albumInfo, randomGenreAlbums } = useLoaderData() as ILoaderData
+  const { album, artistAlbums, albumInfo, randomGenreAlbums } =
+    useLoaderData() as ILoaderData
 
   const player = usePlayer()
   const { t } = useTranslation()
   const { langCode } = useLang()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedSongsColumns = useMemo(() => fillSongsColumns(), [langCode])
   const memoizedAlbums = useMemo(() => album, [album])
 
-  const albumDuration = memoizedAlbums.duration ? convertSecondsToHumanRead(memoizedAlbums.duration, true) : null
+  const albumDuration = memoizedAlbums.duration
+    ? convertSecondsToHumanRead(memoizedAlbums.duration, true)
+    : null
 
   const badges = [
     memoizedAlbums.year || null,
     memoizedAlbums.genre || null,
-    memoizedAlbums.songCount ? t('playlist.songCount', { count: memoizedAlbums.songCount }) : null,
+    memoizedAlbums.songCount
+      ? t('playlist.songCount', { count: memoizedAlbums.songCount })
+      : null,
     albumDuration ? t('playlist.duration', { duration: albumDuration }) : null,
   ]
 
@@ -52,11 +64,11 @@ export default function Album() {
     'played',
     'bitRate',
     'contentType',
-    'starred'
+    'starred',
   ]
 
   function formatMoreFromArtist(moreAlbums: Albums[]) {
-    let list = moreAlbums.filter(item => item.id !== memoizedAlbums.id)
+    let list = moreAlbums.filter((item) => item.id !== memoizedAlbums.id)
 
     if (list.length > 16) list = list.slice(0, 16)
 
@@ -66,7 +78,7 @@ export default function Album() {
   const buttonsTooltips = {
     play: t('playlist.buttons.play', { name: memoizedAlbums.name }),
     shuffle: t('playlist.buttons.shuffle', { name: memoizedAlbums.name }),
-    options: t('playlist.buttons.options', { name: memoizedAlbums.name })
+    options: t('playlist.buttons.options', { name: memoizedAlbums.name }),
   }
 
   return (
@@ -87,7 +99,9 @@ export default function Album() {
           playButtonTooltip={buttonsTooltips.play}
           handlePlayButton={() => player.setSongList(memoizedAlbums.song, 0)}
           shuffleButtonTooltip={buttonsTooltips.shuffle}
-          handleShuffleButton={() => player.setSongList(memoizedAlbums.song, 0, true)}
+          handleShuffleButton={() =>
+            player.setSongList(memoizedAlbums.song, 0, true)
+          }
           optionsTooltip={buttonsTooltips.options}
           showLikeButton={true}
           likeTooltipResource={memoizedAlbums.name}
@@ -114,7 +128,9 @@ export default function Album() {
         <DataTable
           columns={memoizedSongsColumns}
           data={memoizedAlbums.song}
-          handlePlaySong={(row) => player.setSongList(memoizedAlbums.song, row.index)}
+          handlePlaySong={(row) =>
+            player.setSongList(memoizedAlbums.song, row.index)
+          }
           columnFilter={columnsToShow}
         />
 
@@ -148,7 +164,9 @@ export default function Album() {
                   <PreviewList
                     list={list}
                     showMore={false}
-                    title={t('album.more.genreTitle', { genre: memoizedAlbums.genre })}
+                    title={t('album.more.genreTitle', {
+                      genre: memoizedAlbums.genre,
+                    })}
                   />
                 )}
               />

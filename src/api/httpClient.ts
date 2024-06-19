@@ -1,7 +1,7 @@
-import { FetchOptions, fetch as tauriFetch } from "@tauri-apps/api/http";
-import { getFromLocalStorage } from "@/utils/persistDataLayer";
-import { SubsonicJsonResponse } from "@/types/responses/subsonicResponse";
-import { isTauri } from "@/utils/tauriTools";
+import { FetchOptions, fetch as tauriFetch } from '@tauri-apps/api/http'
+import { getFromLocalStorage } from '@/utils/persistDataLayer'
+import { SubsonicJsonResponse } from '@/types/responses/subsonicResponse'
+import { isTauri } from '@/utils/tauriTools'
 
 function queryParams() {
   const { username, token, salt } = getFromLocalStorage()
@@ -11,63 +11,72 @@ function queryParams() {
     s: salt ?? '',
     v: '1.16.0',
     c: 'Subsonic-Player',
-    f: 'json'
+    f: 'json',
   }
 }
 
-async function browserFetch<T>(url: string, options: RequestInit): Promise<{ count: number, data: T } | undefined> {
+async function browserFetch<T>(
+  url: string,
+  options: RequestInit,
+): Promise<{ count: number; data: T } | undefined> {
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(url, options)
 
     if (response.ok) {
-      const data = await response.json();
+      const data = await response.json()
       return {
         count: parseInt(response.headers.get('x-total-count') || '0', 10),
-        data: data['subsonic-response'] as T
-      };
+        data: data['subsonic-response'] as T,
+      }
     }
   } catch (error) {
-    console.error('Error on browserFetch request', error);
-    return undefined;
+    console.error('Error on browserFetch request', error)
+    return undefined
   }
 }
 
-async function rustFetch<T>(url: string, options: FetchOptions): Promise<{ count: number, data: T } | undefined> {
+async function rustFetch<T>(
+  url: string,
+  options: FetchOptions,
+): Promise<{ count: number; data: T } | undefined> {
   try {
     const response = await tauriFetch(url, {
       ...options,
       query: {
         ...options.query,
-        ...queryParams()        
+        ...queryParams(),
       },
-      body: options.body || undefined
+      body: options.body || undefined,
     })
-    
+
     if (response.ok) {
       const data = response.data as SubsonicJsonResponse
-  
+
       return {
         count: parseInt(response.headers['x-total-count'] || '0', 10),
-        data: data['subsonic-response'] as T
+        data: data['subsonic-response'] as T,
       }
     }
   } catch (error) {
-    console.error('Error on tauriFetch request', error);
-    return undefined;
+    console.error('Error on tauriFetch request', error)
+    return undefined
   }
 }
 
-export async function httpClient<T>(path: string, options: FetchOptions): Promise<{ count: number, data: T } | undefined> {
+export async function httpClient<T>(
+  path: string,
+  options: FetchOptions,
+): Promise<{ count: number; data: T } | undefined> {
   try {
     const { url } = getFromLocalStorage()
     let fullUrl = `${url}/rest${path}`
-      
+
     if (isTauri()) {
       return await rustFetch(fullUrl, { ...options })
     } else {
       const queries = new URLSearchParams({
         ...options.query,
-        ...queryParams()
+        ...queryParams(),
       }).toString()
 
       fullUrl += path.includes('?') ? `&${queries}` : `?${queries}`
@@ -75,7 +84,7 @@ export async function httpClient<T>(path: string, options: FetchOptions): Promis
       return await browserFetch<T>(fullUrl, {
         method: options.method,
         headers: options.headers,
-        body: options.body ? JSON.stringify(options.body) : undefined
+        body: options.body ? JSON.stringify(options.body) : undefined,
       })
     }
   } catch (error) {
@@ -91,7 +100,7 @@ export function getCoverArtUrl(id: string, size = '300') {
   const params = {
     ...queryParams(),
     id,
-    size
+    size,
   }
 
   const queryString = new URLSearchParams(params).toString()
@@ -109,7 +118,7 @@ export function getSongStreamUrl(id: string) {
     id,
     maxBitRate: '0',
     format: 'raw',
-    estimateContentLength: 'true'
+    estimateContentLength: 'true',
   }
 
   const queryString = new URLSearchParams(params).toString()

@@ -1,19 +1,22 @@
-import { Suspense } from "react";
-import { Await, useLoaderData } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import PreviewList from "@/app/components/home/preview-list";
-import ImageHeader from "@/app/components/album/image-header";
-import ListWrapper from "@/app/components/list-wrapper";
-import PlayButtons from "@/app/components/album/play-buttons";
-import { IArtist, IArtistInfo } from "@/types/responses/artist";
-import { ISong } from "@/types/responses/song";
-import ArtistTopSongs, { ArtistTopSongsFallback } from "@/app/components/artist/artist-top-songs";
-import RelatedArtistsList from "@/app/components/artist/related-artists";
-import PreviewListFallback from "@/app/components/preview-list-fallback";
-import { subsonic } from "@/service/subsonic";
-import { usePlayer } from "@/app/contexts/player-context";
-import { ROUTES } from "@/routes/routesList";
-import InfoPanel, { InfoPanelFallback } from "@/app/components/album/info-panel";
+/* eslint-disable react/no-children-prop */
+import { Suspense } from 'react'
+import { Await, useLoaderData } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import PreviewList from '@/app/components/home/preview-list'
+import ImageHeader from '@/app/components/album/image-header'
+import ListWrapper from '@/app/components/list-wrapper'
+import PlayButtons from '@/app/components/album/play-buttons'
+import { IArtist, IArtistInfo } from '@/types/responses/artist'
+import { ISong } from '@/types/responses/song'
+import ArtistTopSongs, {
+  ArtistTopSongsFallback,
+} from '@/app/components/artist/artist-top-songs'
+import RelatedArtistsList from '@/app/components/artist/related-artists'
+import PreviewListFallback from '@/app/components/preview-list-fallback'
+import { subsonic } from '@/service/subsonic'
+import { usePlayer } from '@/app/contexts/player-context'
+import { ROUTES } from '@/routes/routesList'
+import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
 
 interface ILoaderData {
   artist: IArtist
@@ -44,17 +47,14 @@ export default function Artist() {
     return t('artist.info.albumsCount', { count: artist.albumCount })
   }
 
-  const badges = [
-    formatAlbumCount(),
-    getSongCount()
-  ]
+  const badges = [formatAlbumCount(), getSongCount()]
 
   async function handlePlayArtistRadio(shuffle = false) {
     const response = await subsonic.search.get({
       query: artist.name,
       songCount: artistSongCount,
       albumCount: 0,
-      artistCount: 0
+      artistCount: 0,
     })
 
     if (response?.song) {

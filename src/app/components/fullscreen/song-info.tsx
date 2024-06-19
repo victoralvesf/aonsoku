@@ -1,7 +1,7 @@
 interface SongInfoProps {
-  imageUrl: string;
-  songTitle: string;
-  artist: string;
+  imageUrl: string
+  songTitle: string
+  artist: string
 }
 
 export function SongInfo({ imageUrl, songTitle, artist }: SongInfoProps) {

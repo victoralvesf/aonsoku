@@ -1,11 +1,14 @@
-import { ReactNode } from "react"
+import { ReactNode } from 'react'
 
 interface FullscreenBackdropProps {
   imageUrl: string
   children: ReactNode
 }
 
-export default function FullscreenBackdrop({ imageUrl, children }: FullscreenBackdropProps) {
+export default function FullscreenBackdrop({
+  imageUrl,
+  children,
+}: FullscreenBackdropProps) {
   const backgroundImage = `url(${imageUrl})`
 
   return (

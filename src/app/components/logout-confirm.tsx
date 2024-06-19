@@ -1,6 +1,6 @@
-import { MouseEvent } from "react"
-import { useTranslation } from "react-i18next"
-import { useNavigate } from "react-router-dom"
+import { MouseEvent } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,18 +10,21 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/app/components/ui/alert-dialog"
-import { useApp } from "@/app/contexts/app-context"
-import { ROUTES } from "@/routes/routesList"
-import { usePlayer } from "@/app/contexts/player-context"
-import { useRadios } from "../contexts/radios-context"
+} from '@/app/components/ui/alert-dialog'
+import { useApp } from '@/app/contexts/app-context'
+import { ROUTES } from '@/routes/routesList'
+import { usePlayer } from '@/app/contexts/player-context'
+import { useRadios } from '../contexts/radios-context'
 
 interface AlertDialogProps {
   openDialog: boolean
   setOpenDialog: (value: boolean) => void
 }
 
-export function LogoutConfirmDialog({ openDialog, setOpenDialog }: AlertDialogProps) {
+export function LogoutConfirmDialog({
+  openDialog,
+  setOpenDialog,
+}: AlertDialogProps) {
   const { handleRemoveServerConfig } = useApp()
   const navigate = useNavigate()
   const { clearPlayerState } = usePlayer()
@@ -40,9 +43,7 @@ export function LogoutConfirmDialog({ openDialog, setOpenDialog }: AlertDialogPr
     <AlertDialog open={openDialog}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {t('logout.dialog.title')}
-          </AlertDialogTitle>
+          <AlertDialogTitle>{t('logout.dialog.title')}</AlertDialogTitle>
           <AlertDialogDescription>
             {t('logout.dialog.description')}
           </AlertDialogDescription>

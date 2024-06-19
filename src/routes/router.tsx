@@ -27,48 +27,48 @@ export const router = createBrowserRouter([
         id: 'home',
         path: ROUTES.LIBRARY.HOME,
         loader: homeLoader,
-        element: <Home />
+        element: <Home />,
       },
       {
         id: 'albums',
         path: ROUTES.LIBRARY.ALBUMS,
         loader: albumsListLoader,
-        element: <AlbumList />
+        element: <AlbumList />,
       },
       {
         id: 'playlist',
         path: ROUTES.PLAYLIST.PATH,
         loader: playlistLoader,
         errorElement: <ErrorPage />,
-        element: <Playlist />
+        element: <Playlist />,
       },
       {
         id: 'album',
         path: ROUTES.ALBUM.PATH,
         loader: singleAlbumLoader,
-        element: <Album />
+        element: <Album />,
       },
       {
         id: 'artist',
         path: ROUTES.ARTIST.PATH,
         loader: singleArtistLoader,
-        element: <Artist />
+        element: <Artist />,
       },
       {
         id: 'radios',
         path: ROUTES.LIBRARY.RADIOS,
-        element: <Radios />
+        element: <Radios />,
       },
       {
         id: 'error',
         path: '*',
-        element: <ErrorPage />
-      }
-    ]
+        element: <ErrorPage />,
+      },
+    ],
   },
   {
     id: 'login',
     path: ROUTES.SERVER_CONFIG,
-    element: <Login />
-  }
+    element: <Login />,
+  },
 ])

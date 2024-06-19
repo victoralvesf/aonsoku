@@ -1,9 +1,9 @@
-import { Link, useLocation } from "react-router-dom"
-import { ListMusic } from "lucide-react"
-import { useTranslation } from "react-i18next"
-import { Button } from "@/app/components/ui/button"
-import { Playlist } from "@/types/responses/playlist"
-import { ROUTES } from "@/routes/routesList"
+import { Link, useLocation } from 'react-router-dom'
+import { ListMusic } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { Button } from '@/app/components/ui/button'
+import { Playlist } from '@/types/responses/playlist'
+import { ROUTES } from '@/routes/routesList'
 
 interface ISidebarItem {
   title: string
@@ -23,7 +23,11 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
     <>
       {list.map((item, index) => (
         <Link to={item.route} key={index}>
-          <Button variant={isButtonActive(item.route)} size="sm" className="w-full justify-start">
+          <Button
+            variant={isButtonActive(item.route)}
+            size="sm"
+            className="w-full justify-start"
+          >
             {item.icon}
             {t(item.title)}
           </Button>
@@ -33,18 +37,28 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
   )
 }
 
-export function SidebarPlaylistGenerator({ playlists }: { playlists: Playlist[] }) {
+export function SidebarPlaylistGenerator({
+  playlists,
+}: {
+  playlists: Playlist[]
+}) {
   const location = useLocation()
 
   function isActive(id: string) {
-    return location.pathname === ROUTES.PLAYLIST.PAGE(id) ? 'secondary' : 'ghost'
+    return location.pathname === ROUTES.PLAYLIST.PAGE(id)
+      ? 'secondary'
+      : 'ghost'
   }
 
   return (
     <>
       {playlists.map((playlist) => (
         <Link to={ROUTES.PLAYLIST.PAGE(playlist.id)} key={playlist.id}>
-          <Button variant={isActive(playlist.id)} size="sm" className="w-full justify-start">
+          <Button
+            variant={isActive(playlist.id)}
+            size="sm"
+            className="w-full justify-start"
+          >
             <ListMusic className="mr-2 h-4 w-4" />
             <span className="w-full truncate text-left">{playlist.name}</span>
           </Button>

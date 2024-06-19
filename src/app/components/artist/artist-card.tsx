@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom"
-import { Play } from "lucide-react"
-import { Button } from "@/app/components/ui/button"
-import { getCoverArtUrl } from "@/api/httpClient"
-import { ISimilarArtist } from "@/types/responses/artist"
-import { ROUTES } from "@/routes/routesList"
+import { Link } from 'react-router-dom'
+import { Play } from 'lucide-react'
+import { Button } from '@/app/components/ui/button'
+import { getCoverArtUrl } from '@/api/httpClient'
+import { ISimilarArtist } from '@/types/responses/artist'
+import { ROUTES } from '@/routes/routesList'
 
 interface ArtistCardProps {
-  artist: ISimilarArtist,
+  artist: ISimilarArtist
   onButtonClick: (artist: ISimilarArtist) => void
 }
 
@@ -16,7 +16,9 @@ export default function ArtistCard({ artist, onButtonClick }: ArtistCardProps) {
       <Link to={ROUTES.ARTIST.PAGE(artist.id)}>
         <div
           className="group flex-1 aspect-square rounded bg-cover bg-center"
-          style={{ backgroundImage: `url(${getCoverArtUrl(artist.coverArt, '250')})` }}
+          style={{
+            backgroundImage: `url(${getCoverArtUrl(artist.coverArt, '250')})`,
+          }}
         >
           <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
             <Button

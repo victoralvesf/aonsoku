@@ -1,4 +1,13 @@
-import { createContext, useState, useContext, ReactNode, useEffect, useRef, useCallback, useMemo } from 'react'
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { IPlayerContext } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
@@ -28,91 +37,48 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
   const { t } = useTranslation()
   const radioLabel = t('radios.label')
 
-  useEffect(() => {
-    if (currentSongList.length > 0 && mediaType === 'song') {
-      isScrobbleSentRef.current = false
-
-      const currentSong = getCurrentSong()
-      const starredStatus = currentSong.starred ? true : false
-      setIsSongStarred(starredStatus)
-
-      document.title = `${currentSong.title} - ${currentSong.artist} - Subsonic Player`
-      manageMediaSession.setMediaSession(currentSong)
-    }
-  }, [currentSongList, currentSongIndex])
-
-  useEffect(() => {
-    if (radioList.length > 0 && mediaType === 'radio') {
-      const radioName = radioList[currentSongIndex].name
-      document.title = `${radioLabel} - ${radioName} - Subsonic Player`
-      manageMediaSession.setRadioMediaSession(radioLabel, radioName)
-    }
-  }, [radioList, currentSongIndex])
-
-  useEffect(() => {
-    manageMediaSession.setPlaybackState(isPlaying)
-  }, [isPlaying])
-
-  useEffect(() => {
-    if (mediaType === 'song') {
-      const progressPercentage = (progress / currentDuration) * 100
-
-      if (progressPercentage >= 50 && !isScrobbleSentRef.current) {
-        sendScrobble(getCurrentSong().id)
-        isScrobbleSentRef.current = true
-      }
-    }
-  }, [progress, currentDuration])
-
   const sendScrobble = useCallback(async (songId: string) => {
     await subsonic.scrobble.send(songId)
   }, [])
 
-  const playSong = useCallback((song: ISong) => {
-    if (checkActiveSong(song.id) && !isPlaying) {
+  const setSongList = useCallback(
+    (songlist: ISong[], index: number, shuffle = false) => {
+      setOriginalSongList(songlist)
+      setOriginalSongIndex(index)
+      setMediaType('song')
+
+      if (shuffle) {
+        const shuffledList = shuffleSongList(songlist, index, true)
+        setShuffledSongList(shuffledList)
+
+        setCurrentSongList(shuffledList)
+        setCurrentSongIndex(0)
+        setIsShuffleActive(true)
+      } else {
+        setCurrentSongList(songlist)
+        setCurrentSongIndex(index)
+        if (isShuffleActive) setIsShuffleActive(false)
+      }
+
       setIsPlaying(true)
-      return
-    }
-    setMediaType('song')
-    setCurrentSongList([song])
-    setCurrentSongIndex(0)
-    setIsShuffleActive(false)
-    setIsPlaying(true)
-  }, [isPlaying])
-
-  const setSongList = useCallback((songlist: ISong[], index: number, shuffle = false) => {
-    setOriginalSongList(songlist)
-    setOriginalSongIndex(index)
-    setMediaType('song')
-
-    if (shuffle) {
-      const shuffledList = shuffleSongList(songlist, index, true)
-      setShuffledSongList(shuffledList)
-
-      setCurrentSongList(shuffledList)
-      setCurrentSongIndex(0)
-      setIsShuffleActive(true)
-    } else {
-      setCurrentSongList(songlist)
-      setCurrentSongIndex(index)
-      if (isShuffleActive) setIsShuffleActive(false)
-    }
-
-    setIsPlaying(true)
-  }, [])
+    },
+    [isShuffleActive],
+  )
 
   const togglePlayPause = useCallback(() => {
-    setIsPlaying(prevState => !prevState)
+    setIsPlaying((prevState) => !prevState)
   }, [])
 
   const toggleLoop = useCallback(() => {
-    setIsLoopActive(prevState => !prevState)
+    setIsLoopActive((prevState) => !prevState)
   }, [])
 
   const toggleShuffle = useCallback(() => {
     if (isShuffleActive) {
       const currentSongId = currentSongList[currentSongIndex].id
-      const index = originalSongList.findIndex(song => song.id === currentSongId)
+      const index = originalSongList.findIndex(
+        (song) => song.id === currentSongId,
+      )
 
       setCurrentSongList(originalSongList)
       setCurrentSongIndex(index)
@@ -124,7 +90,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
       setCurrentSongList(shuffledList)
       setCurrentSongIndex(0)
     }
-    setIsShuffleActive(prevState => !prevState)
+    setIsShuffleActive((prevState) => !prevState)
   }, [isShuffleActive, currentSongIndex, currentSongList, originalSongList])
 
   const clearPlayerState = useCallback(() => {
@@ -149,7 +115,13 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     } else {
       return currentSongIndex + 1 < radioList.length
     }
-  }, [isShuffleActive, currentSongIndex, currentSongList.length, mediaType])
+  }, [
+    isShuffleActive,
+    currentSongIndex,
+    currentSongList.length,
+    mediaType,
+    radioList,
+  ])
 
   const hasPrevSong = useMemo(() => {
     return currentSongIndex > 0
@@ -161,23 +133,15 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
 
   const playNextSong = useCallback(() => {
     if (hasNextSong) {
-      setCurrentSongIndex(prevIndex => prevIndex + 1)
+      setCurrentSongIndex((prevIndex) => prevIndex + 1)
     }
   }, [hasNextSong])
 
   const playPrevSong = useCallback(() => {
     if (hasPrevSong) {
-      setCurrentSongIndex(prevIndex => prevIndex - 1)
+      setCurrentSongIndex((prevIndex) => prevIndex - 1)
     }
   }, [hasPrevSong])
-
-  useEffect(() => {
-    manageMediaSession.setHandlers({
-      togglePlayPause,
-      playPrev: playPrevSong,
-      playNext: playNextSong
-    })
-  }, [playPrevSong, playNextSong, togglePlayPause])
 
   const setPlayingState = useCallback((state: boolean) => {
     setIsPlaying(state)
@@ -187,26 +151,91 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     return currentSongList[currentSongIndex]
   }, [currentSongList, currentSongIndex])
 
-  const checkActiveSong = useCallback((id: string) => {
-    return id === getCurrentSong()?.id
-  }, [getCurrentSong])
+  const checkActiveSong = useCallback(
+    (id: string) => {
+      return id === getCurrentSong()?.id
+    },
+    [getCurrentSong],
+  )
 
-  const setPlayRadio = useCallback((list: Radio[], index: number) => {
-    if (
-      mediaType === 'radio' &&
-      radioList.length > 0 &&
-      list[index].id === radioList[currentSongIndex].id
-    ) {
+  const setPlayRadio = useCallback(
+    (list: Radio[], index: number) => {
+      if (
+        mediaType === 'radio' &&
+        radioList.length > 0 &&
+        list[index].id === radioList[currentSongIndex].id
+      ) {
+        setIsPlaying(true)
+        return
+      }
+
+      clearPlayerState()
+      setMediaType('radio')
+      setRadioList(list)
+      setCurrentSongIndex(index)
       setIsPlaying(true)
-      return
-    }
+    },
+    [clearPlayerState, currentSongIndex, mediaType, radioList],
+  )
 
-    clearPlayerState()
-    setMediaType('radio')
-    setRadioList(list)
-    setCurrentSongIndex(index)
-    setIsPlaying(true)
-  }, [])
+  const playSong = useCallback(
+    (song: ISong) => {
+      if (checkActiveSong(song.id) && !isPlaying) {
+        setIsPlaying(true)
+        return
+      }
+      setMediaType('song')
+      setCurrentSongList([song])
+      setCurrentSongIndex(0)
+      setIsShuffleActive(false)
+      setIsPlaying(true)
+    },
+    [checkActiveSong, isPlaying],
+  )
+
+  useEffect(() => {
+    manageMediaSession.setHandlers({
+      togglePlayPause,
+      playPrev: playPrevSong,
+      playNext: playNextSong,
+    })
+  }, [playPrevSong, playNextSong, togglePlayPause])
+
+  useEffect(() => {
+    if (currentSongList.length > 0 && mediaType === 'song') {
+      isScrobbleSentRef.current = false
+
+      const currentSong = getCurrentSong()
+      const starredStatus = !!currentSong.starred
+      setIsSongStarred(starredStatus)
+
+      document.title = `${currentSong.title} - ${currentSong.artist} - Subsonic Player`
+      manageMediaSession.setMediaSession(currentSong)
+    }
+  }, [currentSongList, currentSongIndex, mediaType, getCurrentSong])
+
+  useEffect(() => {
+    if (radioList.length > 0 && mediaType === 'radio') {
+      const radioName = radioList[currentSongIndex].name
+      document.title = `${radioLabel} - ${radioName} - Subsonic Player`
+      manageMediaSession.setRadioMediaSession(radioLabel, radioName)
+    }
+  }, [radioList, currentSongIndex, mediaType, radioLabel])
+
+  useEffect(() => {
+    manageMediaSession.setPlaybackState(isPlaying)
+  }, [isPlaying])
+
+  useEffect(() => {
+    if (mediaType === 'song') {
+      const progressPercentage = (progress / currentDuration) * 100
+
+      if (progressPercentage >= 50 && !isScrobbleSentRef.current) {
+        sendScrobble(getCurrentSong().id)
+        isScrobbleSentRef.current = true
+      }
+    }
+  }, [progress, currentDuration, mediaType, sendScrobble, getCurrentSong])
 
   const value: IPlayerContext = {
     shuffledSongList,
@@ -238,13 +267,11 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     getCurrentSong,
     mediaType,
     radioList,
-    setPlayRadio
+    setPlayRadio,
   }
 
   return (
-    <PlayerContext.Provider value={value}>
-      {children}
-    </PlayerContext.Provider>
+    <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>
   )
 }
 

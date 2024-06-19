@@ -1,10 +1,4 @@
-import { SubsonicResponse } from "./subsonicResponse"
-
-export interface RadioStationsResponse extends SubsonicResponse<{ internetRadioStations: RadioStation }> {}
-
-export interface RadioStation {
-  internetRadioStation: Radio[]
-}
+import { SubsonicResponse } from './subsonicResponse'
 
 export interface CreateRadio {
   name: string
@@ -15,3 +9,9 @@ export interface CreateRadio {
 export interface Radio extends CreateRadio {
   id: string
 }
+export interface RadioStation {
+  internetRadioStation: Radio[]
+}
+
+export interface RadioStationsResponse
+  extends SubsonicResponse<{ internetRadioStations: RadioStation }> {}
