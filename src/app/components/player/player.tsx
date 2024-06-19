@@ -39,7 +39,7 @@ export function Player() {
     if (player.currentSongList.length > 0) {
       player.togglePlayPause()
     }
-  })
+  }, { preventDefault: true })
 
   useEffect(() => {
     if (!audioRef.current) return
