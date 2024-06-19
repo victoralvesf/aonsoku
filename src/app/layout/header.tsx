@@ -1,5 +1,4 @@
-import { Fragment, useEffect, useState } from "react"
-import { UnlistenFn, listen } from "@tauri-apps/api/event"
+import { Fragment, useState } from "react"
 
 import { LogoutConfirmDialog } from "@/app/components/logout-confirm"
 import { NavigationButtons } from "@/app/components/header/navigation-buttons"
@@ -7,30 +6,10 @@ import { ThemeToggle } from "@/app/components/header/theme-toggle"
 import { usePlayer } from "@/app/contexts/player-context"
 import { LangSelect } from "@/app/components/header/lang-select"
 import { BrowserLogout } from "@/app/components/header/browser-logout"
-import { isTauri } from "@/utils/tauriTools"
 
 export function Header() {
   const [logoutDialogState, setLogoutDialogState] = useState(false)
   const player = usePlayer()
-
-  useEffect(() => {
-    let unlisten: UnlistenFn
-
-    if (isTauri()) {
-      const setupLogoutEventListener = async () => {
-        unlisten = await listen('user-asked-for-logout', () => {
-          setLogoutDialogState(true)
-        });
-      }
-      setupLogoutEventListener()
-    }
-
-    return () => {
-      if (unlisten) {
-        unlisten()
-      }
-    }
-  }, [])
 
   const isPlaylistEmpty = player.currentSongList.length === 0
 

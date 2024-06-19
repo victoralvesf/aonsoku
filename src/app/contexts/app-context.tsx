@@ -2,7 +2,7 @@ import { ReactNode, createContext, useContext, useEffect, useState } from "react
 import { Store } from "tauri-plugin-store-api";
 import MD5 from 'crypto-js/md5'
 import { toast } from 'react-toastify'
-import { os, event } from '@tauri-apps/api'
+import { os } from '@tauri-apps/api'
 import { useTranslation } from "react-i18next";
 
 import { IAppContext, IServerConfig } from "@/types/serverConfig";
@@ -41,8 +41,6 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         token: serverConfig.password,
         salt: saltWord
       })
-
-      await event.emit('user-logged-in', { user: serverConfig.username, server: serverConfig.url })
     } else {
       setIsServerConfigured(false)
     }
@@ -100,10 +98,6 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
       setServerUrl(fullUrl)
       setServerPassword(token)
       setIsServerConfigured(true)
-
-      if (isTauri()) {
-        await event.emit('user-logged-in', { user: config.username, server: config.url })
-      }
 
       toast.success(t('toast.server.success'))
       return true
