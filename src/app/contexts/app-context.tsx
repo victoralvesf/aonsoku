@@ -3,11 +3,12 @@ import { Store } from "tauri-plugin-store-api";
 import MD5 from 'crypto-js/md5'
 import { toast } from 'react-toastify'
 import { os, event } from '@tauri-apps/api'
+import { useTranslation } from "react-i18next";
 
 import { IAppContext, IServerConfig } from "@/types/serverConfig";
 import { pingServer } from "@/api/pingServer";
 import { getFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from "@/utils/persistDataLayer";
-import { useTranslation } from "react-i18next";
+import { isTauri } from "@/utils/tauriTools";
 
 const store = new Store(".settings.dat");
 
@@ -60,7 +61,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    if (window.__TAURI__) {
+    if (isTauri()) {
       getServerConfig();
 
       const getOsType = async () => {
@@ -84,7 +85,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         username: serverUsername,
         password: token
       }
-      if (window.__TAURI__) {
+      if (isTauri()) {
         await store.set("server-config", config)
         await store.save()
       }
@@ -100,7 +101,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
       setServerPassword(token)
       setIsServerConfigured(true)
 
-      if (window.__TAURI__) {
+      if (isTauri()) {
         await event.emit('user-logged-in', { user: config.username, server: config.url })
       }
 
@@ -115,7 +116,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   async function handleRemoveServerConfig() {
     removeFromLocalStorage()
-    if (window.__TAURI__) {
+    if (isTauri()) {
       await store.delete("server-config")
       await store.save()
     }
