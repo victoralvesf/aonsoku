@@ -1,17 +1,17 @@
-import { ReactNode, useState } from "react";
-import clsx from "clsx";
-import { EllipsisVertical, Heart, Play, Shuffle } from "lucide-react";
+import { ReactNode, useState } from 'react'
+import clsx from 'clsx'
+import { EllipsisVertical, Heart, Play, Shuffle } from 'lucide-react'
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/app/components/ui/dropdown-menu"
+} from '@/app/components/ui/dropdown-menu'
 
-import { Button } from "@/app/components/ui/button";
-import { SimpleTooltip } from "@/app/components/ui/simple-tooltip";
-import { subsonic } from "@/service/subsonic";
-import { useTranslation } from "react-i18next";
+import { Button } from '@/app/components/ui/button'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import { subsonic } from '@/service/subsonic'
+import { useTranslation } from 'react-i18next'
 
 interface PlayButtonsProps {
   playButtonTooltip: string
@@ -40,9 +40,9 @@ export default function PlayButtons({
   likeTooltipResource,
   likeState,
   contentId,
-  optionsMenuItems
+  optionsMenuItems,
 }: PlayButtonsProps) {
-  const [isStarred, setIsStarred] = useState(likeState ? true : false)
+  const [isStarred, setIsStarred] = useState(!!likeState)
   const { t } = useTranslation()
 
   async function handleLikeButton() {
@@ -70,7 +70,10 @@ export default function PlayButtons({
           onClick={handlePlayButton}
           disabled={disablePlayButton}
         >
-          <Play className="w-4 h-4 fill-slate-50 text-slate-50" strokeWidth={6} />
+          <Play
+            className="w-4 h-4 fill-slate-50 text-slate-50"
+            strokeWidth={6}
+          />
         </Button>
       </SimpleTooltip>
 
@@ -93,7 +96,10 @@ export default function PlayButtons({
             onClick={handleLikeButton}
           >
             <Heart
-              className={clsx("w-4 h-4", isStarred && "text-red-500 fill-red-500")}
+              className={clsx(
+                'w-4 h-4',
+                isStarred && 'text-red-500 fill-red-500',
+              )}
               strokeWidth={2}
             />
           </Button>

@@ -1,11 +1,18 @@
-import { httpClient } from "@/api/httpClient";
-import { CreateRadio, Radio, RadioStationsResponse } from "@/types/responses/radios";
-import { SubsonicResponse } from "@/types/responses/subsonicResponse";
+import { httpClient } from '@/api/httpClient'
+import {
+  CreateRadio,
+  Radio,
+  RadioStationsResponse,
+} from '@/types/responses/radios'
+import { SubsonicResponse } from '@/types/responses/subsonicResponse'
 
 async function getAll() {
-  const response = await httpClient<RadioStationsResponse>('/getInternetRadioStations', {
-    method: 'GET'
-  })
+  const response = await httpClient<RadioStationsResponse>(
+    '/getInternetRadioStations',
+    {
+      method: 'GET',
+    },
+  )
 
   return response?.data.internetRadioStations.internetRadioStation
 }
@@ -16,8 +23,8 @@ async function create({ name, streamUrl, homePageUrl }: CreateRadio) {
     query: {
       streamUrl,
       name,
-      homepageUrl: homePageUrl
-    }
+      homepageUrl: homePageUrl,
+    },
   })
 }
 
@@ -28,8 +35,8 @@ async function update({ id, streamUrl, name, homePageUrl = '' }: Radio) {
       id,
       streamUrl,
       name,
-      homepageUrl: homePageUrl
-    }
+      homepageUrl: homePageUrl,
+    },
   })
 }
 
@@ -37,8 +44,8 @@ async function remove(id: string) {
   await httpClient<SubsonicResponse>('/deleteInternetRadioStation', {
     method: 'GET',
     query: {
-      id
-    }
+      id,
+    },
   })
 }
 
@@ -46,5 +53,5 @@ export const radios = {
   getAll,
   create,
   update,
-  remove
+  remove,
 }

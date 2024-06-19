@@ -1,4 +1,4 @@
-import { Skeleton } from "@/app/components/ui/skeleton";
+import { Skeleton } from '@/app/components/ui/skeleton'
 
 export default function PreviewListFallback() {
   return (

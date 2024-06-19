@@ -1,5 +1,5 @@
-import { Radio } from "./responses/radios";
-import { ISong } from "./responses/song";
+import { Radio } from './responses/radios'
+import { ISong } from './responses/song'
 
 export interface IPlayerContext {
   shuffledSongList: ISong[]
@@ -11,7 +11,7 @@ export interface IPlayerContext {
   isShuffleActive: boolean
   isPlayingOneSong: boolean
   isSongStarred: boolean
-  setIsSongStarred: (starred: boolean) => void 
+  setIsSongStarred: (starred: boolean) => void
   playSong: (song: ISong) => void
   setPlayingState: (state: boolean) => void
   setSongList: (songlist: ISong[], index: number, shuffle?: boolean) => void

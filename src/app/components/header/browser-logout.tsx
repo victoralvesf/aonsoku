@@ -1,18 +1,18 @@
-import { Globe, LogOut, User } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { useHotkeys } from "react-hotkeys-hook";
+import { Globe, LogOut, User } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { useHotkeys } from 'react-hotkeys-hook'
 
-import { useApp } from "@/app/contexts/app-context";
-import { Avatar, AvatarFallback } from "@/app/components/ui/avatar";
-import { Button } from "@/app/components/ui/button";
+import { useApp } from '@/app/contexts/app-context'
+import { Avatar, AvatarFallback } from '@/app/components/ui/avatar'
+import { Button } from '@/app/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuTrigger
-} from "@/app/components/ui/dropdown-menu";
+  DropdownMenuTrigger,
+} from '@/app/components/ui/dropdown-menu'
 
 interface BrowserLogoutProps {
   openDialog: (state: boolean) => void
@@ -47,9 +47,7 @@ export function BrowserLogout({ openDialog }: BrowserLogoutProps) {
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => openDialog(true)}>
           <LogOut className="mr-2 h-4 w-4" />
-          <span>
-            {t('menu.serverLogout')}
-          </span>
+          <span>{t('menu.serverLogout')}</span>
           <DropdownMenuShortcut>{'⇧⌃Q'}</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>

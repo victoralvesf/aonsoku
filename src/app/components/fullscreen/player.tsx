@@ -1,8 +1,15 @@
-import { Pause, Play, Repeat, Shuffle, SkipBack, SkipForward } from "lucide-react";
-import { Button } from "@/app/components/ui/button";
-import { usePlayer } from "@/app/contexts/player-context";
-import { cn } from "@/lib/utils";
-import { convertSecondsToTime } from "@/utils/convertSecondsToTime";
+import {
+  Pause,
+  Play,
+  Repeat,
+  Shuffle,
+  SkipBack,
+  SkipForward,
+} from 'lucide-react'
+import { Button } from '@/app/components/ui/button'
+import { usePlayer } from '@/app/contexts/player-context'
+import { cn } from '@/lib/utils'
+import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 export function FullscreenPlayer() {
   const player = usePlayer()
@@ -17,7 +24,7 @@ export function FullscreenPlayer() {
           backgroundColor: 'hsl(var(--primary))',
           width: `${currentTimePercent}%`,
           height: '4px',
-          transition: 'width 1s linear'
+          transition: 'width 1s linear',
         }}
       />
       <div className="relative flex items-center gap-4 p-4 2xl:p-6">
@@ -28,11 +35,16 @@ export function FullscreenPlayer() {
         <div className="flex flex-1 justify-center items-center gap-2">
           <Button
             size="icon"
-            variant={player.isShuffleActive ? "outline" : "ghost"}
+            variant={player.isShuffleActive ? 'outline' : 'ghost'}
             className="w-12 h-12 p-2 rounded-full"
             onClick={() => player.toggleShuffle()}
           >
-            <Shuffle className={cn("w-5 h-5", player.isShuffleActive && "text-primary")} />
+            <Shuffle
+              className={cn(
+                'w-5 h-5',
+                player.isShuffleActive && 'text-primary',
+              )}
+            />
           </Button>
           <Button
             size="icon"
@@ -49,7 +61,10 @@ export function FullscreenPlayer() {
             onClick={() => player.togglePlayPause()}
           >
             {player.isPlaying ? (
-              <Pause className="w-6 h-6 fill-background dark:text-secondary-foreground dark:fill-secondary-foreground" strokeWidth={1} />
+              <Pause
+                className="w-6 h-6 fill-background dark:text-secondary-foreground dark:fill-secondary-foreground"
+                strokeWidth={1}
+              />
             ) : (
               <Play className="w-6 h-6 fill-background dark:text-secondary-foreground dark:fill-secondary-foreground" />
             )}
@@ -64,11 +79,13 @@ export function FullscreenPlayer() {
           </Button>
           <Button
             size="icon"
-            variant={player.isLoopActive ? "outline" : "ghost"}
+            variant={player.isLoopActive ? 'outline' : 'ghost'}
             className="w-12 h-12 p-2 rounded-full"
             onClick={() => player.toggleLoop()}
           >
-            <Repeat className={cn("w-5 h-5", player.isLoopActive && "text-primary")} />
+            <Repeat
+              className={cn('w-5 h-5', player.isLoopActive && 'text-primary')}
+            />
           </Button>
         </div>
 

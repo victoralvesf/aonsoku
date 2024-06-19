@@ -4,8 +4,8 @@ import {
   getCoreRowModel,
   useReactTable,
   Row,
-  RowData
-} from "@tanstack/react-table"
+  RowData,
+} from '@tanstack/react-table'
 
 import {
   Table,
@@ -14,9 +14,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/app/components/ui/table"
-import clsx from "clsx/lite"
-import { ColumnFilter } from "@/types/columnFilter"
+} from '@/app/components/ui/table'
+import clsx from 'clsx/lite'
+import { ColumnFilter } from '@/types/columnFilter'
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
@@ -37,9 +37,9 @@ export function DataTable<TData, TValue>({
   data,
   onRowClick,
   handlePlaySong,
-  columnFilter
+  columnFilter,
 }: DataTableProps<TData, TValue>) {
-  const newColumns = columns.filter(column => {
+  const newColumns = columns.filter((column) => {
     return columnFilter?.includes(column.id as ColumnFilter)
   })
 
@@ -48,8 +48,8 @@ export function DataTable<TData, TValue>({
     columns: columnFilter ? newColumns : columns,
     getCoreRowModel: getCoreRowModel(),
     meta: {
-      handlePlaySong
-    }
+      handlePlaySong,
+    },
   })
 
   return (
@@ -61,17 +61,20 @@ export function DataTable<TData, TValue>({
               {headerGroup.headers.map((header) => {
                 const smallerHeaders = ['index', 'starred', 'actions']
                 return (
-                  <TableHead key={header.id} className={clsx(
-                    'p-2',
-                    smallerHeaders.includes(header.id) && "w-8",
-                    header.id === 'artist' && "hidden 2xl:table-cell"
-                  )}>
+                  <TableHead
+                    key={header.id}
+                    className={clsx(
+                      'p-2',
+                      smallerHeaders.includes(header.id) && 'w-8',
+                      header.id === 'artist' && 'hidden 2xl:table-cell',
+                    )}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                   </TableHead>
                 )
               })}
@@ -83,15 +86,18 @@ export function DataTable<TData, TValue>({
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && "selected"}
+                data-state={row.getIsSelected() && 'selected'}
                 onClick={() => onRowClick?.(row)}
                 className="group/tablerow"
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className={clsx(
-                    "p-2 max-w-[600px]",
-                    cell.column.id === 'artist' && "hidden 2xl:table-cell"
-                  )}>
+                  <TableCell
+                    key={cell.id}
+                    className={clsx(
+                      'p-2 max-w-[600px]',
+                      cell.column.id === 'artist' && 'hidden 2xl:table-cell',
+                    )}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
@@ -99,7 +105,10 @@ export function DataTable<TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center p-2">
+              <TableCell
+                colSpan={columns.length}
+                className="h-24 text-center p-2"
+              >
                 No results.
               </TableCell>
             </TableRow>

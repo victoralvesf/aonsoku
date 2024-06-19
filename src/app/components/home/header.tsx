@@ -1,21 +1,21 @@
-import { Link } from "react-router-dom";
-import Autoplay from "embla-carousel-autoplay"
-import { Play } from "lucide-react";
+import { Link } from 'react-router-dom'
+import Autoplay from 'embla-carousel-autoplay'
+import { Play } from 'lucide-react'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious
-} from "@/app/components/ui/carousel"
-import { getCoverArtUrl } from "@/api/httpClient";
-import { Badge } from "@/app/components/ui/badge";
-import { convertSecondsToTime } from "@/utils/convertSecondsToTime";
-import { Button } from "@/app/components/ui/button";
-import { usePlayer } from "@/app/contexts/player-context";
-import { subsonic } from "@/service/subsonic";
-import { ISong } from "@/types/responses/song";
-import { ROUTES } from "@/routes/routesList";
+  CarouselPrevious,
+} from '@/app/components/ui/carousel'
+import { getCoverArtUrl } from '@/api/httpClient'
+import { Badge } from '@/app/components/ui/badge'
+import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
+import { Button } from '@/app/components/ui/button'
+import { usePlayer } from '@/app/contexts/player-context'
+import { subsonic } from '@/service/subsonic'
+import { ISong } from '@/types/responses/song'
+import { ROUTES } from '@/routes/routesList'
 
 interface HomeHeaderProps {
   songs: ISong[]
@@ -42,20 +42,30 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
       }}
       plugins={[
         Autoplay({
-          delay: 10000
-        })
+          delay: 10000,
+        }),
       ]}
     >
-      <CarouselContent className="ml-0 flex transform-gpu" style={{ borderRadius: 'calc(var(--radius) - 2px)' }}>
+      <CarouselContent
+        className="ml-0 flex transform-gpu"
+        style={{ borderRadius: 'calc(var(--radius) - 2px)' }}
+      >
         {songs.map((song) => (
           <CarouselItem key={song.id} className="pl-0 basis-full">
-            <div className="w-full bg-cover bg-center" style={{ backgroundImage: `url(${getCoverArtUrl(song.id, '500')})` }}>
+            <div
+              className="w-full bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${getCoverArtUrl(song.id, '500')})`,
+              }}
+            >
               <div className="w-full flex-1 h-full inset-0 backdrop-blur-xl bg-gradient-to-b from-white/30 to-white/80 dark:from-black/30 dark:to-black/80">
                 <div className="flex h-[300px] p-6 gap-6">
                   <div className="min-w-[252px] w-[252px] min-h-[252px] h-[252px] group">
                     <div
                       className="group flex-1 aspect-square rounded bg-cover bg-center"
-                      style={{ backgroundImage: `url(${getCoverArtUrl(song.coverArt)})` }}
+                      style={{
+                        backgroundImage: `url(${getCoverArtUrl(song.coverArt)})`,
+                      }}
                     >
                       <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
                         <Button
@@ -77,7 +87,10 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
                         {song.artist}
                       </h4>
                     ) : (
-                      <Link to={ROUTES.ARTIST.PAGE(song.artistId)} className="w-fit">
+                      <Link
+                        to={ROUTES.ARTIST.PAGE(song.artistId)}
+                        className="w-fit"
+                      >
                         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight opacity-60 hover:underline">
                           {song.artist}
                         </h4>
@@ -85,10 +98,14 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
                     )}
                     <div className="flex gap-2 mt-2">
                       {song.genre !== undefined && (
-                        <Badge variant="secondary" className="border">{song.genre}</Badge>
+                        <Badge variant="secondary" className="border">
+                          {song.genre}
+                        </Badge>
                       )}
                       {song.year && (
-                        <Badge variant="secondary" className="border">{song.year}</Badge>
+                        <Badge variant="secondary" className="border">
+                          {song.year}
+                        </Badge>
                       )}
                       <Badge variant="secondary" className="border">
                         {convertSecondsToTime(song.duration)}

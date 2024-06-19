@@ -1,7 +1,7 @@
-import { Albums } from "./album";
-import { ISimilarArtist } from "./artist";
-import { ISong } from "./song";
-import { SubsonicResponse } from "./subsonicResponse";
+import { Albums } from './album'
+import { ISimilarArtist } from './artist'
+import { ISong } from './song'
+import { SubsonicResponse } from './subsonicResponse'
 
 export interface Search {
   artist?: ISimilarArtist[]
@@ -9,4 +9,5 @@ export interface Search {
   song?: ISong[]
 }
 
-export interface ISearchResponse extends SubsonicResponse<{ searchResult2: Search }> {}
+export interface ISearchResponse
+  extends SubsonicResponse<{ searchResult2: Search }> {}

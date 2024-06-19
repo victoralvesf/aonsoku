@@ -1,11 +1,11 @@
-import { Fragment, useState } from "react"
+import { Fragment, useState } from 'react'
 
-import { LogoutConfirmDialog } from "@/app/components/logout-confirm"
-import { NavigationButtons } from "@/app/components/header/navigation-buttons"
-import { ThemeToggle } from "@/app/components/header/theme-toggle"
-import { usePlayer } from "@/app/contexts/player-context"
-import { LangSelect } from "@/app/components/header/lang-select"
-import { BrowserLogout } from "@/app/components/header/browser-logout"
+import { LogoutConfirmDialog } from '@/app/components/logout-confirm'
+import { NavigationButtons } from '@/app/components/header/navigation-buttons'
+import { ThemeToggle } from '@/app/components/header/theme-toggle'
+import { usePlayer } from '@/app/contexts/player-context'
+import { LangSelect } from '@/app/components/header/lang-select'
+import { BrowserLogout } from '@/app/components/header/browser-logout'
 
 export function Header() {
   const [logoutDialogState, setLogoutDialogState] = useState(false)
@@ -32,7 +32,10 @@ export function Header() {
 
   return (
     <Fragment>
-      <LogoutConfirmDialog openDialog={logoutDialogState} setOpenDialog={setLogoutDialogState} />
+      <LogoutConfirmDialog
+        openDialog={logoutDialogState}
+        setOpenDialog={setLogoutDialogState}
+      />
 
       <div className="w-full grid grid-cols-header h-[40px] px-4">
         <div className="flex items-center">

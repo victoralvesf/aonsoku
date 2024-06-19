@@ -1,6 +1,6 @@
-import { FormEvent } from "react"
-import { useTranslation } from "react-i18next"
-import { useNavigate } from "react-router-dom"
+import { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import {
   Card,
@@ -9,22 +9,22 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/app/components/ui/card"
+} from '@/app/components/ui/card'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/app/components/ui/select"
+} from '@/app/components/ui/select'
 
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
-import { ThemeToggle } from "@/app/components/header/theme-toggle"
-import { Button } from "@/app/components/ui/button"
-import { useApp } from "@/app/contexts/app-context"
-import { ROUTES } from "@/routes/routesList"
-import { LangSelect } from "@/app/components/header/lang-select"
+import { Input } from '@/app/components/ui/input'
+import { Label } from '@/app/components/ui/label'
+import { ThemeToggle } from '@/app/components/header/theme-toggle'
+import { Button } from '@/app/components/ui/button'
+import { useApp } from '@/app/contexts/app-context'
+import { ROUTES } from '@/routes/routesList'
+import { LangSelect } from '@/app/components/header/lang-select'
 
 export function LoginForm() {
   const {
@@ -33,7 +33,7 @@ export function LoginForm() {
     setServerUrl,
     setServerUsername,
     setServerPassword,
-    handleSaveServerConfig
+    handleSaveServerConfig,
   } = useApp()
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -57,19 +57,18 @@ export function LoginForm() {
               <ThemeToggle />
             </div>
           </CardTitle>
-          <CardDescription>
-            {t('login.form.description')}
-          </CardDescription>
+          <CardDescription>{t('login.form.description')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="url">
-                {t('login.form.url')} *
-              </Label>
+              <Label htmlFor="url">{t('login.form.url')} *</Label>
               <div className="flex flex-row gap-2">
-                <Select onValueChange={setServerProtocol} value={serverProtocol}>
-                  <SelectTrigger className="w-[110px]" >
+                <Select
+                  onValueChange={setServerProtocol}
+                  value={serverProtocol}
+                >
+                  <SelectTrigger className="w-[110px]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -90,9 +89,7 @@ export function LoginForm() {
               </div>
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="username">
-                {t('login.form.username')} *
-              </Label>
+              <Label htmlFor="username">{t('login.form.username')} *</Label>
               <Input
                 id="username"
                 type="text"
@@ -105,9 +102,7 @@ export function LoginForm() {
               />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="password">
-                {t('login.form.password')} *
-              </Label>
+              <Label htmlFor="password">{t('login.form.password')} *</Label>
               <Input
                 id="password"
                 type="password"

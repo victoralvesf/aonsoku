@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import useNavigationHistory from "@/app/hooks/use-navigation-history";
-import { Button } from "@/app/components/ui/button";
+import { useNavigate } from 'react-router-dom'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import useNavigationHistory from '@/app/hooks/use-navigation-history'
+import { Button } from '@/app/components/ui/button'
 
 export function NavigationButtons() {
-  const navigate = useNavigate();
-  const { canGoBack, canGoForward } = useNavigationHistory();
+  const navigate = useNavigate()
+  const { canGoBack, canGoForward } = useNavigationHistory()
 
   return (
     <div className="flex gap-2">

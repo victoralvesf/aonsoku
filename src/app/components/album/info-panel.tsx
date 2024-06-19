@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { SimpleTooltip } from "@/app/components/ui/simple-tooltip";
-import LastFmIcon from "@/app/components/icons/last-fm";
-import { Skeleton } from "@/app/components/ui/skeleton";
-import { cn } from "@/lib/utils"
-import MusicbrainzIcon from "@/app/components/icons/musicbrainz"
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import LastFmIcon from '@/app/components/icons/last-fm'
+import { Skeleton } from '@/app/components/ui/skeleton'
+import { cn } from '@/lib/utils'
+import MusicbrainzIcon from '@/app/components/icons/musicbrainz'
 
 interface InfoPanelProps {
   title: string
@@ -13,7 +13,8 @@ interface InfoPanelProps {
   musicBrainzId?: string
 }
 
-const containerClasses = "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all bg-background"
+const containerClasses =
+  'flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all bg-background'
 
 export default function InfoPanel({
   title,
@@ -23,17 +24,17 @@ export default function InfoPanel({
 }: InfoPanelProps) {
   const { t } = useTranslation()
 
-  if (!bio) return <></>
-
   // In case the API returns a link without target blank and nofollow
   useEffect(() => {
-    const links = document.querySelectorAll('#info-panel a');
+    const links = document.querySelectorAll('#info-panel a')
 
-    links.forEach(link => {
+    links.forEach((link) => {
       link.setAttribute('target', '_blank')
       link.setAttribute('rel', 'nofollow')
-    });
+    })
   }, [])
+
+  if (!bio) return <></>
 
   return (
     <div className={cn(containerClasses)} id="artist-biography">
@@ -47,11 +48,10 @@ export default function InfoPanel({
           <SimpleTooltip text={t('album.info.lastfm')}>
             <a
               target="_blank"
-              rel="nofollow"
+              rel="nofollow noreferrer"
               href={lastFmUrl}
               className="p-2 hover:bg-black/10 dark:hover:bg-white/10 rounded-full"
             >
-
               <LastFmIcon className="w-6 h-6 fill-foreground" />
             </a>
           </SimpleTooltip>
@@ -61,7 +61,7 @@ export default function InfoPanel({
           <SimpleTooltip text={t('album.info.musicbrainz')}>
             <a
               target="_blank"
-              rel="nofollow"
+              rel="nofollow noreferrer"
               href={`https://musicbrainz.org/artist/${musicBrainzId}`}
               className="p-2 hover:bg-black/10 dark:hover:bg-white/10 rounded-full"
             >

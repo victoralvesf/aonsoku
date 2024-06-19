@@ -1,31 +1,31 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import HomeSongCard from '@/app/components/home/song-card';
-import ListWrapper from '@/app/components/list-wrapper';
-import { subsonic } from '@/service/subsonic';
-import { AlbumListType, Albums, AlbumsListData } from '@/types/responses/album';
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useLoaderData } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import HomeSongCard from '@/app/components/home/song-card'
+import ListWrapper from '@/app/components/list-wrapper'
+import { subsonic } from '@/service/subsonic'
+import { AlbumListType, Albums, AlbumsListData } from '@/types/responses/album'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/app/components/ui/dropdown-menu"
-import { ListFilter } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
-import debounce from 'lodash/debounce';
-import { usePlayer } from '@/app/contexts/player-context';
-import { Badge } from '@/app/components/ui/badge';
-import { ShadowHeader } from '@/app/components/shadow-header';
+} from '@/app/components/ui/dropdown-menu'
+import { ListFilter } from 'lucide-react'
+import { Button } from '@/app/components/ui/button'
+import debounce from 'lodash/debounce'
+import { usePlayer } from '@/app/contexts/player-context'
+import { Badge } from '@/app/components/ui/badge'
+import { ShadowHeader } from '@/app/components/shadow-header'
 
 export default function AlbumList() {
   const defaultOffset = 32
   const toYear = new Date().getFullYear().toString()
-  const scrollDivRef = useRef<HTMLDivElement | null>(null);
+  const scrollDivRef = useRef<HTMLDivElement | null>(null)
   const { setSongList } = usePlayer()
   const { t } = useTranslation()
 
-  const { albumsCount, list: recentAlbums } = useLoaderData() as AlbumsListData;
+  const { albumsCount, list: recentAlbums } = useLoaderData() as AlbumsListData
   const [items, setItems] = useState<Albums[]>([])
   const [itemsCount, setItemsCount] = useState(0)
   const [hasMore, setHasMore] = useState(true)
@@ -35,8 +35,10 @@ export default function AlbumList() {
   useEffect(() => {
     setItems(recentAlbums)
     setItemsCount(albumsCount)
-    scrollDivRef.current = document.querySelector('#main-scroll-area #scroll-viewport') as HTMLDivElement
-  }, [recentAlbums])
+    scrollDivRef.current = document.querySelector(
+      '#main-scroll-area #scroll-viewport',
+    ) as HTMLDivElement
+  }, [albumsCount, recentAlbums])
 
   const fetchMoreData = useCallback(async () => {
     const response = await subsonic.albums.getAlbumList({
@@ -48,8 +50,10 @@ export default function AlbumList() {
 
     if (response) {
       setItems((prevItems) => {
-        const newItems = response.list!.filter(album => !prevItems.some(item => item.id === album.id));
-        return [...prevItems, ...newItems];
+        const newItems = response.list!.filter(
+          (album) => !prevItems.some((item) => item.id === album.id),
+        )
+        return [...prevItems, ...newItems]
       })
       setItemsCount(response.albumsCount!)
       setHasMore(response.list!.length >= defaultOffset)
@@ -59,22 +63,22 @@ export default function AlbumList() {
   }, [offset, currentFilter, defaultOffset, toYear])
 
   const resetList = useCallback(async () => {
-    setOffset(defaultOffset);
-    setHasMore(true);
+    setOffset(defaultOffset)
+    setHasMore(true)
 
     const response = await subsonic.albums.getAlbumList({
       type: currentFilter,
       size: defaultOffset,
       offset: 0,
       toYear,
-    });
+    })
 
     if (response) {
       setItems(response.list!)
       setItemsCount(response.albumsCount!)
       scrollDivRef.current?.scrollTo(0, 0)
     }
-  }, [currentFilter, defaultOffset, toYear]);
+  }, [currentFilter, defaultOffset, toYear])
 
   useEffect(() => {
     resetList()
@@ -82,20 +86,20 @@ export default function AlbumList() {
 
   useEffect(() => {
     const handleScroll = debounce(() => {
-      if (!scrollDivRef.current) return;
+      if (!scrollDivRef.current) return
 
       const { scrollTop, clientHeight, scrollHeight } = scrollDivRef.current
       if (scrollTop + clientHeight >= scrollHeight - 40) {
         if (hasMore) fetchMoreData()
       }
-    }, 200);
+    }, 200)
 
-    const scrollElement = scrollDivRef.current;
-    scrollElement?.addEventListener("scroll", handleScroll);
+    const scrollElement = scrollDivRef.current
+    scrollElement?.addEventListener('scroll', handleScroll)
     return () => {
-      scrollElement?.removeEventListener("scroll", handleScroll);
-    };
-  }, [fetchMoreData, hasMore]);
+      scrollElement?.removeEventListener('scroll', handleScroll)
+    }
+  }, [fetchMoreData, hasMore])
 
   async function handlePlayAlbum(albumId: string) {
     const album = await subsonic.albums.getOne(albumId)
@@ -113,7 +117,9 @@ export default function AlbumList() {
             <h2 className="text-2xl font-semibold tracking-tight">
               {t('sidebar.albums')}
             </h2>
-            <Badge variant="secondary" className="text-foreground/70">{itemsCount}</Badge>
+            <Badge variant="secondary" className="text-foreground/70">
+              {itemsCount}
+            </Badge>
           </div>
 
           <DropdownMenu>
@@ -129,7 +135,9 @@ export default function AlbumList() {
                   <DropdownMenuCheckboxItem
                     key={index}
                     checked={key === currentFilter}
-                    onCheckedChange={() => setCurrentFilter(key as AlbumListType)}
+                    onCheckedChange={() =>
+                      setCurrentFilter(key as AlbumListType)
+                    }
                     className="cursor-pointer"
                   >
                     {t(label)}
@@ -143,14 +151,15 @@ export default function AlbumList() {
 
       <ListWrapper className="pt-6 lg:pt-8">
         <div className="grid grid-cols-8 gap-4 h-full">
-          {items && items.map((album) => (
-            <HomeSongCard
-              key={`album-${album.id}`}
-              album={album}
-              coverArtSize={300}
-              onButtonClick={(album) => handlePlayAlbum(album.id)}
-            />
-          ))}
+          {items &&
+            items.map((album) => (
+              <HomeSongCard
+                key={`album-${album.id}`}
+                album={album}
+                coverArtSize={300}
+                onButtonClick={(album) => handlePlayAlbum(album.id)}
+              />
+            ))}
         </div>
       </ListWrapper>
     </main>

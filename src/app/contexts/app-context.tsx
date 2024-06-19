@@ -1,16 +1,26 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from "react"
-import { Store } from "tauri-plugin-store-api";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
+import { Store } from 'tauri-plugin-store-api'
 import MD5 from 'crypto-js/md5'
 import { toast } from 'react-toastify'
 import { os } from '@tauri-apps/api'
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next'
 
-import { IAppContext, IServerConfig } from "@/types/serverConfig";
-import { pingServer } from "@/api/pingServer";
-import { getFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from "@/utils/persistDataLayer";
-import { isTauri } from "@/utils/tauriTools";
+import { IAppContext, IServerConfig } from '@/types/serverConfig'
+import { pingServer } from '@/api/pingServer'
+import {
+  getFromLocalStorage,
+  removeFromLocalStorage,
+  saveToLocalStorage,
+} from '@/utils/persistDataLayer'
+import { isTauri } from '@/utils/tauriTools'
 
-const store = new Store(".settings.dat");
+const store = new Store('.settings.dat')
 
 const AppContext = createContext({} as IAppContext)
 
@@ -27,7 +37,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const { t } = useTranslation()
 
   async function getServerConfig() {
-    const serverConfig = await store.get<IServerConfig>("server-config")
+    const serverConfig = await store.get<IServerConfig>('server-config')
 
     if (serverConfig) {
       setServerUrl(serverConfig.url)
@@ -39,7 +49,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         url: serverConfig.url,
         username: serverConfig.username,
         token: serverConfig.password,
-        salt: saltWord
+        salt: saltWord,
       })
     } else {
       setIsServerConfigured(false)
@@ -60,7 +70,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (isTauri()) {
-      getServerConfig();
+      getServerConfig()
 
       const getOsType = async () => {
         setOsType(await os.type())
@@ -75,16 +85,21 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     const token = MD5(`${serverPassword}${saltWord}`).toString()
     const fullUrl = `${serverProtocol}${serverUrl}`
 
-    const canConnect = await pingServer(fullUrl, serverUsername, token, saltWord)
+    const canConnect = await pingServer(
+      fullUrl,
+      serverUsername,
+      token,
+      saltWord,
+    )
 
     if (canConnect) {
       const config = {
         url: fullUrl,
         username: serverUsername,
-        password: token
+        password: token,
       }
       if (isTauri()) {
-        await store.set("server-config", config)
+        await store.set('server-config', config)
         await store.save()
       }
 
@@ -92,7 +107,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         url: config.url,
         username: config.username,
         token,
-        salt: saltWord
+        salt: saltWord,
       })
 
       setServerUrl(fullUrl)
@@ -111,7 +126,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   async function handleRemoveServerConfig() {
     removeFromLocalStorage()
     if (isTauri()) {
-      await store.delete("server-config")
+      await store.delete('server-config')
       await store.save()
     }
     setIsServerConfigured(false)
@@ -129,13 +144,11 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     serverPassword,
     setServerPassword,
     handleSaveServerConfig,
-    handleRemoveServerConfig
+    handleRemoveServerConfig,
   }
 
   return (
-    <AppContext.Provider value={providerProps}>
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={providerProps}>{children}</AppContext.Provider>
   )
 }
 

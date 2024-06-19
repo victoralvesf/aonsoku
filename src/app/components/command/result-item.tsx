@@ -1,7 +1,7 @@
-import { Play } from "lucide-react"
-import Image from "@/app/components/image"
-import { Button } from "@/app/components/ui/button"
-import { getCoverArtUrl } from "@/api/httpClient"
+import { Play } from 'lucide-react'
+import Image from '@/app/components/image'
+import { Button } from '@/app/components/ui/button'
+import { getCoverArtUrl } from '@/api/httpClient'
 
 interface ResultItemProps {
   coverArt: string
@@ -10,7 +10,12 @@ interface ResultItemProps {
   onClick: () => void
 }
 
-export function ResultItem({ coverArt, title, artist, onClick }: ResultItemProps) {
+export function ResultItem({
+  coverArt,
+  title,
+  artist,
+  onClick,
+}: ResultItemProps) {
   return (
     <div className="flex w-full justify-between items-center">
       <div className="flex gap-2 w-[420px]">
@@ -19,9 +24,12 @@ export function ResultItem({ coverArt, title, artist, onClick }: ResultItemProps
           width={40}
           height={40}
           className="aspect-square rounded shadow"
+          alt={`${artist} - ${title}`}
         />
         <div className="flex flex-col justify-center w-full">
-          <span className="font-medium text-sm truncate w-[370px]">{title}</span>
+          <span className="font-medium text-sm truncate w-[370px]">
+            {title}
+          </span>
           <span className="text-xs text-muted-foreground">{artist}</span>
         </div>
       </div>

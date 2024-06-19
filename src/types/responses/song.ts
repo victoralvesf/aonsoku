@@ -1,12 +1,20 @@
-import { SubsonicResponse } from "./subsonicResponse"
+import { SubsonicResponse } from './subsonicResponse'
 
-export interface SongList {
-  song: ISong[]
+export interface IReplayGain {
+  trackGain: number
+  trackPeak: number
+  albumPeak: number
 }
 
-export interface RandomSongsResponse extends SubsonicResponse<{ randomSongs: SongList }> {}
+export interface IGenre {
+  name: string
+}
 
-export interface TopSongsResponse extends SubsonicResponse<{ topSongs: SongList }> {}
+export interface ILyric {
+  artist?: string
+  title?: string
+  value?: string
+}
 
 export interface ISong {
   id: string
@@ -43,20 +51,14 @@ export interface ISong {
   replayGain: IReplayGain
 }
 
-export interface IReplayGain {
-  trackGain: number
-  trackPeak: number
-  albumPeak: number
+export interface SongList {
+  song: ISong[]
 }
 
-export interface IGenre {
-  name: string
-}
+export interface RandomSongsResponse
+  extends SubsonicResponse<{ randomSongs: SongList }> {}
 
-export interface ILyric {
-  artist?: string
-  title?: string
-  value?: string
-}
+export interface TopSongsResponse
+  extends SubsonicResponse<{ topSongs: SongList }> {}
 
-export interface LyricsResponse extends SubsonicResponse <{ lyrics: ILyric }> {}
+export interface LyricsResponse extends SubsonicResponse<{ lyrics: ILyric }> {}

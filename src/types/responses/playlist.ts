@@ -1,13 +1,5 @@
-import { ISong } from "./song"
-import { SubsonicResponse } from "./subsonicResponse"
-
-export interface Playlists {
-  playlist: Playlist[]
-}
-
-export interface PlaylistsResponse extends SubsonicResponse<{ playlists: Playlists }> {}
-
-export interface SinglePlaylistResponse extends SubsonicResponse<{ playlist: Playlist }> {}
+import { ISong } from './song'
+import { SubsonicResponse } from './subsonicResponse'
 
 export interface Playlist {
   id: string
@@ -22,8 +14,19 @@ export interface Playlist {
   coverArt: string
 }
 
+export interface Playlists {
+  playlist: Playlist[]
+}
+
+export interface PlaylistsResponse
+  extends SubsonicResponse<{ playlists: Playlists }> {}
+
+export interface SinglePlaylistResponse
+  extends SubsonicResponse<{ playlist: Playlist }> {}
+
 export interface PlaylistWithEntries extends Playlist {
   entry: ISong[]
 }
 
-export interface PlaylistWithEntriesResponse extends SubsonicResponse<{ playlist: PlaylistWithEntries }> {}
+export interface PlaylistWithEntriesResponse
+  extends SubsonicResponse<{ playlist: PlaylistWithEntries }> {}

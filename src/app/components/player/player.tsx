@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, memo } from "react"
+import { useEffect, useRef, useState, useCallback, memo } from 'react'
 import {
   Heart,
   ListVideo,
@@ -8,19 +8,19 @@ import {
   Shuffle,
   SkipBack,
   SkipForward,
-  Volume2
-} from "lucide-react"
-import clsx from "clsx"
-import { useHotkeys } from "react-hotkeys-hook"
+  Volume2,
+} from 'lucide-react'
+import clsx from 'clsx'
+import { useHotkeys } from 'react-hotkeys-hook'
 
-import { getSongStreamUrl } from "@/api/httpClient"
-import { Slider } from "@/app/components/ui/slider"
-import { Button } from "@/app/components/ui/button"
-import { usePlayer } from "@/app/contexts/player-context"
-import { convertSecondsToTime } from "@/utils/convertSecondsToTime"
-import { subsonic } from "@/service/subsonic"
-import { TrackInfo } from "@/app/components/player/track-info"
-import { RadioInfo } from "@/app/components/player/radio-info"
+import { getSongStreamUrl } from '@/api/httpClient'
+import { Slider } from '@/app/components/ui/slider'
+import { Button } from '@/app/components/ui/button'
+import { usePlayer } from '@/app/contexts/player-context'
+import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
+import { subsonic } from '@/service/subsonic'
+import { TrackInfo } from '@/app/components/player/track-info'
+import { RadioInfo } from '@/app/components/player/radio-info'
 
 let isSeeking = false
 
@@ -35,11 +35,15 @@ export function Player() {
   const song = player.currentSongList[player.currentSongIndex]
   const radio = player.radioList[player.currentSongIndex]
 
-  useHotkeys('space', () => {
-    if (player.currentSongList.length > 0) {
-      player.togglePlayPause()
-    }
-  }, { preventDefault: true })
+  useHotkeys(
+    'space',
+    () => {
+      if (player.currentSongList.length > 0) {
+        player.togglePlayPause()
+      }
+    },
+    { preventDefault: true },
+  )
 
   useEffect(() => {
     if (!audioRef.current) return
@@ -57,7 +61,7 @@ export function Player() {
     if (player.mediaType === 'song') {
       player.isPlaying ? audioRef.current.play() : audioRef.current.pause()
     }
-  }, [player.isPlaying])
+  }, [player.isPlaying, player.mediaType, radio])
 
   useEffect(() => {
     if (!audioRef.current) return
@@ -100,18 +104,24 @@ export function Player() {
     isSeeking = true
   }, [])
 
-  const handleSeeking = useCallback((amount: number) => {
-    isSeeking = true
-    player.setProgress(amount)
-  }, [player])
-
-  const handleSeeked = useCallback((amount: number) => {
-    isSeeking = false
-    if (audioRef.current) {
-      audioRef.current.currentTime = amount
+  const handleSeeking = useCallback(
+    (amount: number) => {
+      isSeeking = true
       player.setProgress(amount)
-    }
-  }, [player])
+    },
+    [player],
+  )
+
+  const handleSeeked = useCallback(
+    (amount: number) => {
+      isSeeking = false
+      if (audioRef.current) {
+        audioRef.current.currentTime = amount
+        player.setProgress(amount)
+      }
+    },
+    [player],
+  )
 
   const handleChangeVolume = useCallback((volume: number) => {
     setVolume(volume)
@@ -127,12 +137,8 @@ export function Player() {
       <div className="w-full h-full grid grid-cols-player gap-2 px-4">
         {/* Track Info */}
         <div className="flex items-center gap-2">
-          {player.mediaType === 'song' && (
-            <MemoizedTrackInfo song={song} />
-          )}
-          {player.mediaType === 'radio' && (
-            <MemoizedRadioInfo radio={radio} />
-          )}
+          {player.mediaType === 'song' && <MemoizedTrackInfo song={song} />}
+          {player.mediaType === 'radio' && <MemoizedRadioInfo radio={radio} />}
         </div>
         {/* Main Controls */}
         <div className="col-span-2 flex flex-col justify-center items-center px-4 gap-1">
@@ -144,7 +150,12 @@ export function Player() {
                 disabled={!song || player.isPlayingOneSong}
                 onClick={player.toggleShuffle}
               >
-                <Shuffle className={clsx("w-10 h-10", player.isShuffleActive && "text-primary")} />
+                <Shuffle
+                  className={clsx(
+                    'w-10 h-10',
+                    player.isShuffleActive && 'text-primary',
+                  )}
+                />
               </Button>
             )}
 
@@ -185,7 +196,12 @@ export function Player() {
                 disabled={!song}
                 onClick={player.toggleLoop}
               >
-                <Repeat className={clsx("w-10 h-10", player.isLoopActive && "text-primary")} />
+                <Repeat
+                  className={clsx(
+                    'w-10 h-10',
+                    player.isLoopActive && 'text-primary',
+                  )}
+                />
               </Button>
             )}
           </div>
@@ -231,7 +247,12 @@ export function Player() {
                 disabled={!song}
                 onClick={handleLikeButton}
               >
-                <Heart className={clsx("w-5 h-5", player.isSongStarred && "text-red-500 fill-red-500")} />
+                <Heart
+                  className={clsx(
+                    'w-5 h-5',
+                    player.isSongStarred && 'text-red-500 fill-red-500',
+                  )}
+                />
               </Button>
             )}
 
@@ -247,7 +268,7 @@ export function Player() {
 
             <div className="flex gap-2 ml-2">
               <Volume2
-                className={clsx("w-4 h-4", !song && !radio && "opacity-50")}
+                className={clsx('w-4 h-4', !song && !radio && 'opacity-50')}
               />
               <Slider
                 defaultValue={[100]}
@@ -255,7 +276,11 @@ export function Player() {
                 max={100}
                 step={1}
                 disabled={!song && !radio}
-                className={clsx("cursor-pointer", "w-[8rem]", !song && !radio && "pointer-events-none opacity-50")}
+                className={clsx(
+                  'cursor-pointer',
+                  'w-[8rem]',
+                  !song && !radio && 'pointer-events-none opacity-50',
+                )}
                 onValueChange={([value]) => handleChangeVolume(value)}
               />
             </div>

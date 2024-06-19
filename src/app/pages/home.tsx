@@ -1,11 +1,11 @@
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import { ISong } from "@/types/responses/song"
-import HomeHeader from "@/app/components/home/header"
-import PreviewList from "@/app/components/home/preview-list"
-import { AlbumsListData } from "@/types/responses/album"
-import { ROUTES } from "@/routes/routesList"
+import { ISong } from '@/types/responses/song'
+import HomeHeader from '@/app/components/home/header'
+import PreviewList from '@/app/components/home/preview-list'
+import { AlbumsListData } from '@/types/responses/album'
+import { ROUTES } from '@/routes/routesList'
 
 interface HomeLoaderData {
   randomSongs: ISong[]
@@ -21,7 +21,7 @@ export default function Home() {
     frequentAlbums,
     newestAlbums,
     recentAlbums,
-    randomAlbums
+    randomAlbums,
   } = useLoaderData() as HomeLoaderData
 
   const { t } = useTranslation()
@@ -30,14 +30,14 @@ export default function Home() {
     { title: t('home.recentlyPlayed'), list: recentAlbums.list },
     { title: t('home.mostPlayed'), list: frequentAlbums.list },
     { title: t('home.recentlyAdded'), list: newestAlbums.list },
-    { title: t('home.explore'), list: randomAlbums.list }
+    { title: t('home.explore'), list: randomAlbums.list },
   ]
 
   return (
     <div className="w-full">
       <HomeHeader songs={randomSongs} />
 
-      {homeSections.map(section => (
+      {homeSections.map((section) => (
         <PreviewList
           key={section.title}
           title={section.title}

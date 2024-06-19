@@ -1,13 +1,13 @@
-import { subsonic } from "@/service/subsonic";
+import { subsonic } from '@/service/subsonic'
 
 export function useSongList() {
   async function getArtistSongCount(id: string) {
-    const response = await subsonic.artists.getOne(id);
+    const response = await subsonic.artists.getOne(id)
     let count = 0
 
     if (!response) return count
 
-    response.album.forEach(item => {
+    response.album.forEach((item) => {
       count += item.songCount
     })
 
@@ -21,7 +21,7 @@ export function useSongList() {
       query: name,
       songCount: artistSongCount,
       albumCount: 0,
-      artistCount: 0
+      artistCount: 0,
     })
 
     if (response?.song) return response.song
@@ -36,6 +36,6 @@ export function useSongList() {
   return {
     getArtistSongCount,
     getArtistAllSongs,
-    getAlbumSongs
+    getAlbumSongs,
   }
 }

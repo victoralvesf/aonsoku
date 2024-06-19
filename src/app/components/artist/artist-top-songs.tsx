@@ -1,18 +1,19 @@
-import { useAsyncValue } from "react-router-dom";
-import { DataTable } from "@/app/components/ui/data-table";
-import { ISong } from "@/types/responses/song";
-import { fillSongsColumns } from "@/app/tables/songs-columns";
-import { usePlayer } from "@/app/contexts/player-context";
-import { Skeleton } from "@/app/components/ui/skeleton";
-import { ColumnFilter } from "@/types/columnFilter";
-import { useTranslation } from "react-i18next";
-import { useMemo } from "react";
-import { useLang } from "@/app/contexts/lang-context";
+import { useAsyncValue } from 'react-router-dom'
+import { DataTable } from '@/app/components/ui/data-table'
+import { ISong } from '@/types/responses/song'
+import { fillSongsColumns } from '@/app/tables/songs-columns'
+import { usePlayer } from '@/app/contexts/player-context'
+import { Skeleton } from '@/app/components/ui/skeleton'
+import { ColumnFilter } from '@/types/columnFilter'
+import { useTranslation } from 'react-i18next'
+import { useMemo } from 'react'
+import { useLang } from '@/app/contexts/lang-context'
 
 export default function ArtistTopSongs() {
-  let topSongs = useAsyncValue() as ISong[]
+  const topSongs = useAsyncValue() as ISong[]
   const { langCode } = useLang()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedSongsColumns = useMemo(() => fillSongsColumns(), [langCode])
   const memoizedTopSongs = useMemo(() => {
     if (topSongs.length > 10) {
@@ -34,7 +35,7 @@ export default function ArtistTopSongs() {
     'playCount',
     'played',
     'contentType',
-    'starred'
+    'starred',
   ]
 
   return (
@@ -46,7 +47,9 @@ export default function ArtistTopSongs() {
       <DataTable
         columns={memoizedSongsColumns}
         data={memoizedTopSongs}
-        handlePlaySong={(row) => player.setSongList(memoizedTopSongs, row.index)}
+        handlePlaySong={(row) =>
+          player.setSongList(memoizedTopSongs, row.index)
+        }
         columnFilter={columnsToShow}
       />
     </div>
@@ -69,7 +72,10 @@ export function ArtistTopSongsFallback() {
           <Skeleton className="w-12 h-5 rounded" />
         </div>
         {Array.from({ length: 10 }).map((_, index) => (
-          <div key={index} className="grid grid-cols-table-fallback p-2 items-center border-t">
+          <div
+            key={index}
+            className="grid grid-cols-table-fallback p-2 items-center border-t"
+          >
             <Skeleton className="w-5 h-5 rounded ml-2" />
             <div className="flex items-center gap-2">
               <Skeleton className="w-10 h-10 rounded" />

@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react";
-import { useAsyncValue } from "react-router-dom";
-import { usePlayer } from "@/app/contexts/player-context";
-import { subsonic } from "@/service/subsonic";
-import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from "@/app/components/ui/carousel";
-import ArtistCard from "@/app/components/artist/artist-card";
-import { CarouselButton } from "@/app/components/ui/carousel-button";
-import { IArtistInfo, ISimilarArtist } from "@/types/responses/artist";
+import { useEffect, useState } from 'react'
+import { useAsyncValue } from 'react-router-dom'
+import { usePlayer } from '@/app/contexts/player-context'
+import { subsonic } from '@/service/subsonic'
+import {
+  Carousel,
+  type CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from '@/app/components/ui/carousel'
+import ArtistCard from '@/app/components/artist/artist-card'
+import { CarouselButton } from '@/app/components/ui/carousel-button'
+import { IArtistInfo, ISimilarArtist } from '@/types/responses/artist'
 
 interface RelatedArtistsListProps {
   title: string
 }
 
-export default function RelatedArtistsList({
-  title,
-}: RelatedArtistsListProps) {
+export default function RelatedArtistsList({ title }: RelatedArtistsListProps) {
   const data = useAsyncValue() as IArtistInfo
   let list = data.similarArtist!
 
@@ -38,7 +41,7 @@ export default function RelatedArtistsList({
 
       const searchResult = await subsonic.search.get({
         query: artist.name,
-        songCount: count
+        songCount: count,
       })
 
       if (searchResult?.song) player.setSongList(searchResult?.song, 0)
@@ -83,7 +86,7 @@ export default function RelatedArtistsList({
         <Carousel
           opts={{
             align: 'start',
-            slidesToScroll: 'auto'
+            slidesToScroll: 'auto',
           }}
           setApi={setApi}
         >
@@ -102,4 +105,3 @@ export default function RelatedArtistsList({
     </div>
   )
 }
-

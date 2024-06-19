@@ -1,15 +1,15 @@
-import { useTranslation } from "react-i18next"
-import { EllipsisVertical, Pencil, Trash } from "lucide-react"
+import { useTranslation } from 'react-i18next'
+import { EllipsisVertical, Pencil, Trash } from 'lucide-react'
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuTrigger
-} from "@/app/components/ui/dropdown-menu"
-import { Radio } from "@/types/responses/radios"
-import { useRadios } from "@/app/contexts/radios-context"
+  DropdownMenuTrigger,
+} from '@/app/components/ui/dropdown-menu'
+import { Radio } from '@/types/responses/radios'
+import { useRadios } from '@/app/contexts/radios-context'
 
 interface RadioActionButtonProps {
   row: Radio
@@ -38,9 +38,7 @@ export function RadioActionButton({ row }: RadioActionButtonProps) {
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={handleEdit}>
             <Pencil className="mr-2 h-4 w-4" />
-            <span>
-              {t('radios.table.actions.edit')}
-            </span>
+            <span>{t('radios.table.actions.edit')}</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleDelete}>
             <Trash className="mr-2 h-4 w-4 fill-red-300 text-red-500" />

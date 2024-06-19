@@ -1,5 +1,5 @@
-import { FormEvent, useState } from "react"
-import { useTranslation } from "react-i18next"
+import { FormEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import {
   Dialog,
@@ -7,12 +7,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/app/components/ui/dialog"
-import { Label } from "@/app/components/ui/label"
-import { Input } from "@/app/components/ui/input"
-import { Button } from "@/app/components/ui/button"
-import { usePlaylists } from "@/app/contexts/playlists-context"
-import { Switch } from "@/app/components/ui/switch"
+} from '@/app/components/ui/dialog'
+import { Label } from '@/app/components/ui/label'
+import { Input } from '@/app/components/ui/input'
+import { Button } from '@/app/components/ui/button'
+import { usePlaylists } from '@/app/contexts/playlists-context'
+import { Switch } from '@/app/components/ui/switch'
 
 export function CreatePlaylistDialog() {
   const [name, setName] = useState('')
@@ -22,7 +22,7 @@ export function CreatePlaylistDialog() {
   const {
     playlistDialogState,
     setPlaylistDialogState,
-    createPlaylistWithoutSongs
+    createPlaylistWithoutSongs,
   } = usePlaylists()
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -43,9 +43,7 @@ export function CreatePlaylistDialog() {
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>
-              {t('playlist.createDialog.title')}
-            </DialogTitle>
+            <DialogTitle>{t('playlist.createDialog.title')}</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col gap-4 py-4">
             <div className="flex flex-col gap-2 items-start">
@@ -70,7 +68,11 @@ export function CreatePlaylistDialog() {
               />
             </div>
             <div className="flex gap-2 items-center">
-              <Switch id="is-public" checked={isPublic} onCheckedChange={setIsPublic} />
+              <Switch
+                id="is-public"
+                checked={isPublic}
+                onCheckedChange={setIsPublic}
+              />
               <Label htmlFor="is-public" className="font-normal">
                 {t('playlist.createDialog.isPublicLabel')}
               </Label>

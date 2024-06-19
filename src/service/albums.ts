@@ -1,5 +1,10 @@
-import { httpClient } from "@/api/httpClient";
-import { AlbumInfoResponse, AlbumListResponse, AlbumListType, GetAlbumResponse } from "@/types/responses/album";
+import { httpClient } from '@/api/httpClient'
+import {
+  AlbumInfoResponse,
+  AlbumListResponse,
+  AlbumListType,
+  GetAlbumResponse,
+} from '@/types/responses/album'
 
 interface AlbumListParams {
   type: AlbumListType
@@ -17,7 +22,7 @@ async function getAlbumList(params: Partial<AlbumListParams> = {}) {
     offset = 0,
     fromYear,
     toYear,
-    genre
+    genre,
   } = params
 
   const response = await httpClient<AlbumListResponse>('/getAlbumList', {
@@ -28,13 +33,13 @@ async function getAlbumList(params: Partial<AlbumListParams> = {}) {
       offset: offset.toString(),
       fromYear,
       toYear,
-      genre
-    }
+      genre,
+    },
   })
 
   return {
     albumsCount: response?.count,
-    list: response?.data.albumList.album
+    list: response?.data.albumList.album,
   }
 }
 
@@ -42,8 +47,8 @@ async function getOne(id: string) {
   const response = await httpClient<GetAlbumResponse>('/getAlbum', {
     method: 'GET',
     query: {
-      id
-    }
+      id,
+    },
   })
 
   return response?.data.album
@@ -53,8 +58,8 @@ async function getInfo(id: string) {
   const response = await httpClient<AlbumInfoResponse>('/getAlbumInfo', {
     method: 'GET',
     query: {
-      id
-    }
+      id,
+    },
   })
 
   return response?.data.albumInfo
@@ -63,5 +68,5 @@ async function getInfo(id: string) {
 export const albums = {
   getAlbumList,
   getOne,
-  getInfo
+  getInfo,
 }

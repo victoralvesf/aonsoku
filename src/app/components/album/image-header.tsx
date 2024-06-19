@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react'
+import { Fragment, useRef, useState } from 'react'
 import { FastAverageColorResult } from 'fast-average-color'
 import { Link } from 'react-router-dom'
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { Skeleton } from '@/app/components/ui/skeleton'
@@ -10,7 +10,8 @@ import { Badge } from '@/app/components/ui/badge'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
 import { ROUTES } from '@/routes/routesList'
 
-const bgGradient = "bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50"
+const bgGradient =
+  'bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50'
 
 interface ImageHeaderProps {
   type: string
@@ -31,7 +32,7 @@ export default function ImageHeader({
   coverArtId,
   coverArtSize,
   coverArtAlt,
-  badges
+  badges,
 }: ImageHeaderProps) {
   const imageRef = useRef<HTMLImageElement>(null)
   const [loaded, setLoaded] = useState(false)
@@ -51,7 +52,11 @@ export default function ImageHeader({
     <>
       {!loaded && <HeaderFallback />}
       <div
-        className={cn("w-full px-4 py-6 lg:px-8 flex gap-4", bgGradient, !loaded ? "hidden" : "visible")}
+        className={cn(
+          'w-full px-4 py-6 lg:px-8 flex gap-4',
+          bgGradient,
+          !loaded ? 'hidden' : 'visible',
+        )}
         style={{ backgroundColor: bgColor?.hex }}
       >
         <div
@@ -71,11 +76,12 @@ export default function ImageHeader({
         </div>
 
         <div className="flex flex-col justify-end">
-          <p className="text-sm mb-2 font-medium">
-            {type}
-          </p>
+          <p className="text-sm mb-2 font-medium">{type}</p>
           <h1
-            className={cn("scroll-m-20 font-bold tracking-tight mb-2 antialiased", getTextSizeClass(title))}
+            className={cn(
+              'scroll-m-20 font-bold tracking-tight mb-2 antialiased',
+              getTextSizeClass(title),
+            )}
           >
             {title}
           </h1>
@@ -88,11 +94,11 @@ export default function ImageHeader({
           )}
 
           <div className="flex gap-2 mt-2">
-            <>
-              {badges.map((badge, index) => {
-                if (badge !== null) return <Badge key={index} variant="secondary">{badge}</Badge>
-              })}
-            </>
+            {badges.map((badge, index) => (
+              <Fragment key={index}>
+                {badge && <Badge variant="secondary">{badge}</Badge>}
+              </Fragment>
+            ))}
           </div>
         </div>
       </div>
@@ -102,7 +108,12 @@ export default function ImageHeader({
 
 function HeaderFallback() {
   return (
-    <div className={cn("w-full px-4 py-6 lg:px-8 bg-muted-foreground flex gap-4", bgGradient)}>
+    <div
+      className={cn(
+        'w-full px-4 py-6 lg:px-8 bg-muted-foreground flex gap-4',
+        bgGradient,
+      )}
+    >
       <Skeleton className="w-[250px] h-[250px] min-w-[250px] min-h-[250px] rounded shadow-lg" />
       <div className="flex flex-col justify-end">
         <Skeleton className="h-[20px] w-16 mb-2" />

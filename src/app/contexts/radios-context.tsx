@@ -1,9 +1,15 @@
-import { ReactNode, createContext, useCallback, useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+} from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
-import { CreateRadio, Radio } from "@/types/responses/radios";
-import { subsonic } from "@/service/subsonic";
+import { CreateRadio, Radio } from '@/types/responses/radios'
+import { subsonic } from '@/service/subsonic'
 
 interface RadiosContextState {
   data: Radio
@@ -34,41 +40,50 @@ export function RadiosProvider({ children }: { children: ReactNode }) {
     try {
       const response = await subsonic.radios.getAll()
       response ? setRadios(response) : setRadios([])
-    } catch (_) { }
+    } catch (_) {}
   }, [])
 
-  const createRadio = useCallback(async (data: CreateRadio) => {
-    try {
-      await subsonic.radios.create(data)
-      await fetchRadios()
+  const createRadio = useCallback(
+    async (data: CreateRadio) => {
+      try {
+        await subsonic.radios.create(data)
+        await fetchRadios()
 
-      toast.success(t('radios.form.create.toast.success'))
-    } catch (_) {
-      toast.error(t('radios.form.create.toast.success'))
-    }
-  }, [])
+        toast.success(t('radios.form.create.toast.success'))
+      } catch (_) {
+        toast.error(t('radios.form.create.toast.success'))
+      }
+    },
+    [fetchRadios, t],
+  )
 
-  const updateRadio = useCallback(async (data: Radio) => {
-    try {
-      await subsonic.radios.update(data)
-      await fetchRadios()
+  const updateRadio = useCallback(
+    async (data: Radio) => {
+      try {
+        await subsonic.radios.update(data)
+        await fetchRadios()
 
-      toast.success(t('radios.form.edit.toast.success'))
-    } catch (_) {
-      toast.error(t('radios.form.edit.toast.success'))
-    }
-  }, [])
+        toast.success(t('radios.form.edit.toast.success'))
+      } catch (_) {
+        toast.error(t('radios.form.edit.toast.success'))
+      }
+    },
+    [fetchRadios, t],
+  )
 
-  const deleteRadio = useCallback(async (id: string) => {
-    try {
-      await subsonic.radios.remove(id)
-      await fetchRadios()
+  const deleteRadio = useCallback(
+    async (id: string) => {
+      try {
+        await subsonic.radios.remove(id)
+        await fetchRadios()
 
-      toast.success(t('radios.form.delete.toast.success'))
-    } catch (_) {
-      toast.error(t('radios.form.delete.toast.success'))
-    }
-  }, [])
+        toast.success(t('radios.form.delete.toast.success'))
+      } catch (_) {
+        toast.error(t('radios.form.delete.toast.success'))
+      }
+    },
+    [fetchRadios, t],
+  )
 
   const value: RadiosContextState = {
     data,
@@ -82,22 +97,19 @@ export function RadiosProvider({ children }: { children: ReactNode }) {
     setConfirmDeleteState,
     createRadio,
     updateRadio,
-    deleteRadio
+    deleteRadio,
   }
 
   return (
-    <RadiosContext.Provider value={value}>
-      {children}
-    </RadiosContext.Provider>
+    <RadiosContext.Provider value={value}>{children}</RadiosContext.Provider>
   )
 }
-
 
 export const useRadios = () => {
   const context = useContext(RadiosContext)
 
   if (context === undefined)
-    throw new Error("useRadios must be used within a RadiosProvider")
+    throw new Error('useRadios must be used within a RadiosProvider')
 
   return context
 }

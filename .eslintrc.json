@@ -1,0 +1,6 @@
+{
+  "extends": "@rocketseat/eslint-config/react",
+  "ignorePatterns": [
+    "src/**/*.css"
+  ]
+}

@@ -1,5 +1,5 @@
-import { FormEvent, useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
+import { FormEvent, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import {
   Dialog,
@@ -7,13 +7,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/app/components/ui/dialog"
-import { Label } from "@/app/components/ui/label"
-import { Input } from "@/app/components/ui/input"
-import { Button } from "@/app/components/ui/button"
+} from '@/app/components/ui/dialog'
+import { Label } from '@/app/components/ui/label'
+import { Input } from '@/app/components/ui/input'
+import { Button } from '@/app/components/ui/button'
 
-import { useRadios } from "@/app/contexts/radios-context"
-import { Radio } from "@/types/responses/radios"
+import { useRadios } from '@/app/contexts/radios-context'
+import { Radio } from '@/types/responses/radios'
 
 export function RadioFormDialog() {
   const { t } = useTranslation()
@@ -23,7 +23,7 @@ export function RadioFormDialog() {
     dialogState,
     setDialogState,
     createRadio,
-    updateRadio
+    updateRadio,
   } = useRadios()
 
   const [name, setName] = useState('')
@@ -42,7 +42,7 @@ export function RadioFormDialog() {
       setHomePageUrl(data.homePageUrl || '')
       setStreamUrl(data.streamUrl || '')
     }
-  }, [data])
+  }, [data, isCreation])
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -51,14 +51,14 @@ export function RadioFormDialog() {
       await createRadio({
         name,
         homePageUrl,
-        streamUrl
+        streamUrl,
       })
     } else {
       await updateRadio({
         id: data.id,
         name,
         homePageUrl,
-        streamUrl
+        streamUrl,
       })
     }
 

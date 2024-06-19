@@ -11,7 +11,7 @@ dayjs.extend(duration)
 dayjs.extend(relativeTime)
 dayjs.extend(updateLocale)
 
-currentLanguages.forEach(lang => {
+currentLanguages.forEach((lang) => {
   const langCode = lang.langCode as keyof typeof languages
   dayjs.updateLocale(lang.dayjsLocale, languages[langCode].translation.dayjs)
 })

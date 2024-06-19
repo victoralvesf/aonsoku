@@ -1,24 +1,20 @@
-import { Fragment, ReactNode, useEffect } from "react"
+import { Fragment, ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ListMusic, Mic2, Music2, Radio, Home, Library } from 'lucide-react'
+
+import { cn } from '@/lib/utils'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import {
-  ListMusic,
-  Mic2,
-  Music2,
-  Radio,
-  Home,
-  Library,
-} from "lucide-react"
+  SidebarGenerator,
+  SidebarPlaylistGenerator,
+} from '@/app/components/sidebar-generator'
+import { ROUTES } from '@/routes/routesList'
+import CommandMenu from '@/app/components/command/command-menu'
+import { usePlaylists } from '@/app/contexts/playlists-context'
+import { PlaylistOptionsButtons } from '@/app/components/playlist/options-buttons'
+import { CreatePlaylistDialog } from '@/app/components/playlist/create-dialog'
 
-import { cn } from "@/lib/utils"
-import { ScrollArea } from "@/app/components/ui/scroll-area"
-import { SidebarGenerator, SidebarPlaylistGenerator } from "@/app/components/sidebar-generator"
-import { ROUTES } from "@/routes/routesList"
-import CommandMenu from "@/app/components/command/command-menu"
-import { usePlaylists } from "@/app/contexts/playlists-context"
-import { PlaylistOptionsButtons } from "@/app/components/playlist/options-buttons"
-import { CreatePlaylistDialog } from "@/app/components/playlist/create-dialog"
-
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
+interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className }: SidebarProps) {
   const { t } = useTranslation()
@@ -26,7 +22,7 @@ export function Sidebar({ className }: SidebarProps) {
 
   useEffect(() => {
     fetchPlaylists()
-  }, [])
+  }, [fetchPlaylists])
 
   return (
     <Fragment>
@@ -74,11 +70,7 @@ export function Sidebar({ className }: SidebarProps) {
 }
 
 function SidebarSection({ children }: { children: ReactNode }) {
-  return (
-    <div className="px-4 py-2 pt-0">
-      {children}
-    </div>
-  )
+  return <div className="px-4 py-2 pt-0">{children}</div>
 }
 
 function SectionTitle({ children }: { children: ReactNode }) {
@@ -89,13 +81,13 @@ function SectionTitle({ children }: { children: ReactNode }) {
   )
 }
 
-const iconClassName = "mr-2 h-4 w-4"
+const iconClassName = 'mr-2 h-4 w-4'
 
 const mainMenuItems = [
   {
     title: 'sidebar.home',
     route: ROUTES.LIBRARY.HOME,
-    icon: <Home className={iconClassName} />
+    icon: <Home className={iconClassName} />,
   },
 ]
 
@@ -103,26 +95,26 @@ const libraryItems = [
   {
     title: 'sidebar.artists',
     route: ROUTES.LIBRARY.ARTISTS,
-    icon: <Mic2 className={iconClassName} />
+    icon: <Mic2 className={iconClassName} />,
   },
   {
     title: 'sidebar.songs',
     route: ROUTES.LIBRARY.SONGS,
-    icon: <Music2 className={iconClassName} />
+    icon: <Music2 className={iconClassName} />,
   },
   {
     title: 'sidebar.albums',
     route: ROUTES.LIBRARY.ALBUMS,
-    icon: <Library className={iconClassName} />
+    icon: <Library className={iconClassName} />,
   },
   {
     title: 'sidebar.playlists',
     route: ROUTES.LIBRARY.PLAYLISTS,
-    icon: <ListMusic className={iconClassName} />
+    icon: <ListMusic className={iconClassName} />,
   },
   {
     title: 'sidebar.radios',
     route: ROUTES.LIBRARY.RADIOS,
-    icon: <Radio className={iconClassName} />
+    icon: <Radio className={iconClassName} />,
   },
 ]

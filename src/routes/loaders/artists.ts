@@ -1,7 +1,7 @@
 import { subsonic } from '@/service/subsonic'
 import { LoaderFunctionArgs, defer } from 'react-router-dom'
 
-export async function singleArtistLoader({ params }: LoaderFunctionArgs<any>) {
+export async function singleArtistLoader({ params }: LoaderFunctionArgs) {
   const { artistId } = params
 
   if (artistId) {
@@ -12,7 +12,7 @@ export async function singleArtistLoader({ params }: LoaderFunctionArgs<any>) {
     return defer({
       artist,
       artistInfo: artistInfoPromise,
-      topSongs: topSongsPromise
+      topSongs: topSongsPromise,
     })
   }
 }

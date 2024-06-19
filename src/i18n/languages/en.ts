@@ -23,13 +23,13 @@ export const english = {
       serverLogout: 'Logout',
     },
     generic: {
-      seeMore: 'See more'
+      seeMore: 'See more',
     },
     theme: {
       label: 'Theme',
       light: 'Light',
       dark: 'Dark',
-      system: 'System'
+      system: 'System',
     },
     playlist: {
       headline: 'Playlist',
@@ -49,8 +49,8 @@ export const english = {
         description: 'This action cannot be undone.',
         toast: {
           success: 'Playlist removed successfully!',
-          error: 'Failed to remove playlist!'
-        }
+          error: 'Failed to remove playlist!',
+        },
       },
       createDialog: {
         title: 'Create a new playlist',
@@ -60,15 +60,15 @@ export const english = {
         saveButton: 'Create',
         toast: {
           success: 'Playlist created successfully!',
-          error: 'Failed to create playlist!'
-        }
-      }
+          error: 'Failed to create playlist!',
+        },
+      },
     },
     album: {
       headline: 'Album',
       buttons: {
         like: 'Like {{name}}',
-        dislike: 'Remove like from {{name}}'
+        dislike: 'Remove like from {{name}}',
       },
       info: {
         about: 'About {{name}}',
@@ -92,15 +92,15 @@ export const english = {
           recentlyAdded: 'Recently Added',
           recentlyPlayed: 'Recently Played',
           releaseYear: 'Release Year',
-        }
-      }
+        },
+      },
     },
     artist: {
       headline: 'Artist',
       buttons: {
         play: 'Play {{artist}} radio',
         shuffle: 'Play {{artist}} radio in shuffle mode',
-        options: 'More options for {{artist}}'
+        options: 'More options for {{artist}}',
       },
       info: {
         albumsCount_zero: '{{count}} albums',
@@ -128,7 +128,7 @@ export const english = {
         play: 'Play {{title}} by {{artist}}',
         pause: 'Pause {{title}} by {{artist}}',
       },
-      lastPlayed: '{{date}} ago'
+      lastPlayed: '{{date}} ago',
     },
     fullscreen: {
       noLyrics: 'No lyrics found',
@@ -142,7 +142,7 @@ export const english = {
         description: 'Confirm to logout.',
         cancel: 'Cancel',
         confirm: 'Continue',
-      }
+      },
     },
     login: {
       form: {
@@ -154,13 +154,13 @@ export const english = {
         usernamePlaceholder: 'Your username',
         password: 'Password',
         connect: 'Connect',
-      }
+      },
     },
     toast: {
       server: {
         success: 'Server was saved successfully!',
         error: 'Server communication failed!',
-      }
+      },
     },
     command: {
       inputPlaceholder: 'Search for an album, artist or song',
@@ -168,7 +168,7 @@ export const english = {
       commands: {
         heading: 'Commands',
         pages: 'Go to page',
-        theme: 'Change theme'
+        theme: 'Change theme',
       },
       pages: 'Pages',
     },
@@ -182,8 +182,8 @@ export const english = {
       download: 'Download',
       playlist: {
         edit: 'Edit playlist',
-        delete: 'Delete playlist'
-      }
+        delete: 'Delete playlist',
+      },
     },
     radios: {
       label: 'Radio',
@@ -194,7 +194,7 @@ export const english = {
         stream: 'Stream URL',
         actions: {
           edit: 'Edit radio',
-          delete: 'Delete radio'
+          delete: 'Delete radio',
         },
         playTooltip: 'Play {{name}} radio',
         pauseTooltip: 'Pause {{name}} radio',
@@ -205,43 +205,43 @@ export const english = {
           button: 'Save',
           toast: {
             success: 'Radio created successfully!',
-            error: 'Failed to create radio!'
-          }
+            error: 'Failed to create radio!',
+          },
         },
         edit: {
           title: 'Edit Radio',
           button: 'Update',
           toast: {
             success: 'Radio updated successfully!',
-            error: 'Failed to update radio!'
-          }
+            error: 'Failed to update radio!',
+          },
         },
         delete: {
           title: 'Are you sure you want to delete this radio station?',
           description: 'This action cannot be undone.',
           toast: {
             success: 'Radio removed successfully!',
-            error: 'Failed to remove radio!'
-          }
-        }
-      }
+            error: 'Failed to remove radio!',
+          },
+        },
+      },
     },
     dayjs: {
       relativeTime: {
-        future: "in %s",
-        past: "%s ago",
+        future: 'in %s',
+        past: '%s ago',
         s: 'a few seconds',
-        m: "1 minute",
-        mm: "%d minutes",
-        h: "1 hour",
-        hh: "%d hours",
-        d: "1 day",
-        dd: "%d days",
-        M: "1 month",
-        MM: "%d months",
-        y: "1 year",
-        yy: "%d years"
-      }
-    }
-  }
+        m: '1 minute',
+        mm: '%d minutes',
+        h: '1 hour',
+        hh: '%d hours',
+        d: '1 day',
+        dd: '%d days',
+        M: '1 month',
+        MM: '%d months',
+        y: '1 year',
+        yy: '%d years',
+      },
+    },
+  },
 }
