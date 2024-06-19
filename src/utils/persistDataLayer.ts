@@ -5,6 +5,14 @@ interface IData {
   salt: string;
 }
 
+export function getFromLocalStorage() {
+  return {
+    url: localStorage.getItem("server-url"),
+    username: localStorage.getItem("server-username"),
+    token: localStorage.getItem("server-token"),
+  }
+}
+
 export function saveToLocalStorage(data: IData) {
   localStorage.setItem("server-url", data.url)
   localStorage.setItem("server-username", data.username)

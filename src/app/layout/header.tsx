@@ -14,12 +14,14 @@ export function Header() {
   useEffect(() => {
     let unlisten: UnlistenFn
 
-    const setupLogoutEventListener = async () => {
-      unlisten = await listen('user-asked-for-logout', () => {
-        setLogoutDialogState(true)
-      });
+    if (window.__TAURI__) {
+      const setupLogoutEventListener = async () => {
+        unlisten = await listen('user-asked-for-logout', () => {
+          setLogoutDialogState(true)
+        });
+      }
+      setupLogoutEventListener()
     }
-    setupLogoutEventListener()
 
     return () => {
       if (unlisten) {

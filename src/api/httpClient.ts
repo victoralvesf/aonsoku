@@ -1,4 +1,4 @@
-import { FetchOptions, fetch } from "@tauri-apps/api/http";
+import { FetchOptions, fetch as tauriFetch } from "@tauri-apps/api/http";
 
 function getStoredConfig() {
   let url = localStorage.getItem("server-url")
@@ -34,13 +34,40 @@ export async function httpClient<T>(path: string, options: FetchOptions): Promis
   try {
     const { url } = getStoredConfig()
   
-    const response: any = await fetch(`${url}/rest${path}`, {
-      ...options,
-      query: {
+    let response: any
+    
+    if (window.__TAURI__) {
+      response = await tauriFetch(`${url}/rest${path}`, {
+        ...options,
+        query: {
+          ...options.query,
+          ...queryParams()        
+        }
+      })
+    } else {
+      const queries = new URLSearchParams({
         ...options.query,
-        ...queryParams()        
+        ...queryParams()
+      }).toString()
+
+      let composedUrl = `${url}/rest${path}`
+      if (path.includes('?')) {
+        composedUrl += `&${queries}`
+      } else {
+        composedUrl += `?${queries}`
       }
-    })
+
+      const data = await fetch(composedUrl, { method: options.method })
+
+      response = {
+        ok: data.ok,
+        headers: {
+          'x-total-count': data.headers.get('x-total-count'),
+        },
+        data: await data.json()
+      }
+    }
+
 
     if (response.ok) {
       return {
