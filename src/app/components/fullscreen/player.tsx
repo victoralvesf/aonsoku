@@ -38,6 +38,7 @@ export function FullscreenPlayer() {
             variant={player.isShuffleActive ? 'outline' : 'ghost'}
             className="w-12 h-12 p-2 rounded-full"
             onClick={() => player.toggleShuffle()}
+            disabled={player.isPlayingOneSong}
           >
             <Shuffle
               className={cn(
@@ -51,6 +52,7 @@ export function FullscreenPlayer() {
             variant="ghost"
             className="w-12 h-12 p-2 rounded-full"
             onClick={() => player.playPrevSong()}
+            disabled={!player.hasPrevSong}
           >
             <SkipBack className="w-5 h-5" />
           </Button>
@@ -74,6 +76,7 @@ export function FullscreenPlayer() {
             variant="ghost"
             className="w-12 h-12 p-2 rounded-full"
             onClick={() => player.playNextSong()}
+            disabled={!player.hasNextSong}
           >
             <SkipForward className="w-5 h-5" />
           </Button>

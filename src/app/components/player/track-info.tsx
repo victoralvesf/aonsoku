@@ -1,14 +1,16 @@
 import { AudioLines, Maximize2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
 import { ISong } from '@/types/responses/song'
 import Image from '@/app/components/image'
 import { getCoverArtUrl } from '@/api/httpClient'
 import FullscreenMode from '@/app/components/fullscreen/page'
 import { Button } from '@/app/components/ui/button'
-import { SimpleTooltip } from '../ui/simple-tooltip'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
-import { useTranslation } from 'react-i18next'
+import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 
 export function TrackInfo({ song }: { song: ISong }) {
   const { t } = useTranslation()
@@ -36,8 +38,10 @@ export function TrackInfo({ song }: { song: ISong }) {
           </Button>
         </FullscreenMode>
       </div>
-      <div className="flex flex-col justify-center">
-        <span className="text-sm font-medium">{song.title}</span>
+      <div className="flex flex-col justify-center w-full">
+        <MarqueeTitle>
+          <span className="text-sm font-medium">{song.title}</span>
+        </MarqueeTitle>
         <Link
           to={ROUTES.ARTIST.PAGE(song.artistId!)}
           className={cn('w-fit', !song.artistId && 'pointer-events-none')}

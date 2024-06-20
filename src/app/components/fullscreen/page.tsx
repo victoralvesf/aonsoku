@@ -76,11 +76,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
             <div className="flex flex-col">
               <div className="grid grid-cols-12 min-h-[300px] h-full">
                 <div className="col-start-2 col-span-5 max-w-full">
-                  <SongInfo
-                    imageUrl={songCoverArtUrl}
-                    songTitle={song.title}
-                    artist={song.artist}
-                  />
+                  <SongInfo imageUrl={songCoverArtUrl} song={song} />
                 </div>
 
                 <Card className="overflow-hidden bg-background/70 col-start-7 col-span-5 rounded-2xl p-6 shadow-lg shadows-4 shadow-opacity-5 shadow-y-[3px] shadows-scale-3">
