@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState, useCallback, memo } from 'react'
+import { useEffect, useRef, useCallback, memo, useState } from 'react'
 import {
+  Airplay,
   Heart,
   ListVideo,
   Pause,
@@ -29,8 +30,8 @@ const MemoizedRadioInfo = memo(RadioInfo)
 
 export function Player() {
   const player = usePlayer()
+  const [airPlaySupport, setAirPlaySupport] = useState(true)
   const audioRef = useRef<HTMLAudioElement>(null)
-  const [volume, setVolume] = useState(100)
 
   const song = player.currentSongList[player.currentSongIndex]
   const radio = player.radioList[player.currentSongIndex]
@@ -44,6 +45,13 @@ export function Player() {
     },
     { preventDefault: true },
   )
+
+  useEffect(() => {
+    // @ts-expect-error "AirPlay test on browser"
+    if (window.WebKitPlaybackTargetAvailabilityEvent) {
+      setAirPlaySupport(true)
+    }
+  }, [])
 
   useEffect(() => {
     if (!audioRef.current) return
@@ -66,8 +74,8 @@ export function Player() {
   useEffect(() => {
     if (!audioRef.current) return
 
-    audioRef.current.volume = volume / 100
-  }, [volume])
+    audioRef.current.volume = player.volume / 100
+  }, [player.volume])
 
   const setupProgressListener = useCallback(() => {
     const audio = audioRef.current
@@ -123,14 +131,21 @@ export function Player() {
     [player],
   )
 
-  const handleChangeVolume = useCallback((volume: number) => {
-    setVolume(volume)
-  }, [])
-
   const handleLikeButton = useCallback(async () => {
     await subsonic.star.handleStarItem(song.id, player.isSongStarred)
     player.setIsSongStarred(!player.isSongStarred)
   }, [song, player])
+
+  const handleAirPlay = () => {
+    // @ts-expect-error "AirPlay test on browser"
+    if (audioRef.current && window.WebKitPlaybackTargetAvailabilityEvent) {
+      const audioElement = audioRef.current
+      // @ts-expect-error "Show AirPlay device picker"
+      audioElement.webkitShowPlaybackTargetPicker()
+    } else {
+      setAirPlaySupport(false)
+    }
+  }
 
   return (
     <div className="border-t h-[100px] w-full flex items-center">
@@ -240,6 +255,17 @@ export function Player() {
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
+            {airPlaySupport && (
+              <Button
+                variant="ghost"
+                className="rounded-full w-10 h-10 p-3"
+                onClick={handleAirPlay}
+                disabled={!song}
+              >
+                <Airplay className="w-5 h-5" />
+              </Button>
+            )}
+
             {player.mediaType === 'song' && (
               <Button
                 variant="ghost"
@@ -272,7 +298,7 @@ export function Player() {
               />
               <Slider
                 defaultValue={[100]}
-                value={[volume]}
+                value={[player.volume]}
                 max={100}
                 step={1}
                 disabled={!song && !radio}
@@ -281,7 +307,7 @@ export function Player() {
                   'w-[8rem]',
                   !song && !radio && 'pointer-events-none opacity-50',
                 )}
-                onValueChange={([value]) => handleChangeVolume(value)}
+                onValueChange={([value]) => player.setVolume(value)}
               />
             </div>
           </div>

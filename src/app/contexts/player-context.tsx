@@ -32,6 +32,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
   const [currentDuration, setCurrentDuration] = useState(0)
   const [mediaType, setMediaType] = useState<'song' | 'radio'>('song')
   const [radioList, setRadioList] = useState<Radio[]>([])
+  const [volume, setVolume] = useState(100)
   const isScrobbleSentRef = useRef(false)
 
   const { t } = useTranslation()
@@ -158,6 +159,27 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     [getCurrentSong],
   )
 
+  const starCurrentSong = useCallback(async () => {
+    if (currentSongList.length === 0 && mediaType !== 'song') return
+
+    const { id } = getCurrentSong()
+    const starStatus = isSongStarred
+    await subsonic.star.handleStarItem(id, starStatus)
+    setIsSongStarred(!starStatus)
+
+    const songList = currentSongList
+    songList[currentSongIndex].starred = starStatus
+      ? undefined
+      : new Date().toISOString()
+    setCurrentSongList(songList)
+  }, [
+    currentSongIndex,
+    currentSongList,
+    getCurrentSong,
+    isSongStarred,
+    mediaType,
+  ])
+
   const setPlayRadio = useCallback(
     (list: Radio[], index: number) => {
       if (
@@ -206,7 +228,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
       isScrobbleSentRef.current = false
 
       const currentSong = getCurrentSong()
-      const starredStatus = !!currentSong.starred
+      const starredStatus = typeof currentSong.starred === 'string'
       setIsSongStarred(starredStatus)
 
       document.title = `${currentSong.title} - ${currentSong.artist} - Subsonic Player`
@@ -268,6 +290,9 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     mediaType,
     radioList,
     setPlayRadio,
+    volume,
+    setVolume,
+    starCurrentSong,
   }
 
   return (

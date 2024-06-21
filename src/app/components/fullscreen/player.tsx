@@ -10,27 +10,30 @@ import { Button } from '@/app/components/ui/button'
 import { usePlayer } from '@/app/contexts/player-context'
 import { cn } from '@/lib/utils'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
+import { Slider } from '@/app/components/ui/slider'
+import { VolumePopover } from './volume-popover'
+import { LikeButton } from './like-button'
 
 export function FullscreenPlayer() {
   const player = usePlayer()
 
-  const currentTimePercent = (player.progress / player.currentDuration) * 100
-
   return (
     <div className="w-full relative border bg-background/70 overflow-hidden rounded-2xl shadow-lg shadows-4 shadow-opacity-5 shadow-y-[3px] shadows-scale-3">
-      <div
-        className="absolute inset-0 rounded-sm"
-        style={{
-          backgroundColor: 'hsl(var(--primary))',
-          width: `${currentTimePercent}%`,
-          height: '4px',
-          transition: 'width 1s linear',
-        }}
+      <Slider
+        defaultValue={[0]}
+        value={[player.progress]}
+        max={player.currentDuration}
+        step={1}
+        className="w-full z-20 absolute top-[0.25px]"
+        showThumb={false}
       />
       <div className="relative flex items-center gap-4 p-4 2xl:p-6">
-        <span className="text-secondary-foreground/80 font-medium w-[200px]">
-          {convertSecondsToTime(player.progress)}
-        </span>
+        <div className="w-[200px] flex items-center justify-start">
+          <span className="text-secondary-foreground/80 font-medium w-[60px]">
+            {convertSecondsToTime(player.progress)}
+          </span>
+          <LikeButton />
+        </div>
 
         <div className="flex flex-1 justify-center items-center gap-2">
           <Button
@@ -92,9 +95,12 @@ export function FullscreenPlayer() {
           </Button>
         </div>
 
-        <span className="text-secondary-foreground/80 font-medium w-[200px] text-right">
-          {convertSecondsToTime(player.currentDuration ?? 0)}
-        </span>
+        <div className="w-[200px] flex items-center justify-end">
+          <VolumePopover />
+          <span className="text-secondary-foreground/80 font-medium w-[60px] text-right">
+            {convertSecondsToTime(player.currentDuration ?? 0)}
+          </span>
+        </div>
       </div>
     </div>
   )

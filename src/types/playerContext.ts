@@ -32,4 +32,7 @@ export interface IPlayerContext {
   mediaType: 'song' | 'radio'
   radioList: Radio[]
   setPlayRadio: (list: Radio[], index: number) => void
+  volume: number
+  setVolume: (volume: number) => void
+  starCurrentSong: () => void
 }
