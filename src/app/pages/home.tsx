@@ -38,12 +38,16 @@ export default function Home() {
       <HomeHeader songs={randomSongs} />
 
       {homeSections.map((section) => (
-        <PreviewList
-          key={section.title}
-          title={section.title}
-          moreRoute={ROUTES.LIBRARY.ALBUMS}
-          list={section.list}
-        />
+        <>
+          {section.list !== undefined && (
+            <PreviewList
+              key={section.title}
+              title={section.title}
+              moreRoute={ROUTES.LIBRARY.ALBUMS}
+              list={section.list}
+            />
+          )}
+        </>
       ))}
     </div>
   )
