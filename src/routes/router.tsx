@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 
 import BaseLayout from '@/app/layout/base'
 import ErrorPage from '@/app/pages/error-page'
-import AlbumList from '@/app/pages/albums/album-list'
+import AlbumsList from '@/app/pages/albums/list'
 import Playlist from '@/app/pages/playlists/playlist'
 import Home from '@/app/pages/home'
 import Album from '@/app/pages/albums/album'
@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
         id: 'albums',
         path: ROUTES.LIBRARY.ALBUMS,
         loader: albumsListLoader,
-        element: <AlbumList />,
+        element: <AlbumsList />,
       },
       {
         id: 'playlist',
