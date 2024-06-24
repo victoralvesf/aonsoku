@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef } from 'react'
 import {
   Table,
   TableBody,
@@ -9,7 +10,24 @@ import { cn } from '@/lib/utils'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 export function FullscreenSongQueue() {
-  const { currentSongList, setSongList, getCurrentSong } = usePlayer()
+  const { currentSongList, currentSongIndex, setSongList, getCurrentSong } =
+    usePlayer()
+  const songRefs = useRef<HTMLTableRowElement[]>([])
+
+  const moveSongToTop = useCallback(() => {
+    if (songRefs.current && songRefs.current[currentSongIndex]) {
+      songRefs.current[currentSongIndex].scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }
+  }, [currentSongIndex])
+
+  useEffect(() => {
+    if (currentSongList.length === 0) return
+
+    moveSongToTop()
+  }, [currentSongIndex, currentSongList, moveSongToTop])
 
   if (currentSongList.length === 0)
     return (
@@ -26,6 +44,9 @@ export function FullscreenSongQueue() {
         {currentSongList.map((entry, index) => (
           <TableRow
             key={entry.id}
+            ref={(el) => {
+              if (el) songRefs.current[index] = el
+            }}
             className={cn(
               'hover:bg-muted-foreground/15 border-0 cursor-pointer',
               currentSongId === entry.id && 'bg-primary/25',
