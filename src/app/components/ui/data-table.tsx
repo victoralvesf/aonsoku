@@ -18,7 +18,7 @@ import {
   TableRow,
 } from '@/app/components/ui/table'
 import { ColumnFilter } from '@/types/columnFilter'
-import { DataTablePagination } from './data-table-pagination'
+import { DataTablePagination } from '@/app/components/ui/data-table-pagination'
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
@@ -51,7 +51,7 @@ export function DataTable<TData, TValue>({
     data,
     columns: columnFilter ? newColumns : columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    getPaginationRowModel: showPagination ? getPaginationRowModel() : undefined,
     meta: {
       handlePlaySong,
     },

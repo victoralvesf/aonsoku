@@ -1,4 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table'
+import { RadioIcon } from 'lucide-react'
 
 import { Radio } from '@/types/responses/radios'
 import i18n from '@/i18n'
@@ -6,7 +7,7 @@ import i18n from '@/i18n'
 import { RadioActionButton } from '@/app/components/radios/action-button'
 import PlaySongButton from '@/app/components/table/play-button'
 
-export function fillRadiosColumns(): ColumnDef<Radio>[] {
+export function radiosColumns(): ColumnDef<Radio>[] {
   return [
     {
       id: 'index',
@@ -34,8 +35,13 @@ export function fillRadiosColumns(): ColumnDef<Radio>[] {
       accessorKey: 'name',
       header: i18n.t('radios.table.name'),
       cell: ({ row }) => (
-        <div className="min-w-[200px] 2xl:min-w-[350px]">
-          <p>{row.original.name}</p>
+        <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
+          <div className="flex justify-center items-center w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded shadow-md bg-foreground/10">
+            <RadioIcon className="w-5 h-5" />
+          </div>
+          <div className="flex flex-col justify-center items-center">
+            <p>{row.original.name}</p>
+          </div>
         </div>
       ),
     },

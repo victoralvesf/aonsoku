@@ -11,7 +11,7 @@ import {
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { DataTable } from '@/app/components/ui/data-table'
 import { usePlayer } from '@/app/contexts/player-context'
-import { fillSongsColumns } from '@/app/tables/songs-columns'
+import { songsColumns } from '@/app/tables/songs-columns'
 import ImageHeader from '@/app/components/album/image-header'
 import PlayButtons from '@/app/components/album/play-buttons'
 import ListWrapper from '@/app/components/list-wrapper'
@@ -39,7 +39,7 @@ export default function Album() {
   const { langCode } = useLang()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedSongsColumns = useMemo(() => fillSongsColumns(), [langCode])
+  const memoizedSongsColumns = useMemo(() => songsColumns(), [langCode])
   const memoizedAlbums = useMemo(() => album, [album])
 
   const albumDuration = memoizedAlbums.duration

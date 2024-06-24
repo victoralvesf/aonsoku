@@ -1,12 +1,12 @@
+import { useMemo } from 'react'
 import { useAsyncValue } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { DataTable } from '@/app/components/ui/data-table'
 import { ISong } from '@/types/responses/song'
-import { fillSongsColumns } from '@/app/tables/songs-columns'
+import { songsColumns } from '@/app/tables/songs-columns'
 import { usePlayer } from '@/app/contexts/player-context'
 import { Skeleton } from '@/app/components/ui/skeleton'
 import { ColumnFilter } from '@/types/columnFilter'
-import { useTranslation } from 'react-i18next'
-import { useMemo } from 'react'
 import { useLang } from '@/app/contexts/lang-context'
 
 export default function ArtistTopSongs() {
@@ -14,7 +14,7 @@ export default function ArtistTopSongs() {
   const { langCode } = useLang()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedSongsColumns = useMemo(() => fillSongsColumns(), [langCode])
+  const memoizedSongsColumns = useMemo(() => songsColumns(), [langCode])
   const memoizedTopSongs = useMemo(() => {
     if (topSongs.length > 10) {
       return topSongs.slice(0, 10)

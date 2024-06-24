@@ -1,11 +1,11 @@
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLoaderData } from 'react-router-dom'
 
 import ListWrapper from '@/app/components/list-wrapper'
 import { ShadowHeader } from '@/app/components/shadow-header'
 import { ArtistSeparator, ISimilarArtist } from '@/types/responses/artist'
-import { useCallback, useMemo } from 'react'
-import { fillArtistsColumns } from '@/app/tables/artists-columns'
+import { artistsColumns } from '@/app/tables/artists-columns'
 import { DataTable } from '@/app/components/ui/data-table'
 import { Badge } from '@/app/components/ui/badge'
 
@@ -14,7 +14,7 @@ export default function ArtistsList() {
   const list = useLoaderData() as ArtistSeparator[]
 
   const memoizedArtistsColumns = useMemo(
-    () => fillArtistsColumns(),
+    () => artistsColumns(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [list],
   )

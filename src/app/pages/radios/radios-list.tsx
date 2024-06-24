@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PlusIcon } from 'lucide-react'
 import { DataTable } from '@/app/components/ui/data-table'
-import { fillRadiosColumns } from '@/app/tables/radios-columns'
+import { radiosColumns } from '@/app/tables/radios-columns'
 import ListWrapper from '@/app/components/list-wrapper'
 import { Button } from '@/app/components/ui/button'
 import { ShadowHeader } from '@/app/components/shadow-header'
@@ -20,7 +20,7 @@ export default function Radios() {
   const { t } = useTranslation()
 
   const memoizedRadiosColumns = useMemo(
-    () => fillRadiosColumns(),
+    () => radiosColumns(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [langCode, radios],
   )

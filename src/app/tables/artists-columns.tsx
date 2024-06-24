@@ -11,7 +11,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { subsonic } from '@/service/subsonic'
 
-export function fillArtistsColumns(): ColumnDef<ISimilarArtist>[] {
+export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
   return [
     {
       id: 'index',
