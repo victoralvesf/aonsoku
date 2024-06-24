@@ -129,6 +129,16 @@ export const english = {
         pause: 'Pause {{title}} by {{artist}}',
       },
       lastPlayed: '{{date}} ago',
+      pagination: {
+        rowsPerPage: 'Rows per page',
+        currentPage: 'Page {{currentPage}} of {{totalPages}}',
+        screenReader: {
+          firstPage: 'Go to first page',
+          previousPage: 'Go to previous page',
+          nextPage: 'Go to next page',
+          lastPage: 'Go to last page',
+        },
+      },
     },
     fullscreen: {
       noLyrics: 'No lyrics found',

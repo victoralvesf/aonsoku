@@ -12,6 +12,7 @@ import { RemoveRadioDialog } from '@/app/components/radios/remove-dialog'
 import { Radio } from '@/types/responses/radios'
 import { useLang } from '@/app/contexts/lang-context'
 import { usePlayer } from '@/app/contexts/player-context'
+import { Badge } from '@/app/components/ui/badge'
 
 export default function Radios() {
   const { radios, setDialogState, setData, fetchRadios } = useRadios()
@@ -40,9 +41,14 @@ export default function Radios() {
     <main className="w-full h-full">
       <ShadowHeader>
         <div className="w-full flex items-center justify-between">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            {t('sidebar.radios')}
-          </h2>
+          <div className="flex gap-2 items-center">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              {t('sidebar.radios')}
+            </h2>
+            <Badge variant="secondary" className="text-foreground/70">
+              {radios.length}
+            </Badge>
+          </div>
 
           <Button
             size="sm"
@@ -63,6 +69,7 @@ export default function Radios() {
           handlePlaySong={(row) =>
             player.setPlayRadio(memoizedRadios, row.index)
           }
+          showPagination={true}
         />
       </ListWrapper>
 

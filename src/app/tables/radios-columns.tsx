@@ -33,6 +33,11 @@ export function fillRadiosColumns(): ColumnDef<Radio>[] {
       id: 'name',
       accessorKey: 'name',
       header: i18n.t('radios.table.name'),
+      cell: ({ row }) => (
+        <div className="min-w-[200px] 2xl:min-w-[350px]">
+          <p>{row.original.name}</p>
+        </div>
+      ),
     },
     {
       id: 'homePageUrl',
@@ -44,14 +49,18 @@ export function fillRadiosColumns(): ColumnDef<Radio>[] {
         if (!homePageUrl) return ''
 
         return (
-          <a
-            href={homePageUrl}
-            target="_blank"
-            rel="nofollow noreferrer"
-            className="text-primary hover:underline"
-          >
-            {homePageUrl}
-          </a>
+          <div className="max-w-[250px] 2xl:max-w-[400px]">
+            <p className="truncate text-primary">
+              <a
+                href={homePageUrl}
+                target="_blank"
+                rel="nofollow noreferrer"
+                className="hover:underline"
+              >
+                {homePageUrl}
+              </a>
+            </p>
+          </div>
         )
       },
     },
@@ -60,7 +69,7 @@ export function fillRadiosColumns(): ColumnDef<Radio>[] {
       accessorKey: 'streamUrl',
       header: i18n.t('radios.table.stream'),
       cell: ({ row }) => (
-        <div className="max-w-[350px] 2xl:max-w-[600px]">
+        <div className="max-w-[250px] 2xl:max-w-[500px]">
           <p className="truncate">{row.original.streamUrl}</p>
         </div>
       ),
