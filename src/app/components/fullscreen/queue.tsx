@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef } from 'react'
 import {
   Table,
   TableBody,
@@ -9,41 +10,55 @@ import { cn } from '@/lib/utils'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 export function FullscreenSongQueue() {
-  const { currentSongList, currentSongIndex, setSongList } = usePlayer()
+  const { currentSongList, currentSongIndex, setSongList, getCurrentSong } =
+    usePlayer()
+  const songRefs = useRef<HTMLTableRowElement[]>([])
 
-  if (currentSongList.length === 0) return <></>
+  const moveSongToTop = useCallback(() => {
+    if (songRefs.current && songRefs.current[currentSongIndex]) {
+      songRefs.current[currentSongIndex].scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }
+  }, [currentSongIndex])
 
-  const queue = [...currentSongList].slice(
-    currentSongIndex,
-    currentSongList.length,
-  )
-  const currentSongId = currentSongList[currentSongIndex].id
+  useEffect(() => {
+    if (currentSongList.length === 0) return
 
-  if (queue.length === 0)
+    moveSongToTop()
+  }, [currentSongIndex, currentSongList, moveSongToTop])
+
+  if (currentSongList.length === 0)
     return (
       <div className="flex justify-center items-center">
         <span>No songs in queue</span>
       </div>
     )
 
+  const currentSongId = getCurrentSong().id
+
   return (
     <Table className="h-full mb-1 bg-transparent">
       <TableBody className="rounded-md">
-        {queue.map((entry, index) => (
+        {currentSongList.map((entry, index) => (
           <TableRow
             key={entry.id}
+            ref={(el) => {
+              if (el) songRefs.current[index] = el
+            }}
             className={cn(
               'hover:bg-muted-foreground/15 border-0 cursor-pointer',
               currentSongId === entry.id && 'bg-primary/25',
             )}
             onClick={() => {
               if (currentSongId !== entry.id) {
-                setSongList(currentSongList, currentSongIndex + index)
+                setSongList(currentSongList, index)
               }
             }}
           >
             <TableCell className="w-[30px] text-center font-medium">
-              {currentSongIndex + (index + 1)}
+              {index + 1}
             </TableCell>
             <TableCell>
               <span className="font-semibold">{entry.title}</span>

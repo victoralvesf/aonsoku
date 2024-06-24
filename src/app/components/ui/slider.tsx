@@ -6,8 +6,8 @@ import { cn } from '@/lib/utils'
 interface SliderProps
   extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> {
   showThumb?: boolean
-  thumbmousedown?: React.MouseEventHandler<HTMLSpanElement>
-  thumbmouseup?: React.MouseEventHandler<HTMLSpanElement>
+  thumbMouseDown?: React.MouseEventHandler<HTMLSpanElement>
+  thumbMouseUp?: React.MouseEventHandler<HTMLSpanElement>
 }
 
 const Slider = React.forwardRef<
@@ -27,8 +27,8 @@ const Slider = React.forwardRef<
     </SliderPrimitive.Track>
     {showThumb && (
       <SliderPrimitive.Thumb
-        onPointerDown={props.thumbmousedown}
-        onPointerUp={props.thumbmouseup}
+        onPointerDown={props.thumbMouseDown}
+        onPointerUp={props.thumbMouseUp}
         className="block h-3 w-3 rounded-full border-2 border-primary bg-primary ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none transform-gpu disabled:opacity-50"
       />
     )}

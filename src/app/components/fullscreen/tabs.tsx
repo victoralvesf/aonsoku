@@ -4,7 +4,6 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/app/components/ui/tabs'
-import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { FullscreenSongQueue } from './queue'
 import { useTranslation } from 'react-i18next'
 
@@ -13,7 +12,7 @@ export function FullscreenTabs({ lyrics }: { lyrics: string }) {
 
   return (
     <Tabs defaultValue="queue" className="w-full h-full">
-      <TabsList className="w-full bg-muted/50">
+      <TabsList className="w-full bg-muted/50 mb-4">
         <TabsTrigger
           value="queue"
           className="w-full data-[state=active]:bg-background/70"
@@ -27,18 +26,22 @@ export function FullscreenTabs({ lyrics }: { lyrics: string }) {
           {t('fullscreen.lyrics')}
         </TabsTrigger>
       </TabsList>
-      <ScrollArea className="mt-4 h-[calc(100%-60px)]">
-        <TabsContent value="queue" className="mt-0">
-          <FullscreenSongQueue />
-        </TabsContent>
-        <TabsContent value="lyrics" className="mt-0">
-          {lyrics && (
-            <div className="text-center font-medium text-base 2xl:text-xl">
-              <TextWithBreaks text={lyrics} />
-            </div>
-          )}
-        </TabsContent>
-      </ScrollArea>
+      <TabsContent
+        value="queue"
+        className="mt-0 h-[calc(100%-60px)] overflow-y-auto pr-1"
+      >
+        <FullscreenSongQueue />
+      </TabsContent>
+      <TabsContent
+        value="lyrics"
+        className="mt-0 h-[calc(100%-60px)] overflow-y-auto"
+      >
+        {lyrics && (
+          <div className="text-center font-medium text-base 2xl:text-xl px-2">
+            <TextWithBreaks text={lyrics} />
+          </div>
+        )}
+      </TabsContent>
     </Tabs>
   )
 }

@@ -55,7 +55,7 @@ export function fillSongsColumns(): ColumnDef<ISong>[] {
         const player = usePlayer()
 
         return (
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
             <Image
               src={getCoverArtUrl(coverArt, '80')}
               alt={title}
