@@ -28,11 +28,14 @@ export function FullscreenPlayer() {
         showThumb={false}
       />
       <div className="relative flex items-center gap-4 p-4 2xl:p-6">
-        <div className="w-[200px] flex items-center justify-start">
-          <span className="text-secondary-foreground/80 font-medium w-[60px]">
+        <div className="w-[200px] text-secondary-foreground/80 font-medium flex gap-1">
+          <div className="w-[45px]">
             {convertSecondsToTime(player.progress)}
-          </span>
-          <LikeButton />
+          </div>
+          <div>{'/'}</div>
+          <div className="w-[45px]">
+            {convertSecondsToTime(player.currentDuration ?? 0)}
+          </div>
         </div>
 
         <div className="flex flex-1 justify-center items-center gap-2">
@@ -95,11 +98,9 @@ export function FullscreenPlayer() {
           </Button>
         </div>
 
-        <div className="w-[200px] flex items-center justify-end">
+        <div className="w-[200px] flex items-center justify-end gap-2">
+          <LikeButton />
           <VolumePopover />
-          <span className="text-secondary-foreground/80 font-medium w-[60px] text-right">
-            {convertSecondsToTime(player.currentDuration ?? 0)}
-          </span>
         </div>
       </div>
     </div>

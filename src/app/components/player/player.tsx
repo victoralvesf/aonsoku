@@ -1,6 +1,5 @@
-import { useEffect, useRef, useCallback, memo, useState } from 'react'
+import { useEffect, useRef, useCallback, memo } from 'react'
 import {
-  Airplay,
   Heart,
   ListVideo,
   Pause,
@@ -9,6 +8,8 @@ import {
   Shuffle,
   SkipBack,
   SkipForward,
+  Volume,
+  Volume1,
   Volume2,
 } from 'lucide-react'
 import clsx from 'clsx'
@@ -19,7 +20,6 @@ import { Slider } from '@/app/components/ui/slider'
 import { Button } from '@/app/components/ui/button'
 import { usePlayer } from '@/app/contexts/player-context'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
-import { subsonic } from '@/service/subsonic'
 import { TrackInfo } from '@/app/components/player/track-info'
 import { RadioInfo } from '@/app/components/player/radio-info'
 
@@ -30,7 +30,6 @@ const MemoizedRadioInfo = memo(RadioInfo)
 
 export function Player() {
   const player = usePlayer()
-  const [airPlaySupport, setAirPlaySupport] = useState(true)
   const audioRef = useRef<HTMLAudioElement>(null)
 
   const song = player.currentSongList[player.currentSongIndex]
@@ -45,13 +44,6 @@ export function Player() {
     },
     { preventDefault: true },
   )
-
-  useEffect(() => {
-    // @ts-expect-error "AirPlay test on browser"
-    if (window.WebKitPlaybackTargetAvailabilityEvent) {
-      setAirPlaySupport(true)
-    }
-  }, [])
 
   useEffect(() => {
     if (!audioRef.current) return
@@ -130,22 +122,6 @@ export function Player() {
     },
     [player],
   )
-
-  const handleLikeButton = useCallback(async () => {
-    await subsonic.star.handleStarItem(song.id, player.isSongStarred)
-    player.setIsSongStarred(!player.isSongStarred)
-  }, [song, player])
-
-  const handleAirPlay = () => {
-    // @ts-expect-error "AirPlay test on browser"
-    if (audioRef.current && window.WebKitPlaybackTargetAvailabilityEvent) {
-      const audioElement = audioRef.current
-      // @ts-expect-error "Show AirPlay device picker"
-      audioElement.webkitShowPlaybackTargetPicker()
-    } else {
-      setAirPlaySupport(false)
-    }
-  }
 
   return (
     <div className="border-t h-[100px] w-full flex items-center">
@@ -233,7 +209,7 @@ export function Player() {
                   max={player.currentDuration}
                   step={1}
                   className="cursor-pointer w-[32rem]"
-                  thumbmousedown={() => handleStartedSeeking()}
+                  thumbMouseDown={() => handleStartedSeeking()}
                   onValueChange={([value]) => handleSeeking(value)}
                   onValueCommit={([value]) => handleSeeked(value)}
                 />
@@ -255,23 +231,12 @@ export function Player() {
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
-            {airPlaySupport && (
-              <Button
-                variant="ghost"
-                className="rounded-full w-10 h-10 p-3"
-                onClick={handleAirPlay}
-                disabled={!song}
-              >
-                <Airplay className="w-5 h-5" />
-              </Button>
-            )}
-
             {player.mediaType === 'song' && (
               <Button
                 variant="ghost"
                 className="rounded-full w-10 h-10 p-3"
                 disabled={!song}
-                onClick={handleLikeButton}
+                onClick={player.starCurrentSong}
               >
                 <Heart
                   className={clsx(
@@ -293,9 +258,13 @@ export function Player() {
             )}
 
             <div className="flex gap-2 ml-2">
-              <Volume2
-                className={clsx('w-4 h-4', !song && !radio && 'opacity-50')}
-              />
+              <div className={clsx(!song && !radio && 'opacity-50')}>
+                {player.volume >= 50 && <Volume2 className="w-4 h-4" />}
+                {player.volume > 0 && player.volume < 50 && (
+                  <Volume1 className="w-4 h-4" />
+                )}
+                {player.volume === 0 && <Volume className="w-4 h-4" />}
+              </div>
               <Slider
                 defaultValue={[100]}
                 value={[player.volume]}

@@ -9,27 +9,21 @@ import { cn } from '@/lib/utils'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 export function FullscreenSongQueue() {
-  const { currentSongList, currentSongIndex, setSongList } = usePlayer()
+  const { currentSongList, setSongList, getCurrentSong } = usePlayer()
 
-  if (currentSongList.length === 0) return <></>
-
-  const queue = [...currentSongList].slice(
-    currentSongIndex,
-    currentSongList.length,
-  )
-  const currentSongId = currentSongList[currentSongIndex].id
-
-  if (queue.length === 0)
+  if (currentSongList.length === 0)
     return (
       <div className="flex justify-center items-center">
         <span>No songs in queue</span>
       </div>
     )
 
+  const currentSongId = getCurrentSong().id
+
   return (
     <Table className="h-full mb-1 bg-transparent">
       <TableBody className="rounded-md">
-        {queue.map((entry, index) => (
+        {currentSongList.map((entry, index) => (
           <TableRow
             key={entry.id}
             className={cn(
@@ -38,12 +32,12 @@ export function FullscreenSongQueue() {
             )}
             onClick={() => {
               if (currentSongId !== entry.id) {
-                setSongList(currentSongList, currentSongIndex + index)
+                setSongList(currentSongList, index)
               }
             }}
           >
             <TableCell className="w-[30px] text-center font-medium">
-              {currentSongIndex + (index + 1)}
+              {index + 1}
             </TableCell>
             <TableCell>
               <span className="font-semibold">{entry.title}</span>

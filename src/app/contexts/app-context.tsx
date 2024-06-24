@@ -19,14 +19,13 @@ import {
   saveToLocalStorage,
 } from '@/utils/persistDataLayer'
 import { isTauri } from '@/utils/tauriTools'
+import { saltWord } from '@/utils/salt'
 
 const store = new Store('.settings.dat')
 
 const AppContext = createContext({} as IAppContext)
 
 export function AppContextProvider({ children }: { children: ReactNode }) {
-  const saltWord = '5ub50n1cPl4y3r'
-
   const [osType, setOsType] = useState('')
   const [isServerConfigured, setIsServerConfigured] = useState(false)
   const [serverProtocol, setServerProtocol] = useState('http://')
@@ -49,7 +48,6 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         url: serverConfig.url,
         username: serverConfig.username,
         token: serverConfig.password,
-        salt: saltWord,
       })
     } else {
       setIsServerConfigured(false)
@@ -85,12 +83,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     const token = MD5(`${serverPassword}${saltWord}`).toString()
     const fullUrl = `${serverProtocol}${serverUrl}`
 
-    const canConnect = await pingServer(
-      fullUrl,
-      serverUsername,
-      token,
-      saltWord,
-    )
+    const canConnect = await pingServer(fullUrl, serverUsername, token)
 
     if (canConnect) {
       const config = {
@@ -107,7 +100,6 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         url: config.url,
         username: config.username,
         token,
-        salt: saltWord,
       })
 
       setServerUrl(fullUrl)

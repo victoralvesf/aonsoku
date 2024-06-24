@@ -104,6 +104,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     setIsPlaying(false)
     setIsLoopActive(false)
     setIsShuffleActive(false)
+    setIsSongStarred(false)
     setProgress(0)
     setCurrentDuration(0)
     manageMediaSession.setPlaybackState(null)

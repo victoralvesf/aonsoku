@@ -4,7 +4,7 @@ import {
   PopoverTrigger,
 } from '@/app/components/ui/popover'
 import { Button } from '@/app/components/ui/button'
-import { Volume2 } from 'lucide-react'
+import { Volume, Volume1, Volume2 } from 'lucide-react'
 import { Slider } from '../ui/slider'
 import { usePlayer } from '@/app/contexts/player-context'
 
@@ -19,7 +19,15 @@ export function VolumePopover() {
           variant="ghost"
           className="w-12 h-12 p-2 rounded-full"
         >
-          <Volume2 className="w-6 h-6" strokeWidth={1.5} />
+          {player.volume >= 50 && (
+            <Volume2 className="w-6 h-6" strokeWidth={1.5} />
+          )}
+          {player.volume > 0 && player.volume < 50 && (
+            <Volume1 className="w-6 h-6" strokeWidth={1.5} />
+          )}
+          {player.volume === 0 && (
+            <Volume className="w-6 h-6" strokeWidth={1.5} />
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="p-4 w-56" side="top">
