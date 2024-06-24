@@ -66,7 +66,9 @@ export function FullscreenSongQueue() {
                 {entry.artist}
               </p>
             </TableCell>
-            <TableCell>{convertSecondsToTime(entry.duration)}</TableCell>
+            <TableCell className="w-[100px] text-center">
+              {convertSecondsToTime(entry.duration)}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
