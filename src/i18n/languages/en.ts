@@ -123,6 +123,8 @@ export const english = {
         bpm: 'BPM',
         bitrate: 'Bitrate',
         quality: 'Quality',
+        name: 'Name',
+        albumCount: 'Album count',
       },
       buttons: {
         play: 'Play {{title}} by {{artist}}',

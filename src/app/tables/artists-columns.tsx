@@ -1,14 +1,15 @@
-import { ColumnDef } from '@tanstack/react-table'
-
-// import i18n from '@/i18n'
-import { ISimilarArtist } from '@/types/responses/artist'
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ROUTES } from '@/routes/routesList'
-import { getCoverArtUrl } from '@/api/httpClient'
-import { Button } from '../components/ui/button'
+import { ColumnDef } from '@tanstack/react-table'
 import { Heart } from 'lucide-react'
 import clsx from 'clsx'
-import { useState } from 'react'
+
+import i18n from '@/i18n'
+import { ISimilarArtist } from '@/types/responses/artist'
+import { ROUTES } from '@/routes/routesList'
+import { getCoverArtUrl } from '@/api/httpClient'
+import { Button } from '@/app/components/ui/button'
 import { subsonic } from '@/service/subsonic'
 
 export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
@@ -24,7 +25,7 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
     {
       id: 'name',
       accessorKey: 'name',
-      header: 'Name',
+      header: i18n.t('table.columns.name'),
       cell: ({ row }) => (
         <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
           <div
@@ -47,7 +48,7 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
     {
       id: 'albumCount',
       accessorKey: 'albumCount',
-      header: 'Album Count',
+      header: i18n.t('table.columns.albumCount'),
     },
     {
       id: 'starred',
@@ -57,7 +58,6 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
       maxSize: 40,
       cell: ({ row }) => {
         const { starred, id } = row.original
-        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [isStarredLocal, setIsStarredLocal] = useState(
           typeof starred === 'string',
         )

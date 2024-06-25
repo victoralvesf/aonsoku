@@ -72,6 +72,7 @@ export function DataTable<TData, TValue>({
                       className={clsx(
                         'p-2',
                         smallerHeaders.includes(header.id) && 'w-8',
+                        header.id === 'albumCount' && 'w-48',
                         header.id === 'artist' && 'hidden 2xl:table-cell',
                       )}
                     >

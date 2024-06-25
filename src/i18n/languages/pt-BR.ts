@@ -123,6 +123,8 @@ export const brazilianPortuguese = {
         bpm: 'BPM',
         bitrate: 'Taxa de bits',
         quality: 'Qualidade',
+        name: 'Nome',
+        albumCount: 'Número de álbuns',
       },
       buttons: {
         play: 'Tocar {{title}} por {{artist}}',

@@ -8,15 +8,17 @@ import { ArtistSeparator, ISimilarArtist } from '@/types/responses/artist'
 import { artistsColumns } from '@/app/tables/artists-columns'
 import { DataTable } from '@/app/components/ui/data-table'
 import { Badge } from '@/app/components/ui/badge'
+import { useLang } from '@/app/contexts/lang-context'
 
 export default function ArtistsList() {
   const { t } = useTranslation()
+  const { langCode } = useLang()
   const list = useLoaderData() as ArtistSeparator[]
 
   const memoizedArtistsColumns = useMemo(
     () => artistsColumns(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [list],
+    [list, langCode],
   )
 
   const organizeArtists = useCallback(() => {
