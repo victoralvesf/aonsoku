@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { PlaylistWithEntries } from '@/types/responses/playlist'
 import { getCoverArtUrl } from '@/api/httpClient'
-import { fillSongsColumns } from '@/app/tables/songs-columns'
+import { songsColumns } from '@/app/tables/songs-columns'
 import { DataTable } from '@/app/components/ui/data-table'
 import Image from '@/app/components/image'
 import { Badge } from '@/app/components/ui/badge'
@@ -23,7 +23,7 @@ export default function Playlist() {
 
   const playlist = useLoaderData() as PlaylistWithEntries
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedSongsColumns = useMemo(() => fillSongsColumns(), [langCode])
+  const memoizedSongsColumns = useMemo(() => songsColumns(), [langCode])
   const memoizedPlaylist = useMemo(() => playlist, [playlist])
 
   const [removeDialogState, setRemoveDialogState] = useState(false)

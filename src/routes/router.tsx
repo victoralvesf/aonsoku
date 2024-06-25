@@ -2,18 +2,19 @@ import { createBrowserRouter } from 'react-router-dom'
 
 import BaseLayout from '@/app/layout/base'
 import ErrorPage from '@/app/pages/error-page'
-import AlbumList from '@/app/pages/albums/album-list'
+import AlbumsList from '@/app/pages/albums/list'
 import Playlist from '@/app/pages/playlists/playlist'
 import Home from '@/app/pages/home'
 import Album from '@/app/pages/albums/album'
 import Artist from '@/app/pages/artists/artist'
 import Login from '@/app/pages/login'
 import Radios from '@/app/pages/radios/radios-list'
+import ArtistsList from '@/app/pages/artists/list'
 
 import { homeLoader } from '@/routes/loaders/home'
 import { albumsListLoader, singleAlbumLoader } from '@/routes/loaders/albums'
 import { playlistLoader } from '@/routes/loaders/playlists'
-import { singleArtistLoader } from '@/routes/loaders/artists'
+import { artistsListLoader, singleArtistLoader } from '@/routes/loaders/artists'
 import { ROUTES } from '@/routes/routesList'
 import { protectedLoader } from '@/routes/loaders/protected'
 
@@ -33,7 +34,13 @@ export const router = createBrowserRouter([
         id: 'albums',
         path: ROUTES.LIBRARY.ALBUMS,
         loader: albumsListLoader,
-        element: <AlbumList />,
+        element: <AlbumsList />,
+      },
+      {
+        id: 'artists',
+        path: ROUTES.LIBRARY.ARTISTS,
+        loader: artistsListLoader,
+        element: <ArtistsList />,
       },
       {
         id: 'playlist',

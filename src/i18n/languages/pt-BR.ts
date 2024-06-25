@@ -123,12 +123,24 @@ export const brazilianPortuguese = {
         bpm: 'BPM',
         bitrate: 'Taxa de bits',
         quality: 'Qualidade',
+        name: 'Nome',
+        albumCount: 'Número de álbuns',
       },
       buttons: {
         play: 'Tocar {{title}} por {{artist}}',
         pause: 'Pausar {{title}} por {{artist}}',
       },
       lastPlayed: '{{date}} atrás',
+      pagination: {
+        rowsPerPage: 'Linhas por página',
+        currentPage: 'Página {{currentPage}} de {{totalPages}}',
+        screenReader: {
+          firstPage: 'Ir para a primeira página',
+          previousPage: 'Ir para a página anterior',
+          nextPage: 'Ir para a próxima página',
+          lastPage: 'Ir para a última página',
+        },
+      },
     },
     fullscreen: {
       noLyrics: 'Letra não encontrada',

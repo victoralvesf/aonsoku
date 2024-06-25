@@ -1,5 +1,17 @@
 import { httpClient } from '@/api/httpClient'
-import { ArtistInfoResponse, ArtistResponse } from '@/types/responses/artist'
+import {
+  ArtistInfoResponse,
+  ArtistResponse,
+  ArtistsResponse,
+} from '@/types/responses/artist'
+
+async function getAll() {
+  const response = await httpClient<ArtistsResponse>('/getArtists', {
+    method: 'GET',
+  })
+
+  return response?.data.artists.index
+}
 
 async function getOne(id: string) {
   const response = await httpClient<ArtistResponse>('/getArtist', {
@@ -26,4 +38,5 @@ async function getInfo(id: string) {
 export const artists = {
   getOne,
   getInfo,
+  getAll,
 }

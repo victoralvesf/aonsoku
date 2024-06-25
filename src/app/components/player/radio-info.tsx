@@ -1,7 +1,7 @@
-import { Radio } from '@/types/responses/radios'
-import { BoomBox } from 'lucide-react'
 import { Fragment } from 'react'
+import { RadioIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Radio } from '@/types/responses/radios'
 
 export function RadioInfo({ radio }: { radio: Radio }) {
   const { t } = useTranslation()
@@ -9,7 +9,7 @@ export function RadioInfo({ radio }: { radio: Radio }) {
   return (
     <Fragment>
       <div className="w-[70px] h-[70px] flex justify-center items-center bg-muted rounded">
-        <BoomBox className="w-12 h-12" strokeWidth={1} />
+        <RadioIcon className="w-12 h-12" strokeWidth={1} />
       </div>
       <div className="flex flex-col justify-center">
         {radio ? (

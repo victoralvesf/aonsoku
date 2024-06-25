@@ -123,12 +123,24 @@ export const english = {
         bpm: 'BPM',
         bitrate: 'Bitrate',
         quality: 'Quality',
+        name: 'Name',
+        albumCount: 'Album count',
       },
       buttons: {
         play: 'Play {{title}} by {{artist}}',
         pause: 'Pause {{title}} by {{artist}}',
       },
       lastPlayed: '{{date}} ago',
+      pagination: {
+        rowsPerPage: 'Rows per page',
+        currentPage: 'Page {{currentPage}} of {{totalPages}}',
+        screenReader: {
+          firstPage: 'Go to first page',
+          previousPage: 'Go to previous page',
+          nextPage: 'Go to next page',
+          lastPage: 'Go to last page',
+        },
+      },
     },
     fullscreen: {
       noLyrics: 'No lyrics found',

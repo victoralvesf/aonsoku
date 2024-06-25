@@ -1,4 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table'
+import { RadioIcon } from 'lucide-react'
 
 import { Radio } from '@/types/responses/radios'
 import i18n from '@/i18n'
@@ -6,7 +7,7 @@ import i18n from '@/i18n'
 import { RadioActionButton } from '@/app/components/radios/action-button'
 import PlaySongButton from '@/app/components/table/play-button'
 
-export function fillRadiosColumns(): ColumnDef<Radio>[] {
+export function radiosColumns(): ColumnDef<Radio>[] {
   return [
     {
       id: 'index',
@@ -33,6 +34,16 @@ export function fillRadiosColumns(): ColumnDef<Radio>[] {
       id: 'name',
       accessorKey: 'name',
       header: i18n.t('radios.table.name'),
+      cell: ({ row }) => (
+        <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
+          <div className="flex justify-center items-center w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded shadow-md bg-foreground/10">
+            <RadioIcon className="w-5 h-5" />
+          </div>
+          <div className="flex flex-col justify-center items-center">
+            <p>{row.original.name}</p>
+          </div>
+        </div>
+      ),
     },
     {
       id: 'homePageUrl',
@@ -44,14 +55,18 @@ export function fillRadiosColumns(): ColumnDef<Radio>[] {
         if (!homePageUrl) return ''
 
         return (
-          <a
-            href={homePageUrl}
-            target="_blank"
-            rel="nofollow noreferrer"
-            className="text-primary hover:underline"
-          >
-            {homePageUrl}
-          </a>
+          <div className="max-w-[250px] 2xl:max-w-[400px]">
+            <p className="truncate text-primary">
+              <a
+                href={homePageUrl}
+                target="_blank"
+                rel="nofollow noreferrer"
+                className="hover:underline"
+              >
+                {homePageUrl}
+              </a>
+            </p>
+          </div>
         )
       },
     },
@@ -60,7 +75,7 @@ export function fillRadiosColumns(): ColumnDef<Radio>[] {
       accessorKey: 'streamUrl',
       header: i18n.t('radios.table.stream'),
       cell: ({ row }) => (
-        <div className="max-w-[350px] 2xl:max-w-[600px]">
+        <div className="max-w-[250px] 2xl:max-w-[500px]">
           <p className="truncate">{row.original.streamUrl}</p>
         </div>
       ),

@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -38,16 +39,15 @@ export default function Home() {
       <HomeHeader songs={randomSongs} />
 
       {homeSections.map((section) => (
-        <>
+        <Fragment key={section.title}>
           {section.list !== undefined && (
             <PreviewList
-              key={section.title}
               title={section.title}
               moreRoute={ROUTES.LIBRARY.ALBUMS}
               list={section.list}
             />
           )}
-        </>
+        </Fragment>
       ))}
     </div>
   )

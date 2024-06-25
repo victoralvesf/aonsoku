@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { ListFilter } from 'lucide-react'
+import debounce from 'lodash/debounce'
 import HomeSongCard from '@/app/components/home/song-card'
 import ListWrapper from '@/app/components/list-wrapper'
 import { subsonic } from '@/service/subsonic'
@@ -11,14 +13,12 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
-import { ListFilter } from 'lucide-react'
 import { Button } from '@/app/components/ui/button'
-import debounce from 'lodash/debounce'
 import { usePlayer } from '@/app/contexts/player-context'
 import { Badge } from '@/app/components/ui/badge'
 import { ShadowHeader } from '@/app/components/shadow-header'
 
-export default function AlbumList() {
+export default function AlbumsList() {
   const defaultOffset = 32
   const toYear = new Date().getFullYear().toString()
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
@@ -109,6 +109,55 @@ export default function AlbumList() {
     }
   }
 
+  const filterList = useMemo(() => {
+    return [
+      {
+        key: 'alphabeticalByArtist',
+        label: t('album.list.filter.artist'),
+      },
+      {
+        key: 'byGenre',
+        label: t('album.list.filter.genre'),
+      },
+      {
+        key: 'highest',
+        label: t('album.list.filter.highest'),
+      },
+      {
+        key: 'starred',
+        label: t('album.list.filter.favorites'),
+      },
+      {
+        key: 'frequent',
+        label: t('album.list.filter.mostPlayed'),
+      },
+      {
+        key: 'alphabeticalByName',
+        label: t('album.list.filter.name'),
+      },
+      {
+        key: 'random',
+        label: t('album.list.filter.random'),
+      },
+      {
+        key: 'newest',
+        label: t('album.list.filter.recentlyAdded'),
+      },
+      {
+        key: 'recent',
+        label: t('album.list.filter.recentlyPlayed'),
+      },
+      {
+        key: 'byYear',
+        label: t('album.list.filter.releaseYear'),
+      },
+    ]
+  }, [t])
+
+  const currentFilterLabel = filterList.filter(
+    (item) => item.key === currentFilter,
+  )[0].label
+
   return (
     <main className="w-full h-full">
       <ShadowHeader>
@@ -126,21 +175,21 @@ export default function AlbumList() {
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <ListFilter className="w-4 h-4 mr-2" />
-                {t(filterList[currentFilter])}
+                {currentFilterLabel}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {Object.entries(filterList).map(([key, label], index) => {
+              {filterList.map((item, index) => {
                 return (
                   <DropdownMenuCheckboxItem
                     key={index}
-                    checked={key === currentFilter}
+                    checked={item.key === currentFilter}
                     onCheckedChange={() =>
-                      setCurrentFilter(key as AlbumListType)
+                      setCurrentFilter(item.key as AlbumListType)
                     }
                     className="cursor-pointer"
                   >
-                    {t(label)}
+                    {item.label}
                   </DropdownMenuCheckboxItem>
                 )
               })}
@@ -164,17 +213,4 @@ export default function AlbumList() {
       </ListWrapper>
     </main>
   )
-}
-
-const filterList = {
-  alphabeticalByArtist: 'album.list.filter.artist',
-  byGenre: 'album.list.filter.genre',
-  highest: 'album.list.filter.highest',
-  starred: 'album.list.filter.favorites',
-  frequent: 'album.list.filter.mostPlayed',
-  alphabeticalByName: 'album.list.filter.name',
-  random: 'album.list.filter.random',
-  newest: 'album.list.filter.recentlyAdded',
-  recent: 'album.list.filter.recentlyPlayed',
-  byYear: 'album.list.filter.releaseYear',
 }

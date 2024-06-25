@@ -18,7 +18,7 @@ import { subsonic } from '@/service/subsonic'
 import { ROUTES } from '@/routes/routesList'
 import i18n from '@/i18n'
 
-export function fillSongsColumns(): ColumnDef<ISong>[] {
+export function songsColumns(): ColumnDef<ISong>[] {
   return [
     {
       id: 'index',
@@ -61,7 +61,7 @@ export function fillSongsColumns(): ColumnDef<ISong>[] {
               alt={title}
               width={40}
               height={40}
-              className="rounded shadow-md"
+              className="rounded shadow-md bg-foreground/10"
             />
             <div className="flex flex-col justify-center">
               <p

@@ -29,11 +29,11 @@ export function FullscreenPlayer() {
       />
       <div className="relative flex items-center gap-4 p-4 2xl:p-6">
         <div className="w-[200px] text-secondary-foreground/80 font-medium flex gap-1">
-          <div className="w-[45px]">
+          <div className="w-[45px] text-right">
             {convertSecondsToTime(player.progress)}
           </div>
           <div>{'/'}</div>
-          <div className="w-[45px]">
+          <div className="w-[45px] text-left">
             {convertSecondsToTime(player.currentDuration ?? 0)}
           </div>
         </div>
