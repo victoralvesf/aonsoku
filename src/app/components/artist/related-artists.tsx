@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAsyncValue } from 'react-router-dom'
 import { usePlayer } from '@/app/contexts/player-context'
-import { subsonic } from '@/service/subsonic'
 import {
   Carousel,
   type CarouselApi,
@@ -11,6 +10,7 @@ import {
 import ArtistCard from '@/app/components/artist/artist-card'
 import { CarouselButton } from '@/app/components/ui/carousel-button'
 import { IArtistInfo, ISimilarArtist } from '@/types/responses/artist'
+import { useSongList } from '@/app/hooks/use-song-list'
 
 interface RelatedArtistsListProps {
   title: string
@@ -18,6 +18,7 @@ interface RelatedArtistsListProps {
 
 export default function RelatedArtistsList({ title }: RelatedArtistsListProps) {
   const data = useAsyncValue() as IArtistInfo
+  const { getArtistAllSongs } = useSongList()
   let list = data.similarArtist!
 
   const [api, setApi] = useState<CarouselApi>()
@@ -30,22 +31,8 @@ export default function RelatedArtistsList({ title }: RelatedArtistsListProps) {
   }
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
-    const response = await subsonic.artists.getOne(artist.id)
-
-    if (response) {
-      let count = 0
-
-      response.album.forEach((album) => {
-        count += album.songCount
-      })
-
-      const searchResult = await subsonic.search.get({
-        query: artist.name,
-        songCount: count,
-      })
-
-      if (searchResult?.song) player.setSongList(searchResult?.song, 0)
-    }
+    const songList = await getArtistAllSongs(artist.name)
+    if (songList) player.setSongList(songList, 0)
   }
 
   useEffect(() => {

@@ -14,12 +14,10 @@ export function useSongList() {
     return count
   }
 
-  async function getArtistAllSongs(name: string, id: string) {
-    const artistSongCount = await getArtistSongCount(id)
-
+  async function getArtistAllSongs(name: string) {
     const response = await subsonic.search.get({
       query: name,
-      songCount: artistSongCount,
+      songCount: 9999999,
       albumCount: 0,
       artistCount: 0,
     })

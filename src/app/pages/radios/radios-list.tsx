@@ -70,6 +70,8 @@ export default function Radios() {
             player.setPlayRadio(memoizedRadios, row.index)
           }
           showPagination={true}
+          showSearch={true}
+          searchColumn="name"
         />
       </ListWrapper>
 

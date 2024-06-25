@@ -36,7 +36,7 @@ export default function ArtistsList() {
   const artists = useMemo(() => organizeArtists(), [organizeArtists])
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
-    const songList = await getArtistAllSongs(artist.name, artist.id)
+    const songList = await getArtistAllSongs(artist.name)
 
     if (songList) player.setSongList(songList, 0)
   }

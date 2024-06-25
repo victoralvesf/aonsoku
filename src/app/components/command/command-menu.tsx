@@ -107,7 +107,7 @@ export default function CommandMenu() {
   }
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
-    const artistSongs = await getArtistAllSongs(artist.name, artist.id)
+    const artistSongs = await getArtistAllSongs(artist.name)
     if (artistSongs) player.setSongList(artistSongs, 0)
   }
 

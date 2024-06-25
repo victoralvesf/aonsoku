@@ -87,6 +87,9 @@ export function DataTable<TData, TValue>({
               table.getColumn(searchColumn)?.setFilterValue(event.target.value)
             }
             className="max-w-xs"
+            autoCorrect="false"
+            autoCapitalize="false"
+            spellCheck="false"
           />
         </div>
       )}

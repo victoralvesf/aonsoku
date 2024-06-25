@@ -13,10 +13,10 @@ import ArtistTopSongs, {
 } from '@/app/components/artist/artist-top-songs'
 import RelatedArtistsList from '@/app/components/artist/related-artists'
 import PreviewListFallback from '@/app/components/preview-list-fallback'
-import { subsonic } from '@/service/subsonic'
 import { usePlayer } from '@/app/contexts/player-context'
 import { ROUTES } from '@/routes/routesList'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
+import { useSongList } from '@/app/hooks/use-song-list'
 
 interface ILoaderData {
   artist: IArtist
@@ -28,6 +28,7 @@ export default function Artist() {
   const player = usePlayer()
   const { t } = useTranslation()
   const { artist, artistInfo, topSongs } = useLoaderData() as ILoaderData
+  const { getArtistAllSongs } = useSongList()
   let artistSongCount = 0
 
   function getSongCount() {
@@ -50,15 +51,10 @@ export default function Artist() {
   const badges = [formatAlbumCount(), getSongCount()]
 
   async function handlePlayArtistRadio(shuffle = false) {
-    const response = await subsonic.search.get({
-      query: artist.name,
-      songCount: artistSongCount,
-      albumCount: 0,
-      artistCount: 0,
-    })
+    const songList = await getArtistAllSongs(artist.name)
 
-    if (response?.song) {
-      player.setSongList(response.song, 0, shuffle)
+    if (songList) {
+      player.setSongList(songList, 0, shuffle)
     }
   }
 
