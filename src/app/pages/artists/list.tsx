@@ -9,11 +9,15 @@ import { artistsColumns } from '@/app/tables/artists-columns'
 import { DataTable } from '@/app/components/ui/data-table'
 import { Badge } from '@/app/components/ui/badge'
 import { useLang } from '@/app/contexts/lang-context'
+import { useSongList } from '@/app/hooks/use-song-list'
+import { usePlayer } from '@/app/contexts/player-context'
 
 export default function ArtistsList() {
+  const list = useLoaderData() as ArtistSeparator[]
   const { t } = useTranslation()
   const { langCode } = useLang()
-  const list = useLoaderData() as ArtistSeparator[]
+  const { getArtistAllSongs } = useSongList()
+  const player = usePlayer()
 
   const memoizedArtistsColumns = useMemo(
     () => artistsColumns(),
@@ -30,6 +34,12 @@ export default function ArtistsList() {
   }, [list])
 
   const artists = useMemo(() => organizeArtists(), [organizeArtists])
+
+  async function handlePlayArtistRadio(artist: ISimilarArtist) {
+    const songList = await getArtistAllSongs(artist.name, artist.id)
+
+    if (songList) player.setSongList(songList, 0)
+  }
 
   return (
     <main className="w-full h-full">
@@ -49,6 +59,9 @@ export default function ArtistsList() {
           columns={memoizedArtistsColumns}
           data={artists}
           showPagination={true}
+          showSearch={true}
+          searchColumn="name"
+          handlePlaySong={(row) => handlePlayArtistRadio(row.original)}
         />
       </ListWrapper>
     </main>

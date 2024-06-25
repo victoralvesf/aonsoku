@@ -11,6 +11,7 @@ import { ROUTES } from '@/routes/routesList'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { Button } from '@/app/components/ui/button'
 import { subsonic } from '@/service/subsonic'
+import PlaySongButton from '@/app/components/table/play-button'
 
 export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
   return [
@@ -20,7 +21,20 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
       header: () => {
         return <div className="text-center">#</div>
       },
-      cell: ({ row }) => <div className="w-8 text-center">{row.index + 1}</div>,
+      cell: ({ row, table }) => {
+        const index = row.index + 1
+        const artist = row.original
+
+        return (
+          <PlaySongButton
+            type="artist"
+            trackNumber={index}
+            trackId={artist.id}
+            title={artist.name}
+            handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
+          />
+        )
+      },
     },
     {
       id: 'name',

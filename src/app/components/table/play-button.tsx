@@ -11,7 +11,7 @@ interface PlaySongButtonProps {
   trackNumber: number
   trackId: string
   handlePlayButton: () => void
-  type: 'song' | 'radio'
+  type: 'song' | 'radio' | 'artist'
   title: string
   artist?: string
 }
@@ -52,9 +52,12 @@ export default function PlaySongButton({
         title,
         artist,
       })
-    } else {
+    } else if (type === 'radio') {
       tooltips.playTooltip = t('radios.table.playTooltip', { name: title })
       tooltips.pauseTooltip = t('radios.table.pauseTooltip', { name: title })
+    } else {
+      tooltips.playTooltip = t('artist.buttons.play', { artist: title })
+      tooltips.pauseTooltip = ''
     }
 
     return tooltips
