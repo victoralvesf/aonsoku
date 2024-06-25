@@ -44,7 +44,10 @@ export function TrackInfo({ song }: { song: ISong }) {
         </MarqueeTitle>
         <Link
           to={ROUTES.ARTIST.PAGE(song.artistId!)}
-          className={cn('w-fit', !song.artistId && 'pointer-events-none')}
+          className={cn(
+            'w-fit inline-flex',
+            !song.artistId && 'pointer-events-none',
+          )}
         >
           <span
             className={cn(
