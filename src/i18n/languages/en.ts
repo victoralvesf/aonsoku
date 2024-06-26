@@ -141,6 +141,11 @@ export const english = {
           lastPage: 'Go to last page',
         },
       },
+      sort: {
+        asc: 'Ascending',
+        desc: 'Descending',
+        reset: 'Reset',
+      },
     },
     fullscreen: {
       noLyrics: 'No lyrics found',

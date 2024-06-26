@@ -141,6 +141,11 @@ export const brazilianPortuguese = {
           lastPage: 'Ir para a última página',
         },
       },
+      sort: {
+        asc: 'Crescente',
+        desc: 'Decrescente',
+        reset: 'Restaurar',
+      },
     },
     fullscreen: {
       noLyrics: 'Letra não encontrada',

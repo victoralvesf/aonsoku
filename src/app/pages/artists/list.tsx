@@ -30,7 +30,7 @@ export default function ArtistsList() {
     list.forEach((item) => {
       artistsList.push(...item.artist)
     })
-    return artistsList
+    return artistsList.sort((a, b) => a.name.localeCompare(b.name))
   }, [list])
 
   const artists = useMemo(() => organizeArtists(), [organizeArtists])
@@ -54,7 +54,7 @@ export default function ArtistsList() {
         </div>
       </ShadowHeader>
 
-      <ListWrapper className="mt-8">
+      <ListWrapper className="mt-6">
         <DataTable
           columns={memoizedArtistsColumns}
           data={artists}

@@ -12,6 +12,7 @@ import { getCoverArtUrl } from '@/api/httpClient'
 import { Button } from '@/app/components/ui/button'
 import { subsonic } from '@/service/subsonic'
 import PlaySongButton from '@/app/components/table/play-button'
+import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
 
 export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
   return [
@@ -39,7 +40,14 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
     {
       id: 'name',
       accessorKey: 'name',
-      header: i18n.t('table.columns.name'),
+      enableSorting: true,
+      sortingFn: 'customSortFn',
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={i18n.t('table.columns.name')}
+        />
+      ),
       cell: ({ row }) => (
         <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
           <div
@@ -62,7 +70,14 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
     {
       id: 'albumCount',
       accessorKey: 'albumCount',
-      header: i18n.t('table.columns.albumCount'),
+      enableSorting: true,
+      sortingFn: 'alphanumeric',
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={i18n.t('table.columns.albumCount')}
+        />
+      ),
     },
     {
       id: 'starred',

@@ -6,6 +6,7 @@ import i18n from '@/i18n'
 
 import { RadioActionButton } from '@/app/components/radios/action-button'
 import PlaySongButton from '@/app/components/table/play-button'
+import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
 
 export function radiosColumns(): ColumnDef<Radio>[] {
   return [
@@ -33,7 +34,14 @@ export function radiosColumns(): ColumnDef<Radio>[] {
     {
       id: 'name',
       accessorKey: 'name',
-      header: i18n.t('radios.table.name'),
+      enableSorting: true,
+      sortingFn: 'customSortFn',
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={i18n.t('radios.table.name')}
+        />
+      ),
       cell: ({ row }) => (
         <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
           <div className="flex justify-center items-center w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded shadow-md bg-foreground/10">

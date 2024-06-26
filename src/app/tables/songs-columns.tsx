@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from 'react'
-import { Heart } from 'lucide-react'
+import { ClockIcon, Heart } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ColumnDef } from '@tanstack/react-table'
 import clsx from 'clsx'
@@ -17,6 +17,7 @@ import { Button } from '@/app/components/ui/button'
 import { subsonic } from '@/service/subsonic'
 import { ROUTES } from '@/routes/routesList'
 import i18n from '@/i18n'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 
 export function songsColumns(): ColumnDef<ISong>[] {
   return [
@@ -132,9 +133,13 @@ export function songsColumns(): ColumnDef<ISong>[] {
     {
       id: 'duration',
       accessorKey: 'duration',
-      header: i18n.t('table.columns.duration'),
-      minSize: 80,
-      maxSize: 90,
+      header: () => (
+        <SimpleTooltip text={i18n.t('table.columns.duration')}>
+          <div className="w-14">
+            <ClockIcon className="w-4 h-4" />
+          </div>
+        </SimpleTooltip>
+      ),
       cell: ({ row }) => {
         const duration = row.original.duration
         const formattedDuration = convertSecondsToTime(duration)

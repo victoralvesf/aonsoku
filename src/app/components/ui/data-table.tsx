@@ -4,6 +4,7 @@ import clsx from 'clsx/lite'
 import {
   ColumnDef,
   ColumnFiltersState,
+  SortingState,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -11,6 +12,8 @@ import {
   RowData,
   getPaginationRowModel,
   getFilteredRowModel,
+  getSortedRowModel,
+  SortingFn,
 } from '@tanstack/react-table'
 
 import {
@@ -28,6 +31,9 @@ import { Input } from '@/app/components/ui/input'
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
     handlePlaySong: ((row: Row<TData>) => void) | undefined
+  }
+  interface SortingFns {
+    customSortFn: SortingFn<unknown>
   }
 }
 
@@ -58,6 +64,7 @@ export function DataTable<TData, TValue>({
   })
 
   const [columnSearch, setColumnSearch] = useState<ColumnFiltersState>([])
+  const [sorting, setSorting] = useState<SortingState>([])
 
   const table = useReactTable({
     data,
@@ -66,11 +73,19 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: showPagination ? getPaginationRowModel() : undefined,
     onColumnFiltersChange: setColumnSearch,
     getFilteredRowModel: showSearch ? getFilteredRowModel() : undefined,
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    sortingFns: {
+      customSortFn: (rowA, rowB, columnId) => {
+        return rowA.original[columnId].localeCompare(rowB.original[columnId])
+      },
+    },
     meta: {
       handlePlaySong,
     },
     state: {
       columnFilters: columnSearch,
+      sorting,
     },
   })
 

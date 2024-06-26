@@ -62,7 +62,7 @@ export default function Radios() {
         </div>
       </ShadowHeader>
 
-      <ListWrapper className="mt-8">
+      <ListWrapper className="mt-6">
         <DataTable
           columns={memoizedRadiosColumns}
           data={memoizedRadios}
