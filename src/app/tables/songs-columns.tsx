@@ -56,7 +56,7 @@ export function songsColumns(): ColumnDef<ISong>[] {
         const player = usePlayer()
 
         return (
-          <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
+          <div className="flex gap-2 items-center min-w-[200px] max-w-[300px] 2xl:min-w-[350px] 2xl:max-w-[450px]">
             <Image
               src={getCoverArtUrl(coverArt, '80')}
               alt={title}
@@ -64,10 +64,10 @@ export function songsColumns(): ColumnDef<ISong>[] {
               height={40}
               className="rounded shadow-md bg-foreground/10"
             />
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center w-full">
               <p
                 className={clsx(
-                  'font-medium',
+                  'font-medium truncate',
                   player.checkActiveSong(row.original.id) &&
                     'underline underline-offset-1 text-primary dark:text-purple-500',
                 )}
@@ -114,12 +114,14 @@ export function songsColumns(): ColumnDef<ISong>[] {
       header: i18n.t('table.columns.album'),
       cell: ({ row }) => {
         return (
-          <Link
-            to={ROUTES.ALBUM.PAGE(row.original.albumId)}
-            className="hover:underline"
-          >
-            {row.original.album}
-          </Link>
+          <div className="min-w-[200px] max-w-[250px] 2xl:min-w-[350px] 2xl:max-w-[400px]">
+            <Link
+              to={ROUTES.ALBUM.PAGE(row.original.albumId)}
+              className="hover:underline truncate block"
+            >
+              {row.original.album}
+            </Link>
+          </div>
         )
       },
     },
@@ -135,9 +137,7 @@ export function songsColumns(): ColumnDef<ISong>[] {
       accessorKey: 'duration',
       header: () => (
         <SimpleTooltip text={i18n.t('table.columns.duration')}>
-          <div className="w-14">
-            <ClockIcon className="w-4 h-4" />
-          </div>
+          <ClockIcon className="w-4 h-4" />
         </SimpleTooltip>
       ),
       cell: ({ row }) => {

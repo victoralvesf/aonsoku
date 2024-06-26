@@ -89,6 +89,9 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const smallerHeaders = ['index', 'starred', 'actions']
+  const hiddenHeaders = ['artist', 'playCount', 'played']
+
   return (
     <>
       {showSearch && searchColumn && (
@@ -114,7 +117,6 @@ export function DataTable<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
-                  const smallerHeaders = ['index', 'starred', 'actions']
                   return (
                     <TableHead
                       key={header.id}
@@ -122,7 +124,8 @@ export function DataTable<TData, TValue>({
                         'p-2',
                         smallerHeaders.includes(header.id) && 'w-8',
                         header.id === 'albumCount' && 'w-48',
-                        header.id === 'artist' && 'hidden 2xl:table-cell',
+                        hiddenHeaders.includes(header.id) &&
+                          'hidden 2xl:table-cell',
                       )}
                     >
                       {header.isPlaceholder
@@ -151,7 +154,8 @@ export function DataTable<TData, TValue>({
                       key={cell.id}
                       className={clsx(
                         'p-2 max-w-[600px]',
-                        cell.column.id === 'artist' && 'hidden 2xl:table-cell',
+                        hiddenHeaders.includes(cell.column.id) &&
+                          'hidden 2xl:table-cell',
                       )}
                     >
                       {flexRender(

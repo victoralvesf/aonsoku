@@ -13,6 +13,9 @@ import { ROUTES } from '@/routes/routesList'
 const bgGradient =
   'bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50'
 
+const imageSize =
+  'w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] aspect-square'
+
 interface ImageHeaderProps {
   type: string
   title: string
@@ -60,7 +63,7 @@ export default function ImageHeader({
         style={{ backgroundColor: bgColor?.hex }}
       >
         <div
-          className="w-[250px] h-[250px] min-w-[250px] min-h-[250px] aspect-square bg-cover bg-center rounded shadow-lg"
+          className={cn(imageSize, 'bg-cover bg-center rounded shadow-lg')}
           style={{ backgroundImage: `url(${imageUrl})` }}
         >
           <img
@@ -76,10 +79,12 @@ export default function ImageHeader({
         </div>
 
         <div className="flex flex-col justify-end">
-          <p className="text-sm mb-2 font-medium">{type}</p>
+          <p className="text-xs 2xl:text-sm mb-1 2xl:mb-2 font-medium">
+            {type}
+          </p>
           <h1
             className={cn(
-              'scroll-m-20 font-bold tracking-tight mb-2 antialiased',
+              'scroll-m-20 font-bold tracking-tight mb-1 2xl:mb-2 antialiased',
               getTextSizeClass(title),
             )}
           >
@@ -87,13 +92,13 @@ export default function ImageHeader({
           </h1>
           {subtitle && artistId && (
             <Link to={ROUTES.ARTIST.PAGE(artistId)}>
-              <h4 className="scroll-m-20 text-lg font-medium tracking-tight opacity-70 hover:underline">
+              <h4 className="scroll-m-20 text-base 2xl:text-lg font-medium tracking-tight opacity-70 hover:underline">
                 {subtitle}
               </h4>
             </Link>
           )}
 
-          <div className="flex gap-2 mt-2">
+          <div className="flex gap-2 mt-1 2xl:mt-2">
             {badges.map((badge, index) => (
               <Fragment key={index}>
                 {badge && <Badge variant="secondary">{badge}</Badge>}
@@ -114,7 +119,7 @@ function HeaderFallback() {
         bgGradient,
       )}
     >
-      <Skeleton className="w-[250px] h-[250px] min-w-[250px] min-h-[250px] rounded shadow-lg" />
+      <Skeleton className={cn(imageSize, 'rounded shadow-lg')} />
       <div className="flex flex-col justify-end">
         <Skeleton className="h-[20px] w-16 mb-2" />
         <Skeleton className="h-12 w-[260px] mb-2" />

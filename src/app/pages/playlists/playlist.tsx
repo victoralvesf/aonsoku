@@ -57,12 +57,10 @@ export default function Playlist() {
         <Image
           src={getCoverArtUrl(memoizedPlaylist.coverArt)}
           alt={memoizedPlaylist.name}
-          width={250}
-          height={250}
-          className="rounded-lg shadow-md resize-none bg-background"
+          className="rounded-lg shadow-md resize-none bg-background aspect-square min-w-[200px] w-[200px] 2xl:w-[250px] 2xl:min-w-[250px]"
         />
         <div className="ml-4 w-full flex flex-col justify-end">
-          <p className="text-sm mb-2">{t('playlist.headline')}</p>
+          <p className="text-xs 2xl:text-sm mb-2">{t('playlist.headline')}</p>
           <h2
             className={cn(
               'scroll-m-20 font-bold tracking-tight antialiased',
@@ -71,7 +69,7 @@ export default function Playlist() {
           >
             {memoizedPlaylist.name}
           </h2>
-          <p className="text-sm text-muted-foreground mt-2">
+          <p className="text-xs 2xl:text-sm text-muted-foreground mt-2">
             {memoizedPlaylist.comment}
           </p>
           <div className="flex gap-1 mt-2 text-muted-foreground text-sm">

@@ -59,8 +59,8 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
               }}
             >
               <div className="w-full flex-1 h-full inset-0 backdrop-blur-xl bg-gradient-to-b from-white/30 to-white/80 dark:from-black/30 dark:to-black/80">
-                <div className="flex h-[300px] p-6 gap-6">
-                  <div className="min-w-[252px] w-[252px] min-h-[252px] h-[252px] group">
+                <div className="flex h-[200px] 2xl:h-[300px] p-6 gap-4">
+                  <div className="min-w-[152px] w-[152px] 2xl:min-w-[252px] 2xl:w-[252px] aspect-square group">
                     <div
                       className="group flex-1 aspect-square rounded bg-cover bg-center"
                       style={{
@@ -78,12 +78,12 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
                       </div>
                     </div>
                   </div>
-                  <div className="flex min-h-[252px] h-[252px] flex-col justify-end">
-                    <h1 className="scroll-m-20 text-4xl font-bold tracking-tight lg:text-5xl mb-2">
+                  <div className="flex min-h-[152px] h-[152px] 2xl:min-h-[252px] 2xl:h-[252px] flex-col justify-end">
+                    <h1 className="w-full scroll-m-20 text-3xl 2xl:text-4xl font-bold tracking-tight mb-0 2xl:mb-2">
                       {song.title}
                     </h1>
                     {!song.artistId ? (
-                      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight opacity-60">
+                      <h4 className="scroll-m-20 text-lg 2xl:text-xl font-semibold tracking-tight opacity-60">
                         {song.artist}
                       </h4>
                     ) : (
@@ -91,12 +91,12 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
                         to={ROUTES.ARTIST.PAGE(song.artistId)}
                         className="w-fit"
                       >
-                        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight opacity-60 hover:underline">
+                        <h4 className="scroll-m-20 text-lg 2xl:text-xl font-semibold tracking-tight opacity-60 hover:underline">
                           {song.artist}
                         </h4>
                       </Link>
                     )}
-                    <div className="flex gap-2 mt-2">
+                    <div className="flex gap-2 mt-1 2xl:mt-2">
                       {song.genre !== undefined && (
                         <Badge variant="secondary" className="border">
                           {song.genre}
