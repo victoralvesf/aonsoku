@@ -10,6 +10,7 @@ import Artist from '@/app/pages/artists/artist'
 import Login from '@/app/pages/login'
 import Radios from '@/app/pages/radios/radios-list'
 import ArtistsList from '@/app/pages/artists/list'
+import SongsList from '@/app/pages/songs/list'
 
 import { homeLoader } from '@/routes/loaders/home'
 import { albumsListLoader, singleAlbumLoader } from '@/routes/loaders/albums'
@@ -17,6 +18,7 @@ import { playlistLoader } from '@/routes/loaders/playlists'
 import { artistsListLoader, singleArtistLoader } from '@/routes/loaders/artists'
 import { ROUTES } from '@/routes/routesList'
 import { protectedLoader } from '@/routes/loaders/protected'
+import { songsListLoader } from '@/routes/loaders/songs'
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +67,12 @@ export const router = createBrowserRouter([
         id: 'radios',
         path: ROUTES.LIBRARY.RADIOS,
         element: <Radios />,
+      },
+      {
+        id: 'songs',
+        path: ROUTES.LIBRARY.SONGS,
+        loader: songsListLoader,
+        element: <SongsList />,
       },
       {
         id: 'error',

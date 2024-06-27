@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx/lite'
+import { XIcon } from 'lucide-react'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -27,6 +28,7 @@ import {
 import { ColumnFilter } from '@/types/columnFilter'
 import { DataTablePagination } from '@/app/components/ui/data-table-pagination'
 import { Input } from '@/app/components/ui/input'
+import { Button } from '@/app/components/ui/button'
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
@@ -92,23 +94,41 @@ export function DataTable<TData, TValue>({
   const smallerHeaders = ['index', 'starred', 'actions']
   const hiddenHeaders = ['artist', 'playCount', 'played']
 
+  const inputValue =
+    searchColumn !== undefined
+      ? (table.getColumn(searchColumn || '')?.getFilterValue() as string)
+      : undefined
+
   return (
     <>
       {showSearch && searchColumn && (
         <div className="flex items-center mb-4">
-          <Input
-            placeholder={t('sidebar.search')}
-            value={
-              (table.getColumn(searchColumn)?.getFilterValue() as string) ?? ''
-            }
-            onChange={(event) =>
-              table.getColumn(searchColumn)?.setFilterValue(event.target.value)
-            }
-            className="max-w-xs"
-            autoCorrect="false"
-            autoCapitalize="false"
-            spellCheck="false"
-          />
+          <div className="max-w-xs relative">
+            <Input
+              placeholder={t('sidebar.search')}
+              value={inputValue ?? ''}
+              onChange={(event) =>
+                table
+                  .getColumn(searchColumn)
+                  ?.setFilterValue(event.target.value)
+              }
+              autoCorrect="false"
+              autoCapitalize="false"
+              spellCheck="false"
+            />
+            {inputValue !== '' && inputValue !== undefined && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-2 top-2 w-6 h-6"
+                onClick={() =>
+                  table.getColumn(searchColumn)?.setFilterValue('')
+                }
+              >
+                <XIcon className="w-4 h-4" />
+              </Button>
+            )}
+          </div>
         </div>
       )}
       <div className="rounded-md border">
