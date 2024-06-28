@@ -1,7 +1,14 @@
 import dateTime from './dateTime'
 
 export function convertSecondsToTime(seconds: number): string {
-  return dateTime.duration(seconds, 'seconds').format('mm:ss')
+  const duration = dateTime.duration(seconds, 'seconds')
+  const hours = duration.hours()
+
+  if (hours > 0) {
+    return duration.format('HH:mm:ss')
+  } else {
+    return duration.format('mm:ss')
+  }
 }
 
 export function convertSecondsToHumanRead(

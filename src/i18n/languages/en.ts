@@ -125,6 +125,9 @@ export const english = {
         quality: 'Quality',
         name: 'Name',
         albumCount: 'Album count',
+        songCount: 'Song count',
+        comment: 'Comment',
+        public: 'Public',
       },
       buttons: {
         play: 'Play {{title}} by {{artist}}',

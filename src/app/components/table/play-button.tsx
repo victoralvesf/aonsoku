@@ -11,7 +11,7 @@ interface PlaySongButtonProps {
   trackNumber: number
   trackId: string
   handlePlayButton: () => void
-  type: 'song' | 'radio' | 'artist'
+  type: 'song' | 'radio' | 'artist' | 'playlist'
   title: string
   artist?: string
 }
@@ -35,9 +35,12 @@ export default function PlaySongButton({
   const isCurrentSongPlaying = () => {
     if (player.mediaType === 'song') {
       return player.checkActiveSong(trackId)
-    } else {
+    }
+    if (player.mediaType === 'radio') {
       return player.radioList[player.currentSongIndex].id === trackId
     }
+
+    return false
   }
 
   const tooltips = useMemo(() => {
@@ -52,11 +55,17 @@ export default function PlaySongButton({
         title,
         artist,
       })
-    } else if (type === 'radio') {
+    }
+    if (type === 'radio') {
       tooltips.playTooltip = t('radios.table.playTooltip', { name: title })
       tooltips.pauseTooltip = t('radios.table.pauseTooltip', { name: title })
-    } else {
+    }
+    if (type === 'artist') {
       tooltips.playTooltip = t('artist.buttons.play', { artist: title })
+      tooltips.pauseTooltip = ''
+    }
+    if (type === 'playlist') {
+      tooltips.playTooltip = t('playlist.buttons.play', { name: title })
       tooltips.pauseTooltip = ''
     }
 

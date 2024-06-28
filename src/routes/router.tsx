@@ -11,6 +11,7 @@ import Login from '@/app/pages/login'
 import Radios from '@/app/pages/radios/radios-list'
 import ArtistsList from '@/app/pages/artists/list'
 import SongsList from '@/app/pages/songs/list'
+import PlaylistsPage from '@/app/pages/playlists/list'
 
 import { homeLoader } from '@/routes/loaders/home'
 import { albumsListLoader, singleAlbumLoader } from '@/routes/loaders/albums'
@@ -50,6 +51,12 @@ export const router = createBrowserRouter([
         loader: playlistLoader,
         errorElement: <ErrorPage />,
         element: <Playlist />,
+      },
+      {
+        id: 'playlists',
+        path: ROUTES.LIBRARY.PLAYLISTS,
+        errorElement: <ErrorPage />,
+        element: <PlaylistsPage />,
       },
       {
         id: 'album',

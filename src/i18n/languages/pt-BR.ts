@@ -125,6 +125,9 @@ export const brazilianPortuguese = {
         quality: 'Qualidade',
         name: 'Nome',
         albumCount: 'Número de álbuns',
+        songCount: 'Número de músicas',
+        comment: 'Comentário',
+        public: 'Pública',
       },
       buttons: {
         play: 'Tocar {{title}} por {{artist}}',
