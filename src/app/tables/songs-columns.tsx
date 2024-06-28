@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useEffect, useState } from 'react'
-import { ClockIcon, Heart } from 'lucide-react'
+import { ClockIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ColumnDef } from '@tanstack/react-table'
 import clsx from 'clsx'
@@ -13,11 +12,10 @@ import Image from '@/app/components/image'
 import { usePlayer } from '@/app/contexts/player-context'
 import PlaySongButton from '@/app/components/table/play-button'
 import dateTime from '@/utils/dateTime'
-import { Button } from '@/app/components/ui/button'
-import { subsonic } from '@/service/subsonic'
 import { ROUTES } from '@/routes/routesList'
 import i18n from '@/i18n'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import { TableLikeButton } from '@/app/components/table/like-button'
 
 export function songsColumns(): ColumnDef<ISong>[] {
   return [
@@ -205,39 +203,13 @@ export function songsColumns(): ColumnDef<ISong>[] {
       maxSize: 40,
       cell: ({ row }) => {
         const { starred, id } = row.original
-        const [isStarredLocal, setIsStarredLocal] = useState(!!starred)
-        const { checkActiveSong, isSongStarred, setIsSongStarred } = usePlayer()
-
-        useEffect(() => {
-          const isSongPlaying = checkActiveSong(id)
-
-          if (isSongPlaying) setIsStarredLocal(isSongStarred)
-        }, [checkActiveSong, id, isSongStarred])
-
-        async function handleStarred() {
-          const state = !isStarredLocal
-
-          await subsonic.star.handleStarItem(id, isStarredLocal)
-          setIsStarredLocal(state)
-
-          const isSongPlaying = checkActiveSong(id)
-          if (isSongPlaying) setIsSongStarred(state)
-        }
 
         return (
-          <Button
-            variant="ghost"
-            className="rounded-full w-8 h-8 p-1 hover:border hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
-            onClick={handleStarred}
-          >
-            <Heart
-              className={clsx(
-                'w-4 h-4',
-                isStarredLocal && 'text-red-500 fill-red-500',
-              )}
-              strokeWidth={2}
-            />
-          </Button>
+          <TableLikeButton
+            type="song"
+            entityId={id}
+            starred={typeof starred === 'string'}
+          />
         )
       },
     },

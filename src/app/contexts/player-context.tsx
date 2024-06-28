@@ -160,6 +160,23 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     [getCurrentSong],
   )
 
+  const starSongInQueue = useCallback(
+    async (id: string) => {
+      if (currentSongList.length === 0 && mediaType !== 'song') return
+
+      const songIndex = currentSongList.findIndex((song) => song.id === id)
+      if (songIndex === -1) return
+
+      const songList = currentSongList
+      const isSongStarred = typeof songList[songIndex].starred === 'string'
+      songList[songIndex].starred = isSongStarred
+        ? undefined
+        : new Date().toISOString()
+      setCurrentSongList(songList)
+    },
+    [currentSongList, mediaType],
+  )
+
   const starCurrentSong = useCallback(async () => {
     if (currentSongList.length === 0 && mediaType !== 'song') return
 
@@ -271,6 +288,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     isPlayingOneSong,
     isSongStarred,
     setIsSongStarred,
+    starSongInQueue,
     playSong,
     setPlayingState,
     setSongList,

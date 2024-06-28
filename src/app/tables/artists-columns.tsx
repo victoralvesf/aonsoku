@@ -1,18 +1,13 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ColumnDef } from '@tanstack/react-table'
-import { Heart } from 'lucide-react'
-import clsx from 'clsx'
 
 import i18n from '@/i18n'
 import { ISimilarArtist } from '@/types/responses/artist'
 import { ROUTES } from '@/routes/routesList'
 import { getCoverArtUrl } from '@/api/httpClient'
-import { Button } from '@/app/components/ui/button'
-import { subsonic } from '@/service/subsonic'
 import PlaySongButton from '@/app/components/table/play-button'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
+import { TableLikeButton } from '@/app/components/table/like-button'
 
 export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
   return [
@@ -87,31 +82,13 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
       maxSize: 40,
       cell: ({ row }) => {
         const { starred, id } = row.original
-        const [isStarredLocal, setIsStarredLocal] = useState(
-          typeof starred === 'string',
-        )
-
-        async function handleStarred() {
-          const state = !isStarredLocal
-
-          await subsonic.star.handleStarItem(id, isStarredLocal)
-          setIsStarredLocal(state)
-        }
 
         return (
-          <Button
-            variant="ghost"
-            className="rounded-full w-8 h-8 p-1 hover:border hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
-            onClick={handleStarred}
-          >
-            <Heart
-              className={clsx(
-                'w-4 h-4',
-                isStarredLocal && 'text-red-500 fill-red-500',
-              )}
-              strokeWidth={2}
-            />
-          </Button>
+          <TableLikeButton
+            type="artist"
+            entityId={id}
+            starred={typeof starred === 'string'}
+          />
         )
       },
     },

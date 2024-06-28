@@ -12,6 +12,7 @@ export interface IPlayerContext {
   isPlayingOneSong: boolean
   isSongStarred: boolean
   setIsSongStarred: (starred: boolean) => void
+  starSongInQueue: (id: string) => void
   playSong: (song: ISong) => void
   setPlayingState: (state: boolean) => void
   setSongList: (songlist: ISong[], index: number, shuffle?: boolean) => void
