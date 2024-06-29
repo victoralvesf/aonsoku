@@ -1,3 +1,4 @@
+import { RefObject } from 'react'
 import { Radio } from './responses/radios'
 import { ISong } from './responses/song'
 
@@ -36,4 +37,6 @@ export interface IPlayerContext {
   volume: number
   setVolume: (volume: number) => void
   starCurrentSong: () => void
+  audioPlayerRef: RefObject<HTMLAudioElement> | null
+  setAudioPlayerRef: (audioPlayer: RefObject<HTMLAudioElement>) => void
 }
