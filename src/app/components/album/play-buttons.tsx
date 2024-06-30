@@ -1,6 +1,7 @@
 import { ReactNode, useState } from 'react'
 import clsx from 'clsx'
 import { EllipsisVertical, Heart, Play, Shuffle } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 import {
   DropdownMenu,
@@ -11,7 +12,6 @@ import {
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { subsonic } from '@/service/subsonic'
-import { useTranslation } from 'react-i18next'
 
 interface PlayButtonsProps {
   playButtonTooltip: string
@@ -107,7 +107,7 @@ export default function PlayButtons({
       )}
 
       <DropdownMenu>
-        <DropdownMenuTrigger className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-full w-12 h-12">
+        <DropdownMenuTrigger className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-full w-12 h-12 data-[state=open]:bg-accent">
           <SimpleTooltip text={optionsTooltip}>
             <div className="min-w-12 h-12 rounded-full flex justify-center items-center">
               <EllipsisVertical className="w-4 h-4" strokeWidth={2} />

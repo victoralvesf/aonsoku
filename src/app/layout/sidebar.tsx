@@ -12,7 +12,7 @@ import { ROUTES } from '@/routes/routesList'
 import CommandMenu from '@/app/components/command/command-menu'
 import { usePlaylists } from '@/app/contexts/playlists-context'
 import { PlaylistOptionsButtons } from '@/app/components/playlist/options-buttons'
-import { CreatePlaylistDialog } from '@/app/components/playlist/create-dialog'
+import { CreatePlaylistDialog } from '@/app/components/playlist/form-dialog'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 

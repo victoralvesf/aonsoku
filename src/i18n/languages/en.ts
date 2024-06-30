@@ -44,23 +44,35 @@ export const english = {
         options: 'More options for {{name}}',
       },
       noSongList: 'This playlist does not have any songs!',
-      removeDialog: {
-        title: 'Are you sure you want to delete this playlist?',
-        description: 'This action cannot be undone.',
-        toast: {
-          success: 'Playlist removed successfully!',
-          error: 'Failed to remove playlist!',
+      form: {
+        labels: {
+          name: 'Name',
+          comment: 'Comment',
+          isPublic: 'Public',
         },
-      },
-      createDialog: {
-        title: 'Create a new playlist',
-        nameLabel: 'Name',
-        commentLabel: 'Comment',
-        isPublicLabel: 'Public',
-        saveButton: 'Create',
-        toast: {
-          success: 'Playlist created successfully!',
-          error: 'Failed to create playlist!',
+        create: {
+          title: 'Create Playlist',
+          button: 'Create',
+          toast: {
+            success: 'Playlist created successfully!',
+            error: 'Failed to create playlist!',
+          },
+        },
+        edit: {
+          title: 'Edit Playlist',
+          button: 'Update',
+          toast: {
+            success: 'Playlist updated successfully!',
+            error: 'Failed to update playlist!',
+          },
+        },
+        delete: {
+          title: 'Are you sure you want to delete this playlist?',
+          description: 'This action cannot be undone.',
+          toast: {
+            success: 'Playlist removed successfully!',
+            error: 'Failed to remove playlist!',
+          },
         },
       },
     },

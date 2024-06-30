@@ -79,7 +79,7 @@ export function RadioFormDialog() {
         setDialogState(state)
       }}
     >
-      <DialogContent className="max-w-[700px]">
+      <DialogContent className="max-w-[500px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>

@@ -44,23 +44,35 @@ export const brazilianPortuguese = {
         options: 'Mais opções para {{name}}',
       },
       noSongList: 'Esta playlist não possui nenhuma música!',
-      removeDialog: {
-        title: 'Você tem certeza de que deseja excluir esta playlist?',
-        description: 'Essa ação não poderá ser desfeita.',
-        toast: {
-          success: 'Playlist excluída com sucesso!',
-          error: 'Falha ao excluir esta playlist!',
+      form: {
+        labels: {
+          name: 'Nome',
+          comment: 'Comentário',
+          isPublic: 'Pública',
         },
-      },
-      createDialog: {
-        title: 'Criar uma playlist',
-        nameLabel: 'Nome',
-        commentLabel: 'Comentário',
-        isPublicLabel: 'Pública',
-        saveButton: 'Criar',
-        toast: {
-          success: 'Playlist criada com sucesso!',
-          error: 'Falha ao criar a playlist!',
+        create: {
+          title: 'Criar Playlist',
+          button: 'Criar',
+          toast: {
+            success: 'Playlist criada com sucesso!',
+            error: 'Falha ao criar a playlist!',
+          },
+        },
+        edit: {
+          title: 'Editar Playlist',
+          button: 'Update',
+          toast: {
+            success: 'Playlist atualizada com sucesso!',
+            error: 'Falha ao atualizar a playlist!',
+          },
+        },
+        delete: {
+          title: 'Você tem certeza de que deseja excluir esta playlist?',
+          description: 'Essa ação não poderá ser desfeita.',
+          toast: {
+            success: 'Playlist excluída com sucesso!',
+            error: 'Falha ao excluir esta playlist!',
+          },
         },
       },
     },

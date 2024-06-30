@@ -1,5 +1,7 @@
 import { MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useMatches, useNavigate } from 'react-router-dom'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,8 +12,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/app/components/ui/alert-dialog'
-
-import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/routes/routesList'
 import { usePlaylists } from '@/app/contexts/playlists-context'
 
@@ -28,6 +28,7 @@ export function RemovePlaylistDialog({
 }: RemovePlaylistDialogProps) {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const matches = useMatches()
   const { removePlaylist } = usePlaylists()
 
   async function handleRemovePlaylist(e: MouseEvent<HTMLButtonElement>) {
@@ -35,18 +36,22 @@ export function RemovePlaylistDialog({
 
     await removePlaylist(playlistId)
     setOpenDialog(false)
-    navigate(ROUTES.LIBRARY.HOME)
+    navigateIfNeeded()
+  }
+
+  function navigateIfNeeded() {
+    const isOnPlaylistsPage = matches[1].pathname === ROUTES.LIBRARY.PLAYLISTS
+
+    if (!isOnPlaylistsPage) navigate(ROUTES.LIBRARY.HOME)
   }
 
   return (
     <AlertDialog open={openDialog}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {t('playlist.removeDialog.title')}
-          </AlertDialogTitle>
+          <AlertDialogTitle>{t('playlist.form.delete.title')}</AlertDialogTitle>
           <AlertDialogDescription>
-            {t('playlist.removeDialog.description')}
+            {t('playlist.form.delete.description')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

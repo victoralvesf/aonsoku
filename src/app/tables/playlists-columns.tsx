@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useState } from 'react'
 import { ColumnDef } from '@tanstack/react-table'
-import { CheckIcon, ClockIcon, EllipsisVertical, XIcon } from 'lucide-react'
+import { CheckIcon, ClockIcon, XIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import i18n from '@/i18n'
@@ -7,10 +9,12 @@ import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-hea
 import { Playlist } from '@/types/responses/playlist'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
-import { Button } from '@/app/components/ui/button'
 import { ROUTES } from '@/routes/routesList'
 import { getCoverArtUrl } from '@/api/httpClient'
 import PlaySongButton from '@/app/components/table/play-button'
+import { TableActionButton } from '@/app/components/table/action-button'
+import { PlaylistOptions } from '@/app/components/playlist/options'
+import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
 
 export function playlistsColumns(): ColumnDef<Playlist>[] {
   return [
@@ -122,15 +126,30 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
       header: '',
       size: 40,
       maxSize: 40,
-      cell: () => {
+      cell: ({ row }) => {
+        const playlist = row.original
+        const disableOption = playlist.songCount === 0
+        const [removeDialogState, setRemoveDialogState] = useState(false)
+
         return (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="w-8 h-8 p-1 rounded-full"
-          >
-            <EllipsisVertical className="w-4 h-4" strokeWidth={2} />
-          </Button>
+          <>
+            <TableActionButton
+              optionsMenuItems={
+                <PlaylistOptions
+                  playlist={playlist}
+                  onRemovePlaylist={() => setRemoveDialogState(true)}
+                  disablePlayNext={disableOption}
+                  disableAddLast={disableOption}
+                  disableDownload={disableOption}
+                />
+              }
+            />
+            <RemovePlaylistDialog
+              playlistId={playlist.id}
+              openDialog={removeDialogState}
+              setOpenDialog={setRemoveDialogState}
+            />
+          </>
         )
       },
     },

@@ -1,15 +1,15 @@
+import { useTranslation } from 'react-i18next'
+import { Download, Pencil, PlusCircle, PlusSquare, Trash } from 'lucide-react'
 import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
-import { PlaylistWithEntries } from '@/types/responses/playlist'
-import { Download, Pencil, PlusCircle, PlusSquare, Trash } from 'lucide-react'
-// import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
+import { usePlaylists } from '@/app/contexts/playlists-context'
+import { Playlist, PlaylistWithEntries } from '@/types/responses/playlist'
 
 interface PlaylistOptionsProps {
-  playlist: PlaylistWithEntries
+  playlist: PlaylistWithEntries | Playlist
   onRemovePlaylist: () => void
   disablePlayNext?: boolean
   disableAddLast?: boolean
@@ -19,7 +19,7 @@ interface PlaylistOptionsProps {
 }
 
 export function PlaylistOptions({
-  // playlist,
+  playlist,
   onRemovePlaylist,
   disablePlayNext = false,
   disableAddLast = false,
@@ -27,8 +27,18 @@ export function PlaylistOptions({
   disableEdit = false,
   disableDelete = false,
 }: PlaylistOptionsProps) {
-  // const memoizedPlaylist = useMemo(() => playlist, [playlist])
   const { t } = useTranslation()
+  const { setPlaylistDialogState, setData } = usePlaylists()
+
+  function handleEdit() {
+    setData({
+      id: playlist.id,
+      name: playlist.name,
+      comment: playlist.comment,
+      public: playlist.public,
+    })
+    setPlaylistDialogState(true)
+  }
 
   return (
     <>
@@ -51,7 +61,7 @@ export function PlaylistOptions({
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        <DropdownMenuItem disabled={disableEdit}>
+        <DropdownMenuItem onClick={() => handleEdit()} disabled={disableEdit}>
           <Pencil className="mr-2 h-4 w-4" />
           <span>{t('options.playlist.edit')}</span>
         </DropdownMenuItem>

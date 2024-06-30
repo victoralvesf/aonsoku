@@ -1,5 +1,3 @@
-import { subsonic } from '@/service/subsonic'
-import { Playlist } from '@/types/responses/playlist'
 import {
   ReactNode,
   createContext,
@@ -9,6 +7,16 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+
+import { subsonic } from '@/service/subsonic'
+import { Playlist } from '@/types/responses/playlist'
+
+interface PlaylistData {
+  id: string
+  name: string
+  comment: string
+  public: boolean
+}
 
 interface PlaylistContextState {
   playlists: Playlist[]
@@ -21,27 +29,29 @@ interface PlaylistContextState {
     comment: string,
     isPublic: 'true' | 'false',
   ) => Promise<void>
+  editPlaylist: (
+    id: string,
+    name: string,
+    comment: string,
+    isPublic: 'true' | 'false',
+  ) => Promise<void>
+  data: PlaylistData
+  setData: (data: PlaylistData) => void
 }
 
-const initialState: PlaylistContextState = {
-  playlists: [],
-  fetchPlaylists: async () => {},
-  removePlaylist: async () => {},
-  playlistDialogState: false,
-  setPlaylistDialogState: () => {},
-  createPlaylistWithoutSongs: async () => {},
-}
-
-const PlaylistContext = createContext<PlaylistContextState>(initialState)
+const PlaylistContext = createContext<PlaylistContextState>(
+  {} as PlaylistContextState,
+)
 
 interface PlaylistProviderProps {
   children: ReactNode
 }
 
 export function PlaylistProvider({ children }: PlaylistProviderProps) {
+  const { t } = useTranslation()
   const [playlists, setPlaylists] = useState<Playlist[]>([])
   const [playlistDialogState, setPlaylistDialogState] = useState(false)
-  const { t } = useTranslation()
+  const [data, setData] = useState<PlaylistData>({} as PlaylistData)
 
   const fetchPlaylists = useCallback(async () => {
     try {
@@ -64,9 +74,9 @@ export function PlaylistProvider({ children }: PlaylistProviderProps) {
           return newList
         })
 
-        toast.success(t('playlist.removeDialog.toast.success'))
+        toast.success(t('playlist.form.delete.toast.success'))
       } catch (_) {
-        toast.error(t('playlist.removeDialog.toast.error'))
+        toast.error(t('playlist.form.delete.toast.error'))
       }
     },
     [t],
@@ -85,9 +95,33 @@ export function PlaylistProvider({ children }: PlaylistProviderProps) {
         }
 
         await fetchPlaylists()
-        toast.success(t('playlist.createDialog.toast.success'))
+        toast.success(t('playlist.form.create.toast.success'))
       } catch (_) {
-        toast.error(t('playlist.createDialog.toast.error'))
+        toast.error(t('playlist.form.create.toast.success'))
+      }
+    },
+    [fetchPlaylists, t],
+  )
+
+  const editPlaylist = useCallback(
+    async (
+      id: string,
+      name: string,
+      comment: string,
+      isPublic: 'true' | 'false',
+    ) => {
+      try {
+        await subsonic.playlists.update({
+          playlistId: id,
+          name,
+          comment,
+          isPublic,
+        })
+
+        await fetchPlaylists()
+        toast.success(t('playlist.form.edit.toast.success'))
+      } catch (_) {
+        toast.error(t('playlist.form.edit.toast.error'))
       }
     },
     [fetchPlaylists, t],
@@ -100,6 +134,9 @@ export function PlaylistProvider({ children }: PlaylistProviderProps) {
     playlistDialogState,
     setPlaylistDialogState,
     createPlaylistWithoutSongs,
+    editPlaylist,
+    data,
+    setData,
   }
 
   return (
