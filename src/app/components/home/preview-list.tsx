@@ -63,7 +63,7 @@ export default function PreviewList({
   }, [api])
 
   return (
-    <div className="w-full flex flex-col mb-4">
+    <div className="w-full flex flex-col mt-4">
       <div className="my-4 flex justify-between items-center">
         <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
           {title}

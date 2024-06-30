@@ -72,7 +72,7 @@ export default function Playlist() {
           <p className="text-xs 2xl:text-sm text-muted-foreground mt-2">
             {memoizedPlaylist.comment}
           </p>
-          <div className="flex gap-1 mt-2 text-muted-foreground text-sm">
+          <div className="flex gap-1 mt-3 text-muted-foreground text-sm">
             <Badge variant="default" className="shadow">
               {t('playlist.songCount', { count: memoizedPlaylist.songCount })}
             </Badge>

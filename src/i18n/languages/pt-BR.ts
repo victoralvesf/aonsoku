@@ -60,7 +60,7 @@ export const brazilianPortuguese = {
         },
         edit: {
           title: 'Editar Playlist',
-          button: 'Update',
+          button: 'Atualizar',
           toast: {
             success: 'Playlist atualizada com sucesso!',
             error: 'Falha ao atualizar a playlist!',
