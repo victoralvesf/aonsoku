@@ -12,16 +12,18 @@ import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 export function FullscreenSongQueue() {
   const { currentSongList, currentSongIndex, setSongList, getCurrentSong } =
     usePlayer()
-  const songRefs = useRef<HTMLTableRowElement[]>([])
+  const songRef = useRef<HTMLTableSectionElement>(null)
 
   const moveSongToTop = useCallback(() => {
-    if (songRefs.current && songRefs.current[currentSongIndex]) {
-      songRefs.current[currentSongIndex].scrollIntoView({
+    if (songRef.current) {
+      const activeSong = songRef.current.querySelector('[data-state=active]')
+
+      activeSong?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       })
     }
-  }, [currentSongIndex])
+  }, [])
 
   useEffect(() => {
     if (currentSongList.length === 0) return
@@ -39,17 +41,16 @@ export function FullscreenSongQueue() {
   const currentSongId = getCurrentSong().id
 
   return (
-    <Table className="h-full mb-1 bg-transparent">
-      <TableBody className="rounded-md">
+    <Table className="min-h-full h-full bg-transparent">
+      <TableBody className="rounded-md" ref={songRef}>
         {currentSongList.map((entry, index) => (
           <TableRow
             key={entry.id}
-            ref={(el) => {
-              if (el) songRefs.current[index] = el
-            }}
+            data-state={currentSongId === entry.id ? 'active' : 'inactive'}
             className={cn(
-              'hover:bg-muted-foreground/15 border-0 cursor-pointer',
-              currentSongId === entry.id && 'bg-primary/25',
+              'hover:shadow-md hover:bg-background/30 dark:hover:bg-muted-foreground/30 border-0 cursor-pointer rounded-lg',
+              currentSongId === entry.id &&
+                'bg-primary/80 hover:bg-primary dark:hover:bg-primary/70',
             )}
             onClick={() => {
               if (currentSongId !== entry.id) {
@@ -62,7 +63,7 @@ export function FullscreenSongQueue() {
             </TableCell>
             <TableCell>
               <span className="font-semibold">{entry.title}</span>
-              <p className="font-light text-sm text-foreground/70">
+              <p className="font-normal text-sm text-foreground/70">
                 {entry.artist}
               </p>
             </TableCell>

@@ -153,6 +153,7 @@ export const english = {
     fullscreen: {
       noLyrics: 'No lyrics found',
       queue: 'Queue',
+      playing: 'Playing now',
       lyrics: 'Lyrics',
       switchButton: 'Switch to Fullscreen',
     },
