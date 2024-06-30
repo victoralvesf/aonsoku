@@ -1,4 +1,5 @@
 import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import {
   Drawer,
@@ -7,17 +8,14 @@ import {
   DrawerTrigger,
 } from '@/app/components/ui/drawer'
 
-import { Card } from '@/app/components/ui/card'
 import { usePlayer } from '@/app/contexts/player-context'
 import { getCoverArtUrl } from '@/api/httpClient'
 
 import { subsonic } from '@/service/subsonic'
 import FullscreenBackdrop from './backdrop'
 import { CloseFullscreenButton, SwitchThemeButton } from './buttons'
-import { SongInfo } from './song-info'
 import { FullscreenPlayer } from './player'
 import { FullscreenTabs } from './tabs'
-import { useTranslation } from 'react-i18next'
 
 interface FullscreenModeProps {
   children: ReactNode
@@ -62,9 +60,9 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
         showHandle={false}
       >
         <FullscreenBackdrop imageUrl={songCoverArtUrl}>
-          <div className="p-8 w-full h-full grid grid-rows-[40px_minmax(300px,_1fr)_150px] gap-4">
+          <div className="flex flex-col p-8 w-screen h-screen gap-4">
             {/* First Row */}
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center w-full h-[40px]">
               <DrawerClose>
                 <CloseFullscreenButton />
               </DrawerClose>
@@ -73,21 +71,15 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
             </div>
 
             {/* Second Row */}
-            <div className="flex flex-col">
-              <div className="grid grid-cols-12 min-h-[300px] h-full">
-                <div className="col-start-2 col-span-5 max-w-full">
-                  <SongInfo imageUrl={songCoverArtUrl} song={song} />
-                </div>
-
-                <Card className="overflow-hidden bg-background/70 col-start-7 col-span-5 rounded-2xl p-6 shadow-lg shadows-4 shadow-opacity-5 shadow-y-[3px] shadows-scale-3">
-                  <FullscreenTabs lyrics={currentLyrics} />
-                </Card>
+            <div className="w-full max-h-[calc(100%-220px)] min-h-[calc(100%-220px)] px-16">
+              <div className="min-h-[300px] h-full max-h-full">
+                <FullscreenTabs lyrics={currentLyrics} />
               </div>
             </div>
 
             {/* Third Row */}
-            <div className="grid grid-cols-12">
-              <div className="col-start-2 col-span-10 flex items-center">
+            <div className="h-[150px] min-h-[150px] px-16 py-2">
+              <div className="flex items-center">
                 <FullscreenPlayer />
               </div>
             </div>

@@ -124,8 +124,8 @@ export const brazilianPortuguese = {
         bitrate: 'Taxa de bits',
         quality: 'Qualidade',
         name: 'Nome',
-        albumCount: 'Número de álbuns',
-        songCount: 'Número de músicas',
+        albumCount: 'Álbuns',
+        songCount: 'Músicas',
         comment: 'Comentário',
         public: 'Pública',
       },
@@ -153,6 +153,7 @@ export const brazilianPortuguese = {
     fullscreen: {
       noLyrics: 'Letra não encontrada',
       queue: 'Fila',
+      playing: 'Tocando agora',
       lyrics: 'Letra',
       switchButton: 'Switch to Fullscreen',
     },

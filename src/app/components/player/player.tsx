@@ -46,6 +46,12 @@ export function Player() {
   )
 
   useEffect(() => {
+    if (player.mediaType !== 'song' && !song) return
+
+    if (player.audioPlayerRef === null) player.setAudioPlayerRef(audioRef)
+  }, [audioRef, player, song])
+
+  useEffect(() => {
     if (!audioRef.current) return
 
     if (player.mediaType === 'radio') {
@@ -133,11 +139,14 @@ export function Player() {
         </div>
         {/* Main Controls */}
         <div className="col-span-2 flex flex-col justify-center items-center px-4 gap-1">
-          <div className="flex w-full gap-1 justify-center items-center">
+          <div className="flex w-full gap-1 justify-center items-center mb-1">
             {player.mediaType === 'song' && (
               <Button
                 variant="ghost"
-                className="rounded-full w-10 h-10 p-3"
+                className={clsx(
+                  'relative rounded-full w-10 h-10 p-3',
+                  player.isShuffleActive && 'player-button-active',
+                )}
                 disabled={!song || player.isPlayingOneSong}
                 onClick={player.toggleShuffle}
               >
@@ -156,7 +165,7 @@ export function Player() {
               disabled={(!song && !radio) || !player.hasPrevSong}
               onClick={player.playPrevSong}
             >
-              <SkipBack className="w-10 h-10" />
+              <SkipBack className="w-10 h-10 fill-secondary-foreground" />
             </Button>
 
             <Button
@@ -177,13 +186,16 @@ export function Player() {
               disabled={(!song && !radio) || !player.hasNextSong}
               onClick={player.playNextSong}
             >
-              <SkipForward className="w-10 h-10" />
+              <SkipForward className="w-10 h-10 fill-secondary-foreground" />
             </Button>
 
             {player.mediaType === 'song' && (
               <Button
                 variant="ghost"
-                className="rounded-full w-10 h-10 p-3"
+                className={clsx(
+                  'relative rounded-full w-10 h-10 p-3',
+                  player.isLoopActive && 'player-button-active',
+                )}
                 disabled={!song}
                 onClick={player.toggleLoop}
               >

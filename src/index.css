@@ -11,7 +11,7 @@
     --card-foreground: 224 10% 15%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 10% 15%;
-    --primary: 262.1 83.3% 57.8%;
+    --primary: 142.1 76.2% 36.3%;
     --primary-foreground: 210 20% 98%;
     --secondary: 220 14.3% 95.9%;
     --secondary-foreground: 220.9 39.3% 11%;
@@ -23,7 +23,7 @@
     --destructive-foreground: 210 20% 98%;
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 262.1 83.3% 57.8%;
+    --ring: 142.1 76.2% 36.3%;
     --radius: 0.5rem;
   }
 
@@ -34,7 +34,7 @@
     --card-foreground: 210 20% 95%;
     --popover: 224 71.4% 8.1%;
     --popover-foreground: 210 20% 95%;
-    --primary: 263.4 70% 50.4%;
+    --primary: 142.1 70.6% 45.3%;
     --primary-foreground: 210 20% 95%;
     --secondary: 215 27.9% 19.9%;
     --secondary-foreground: 210 20% 95%;
@@ -46,7 +46,7 @@
     --destructive-foreground: 210 20% 95%;
     --border: 215 27.9% 19.9%;
     --input: 215 27.9% 19.9%;
-    --ring: 263.4 70% 50.4%;
+    --ring: 142.1 70.6% 45.3%;
   }
 }
 
@@ -101,6 +101,10 @@ img {
 
 #artist-biography > p > a {
   @apply text-primary hover:underline;
+}
+
+.player-button-active {
+  @apply after:content-['•'] after:block after:absolute after:-bottom-1 after:text-primary;
 }
 
 /* Native Scroll Bar */

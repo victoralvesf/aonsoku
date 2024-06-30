@@ -1,35 +1,35 @@
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
-import { ISong } from '@/types/responses/song'
-import { Badge } from '../ui/badge'
+import { Badge } from '@/app/components/ui/badge'
+import { usePlayer } from '@/app/contexts/player-context'
+import { getCoverArtUrl } from '@/api/httpClient'
 
-interface SongInfoProps {
-  imageUrl: string
-  song: ISong
-}
+export function SongInfo() {
+  const player = usePlayer()
+  const song = player.getCurrentSong()
+  const imageUrl = getCoverArtUrl(song.coverArt, '1000')
 
-export function SongInfo({ imageUrl, song }: SongInfoProps) {
   const backgroundImage = `url(${imageUrl})`
 
   return (
-    <div className="flex flex-col items-center px-4">
+    <div className="flex items-end justify-start h-full min-h-full gap-6 flex-1 2xl:py-16">
       <div
-        className="w-[50%] 2xl:w-[65%] max-w-[550px] bg-contain bg-center aspect-square rounded-2xl shadow-lg shadows-4 shadow-opacity-5 shadow-y-[3px] shadows-scale-3"
+        className="max-w-[1000px] h-full bg-contain bg-center aspect-square rounded-lg 2xl:rounded-2xl"
         style={{ backgroundImage }}
       />
 
-      <div className="w-full text-left space-y-1 mt-6">
-        <MarqueeTitle>
-          <h2 className="scroll-m-20 text-xl 2xl:text-3xl font-bold tracking-tight">
+      <div className="text-left w-full max-w-full overflow-hidden">
+        <MarqueeTitle spacing="high">
+          <h2 className="scroll-m-20 text-4xl 2xl:text-5xl font-bold tracking-tight py-3">
             {song.title}
           </h2>
         </MarqueeTitle>
-        <p className="leading-7 text-base 2xl:text-lg text-foreground/70 truncate">
+        <p className="leading-7 text-lg 2xl:text-xl text-foreground/70 truncate -mt-1">
           {song.artist} {'•'} {song.album}
         </p>
-        <div className="flex gap-2 mt-1">
-          <Badge variant="secondary">{song.suffix.toUpperCase()}</Badge>
-          {song.genre && <Badge variant="secondary">{song.genre}</Badge>}
-          <Badge variant="secondary">{song.year}</Badge>
+        <div className="flex gap-2 mt-2 2xl:mt-3">
+          <Badge>{song.suffix.toUpperCase()}</Badge>
+          {song.genre && <Badge>{song.genre}</Badge>}
+          <Badge>{song.year}</Badge>
         </div>
       </div>
     </div>

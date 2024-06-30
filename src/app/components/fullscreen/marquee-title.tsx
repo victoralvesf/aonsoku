@@ -1,7 +1,15 @@
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 
-export function MarqueeTitle({ children }: { children: ReactNode }) {
+interface MarqueeTitleProps {
+  children: ReactNode
+  spacing?: 'low' | 'medium' | 'high'
+}
+
+export function MarqueeTitle({
+  children,
+  spacing = 'medium',
+}: MarqueeTitleProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
@@ -19,6 +27,12 @@ export function MarqueeTitle({ children }: { children: ReactNode }) {
     }
   }, [children])
 
+  function setSpacingClass() {
+    if (spacing === 'low') return 'mr-1'
+    if (spacing === 'medium') return 'mr-2'
+    if (spacing === 'high') return 'mr-4'
+  }
+
   return (
     <div
       ref={containerRef}
@@ -27,11 +41,18 @@ export function MarqueeTitle({ children }: { children: ReactNode }) {
       <div
         ref={textRef}
         className={clsx(
-          'inline-block will-change-transform',
+          'inline-flex will-change-transform',
           isOverflowing && 'animate-marquee',
         )}
       >
-        {children}
+        {!isOverflowing ? (
+          <>{children}</>
+        ) : (
+          <>
+            <div className={setSpacingClass()}>{children}</div>
+            <div className={setSpacingClass()}>{children}</div>
+          </>
+        )}
       </div>
     </div>
   )

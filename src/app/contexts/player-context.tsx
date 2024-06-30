@@ -7,6 +7,7 @@ import {
   useRef,
   useCallback,
   useMemo,
+  RefObject,
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IPlayerContext } from '@/types/playerContext'
@@ -33,6 +34,8 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
   const [mediaType, setMediaType] = useState<'song' | 'radio'>('song')
   const [radioList, setRadioList] = useState<Radio[]>([])
   const [volume, setVolume] = useState(100)
+  const [audioPlayerRef, setAudioPlayerRef] =
+    useState<RefObject<HTMLAudioElement> | null>(null)
   const isScrobbleSentRef = useRef(false)
 
   const { t } = useTranslation()
@@ -312,6 +315,8 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     volume,
     setVolume,
     starCurrentSong,
+    audioPlayerRef,
+    setAudioPlayerRef,
   }
 
   return (

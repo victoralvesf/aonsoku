@@ -67,7 +67,7 @@ export function songsColumns(): ColumnDef<ISong>[] {
                 className={clsx(
                   'font-medium truncate',
                   player.checkActiveSong(row.original.id) &&
-                    'underline underline-offset-1 text-primary dark:text-purple-500',
+                    'underline underline-offset-1 text-primary',
                 )}
               >
                 {title}

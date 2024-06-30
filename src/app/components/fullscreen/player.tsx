@@ -8,47 +8,78 @@ import {
 } from 'lucide-react'
 import { Button } from '@/app/components/ui/button'
 import { usePlayer } from '@/app/contexts/player-context'
-import { cn } from '@/lib/utils'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { Slider } from '@/app/components/ui/slider'
-import { VolumePopover } from './volume-popover'
+import { VolumeContainer } from './volume-container'
 import { LikeButton } from './like-button'
+import { useCallback, useState } from 'react'
+import clsx from 'clsx'
+
+let isSeeking = false
 
 export function FullscreenPlayer() {
+  const [progress, setProgress] = useState(0)
   const player = usePlayer()
 
+  const handleSeeking = useCallback((amount: number) => {
+    isSeeking = true
+    setProgress(amount)
+  }, [])
+
+  const handleSeeked = useCallback(
+    (amount: number) => {
+      isSeeking = false
+
+      if (player.audioPlayerRef && player.audioPlayerRef.current) {
+        player.audioPlayerRef.current.currentTime = amount
+        setProgress(amount)
+        player.setProgress(amount)
+      }
+    },
+    [player],
+  )
+
   return (
-    <div className="w-full relative border bg-background/70 overflow-hidden rounded-2xl shadow-lg shadows-4 shadow-opacity-5 shadow-y-[3px] shadows-scale-3">
-      <Slider
-        defaultValue={[0]}
-        value={[player.progress]}
-        max={player.currentDuration}
-        step={1}
-        className="w-full z-20 absolute top-[0.25px]"
-        showThumb={false}
-      />
-      <div className="relative flex items-center gap-4 p-4 2xl:p-6">
-        <div className="w-[200px] text-secondary-foreground/80 font-medium flex gap-1">
-          <div className="w-[45px] text-right">
-            {convertSecondsToTime(player.progress)}
-          </div>
-          <div>{'/'}</div>
-          <div className="w-[45px] text-left">
-            {convertSecondsToTime(player.currentDuration ?? 0)}
-          </div>
+    <div className="w-full">
+      <div className="flex gap-4 items-center">
+        <div className="min-w-[50px] text-right">
+          {convertSecondsToTime(player.progress)}
+        </div>
+
+        <Slider
+          variant="secondary"
+          defaultValue={[progress]}
+          value={isSeeking ? [progress] : [player.progress]}
+          max={player.currentDuration}
+          step={1}
+          className="w-full h-4"
+          onValueChange={([value]) => handleSeeking(value)}
+          onValueCommit={([value]) => handleSeeked(value)}
+        />
+
+        <div className="min-w-[50px] text-left">
+          {convertSecondsToTime(player.currentDuration ?? 0)}
+        </div>
+      </div>
+      <div className="flex items-center justify-between gap-4 mt-5">
+        <div className="w-[200px] flex justify-start">
+          <LikeButton className={buttonStyle.secondary} />
         </div>
 
         <div className="flex flex-1 justify-center items-center gap-2">
           <Button
             size="icon"
-            variant={player.isShuffleActive ? 'outline' : 'ghost'}
-            className="w-12 h-12 p-2 rounded-full"
+            variant="ghost"
+            className={clsx(
+              buttonStyle.secondary,
+              player.isShuffleActive && buttonStyle.activeDot,
+            )}
             onClick={() => player.toggleShuffle()}
             disabled={player.isPlayingOneSong}
           >
             <Shuffle
-              className={cn(
-                'w-5 h-5',
+              className={clsx(
+                buttonStyle.secondaryIcon,
                 player.isShuffleActive && 'text-primary',
               )}
             />
@@ -56,53 +87,65 @@ export function FullscreenPlayer() {
           <Button
             size="icon"
             variant="ghost"
-            className="w-12 h-12 p-2 rounded-full"
+            className={buttonStyle.secondary}
             onClick={() => player.playPrevSong()}
             disabled={!player.hasPrevSong}
           >
-            <SkipBack className="w-5 h-5" />
+            <SkipBack className={buttonStyle.secondaryIconFilled} />
           </Button>
           <Button
             size="icon"
-            variant="default"
-            className="w-14 h-14 rounded-full shadow-md"
+            variant="link"
+            className={buttonStyle.main}
             onClick={() => player.togglePlayPause()}
           >
             {player.isPlaying ? (
-              <Pause
-                className="w-6 h-6 fill-background dark:text-secondary-foreground dark:fill-secondary-foreground"
-                strokeWidth={1}
-              />
+              <Pause className={buttonStyle.mainIcon} strokeWidth={1} />
             ) : (
-              <Play className="w-6 h-6 fill-background dark:text-secondary-foreground dark:fill-secondary-foreground" />
+              <Play className={buttonStyle.mainIcon} />
             )}
           </Button>
           <Button
             size="icon"
             variant="ghost"
-            className="w-12 h-12 p-2 rounded-full"
+            className={buttonStyle.secondary}
             onClick={() => player.playNextSong()}
             disabled={!player.hasNextSong}
           >
-            <SkipForward className="w-5 h-5" />
+            <SkipForward className={buttonStyle.secondaryIconFilled} />
           </Button>
           <Button
             size="icon"
-            variant={player.isLoopActive ? 'outline' : 'ghost'}
-            className="w-12 h-12 p-2 rounded-full"
+            variant="ghost"
+            className={clsx(
+              buttonStyle.secondary,
+              player.isLoopActive && buttonStyle.activeDot,
+            )}
             onClick={() => player.toggleLoop()}
           >
             <Repeat
-              className={cn('w-5 h-5', player.isLoopActive && 'text-primary')}
+              className={clsx(
+                buttonStyle.secondaryIcon,
+                player.isLoopActive && 'text-primary',
+              )}
             />
           </Button>
         </div>
 
-        <div className="w-[200px] flex items-center justify-end gap-2">
-          <LikeButton />
-          <VolumePopover />
+        <div className="w-[200px] flex justify-end">
+          <VolumeContainer className={buttonStyle.secondaryIcon} />
         </div>
       </div>
     </div>
   )
+}
+
+const buttonStyle = {
+  main: 'w-14 h-14 rounded-full shadow-md bg-secondary-foreground hover:scale-105',
+  mainIcon: 'w-6 h-6 text-background fill-background',
+  secondary:
+    'relative w-12 h-12 rounded-full hover:bg-transparent hover:scale-110',
+  secondaryIcon: 'w-6 h-6',
+  secondaryIconFilled: 'w-6 h-6 fill-secondary-foreground',
+  activeDot: 'player-button-active',
 }

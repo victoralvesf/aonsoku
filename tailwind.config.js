@@ -72,9 +72,8 @@ module.exports = {
         marquee: {
           '0%': { transform: 'translateX(0%)' },
           '5%': { transform: 'translateX(0%)' },
-          '50%': { transform: 'translateX(-50%)' },
-          '95%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(0%)' },
+          '95%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
       },
       animation: {
