@@ -1,6 +1,4 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
+import { ReactNode } from 'react'
 import { getCoverArtUrl } from '@/api/httpClient'
 import {
   Drawer,
@@ -8,10 +6,7 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from '@/app/components/ui/drawer'
-
 import { usePlayer } from '@/app/contexts/player-context'
-
-import { subsonic } from '@/service/subsonic'
 import FullscreenBackdrop from './backdrop'
 import { CloseFullscreenButton, SwitchThemeButton } from './buttons'
 import { FullscreenPlayer } from './player'
@@ -22,26 +17,8 @@ interface FullscreenModeProps {
 }
 
 export default function FullscreenMode({ children }: FullscreenModeProps) {
-  const { t } = useTranslation()
-
-  const noLyricsFound = t('fullscreen.noLyrics')
-
-  const [currentLyrics, setCurrentLyrics] = useState(noLyricsFound)
-  const { currentSongList, currentSongIndex } = usePlayer()
-
-  const song = currentSongList[currentSongIndex]
-
-  const getLyrics = useCallback(async () => {
-    const response = await subsonic.songs.getLyrics(song.artist, song.title)
-
-    if (response) {
-      setCurrentLyrics(response.value || noLyricsFound)
-    }
-  }, [song, noLyricsFound])
-
-  useEffect(() => {
-    if (song) getLyrics()
-  }, [song, getLyrics])
+  const { getCurrentSong } = usePlayer()
+  const song = getCurrentSong()
 
   if (!song) return <></>
 
@@ -73,7 +50,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
             {/* Second Row */}
             <div className="w-full max-h-[calc(100%-220px)] min-h-[calc(100%-220px)] px-16">
               <div className="min-h-[300px] h-full max-h-full">
-                <FullscreenTabs lyrics={currentLyrics} />
+                <FullscreenTabs />
               </div>
             </div>
 

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
+import Image from '@/app/components/image'
 import {
   Table,
   TableBody,
@@ -10,8 +11,14 @@ import { cn } from '@/lib/utils'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 export function FullscreenSongQueue() {
-  const { currentSongList, currentSongIndex, setSongList, getCurrentSong } =
-    usePlayer()
+  const {
+    currentSongIndex,
+    currentSongList,
+    getCurrentSong,
+    setSongList,
+    isPlaying,
+  } = usePlayer()
+
   const songRef = useRef<HTMLTableSectionElement>(null)
 
   const moveSongToTop = useCallback(() => {
@@ -26,10 +33,8 @@ export function FullscreenSongQueue() {
   }, [])
 
   useEffect(() => {
-    if (currentSongList.length === 0) return
-
     moveSongToTop()
-  }, [currentSongIndex, currentSongList, moveSongToTop])
+  }, [currentSongIndex, moveSongToTop])
 
   if (currentSongList.length === 0)
     return (
@@ -59,7 +64,20 @@ export function FullscreenSongQueue() {
             }}
           >
             <TableCell className="w-[30px] text-center font-medium">
-              {index + 1}
+              {currentSongId === entry.id && isPlaying ? (
+                <div className="w-6 flex items-center">
+                  <div className="w-6 h-6 flex items-center justify-center">
+                    <Image
+                      src="/equalizer.gif"
+                      className="w-5 h-5"
+                      id="equalizer-image"
+                      alt="Audio bars animation"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div>{index + 1}</div>
+              )}
             </TableCell>
             <TableCell>
               <span className="font-semibold">{entry.title}</span>

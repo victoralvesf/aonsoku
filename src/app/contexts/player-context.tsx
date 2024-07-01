@@ -170,7 +170,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
       const songIndex = currentSongList.findIndex((song) => song.id === id)
       if (songIndex === -1) return
 
-      const songList = currentSongList
+      const songList = [...currentSongList]
       const isSongStarred = typeof songList[songIndex].starred === 'string'
       songList[songIndex].starred = isSongStarred
         ? undefined
@@ -188,7 +188,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     await subsonic.star.handleStarItem(id, starStatus)
     setIsSongStarred(!starStatus)
 
-    const songList = currentSongList
+    const songList = [...currentSongList]
     songList[currentSongIndex].starred = starStatus
       ? undefined
       : new Date().toISOString()
@@ -280,44 +280,79 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     }
   }, [progress, currentDuration, mediaType, sendScrobble, getCurrentSong])
 
-  const value: IPlayerContext = {
-    shuffledSongList,
-    currentSongList,
-    currentSongIndex,
-    originalSongIndex,
-    isPlaying,
-    isLoopActive,
-    isShuffleActive,
-    isPlayingOneSong,
-    isSongStarred,
-    setIsSongStarred,
-    starSongInQueue,
-    playSong,
-    setPlayingState,
-    setSongList,
-    togglePlayPause,
-    toggleLoop,
-    toggleShuffle,
-    checkActiveSong,
-    playNextSong,
-    playPrevSong,
-    clearPlayerState,
-    hasNextSong,
-    hasPrevSong,
-    progress,
-    setProgress,
-    currentDuration,
-    setCurrentDuration,
-    getCurrentSong,
-    mediaType,
-    radioList,
-    setPlayRadio,
-    volume,
-    setVolume,
-    starCurrentSong,
-    audioPlayerRef,
-    setAudioPlayerRef,
-  }
+  const value: IPlayerContext = useMemo(
+    () => ({
+      shuffledSongList,
+      currentSongList,
+      currentSongIndex,
+      originalSongIndex,
+      isPlaying,
+      isLoopActive,
+      isShuffleActive,
+      isPlayingOneSong,
+      isSongStarred,
+      setIsSongStarred,
+      starSongInQueue,
+      playSong,
+      setPlayingState,
+      setSongList,
+      togglePlayPause,
+      toggleLoop,
+      toggleShuffle,
+      checkActiveSong,
+      playNextSong,
+      playPrevSong,
+      clearPlayerState,
+      hasNextSong,
+      hasPrevSong,
+      progress,
+      setProgress,
+      currentDuration,
+      setCurrentDuration,
+      getCurrentSong,
+      mediaType,
+      radioList,
+      setPlayRadio,
+      volume,
+      setVolume,
+      starCurrentSong,
+      audioPlayerRef,
+      setAudioPlayerRef,
+    }),
+    [
+      audioPlayerRef,
+      checkActiveSong,
+      clearPlayerState,
+      currentDuration,
+      currentSongIndex,
+      currentSongList,
+      getCurrentSong,
+      hasNextSong,
+      hasPrevSong,
+      isLoopActive,
+      isPlaying,
+      isPlayingOneSong,
+      isShuffleActive,
+      isSongStarred,
+      mediaType,
+      originalSongIndex,
+      playNextSong,
+      playPrevSong,
+      playSong,
+      progress,
+      radioList,
+      setPlayRadio,
+      setPlayingState,
+      setSongList,
+      shuffledSongList,
+      starCurrentSong,
+      starSongInQueue,
+      toggleLoop,
+      togglePlayPause,
+      toggleShuffle,
+      volume,
+    ],
+  )
 
   return (
     <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>

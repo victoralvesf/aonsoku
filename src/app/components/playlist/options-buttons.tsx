@@ -21,7 +21,7 @@ export function PlaylistOptionsButtons() {
         </Button>
       </SimpleTooltip>
 
-      <SimpleTooltip text={t('playlist.createDialog.title')}>
+      <SimpleTooltip text={t('playlist.form.create.title')}>
         <Button
           size="icon"
           variant="default"

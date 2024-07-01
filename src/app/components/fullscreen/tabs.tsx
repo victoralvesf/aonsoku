@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Tabs,
@@ -9,7 +10,9 @@ import { LyricsTab } from './lyrics'
 import { FullscreenSongQueue } from './queue'
 import { SongInfo } from './song-info'
 
-export function FullscreenTabs({ lyrics }: { lyrics: string }) {
+const SongQueue = memo(FullscreenSongQueue)
+
+export function FullscreenTabs() {
   const { t } = useTranslation()
 
   return (
@@ -38,7 +41,7 @@ export function FullscreenTabs({ lyrics }: { lyrics: string }) {
         value="queue"
         className="mt-0 h-[calc(100%-64px)] overflow-y-auto pr-1"
       >
-        <FullscreenSongQueue />
+        <SongQueue />
       </TabsContent>
       <TabsContent
         value="playing"
@@ -50,7 +53,7 @@ export function FullscreenTabs({ lyrics }: { lyrics: string }) {
         value="lyrics"
         className="mt-0 h-[calc(100%-64px)] overflow-y-auto pr-1"
       >
-        {lyrics && <LyricsTab text={lyrics} />}
+        <LyricsTab />
       </TabsContent>
     </Tabs>
   )

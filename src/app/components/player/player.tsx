@@ -101,6 +101,7 @@ export function Player() {
   const handleSongEnded = useCallback(() => {
     if (player.hasNextSong) {
       player.playNextSong()
+      audioRef.current?.play()
     } else {
       player.clearPlayerState()
     }
@@ -298,7 +299,7 @@ export function Player() {
       {player.mediaType === 'song' && song && (
         <audio
           src={getSongStreamUrl(song.id)}
-          autoPlay
+          autoPlay={true}
           ref={audioRef}
           loop={player.isLoopActive}
           onPlay={() => player.setPlayingState(true)}
@@ -311,7 +312,7 @@ export function Player() {
       {player.mediaType === 'radio' && radio && (
         <audio
           src={radio.streamUrl}
-          autoPlay
+          autoPlay={true}
           ref={audioRef}
           onPlay={() => player.setPlayingState(true)}
           onPause={() => player.setPlayingState(false)}

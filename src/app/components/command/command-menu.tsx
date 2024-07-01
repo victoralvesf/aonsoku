@@ -249,7 +249,7 @@ export default function CommandMenu() {
               <CommandItem
                 onSelect={() => runCommand(() => setPlaylistDialogState(true))}
               >
-                {t('playlist.createDialog.title')}
+                {t('playlist.form.create.title')}
               </CommandItem>
             </CommandGroup>
           )}

@@ -97,10 +97,11 @@ export default function PlaySongButton({
       {isCurrentSongPlaying() && player.isPlaying && (
         <>
           <div className="group-hover/tablerow:hidden w-8 flex items-center">
-            <div className="w-8 h-8 overflow-hidden rounded-full">
+            <div className="w-8 h-8 flex items-center justify-center">
               <Image
-                src="/sound-motion.gif"
-                className="ml-[3px] mt-[7px] dark:invert w-6 h-4 opacity-70"
+                src="/equalizer.gif"
+                className="w-4 h-4"
+                id="equalizer-image"
                 alt="Audio bars animation"
               />
             </div>

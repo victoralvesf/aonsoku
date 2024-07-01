@@ -107,6 +107,10 @@ img {
   @apply after:content-['•'] after:block after:absolute after:-bottom-1 after:text-primary;
 }
 
+:root.light #equalizer-image {
+  filter: invert(1);
+}
+
 /* Native Scroll Bar */
 ::-webkit-scrollbar {
   width: 7px;
