@@ -1,9 +1,9 @@
-import { Link, useLocation } from 'react-router-dom'
 import { ListMusic } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@/app/components/ui/button'
-import { Playlist } from '@/types/responses/playlist'
 import { ROUTES } from '@/routes/routesList'
+import { Playlist } from '@/types/responses/playlist'
 
 interface ISidebarItem {
   title: string

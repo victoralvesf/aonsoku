@@ -10,12 +10,12 @@ import {
   RefObject,
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { IPlayerContext } from '@/types/playerContext'
-import { ISong } from '@/types/responses/song'
-import { shuffleSongList } from '@/utils/shuffleArray'
 import { subsonic } from '@/service/subsonic'
-import { manageMediaSession } from '@/utils/setMediaSession'
+import { IPlayerContext } from '@/types/playerContext'
 import { Radio } from '@/types/responses/radios'
+import { ISong } from '@/types/responses/song'
+import { manageMediaSession } from '@/utils/setMediaSession'
+import { shuffleSongList } from '@/utils/shuffleArray'
 
 const PlayerContext = createContext({} as IPlayerContext)
 

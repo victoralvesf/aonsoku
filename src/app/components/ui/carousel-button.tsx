@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { Button } from './button'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import * as React from 'react'
 import { cn } from '@/lib/utils'
+import { Button } from './button'
 
 interface CarouselButtonProps extends React.ComponentProps<typeof Button> {
   direction: 'prev' | 'next'

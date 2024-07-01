@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import { ColumnDef } from '@tanstack/react-table'
+import { clsx } from 'clsx'
 import { ClockIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { ColumnDef } from '@tanstack/react-table'
-import clsx from 'clsx'
 
-import { Badge } from '@/app/components/ui/badge'
-import { ISong } from '@/types/responses/song'
-import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { getCoverArtUrl } from '@/api/httpClient'
 import Image from '@/app/components/image'
-import { usePlayer } from '@/app/contexts/player-context'
-import PlaySongButton from '@/app/components/table/play-button'
-import dateTime from '@/utils/dateTime'
-import { ROUTES } from '@/routes/routesList'
-import i18n from '@/i18n'
-import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { TableLikeButton } from '@/app/components/table/like-button'
+import PlaySongButton from '@/app/components/table/play-button'
+import { Badge } from '@/app/components/ui/badge'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import { usePlayer } from '@/app/contexts/player-context'
+import i18n from '@/i18n'
+import { ROUTES } from '@/routes/routesList'
+import { ISong } from '@/types/responses/song'
+import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
+import dateTime from '@/utils/dateTime'
 
 export function songsColumns(): ColumnDef<ISong>[] {
   return [

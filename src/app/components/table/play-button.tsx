@@ -1,11 +1,11 @@
-import { useMemo } from 'react'
 import { PauseIcon, PlayIcon } from 'lucide-react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { usePlayer } from '@/app/contexts/player-context'
-import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
-import { Button } from '@/app/components/ui/button'
 import Image from '@/app/components/image'
+import { Button } from '@/app/components/ui/button'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import { usePlayer } from '@/app/contexts/player-context'
 
 interface PlaySongButtonProps {
   trackNumber: number

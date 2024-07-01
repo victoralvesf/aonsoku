@@ -1,8 +1,8 @@
-import * as React from 'react'
 import * as SliderPrimitive from '@radix-ui/react-slider'
+import { clsx } from 'clsx'
+import * as React from 'react'
 
 import { cn } from '@/lib/utils'
-import clsx from 'clsx'
 
 interface SliderProps
   extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> {

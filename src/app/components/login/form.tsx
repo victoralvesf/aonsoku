@@ -2,6 +2,9 @@ import { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
+import { LangSelect } from '@/app/components/header/lang-select'
+import { ThemeToggle } from '@/app/components/header/theme-toggle'
+import { Button } from '@/app/components/ui/button'
 import {
   Card,
   CardContent,
@@ -10,6 +13,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/components/ui/card'
+
+import { Input } from '@/app/components/ui/input'
+import { Label } from '@/app/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -17,14 +23,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/components/ui/select'
-
-import { Input } from '@/app/components/ui/input'
-import { Label } from '@/app/components/ui/label'
-import { ThemeToggle } from '@/app/components/header/theme-toggle'
-import { Button } from '@/app/components/ui/button'
 import { useApp } from '@/app/contexts/app-context'
 import { ROUTES } from '@/routes/routesList'
-import { LangSelect } from '@/app/components/header/lang-select'
 
 export function LoginForm() {
   const {

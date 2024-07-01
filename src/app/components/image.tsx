@@ -1,4 +1,4 @@
-import React from 'react'
+import { ImgHTMLAttributes } from 'react'
 import {
   LazyLoadImage,
   trackWindowScroll,
@@ -6,7 +6,7 @@ import {
   Effect,
 } from 'react-lazy-load-image-component'
 
-interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   scrollPosition: ScrollPosition
   effect?: Effect
 }

@@ -1,15 +1,14 @@
-import { ReactNode, useState } from 'react'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { EllipsisVertical, Heart, Play, Shuffle } from 'lucide-react'
+import { ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { Button } from '@/app/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
-
-import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { subsonic } from '@/service/subsonic'
 

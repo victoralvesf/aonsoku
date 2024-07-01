@@ -1,9 +1,11 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { SearchIcon } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
+import { Keyboard } from '@/app/components/command/keyboard-key'
+import { ResultItem } from '@/app/components/command/result-item'
 import { Button } from '@/app/components/ui/button'
 import {
   CommandDialog,
@@ -12,18 +14,16 @@ import {
   CommandItem,
   CommandList,
 } from '@/app/components/ui/command'
+import { useApp } from '@/app/contexts/app-context'
+import { usePlayer } from '@/app/contexts/player-context'
+import { usePlaylists } from '@/app/contexts/playlists-context'
+import { useTheme } from '@/app/contexts/theme-context'
+import { useSongList } from '@/app/hooks/use-song-list'
+import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { Albums } from '@/types/responses/album'
 import { ISimilarArtist } from '@/types/responses/artist'
 import { ISong } from '@/types/responses/song'
-import { ROUTES } from '@/routes/routesList'
-import { useTheme } from '@/app/contexts/theme-context'
-import { useApp } from '@/app/contexts/app-context'
-import { ResultItem } from '@/app/components/command/result-item'
-import { Keyboard } from '@/app/components/command/keyboard-key'
-import { useSongList } from '@/app/hooks/use-song-list'
-import { usePlayer } from '@/app/contexts/player-context'
-import { usePlaylists } from '@/app/contexts/playlists-context'
 import { isTauri } from '@/utils/tauriTools'
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS'

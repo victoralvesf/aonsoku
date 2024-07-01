@@ -5,9 +5,9 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/app/components/ui/tabs'
+import { LyricsTab } from './lyrics'
 import { FullscreenSongQueue } from './queue'
 import { SongInfo } from './song-info'
-import { LyricsTab } from './lyrics'
 
 export function FullscreenTabs({ lyrics }: { lyrics: string }) {
   const { t } = useTranslation()

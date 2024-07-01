@@ -4,13 +4,13 @@ import { useLoaderData } from 'react-router-dom'
 
 import ListWrapper from '@/app/components/list-wrapper'
 import { ShadowHeader } from '@/app/components/shadow-header'
-import { ArtistSeparator, ISimilarArtist } from '@/types/responses/artist'
-import { artistsColumns } from '@/app/tables/artists-columns'
-import { DataTable } from '@/app/components/ui/data-table'
 import { Badge } from '@/app/components/ui/badge'
+import { DataTable } from '@/app/components/ui/data-table'
 import { useLang } from '@/app/contexts/lang-context'
-import { useSongList } from '@/app/hooks/use-song-list'
 import { usePlayer } from '@/app/contexts/player-context'
+import { useSongList } from '@/app/hooks/use-song-list'
+import { artistsColumns } from '@/app/tables/artists-columns'
+import { ArtistSeparator, ISimilarArtist } from '@/types/responses/artist'
 
 export default function ArtistsList() {
   const list = useLoaderData() as ArtistSeparator[]

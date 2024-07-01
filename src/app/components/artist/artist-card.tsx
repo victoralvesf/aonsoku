@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
 import { Play } from 'lucide-react'
-import { Button } from '@/app/components/ui/button'
+import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
-import { ISimilarArtist } from '@/types/responses/artist'
+import { Button } from '@/app/components/ui/button'
 import { ROUTES } from '@/routes/routesList'
+import { ISimilarArtist } from '@/types/responses/artist'
 
 interface ArtistCardProps {
   artist: ISimilarArtist

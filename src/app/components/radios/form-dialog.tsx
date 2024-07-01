@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { Button } from '@/app/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -8,9 +9,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/app/components/ui/dialog'
-import { Label } from '@/app/components/ui/label'
 import { Input } from '@/app/components/ui/input'
-import { Button } from '@/app/components/ui/button'
+import { Label } from '@/app/components/ui/label'
 
 import { useRadios } from '@/app/contexts/radios-context'
 import { Radio } from '@/types/responses/radios'

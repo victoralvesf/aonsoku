@@ -1,7 +1,7 @@
 import { fetch as tauriFetch } from '@tauri-apps/api/http'
 import { SubsonicJsonResponse } from '@/types/responses/subsonicResponse'
-import { isTauri } from '@/utils/tauriTools'
 import { saltWord } from '@/utils/salt'
+import { isTauri } from '@/utils/tauriTools'
 
 export async function pingServer(url: string, user: string, token: string) {
   try {

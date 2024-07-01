@@ -1,6 +1,6 @@
 import { Volume, Volume1, Volume2 } from 'lucide-react'
-import { Slider } from '../ui/slider'
 import { usePlayer } from '@/app/contexts/player-context'
+import { Slider } from '../ui/slider'
 
 interface VolumeContainerProps {
   className: string

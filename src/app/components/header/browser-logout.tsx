@@ -1,8 +1,7 @@
 import { Globe, LogOut, User } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { useTranslation } from 'react-i18next'
 
-import { useApp } from '@/app/contexts/app-context'
 import { Avatar, AvatarFallback } from '@/app/components/ui/avatar'
 import { Button } from '@/app/components/ui/button'
 import {
@@ -13,6 +12,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
+import { useApp } from '@/app/contexts/app-context'
 
 interface BrowserLogoutProps {
   openDialog: (state: boolean) => void

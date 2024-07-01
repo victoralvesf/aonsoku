@@ -1,5 +1,5 @@
-import { subsonic } from '@/service/subsonic'
 import { LoaderFunctionArgs, defer } from 'react-router-dom'
+import { subsonic } from '@/service/subsonic'
 
 export async function artistsListLoader() {
   return await subsonic.artists.getAll()

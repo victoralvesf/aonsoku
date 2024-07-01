@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import useNavigationHistory from '@/app/hooks/use-navigation-history'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@/app/components/ui/button'
+import useNavigationHistory from '@/app/hooks/use-navigation-history'
 
 export function NavigationButtons() {
   const navigate = useNavigate()

@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMatches, useNavigate } from 'react-router-dom'
 
+import { Button } from '@/app/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,13 +10,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/app/components/ui/dialog'
-import { Label } from '@/app/components/ui/label'
 import { Input } from '@/app/components/ui/input'
-import { Button } from '@/app/components/ui/button'
-import { usePlaylists } from '@/app/contexts/playlists-context'
+import { Label } from '@/app/components/ui/label'
 import { Switch } from '@/app/components/ui/switch'
-import { Playlist } from '@/types/responses/playlist'
+import { usePlaylists } from '@/app/contexts/playlists-context'
 import { ROUTES } from '@/routes/routesList'
+import { Playlist } from '@/types/responses/playlist'
 
 export function CreatePlaylistDialog() {
   const { t } = useTranslation()

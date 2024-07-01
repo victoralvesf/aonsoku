@@ -1,22 +1,22 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useLoaderData } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { ListFilter } from 'lucide-react'
 import debounce from 'lodash/debounce'
+import { ListFilter } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useLoaderData } from 'react-router-dom'
 import HomeSongCard from '@/app/components/home/song-card'
 import ListWrapper from '@/app/components/list-wrapper'
-import { subsonic } from '@/service/subsonic'
-import { AlbumListType, Albums, AlbumsListData } from '@/types/responses/album'
+import { ShadowHeader } from '@/app/components/shadow-header'
+import { Badge } from '@/app/components/ui/badge'
+import { Button } from '@/app/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
-import { Button } from '@/app/components/ui/button'
 import { usePlayer } from '@/app/contexts/player-context'
-import { Badge } from '@/app/components/ui/badge'
-import { ShadowHeader } from '@/app/components/shadow-header'
+import { subsonic } from '@/service/subsonic'
+import { AlbumListType, Albums, AlbumsListData } from '@/types/responses/album'
 
 export default function AlbumsList() {
   const defaultOffset = 32

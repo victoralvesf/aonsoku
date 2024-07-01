@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import {
   Pause,
   Play,
@@ -6,14 +7,13 @@ import {
   SkipBack,
   SkipForward,
 } from 'lucide-react'
+import { useCallback, useState } from 'react'
 import { Button } from '@/app/components/ui/button'
+import { Slider } from '@/app/components/ui/slider'
 import { usePlayer } from '@/app/contexts/player-context'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
-import { Slider } from '@/app/components/ui/slider'
-import { VolumeContainer } from './volume-container'
 import { LikeButton } from './like-button'
-import { useCallback, useState } from 'react'
-import clsx from 'clsx'
+import { VolumeContainer } from './volume-container'
 
 let isSeeking = false
 

@@ -1,20 +1,19 @@
+import { Column } from '@tanstack/react-table'
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   ChevronsUpDownIcon,
   RotateCcwIcon,
 } from 'lucide-react'
-import { Column } from '@tanstack/react-table'
-
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
-import { cn } from '@/lib/utils'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
-import { useTranslation } from 'react-i18next'
+import { cn } from '@/lib/utils'
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {

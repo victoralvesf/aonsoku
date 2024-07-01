@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import { useEffect } from 'react'
 import {
   Outlet,
@@ -6,12 +7,11 @@ import {
   useMatches,
   UIMatch,
 } from 'react-router-dom'
-import clsx from 'clsx'
 
+import { Player } from '@/app/components/player/player'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { Header } from '@/app/layout/header'
 import { Sidebar } from '@/app/layout/sidebar'
-import { ScrollArea } from '@/app/components/ui/scroll-area'
-import { Player } from '@/app/components/player/player'
 
 export default function BaseLayout() {
   const location = useLocation() as Location

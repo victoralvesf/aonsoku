@@ -8,8 +8,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
-import { cn } from '@/lib/utils'
 import { useTheme } from '@/app/contexts/theme-context'
+import { cn } from '@/lib/utils'
 
 interface ThemeToggleProps extends React.HTMLAttributes<HTMLDivElement> {}
 

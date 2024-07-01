@@ -1,12 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { RadioIcon } from 'lucide-react'
 
-import { Radio } from '@/types/responses/radios'
-import i18n from '@/i18n'
-
 import { RadioActionButton } from '@/app/components/radios/action-button'
 import PlaySongButton from '@/app/components/table/play-button'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
+import i18n from '@/i18n'
+import { Radio } from '@/types/responses/radios'
 
 export function radiosColumns(): ColumnDef<Radio>[] {
   return [

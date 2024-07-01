@@ -1,3 +1,5 @@
+import { os } from '@tauri-apps/api'
+import MD5 from 'crypto-js/md5'
 import {
   ReactNode,
   createContext,
@@ -5,21 +7,19 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { Store } from 'tauri-plugin-store-api'
-import MD5 from 'crypto-js/md5'
-import { toast } from 'react-toastify'
-import { os } from '@tauri-apps/api'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import { Store } from 'tauri-plugin-store-api'
 
-import { IAppContext, IServerConfig } from '@/types/serverConfig'
 import { pingServer } from '@/api/pingServer'
+import { IAppContext, IServerConfig } from '@/types/serverConfig'
 import {
   getFromLocalStorage,
   removeFromLocalStorage,
   saveToLocalStorage,
 } from '@/utils/persistDataLayer'
-import { isTauri } from '@/utils/tauriTools'
 import { saltWord } from '@/utils/salt'
+import { isTauri } from '@/utils/tauriTools'
 
 const store = new Store('.settings.dat')
 

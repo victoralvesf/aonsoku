@@ -19,7 +19,7 @@ currentLanguages.forEach((lang) => {
 const savedLang = localStorage.getItem('i18nextLng') || 'en'
 dayjs.locale(savedLang)
 
-i18n.on('languageChanged', (lang) => {
+i18n.on('languageChanged', (lang: string) => {
   dayjs.locale(lang)
 })
 

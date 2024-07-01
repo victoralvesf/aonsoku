@@ -1,8 +1,8 @@
 import { FetchOptions, fetch as tauriFetch } from '@tauri-apps/api/http'
-import { getFromLocalStorage } from '@/utils/persistDataLayer'
 import { SubsonicJsonResponse } from '@/types/responses/subsonicResponse'
-import { isTauri } from '@/utils/tauriTools'
+import { getFromLocalStorage } from '@/utils/persistDataLayer'
 import { saltWord } from '@/utils/salt'
+import { isTauri } from '@/utils/tauriTools'
 
 function queryParams() {
   const { username, token } = getFromLocalStorage()

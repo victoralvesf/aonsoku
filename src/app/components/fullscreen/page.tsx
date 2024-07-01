@@ -1,6 +1,7 @@
 import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { getCoverArtUrl } from '@/api/httpClient'
 import {
   Drawer,
   DrawerClose,
@@ -9,7 +10,6 @@ import {
 } from '@/app/components/ui/drawer'
 
 import { usePlayer } from '@/app/contexts/player-context'
-import { getCoverArtUrl } from '@/api/httpClient'
 
 import { subsonic } from '@/service/subsonic'
 import FullscreenBackdrop from './backdrop'

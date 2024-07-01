@@ -1,16 +1,16 @@
 import { AudioLines, Maximize2 } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
-import { ISong } from '@/types/responses/song'
-import Image from '@/app/components/image'
 import { getCoverArtUrl } from '@/api/httpClient'
+import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import FullscreenMode from '@/app/components/fullscreen/page'
+import Image from '@/app/components/image'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
-import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
+import { ISong } from '@/types/responses/song'
 
 export function TrackInfo({ song }: { song: ISong }) {
   const { t } = useTranslation()

@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from 'clsx'
-import { extendTailwindMerge } from 'tailwind-merge'
 import { withExtendedShadows } from 'tailwind-extended-shadows-merge'
+import { extendTailwindMerge } from 'tailwind-merge'
 
 export const twMerge = extendTailwindMerge(withExtendedShadows)
 

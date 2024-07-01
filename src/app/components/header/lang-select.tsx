@@ -1,4 +1,4 @@
-import ReactCountryFlag from 'react-country-flag'
+import { ReactCountryFlag } from 'react-country-flag'
 import {
   Select,
   SelectContent,
@@ -7,8 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/components/ui/select'
-import { currentLanguages } from '@/i18n/languages'
 import { useLang } from '@/app/contexts/lang-context'
+import { currentLanguages } from '@/i18n/languages'
 
 export function LangSelect() {
   const { langCode, setLang, flag } = useLang()

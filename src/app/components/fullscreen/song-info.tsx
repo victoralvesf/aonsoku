@@ -1,7 +1,7 @@
+import { getCoverArtUrl } from '@/api/httpClient'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import { Badge } from '@/app/components/ui/badge'
 import { usePlayer } from '@/app/contexts/player-context'
-import { getCoverArtUrl } from '@/api/httpClient'
 
 export function SongInfo() {
   const player = usePlayer()

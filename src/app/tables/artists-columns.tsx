@@ -1,13 +1,13 @@
-import { Link } from 'react-router-dom'
 import { ColumnDef } from '@tanstack/react-table'
+import { Link } from 'react-router-dom'
 
-import i18n from '@/i18n'
-import { ISimilarArtist } from '@/types/responses/artist'
-import { ROUTES } from '@/routes/routesList'
 import { getCoverArtUrl } from '@/api/httpClient'
+import { TableLikeButton } from '@/app/components/table/like-button'
 import PlaySongButton from '@/app/components/table/play-button'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
-import { TableLikeButton } from '@/app/components/table/like-button'
+import i18n from '@/i18n'
+import { ROUTES } from '@/routes/routesList'
+import { ISimilarArtist } from '@/types/responses/artist'
 
 export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
   return [

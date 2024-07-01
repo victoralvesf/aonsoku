@@ -42,13 +42,13 @@ export function FullscreenSongQueue() {
 
   return (
     <Table className="min-h-full h-full bg-transparent">
-      <TableBody className="rounded-md" ref={songRef}>
+      <TableBody ref={songRef}>
         {currentSongList.map((entry, index) => (
           <TableRow
             key={entry.id}
             data-state={currentSongId === entry.id ? 'active' : 'inactive'}
             className={cn(
-              'hover:shadow-md hover:bg-background/30 dark:hover:bg-muted-foreground/30 border-0 cursor-pointer rounded-lg',
+              'hover:shadow-md hover:bg-background/30 dark:hover:bg-muted-foreground/30 border-0 cursor-pointer',
               currentSongId === entry.id &&
                 'bg-primary/80 hover:bg-primary dark:hover:bg-primary/70',
             )}

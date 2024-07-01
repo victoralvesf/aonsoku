@@ -12,8 +12,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/app/components/ui/alert-dialog'
-import { ROUTES } from '@/routes/routesList'
 import { usePlaylists } from '@/app/contexts/playlists-context'
+import { ROUTES } from '@/routes/routesList'
 
 interface RemovePlaylistDialogProps {
   playlistId: string

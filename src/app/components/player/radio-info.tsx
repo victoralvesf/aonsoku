@@ -1,5 +1,5 @@
-import { Fragment } from 'react'
 import { RadioIcon } from 'lucide-react'
+import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Radio } from '@/types/responses/radios'
 

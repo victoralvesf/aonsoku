@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import LastFmIcon from '@/app/components/icons/last-fm'
+import MusicbrainzIcon from '@/app/components/icons/musicbrainz'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { Skeleton } from '@/app/components/ui/skeleton'
 import { cn } from '@/lib/utils'
-import MusicbrainzIcon from '@/app/components/icons/musicbrainz'
 
 interface InfoPanelProps {
   title: string

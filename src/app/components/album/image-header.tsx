@@ -1,14 +1,14 @@
-import { Fragment, useRef, useState } from 'react'
 import { FastAverageColorResult } from 'fast-average-color'
+import { Fragment, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { cn } from '@/lib/utils'
-import { getAverageColor } from '@/utils/getAverageColor'
 import { getCoverArtUrl } from '@/api/httpClient'
-import { Skeleton } from '@/app/components/ui/skeleton'
 import { Badge } from '@/app/components/ui/badge'
-import { getTextSizeClass } from '@/utils/getTextSizeClass'
+import { Skeleton } from '@/app/components/ui/skeleton'
+import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
+import { getAverageColor } from '@/utils/getAverageColor'
+import { getTextSizeClass } from '@/utils/getTextSizeClass'
 
 const bgGradient =
   'bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50'

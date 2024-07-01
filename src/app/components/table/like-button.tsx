@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { Heart } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 import { Button } from '@/app/components/ui/button'
-import { subsonic } from '@/service/subsonic'
 import { usePlayer } from '@/app/contexts/player-context'
+import { subsonic } from '@/service/subsonic'
 
 interface TableLikeButtonProps {
   type: 'song' | 'artist'

@@ -1,7 +1,7 @@
+import { clsx } from 'clsx'
 import { Heart } from 'lucide-react'
 import { Button } from '@/app/components/ui/button'
 import { usePlayer } from '@/app/contexts/player-context'
-import clsx from 'clsx'
 
 interface LikeButtonProps {
   className?: string

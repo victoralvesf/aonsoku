@@ -1,7 +1,3 @@
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import clsx from 'clsx/lite'
-import { XIcon } from 'lucide-react'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -16,7 +12,14 @@ import {
   getSortedRowModel,
   SortingFn,
 } from '@tanstack/react-table'
+import { clsx } from 'clsx/lite'
+import { XIcon } from 'lucide-react'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
+import { Button } from '@/app/components/ui/button'
+import { DataTablePagination } from '@/app/components/ui/data-table-pagination'
+import { Input } from '@/app/components/ui/input'
 import {
   Table,
   TableBody,
@@ -26,9 +29,6 @@ import {
   TableRow,
 } from '@/app/components/ui/table'
 import { ColumnFilter } from '@/types/columnFilter'
-import { DataTablePagination } from '@/app/components/ui/data-table-pagination'
-import { Input } from '@/app/components/ui/input'
-import { Button } from '@/app/components/ui/button'
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {

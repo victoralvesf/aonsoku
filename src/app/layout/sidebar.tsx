@@ -1,18 +1,18 @@
+import { ListMusic, Mic2, Music2, Radio, Home, Library } from 'lucide-react'
 import { Fragment, ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ListMusic, Mic2, Music2, Radio, Home, Library } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
-import { ScrollArea } from '@/app/components/ui/scroll-area'
+import CommandMenu from '@/app/components/command/command-menu'
+import { CreatePlaylistDialog } from '@/app/components/playlist/form-dialog'
+import { PlaylistOptionsButtons } from '@/app/components/playlist/options-buttons'
 import {
   SidebarGenerator,
   SidebarPlaylistGenerator,
 } from '@/app/components/sidebar-generator'
-import { ROUTES } from '@/routes/routesList'
-import CommandMenu from '@/app/components/command/command-menu'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { usePlaylists } from '@/app/contexts/playlists-context'
-import { PlaylistOptionsButtons } from '@/app/components/playlist/options-buttons'
-import { CreatePlaylistDialog } from '@/app/components/playlist/form-dialog'
+import { cn } from '@/lib/utils'
+import { ROUTES } from '@/routes/routesList'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 

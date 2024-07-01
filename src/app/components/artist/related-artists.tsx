@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useAsyncValue } from 'react-router-dom'
-import { usePlayer } from '@/app/contexts/player-context'
+import ArtistCard from '@/app/components/artist/artist-card'
 import {
   Carousel,
   type CarouselApi,
   CarouselContent,
   CarouselItem,
 } from '@/app/components/ui/carousel'
-import ArtistCard from '@/app/components/artist/artist-card'
 import { CarouselButton } from '@/app/components/ui/carousel-button'
-import { IArtistInfo, ISimilarArtist } from '@/types/responses/artist'
+import { usePlayer } from '@/app/contexts/player-context'
 import { useSongList } from '@/app/hooks/use-song-list'
+import { IArtistInfo, ISimilarArtist } from '@/types/responses/artist'
 
 interface RelatedArtistsListProps {
   title: string

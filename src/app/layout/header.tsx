@@ -1,11 +1,11 @@
 import { Fragment, useState } from 'react'
 
-import { LogoutConfirmDialog } from '@/app/components/logout-confirm'
+import { BrowserLogout } from '@/app/components/header/browser-logout'
+import { LangSelect } from '@/app/components/header/lang-select'
 import { NavigationButtons } from '@/app/components/header/navigation-buttons'
 import { ThemeToggle } from '@/app/components/header/theme-toggle'
+import { LogoutConfirmDialog } from '@/app/components/logout-confirm'
 import { usePlayer } from '@/app/contexts/player-context'
-import { LangSelect } from '@/app/components/header/lang-select'
-import { BrowserLogout } from '@/app/components/header/browser-logout'
 
 export function Header() {
   const [logoutDialogState, setLogoutDialogState] = useState(false)

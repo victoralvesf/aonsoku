@@ -1,6 +1,6 @@
 import { Link, useRouteError } from 'react-router-dom'
-import { Button } from '../components/ui/button'
-import Error404Icon from '../components/icons/error-404-icon'
+import Error404Icon from '@/app/components/icons/error-404-icon'
+import { Button } from '@/app/components/ui/button'
 import { ROUTES } from '@/routes/routesList'
 
 interface IError {

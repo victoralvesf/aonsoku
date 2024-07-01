@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
-import { useAsyncValue } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useAsyncValue } from 'react-router-dom'
 import { DataTable } from '@/app/components/ui/data-table'
-import { ISong } from '@/types/responses/song'
-import { songsColumns } from '@/app/tables/songs-columns'
-import { usePlayer } from '@/app/contexts/player-context'
 import { Skeleton } from '@/app/components/ui/skeleton'
-import { ColumnFilter } from '@/types/columnFilter'
 import { useLang } from '@/app/contexts/lang-context'
+import { usePlayer } from '@/app/contexts/player-context'
+import { songsColumns } from '@/app/tables/songs-columns'
+import { ColumnFilter } from '@/types/columnFilter'
+import { ISong } from '@/types/responses/song'
 
 export default function ArtistTopSongs() {
   const topSongs = useAsyncValue() as ISong[]

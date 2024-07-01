@@ -1,27 +1,27 @@
 /* eslint-disable react/no-children-prop */
 import { Suspense, useMemo } from 'react'
-import { Await, useLoaderData } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Await, useLoaderData } from 'react-router-dom'
+import ImageHeader from '@/app/components/album/image-header'
+import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
+import PlayButtons from '@/app/components/album/play-buttons'
+import PreviewList from '@/app/components/home/preview-list'
+import ListWrapper from '@/app/components/list-wrapper'
+import PreviewListFallback from '@/app/components/preview-list-fallback'
+import { DataTable } from '@/app/components/ui/data-table'
+import { useLang } from '@/app/contexts/lang-context'
+import { usePlayer } from '@/app/contexts/player-context'
+import { songsColumns } from '@/app/tables/songs-columns'
+import { ROUTES } from '@/routes/routesList'
+import { ColumnFilter } from '@/types/columnFilter'
 import {
   Albums,
   AlbumsListData,
   IAlbumInfo,
   SingleAlbum,
 } from '@/types/responses/album'
-import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
-import { DataTable } from '@/app/components/ui/data-table'
-import { usePlayer } from '@/app/contexts/player-context'
-import { songsColumns } from '@/app/tables/songs-columns'
-import ImageHeader from '@/app/components/album/image-header'
-import PlayButtons from '@/app/components/album/play-buttons'
-import ListWrapper from '@/app/components/list-wrapper'
-import { ColumnFilter } from '@/types/columnFilter'
 import { Search } from '@/types/responses/search'
-import PreviewList from '@/app/components/home/preview-list'
-import PreviewListFallback from '@/app/components/preview-list-fallback'
-import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
-import { ROUTES } from '@/routes/routesList'
-import { useLang } from '@/app/contexts/lang-context'
+import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 
 interface ILoaderData {
   album: SingleAlbum

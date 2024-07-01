@@ -1,5 +1,5 @@
+import { clsx } from 'clsx'
 import { ReactNode, useEffect, useRef, useState } from 'react'
-import clsx from 'clsx'
 
 interface MarqueeTitleProps {
   children: ReactNode

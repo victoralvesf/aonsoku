@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, memo } from 'react'
+import { clsx } from 'clsx'
 import {
   Heart,
   ListVideo,
@@ -12,16 +12,16 @@ import {
   Volume1,
   Volume2,
 } from 'lucide-react'
-import clsx from 'clsx'
+import { useEffect, useRef, useCallback, memo } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { getSongStreamUrl } from '@/api/httpClient'
-import { Slider } from '@/app/components/ui/slider'
+import { RadioInfo } from '@/app/components/player/radio-info'
+import { TrackInfo } from '@/app/components/player/track-info'
 import { Button } from '@/app/components/ui/button'
+import { Slider } from '@/app/components/ui/slider'
 import { usePlayer } from '@/app/contexts/player-context'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
-import { TrackInfo } from '@/app/components/player/track-info'
-import { RadioInfo } from '@/app/components/player/radio-info'
 
 let isSeeking = false
 

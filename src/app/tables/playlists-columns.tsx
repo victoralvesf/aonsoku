@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from 'react'
 import { ColumnDef } from '@tanstack/react-table'
 import { CheckIcon, ClockIcon, XIcon } from 'lucide-react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import i18n from '@/i18n'
-import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
-import { Playlist } from '@/types/responses/playlist'
-import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
-import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
-import { ROUTES } from '@/routes/routesList'
 import { getCoverArtUrl } from '@/api/httpClient'
-import PlaySongButton from '@/app/components/table/play-button'
-import { TableActionButton } from '@/app/components/table/action-button'
 import { PlaylistOptions } from '@/app/components/playlist/options'
 import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
+import { TableActionButton } from '@/app/components/table/action-button'
+import PlaySongButton from '@/app/components/table/play-button'
+import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import i18n from '@/i18n'
+import { ROUTES } from '@/routes/routesList'
+import { Playlist } from '@/types/responses/playlist'
+import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 export function playlistsColumns(): ColumnDef<Playlist>[] {
   return [

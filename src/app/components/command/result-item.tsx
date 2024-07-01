@@ -1,7 +1,7 @@
 import { Play } from 'lucide-react'
+import { getCoverArtUrl } from '@/api/httpClient'
 import Image from '@/app/components/image'
 import { Button } from '@/app/components/ui/button'
-import { getCoverArtUrl } from '@/api/httpClient'
 
 interface ResultItemProps {
   coverArt: string
