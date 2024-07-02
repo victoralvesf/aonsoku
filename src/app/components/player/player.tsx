@@ -23,14 +23,11 @@ import { Slider } from '@/app/components/ui/slider'
 import {
   usePlayerActions,
   usePlayerIsPlaying,
-  usePlayerProgress,
   usePlayerSonglist,
   usePlayerState,
   usePlayerVolume,
 } from '@/store/player.store'
-import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
-
-let isSeeking = false
+import { PlayerProgress } from './progress'
 
 const MemoizedTrackInfo = memo(TrackInfo)
 const MemoizedRadioInfo = memo(RadioInfo)
@@ -62,7 +59,6 @@ export function Player() {
     isShuffleActive,
   } = usePlayerState()
   const { currentList, currentSongIndex, radioList } = usePlayerSonglist()
-  const progress = usePlayerProgress()
   const isPlaying = usePlayerIsPlaying()
   const { volume, setVolume } = usePlayerVolume()
 
@@ -122,9 +118,7 @@ export function Player() {
     }
 
     const handleTimeUpdate = () => {
-      if (!isSeeking) {
-        setProgress(Math.floor(audio.currentTime))
-      }
+      setProgress(Math.floor(audio.currentTime))
     }
 
     audio.addEventListener('timeupdate', handleTimeUpdate)
@@ -141,29 +135,6 @@ export function Player() {
       clearPlayerState()
     }
   }, [clearPlayerState, hasNextSong, playNextSong])
-
-  const handleStartedSeeking = useCallback(() => {
-    isSeeking = true
-  }, [])
-
-  const handleSeeking = useCallback(
-    (amount: number) => {
-      isSeeking = true
-      setProgress(amount)
-    },
-    [setProgress],
-  )
-
-  const handleSeeked = useCallback(
-    (amount: number) => {
-      isSeeking = false
-      if (audioRef.current) {
-        audioRef.current.currentTime = amount
-        setProgress(amount)
-      }
-    },
-    [setProgress],
-  )
 
   return (
     <div className="border-t h-[100px] w-full flex items-center">
@@ -243,34 +214,7 @@ export function Player() {
           </div>
 
           {mediaType === 'song' && (
-            <div className="flex w-full gap-2 justify-center items-center">
-              <small className="text-xs text-muted-foreground w-10 text-center">
-                {convertSecondsToTime(progress)}
-              </small>
-              {song ? (
-                <Slider
-                  defaultValue={[0]}
-                  value={[progress]}
-                  max={currentDuration}
-                  step={1}
-                  className="cursor-pointer w-[32rem]"
-                  thumbMouseDown={() => handleStartedSeeking()}
-                  onValueChange={([value]) => handleSeeking(value)}
-                  onValueCommit={([value]) => handleSeeked(value)}
-                />
-              ) : (
-                <Slider
-                  defaultValue={[0]}
-                  max={100}
-                  step={1}
-                  showThumb={false}
-                  className="cursor-pointer w-[32rem] pointer-events-none"
-                />
-              )}
-              <small className="text-xs text-muted-foreground w-10 text-center">
-                {convertSecondsToTime(currentDuration ?? 0)}
-              </small>
-            </div>
+            <PlayerProgress audioRef={audioRef} song={song} />
           )}
         </div>
         {/* Remain Controls and Volume */}
