@@ -1,4 +1,5 @@
 import { produce } from 'immer'
+import { pick } from 'lodash'
 import merge from 'lodash/merge'
 import { devtools, subscribeWithSelector, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
@@ -305,8 +306,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
           return merge(currentState, persistedState)
         },
         partialize: (state) => {
+          const playerState = pick(state.playerState, [
+            'isLoopActive',
+            'isShuffleActive',
+            'volume',
+          ])
+
           return {
-            actions: state.actions,
+            playerState,
           }
         },
       },
