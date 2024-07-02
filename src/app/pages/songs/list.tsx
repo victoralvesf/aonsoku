@@ -6,8 +6,8 @@ import { ShadowHeader } from '@/app/components/shadow-header'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import { useLang } from '@/app/contexts/lang-context'
-import { usePlayer } from '@/app/contexts/player-context'
 import { songsColumns } from '@/app/tables/songs-columns'
+import { usePlayerActions, usePlayerSonglist } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { ISong } from '@/types/responses/song'
 
@@ -20,12 +20,13 @@ export default function SongsList() {
   const { count, songs } = useLoaderData() as LoaderData
   const { t } = useTranslation()
   const { langCode } = useLang()
-  const player = usePlayer()
+  const { setSongList } = usePlayerActions()
+  const { currentSongIndex } = usePlayerSonglist()
 
   const memoizedSongsColumns = useMemo(
     () => songsColumns(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [songs, langCode],
+    [songs, langCode, currentSongIndex],
   )
 
   const columnsToShow: ColumnFilter[] = [
@@ -41,7 +42,7 @@ export default function SongsList() {
   ]
 
   function handlePlaySong(index: number) {
-    player.setSongList(songs, index)
+    setSongList(songs, index)
   }
 
   return (

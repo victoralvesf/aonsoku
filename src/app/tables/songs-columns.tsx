@@ -1,16 +1,12 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { ColumnDef } from '@tanstack/react-table'
-import { clsx } from 'clsx'
 import { ClockIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-import { getCoverArtUrl } from '@/api/httpClient'
-import Image from '@/app/components/image'
 import { TableLikeButton } from '@/app/components/table/like-button'
 import PlaySongButton from '@/app/components/table/play-button'
+import { TableSongTitle } from '@/app/components/table/song-title'
 import { Badge } from '@/app/components/ui/badge'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
-import { usePlayer } from '@/app/contexts/player-context'
 import i18n from '@/i18n'
 import { ROUTES } from '@/routes/routesList'
 import { ISong } from '@/types/responses/song'
@@ -46,48 +42,7 @@ export function songsColumns(): ColumnDef<ISong>[] {
       accessorKey: 'title',
       header: i18n.t('table.columns.title'),
       maxSize: 600,
-      cell: ({ row }) => {
-        const coverArt = row.original.coverArt
-        const title = row.original.title
-        const artist = row.original.artist
-
-        const player = usePlayer()
-
-        return (
-          <div className="flex gap-2 items-center min-w-[200px] max-w-[300px] 2xl:min-w-[350px] 2xl:max-w-[450px]">
-            <Image
-              src={getCoverArtUrl(coverArt, '80')}
-              alt={title}
-              width={40}
-              height={40}
-              className="rounded shadow-md bg-foreground/10"
-            />
-            <div className="flex flex-col justify-center w-full">
-              <p
-                className={clsx(
-                  'font-medium truncate',
-                  player.checkActiveSong(row.original.id) &&
-                    'underline underline-offset-1 text-primary',
-                )}
-              >
-                {title}
-              </p>
-              {row.original.artistId ? (
-                <Link
-                  to={ROUTES.ARTIST.PAGE(row.original.artistId)}
-                  className="hover:underline flex 2xl:hidden w-fit"
-                >
-                  <p className="text-xs text-muted-foreground">{artist}</p>
-                </Link>
-              ) : (
-                <p className="flex 2xl:hidden text-xs text-muted-foreground">
-                  {artist}
-                </p>
-              )}
-            </div>
-          </div>
-        )
-      },
+      cell: ({ row }) => <TableSongTitle song={row.original} />,
     },
     {
       id: 'artist',

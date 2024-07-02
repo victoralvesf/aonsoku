@@ -14,15 +14,15 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
-import { usePlayer } from '@/app/contexts/player-context'
 import { subsonic } from '@/service/subsonic'
+import { usePlayerActions } from '@/store/player.store'
 import { AlbumListType, Albums, AlbumsListData } from '@/types/responses/album'
 
 export default function AlbumsList() {
   const defaultOffset = 32
   const toYear = new Date().getFullYear().toString()
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
-  const { setSongList } = usePlayer()
+  const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
 
   const { albumsCount, list: recentAlbums } = useLoaderData() as AlbumsListData

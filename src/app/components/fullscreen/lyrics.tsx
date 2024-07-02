@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { usePlayer } from '@/app/contexts/player-context'
 import { subsonic } from '@/service/subsonic'
+import { usePlayerActions, usePlayerSonglist } from '@/store/player.store'
 
 export function LyricsTab() {
   const lyricsBoxRef = useRef<HTMLDivElement>(null)
-  const { currentSongIndex, getCurrentSong } = usePlayer()
+  const { getCurrentSong } = usePlayerActions()
+  const { currentSongIndex } = usePlayerSonglist()
   const { t } = useTranslation()
 
   const noLyricsFound = t('fullscreen.noLyrics')

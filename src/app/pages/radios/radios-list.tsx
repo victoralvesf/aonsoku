@@ -9,9 +9,9 @@ import { ShadowHeader } from '@/app/components/shadow-header'
 import { Button } from '@/app/components/ui/button'
 import { DataTable } from '@/app/components/ui/data-table'
 import { useLang } from '@/app/contexts/lang-context'
-import { usePlayer } from '@/app/contexts/player-context'
 import { useRadios } from '@/app/contexts/radios-context'
 import { radiosColumns } from '@/app/tables/radios-columns'
+import { usePlayerActions } from '@/store/player.store'
 import { Radio } from '@/types/responses/radios'
 
 export default function Radios() {
@@ -25,8 +25,7 @@ export default function Radios() {
     [langCode, radios],
   )
   const memoizedRadios = useMemo(() => radios, [radios])
-
-  const player = usePlayer()
+  const { setPlayRadio } = usePlayerActions()
 
   function handleAddRadio() {
     setData({} as Radio)
@@ -59,9 +58,7 @@ export default function Radios() {
         <DataTable
           columns={memoizedRadiosColumns}
           data={memoizedRadios}
-          handlePlaySong={(row) =>
-            player.setPlayRadio(memoizedRadios, row.index)
-          }
+          handlePlaySong={(row) => setPlayRadio(memoizedRadios, row.index)}
           showPagination={true}
           showSearch={true}
           searchColumn="name"

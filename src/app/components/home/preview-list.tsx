@@ -9,8 +9,8 @@ import {
   CarouselItem,
 } from '@/app/components/ui/carousel'
 import { CarouselButton } from '@/app/components/ui/carousel-button'
-import { usePlayer } from '@/app/contexts/player-context'
 import { subsonic } from '@/service/subsonic'
+import { usePlayerActions } from '@/store/player.store'
 import { Albums } from '@/types/responses/album'
 
 interface PreviewListProps {
@@ -31,7 +31,7 @@ export default function PreviewList({
   const [api, setApi] = useState<CarouselApi>()
   const [canScrollPrev, setCanScrollPrev] = useState<boolean>()
   const [canScrollNext, setCanScrollNext] = useState<boolean>()
-  const player = usePlayer()
+  const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
 
   moreTitle = moreTitle || t('generic.seeMore')
@@ -44,7 +44,7 @@ export default function PreviewList({
     const response = await subsonic.albums.getOne(album.id)
 
     if (response) {
-      player.setSongList(response.song, 0)
+      setSongList(response.song, 0)
     }
   }
 

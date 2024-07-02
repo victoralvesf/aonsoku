@@ -20,7 +20,11 @@ import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
 import { Button } from '@/app/components/ui/button'
 import { Slider } from '@/app/components/ui/slider'
-import { usePlayer } from '@/app/contexts/player-context'
+import {
+  usePlayerActions,
+  usePlayerSonglist,
+  usePlayerState,
+} from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 let isSeeking = false
@@ -29,33 +33,63 @@ const MemoizedTrackInfo = memo(TrackInfo)
 const MemoizedRadioInfo = memo(RadioInfo)
 
 export function Player() {
-  const player = usePlayer()
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  const song = player.currentSongList[player.currentSongIndex]
-  const radio = player.radioList[player.currentSongIndex]
+  const {
+    togglePlayPause,
+    setAudioPlayerRef,
+    setCurrentDuration,
+    setProgress,
+    hasNextSong,
+    hasPrevSong,
+    playNextSong,
+    playPrevSong,
+    clearPlayerState,
+    isPlayingOneSong,
+    toggleShuffle,
+    toggleLoop,
+    starCurrentSong,
+    setVolume,
+    setPlayingState,
+  } = usePlayerActions()
+  const { currentList, currentSongIndex, radioList } = usePlayerSonglist()
+  const {
+    mediaType,
+    audioPlayerRef,
+    isPlaying,
+    volume,
+    currentDuration,
+    isLoopActive,
+    isShuffleActive,
+    isSongStarred,
+    progress,
+  } = usePlayerState()
+
+  const song = currentList[currentSongIndex]
+  const radio = radioList[currentSongIndex]
 
   useHotkeys(
     'space',
     () => {
-      if (player.currentSongList.length > 0) {
-        player.togglePlayPause()
+      if (currentList.length > 0) {
+        togglePlayPause()
       }
     },
     { preventDefault: true },
   )
 
   useEffect(() => {
-    if (player.mediaType !== 'song' && !song) return
+    if (mediaType !== 'song' && !song) return
 
-    if (player.audioPlayerRef === null) player.setAudioPlayerRef(audioRef)
-  }, [audioRef, player, song])
+    if (audioPlayerRef === null && audioRef.current)
+      setAudioPlayerRef(audioRef.current)
+  }, [audioPlayerRef, audioRef, mediaType, setAudioPlayerRef, song])
 
   useEffect(() => {
     if (!audioRef.current) return
 
-    if (player.mediaType === 'radio') {
-      if (player.isPlaying) {
+    if (mediaType === 'radio') {
+      if (isPlaying) {
         audioRef.current.src = ''
         audioRef.current.src = radio.streamUrl
         audioRef.current.play()
@@ -64,16 +98,16 @@ export function Player() {
       }
     }
 
-    if (player.mediaType === 'song') {
-      player.isPlaying ? audioRef.current.play() : audioRef.current.pause()
+    if (mediaType === 'song') {
+      isPlaying ? audioRef.current.play() : audioRef.current.pause()
     }
-  }, [player.isPlaying, player.mediaType, radio])
+  }, [isPlaying, mediaType, radio])
 
   useEffect(() => {
     if (!audioRef.current) return
 
-    audioRef.current.volume = player.volume / 100
-  }, [player.volume])
+    audioRef.current.volume = volume / 100
+  }, [volume])
 
   const setupProgressListener = useCallback(() => {
     const audio = audioRef.current
@@ -82,13 +116,13 @@ export function Player() {
     audio.currentTime = 0
     const audioDuration = Math.floor(audio.duration)
 
-    if (player.currentDuration !== audioDuration) {
-      player.setCurrentDuration(audioDuration)
+    if (currentDuration !== audioDuration) {
+      setCurrentDuration(audioDuration)
     }
 
     const handleTimeUpdate = () => {
       if (!isSeeking) {
-        player.setProgress(Math.floor(audio.currentTime))
+        setProgress(Math.floor(audio.currentTime))
       }
     }
 
@@ -96,16 +130,17 @@ export function Player() {
     return () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate)
     }
-  }, [player])
+  }, [currentDuration, setCurrentDuration, setProgress])
 
   const handleSongEnded = useCallback(() => {
-    if (player.hasNextSong) {
-      player.playNextSong()
+    if (hasNextSong()) {
+      playNextSong()
+      console.log('playNextSong')
       audioRef.current?.play()
     } else {
-      player.clearPlayerState()
+      clearPlayerState()
     }
-  }, [player])
+  }, [clearPlayerState, hasNextSong, playNextSong])
 
   const handleStartedSeeking = useCallback(() => {
     isSeeking = true
@@ -114,9 +149,9 @@ export function Player() {
   const handleSeeking = useCallback(
     (amount: number) => {
       isSeeking = true
-      player.setProgress(amount)
+      setProgress(amount)
     },
-    [player],
+    [setProgress],
   )
 
   const handleSeeked = useCallback(
@@ -124,10 +159,10 @@ export function Player() {
       isSeeking = false
       if (audioRef.current) {
         audioRef.current.currentTime = amount
-        player.setProgress(amount)
+        setProgress(amount)
       }
     },
-    [player],
+    [setProgress],
   )
 
   return (
@@ -135,26 +170,26 @@ export function Player() {
       <div className="w-full h-full grid grid-cols-player gap-2 px-4">
         {/* Track Info */}
         <div className="flex items-center gap-2">
-          {player.mediaType === 'song' && <MemoizedTrackInfo song={song} />}
-          {player.mediaType === 'radio' && <MemoizedRadioInfo radio={radio} />}
+          {mediaType === 'song' && <MemoizedTrackInfo song={song} />}
+          {mediaType === 'radio' && <MemoizedRadioInfo radio={radio} />}
         </div>
         {/* Main Controls */}
         <div className="col-span-2 flex flex-col justify-center items-center px-4 gap-1">
           <div className="flex w-full gap-1 justify-center items-center mb-1">
-            {player.mediaType === 'song' && (
+            {mediaType === 'song' && (
               <Button
                 variant="ghost"
                 className={clsx(
                   'relative rounded-full w-10 h-10 p-3',
-                  player.isShuffleActive && 'player-button-active',
+                  isShuffleActive && 'player-button-active',
                 )}
-                disabled={!song || player.isPlayingOneSong}
-                onClick={player.toggleShuffle}
+                disabled={!song || isPlayingOneSong()}
+                onClick={toggleShuffle}
               >
                 <Shuffle
                   className={clsx(
                     'w-10 h-10',
-                    player.isShuffleActive && 'text-primary',
+                    isShuffleActive && 'text-primary',
                   )}
                 />
               </Button>
@@ -163,8 +198,8 @@ export function Player() {
             <Button
               variant="ghost"
               className="rounded-full w-10 h-10 p-3"
-              disabled={(!song && !radio) || !player.hasPrevSong}
-              onClick={player.playPrevSong}
+              disabled={(!song && !radio) || !hasPrevSong()}
+              onClick={playPrevSong}
             >
               <SkipBack className="w-10 h-10 fill-secondary-foreground" />
             </Button>
@@ -172,9 +207,9 @@ export function Player() {
             <Button
               className="rounded-full w-10 h-10 p-3"
               disabled={!song && !radio}
-              onClick={player.togglePlayPause}
+              onClick={togglePlayPause}
             >
-              {player.isPlaying ? (
+              {isPlaying ? (
                 <Pause className="w-10 h-10 fill-slate-50 text-slate-50" />
               ) : (
                 <Play className="w-10 h-10 fill-slate-50 text-slate-50" />
@@ -184,42 +219,39 @@ export function Player() {
             <Button
               variant="ghost"
               className="rounded-full w-10 h-10 p-3"
-              disabled={(!song && !radio) || !player.hasNextSong}
-              onClick={player.playNextSong}
+              disabled={(!song && !radio) || !hasNextSong()}
+              onClick={playNextSong}
             >
               <SkipForward className="w-10 h-10 fill-secondary-foreground" />
             </Button>
 
-            {player.mediaType === 'song' && (
+            {mediaType === 'song' && (
               <Button
                 variant="ghost"
                 className={clsx(
                   'relative rounded-full w-10 h-10 p-3',
-                  player.isLoopActive && 'player-button-active',
+                  isLoopActive && 'player-button-active',
                 )}
                 disabled={!song}
-                onClick={player.toggleLoop}
+                onClick={toggleLoop}
               >
                 <Repeat
-                  className={clsx(
-                    'w-10 h-10',
-                    player.isLoopActive && 'text-primary',
-                  )}
+                  className={clsx('w-10 h-10', isLoopActive && 'text-primary')}
                 />
               </Button>
             )}
           </div>
 
-          {player.mediaType === 'song' && (
+          {mediaType === 'song' && (
             <div className="flex w-full gap-2 justify-center items-center">
               <small className="text-xs text-muted-foreground w-10 text-center">
-                {convertSecondsToTime(player.progress)}
+                {convertSecondsToTime(progress)}
               </small>
               {song ? (
                 <Slider
                   defaultValue={[0]}
-                  value={[player.progress]}
-                  max={player.currentDuration}
+                  value={[progress]}
+                  max={currentDuration}
                   step={1}
                   className="cursor-pointer w-[32rem]"
                   thumbMouseDown={() => handleStartedSeeking()}
@@ -236,7 +268,7 @@ export function Player() {
                 />
               )}
               <small className="text-xs text-muted-foreground w-10 text-center">
-                {convertSecondsToTime(player.currentDuration ?? 0)}
+                {convertSecondsToTime(currentDuration ?? 0)}
               </small>
             </div>
           )}
@@ -244,23 +276,23 @@ export function Player() {
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
-            {player.mediaType === 'song' && (
+            {mediaType === 'song' && (
               <Button
                 variant="ghost"
                 className="rounded-full w-10 h-10 p-3"
                 disabled={!song}
-                onClick={player.starCurrentSong}
+                onClick={starCurrentSong}
               >
                 <Heart
                   className={clsx(
                     'w-5 h-5',
-                    player.isSongStarred && 'text-red-500 fill-red-500',
+                    isSongStarred && 'text-red-500 fill-red-500',
                   )}
                 />
               </Button>
             )}
 
-            {player.mediaType === 'song' && (
+            {mediaType === 'song' && (
               <Button
                 variant="ghost"
                 className="rounded-full w-10 h-10 p-2"
@@ -272,15 +304,13 @@ export function Player() {
 
             <div className="flex gap-2 ml-2">
               <div className={clsx(!song && !radio && 'opacity-50')}>
-                {player.volume >= 50 && <Volume2 className="w-4 h-4" />}
-                {player.volume > 0 && player.volume < 50 && (
-                  <Volume1 className="w-4 h-4" />
-                )}
-                {player.volume === 0 && <Volume className="w-4 h-4" />}
+                {volume >= 50 && <Volume2 className="w-4 h-4" />}
+                {volume > 0 && volume < 50 && <Volume1 className="w-4 h-4" />}
+                {volume === 0 && <Volume className="w-4 h-4" />}
               </div>
               <Slider
                 defaultValue={[100]}
-                value={[player.volume]}
+                value={[volume]}
                 max={100}
                 step={1}
                 disabled={!song && !radio}
@@ -289,33 +319,33 @@ export function Player() {
                   'w-[8rem]',
                   !song && !radio && 'pointer-events-none opacity-50',
                 )}
-                onValueChange={([value]) => player.setVolume(value)}
+                onValueChange={([value]) => setVolume(value)}
               />
             </div>
           </div>
         </div>
       </div>
 
-      {player.mediaType === 'song' && song && (
+      {mediaType === 'song' && song && (
         <audio
           src={getSongStreamUrl(song.id)}
           autoPlay={true}
           ref={audioRef}
-          loop={player.isLoopActive}
-          onPlay={() => player.setPlayingState(true)}
-          onPause={() => player.setPlayingState(false)}
+          loop={isLoopActive}
+          onPlay={() => setPlayingState(true)}
+          onPause={() => setPlayingState(false)}
           onLoadedMetadata={setupProgressListener}
           onEnded={handleSongEnded}
         />
       )}
 
-      {player.mediaType === 'radio' && radio && (
+      {mediaType === 'radio' && radio && (
         <audio
           src={radio.streamUrl}
           autoPlay={true}
           ref={audioRef}
-          onPlay={() => player.setPlayingState(true)}
-          onPause={() => player.setPlayingState(false)}
+          onPlay={() => setPlayingState(true)}
+          onPause={() => setPlayingState(false)}
         />
       )}
     </div>

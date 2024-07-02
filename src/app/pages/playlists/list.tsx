@@ -8,15 +8,15 @@ import { ShadowHeader } from '@/app/components/shadow-header'
 import { Button } from '@/app/components/ui/button'
 import { DataTable } from '@/app/components/ui/data-table'
 import { useLang } from '@/app/contexts/lang-context'
-import { usePlayer } from '@/app/contexts/player-context'
 import { usePlaylists } from '@/app/contexts/playlists-context'
 import { playlistsColumns } from '@/app/tables/playlists-columns'
 import { subsonic } from '@/service/subsonic'
+import { usePlayerActions } from '@/store/player.store'
 
 export default function PlaylistsPage() {
   const { langCode } = useLang()
   const { playlists, setPlaylistDialogState } = usePlaylists()
-  const player = usePlayer()
+  const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
 
   const memoizedPlaylistsColumns = useMemo(
@@ -29,7 +29,7 @@ export default function PlaylistsPage() {
     const playlist = await subsonic.playlists.getOne(playlistId)
 
     if (playlist && playlist.entry.length > 0) {
-      player.setSongList(playlist.entry, 0)
+      setSongList(playlist.entry, 0)
     }
   }
 

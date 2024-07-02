@@ -12,9 +12,9 @@ import {
   AlertDialogTitle,
 } from '@/app/components/ui/alert-dialog'
 import { useApp } from '@/app/contexts/app-context'
-import { usePlayer } from '@/app/contexts/player-context'
+import { useRadios } from '@/app/contexts/radios-context'
 import { ROUTES } from '@/routes/routesList'
-import { useRadios } from '../contexts/radios-context'
+import { usePlayerActions } from '@/store/player.store'
 
 interface AlertDialogProps {
   openDialog: boolean
@@ -27,7 +27,7 @@ export function LogoutConfirmDialog({
 }: AlertDialogProps) {
   const { handleRemoveServerConfig } = useApp()
   const navigate = useNavigate()
-  const { clearPlayerState } = usePlayer()
+  const { clearPlayerState } = usePlayerActions()
   const { setRadios } = useRadios()
   const { t } = useTranslation()
 

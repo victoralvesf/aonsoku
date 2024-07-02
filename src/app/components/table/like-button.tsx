@@ -3,8 +3,8 @@ import { Heart } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/app/components/ui/button'
-import { usePlayer } from '@/app/contexts/player-context'
 import { subsonic } from '@/service/subsonic'
+import { usePlayerActions, usePlayerState } from '@/store/player.store'
 
 interface TableLikeButtonProps {
   type: 'song' | 'artist'
@@ -18,8 +18,9 @@ export function TableLikeButton({
   type,
 }: TableLikeButtonProps) {
   const [isStarred, setIsStarred] = useState(starred)
-  const { checkActiveSong, isSongStarred, starCurrentSong, starSongInQueue } =
-    usePlayer()
+  const { checkActiveSong, starCurrentSong, starSongInQueue } =
+    usePlayerActions()
+  const { isSongStarred } = usePlayerState()
 
   useEffect(() => {
     if (type === 'artist') return

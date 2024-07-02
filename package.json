@@ -39,6 +39,7 @@
     "fast-average-color": "^9.4.0",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
+    "immer": "^10.1.1",
     "lodash": "^4.17.21",
     "lucide-react": "^0.378.0",
     "react": "^18.2.0",
@@ -54,7 +55,8 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#v1",
-    "vaul": "^0.9.1"
+    "vaul": "^0.9.1",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.2.2",

@@ -6,18 +6,18 @@ import {
   TableCell,
   TableRow,
 } from '@/app/components/ui/table'
-import { usePlayer } from '@/app/contexts/player-context'
 import { cn } from '@/lib/utils'
+import {
+  usePlayerActions,
+  usePlayerSonglist,
+  usePlayerState,
+} from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 export function FullscreenSongQueue() {
-  const {
-    currentSongIndex,
-    currentSongList,
-    getCurrentSong,
-    setSongList,
-    isPlaying,
-  } = usePlayer()
+  const { getCurrentSong, setSongList } = usePlayerActions()
+  const { isPlaying } = usePlayerState()
+  const { currentSongIndex, currentList } = usePlayerSonglist()
 
   const songRef = useRef<HTMLTableSectionElement>(null)
 
@@ -36,7 +36,7 @@ export function FullscreenSongQueue() {
     moveSongToTop()
   }, [currentSongIndex, moveSongToTop])
 
-  if (currentSongList.length === 0)
+  if (currentList.length === 0)
     return (
       <div className="flex justify-center items-center">
         <span>No songs in queue</span>
@@ -48,7 +48,7 @@ export function FullscreenSongQueue() {
   return (
     <Table className="min-h-full h-full bg-transparent">
       <TableBody ref={songRef}>
-        {currentSongList.map((entry, index) => (
+        {currentList.map((entry, index) => (
           <TableRow
             key={entry.id}
             data-state={currentSongId === entry.id ? 'active' : 'inactive'}
@@ -59,7 +59,7 @@ export function FullscreenSongQueue() {
             )}
             onClick={() => {
               if (currentSongId !== entry.id) {
-                setSongList(currentSongList, index)
+                setSongList(currentList, index)
               }
             }}
           >

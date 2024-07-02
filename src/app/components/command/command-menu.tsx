@@ -15,12 +15,12 @@ import {
   CommandList,
 } from '@/app/components/ui/command'
 import { useApp } from '@/app/contexts/app-context'
-import { usePlayer } from '@/app/contexts/player-context'
 import { usePlaylists } from '@/app/contexts/playlists-context'
 import { useTheme } from '@/app/contexts/theme-context'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
+import { usePlayerActions } from '@/store/player.store'
 import { Albums } from '@/types/responses/album'
 import { ISimilarArtist } from '@/types/responses/artist'
 import { ISong } from '@/types/responses/song'
@@ -45,7 +45,7 @@ export default function CommandMenu() {
   const { osType } = useApp()
   const { getArtistAllSongs, getAlbumSongs } = useSongList()
   const { playlists, setPlaylistDialogState } = usePlaylists()
-  const player = usePlayer()
+  const { setSongList, playSong } = usePlayerActions()
 
   const isMacOS = osType === 'Darwin'
   const isBrowser = !isTauri()
@@ -108,12 +108,12 @@ export default function CommandMenu() {
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
     const artistSongs = await getArtistAllSongs(artist.name)
-    if (artistSongs) player.setSongList(artistSongs, 0)
+    if (artistSongs) setSongList(artistSongs, 0)
   }
 
   async function handlePlayAlbum(albumId: string) {
     const albumSongs = await getAlbumSongs(albumId)
-    if (albumSongs) player.setSongList(albumSongs, 0)
+    if (albumSongs) setSongList(albumSongs, 0)
   }
 
   const modifierKey = () => {
@@ -228,7 +228,7 @@ export default function CommandMenu() {
                       coverArt={song.coverArt}
                       title={song.title}
                       artist={song.artist}
-                      onClick={() => player.playSong(song)}
+                      onClick={() => playSong(song)}
                     />
                   </CommandItem>
                 ))}

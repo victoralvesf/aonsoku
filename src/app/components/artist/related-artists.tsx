@@ -8,8 +8,8 @@ import {
   CarouselItem,
 } from '@/app/components/ui/carousel'
 import { CarouselButton } from '@/app/components/ui/carousel-button'
-import { usePlayer } from '@/app/contexts/player-context'
 import { useSongList } from '@/app/hooks/use-song-list'
+import { usePlayerActions } from '@/store/player.store'
 import { IArtistInfo, ISimilarArtist } from '@/types/responses/artist'
 
 interface RelatedArtistsListProps {
@@ -24,7 +24,7 @@ export default function RelatedArtistsList({ title }: RelatedArtistsListProps) {
   const [api, setApi] = useState<CarouselApi>()
   const [canScrollPrev, setCanScrollPrev] = useState<boolean>()
   const [canScrollNext, setCanScrollNext] = useState<boolean>()
-  const player = usePlayer()
+  const { setSongList } = usePlayerActions()
 
   if (list.length > 16) {
     list = list.slice(0, 16)
@@ -32,7 +32,7 @@ export default function RelatedArtistsList({ title }: RelatedArtistsListProps) {
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
     const songList = await getArtistAllSongs(artist.name)
-    if (songList) player.setSongList(songList, 0)
+    if (songList) setSongList(songList, 0)
   }
 
   useEffect(() => {

@@ -114,7 +114,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     document.title = 'Subsonic Player'
   }, [])
 
-  const hasNextSong = useMemo(() => {
+  const hasNextSong = useCallback(() => {
     if (mediaType === 'song') {
       return isShuffleActive || currentSongIndex + 1 < currentSongList.length
     } else {
@@ -128,22 +128,22 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
     radioList,
   ])
 
-  const hasPrevSong = useMemo(() => {
+  const hasPrevSong = useCallback(() => {
     return currentSongIndex > 0
   }, [currentSongIndex])
 
-  const isPlayingOneSong = useMemo(() => {
+  const isPlayingOneSong = useCallback(() => {
     return currentSongList.length === 1
   }, [currentSongList.length])
 
   const playNextSong = useCallback(() => {
-    if (hasNextSong) {
+    if (hasNextSong()) {
       setCurrentSongIndex((prevIndex) => prevIndex + 1)
     }
   }, [hasNextSong])
 
   const playPrevSong = useCallback(() => {
-    if (hasPrevSong) {
+    if (hasPrevSong()) {
       setCurrentSongIndex((prevIndex) => prevIndex - 1)
     }
   }, [hasPrevSong])
@@ -164,7 +164,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
   )
 
   const starSongInQueue = useCallback(
-    async (id: string) => {
+    (id: string) => {
       if (currentSongList.length === 0 && mediaType !== 'song') return
 
       const songIndex = currentSongList.findIndex((song) => song.id === id)
@@ -282,42 +282,49 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
 
   const value: IPlayerContext = useMemo(
     () => ({
-      shuffledSongList,
-      currentSongList,
-      currentSongIndex,
-      originalSongIndex,
-      isPlaying,
-      isLoopActive,
-      isShuffleActive,
-      isPlayingOneSong,
-      isSongStarred,
-      setIsSongStarred,
-      starSongInQueue,
-      playSong,
-      setPlayingState,
-      setSongList,
-      togglePlayPause,
-      toggleLoop,
-      toggleShuffle,
-      checkActiveSong,
-      playNextSong,
-      playPrevSong,
-      clearPlayerState,
-      hasNextSong,
-      hasPrevSong,
-      progress,
-      setProgress,
-      currentDuration,
-      setCurrentDuration,
-      getCurrentSong,
-      mediaType,
-      radioList,
-      setPlayRadio,
-      volume,
-      setVolume,
-      starCurrentSong,
-      audioPlayerRef,
-      setAudioPlayerRef,
+      songlist: {
+        originalList: originalSongList,
+        originalSongIndex,
+        currentList: currentSongList,
+        currentSongIndex,
+        radioList,
+        shuffledList: shuffledSongList,
+      },
+      playerState: {
+        audioPlayerRef,
+        currentDuration,
+        isLoopActive,
+        isPlaying,
+        isShuffleActive,
+        isSongStarred,
+        mediaType,
+        progress,
+        volume,
+      },
+      actions: {
+        setIsSongStarred,
+        starSongInQueue,
+        playSong,
+        setPlayingState,
+        setSongList,
+        togglePlayPause,
+        toggleLoop,
+        toggleShuffle,
+        checkActiveSong,
+        playNextSong,
+        playPrevSong,
+        hasNextSong,
+        hasPrevSong,
+        isPlayingOneSong,
+        clearPlayerState,
+        setProgress,
+        setCurrentDuration,
+        getCurrentSong,
+        setPlayRadio,
+        setVolume,
+        starCurrentSong,
+        setAudioPlayerRef,
+      },
     }),
     [
       audioPlayerRef,
@@ -336,6 +343,7 @@ export function PlayerContextProvider({ children }: { children: ReactNode }) {
       isSongStarred,
       mediaType,
       originalSongIndex,
+      originalSongList,
       playNextSong,
       playPrevSong,
       playSong,

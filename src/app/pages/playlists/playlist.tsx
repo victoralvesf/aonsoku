@@ -9,9 +9,9 @@ import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import { useLang } from '@/app/contexts/lang-context'
-import { usePlayer } from '@/app/contexts/player-context'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { cn } from '@/lib/utils'
+import { usePlayerActions, usePlayerSonglist } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { PlaylistWithEntries } from '@/types/responses/playlist'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
@@ -20,10 +20,14 @@ import { getTextSizeClass } from '@/utils/getTextSizeClass'
 export default function Playlist() {
   const { t } = useTranslation()
   const { langCode } = useLang()
+  const { currentSongIndex } = usePlayerSonglist()
 
   const playlist = useLoaderData() as PlaylistWithEntries
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedSongsColumns = useMemo(() => songsColumns(), [langCode])
+  const memoizedSongsColumns = useMemo(
+    () => songsColumns(),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [langCode, currentSongIndex],
+  )
   const memoizedPlaylist = useMemo(() => playlist, [playlist])
 
   const [removeDialogState, setRemoveDialogState] = useState(false)
@@ -32,7 +36,7 @@ export default function Playlist() {
     memoizedPlaylist.duration > 0
       ? convertSecondsToHumanRead(memoizedPlaylist.duration)
       : undefined
-  const player = usePlayer()
+  const { setSongList } = usePlayerActions()
 
   const columnsToShow: ColumnFilter[] = [
     'index',
@@ -87,12 +91,10 @@ export default function Playlist() {
 
       <PlayButtons
         playButtonTooltip={buttonsTooltips.play}
-        handlePlayButton={() => player.setSongList(memoizedPlaylist.entry, 0)}
+        handlePlayButton={() => setSongList(memoizedPlaylist.entry, 0)}
         disablePlayButton={!memoizedPlaylist.entry}
         shuffleButtonTooltip={buttonsTooltips.shuffle}
-        handleShuffleButton={() =>
-          player.setSongList(memoizedPlaylist.entry, 0, true)
-        }
+        handleShuffleButton={() => setSongList(memoizedPlaylist.entry, 0, true)}
         disableShuffleButton={!memoizedPlaylist.entry}
         optionsTooltip={buttonsTooltips.options}
         showLikeButton={false}
@@ -118,7 +120,7 @@ export default function Playlist() {
           columns={memoizedSongsColumns}
           data={memoizedPlaylist.entry}
           handlePlaySong={(row) =>
-            player.setSongList(memoizedPlaylist.entry, row.index)
+            setSongList(memoizedPlaylist.entry, row.index)
           }
           columnFilter={columnsToShow}
         />

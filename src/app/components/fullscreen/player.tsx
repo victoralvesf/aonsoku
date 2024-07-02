@@ -10,7 +10,7 @@ import {
 import { useCallback, useState } from 'react'
 import { Button } from '@/app/components/ui/button'
 import { Slider } from '@/app/components/ui/slider'
-import { usePlayer } from '@/app/contexts/player-context'
+import { usePlayerActions, usePlayerState } from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { LikeButton } from './like-button'
 import { VolumeContainer } from './volume-container'
@@ -18,39 +18,57 @@ import { VolumeContainer } from './volume-container'
 let isSeeking = false
 
 export function FullscreenPlayer() {
-  const [progress, setProgress] = useState(0)
-  const player = usePlayer()
+  const [localProgress, setLocalProgress] = useState(0)
+  const {
+    audioPlayerRef,
+    progress,
+    currentDuration,
+    isShuffleActive,
+    isPlaying,
+    isLoopActive,
+  } = usePlayerState()
+  const {
+    setProgress,
+    isPlayingOneSong,
+    toggleShuffle,
+    playNextSong,
+    playPrevSong,
+    hasNextSong,
+    hasPrevSong,
+    togglePlayPause,
+    toggleLoop,
+  } = usePlayerActions()
 
   const handleSeeking = useCallback((amount: number) => {
     isSeeking = true
-    setProgress(amount)
+    setLocalProgress(amount)
   }, [])
 
   const handleSeeked = useCallback(
     (amount: number) => {
       isSeeking = false
 
-      if (player.audioPlayerRef && player.audioPlayerRef.current) {
-        player.audioPlayerRef.current.currentTime = amount
+      if (audioPlayerRef) {
+        audioPlayerRef.currentTime = amount
+        setLocalProgress(amount)
         setProgress(amount)
-        player.setProgress(amount)
       }
     },
-    [player],
+    [audioPlayerRef, setProgress],
   )
 
   return (
     <div className="w-full">
       <div className="flex gap-4 items-center">
         <div className="min-w-[50px] text-right">
-          {convertSecondsToTime(player.progress)}
+          {convertSecondsToTime(progress)}
         </div>
 
         <Slider
           variant="secondary"
-          defaultValue={[progress]}
-          value={isSeeking ? [progress] : [player.progress]}
-          max={player.currentDuration}
+          defaultValue={[localProgress]}
+          value={isSeeking ? [localProgress] : [progress]}
+          max={currentDuration}
           step={1}
           className="w-full h-4"
           onValueChange={([value]) => handleSeeking(value)}
@@ -58,7 +76,7 @@ export function FullscreenPlayer() {
         />
 
         <div className="min-w-[50px] text-left">
-          {convertSecondsToTime(player.currentDuration ?? 0)}
+          {convertSecondsToTime(currentDuration ?? 0)}
         </div>
       </div>
       <div className="flex items-center justify-between gap-4 mt-5">
@@ -72,15 +90,15 @@ export function FullscreenPlayer() {
             variant="ghost"
             className={clsx(
               buttonStyle.secondary,
-              player.isShuffleActive && buttonStyle.activeDot,
+              isShuffleActive && buttonStyle.activeDot,
             )}
-            onClick={() => player.toggleShuffle()}
-            disabled={player.isPlayingOneSong}
+            onClick={() => toggleShuffle()}
+            disabled={isPlayingOneSong()}
           >
             <Shuffle
               className={clsx(
                 buttonStyle.secondaryIcon,
-                player.isShuffleActive && 'text-primary',
+                isShuffleActive && 'text-primary',
               )}
             />
           </Button>
@@ -88,8 +106,8 @@ export function FullscreenPlayer() {
             size="icon"
             variant="ghost"
             className={buttonStyle.secondary}
-            onClick={() => player.playPrevSong()}
-            disabled={!player.hasPrevSong}
+            onClick={() => playPrevSong()}
+            disabled={!hasPrevSong()}
           >
             <SkipBack className={buttonStyle.secondaryIconFilled} />
           </Button>
@@ -97,9 +115,9 @@ export function FullscreenPlayer() {
             size="icon"
             variant="link"
             className={buttonStyle.main}
-            onClick={() => player.togglePlayPause()}
+            onClick={() => togglePlayPause()}
           >
-            {player.isPlaying ? (
+            {isPlaying ? (
               <Pause className={buttonStyle.mainIcon} strokeWidth={1} />
             ) : (
               <Play className={buttonStyle.mainIcon} />
@@ -109,8 +127,8 @@ export function FullscreenPlayer() {
             size="icon"
             variant="ghost"
             className={buttonStyle.secondary}
-            onClick={() => player.playNextSong()}
-            disabled={!player.hasNextSong}
+            onClick={() => playNextSong()}
+            disabled={!hasNextSong()}
           >
             <SkipForward className={buttonStyle.secondaryIconFilled} />
           </Button>
@@ -119,14 +137,14 @@ export function FullscreenPlayer() {
             variant="ghost"
             className={clsx(
               buttonStyle.secondary,
-              player.isLoopActive && buttonStyle.activeDot,
+              isLoopActive && buttonStyle.activeDot,
             )}
-            onClick={() => player.toggleLoop()}
+            onClick={() => toggleLoop()}
           >
             <Repeat
               className={clsx(
                 buttonStyle.secondaryIcon,
-                player.isLoopActive && 'text-primary',
+                isLoopActive && 'text-primary',
               )}
             />
           </Button>

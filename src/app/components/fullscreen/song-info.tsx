@@ -1,11 +1,11 @@
 import { getCoverArtUrl } from '@/api/httpClient'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import { Badge } from '@/app/components/ui/badge'
-import { usePlayer } from '@/app/contexts/player-context'
+import { usePlayerActions } from '@/store/player.store'
 
 export function SongInfo() {
-  const player = usePlayer()
-  const song = player.getCurrentSong()
+  const { getCurrentSong } = usePlayerActions()
+  const song = getCurrentSong()
   const imageUrl = getCoverArtUrl(song.coverArt, '1000')
 
   const backgroundImage = `url(${imageUrl})`
