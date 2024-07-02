@@ -10,7 +10,12 @@ import {
 import { useCallback, useState } from 'react'
 import { Button } from '@/app/components/ui/button'
 import { Slider } from '@/app/components/ui/slider'
-import { usePlayerActions, usePlayerState } from '@/store/player.store'
+import {
+  usePlayerActions,
+  usePlayerIsPlaying,
+  usePlayerProgress,
+  usePlayerState,
+} from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { LikeButton } from './like-button'
 import { VolumeContainer } from './volume-container'
@@ -19,14 +24,10 @@ let isSeeking = false
 
 export function FullscreenPlayer() {
   const [localProgress, setLocalProgress] = useState(0)
-  const {
-    audioPlayerRef,
-    progress,
-    currentDuration,
-    isShuffleActive,
-    isPlaying,
-    isLoopActive,
-  } = usePlayerState()
+  const progress = usePlayerProgress()
+  const isPlaying = usePlayerIsPlaying()
+  const { audioPlayerRef, currentDuration, isShuffleActive, isLoopActive } =
+    usePlayerState()
   const {
     setProgress,
     isPlayingOneSong,

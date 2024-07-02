@@ -5,12 +5,11 @@ import { LangSelect } from '@/app/components/header/lang-select'
 import { NavigationButtons } from '@/app/components/header/navigation-buttons'
 import { ThemeToggle } from '@/app/components/header/theme-toggle'
 import { LogoutConfirmDialog } from '@/app/components/logout-confirm'
-import { usePlayerActions, usePlayerSonglist } from '@/store/player.store'
+import { usePlayerSonglist } from '@/store/player.store'
 
 export function Header() {
   const [logoutDialogState, setLogoutDialogState] = useState(false)
-  const { currentList, currentSongIndex } = usePlayerSonglist()
-  const { getCurrentSong } = usePlayerActions()
+  const { currentList, currentSongIndex, currentSong } = usePlayerSonglist()
 
   const isPlaylistEmpty = currentList.length === 0
 
@@ -26,9 +25,7 @@ export function Header() {
   function getCurrentSongInfo() {
     if (isPlaylistEmpty) return ''
 
-    const song = getCurrentSong()
-
-    return `${song.artist} - ${song.title}`
+    return `${currentSong.artist} - ${currentSong.title}`
   }
 
   return (

@@ -1,14 +1,23 @@
 import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { ROUTES } from '@/routes/routesList'
-import { usePlayerActions } from '@/store/player.store'
+import { usePlayerMediaType, usePlayerSonglist } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 import Image from '../image'
 
 export function TableSongTitle({ song }: { song: ISong }) {
-  const { checkActiveSong } = usePlayerActions()
-  const songIsPlaying = checkActiveSong(song.id)
+  const { currentSong } = usePlayerSonglist()
+  const mediaType = usePlayerMediaType()
+  const [songIsPlaying, setSongIsPlaying] = useState(false)
+
+  useEffect(() => {
+    if (mediaType === 'radio') return
+
+    const isPlaying = currentSong.id === song.id
+    setSongIsPlaying(isPlaying)
+  }, [currentSong, mediaType, song.id])
 
   return (
     <div className="flex gap-2 items-center min-w-[200px] max-w-[300px] 2xl:min-w-[350px] 2xl:max-w-[450px]">

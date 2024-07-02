@@ -7,8 +7,9 @@ import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import {
   usePlayerActions,
+  usePlayerIsPlaying,
+  usePlayerMediaType,
   usePlayerSonglist,
-  usePlayerState,
 } from '@/store/player.store'
 
 interface PlaySongButtonProps {
@@ -34,7 +35,8 @@ export default function PlaySongButton({
   artist = '',
 }: PlaySongButtonProps) {
   const { checkActiveSong, togglePlayPause } = usePlayerActions()
-  const { mediaType, isPlaying } = usePlayerState()
+  const mediaType = usePlayerMediaType()
+  const isPlaying = usePlayerIsPlaying()
   const { radioList, currentSongIndex } = usePlayerSonglist()
   const { t } = useTranslation()
 

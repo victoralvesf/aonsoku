@@ -9,15 +9,15 @@ import {
 import { cn } from '@/lib/utils'
 import {
   usePlayerActions,
+  usePlayerIsPlaying,
   usePlayerSonglist,
-  usePlayerState,
 } from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 export function FullscreenSongQueue() {
-  const { getCurrentSong, setSongList } = usePlayerActions()
-  const { isPlaying } = usePlayerState()
-  const { currentSongIndex, currentList } = usePlayerSonglist()
+  const { setSongList } = usePlayerActions()
+  const { currentList, currentSongIndex, currentSong } = usePlayerSonglist()
+  const isPlaying = usePlayerIsPlaying()
 
   const songRef = useRef<HTMLTableSectionElement>(null)
 
@@ -43,28 +43,26 @@ export function FullscreenSongQueue() {
       </div>
     )
 
-  const currentSongId = getCurrentSong().id
-
   return (
     <Table className="min-h-full h-full bg-transparent">
       <TableBody ref={songRef}>
         {currentList.map((entry, index) => (
           <TableRow
             key={entry.id}
-            data-state={currentSongId === entry.id ? 'active' : 'inactive'}
+            data-state={currentSong.id === entry.id ? 'active' : 'inactive'}
             className={cn(
               'hover:shadow-md hover:bg-background/30 dark:hover:bg-muted-foreground/30 border-0 cursor-pointer',
-              currentSongId === entry.id &&
+              currentSong.id === entry.id &&
                 'bg-primary/80 hover:bg-primary dark:hover:bg-primary/70',
             )}
             onClick={() => {
-              if (currentSongId !== entry.id) {
+              if (currentSong.id !== entry.id) {
                 setSongList(currentList, index)
               }
             }}
           >
             <TableCell className="w-[30px] text-center font-medium">
-              {currentSongId === entry.id && isPlaying ? (
+              {currentSong.id === entry.id && isPlaying ? (
                 <div className="w-6 flex items-center">
                   <div className="w-6 h-6 flex items-center justify-center">
                     <Image
@@ -76,7 +74,9 @@ export function FullscreenSongQueue() {
                   </div>
                 </div>
               ) : (
-                <div>{index + 1}</div>
+                <div className="w-6 h-6 text-center flex justify-center items-center">
+                  <p>{index + 1}</p>
+                </div>
               )}
             </TableCell>
             <TableCell>

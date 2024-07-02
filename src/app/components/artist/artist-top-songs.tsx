@@ -3,22 +3,15 @@ import { useTranslation } from 'react-i18next'
 import { useAsyncValue } from 'react-router-dom'
 import { DataTable } from '@/app/components/ui/data-table'
 import { Skeleton } from '@/app/components/ui/skeleton'
-import { useLang } from '@/app/contexts/lang-context'
 import { songsColumns } from '@/app/tables/songs-columns'
-import { usePlayerActions, usePlayerSonglist } from '@/store/player.store'
+import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { ISong } from '@/types/responses/song'
 
 export default function ArtistTopSongs() {
   const topSongs = useAsyncValue() as ISong[]
-  const { langCode } = useLang()
-  const { currentSongIndex } = usePlayerSonglist()
+  const columns = songsColumns()
 
-  const memoizedSongsColumns = useMemo(
-    () => songsColumns(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [langCode, currentSongIndex],
-  )
   const memoizedTopSongs = useMemo(() => {
     if (topSongs.length > 10) {
       return topSongs.slice(0, 10)
@@ -49,7 +42,7 @@ export default function ArtistTopSongs() {
       </h3>
 
       <DataTable
-        columns={memoizedSongsColumns}
+        columns={columns}
         data={memoizedTopSongs}
         handlePlaySong={(row) => setSongList(memoizedTopSongs, row.index)}
         columnFilter={columnsToShow}

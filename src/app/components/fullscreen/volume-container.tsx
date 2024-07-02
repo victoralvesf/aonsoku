@@ -1,14 +1,13 @@
 import { Volume, Volume1, Volume2 } from 'lucide-react'
 import { Slider } from '@/app/components/ui/slider'
-import { usePlayerActions, usePlayerState } from '@/store/player.store'
+import { usePlayerVolume } from '@/store/player.store'
 
 interface VolumeContainerProps {
   className: string
 }
 
 export function VolumeContainer({ className }: VolumeContainerProps) {
-  const { volume } = usePlayerState()
-  const { setVolume } = usePlayerActions()
+  const { volume, setVolume } = usePlayerVolume()
 
   return (
     <div className="flex justify-center items-center gap-4">

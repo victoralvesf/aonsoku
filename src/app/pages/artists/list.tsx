@@ -6,7 +6,6 @@ import ListWrapper from '@/app/components/list-wrapper'
 import { ShadowHeader } from '@/app/components/shadow-header'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
-import { useLang } from '@/app/contexts/lang-context'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { artistsColumns } from '@/app/tables/artists-columns'
 import { usePlayerActions } from '@/store/player.store'
@@ -15,15 +14,10 @@ import { ArtistSeparator, ISimilarArtist } from '@/types/responses/artist'
 export default function ArtistsList() {
   const list = useLoaderData() as ArtistSeparator[]
   const { t } = useTranslation()
-  const { langCode } = useLang()
   const { getArtistAllSongs } = useSongList()
   const { setSongList } = usePlayerActions()
 
-  const memoizedArtistsColumns = useMemo(
-    () => artistsColumns(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [list, langCode],
-  )
+  const columns = artistsColumns()
 
   const organizeArtists = useCallback(() => {
     const artistsList: ISimilarArtist[] = []
@@ -56,7 +50,7 @@ export default function ArtistsList() {
 
       <ListWrapper className="mt-6">
         <DataTable
-          columns={memoizedArtistsColumns}
+          columns={columns}
           data={artists}
           showPagination={true}
           showSearch={true}

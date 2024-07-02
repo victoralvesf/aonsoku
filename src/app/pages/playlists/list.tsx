@@ -1,5 +1,4 @@
 import { PlusIcon } from 'lucide-react'
-import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { HeaderTitle } from '@/app/components/header-title'
@@ -7,23 +6,17 @@ import ListWrapper from '@/app/components/list-wrapper'
 import { ShadowHeader } from '@/app/components/shadow-header'
 import { Button } from '@/app/components/ui/button'
 import { DataTable } from '@/app/components/ui/data-table'
-import { useLang } from '@/app/contexts/lang-context'
 import { usePlaylists } from '@/app/contexts/playlists-context'
 import { playlistsColumns } from '@/app/tables/playlists-columns'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 
 export default function PlaylistsPage() {
-  const { langCode } = useLang()
   const { playlists, setPlaylistDialogState } = usePlaylists()
   const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
 
-  const memoizedPlaylistsColumns = useMemo(
-    () => playlistsColumns(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [playlists, langCode],
-  )
+  const columns = playlistsColumns()
 
   async function handlePlayPlaylist(playlistId: string) {
     const playlist = await subsonic.playlists.getOne(playlistId)
@@ -56,7 +49,7 @@ export default function PlaylistsPage() {
 
       <ListWrapper className="mt-6">
         <DataTable
-          columns={memoizedPlaylistsColumns}
+          columns={columns}
           data={playlists}
           showPagination={true}
           showSearch={true}

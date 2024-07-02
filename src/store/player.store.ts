@@ -1,14 +1,15 @@
 import { produce } from 'immer'
-import { omit } from 'lodash'
 import merge from 'lodash/merge'
-import { create } from 'zustand'
 import { devtools, subscribeWithSelector, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
+import { shallow } from 'zustand/shallow'
+import { createWithEqualityFn } from 'zustand/traditional'
 import { subsonic } from '@/service/subsonic'
 import { IPlayerContext } from '@/types/playerContext'
+import { ISong } from '@/types/responses/song'
 import { shuffleSongList } from '@/utils/shuffleArray'
 
-export const usePlayerStore = create<IPlayerContext>()(
+export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
   subscribeWithSelector(
     persist(
       devtools(
@@ -17,6 +18,7 @@ export const usePlayerStore = create<IPlayerContext>()(
             shuffledList: [],
             originalList: [],
             originalSongIndex: 0,
+            currentSong: {} as ISong,
             currentList: [],
             currentSongIndex: 0,
             radioList: [],
@@ -26,11 +28,13 @@ export const usePlayerStore = create<IPlayerContext>()(
             isLoopActive: false,
             isShuffleActive: false,
             isSongStarred: false,
-            progress: 0,
             volume: 100,
             currentDuration: 0,
             mediaType: 'song',
             audioPlayerRef: null,
+          },
+          playerProgress: {
+            progress: 0,
           },
           actions: {
             setSongList: (songlist, index, shuffle = false) => {
@@ -56,6 +60,15 @@ export const usePlayerStore = create<IPlayerContext>()(
                   state.songlist.currentSongIndex = index
                   state.playerState.isShuffleActive = false
                   state.playerState.isPlaying = true
+                })
+              }
+            },
+            setCurrentSong: () => {
+              const { currentList, currentSongIndex } = get().songlist
+
+              if (currentList.length > 0) {
+                set((state) => {
+                  state.songlist.currentSong = currentList[currentSongIndex]
                 })
               }
             },
@@ -120,7 +133,7 @@ export const usePlayerStore = create<IPlayerContext>()(
               const { isShuffleActive } = get().playerState
 
               if (isShuffleActive) {
-                const currentSongId = get().actions.getCurrentSong().id
+                const currentSongId = get().songlist.currentSong.id
                 const index = get().songlist.originalList.findIndex(
                   (song) => song.id === currentSongId,
                 )
@@ -168,13 +181,12 @@ export const usePlayerStore = create<IPlayerContext>()(
                 state.playerState.isPlaying = false
                 state.playerState.isLoopActive = false
                 state.playerState.isShuffleActive = false
-                state.playerState.isSongStarred = false
-                state.playerState.progress = 0
+                state.playerProgress.progress = 0
               })
             },
             setProgress: (progress) => {
               set((state) => {
-                state.playerState.progress = progress
+                state.playerProgress.progress = progress
               })
             },
             setVolume: (volume) => {
@@ -209,23 +221,29 @@ export const usePlayerStore = create<IPlayerContext>()(
               return currentList.length === 1
             },
             checkActiveSong: (id: string) => {
-              const currentSong = get().actions.getCurrentSong()
+              const currentSong = get().songlist.currentSong
               if (currentSong) {
                 return id === currentSong.id
               } else {
                 return false
               }
             },
-            getCurrentSong: () => {
-              const currentList = get().songlist.currentList
-              const currentSongIndex = get().songlist.currentSongIndex
+            checkIsSongStarred: () => {
+              const { currentList, currentSongIndex } = get().songlist
+              const { mediaType } = get().playerState
+              const song = currentList[currentSongIndex]
 
-              return currentList[currentSongIndex]
-            },
-            setIsSongStarred: (status) => {
-              set((state) => {
-                state.playerState.isSongStarred = status
-              })
+              if (mediaType === 'song' && song) {
+                const isStarred = typeof song.starred === 'string'
+
+                set((state) => {
+                  state.playerState.isSongStarred = isStarred
+                })
+              } else {
+                set((state) => {
+                  state.playerState.isSongStarred = false
+                })
+              }
             },
             starSongInQueue: (id) => {
               const { currentList } = get().songlist
@@ -255,7 +273,7 @@ export const usePlayerStore = create<IPlayerContext>()(
 
               if (currentList.length === 0 && mediaType !== 'song') return
 
-              const { id, starred } = get().actions.getCurrentSong()
+              const { id, starred } = get().songlist.currentSong
               const isSongStarred = typeof starred === 'string'
               await subsonic.star.handleStarItem(id, isSongStarred)
 
@@ -266,7 +284,6 @@ export const usePlayerStore = create<IPlayerContext>()(
               }
 
               set((state) => {
-                state.playerState.isSongStarred = !isSongStarred
                 state.songlist.currentList = songList
               })
             },
@@ -288,18 +305,40 @@ export const usePlayerStore = create<IPlayerContext>()(
           return merge(currentState, persistedState)
         },
         partialize: (state) => {
-          const playerState = omit(state.playerState, 'audioPlayerRef')
-
           return {
-            songlist: state.songlist,
-            playerState,
+            actions: state.actions,
           }
         },
       },
     ),
   ),
+  shallow,
+)
+
+usePlayerStore.subscribe(
+  (state) => [state.songlist.currentList, state.songlist.currentSongIndex],
+  () => {
+    usePlayerStore.getState().actions.checkIsSongStarred()
+    usePlayerStore.getState().actions.setCurrentSong()
+  },
 )
 
 export const usePlayerActions = () => usePlayerStore((state) => state.actions)
+
 export const usePlayerSonglist = () => usePlayerStore((state) => state.songlist)
+
+export const usePlayerProgress = () =>
+  usePlayerStore((state) => state.playerProgress.progress)
+
 export const usePlayerState = () => usePlayerStore((state) => state.playerState)
+
+export const usePlayerVolume = () => ({
+  volume: usePlayerStore((state) => state.playerState.volume),
+  setVolume: usePlayerStore((state) => state.actions.setVolume),
+})
+
+export const usePlayerMediaType = () =>
+  usePlayerStore((state) => state.playerState.mediaType)
+
+export const usePlayerIsPlaying = () =>
+  usePlayerStore((state) => state.playerState.isPlaying)

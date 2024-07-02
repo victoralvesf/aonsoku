@@ -8,10 +8,9 @@ import { PlaylistOptions } from '@/app/components/playlist/options'
 import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
-import { useLang } from '@/app/contexts/lang-context'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { cn } from '@/lib/utils'
-import { usePlayerActions, usePlayerSonglist } from '@/store/player.store'
+import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { PlaylistWithEntries } from '@/types/responses/playlist'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
@@ -19,15 +18,9 @@ import { getTextSizeClass } from '@/utils/getTextSizeClass'
 
 export default function Playlist() {
   const { t } = useTranslation()
-  const { langCode } = useLang()
-  const { currentSongIndex } = usePlayerSonglist()
 
   const playlist = useLoaderData() as PlaylistWithEntries
-  const memoizedSongsColumns = useMemo(
-    () => songsColumns(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [langCode, currentSongIndex],
-  )
+  const columns = songsColumns()
   const memoizedPlaylist = useMemo(() => playlist, [playlist])
 
   const [removeDialogState, setRemoveDialogState] = useState(false)
@@ -117,7 +110,7 @@ export default function Playlist() {
 
       {memoizedPlaylist.entry && memoizedPlaylist.entry.length > 0 ? (
         <DataTable
-          columns={memoizedSongsColumns}
+          columns={columns}
           data={memoizedPlaylist.entry}
           handlePlaySong={(row) =>
             setSongList(memoizedPlaylist.entry, row.index)

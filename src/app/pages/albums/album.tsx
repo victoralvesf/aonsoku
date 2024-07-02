@@ -9,10 +9,9 @@ import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
 import PreviewListFallback from '@/app/components/preview-list-fallback'
 import { DataTable } from '@/app/components/ui/data-table'
-import { useLang } from '@/app/contexts/lang-context'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { ROUTES } from '@/routes/routesList'
-import { usePlayerActions, usePlayerSonglist } from '@/store/player.store'
+import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import {
   Albums,
@@ -35,15 +34,9 @@ export default function Album() {
     useLoaderData() as ILoaderData
 
   const { setSongList } = usePlayerActions()
-  const { currentSongIndex } = usePlayerSonglist()
   const { t } = useTranslation()
-  const { langCode } = useLang()
 
-  const memoizedSongsColumns = useMemo(
-    () => songsColumns(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [langCode, currentSongIndex],
-  )
+  const columns = songsColumns()
   const memoizedAlbums = useMemo(() => album, [album])
 
   const albumDuration = memoizedAlbums.duration
@@ -128,7 +121,7 @@ export default function Album() {
         </div>
 
         <DataTable
-          columns={memoizedSongsColumns}
+          columns={columns}
           data={memoizedAlbums.song}
           handlePlaySong={(row) => setSongList(memoizedAlbums.song, row.index)}
           columnFilter={columnsToShow}

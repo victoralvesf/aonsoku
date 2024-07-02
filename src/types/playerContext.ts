@@ -5,6 +5,7 @@ export interface ISongList {
   shuffledList: ISong[]
   currentList: ISong[]
   currentSongIndex: number
+  currentSong: ISong
   originalList: ISong[]
   originalSongIndex: number
   radioList: Radio[]
@@ -15,17 +16,21 @@ export interface IPlayerState {
   isLoopActive: boolean
   isShuffleActive: boolean
   isSongStarred: boolean
-  progress: number
   volume: number
   currentDuration: number
   mediaType: 'song' | 'radio'
   audioPlayerRef: HTMLAudioElement | null
 }
 
+export interface IPlayerProgress {
+  progress: number
+}
+
 export interface IPlayerActions {
   playSong: (song: ISong) => void
   setSongList: (songlist: ISong[], index: number, shuffle?: boolean) => void
-  setIsSongStarred: (starred: boolean) => void
+  setCurrentSong: () => void
+  checkIsSongStarred: () => void
   starSongInQueue: (id: string) => void
   starCurrentSong: () => Promise<void>
   setPlayingState: (status: boolean) => void
@@ -42,7 +47,6 @@ export interface IPlayerActions {
   setProgress: (progress: number) => void
   setVolume: (volume: number) => void
   setCurrentDuration: (duration: number) => void
-  getCurrentSong: () => ISong
   setPlayRadio: (list: Radio[], index: number) => void
   setAudioPlayerRef: (ref: HTMLAudioElement) => void
 }
@@ -50,5 +54,6 @@ export interface IPlayerActions {
 export interface IPlayerContext {
   songlist: ISongList
   playerState: IPlayerState
+  playerProgress: IPlayerProgress
   actions: IPlayerActions
 }

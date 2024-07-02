@@ -22,8 +22,11 @@ import { Button } from '@/app/components/ui/button'
 import { Slider } from '@/app/components/ui/slider'
 import {
   usePlayerActions,
+  usePlayerIsPlaying,
+  usePlayerProgress,
   usePlayerSonglist,
   usePlayerState,
+  usePlayerVolume,
 } from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
@@ -34,7 +37,6 @@ const MemoizedRadioInfo = memo(RadioInfo)
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
-
   const {
     togglePlayPause,
     setAudioPlayerRef,
@@ -49,21 +51,20 @@ export function Player() {
     toggleShuffle,
     toggleLoop,
     starCurrentSong,
-    setVolume,
     setPlayingState,
   } = usePlayerActions()
-  const { currentList, currentSongIndex, radioList } = usePlayerSonglist()
   const {
     mediaType,
     audioPlayerRef,
-    isPlaying,
-    volume,
     currentDuration,
     isLoopActive,
-    isShuffleActive,
     isSongStarred,
-    progress,
+    isShuffleActive,
   } = usePlayerState()
+  const { currentList, currentSongIndex, radioList } = usePlayerSonglist()
+  const progress = usePlayerProgress()
+  const isPlaying = usePlayerIsPlaying()
+  const { volume, setVolume } = usePlayerVolume()
 
   const song = currentList[currentSongIndex]
   const radio = radioList[currentSongIndex]
@@ -135,7 +136,6 @@ export function Player() {
   const handleSongEnded = useCallback(() => {
     if (hasNextSong()) {
       playNextSong()
-      console.log('playNextSong')
       audioRef.current?.play()
     } else {
       clearPlayerState()
