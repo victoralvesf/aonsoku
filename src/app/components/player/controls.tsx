@@ -7,6 +7,7 @@ import {
   SkipBack,
   SkipForward,
 } from 'lucide-react'
+import { useEffect } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Button } from '@/app/components/ui/button'
 import {
@@ -19,6 +20,7 @@ import {
 } from '@/store/player.store'
 import { Radio } from '@/types/responses/radios'
 import { ISong } from '@/types/responses/song'
+import { manageMediaSession } from '@/utils/setMediaSession'
 
 interface PlayerControlsProps {
   song: ISong
@@ -51,6 +53,14 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
     },
     { preventDefault: true },
   )
+
+  useEffect(() => {
+    manageMediaSession.setHandlers({
+      togglePlayPause,
+      playPrev: playPrevSong,
+      playNext: playNextSong,
+    })
+  }, [playNextSong, playPrevSong, togglePlayPause])
 
   return (
     <div className="flex w-full gap-1 justify-center items-center mb-1">

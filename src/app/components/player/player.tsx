@@ -1,11 +1,9 @@
-import { clsx } from 'clsx'
-import { Heart, ListVideo } from 'lucide-react'
 import { useEffect, useRef, useCallback } from 'react'
 
 import { getSongStreamUrl } from '@/api/httpClient'
 import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
-import { Button } from '@/app/components/ui/button'
+import useMediaSession from '@/app/hooks/use-media-session'
 import {
   usePlayerActions,
   usePlayerDuration,
@@ -13,11 +11,12 @@ import {
   usePlayerLoop,
   usePlayerMediaType,
   usePlayerRef,
-  usePlayerSongStarred,
   usePlayerSonglist,
 } from '@/store/player.store'
 import { PlayerControls } from './controls'
+import { PlayerLikeButton } from './like-button'
 import { PlayerProgress } from './progress'
+import { PlayerSongListButton } from './song-list-button'
 import { PlayerVolume } from './volume'
 
 export function Player() {
@@ -29,16 +28,16 @@ export function Player() {
     hasNextSong,
     playNextSong,
     clearPlayerState,
-    starCurrentSong,
     setPlayingState,
   } = usePlayerActions()
   const { currentList, currentSongIndex, radioList } = usePlayerSonglist()
   const isPlaying = usePlayerIsPlaying()
   const mediaType = usePlayerMediaType()
-  const isSongStarred = usePlayerSongStarred()
   const isLoopActive = usePlayerLoop()
   const currentDuration = usePlayerDuration()
   const audioPlayerRef = usePlayerRef()
+  const { resetTitle, radioSession, songSession, playbackState } =
+    useMediaSession()
 
   const song = currentList[currentSongIndex]
   const radio = radioList[currentSongIndex]
@@ -49,6 +48,28 @@ export function Player() {
     if (audioPlayerRef === null && audioRef.current)
       setAudioPlayerRef(audioRef.current)
   }, [audioPlayerRef, audioRef, mediaType, setAudioPlayerRef, song])
+
+  useEffect(() => {
+    if (!song && !radio) resetTitle()
+  }, [song, radio, resetTitle])
+
+  useEffect(() => {
+    if (radioList.length > 0 && mediaType === 'radio') {
+      const radio = radioList[currentSongIndex]
+      radioSession(radio)
+    }
+  }, [currentSongIndex, mediaType, radioList, radioSession])
+
+  useEffect(() => {
+    if (currentList.length > 0 && mediaType === 'song') {
+      const song = currentList[currentSongIndex]
+      songSession(song)
+    }
+  }, [currentList, currentSongIndex, mediaType, songSession])
+
+  useEffect(() => {
+    playbackState(isPlaying)
+  }, [isPlaying, playbackState])
 
   useEffect(() => {
     if (!audioRef.current) return
@@ -117,31 +138,8 @@ export function Player() {
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
-            {mediaType === 'song' && (
-              <Button
-                variant="ghost"
-                className="rounded-full w-10 h-10 p-3"
-                disabled={!song}
-                onClick={starCurrentSong}
-              >
-                <Heart
-                  className={clsx(
-                    'w-5 h-5',
-                    isSongStarred && 'text-red-500 fill-red-500',
-                  )}
-                />
-              </Button>
-            )}
-
-            {mediaType === 'song' && (
-              <Button
-                variant="ghost"
-                className="rounded-full w-10 h-10 p-2"
-                disabled={!song}
-              >
-                <ListVideo className="w-4 h-4" />
-              </Button>
-            )}
+            {mediaType === 'song' && <PlayerLikeButton disabled={!song} />}
+            {mediaType === 'song' && <PlayerSongListButton disabled={!song} />}
 
             <PlayerVolume audioRef={audioRef} disabled={!song && !radio} />
           </div>
