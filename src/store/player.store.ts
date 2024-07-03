@@ -334,10 +334,10 @@ export const usePlayerActions = () => usePlayerStore((state) => state.actions)
 
 export const usePlayerSonglist = () => usePlayerStore((state) => state.songlist)
 
+export const usePlayerState = () => usePlayerStore((state) => state.playerState)
+
 export const usePlayerProgress = () =>
   usePlayerStore((state) => state.playerProgress.progress)
-
-export const usePlayerState = () => usePlayerStore((state) => state.playerState)
 
 export const usePlayerVolume = () => ({
   volume: usePlayerStore((state) => state.playerState.volume),
@@ -352,3 +352,15 @@ export const usePlayerIsPlaying = () =>
 
 export const usePlayerDuration = () =>
   usePlayerStore((state) => state.playerState.currentDuration)
+
+export const usePlayerSongStarred = () =>
+  usePlayerStore((state) => state.playerState.isSongStarred)
+
+export const usePlayerShuffle = () =>
+  usePlayerStore((state) => state.playerState.isShuffleActive)
+
+export const usePlayerLoop = () =>
+  usePlayerStore((state) => state.playerState.isLoopActive)
+
+export const usePlayerRef = () =>
+  usePlayerStore((state) => state.playerState.audioPlayerRef)

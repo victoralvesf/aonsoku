@@ -6,8 +6,9 @@ import { Button } from '@/app/components/ui/button'
 import { subsonic } from '@/service/subsonic'
 import {
   usePlayerActions,
+  usePlayerMediaType,
+  usePlayerSongStarred,
   usePlayerSonglist,
-  usePlayerState,
 } from '@/store/player.store'
 
 interface TableLikeButtonProps {
@@ -23,7 +24,8 @@ export function TableLikeButton({
 }: TableLikeButtonProps) {
   const [isStarred, setIsStarred] = useState(starred)
   const { currentSong } = usePlayerSonglist()
-  const { mediaType, isSongStarred } = usePlayerState()
+  const isSongStarred = usePlayerSongStarred()
+  const mediaType = usePlayerMediaType()
   const { starCurrentSong, starSongInQueue } = usePlayerActions()
 
   useEffect(() => {

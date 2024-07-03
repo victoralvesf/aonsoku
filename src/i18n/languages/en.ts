@@ -167,7 +167,7 @@ export const english = {
       queue: 'Queue',
       playing: 'Playing now',
       lyrics: 'Lyrics',
-      switchButton: 'Switch to Fullscreen',
+      switchButton: 'Switch to fullscreen',
     },
     logout: {
       dialog: {
