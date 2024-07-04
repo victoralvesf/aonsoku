@@ -84,7 +84,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         player:
-          'minmax(400px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(400px, 1fr)',
+          'minmax(200px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(200px, 1fr)',
         'table-fallback':
           'minmax(40px, 50px) minmax(0px, 3fr) minmax(0px, 2fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(60px, 70px)',
         header:

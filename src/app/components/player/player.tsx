@@ -123,7 +123,7 @@ export function Player() {
     <div className="border-t h-[100px] w-full flex items-center">
       <div className="w-full h-full grid grid-cols-player gap-2 px-4">
         {/* Track Info */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full">
           {mediaType === 'song' && <TrackInfo song={song} />}
           {mediaType === 'radio' && <RadioInfo radio={radio} />}
         </div>
