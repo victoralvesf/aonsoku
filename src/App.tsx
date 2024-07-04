@@ -3,22 +3,21 @@ import { ToastContainer } from 'react-toastify'
 import { AppContextProvider } from '@/app/contexts/app-context'
 import { PlaylistProvider } from '@/app/contexts/playlists-context'
 import { RadiosProvider } from '@/app/contexts/radios-context'
-import { ThemeProvider } from '@/app/contexts/theme-context'
+import { LangObserver } from '@/app/observers/lang-observer'
+import { ThemeObserver } from '@/app/observers/theme-observer'
 import { router } from '@/routes/router'
-import { LangObserver } from './app/observers/lang-observer'
 
 function App() {
   return (
     <AppContextProvider>
-      <ThemeProvider>
-        <PlaylistProvider>
-          <RadiosProvider>
-            <LangObserver />
-            <RouterProvider router={router} />
-            <ToastContainer theme="colored" />
-          </RadiosProvider>
-        </PlaylistProvider>
-      </ThemeProvider>
+      <PlaylistProvider>
+        <RadiosProvider>
+          <LangObserver />
+          <ThemeObserver />
+          <RouterProvider router={router} />
+          <ToastContainer theme="colored" />
+        </RadiosProvider>
+      </PlaylistProvider>
     </AppContextProvider>
   )
 }

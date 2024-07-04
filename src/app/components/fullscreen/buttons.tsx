@@ -1,7 +1,7 @@
 import { ChevronDown, Moon, Sun } from 'lucide-react'
 import { Badge } from '@/app/components/ui/badge'
 import { Button } from '@/app/components/ui/button'
-import { useTheme } from '@/app/contexts/theme-context'
+import { useTheme } from '@/store/theme.store'
 
 const buttonStyle = [
   'w-10',
