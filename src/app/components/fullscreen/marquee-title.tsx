@@ -12,7 +12,7 @@ interface MarqueeTitleProps {
   children: ReactNode
 }
 
-const SPEED = 5
+const SPEED = 10
 
 export function MarqueeTitle({ children }: MarqueeTitleProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -20,6 +20,18 @@ export function MarqueeTitle({ children }: MarqueeTitleProps) {
   const [isOverflowing, setIsOverflowing] = useState(false)
   const [animationSize, setAnimationSize] = useState(0)
   const [animationTime, setAnimationTime] = useState(0)
+
+  function calculateMarqueeTime(width: number) {
+    if (width < 100) {
+      return width / (SPEED / 2)
+    } else if (width > 100 && width < 500) {
+      return width / SPEED
+    } else if (width > 500 && width < 1000) {
+      return width / (SPEED * 2)
+    } else {
+      return width / SPEED
+    }
+  }
 
   const calculateOverflow = useCallback(() => {
     if (!containerRef.current || !textRef.current) return
@@ -31,10 +43,8 @@ export function MarqueeTitle({ children }: MarqueeTitleProps) {
     if (textWidth > containerWidth) {
       setIsOverflowing(true)
       setAnimationSize(overflowWidth)
-      const time =
-        overflowWidth < 500
-          ? overflowWidth / SPEED
-          : overflowWidth / (SPEED * 2)
+      const time = calculateMarqueeTime(overflowWidth)
+
       setAnimationTime(time)
     } else {
       setIsOverflowing(false)
