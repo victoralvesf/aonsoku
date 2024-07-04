@@ -1,37 +1,60 @@
 import { clsx } from 'clsx'
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import {
+  CSSProperties,
+  ReactNode,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react'
 
 interface MarqueeTitleProps {
   children: ReactNode
-  spacing?: 'low' | 'medium' | 'high'
 }
 
-export function MarqueeTitle({
-  children,
-  spacing = 'medium',
-}: MarqueeTitleProps) {
+const SPEED = 5
+
+export function MarqueeTitle({ children }: MarqueeTitleProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
+  const [animationSize, setAnimationSize] = useState(0)
+  const [animationTime, setAnimationTime] = useState(0)
 
-  useEffect(() => {
-    if (!containerRef && !textRef) return
+  const calculateOverflow = useCallback(() => {
+    if (!containerRef.current || !textRef.current) return
 
-    const containerWidth = containerRef.current?.offsetWidth || 0
-    const textWidth = textRef.current?.offsetWidth || 0
+    const containerWidth = containerRef.current.offsetWidth
+    const textWidth = textRef.current.offsetWidth
+    const overflowWidth = textWidth - containerWidth
 
     if (textWidth > containerWidth) {
       setIsOverflowing(true)
+      setAnimationSize(overflowWidth)
+      const time =
+        overflowWidth < 500
+          ? overflowWidth / SPEED
+          : overflowWidth / (SPEED * 2)
+      setAnimationTime(time)
     } else {
       setIsOverflowing(false)
+      setAnimationSize(0)
+      setAnimationTime(0)
     }
-  }, [children])
+  }, [containerRef, textRef])
 
-  function setSpacingClass() {
-    if (spacing === 'low') return 'mr-1'
-    if (spacing === 'medium') return 'mr-2'
-    if (spacing === 'high') return 'mr-4'
-  }
+  useLayoutEffect(() => {
+    calculateOverflow()
+
+    const handleResize = () => {
+      requestAnimationFrame(calculateOverflow)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [calculateOverflow, children])
 
   return (
     <div
@@ -44,15 +67,14 @@ export function MarqueeTitle({
           'inline-flex will-change-transform',
           isOverflowing && 'animate-marquee',
         )}
+        style={
+          {
+            '--tw-translate-x-end': `-${animationSize}px`,
+            '--tw-marquee-time': `${animationTime}s`,
+          } as CSSProperties
+        }
       >
-        {!isOverflowing ? (
-          <>{children}</>
-        ) : (
-          <>
-            <div className={setSpacingClass()}>{children}</div>
-            <div className={setSpacingClass()}>{children}</div>
-          </>
-        )}
+        {children}
       </div>
     </div>
   )
