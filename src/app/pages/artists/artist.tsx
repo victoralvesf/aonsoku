@@ -12,9 +12,9 @@ import RelatedArtistsList from '@/app/components/artist/related-artists'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
 import PreviewListFallback from '@/app/components/preview-list-fallback'
-import { usePlayer } from '@/app/contexts/player-context'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
+import { usePlayerActions } from '@/store/player.store'
 import { IArtist, IArtistInfo } from '@/types/responses/artist'
 import { ISong } from '@/types/responses/song'
 
@@ -25,7 +25,7 @@ interface ILoaderData {
 }
 
 export default function Artist() {
-  const player = usePlayer()
+  const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
   const { artist, artistInfo, topSongs } = useLoaderData() as ILoaderData
   const { getArtistAllSongs } = useSongList()
@@ -54,7 +54,7 @@ export default function Artist() {
     const songList = await getArtistAllSongs(artist.name)
 
     if (songList) {
-      player.setSongList(songList, 0, shuffle)
+      setSongList(songList, 0, shuffle)
     }
   }
 

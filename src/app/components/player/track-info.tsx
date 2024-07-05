@@ -38,7 +38,7 @@ export function TrackInfo({ song }: { song: ISong }) {
           </Button>
         </FullscreenMode>
       </div>
-      <div className="flex flex-col justify-center w-full">
+      <div className="flex flex-col justify-center w-full overflow-hidden">
         <MarqueeTitle>
           <span className="text-sm font-medium">{song.title}</span>
         </MarqueeTitle>

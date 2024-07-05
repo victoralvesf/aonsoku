@@ -1,42 +1,59 @@
-import { RefObject } from 'react'
 import { Radio } from './responses/radios'
 import { ISong } from './responses/song'
 
-export interface IPlayerContext {
-  shuffledSongList: ISong[]
-  currentSongList: ISong[]
+export interface ISongList {
+  shuffledList: ISong[]
+  currentList: ISong[]
   currentSongIndex: number
+  currentSong: ISong
+  originalList: ISong[]
   originalSongIndex: number
+  radioList: Radio[]
+}
+
+export interface IPlayerState {
   isPlaying: boolean
   isLoopActive: boolean
   isShuffleActive: boolean
-  isPlayingOneSong: boolean
   isSongStarred: boolean
-  setIsSongStarred: (starred: boolean) => void
-  starSongInQueue: (id: string) => void
+  volume: number
+  currentDuration: number
+  mediaType: 'song' | 'radio'
+  audioPlayerRef: HTMLAudioElement | null
+}
+
+export interface IPlayerProgress {
+  progress: number
+}
+
+export interface IPlayerActions {
   playSong: (song: ISong) => void
-  setPlayingState: (state: boolean) => void
   setSongList: (songlist: ISong[], index: number, shuffle?: boolean) => void
+  setCurrentSong: () => void
+  checkIsSongStarred: () => void
+  starSongInQueue: (id: string) => void
+  starCurrentSong: () => Promise<void>
+  setPlayingState: (status: boolean) => void
   togglePlayPause: () => void
   toggleLoop: () => void
   toggleShuffle: () => void
   checkActiveSong: (id: string) => boolean
   playNextSong: () => void
   playPrevSong: () => void
+  hasNextSong: () => boolean
+  hasPrevSong: () => boolean
+  isPlayingOneSong: () => boolean
   clearPlayerState: () => void
-  hasNextSong: boolean
-  hasPrevSong: boolean
-  progress: number
   setProgress: (progress: number) => void
-  currentDuration: number
-  setCurrentDuration: (duration: number) => void
-  getCurrentSong: () => ISong
-  mediaType: 'song' | 'radio'
-  radioList: Radio[]
-  setPlayRadio: (list: Radio[], index: number) => void
-  volume: number
   setVolume: (volume: number) => void
-  starCurrentSong: () => void
-  audioPlayerRef: RefObject<HTMLAudioElement> | null
-  setAudioPlayerRef: (audioPlayer: RefObject<HTMLAudioElement>) => void
+  setCurrentDuration: (duration: number) => void
+  setPlayRadio: (list: Radio[], index: number) => void
+  setAudioPlayerRef: (ref: HTMLAudioElement) => void
+}
+
+export interface IPlayerContext {
+  songlist: ISongList
+  playerState: IPlayerState
+  playerProgress: IPlayerProgress
+  actions: IPlayerActions
 }

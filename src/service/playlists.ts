@@ -66,13 +66,12 @@ interface UpdateParams {
 
 async function update({ isPublic = 'true', ...params }: UpdateParams) {
   const { playlistId, name, comment, songIdToAdd, songIndexToRemove } = params
-  const query = new URLSearchParams()
-
-  query.append('playlistId', playlistId)
-  query.append('public', isPublic)
-
-  if (name) query.append('name', name)
-  if (comment) query.append('comment', comment)
+  const query = new URLSearchParams({
+    playlistId,
+    isPublic,
+    name: name ?? '',
+    comment: comment ?? '',
+  })
 
   if (songIdToAdd) {
     if (typeof songIdToAdd === 'string') {

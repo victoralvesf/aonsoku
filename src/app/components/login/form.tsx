@@ -1,7 +1,9 @@
-import { FormEvent } from 'react'
+import { Loader2 } from 'lucide-react'
+import { FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
+import { toast } from 'react-toastify'
 import { LangSelect } from '@/app/components/header/lang-select'
 import { ThemeToggle } from '@/app/components/header/theme-toggle'
 import { Button } from '@/app/components/ui/button'
@@ -23,26 +25,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/components/ui/select'
-import { useApp } from '@/app/contexts/app-context'
 import { ROUTES } from '@/routes/routesList'
+import { useAppActions, useAppData } from '@/store/app.store'
 
 export function LoginForm() {
-  const {
-    serverProtocol,
-    setServerProtocol,
-    setServerUrl,
-    setServerUsername,
-    setServerPassword,
-    handleSaveServerConfig,
-  } = useApp()
+  const [loading, setLoading] = useState(false)
+  const { protocol } = useAppData()
+  const { setProtocol, setUrl, setUsername, setPassword, saveConfig } =
+    useAppActions()
   const navigate = useNavigate()
   const { t } = useTranslation()
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const status = await handleSaveServerConfig()
+    setLoading(true)
+    const status = await saveConfig()
     if (status) {
+      toast.success(t('toast.server.success'))
       navigate(ROUTES.LIBRARY.HOME, { replace: true })
+    } else {
+      setLoading(false)
+      toast.error(t('toast.server.error'))
     }
   }
 
@@ -64,10 +67,7 @@ export function LoginForm() {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="url">{t('login.form.url')} *</Label>
               <div className="flex flex-row gap-2">
-                <Select
-                  onValueChange={setServerProtocol}
-                  value={serverProtocol}
-                >
+                <Select onValueChange={setProtocol} value={protocol}>
                   <SelectTrigger className="w-[110px]">
                     <SelectValue />
                   </SelectTrigger>
@@ -84,7 +84,7 @@ export function LoginForm() {
                   autoCapitalize="false"
                   spellCheck="false"
                   required
-                  onChange={(e) => setServerUrl(e.currentTarget.value)}
+                  onChange={(e) => setUrl(e.currentTarget.value)}
                 />
               </div>
             </div>
@@ -98,7 +98,7 @@ export function LoginForm() {
                 autoCapitalize="false"
                 spellCheck="false"
                 required
-                onChange={(e) => setServerUsername(e.currentTarget.value)}
+                onChange={(e) => setUsername(e.currentTarget.value)}
               />
             </div>
             <div className="flex flex-col space-y-1.5">
@@ -107,13 +107,14 @@ export function LoginForm() {
                 id="password"
                 type="password"
                 required
-                onChange={(e) => setServerPassword(e.currentTarget.value)}
+                onChange={(e) => setPassword(e.currentTarget.value)}
               />
             </div>
           </div>
         </CardContent>
         <CardFooter className="flex">
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {t('login.form.connect')}
           </Button>
         </CardFooter>

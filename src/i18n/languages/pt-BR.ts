@@ -167,7 +167,7 @@ export const brazilianPortuguese = {
       queue: 'Fila',
       playing: 'Tocando agora',
       lyrics: 'Letra',
-      switchButton: 'Switch to Fullscreen',
+      switchButton: 'Mudar para tela cheia',
     },
     logout: {
       dialog: {

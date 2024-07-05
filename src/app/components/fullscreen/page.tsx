@@ -6,7 +6,7 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from '@/app/components/ui/drawer'
-import { usePlayer } from '@/app/contexts/player-context'
+import { usePlayerSonglist } from '@/store/player.store'
 import FullscreenBackdrop from './backdrop'
 import { CloseFullscreenButton, SwitchThemeButton } from './buttons'
 import { FullscreenPlayer } from './player'
@@ -17,12 +17,11 @@ interface FullscreenModeProps {
 }
 
 export default function FullscreenMode({ children }: FullscreenModeProps) {
-  const { getCurrentSong } = usePlayer()
-  const song = getCurrentSong()
+  const { currentSong } = usePlayerSonglist()
 
-  if (!song) return <></>
+  if (!currentSong) return <></>
 
-  const songCoverArtUrl = getCoverArtUrl(song.coverArt, '1000')
+  const songCoverArtUrl = getCoverArtUrl(currentSong.coverArt, '1000')
 
   return (
     <Drawer

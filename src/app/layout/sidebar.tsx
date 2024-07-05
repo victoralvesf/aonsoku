@@ -10,9 +10,9 @@ import {
   SidebarPlaylistGenerator,
 } from '@/app/components/sidebar-generator'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
-import { usePlaylists } from '@/app/contexts/playlists-context'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
+import { usePlaylists } from '@/store/playlists.store'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -22,7 +22,8 @@ export function Sidebar({ className }: SidebarProps) {
 
   useEffect(() => {
     fetchPlaylists()
-  }, [fetchPlaylists])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Fragment>

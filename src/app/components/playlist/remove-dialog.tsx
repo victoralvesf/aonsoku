@@ -1,6 +1,7 @@
 import { MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMatches, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import {
   AlertDialog,
@@ -12,8 +13,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/app/components/ui/alert-dialog'
-import { usePlaylists } from '@/app/contexts/playlists-context'
 import { ROUTES } from '@/routes/routesList'
+import { usePlaylists } from '@/store/playlists.store'
 
 interface RemovePlaylistDialogProps {
   playlistId: string
@@ -33,10 +34,15 @@ export function RemovePlaylistDialog({
 
   async function handleRemovePlaylist(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
+    try {
+      await removePlaylist(playlistId)
+      toast.success(t('playlist.form.delete.toast.success'))
 
-    await removePlaylist(playlistId)
-    setOpenDialog(false)
-    navigateIfNeeded()
+      setOpenDialog(false)
+      navigateIfNeeded()
+    } catch (_) {
+      toast.error(t('playlist.form.delete.toast.error'))
+    }
   }
 
   function navigateIfNeeded() {

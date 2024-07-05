@@ -72,18 +72,19 @@ module.exports = {
         marquee: {
           '0%': { transform: 'translateX(0%)' },
           '5%': { transform: 'translateX(0%)' },
-          '95%': { transform: 'translateX(-50%)' },
-          '100%': { transform: 'translateX(-50%)' },
+          '50%': { transform: 'translateX(var(--tw-translate-x-end))' },
+          '55%': { transform: 'translateX(var(--tw-translate-x-end))' },
+          '100%': { transform: 'translateX(0%)' },
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        marquee: 'marquee 50s linear infinite',
+        marquee: 'marquee var(--tw-marquee-time) linear 2s infinite',
       },
       gridTemplateColumns: {
         player:
-          'minmax(400px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(400px, 1fr)',
+          'minmax(200px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(200px, 1fr)',
         'table-fallback':
           'minmax(40px, 50px) minmax(0px, 3fr) minmax(0px, 2fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(60px, 70px)',
         header:

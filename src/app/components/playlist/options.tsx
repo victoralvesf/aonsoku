@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
-import { usePlaylists } from '@/app/contexts/playlists-context'
+import { usePlaylists } from '@/store/playlists.store'
 import { Playlist, PlaylistWithEntries } from '@/types/responses/playlist'
 
 interface PlaylistOptionsProps {

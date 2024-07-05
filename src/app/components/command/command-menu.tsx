@@ -14,17 +14,15 @@ import {
   CommandItem,
   CommandList,
 } from '@/app/components/ui/command'
-import { useApp } from '@/app/contexts/app-context'
-import { usePlayer } from '@/app/contexts/player-context'
-import { usePlaylists } from '@/app/contexts/playlists-context'
-import { useTheme } from '@/app/contexts/theme-context'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
+import { usePlayerActions } from '@/store/player.store'
+import { usePlaylists } from '@/store/playlists.store'
+import { useTheme } from '@/store/theme.store'
 import { Albums } from '@/types/responses/album'
 import { ISimilarArtist } from '@/types/responses/artist'
 import { ISong } from '@/types/responses/song'
-import { isTauri } from '@/utils/tauriTools'
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS'
 
@@ -42,19 +40,15 @@ export default function CommandMenu() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { setTheme } = useTheme()
-  const { osType } = useApp()
   const { getArtistAllSongs, getAlbumSongs } = useSongList()
   const { playlists, setPlaylistDialogState } = usePlaylists()
-  const player = usePlayer()
-
-  const isMacOS = osType === 'Darwin'
-  const isBrowser = !isTauri()
+  const { setSongList, playSong } = usePlayerActions()
 
   const showAlbumGroup = Boolean(query && albums && albums.length > 0)
   const showArtistGroup = Boolean(query && artists && artists.length > 0)
   const showSongGroup = Boolean(query && songs && songs.length > 0)
 
-  useHotkeys('mod+k', () => setOpen((state) => !state))
+  useHotkeys('/', () => setOpen((state) => !state))
 
   const clear = useCallback(() => {
     setQuery('')
@@ -74,6 +68,7 @@ export default function CommandMenu() {
   )
 
   function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {
+    if (event.target.value === '/') return
     setQuery(event.target.value)
   }
 
@@ -108,19 +103,12 @@ export default function CommandMenu() {
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
     const artistSongs = await getArtistAllSongs(artist.name)
-    if (artistSongs) player.setSongList(artistSongs, 0)
+    if (artistSongs) setSongList(artistSongs, 0)
   }
 
   async function handlePlayAlbum(albumId: string) {
     const albumSongs = await getAlbumSongs(albumId)
-    if (albumSongs) player.setSongList(albumSongs, 0)
-  }
-
-  const modifierKey = () => {
-    const keys = { mac: '⌘', win: '⌃' }
-
-    if (isBrowser || isMacOS) return keys.mac
-    if (!isBrowser && !isMacOS) return keys.win
+    if (albumSongs) setSongList(albumSongs, 0)
   }
 
   return (
@@ -135,7 +123,7 @@ export default function CommandMenu() {
           {t('sidebar.search')}
         </span>
 
-        <Keyboard modifier={modifierKey()} text="K" />
+        <Keyboard text="/" />
       </Button>
       <CommandDialog
         open={open}
@@ -228,7 +216,7 @@ export default function CommandMenu() {
                       coverArt={song.coverArt}
                       title={song.title}
                       artist={song.artist}
-                      onClick={() => player.playSong(song)}
+                      onClick={() => playSong(song)}
                     />
                   </CommandItem>
                 ))}

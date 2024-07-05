@@ -4,17 +4,26 @@ export interface IServerConfig {
   password: string
 }
 
-export interface IAppContext {
+export interface IAppData {
   isServerConfigured: boolean
   osType: string
-  serverProtocol: string
-  setServerProtocol: (value: React.SetStateAction<string>) => void
-  serverUrl: string
-  setServerUrl: (value: React.SetStateAction<string>) => void
-  serverUsername: string
-  setServerUsername: (value: React.SetStateAction<string>) => void
-  serverPassword: string
-  setServerPassword: (value: React.SetStateAction<string>) => void
-  handleSaveServerConfig: () => Promise<boolean>
-  handleRemoveServerConfig: () => Promise<void>
+  protocol: string
+  url: string
+  username: string
+  password: string
+}
+
+export interface IAppActions {
+  setOsType: (value: string) => void
+  setProtocol: (value: string) => void
+  setUrl: (value: string) => void
+  setUsername: (value: string) => void
+  setPassword: (value: string) => void
+  saveConfig: () => Promise<boolean>
+  removeConfig: () => void
+}
+
+export interface IAppContext {
+  data: IAppData
+  actions: IAppActions
 }

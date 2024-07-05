@@ -9,10 +9,9 @@ import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
 import PreviewListFallback from '@/app/components/preview-list-fallback'
 import { DataTable } from '@/app/components/ui/data-table'
-import { useLang } from '@/app/contexts/lang-context'
-import { usePlayer } from '@/app/contexts/player-context'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { ROUTES } from '@/routes/routesList'
+import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import {
   Albums,
@@ -34,12 +33,10 @@ export default function Album() {
   const { album, artistAlbums, albumInfo, randomGenreAlbums } =
     useLoaderData() as ILoaderData
 
-  const player = usePlayer()
+  const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
-  const { langCode } = useLang()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedSongsColumns = useMemo(() => songsColumns(), [langCode])
+  const columns = songsColumns()
   const memoizedAlbums = useMemo(() => album, [album])
 
   const albumDuration = memoizedAlbums.duration
@@ -97,11 +94,9 @@ export default function Album() {
       <ListWrapper>
         <PlayButtons
           playButtonTooltip={buttonsTooltips.play}
-          handlePlayButton={() => player.setSongList(memoizedAlbums.song, 0)}
+          handlePlayButton={() => setSongList(memoizedAlbums.song, 0)}
           shuffleButtonTooltip={buttonsTooltips.shuffle}
-          handleShuffleButton={() =>
-            player.setSongList(memoizedAlbums.song, 0, true)
-          }
+          handleShuffleButton={() => setSongList(memoizedAlbums.song, 0, true)}
           optionsTooltip={buttonsTooltips.options}
           showLikeButton={true}
           likeTooltipResource={memoizedAlbums.name}
@@ -126,11 +121,9 @@ export default function Album() {
         </div>
 
         <DataTable
-          columns={memoizedSongsColumns}
+          columns={columns}
           data={memoizedAlbums.song}
-          handlePlaySong={(row) =>
-            player.setSongList(memoizedAlbums.song, row.index)
-          }
+          handlePlaySong={(row) => setSongList(memoizedAlbums.song, row.index)}
           columnFilter={columnsToShow}
         />
 

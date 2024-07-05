@@ -5,7 +5,12 @@ import { useTranslation } from 'react-i18next'
 import Image from '@/app/components/image'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
-import { usePlayer } from '@/app/contexts/player-context'
+import {
+  usePlayerActions,
+  usePlayerIsPlaying,
+  usePlayerMediaType,
+  usePlayerSonglist,
+} from '@/store/player.store'
 
 interface PlaySongButtonProps {
   trackNumber: number
@@ -29,15 +34,18 @@ export default function PlaySongButton({
   title,
   artist = '',
 }: PlaySongButtonProps) {
-  const player = usePlayer()
+  const { checkActiveSong, togglePlayPause } = usePlayerActions()
+  const mediaType = usePlayerMediaType()
+  const isPlaying = usePlayerIsPlaying()
+  const { radioList, currentSongIndex } = usePlayerSonglist()
   const { t } = useTranslation()
 
   const isCurrentSongPlaying = () => {
-    if (player.mediaType === 'song') {
-      return player.checkActiveSong(trackId)
+    if (mediaType === 'song') {
+      return checkActiveSong(trackId)
     }
-    if (player.mediaType === 'radio') {
-      return player.radioList[player.currentSongIndex].id === trackId
+    if (mediaType === 'radio') {
+      return radioList[currentSongIndex].id === trackId
     }
 
     return false
@@ -74,7 +82,7 @@ export default function PlaySongButton({
 
   return (
     <div className="text-center text-foreground flex justify-center">
-      {isCurrentSongPlaying() && !player.isPlaying && (
+      {isCurrentSongPlaying() && !isPlaying && (
         <div className="w-8 flex items-center">
           <SimpleTooltip text={tooltips.playTooltip}>
             <Button
@@ -83,7 +91,7 @@ export default function PlaySongButton({
               variant="outline"
               onClick={(e) => {
                 e.stopPropagation()
-                player.togglePlayPause()
+                togglePlayPause()
               }}
             >
               <PlayIcon
@@ -94,7 +102,7 @@ export default function PlaySongButton({
           </SimpleTooltip>
         </div>
       )}
-      {isCurrentSongPlaying() && player.isPlaying && (
+      {isCurrentSongPlaying() && isPlaying && (
         <>
           <div className="group-hover/tablerow:hidden w-8 flex items-center">
             <div className="w-8 h-8 flex items-center justify-center">
@@ -114,7 +122,7 @@ export default function PlaySongButton({
                 variant="outline"
                 onClick={(e) => {
                   e.stopPropagation()
-                  player.togglePlayPause()
+                  togglePlayPause()
                 }}
               >
                 <PauseIcon

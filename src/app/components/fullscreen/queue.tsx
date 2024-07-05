@@ -6,18 +6,18 @@ import {
   TableCell,
   TableRow,
 } from '@/app/components/ui/table'
-import { usePlayer } from '@/app/contexts/player-context'
 import { cn } from '@/lib/utils'
+import {
+  usePlayerActions,
+  usePlayerIsPlaying,
+  usePlayerSonglist,
+} from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 export function FullscreenSongQueue() {
-  const {
-    currentSongIndex,
-    currentSongList,
-    getCurrentSong,
-    setSongList,
-    isPlaying,
-  } = usePlayer()
+  const { setSongList } = usePlayerActions()
+  const { currentList, currentSongIndex, currentSong } = usePlayerSonglist()
+  const isPlaying = usePlayerIsPlaying()
 
   const songRef = useRef<HTMLTableSectionElement>(null)
 
@@ -36,35 +36,33 @@ export function FullscreenSongQueue() {
     moveSongToTop()
   }, [currentSongIndex, moveSongToTop])
 
-  if (currentSongList.length === 0)
+  if (currentList.length === 0)
     return (
       <div className="flex justify-center items-center">
         <span>No songs in queue</span>
       </div>
     )
 
-  const currentSongId = getCurrentSong().id
-
   return (
     <Table className="min-h-full h-full bg-transparent">
       <TableBody ref={songRef}>
-        {currentSongList.map((entry, index) => (
+        {currentList.map((entry, index) => (
           <TableRow
             key={entry.id}
-            data-state={currentSongId === entry.id ? 'active' : 'inactive'}
+            data-state={currentSong.id === entry.id ? 'active' : 'inactive'}
             className={cn(
               'hover:shadow-md hover:bg-background/30 dark:hover:bg-muted-foreground/30 border-0 cursor-pointer',
-              currentSongId === entry.id &&
+              currentSong.id === entry.id &&
                 'bg-primary/80 hover:bg-primary dark:hover:bg-primary/70',
             )}
             onClick={() => {
-              if (currentSongId !== entry.id) {
-                setSongList(currentSongList, index)
+              if (currentSong.id !== entry.id) {
+                setSongList(currentList, index)
               }
             }}
           >
             <TableCell className="w-[30px] text-center font-medium">
-              {currentSongId === entry.id && isPlaying ? (
+              {currentSong.id === entry.id && isPlaying ? (
                 <div className="w-6 flex items-center">
                   <div className="w-6 h-6 flex items-center justify-center">
                     <Image
@@ -76,7 +74,9 @@ export function FullscreenSongQueue() {
                   </div>
                 </div>
               ) : (
-                <div>{index + 1}</div>
+                <div className="w-6 h-6 text-center flex justify-center items-center">
+                  <p>{index + 1}</p>
+                </div>
               )}
             </TableCell>
             <TableCell>

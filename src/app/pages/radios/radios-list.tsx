@@ -8,25 +8,18 @@ import { RemoveRadioDialog } from '@/app/components/radios/remove-dialog'
 import { ShadowHeader } from '@/app/components/shadow-header'
 import { Button } from '@/app/components/ui/button'
 import { DataTable } from '@/app/components/ui/data-table'
-import { useLang } from '@/app/contexts/lang-context'
-import { usePlayer } from '@/app/contexts/player-context'
-import { useRadios } from '@/app/contexts/radios-context'
 import { radiosColumns } from '@/app/tables/radios-columns'
+import { usePlayerActions } from '@/store/player.store'
+import { useRadios } from '@/store/radios.store'
 import { Radio } from '@/types/responses/radios'
 
 export default function Radios() {
   const { radios, setDialogState, setData, fetchRadios } = useRadios()
-  const { langCode } = useLang()
   const { t } = useTranslation()
 
-  const memoizedRadiosColumns = useMemo(
-    () => radiosColumns(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [langCode, radios],
-  )
+  const columns = radiosColumns()
   const memoizedRadios = useMemo(() => radios, [radios])
-
-  const player = usePlayer()
+  const { setPlayRadio } = usePlayerActions()
 
   function handleAddRadio() {
     setData({} as Radio)
@@ -35,7 +28,8 @@ export default function Radios() {
 
   useEffect(() => {
     fetchRadios()
-  }, [fetchRadios])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <main className="w-full h-full">
@@ -57,11 +51,9 @@ export default function Radios() {
 
       <ListWrapper className="mt-6">
         <DataTable
-          columns={memoizedRadiosColumns}
+          columns={columns}
           data={memoizedRadios}
-          handlePlaySong={(row) =>
-            player.setPlayRadio(memoizedRadios, row.index)
-          }
+          handlePlaySong={(row) => setPlayRadio(memoizedRadios, row.index)}
           showPagination={true}
           showSearch={true}
           searchColumn="name"

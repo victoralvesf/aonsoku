@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMatches, useNavigate } from 'react-router-dom'
 
+import { toast } from 'react-toastify'
 import { Button } from '@/app/components/ui/button'
 import {
   Dialog,
@@ -13,9 +14,9 @@ import {
 import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
 import { Switch } from '@/app/components/ui/switch'
-import { usePlaylists } from '@/app/contexts/playlists-context'
 import { ROUTES } from '@/routes/routesList'
-import { Playlist } from '@/types/responses/playlist'
+import { usePlaylists } from '@/store/playlists.store'
+import { PlaylistData } from '@/types/playlistsContext'
 
 export function CreatePlaylistDialog() {
   const { t } = useTranslation()
@@ -42,8 +43,8 @@ export function CreatePlaylistDialog() {
       setComment('')
       setIsPublic(true)
     } else {
-      setName(data.name || '')
-      setComment(data.comment || '')
+      setName(data.name ?? '')
+      setComment(data.comment ?? '')
       setIsPublic(data.public ?? true)
     }
   }, [data, isCreation])
@@ -52,14 +53,29 @@ export function CreatePlaylistDialog() {
     event.preventDefault()
 
     if (isCreation) {
-      await createPlaylistWithoutSongs(
-        name,
-        comment,
-        isPublic ? 'true' : 'false',
-      )
+      try {
+        await createPlaylistWithoutSongs({
+          name,
+          comment,
+          isPublic: isPublic ? 'true' : 'false',
+        })
+        toast.success(t('playlist.form.create.toast.success'))
+      } catch (_) {
+        toast.error(t('playlist.form.create.toast.success'))
+      }
     } else {
-      await editPlaylist(data.id, name, comment, isPublic ? 'true' : 'false')
-      revalidateDataIfNeeded()
+      try {
+        await editPlaylist({
+          id: data.id,
+          name,
+          comment,
+          isPublic: isPublic ? 'true' : 'false',
+        })
+        revalidateDataIfNeeded()
+        toast.success(t('playlist.form.edit.toast.success'))
+      } catch (_) {
+        toast.error(t('playlist.form.edit.toast.error'))
+      }
     }
 
     clear()
@@ -67,7 +83,7 @@ export function CreatePlaylistDialog() {
   }
 
   function clear() {
-    setData({} as Playlist)
+    setData({} as PlaylistData)
   }
 
   function revalidateDataIfNeeded() {

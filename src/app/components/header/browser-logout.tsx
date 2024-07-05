@@ -12,14 +12,14 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
-import { useApp } from '@/app/contexts/app-context'
+import { useAppData } from '@/store/app.store'
 
 interface BrowserLogoutProps {
   openDialog: (state: boolean) => void
 }
 
 export function BrowserLogout({ openDialog }: BrowserLogoutProps) {
-  const { serverUsername, serverUrl } = useApp()
+  const { username, url } = useAppData()
   const { t } = useTranslation()
 
   useHotkeys('shift+ctrl+q', () => openDialog(true))
@@ -38,11 +38,11 @@ export function BrowserLogout({ openDialog }: BrowserLogoutProps) {
       <DropdownMenuContent align="end">
         <DropdownMenuItem disabled>
           <User className="mr-2 h-4 w-4" />
-          <span>{serverUsername}</span>
+          <span>{username}</span>
         </DropdownMenuItem>
         <DropdownMenuItem disabled>
           <Globe className="mr-2 h-4 w-4" />
-          <span>{serverUrl}</span>
+          <span>{url}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => openDialog(true)}>

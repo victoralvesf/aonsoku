@@ -1,14 +1,15 @@
 import { FetchOptions, fetch as tauriFetch } from '@tauri-apps/api/http'
+import { useAppStore } from '@/store/app.store'
 import { SubsonicJsonResponse } from '@/types/responses/subsonicResponse'
-import { getFromLocalStorage } from '@/utils/persistDataLayer'
 import { saltWord } from '@/utils/salt'
 import { isTauri } from '@/utils/tauriTools'
 
 function queryParams() {
-  const { username, token } = getFromLocalStorage()
+  const { username, password } = useAppStore.getState().data
+
   return {
     u: username ?? '',
-    t: token ?? '',
+    t: password ?? '',
     s: saltWord,
     v: '1.16.0',
     c: 'Subsonic-Player',
@@ -69,7 +70,7 @@ export async function httpClient<T>(
   options: FetchOptions,
 ): Promise<{ count: number; data: T } | undefined> {
   try {
-    const { url } = getFromLocalStorage()
+    const { url } = useAppStore.getState().data
     let fullUrl = `${url}/rest${path}`
 
     if (isTauri()) {
@@ -95,7 +96,7 @@ export async function httpClient<T>(
 }
 
 export function getCoverArtUrl(id: string, size = '300') {
-  const { url } = getFromLocalStorage()
+  const { url } = useAppStore.getState().data
   const baseUrl = `${url}/rest/getCoverArt`
 
   const params = {
@@ -111,7 +112,7 @@ export function getCoverArtUrl(id: string, size = '300') {
 }
 
 export function getSongStreamUrl(id: string) {
-  const { url } = getFromLocalStorage()
+  const { url } = useAppStore.getState().data
   const baseUrl = `${url}/rest/stream`
 
   const params = {

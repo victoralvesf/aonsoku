@@ -11,9 +11,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/app/components/ui/carousel'
-import { usePlayer } from '@/app/contexts/player-context'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
+import { usePlayerActions } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
@@ -22,7 +22,7 @@ interface HomeHeaderProps {
 }
 
 export default function HomeHeader({ songs }: HomeHeaderProps) {
-  const player = usePlayer()
+  const { setSongList } = usePlayerActions()
 
   async function handlePlaySongAlbum(song: ISong) {
     const album = await subsonic.albums.getOne(song.albumId)
@@ -30,7 +30,7 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
     if (album?.song) {
       const songIndex = album?.song.findIndex((item) => item.id === song.id)
 
-      player.setSongList(album?.song, songIndex)
+      setSongList(album?.song, songIndex)
     }
   }
 

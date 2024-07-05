@@ -3,8 +3,13 @@ import { Heart } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/app/components/ui/button'
-import { usePlayer } from '@/app/contexts/player-context'
 import { subsonic } from '@/service/subsonic'
+import {
+  usePlayerActions,
+  usePlayerMediaType,
+  usePlayerSongStarred,
+  usePlayerSonglist,
+} from '@/store/player.store'
 
 interface TableLikeButtonProps {
   type: 'song' | 'artist'
@@ -18,16 +23,19 @@ export function TableLikeButton({
   type,
 }: TableLikeButtonProps) {
   const [isStarred, setIsStarred] = useState(starred)
-  const { checkActiveSong, isSongStarred, starCurrentSong, starSongInQueue } =
-    usePlayer()
+  const { currentSong } = usePlayerSonglist()
+  const isSongStarred = usePlayerSongStarred()
+  const mediaType = usePlayerMediaType()
+  const { starCurrentSong, starSongInQueue } = usePlayerActions()
 
   useEffect(() => {
     if (type === 'artist') return
+    if (mediaType === 'radio') return
 
-    const isSongPlaying = checkActiveSong(entityId)
+    const isSongPlaying = currentSong.id === entityId
 
     if (isSongPlaying) setIsStarred(isSongStarred)
-  }, [checkActiveSong, entityId, isSongStarred, type])
+  }, [currentSong, entityId, isSongStarred, mediaType, type])
 
   async function handleStarred() {
     const state = !isStarred
@@ -35,8 +43,8 @@ export function TableLikeButton({
     await subsonic.star.handleStarItem(entityId, isStarred)
     setIsStarred(state)
 
-    if (type === 'song') {
-      const isSongPlaying = checkActiveSong(entityId)
+    if (type === 'song' && mediaType === 'song') {
+      const isSongPlaying = currentSong.id === entityId
       isSongPlaying ? starCurrentSong() : starSongInQueue(entityId)
     }
   }
