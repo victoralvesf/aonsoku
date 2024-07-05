@@ -14,11 +14,11 @@ import {
   CommandItem,
   CommandList,
 } from '@/app/components/ui/command'
-import { usePlaylists } from '@/app/contexts/playlists-context'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
+import { usePlaylists } from '@/store/playlists.store'
 import { useTheme } from '@/store/theme.store'
 import { Albums } from '@/types/responses/album'
 import { ISimilarArtist } from '@/types/responses/artist'

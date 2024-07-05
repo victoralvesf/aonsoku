@@ -6,10 +6,10 @@ import ListWrapper from '@/app/components/list-wrapper'
 import { ShadowHeader } from '@/app/components/shadow-header'
 import { Button } from '@/app/components/ui/button'
 import { DataTable } from '@/app/components/ui/data-table'
-import { usePlaylists } from '@/app/contexts/playlists-context'
 import { playlistsColumns } from '@/app/tables/playlists-columns'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
+import { usePlaylists } from '@/store/playlists.store'
 
 export default function PlaylistsPage() {
   const { playlists, setPlaylistDialogState } = usePlaylists()

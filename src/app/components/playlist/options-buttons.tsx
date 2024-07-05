@@ -2,7 +2,7 @@ import { PlusIcon, RotateCw } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
-import { usePlaylists } from '@/app/contexts/playlists-context'
+import { usePlaylists } from '@/store/playlists.store'
 
 export function PlaylistOptionsButtons() {
   const { setPlaylistDialogState, fetchPlaylists } = usePlaylists()
