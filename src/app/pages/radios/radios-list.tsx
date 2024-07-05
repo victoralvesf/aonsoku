@@ -8,9 +8,9 @@ import { RemoveRadioDialog } from '@/app/components/radios/remove-dialog'
 import { ShadowHeader } from '@/app/components/shadow-header'
 import { Button } from '@/app/components/ui/button'
 import { DataTable } from '@/app/components/ui/data-table'
-import { useRadios } from '@/app/contexts/radios-context'
 import { radiosColumns } from '@/app/tables/radios-columns'
 import { usePlayerActions } from '@/store/player.store'
+import { useRadios } from '@/store/radios.store'
 import { Radio } from '@/types/responses/radios'
 
 export default function Radios() {
@@ -28,7 +28,8 @@ export default function Radios() {
 
   useEffect(() => {
     fetchRadios()
-  }, [fetchRadios])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <main className="w-full h-full">

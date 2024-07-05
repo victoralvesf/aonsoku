@@ -1,5 +1,6 @@
 import { MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,7 +11,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/app/components/ui/alert-dialog'
-import { useRadios } from '@/app/contexts/radios-context'
+import { useRadios } from '@/store/radios.store'
 import { Radio } from '@/types/responses/radios'
 
 export function RemoveRadioDialog() {
@@ -25,9 +26,16 @@ export function RemoveRadioDialog() {
 
   async function handleRemoveRadio(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
-    await deleteRadio(data.id)
-    setConfirmDeleteState(false)
-    setData({} as Radio)
+
+    try {
+      await deleteRadio(data.id)
+      setConfirmDeleteState(false)
+      setData({} as Radio)
+
+      toast.success(t('radios.form.delete.toast.success'))
+    } catch (_) {
+      toast.error(t('radios.form.delete.toast.success'))
+    }
   }
 
   return (

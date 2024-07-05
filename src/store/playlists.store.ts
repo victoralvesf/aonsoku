@@ -20,6 +20,11 @@ export const usePlaylistsStore = createWithEqualityFn<IPlaylistsContext>()(
             })
           }
         },
+        clearPlaylists: () => {
+          set((state) => {
+            state.playlists = []
+          })
+        },
         removePlaylist: async (id) => {
           await subsonic.playlists.remove(id)
           const { playlists } = get()

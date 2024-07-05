@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { toast } from 'react-toastify'
 import { Button } from '@/app/components/ui/button'
 import {
   Dialog,
@@ -11,8 +12,7 @@ import {
 } from '@/app/components/ui/dialog'
 import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
-
-import { useRadios } from '@/app/contexts/radios-context'
+import { useRadios } from '@/store/radios.store'
 import { Radio } from '@/types/responses/radios'
 
 export function RadioFormDialog() {
@@ -38,9 +38,9 @@ export function RadioFormDialog() {
       setHomePageUrl('')
       setStreamUrl('')
     } else {
-      setName(data.name || '')
-      setHomePageUrl(data.homePageUrl || '')
-      setStreamUrl(data.streamUrl || '')
+      setName(data.name ?? '')
+      setHomePageUrl(data.homePageUrl ?? '')
+      setStreamUrl(data.streamUrl ?? '')
     }
   }, [data, isCreation])
 
@@ -48,18 +48,30 @@ export function RadioFormDialog() {
     event.preventDefault()
 
     if (isCreation) {
-      await createRadio({
-        name,
-        homePageUrl,
-        streamUrl,
-      })
+      try {
+        await createRadio({
+          name,
+          homePageUrl,
+          streamUrl,
+        })
+
+        toast.success(t('radios.form.create.toast.success'))
+      } catch (_) {
+        toast.error(t('radios.form.create.toast.success'))
+      }
     } else {
-      await updateRadio({
-        id: data.id,
-        name,
-        homePageUrl,
-        streamUrl,
-      })
+      try {
+        await updateRadio({
+          id: data.id,
+          name,
+          homePageUrl,
+          streamUrl,
+        })
+
+        toast.success(t('radios.form.edit.toast.success'))
+      } catch (_) {
+        toast.error(t('radios.form.edit.toast.success'))
+      }
     }
 
     clear()

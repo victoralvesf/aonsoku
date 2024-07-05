@@ -43,8 +43,8 @@ export function CreatePlaylistDialog() {
       setComment('')
       setIsPublic(true)
     } else {
-      setName(data.name || '')
-      setComment(data.comment || '')
+      setName(data.name ?? '')
+      setComment(data.comment ?? '')
       setIsPublic(data.public ?? true)
     }
   }, [data, isCreation])

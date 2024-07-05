@@ -6,7 +6,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
 } from '@/app/components/ui/dropdown-menu'
-import { useRadios } from '@/app/contexts/radios-context'
+import { useRadios } from '@/store/radios.store'
 import { Radio } from '@/types/responses/radios'
 
 interface RadioActionButtonProps {

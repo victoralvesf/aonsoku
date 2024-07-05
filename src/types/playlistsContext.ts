@@ -20,6 +20,7 @@ interface UpdateData extends CreateData {
 export interface IPlaylistsContext {
   playlists: Playlist[]
   fetchPlaylists: () => Promise<void>
+  clearPlaylists: () => void
   removePlaylist: (id: string) => Promise<void>
   playlistDialogState: boolean
   setPlaylistDialogState: (state: boolean) => void
