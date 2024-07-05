@@ -1,4 +1,5 @@
-import { FormEvent } from 'react'
+import { Loader2 } from 'lucide-react'
+import { FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
@@ -28,6 +29,7 @@ import { ROUTES } from '@/routes/routesList'
 import { useAppActions, useAppData } from '@/store/app.store'
 
 export function LoginForm() {
+  const [loading, setLoading] = useState(false)
   const { protocol } = useAppData()
   const { setProtocol, setUrl, setUsername, setPassword, saveConfig } =
     useAppActions()
@@ -36,11 +38,13 @@ export function LoginForm() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    setLoading(true)
     const status = await saveConfig()
     if (status) {
       toast.success(t('toast.server.success'))
       navigate(ROUTES.LIBRARY.HOME, { replace: true })
     } else {
+      setLoading(false)
       toast.error(t('toast.server.error'))
     }
   }
@@ -109,7 +113,8 @@ export function LoginForm() {
           </div>
         </CardContent>
         <CardFooter className="flex">
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {t('login.form.connect')}
           </Button>
         </CardFooter>
