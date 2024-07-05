@@ -4,14 +4,15 @@ import { useLang } from '@/store/lang.store'
 
 export function LangObserver() {
   const { i18n } = useTranslation()
-  const { setLang, langCode } = useLang()
+  const { langCode, setLang } = useLang()
 
   useEffect(() => {
     const lang = i18n.resolvedLanguage
-    if (lang) {
+    if (lang && lang !== '') {
       setLang(lang)
     }
-  }, [i18n.resolvedLanguage, setLang])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (langCode) {
