@@ -1,9 +1,9 @@
 import { subsonic } from '@/service/subsonic'
-import { getFromLocalStorage } from '@/utils/persistDataLayer'
+import { useAppStore } from '@/store/app.store'
 
 export async function homeLoader() {
-  const { url } = getFromLocalStorage()
-  if (!url) return null
+  const { url } = useAppStore.getState().data
+  if (!url || url === '') return null
 
   const randomSongsPromise = subsonic.songs.getRandomSongs()
   const newestAlbumsPromise = subsonic.albums.getAlbumList({ size: 16 })

@@ -99,7 +99,8 @@ img {
   -ms-user-select: none;
 }
 
-#artist-biography > p > a {
+#artist-biography > p > a,
+.link {
   @apply text-primary hover:underline;
 }
 

@@ -176,6 +176,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.originalList = []
                 state.songlist.shuffledList = []
                 state.songlist.currentList = []
+                state.songlist.currentSong = {} as ISong
                 state.songlist.radioList = []
                 state.songlist.originalSongIndex = 0
                 state.songlist.currentSongIndex = 0

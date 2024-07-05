@@ -11,9 +11,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/app/components/ui/alert-dialog'
-import { useApp } from '@/app/contexts/app-context'
 import { useRadios } from '@/app/contexts/radios-context'
 import { ROUTES } from '@/routes/routesList'
+import { useAppActions } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 
 interface AlertDialogProps {
@@ -25,15 +25,15 @@ export function LogoutConfirmDialog({
   openDialog,
   setOpenDialog,
 }: AlertDialogProps) {
-  const { handleRemoveServerConfig } = useApp()
+  const { removeConfig } = useAppActions()
   const navigate = useNavigate()
   const { clearPlayerState } = usePlayerActions()
   const { setRadios } = useRadios()
   const { t } = useTranslation()
 
-  async function handleRemoveConfig(e: MouseEvent<HTMLButtonElement>) {
+  function handleRemoveConfig(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
-    await handleRemoveServerConfig()
+    removeConfig()
     setRadios([])
     clearPlayerState()
     navigate(ROUTES.SERVER_CONFIG, { replace: true })

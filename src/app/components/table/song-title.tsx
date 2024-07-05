@@ -2,10 +2,10 @@ import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
+import Image from '@/app/components/image'
 import { ROUTES } from '@/routes/routesList'
 import { usePlayerMediaType, usePlayerSonglist } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
-import Image from '../image'
 
 export function TableSongTitle({ song }: { song: ISong }) {
   const { currentSong } = usePlayerSonglist()
@@ -32,7 +32,7 @@ export function TableSongTitle({ song }: { song: ISong }) {
         <p
           className={clsx(
             'font-medium truncate',
-            songIsPlaying && 'underline underline-offset-1 text-primary',
+            songIsPlaying && 'text-primary',
           )}
         >
           {song.title}
