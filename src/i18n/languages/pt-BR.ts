@@ -259,6 +259,11 @@ export const brazilianPortuguese = {
         },
       },
     },
+    time: {
+      hour: '{{hour}}h',
+      minutes: '{{minutes}}min',
+      seconds: '{{seconds}}s',
+    },
     dayjs: {
       relativeTime: {
         future: 'em %s',

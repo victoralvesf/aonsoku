@@ -104,7 +104,7 @@ export default function PlaySongButton({
       )}
       {isCurrentSongPlaying() && isPlaying && (
         <>
-          <div className="group-hover/tablerow:hidden w-8 flex items-center">
+          <div className="group-hover/tablerow:hidden w-8 h-8 flex items-center">
             <div className="w-8 h-8 flex items-center justify-center">
               <Image
                 src="/equalizer.gif"
@@ -136,8 +136,10 @@ export default function PlaySongButton({
       )}
       {!isCurrentSongPlaying() && (
         <>
-          <div className="group-hover/tablerow:hidden w-8">{trackNumber}</div>
-          <div className="hidden group-hover/tablerow:flex justify-center">
+          <div className="group-hover/tablerow:hidden w-8 h-8 flex items-center justify-center">
+            {trackNumber}
+          </div>
+          <div className="hidden group-hover/tablerow:block">
             <SimpleTooltip text={tooltips.playTooltip}>
               <Button
                 className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"

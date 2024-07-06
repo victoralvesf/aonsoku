@@ -9,12 +9,12 @@ export function SongInfo() {
   const imageUrl = getCoverArtUrl(currentSong.coverArt, '1000')
 
   return (
-    <div className="flex items-end justify-start h-full min-h-full max-h-full gap-4 2xl:gap-6 flex-1 pt-2 2xl:py-16">
+    <div className="flex items-end justify-start h-full min-h-full max-h-full gap-4 2xl:gap-6 flex-1 pt-2">
       <div className="2xl:w-[33%] h-full max-w-[450px] max-h-[450px] 2xl:max-w-[550px] 2xl:max-h-[550px] items-end flex aspect-square">
         <AspectRatio ratio={1 / 1}>
           <img
             src={imageUrl}
-            alt={currentSong.title}
+            alt={`${currentSong.artist} - ${currentSong.title}`}
             className="rounded-lg 2xl:rounded-2xl aspect-square"
           />
         </AspectRatio>
