@@ -1,14 +1,10 @@
-import { Fragment, useState } from 'react'
-
 import { BrowserLogout } from '@/app/components/header/browser-logout'
 import { LangSelect } from '@/app/components/header/lang-select'
 import { NavigationButtons } from '@/app/components/header/navigation-buttons'
 import { ThemeToggle } from '@/app/components/header/theme-toggle'
-import { LogoutConfirmDialog } from '@/app/components/logout-confirm'
 import { usePlayerSonglist } from '@/store/player.store'
 
 export function Header() {
-  const [logoutDialogState, setLogoutDialogState] = useState(false)
   const { currentList, currentSongIndex, currentSong } = usePlayerSonglist()
 
   const isPlaylistEmpty = currentList.length === 0
@@ -29,28 +25,21 @@ export function Header() {
   }
 
   return (
-    <Fragment>
-      <LogoutConfirmDialog
-        openDialog={logoutDialogState}
-        setOpenDialog={setLogoutDialogState}
-      />
-
-      <div className="w-full grid grid-cols-header h-[40px] px-4">
-        <div className="flex items-center">
-          <NavigationButtons />
-        </div>
-        <div className="col-span-2 flex justify-center items-center">
-          <div className="flex w-full justify-center subpixel-antialiased font-medium text-sm text-foreground/80">
-            <p className="leading-7 mr-1">{formatSongCount()}</p>
-            <p className="leading-7 truncate">{getCurrentSongInfo()}</p>
-          </div>
-        </div>
-        <div className="flex justify-end items-center gap-2 pr-4">
-          <LangSelect />
-          <ThemeToggle />
-          <BrowserLogout openDialog={setLogoutDialogState} />
+    <div className="w-full grid grid-cols-header h-[40px] px-4">
+      <div className="flex items-center">
+        <NavigationButtons />
+      </div>
+      <div className="col-span-2 flex justify-center items-center">
+        <div className="flex w-full justify-center subpixel-antialiased font-medium text-sm text-foreground/80">
+          <p className="leading-7 mr-1">{formatSongCount()}</p>
+          <p className="leading-7 truncate">{getCurrentSongInfo()}</p>
         </div>
       </div>
-    </Fragment>
+      <div className="flex justify-end items-center gap-2 pr-4">
+        <LangSelect />
+        <ThemeToggle />
+        <BrowserLogout />
+      </div>
+    </div>
   )
 }

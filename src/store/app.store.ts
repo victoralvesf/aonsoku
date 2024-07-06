@@ -1,5 +1,5 @@
 import { MD5 } from 'crypto-js'
-import { merge } from 'lodash'
+import { merge, omit } from 'lodash'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { createWithEqualityFn } from 'zustand/traditional'
@@ -20,6 +20,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             url: '',
             username: '',
             password: '',
+            logoutDialogState: false,
           },
           actions: {
             setOsType: (value) => {
@@ -80,6 +81,11 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.password = ''
               })
             },
+            setLogoutDialogState: (value) => {
+              set((state) => {
+                state.data.logoutDialogState = value
+              })
+            },
           },
         })),
         {
@@ -91,6 +97,11 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
         version: 1,
         merge: (persistedState, currentState) => {
           return merge(currentState, persistedState)
+        },
+        partialize: (state) => {
+          const appStore = omit(state, 'data.logoutDialogState')
+
+          return appStore
         },
       },
     ),
