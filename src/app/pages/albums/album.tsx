@@ -40,7 +40,7 @@ export default function Album() {
   const memoizedAlbums = useMemo(() => album, [album])
 
   const albumDuration = memoizedAlbums.duration
-    ? convertSecondsToHumanRead(memoizedAlbums.duration, true)
+    ? convertSecondsToHumanRead(memoizedAlbums.duration)
     : null
 
   const badges = [

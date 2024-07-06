@@ -1,3 +1,4 @@
+import i18n from '@/i18n'
 import dateTime from './dateTime'
 
 export function convertSecondsToTime(seconds: number): string {
@@ -11,24 +12,21 @@ export function convertSecondsToTime(seconds: number): string {
   }
 }
 
-export function convertSecondsToHumanRead(
-  seconds: number,
-  showSeconds = false,
-) {
-  const dur = dateTime.duration(seconds, 'seconds')
-  const hours = Math.floor(dur.asHours())
-  const minutes = dur.minutes()
-  const secs = dur.seconds()
+export function convertSecondsToHumanRead(time: number) {
+  const dur = dateTime.duration(time, 'seconds')
+  const numberOfHours = dur.hours()
+  const numberOfMinutes = dur.minutes()
+  const numberOfSeconds = dur.seconds()
 
-  const formattedHours = `${String(hours).padStart(2, '0')} hr `
-  const formattedMinutes = `${String(minutes).padStart(2, '0')} min `
-  const formattedSeconds = `${String(secs).padStart(2, '0')} s`
+  const hours = i18n.t('time.hour', { hour: dur.format('HH') })
+  const minutes = i18n.t('time.minutes', { minutes: dur.format('mm') })
+  const seconds = i18n.t('time.seconds', { seconds: dur.format('ss') })
 
-  let finalText = ''
+  const finalText = []
 
-  if (hours > 0) finalText = formattedHours
-  if (minutes > 0) finalText += formattedMinutes
-  if (showSeconds) finalText += formattedSeconds
+  if (numberOfHours > 0) finalText.push(hours)
+  if (!(numberOfHours > 0 && numberOfMinutes === 0)) finalText.push(minutes)
+  if (numberOfHours === 0 && numberOfSeconds !== 0) finalText.push(seconds)
 
-  return finalText.trim()
+  return finalText.join(' ')
 }

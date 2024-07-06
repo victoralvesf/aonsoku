@@ -259,6 +259,11 @@ export const english = {
         },
       },
     },
+    time: {
+      hour: '{{hour}} hr',
+      minutes: '{{minutes}} min',
+      seconds: '{{seconds}} s',
+    },
     dayjs: {
       relativeTime: {
         future: 'in %s',
