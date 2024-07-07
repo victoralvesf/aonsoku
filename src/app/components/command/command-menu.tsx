@@ -140,7 +140,7 @@ export default function CommandMenu() {
           type="text"
           id="search"
           placeholder={t('command.inputPlaceholder')}
-          className="px-4 py-3 bg-background border-b outline-none focus:border-b-primary"
+          className="px-4 py-3 bg-background border-b outline-none focus:bg-foreground/5"
           value={query}
           autoCorrect="false"
           autoCapitalize="false"
