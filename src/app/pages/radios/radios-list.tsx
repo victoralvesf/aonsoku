@@ -32,7 +32,7 @@ export default function Radios() {
   }, [])
 
   return (
-    <main className="w-full h-full">
+    <div className="w-full h-full">
       <ShadowHeader>
         <div className="w-full flex items-center justify-between">
           <HeaderTitle title={t('sidebar.radios')} count={radios.length} />
@@ -49,7 +49,7 @@ export default function Radios() {
         </div>
       </ShadowHeader>
 
-      <ListWrapper className="mt-6">
+      <ListWrapper className="pt-[--shadow-header-distance]">
         <DataTable
           columns={columns}
           data={memoizedRadios}
@@ -62,6 +62,6 @@ export default function Radios() {
 
       <RadioFormDialog />
       <RemoveRadioDialog />
-    </main>
+    </div>
   )
 }

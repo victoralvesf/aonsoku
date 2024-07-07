@@ -120,7 +120,7 @@ export function Player() {
   }, [clearPlayerState, hasNextSong, playNextSong])
 
   return (
-    <div className="border-t h-[100px] w-full flex items-center">
+    <footer className="border-t h-[--player-height] w-full flex items-center fixed bottom-0 left-0 right-0 z-20 bg-background">
       <div className="w-full h-full grid grid-cols-player gap-2 px-4">
         {/* Track Info */}
         <div className="flex items-center gap-2 w-full">
@@ -168,6 +168,6 @@ export function Player() {
           onPause={() => setPlayingState(false)}
         />
       )}
-    </div>
+    </footer>
   )
 }

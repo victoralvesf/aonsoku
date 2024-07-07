@@ -1,12 +1,5 @@
-import { clsx } from 'clsx'
 import { useEffect } from 'react'
-import {
-  Outlet,
-  useLocation,
-  Location,
-  useMatches,
-  UIMatch,
-} from 'react-router-dom'
+import { Outlet, useLocation, Location } from 'react-router-dom'
 
 import { Player } from '@/app/components/player/player'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
@@ -15,10 +8,6 @@ import { Sidebar } from '@/app/layout/sidebar'
 
 export default function BaseLayout() {
   const location = useLocation() as Location
-  const matches = useMatches() as UIMatch[]
-
-  const locationsWithPadding = ['home', 'playlist']
-  const addPadding = locationsWithPadding.includes(matches[1].id)
 
   useEffect(() => {
     document
@@ -27,29 +16,16 @@ export default function BaseLayout() {
   }, [location])
 
   return (
-    <div className="hidden md:block h-screen overflow-hidden">
-      {/* Header */}
+    <div className="h-screen w-screen overflow-hidden">
       <Header />
-      {/* Middle */}
-      <div className="border-t h-[calc(100%-140px)]">
-        <div className="bg-background h-full">
-          <div className="flex h-full">
-            <Sidebar className="hidden lg:block w-[280px] min-w-[280px] max-w-[280px] border-r h-full" />
-            <ScrollArea
-              id="main-scroll-area"
-              className={clsx(
-                'w-full bg-muted/30',
-                addPadding && 'px-4 py-6 lg:px-8',
-              )}
-            >
-              {/* Routes */}
-              <Outlet />
-            </ScrollArea>
-          </div>
-        </div>
-      </div>
-      {/* Player */}
+      <Sidebar />
       <Player />
+      {/* Routes */}
+      <main className="flex h-full pl-[--sidebar-width] pt-[--header-height] pb-[--player-height]">
+        <ScrollArea id="main-scroll-area" className="w-full bg-muted/30">
+          <Outlet />
+        </ScrollArea>
+      </main>
     </div>
   )
 }

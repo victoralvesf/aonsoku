@@ -70,11 +70,11 @@ module.exports = {
           to: { height: '0' },
         },
         marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '5%': { transform: 'translateX(0%)' },
-          '50%': { transform: 'translateX(var(--tw-translate-x-end))' },
-          '55%': { transform: 'translateX(var(--tw-translate-x-end))' },
-          '100%': { transform: 'translateX(0%)' },
+          '0%': { transform: 'translate3d(0, 0, 0)' },
+          '5%': { transform: 'translate3d(0, 0, 0)' },
+          '50%': { transform: 'translate3d(var(--tw-translate-x-end), 0, 0)' },
+          '55%': { transform: 'translate3d(var(--tw-translate-x-end), 0, 0)' },
+          '100%': { transform: 'translate3d(0, 0, 0)' },
         },
       },
       animation: {
@@ -93,10 +93,28 @@ module.exports = {
       flexBasis: {
         '1/8': '12.5%',
       },
+      maskImage: {
+        'marquee-fade':
+          'linear-gradient(270deg, transparent 0%, rgb(0, 0, 0) 3%, rgb(0, 0, 0) 97%, transparent 100%)',
+      },
     },
   },
   plugins: [
     require('tailwindcss-animate'),
     require('tailwind-extended-shadows'),
+    function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          maskImage: (value) => {
+            return {
+              maskImage: value,
+            }
+          },
+        },
+        {
+          values: theme('maskImage'),
+        },
+      )
+    },
   ],
 }

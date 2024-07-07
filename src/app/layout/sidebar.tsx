@@ -1,84 +1,52 @@
 import { ListMusic, Mic2, Music2, Radio, Home, Library } from 'lucide-react'
-import { Fragment, ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import CommandMenu from '@/app/components/command/command-menu'
 import { CreatePlaylistDialog } from '@/app/components/playlist/form-dialog'
-import { PlaylistOptionsButtons } from '@/app/components/playlist/options-buttons'
 import {
-  SidebarGenerator,
-  SidebarPlaylistGenerator,
-} from '@/app/components/sidebar-generator'
-import { ScrollArea } from '@/app/components/ui/scroll-area'
+  SectionTitle,
+  SidebarPlaylists,
+  SidebarSection,
+} from '@/app/components/playlist/sidebar-list'
+import { SidebarGenerator } from '@/app/components/sidebar-generator'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
-import { usePlaylists } from '@/store/playlists.store'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className }: SidebarProps) {
   const { t } = useTranslation()
-  const { playlists, fetchPlaylists } = usePlaylists()
-
-  useEffect(() => {
-    fetchPlaylists()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
-    <Fragment>
-      <div className={cn(className)}>
-        <ScrollArea className="h-full">
-          <div className="flex flex-col gap-2 px-4 sticky top-0 py-4 z-50 bg-background">
-            <CommandMenu />
-          </div>
-          <div className="space-y-4 py-4 pt-0 min-w-[275px] max-w-[275px]">
-            <SidebarSection>
-              <div className="space-y-1">
-                <SidebarGenerator list={mainMenuItems} />
-              </div>
-            </SidebarSection>
-            <SidebarSection>
-              <SectionTitle>{t('sidebar.library')}</SectionTitle>
-              <div className="space-y-1">
-                <SidebarGenerator list={libraryItems} />
-              </div>
-            </SidebarSection>
-            <SidebarSection>
-              <SectionTitle>
-                <Fragment>
-                  {t('sidebar.playlists')}
-                  <PlaylistOptionsButtons />
-                </Fragment>
-              </SectionTitle>
-              <div className="space-y-1">
-                {playlists.length > 0 ? (
-                  <SidebarPlaylistGenerator playlists={playlists} />
-                ) : (
-                  <span className="w-full truncate text-left px-3 pt-2 text-sm">
-                    {t('sidebar.emptyPlaylist')}
-                  </span>
-                )}
-              </div>
-            </SidebarSection>
-          </div>
-        </ScrollArea>
+    <aside>
+      <div
+        className={cn(
+          'hidden lg:flex flex-col min-w-[--sidebar-width] max-w-[--sidebar-width] border-r fixed top-[--header-height] left-0 bottom-0 pb-[--player-height] bg-background z-10',
+          className,
+        )}
+      >
+        <div className="p-4">
+          <CommandMenu />
+        </div>
+        <div className="space-y-4 py-4 pt-0 min-w-[275px] max-w-[275px]">
+          <SidebarSection>
+            <div className="space-y-1">
+              <SidebarGenerator list={mainMenuItems} />
+            </div>
+          </SidebarSection>
+          <SidebarSection>
+            <SectionTitle>{t('sidebar.library')}</SectionTitle>
+            <div className="space-y-1">
+              <SidebarGenerator list={libraryItems} />
+            </div>
+          </SidebarSection>
+        </div>
+
+        <SidebarPlaylists />
       </div>
 
       <CreatePlaylistDialog />
-    </Fragment>
-  )
-}
-
-function SidebarSection({ children }: { children: ReactNode }) {
-  return <div className="px-4 py-2 pt-0">{children}</div>
-}
-
-function SectionTitle({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight flex justify-between items-center">
-      {children}
-    </h2>
+    </aside>
   )
 }
 

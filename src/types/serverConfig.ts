@@ -11,6 +11,7 @@ export interface IAppData {
   url: string
   username: string
   password: string
+  logoutDialogState: boolean
 }
 
 export interface IAppActions {
@@ -21,6 +22,7 @@ export interface IAppActions {
   setPassword: (value: string) => void
   saveConfig: () => Promise<boolean>
   removeConfig: () => void
+  setLogoutDialogState: (value: boolean) => void
 }
 
 export interface IAppContext {

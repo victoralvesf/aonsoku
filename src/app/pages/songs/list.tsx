@@ -38,7 +38,7 @@ export default function SongsList() {
   }
 
   return (
-    <main className="w-full h-full">
+    <div className="w-full h-full">
       <ShadowHeader>
         <div className="flex gap-2 items-center">
           <h2 className="text-2xl font-semibold tracking-tight">
@@ -50,7 +50,7 @@ export default function SongsList() {
         </div>
       </ShadowHeader>
 
-      <ListWrapper className="mt-6">
+      <ListWrapper className="pt-[--shadow-header-distance]">
         <DataTable
           columns={columns}
           data={songs}
@@ -61,6 +61,6 @@ export default function SongsList() {
           columnFilter={columnsToShow}
         />
       </ListWrapper>
-    </main>
+    </div>
   )
 }

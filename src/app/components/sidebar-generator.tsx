@@ -59,7 +59,7 @@ export function SidebarPlaylistGenerator({
             size="sm"
             className="w-full justify-start"
           >
-            <ListMusic className="mr-2 h-4 w-4" />
+            <ListMusic className="mr-2 min-h-4 min-w-4 h-4 w-4" />
             <span className="w-full truncate text-left">{playlist.name}</span>
           </Button>
         </Link>
