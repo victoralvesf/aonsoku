@@ -49,7 +49,7 @@ export default function Playlist() {
   }
 
   return (
-    <main className="w-full">
+    <div className="w-full px-4 py-6 lg:px-8">
       <div className="flex">
         <Image
           src={getCoverArtUrl(memoizedPlaylist.coverArt)}
@@ -124,6 +124,6 @@ export default function Playlist() {
           </p>
         </div>
       )}
-    </main>
+    </div>
   )
 }

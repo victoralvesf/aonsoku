@@ -31,8 +31,8 @@ export function BrowserLogout() {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="w-7 h-7 p-0 rounded-full">
-            <Avatar className="w-7 h-7">
+          <Button variant="ghost" className="w-8 h-8 p-0 rounded-full">
+            <Avatar className="w-8 h-8">
               <AvatarFallback className="text-sm">
                 <User className="w-4 h-4" />
               </AvatarFallback>

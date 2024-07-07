@@ -159,7 +159,7 @@ export default function AlbumsList() {
   )[0].label
 
   return (
-    <main className="w-full h-full">
+    <div className="w-full h-full">
       <ShadowHeader>
         <div className="w-full flex justify-between">
           <div className="flex gap-2 items-center">
@@ -198,7 +198,7 @@ export default function AlbumsList() {
         </div>
       </ShadowHeader>
 
-      <ListWrapper className="pt-6 lg:pt-8">
+      <ListWrapper className="pt-[--shadow-header-distance]">
         <div className="grid grid-cols-8 gap-4 h-full">
           {items &&
             items.map((album) => (
@@ -211,6 +211,6 @@ export default function AlbumsList() {
             ))}
         </div>
       </ListWrapper>
-    </main>
+    </div>
   )
 }

@@ -27,7 +27,7 @@ export default function PlaylistsPage() {
   }
 
   return (
-    <main className="w-full h-full">
+    <div className="w-full h-full">
       <ShadowHeader>
         <div className="w-full flex items-center justify-between">
           <HeaderTitle
@@ -47,7 +47,7 @@ export default function PlaylistsPage() {
         </Button>
       </ShadowHeader>
 
-      <ListWrapper className="mt-6">
+      <ListWrapper className="pt-[--shadow-header-distance]">
         <DataTable
           columns={columns}
           data={playlists}
@@ -57,6 +57,6 @@ export default function PlaylistsPage() {
           handlePlaySong={(row) => handlePlayPlaylist(row.original.id)}
         />
       </ListWrapper>
-    </main>
+    </div>
   )
 }

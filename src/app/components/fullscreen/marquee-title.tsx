@@ -12,7 +12,7 @@ interface MarqueeTitleProps {
   children: ReactNode
 }
 
-const SPEED = 10
+const SPEED = 20
 
 export function MarqueeTitle({ children }: MarqueeTitleProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -22,15 +22,7 @@ export function MarqueeTitle({ children }: MarqueeTitleProps) {
   const [animationTime, setAnimationTime] = useState(0)
 
   function calculateMarqueeTime(width: number) {
-    if (width < 100) {
-      return width / (SPEED / 2)
-    } else if (width > 100 && width < 500) {
-      return width / SPEED
-    } else if (width > 500 && width < 1000) {
-      return width / (SPEED * 2)
-    } else {
-      return width / SPEED
-    }
+    return width / SPEED
   }
 
   const calculateOverflow = useCallback(() => {
@@ -69,7 +61,10 @@ export function MarqueeTitle({ children }: MarqueeTitleProps) {
   return (
     <div
       ref={containerRef}
-      className="overflow-hidden whitespace-nowrap relative"
+      className={clsx(
+        'overflow-hidden whitespace-nowrap relative',
+        isOverflowing && 'maskImage-marquee-fade',
+      )}
     >
       <div
         ref={textRef}

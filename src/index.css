@@ -57,6 +57,14 @@
   body {
     @apply bg-background text-foreground subpixel-antialiased;
   }
+  :root {
+    --header-height: 44px;
+    --sidebar-width: 280px;
+    --player-height: 96px;
+
+    --shadow-header-height: 80px;
+    --shadow-header-distance: calc(var(--shadow-header-height) + 1.5rem)
+  }
 }
 
 #root {
@@ -115,11 +123,11 @@ img {
 /* Native Scroll Bar */
 ::-webkit-scrollbar {
   width: 7px;
-  height: 7px;
+  height: 0px;
 }
 ::-webkit-scrollbar-button {
   width: 7px;
-  height: 7px;
+  height: 0px;
 }
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--border));

@@ -15,7 +15,7 @@ export function LangSelect() {
 
   return (
     <Select value={langCode} onValueChange={(lang) => setLang(lang)}>
-      <SelectTrigger className="w-[70px] h-7 ring-offset-transparent focus:ring-0">
+      <SelectTrigger className="w-[70px] h-8 ring-offset-transparent focus:ring-0">
         <SelectValue>
           <ReactCountryFlag countryCode={flag} svg />
         </SelectValue>

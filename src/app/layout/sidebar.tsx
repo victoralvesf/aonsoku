@@ -9,7 +9,6 @@ import {
   SidebarGenerator,
   SidebarPlaylistGenerator,
 } from '@/app/components/sidebar-generator'
-import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { usePlaylists } from '@/store/playlists.store'
@@ -26,47 +25,53 @@ export function Sidebar({ className }: SidebarProps) {
   }, [])
 
   return (
-    <Fragment>
-      <div className={cn(className)}>
-        <ScrollArea className="h-full">
-          <div className="flex flex-col gap-2 px-4 sticky top-0 py-4 z-50 bg-background">
-            <CommandMenu />
+    <aside>
+      <div
+        className={cn(
+          'hidden lg:flex flex-col min-w-[--sidebar-width] max-w-[--sidebar-width] border-r fixed top-[--header-height] left-0 bottom-0 pb-[--player-height] bg-background z-10',
+          className,
+        )}
+      >
+        <div className="p-4">
+          <CommandMenu />
+        </div>
+        <div className="space-y-4 py-4 pt-0 min-w-[275px] max-w-[275px]">
+          <SidebarSection>
+            <div className="space-y-1">
+              <SidebarGenerator list={mainMenuItems} />
+            </div>
+          </SidebarSection>
+          <SidebarSection>
+            <SectionTitle>{t('sidebar.library')}</SectionTitle>
+            <div className="space-y-1">
+              <SidebarGenerator list={libraryItems} />
+            </div>
+          </SidebarSection>
+        </div>
+        {/* Playlists */}
+        <div className="flex flex-col flex-grow pl-4 pt-0 overflow-y-auto">
+          <div className="pr-2">
+            <SectionTitle>
+              <Fragment>
+                {t('sidebar.playlists')}
+                <PlaylistOptionsButtons />
+              </Fragment>
+            </SectionTitle>
           </div>
-          <div className="space-y-4 py-4 pt-0 min-w-[275px] max-w-[275px]">
-            <SidebarSection>
-              <div className="space-y-1">
-                <SidebarGenerator list={mainMenuItems} />
-              </div>
-            </SidebarSection>
-            <SidebarSection>
-              <SectionTitle>{t('sidebar.library')}</SectionTitle>
-              <div className="space-y-1">
-                <SidebarGenerator list={libraryItems} />
-              </div>
-            </SidebarSection>
-            <SidebarSection>
-              <SectionTitle>
-                <Fragment>
-                  {t('sidebar.playlists')}
-                  <PlaylistOptionsButtons />
-                </Fragment>
-              </SectionTitle>
-              <div className="space-y-1">
-                {playlists.length > 0 ? (
-                  <SidebarPlaylistGenerator playlists={playlists} />
-                ) : (
-                  <span className="w-full truncate text-left px-3 pt-2 text-sm">
-                    {t('sidebar.emptyPlaylist')}
-                  </span>
-                )}
-              </div>
-            </SidebarSection>
+          <div className="flex flex-col pb-2 overflow-y-auto">
+            {playlists.length > 0 ? (
+              <SidebarPlaylistGenerator playlists={playlists} />
+            ) : (
+              <span className="w-full truncate text-left px-3 pt-2 text-sm">
+                {t('sidebar.emptyPlaylist')}
+              </span>
+            )}
           </div>
-        </ScrollArea>
+        </div>
       </div>
 
       <CreatePlaylistDialog />
-    </Fragment>
+    </aside>
   )
 }
 

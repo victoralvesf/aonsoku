@@ -25,7 +25,7 @@ export function Header() {
   }
 
   return (
-    <div className="w-full grid grid-cols-header h-[40px] px-4">
+    <header className="w-full grid grid-cols-header px-4 h-[--header-height] fixed top-0 right-0 left-0 z-20 bg-background border-b">
       <div className="flex items-center">
         <NavigationButtons />
       </div>
@@ -35,11 +35,11 @@ export function Header() {
           <p className="leading-7 truncate">{getCurrentSongInfo()}</p>
         </div>
       </div>
-      <div className="flex justify-end items-center gap-2 pr-4">
+      <div className="flex justify-end items-center gap-2">
         <LangSelect />
         <ThemeToggle />
         <BrowserLogout />
       </div>
-    </div>
+    </header>
   )
 }
