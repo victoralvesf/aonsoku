@@ -1,28 +1,21 @@
 import { ListMusic, Mic2, Music2, Radio, Home, Library } from 'lucide-react'
-import { Fragment, ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import CommandMenu from '@/app/components/command/command-menu'
 import { CreatePlaylistDialog } from '@/app/components/playlist/form-dialog'
-import { PlaylistOptionsButtons } from '@/app/components/playlist/options-buttons'
 import {
-  SidebarGenerator,
-  SidebarPlaylistGenerator,
-} from '@/app/components/sidebar-generator'
+  SectionTitle,
+  SidebarPlaylists,
+  SidebarSection,
+} from '@/app/components/playlist/sidebar-list'
+import { SidebarGenerator } from '@/app/components/sidebar-generator'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
-import { usePlaylists } from '@/store/playlists.store'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className }: SidebarProps) {
   const { t } = useTranslation()
-  const { playlists, fetchPlaylists } = usePlaylists()
-
-  useEffect(() => {
-    fetchPlaylists()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <aside>
@@ -48,42 +41,12 @@ export function Sidebar({ className }: SidebarProps) {
             </div>
           </SidebarSection>
         </div>
-        {/* Playlists */}
-        <div className="flex flex-col flex-grow pl-4 pt-0 overflow-y-auto">
-          <div className="pr-2">
-            <SectionTitle>
-              <Fragment>
-                {t('sidebar.playlists')}
-                <PlaylistOptionsButtons />
-              </Fragment>
-            </SectionTitle>
-          </div>
-          <div className="flex flex-col pb-2 overflow-y-auto">
-            {playlists.length > 0 ? (
-              <SidebarPlaylistGenerator playlists={playlists} />
-            ) : (
-              <span className="w-full truncate text-left px-3 pt-2 text-sm">
-                {t('sidebar.emptyPlaylist')}
-              </span>
-            )}
-          </div>
-        </div>
+
+        <SidebarPlaylists />
       </div>
 
       <CreatePlaylistDialog />
     </aside>
-  )
-}
-
-function SidebarSection({ children }: { children: ReactNode }) {
-  return <div className="px-4 py-2 pt-0">{children}</div>
-}
-
-function SectionTitle({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight flex justify-between items-center">
-      {children}
-    </h2>
   )
 }
 

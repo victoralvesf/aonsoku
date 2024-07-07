@@ -98,6 +98,11 @@ textarea {
   display: flex !important;
 }
 
+#playlists #scroll-viewport > div {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
 img {
   user-drag: none;
   -webkit-user-drag: none;

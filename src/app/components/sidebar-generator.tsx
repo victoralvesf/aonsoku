@@ -53,11 +53,7 @@ export function SidebarPlaylistGenerator({
   return (
     <>
       {playlists.map((playlist) => (
-        <Link
-          to={ROUTES.PLAYLIST.PAGE(playlist.id)}
-          key={playlist.id}
-          className="mr-4"
-        >
+        <Link to={ROUTES.PLAYLIST.PAGE(playlist.id)} key={playlist.id}>
           <Button
             variant={isActive(playlist.id)}
             size="sm"
