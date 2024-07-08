@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, memo } from 'react'
 
 import { getSongStreamUrl } from '@/api/httpClient'
 import { RadioInfo } from '@/app/components/player/radio-info'
@@ -18,6 +18,8 @@ import { PlayerLikeButton } from './like-button'
 import { PlayerProgress } from './progress'
 import { PlayerSongListButton } from './song-list-button'
 import { PlayerVolume } from './volume'
+
+const MemoTrackInfo = memo(TrackInfo)
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -124,7 +126,7 @@ export function Player() {
       <div className="w-full h-full grid grid-cols-player gap-2 px-4">
         {/* Track Info */}
         <div className="flex items-center gap-2 w-full">
-          {mediaType === 'song' && <TrackInfo song={song} />}
+          {mediaType === 'song' && <MemoTrackInfo song={song} />}
           {mediaType === 'radio' && <RadioInfo radio={radio} />}
         </div>
         {/* Main Controls */}
