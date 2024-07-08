@@ -17,3 +17,16 @@ export function shuffleSongList<T>(list: T[], index: number, isRandom = false) {
 
   return array
 }
+
+export function addNextSongList<T>(
+  index: number,
+  currentList: T[],
+  newList: T[],
+) {
+  const firstPart = currentList.slice(0, index + 1)
+  const secondPart = currentList.slice(index + 1)
+
+  const updated = [...firstPart, ...newList, ...secondPart]
+
+  return updated
+}

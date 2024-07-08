@@ -49,6 +49,8 @@ export interface IPlayerActions {
   setCurrentDuration: (duration: number) => void
   setPlayRadio: (list: Radio[], index: number) => void
   setAudioPlayerRef: (ref: HTMLAudioElement) => void
+  setNextOnQueue: (songlist: ISong[]) => void
+  setLastOnQueue: (songlist: ISong[]) => void
 }
 
 export interface IPlayerContext {

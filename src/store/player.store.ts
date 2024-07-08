@@ -8,7 +8,7 @@ import { createWithEqualityFn } from 'zustand/traditional'
 import { subsonic } from '@/service/subsonic'
 import { IPlayerContext } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
-import { shuffleSongList } from '@/utils/shuffleArray'
+import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
 
 export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
   subscribeWithSelector(
@@ -91,6 +91,55 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                   state.playerState.isPlaying = true
                 })
               }
+            },
+            setNextOnQueue: (list) => {
+              const {
+                currentList,
+                currentSongIndex,
+                currentSong,
+                originalList,
+              } = get().songlist
+
+              const currentListIds = new Set(currentList.map((song) => song.id))
+              const uniqueList = list.filter(
+                (song) => !currentListIds.has(song.id),
+              )
+
+              const newCurrentList = addNextSongList(
+                currentSongIndex,
+                currentList,
+                uniqueList,
+              )
+
+              const indexOnOriginalList = originalList.findIndex(
+                (song) => song.id === currentSong.id,
+              )
+              const newOriginalList = addNextSongList(
+                indexOnOriginalList,
+                originalList,
+                uniqueList,
+              )
+
+              set((state) => {
+                state.songlist.currentList = newCurrentList
+                state.songlist.originalList = newOriginalList
+              })
+            },
+            setLastOnQueue: (list) => {
+              const { currentList, originalList } = get().songlist
+
+              const currentListIds = new Set(currentList.map((song) => song.id))
+              const uniqueList = list.filter(
+                (song) => !currentListIds.has(song.id),
+              )
+
+              const newCurrentList = [...currentList, ...uniqueList]
+              const newOriginalList = [...originalList, ...uniqueList]
+
+              set((state) => {
+                state.songlist.currentList = newCurrentList
+                state.songlist.originalList = newOriginalList
+              })
             },
             setPlayRadio: (list, index) => {
               const { mediaType } = get().playerState
