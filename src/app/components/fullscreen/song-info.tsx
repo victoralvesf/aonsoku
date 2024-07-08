@@ -21,7 +21,7 @@ export function SongInfo() {
       </div>
 
       <div className="flex flex-col w-[66%] max-w-full h-full max-h-[450px] 2xl:max-h-[550px] justify-end text-left overflow-hidden">
-        <MarqueeTitle>
+        <MarqueeTitle gap="mr-6">
           <h2 className="scroll-m-20 text-4xl 2xl:text-5xl font-bold tracking-tight py-3 drop-shadow-lg">
             {currentSong.title}
           </h2>
