@@ -74,18 +74,20 @@ export function FullscreenSongQueue() {
                   </div>
                 </div>
               ) : (
-                <div className="w-6 h-6 text-center flex justify-center items-center">
+                <div className="w-6 h-6 text-center flex justify-center items-center drop-shadow-lg">
                   <p>{index + 1}</p>
                 </div>
               )}
             </TableCell>
             <TableCell>
-              <span className="font-semibold">{entry.title}</span>
-              <p className="font-normal text-sm text-foreground/70">
+              <span className="font-semibold drop-shadow-lg">
+                {entry.title}
+              </span>
+              <p className="font-normal text-sm text-foreground/70 drop-shadow-lg">
                 {entry.artist}
               </p>
             </TableCell>
-            <TableCell className="w-[100px] text-center">
+            <TableCell className="w-[100px] text-center drop-shadow-lg">
               {convertSecondsToTime(entry.duration)}
             </TableCell>
           </TableRow>

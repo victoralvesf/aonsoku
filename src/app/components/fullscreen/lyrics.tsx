@@ -44,7 +44,7 @@ export function LyricsTab() {
       ref={lyricsBoxRef}
     >
       {lines.map((line, index) => (
-        <p key={index} className="leading-10">
+        <p key={index} className="leading-10 drop-shadow-lg">
           {line}
         </p>
       ))}
