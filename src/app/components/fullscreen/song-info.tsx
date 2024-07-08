@@ -2,10 +2,10 @@ import { getCoverArtUrl } from '@/api/httpClient'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import { AspectRatio } from '@/app/components/ui/aspect-ratio'
 import { Badge } from '@/app/components/ui/badge'
-import { usePlayerSonglist } from '@/store/player.store'
+import { usePlayerStore } from '@/store/player.store'
 
 export function SongInfo() {
-  const { currentSong } = usePlayerSonglist()
+  const currentSong = usePlayerStore((state) => state.songlist.currentSong)
   const imageUrl = getCoverArtUrl(currentSong.coverArt, '1000')
 
   return (

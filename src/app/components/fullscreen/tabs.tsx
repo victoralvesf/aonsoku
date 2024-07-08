@@ -10,7 +10,9 @@ import { LyricsTab } from './lyrics'
 import { FullscreenSongQueue } from './queue'
 import { SongInfo } from './song-info'
 
-const SongQueue = memo(FullscreenSongQueue)
+const MemoSongQueue = memo(FullscreenSongQueue)
+const MemoSongInfo = memo(SongInfo)
+const MemoLyricsTab = memo(LyricsTab)
 
 export function FullscreenTabs() {
   const { t } = useTranslation()
@@ -41,19 +43,19 @@ export function FullscreenTabs() {
         value="queue"
         className="mt-0 h-[calc(100%-64px)] overflow-y-auto pr-1"
       >
-        <SongQueue />
+        <MemoSongQueue />
       </TabsContent>
       <TabsContent
         value="playing"
         className="mt-0 h-[calc(100%-64px)] overflow-hidden"
       >
-        <SongInfo />
+        <MemoSongInfo />
       </TabsContent>
       <TabsContent
         value="lyrics"
         className="mt-0 h-[calc(100%-64px)] overflow-y-auto pr-1"
       >
-        <LyricsTab />
+        <MemoLyricsTab />
       </TabsContent>
     </Tabs>
   )
