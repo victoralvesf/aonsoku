@@ -1,4 +1,5 @@
-import { SearchIcon } from 'lucide-react'
+import { delay } from 'lodash'
+import { Loader2, SearchIcon } from 'lucide-react'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
@@ -6,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { Keyboard } from '@/app/components/command/keyboard-key'
 import { ResultItem } from '@/app/components/command/result-item'
+import { Badge } from '@/app/components/ui/badge'
 import { Button } from '@/app/components/ui/button'
 import {
   CommandDialog,
@@ -22,9 +24,11 @@ import { usePlaylists } from '@/store/playlists.store'
 import { useTheme } from '@/store/theme.store'
 import { Albums } from '@/types/responses/album'
 import { ISimilarArtist } from '@/types/responses/artist'
+import { ScanStatus } from '@/types/responses/library'
 import { ISong } from '@/types/responses/song'
+import dateTime from '@/utils/dateTime'
 
-type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS'
+type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS' | 'SERVER'
 
 export default function CommandMenu() {
   const [open, setOpen] = useState(false)
@@ -32,6 +36,8 @@ export default function CommandMenu() {
   const [albums, setAlbums] = useState<Albums[]>([])
   const [artists, setArtists] = useState<ISimilarArtist[]>([])
   const [songs, setSongs] = useState<ISong[]>([])
+  const [scanStatus, setScanStatus] = useState<ScanStatus>({} as ScanStatus)
+  const [loadingStatus, setLoadingStatus] = useState(false)
 
   const [pages, setPages] = useState<CommandPages[]>(['HOME'])
   const activePage = pages[pages.length - 1]
@@ -109,6 +115,26 @@ export default function CommandMenu() {
   async function handlePlayAlbum(albumId: string) {
     const albumSongs = await getAlbumSongs(albumId)
     if (albumSongs) setSongList(albumSongs, 0)
+  }
+
+  async function getScanStatus() {
+    setLoadingStatus(true)
+    delay(async () => {
+      const response = await subsonic.library.getScanStatus()
+
+      if (response) setScanStatus(response)
+      setLoadingStatus(false)
+    }, 1000)
+  }
+
+  async function startScan() {
+    setLoadingStatus(true)
+    delay(async () => {
+      const response = await subsonic.library.startScan()
+
+      if (response) setScanStatus(response)
+      setLoadingStatus(false)
+    }, 2000)
   }
 
   return (
@@ -239,6 +265,14 @@ export default function CommandMenu() {
               >
                 {t('playlist.form.create.title')}
               </CommandItem>
+              <CommandItem
+                onSelect={async () => {
+                  await getScanStatus()
+                  setPages([...pages, 'SERVER'])
+                }}
+              >
+                {t('server.management')}
+              </CommandItem>
             </CommandGroup>
           )}
 
@@ -319,6 +353,54 @@ export default function CommandMenu() {
                     {playlist.name}
                   </CommandItem>
                 ))}
+            </CommandGroup>
+          )}
+
+          {activePage === 'SERVER' && (
+            <CommandGroup heading={t('server.management')}>
+              {loadingStatus ? (
+                <div className="flex justify-center items-center p-2 mb-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2 p-2">
+                  <p className="text-sm">{t('server.status')}</p>
+
+                  <div className="flex gap-2 flex-wrap">
+                    <Badge variant="outline">
+                      {t('server.songCount', {
+                        count: parseInt(scanStatus.count),
+                      })}
+                    </Badge>
+                    {scanStatus.folderCount && (
+                      <Badge variant="outline">
+                        {t('server.folderCount', {
+                          count: parseInt(scanStatus.folderCount),
+                        })}
+                      </Badge>
+                    )}
+                    {scanStatus.lastScan && (
+                      <Badge variant="outline">
+                        {t('server.lastScan', {
+                          date: dateTime(scanStatus.lastScan).format('LLLL'),
+                        })}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              )}
+              <CommandItem
+                disabled={loadingStatus}
+                onSelect={() => getScanStatus()}
+              >
+                {t('server.buttons.refresh')}
+              </CommandItem>
+              <CommandItem
+                disabled={loadingStatus}
+                onSelect={() => startScan()}
+              >
+                {t('server.buttons.startScan')}
+              </CommandItem>
             </CommandGroup>
           )}
         </CommandList>

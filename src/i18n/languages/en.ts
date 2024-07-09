@@ -264,6 +264,21 @@ export const english = {
       minutes: '{{minutes}} min',
       seconds: '{{seconds}} s',
     },
+    server: {
+      songCount_zero: '{{count}} songs',
+      songCount_one: '{{count}} song',
+      songCount_other: '{{count}} songs',
+      folderCount_zero: '{{count}} folders',
+      folderCount_one: '{{count}} folder',
+      folderCount_other: '{{count}} folders',
+      lastScan: 'Last scan: {{date}}',
+      status: 'Status',
+      management: 'Server management',
+      buttons: {
+        refresh: 'Refresh status',
+        startScan: 'Quick Scan',
+      },
+    },
     dayjs: {
       relativeTime: {
         future: 'in %s',
