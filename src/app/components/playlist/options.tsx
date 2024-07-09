@@ -5,8 +5,11 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
+import { subsonic } from '@/service/subsonic'
+import { usePlayerActions } from '@/store/player.store'
 import { usePlaylists } from '@/store/playlists.store'
 import { Playlist, PlaylistWithEntries } from '@/types/responses/playlist'
+import { ISong } from '@/types/responses/song'
 
 interface PlaylistOptionsProps {
   playlist: PlaylistWithEntries | Playlist
@@ -29,6 +32,7 @@ export function PlaylistOptions({
 }: PlaylistOptionsProps) {
   const { t } = useTranslation()
   const { setPlaylistDialogState, setData } = usePlaylists()
+  const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
 
   function handleEdit() {
     setData({
@@ -40,14 +44,43 @@ export function PlaylistOptions({
     setPlaylistDialogState(true)
   }
 
+  async function getSongsToQueue(callback: (songs: ISong[]) => void) {
+    const playlistWithEntries = await subsonic.playlists.getOne(playlist.id)
+    if (!playlistWithEntries) return
+
+    callback(playlistWithEntries.entry)
+  }
+
+  async function handlePlayNext() {
+    if ('entry' in playlist) {
+      setNextOnQueue(playlist.entry)
+    } else {
+      await getSongsToQueue((songs) => setNextOnQueue(songs))
+    }
+  }
+
+  async function handlePlayLast() {
+    if ('entry' in playlist) {
+      setLastOnQueue(playlist.entry)
+    } else {
+      await getSongsToQueue((songs) => setLastOnQueue(songs))
+    }
+  }
+
   return (
     <>
       <DropdownMenuGroup>
-        <DropdownMenuItem disabled={disablePlayNext}>
+        <DropdownMenuItem
+          disabled={disablePlayNext}
+          onClick={() => handlePlayNext()}
+        >
           <PlusCircle className="mr-2 h-4 w-4" />
           <span>{t('options.playNext')}</span>
         </DropdownMenuItem>
-        <DropdownMenuItem disabled={disableAddLast}>
+        <DropdownMenuItem
+          disabled={disableAddLast}
+          onClick={() => handlePlayLast()}
+        >
           <PlusSquare className="mr-2 h-4 w-4" />
           <span>{t('options.addLast')}</span>
         </DropdownMenuItem>

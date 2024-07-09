@@ -37,7 +37,7 @@ export function FullscreenProgress() {
 
   return (
     <div className="flex items-center">
-      <div className="min-w-[55px] text-left">
+      <div className="min-w-[55px] text-left drop-shadow-lg">
         {convertSecondsToTime(isSeeking ? localProgress : progress)}
       </div>
 
@@ -52,7 +52,7 @@ export function FullscreenProgress() {
         onValueCommit={([value]) => handleSeeked(value)}
       />
 
-      <div className="min-w-[55px] text-right">
+      <div className="min-w-[55px] text-right drop-shadow-lg">
         {convertSecondsToTime(currentDuration ?? 0)}
       </div>
     </div>

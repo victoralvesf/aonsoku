@@ -1,51 +1,30 @@
 import { clsx } from 'clsx'
-import {
-  CSSProperties,
-  ReactNode,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import Marquee from 'react-fast-marquee'
 
 interface MarqueeTitleProps {
   children: ReactNode
+  gap: string
 }
 
-const SPEED = 20
-
-export function MarqueeTitle({ children }: MarqueeTitleProps) {
+export function MarqueeTitle({ children, gap }: MarqueeTitleProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
-  const [animationSize, setAnimationSize] = useState(0)
-  const [animationTime, setAnimationTime] = useState(0)
-
-  function calculateMarqueeTime(width: number) {
-    return width / SPEED
-  }
+  const [isFinished, setIsFinished] = useState(false)
+  const [marqueeKey, setMarqueeKey] = useState('')
+  const [containerKey, setContainerKey] = useState('')
 
   const calculateOverflow = useCallback(() => {
     if (!containerRef.current || !textRef.current) return
 
     const containerWidth = containerRef.current.offsetWidth
     const textWidth = textRef.current.offsetWidth
-    const overflowWidth = textWidth - containerWidth
 
-    if (textWidth > containerWidth) {
-      setIsOverflowing(true)
-      setAnimationSize(overflowWidth)
-      const time = calculateMarqueeTime(overflowWidth)
-
-      setAnimationTime(time)
-    } else {
-      setIsOverflowing(false)
-      setAnimationSize(0)
-      setAnimationTime(0)
-    }
+    setIsOverflowing(textWidth > containerWidth)
   }, [containerRef, textRef])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     calculateOverflow()
 
     const handleResize = () => {
@@ -56,30 +35,48 @@ export function MarqueeTitle({ children }: MarqueeTitleProps) {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
+  }, [calculateOverflow])
+
+  useEffect(() => {
+    setIsOverflowing(false)
+    setIsFinished(false)
+    setMarqueeKey(Math.random().toString())
+    setContainerKey(Math.random().toString())
+
+    calculateOverflow()
   }, [calculateOverflow, children])
 
   return (
-    <div
-      ref={containerRef}
-      className={clsx(
-        'overflow-hidden whitespace-nowrap relative',
-        isOverflowing && 'maskImage-marquee-fade',
-      )}
-    >
+    <div className="relative">
+      {/* Not shown in screen, its just for calculations */}
       <div
-        ref={textRef}
-        className={clsx(
-          'inline-flex will-change-transform',
-          isOverflowing && 'animate-marquee',
-        )}
-        style={
-          {
-            '--tw-translate-x-end': `-${animationSize}px`,
-            '--tw-marquee-time': `${animationTime}s`,
-          } as CSSProperties
-        }
+        key={containerKey}
+        className="w-full overflow-hidden whitespace-nowrap opacity-0 absolute left-0 right-0 bottom-0"
+        ref={containerRef}
       >
-        {children}
+        <div className="inline-flex" ref={textRef}>
+          {children}
+        </div>
+      </div>
+
+      <div>
+        <Marquee
+          key={marqueeKey}
+          className={clsx(
+            isOverflowing && !isFinished && 'maskImage-marquee-fade',
+            isFinished && 'maskImage-marquee-fade-finished',
+          )}
+          speed={30}
+          play={isOverflowing}
+          loop={2}
+          delay={3}
+          pauseOnHover={true}
+          onFinish={() => {
+            setIsFinished(true)
+          }}
+        >
+          <div className={gap}>{children}</div>
+        </Marquee>
       </div>
     </div>
   )

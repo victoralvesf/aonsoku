@@ -101,11 +101,12 @@ export function FullscreenControls() {
 }
 
 export const buttonsStyle = {
-  main: 'w-14 h-14 rounded-full shadow-md bg-secondary-foreground hover:scale-105',
-  mainIcon: 'w-6 h-6 text-background fill-background',
+  main: 'w-14 h-14 rounded-full shadow-lg bg-secondary-foreground hover:scale-105 transition-transform transform-gpu',
+  mainIcon: 'w-6 h-6 text-background fill-background transform-gpu',
   secondary:
-    'relative w-12 h-12 rounded-full hover:bg-transparent hover:scale-110',
-  secondaryIcon: 'w-6 h-6',
-  secondaryIconFilled: 'w-6 h-6 fill-secondary-foreground',
+    'relative w-12 h-12 rounded-full hover:bg-transparent hover:scale-110 transition-transform transform-gpu',
+  secondaryIcon: 'w-6 h-6 drop-shadow-lg transform-gpu',
+  secondaryIconFilled:
+    'w-6 h-6 fill-secondary-foreground drop-shadow-lg transform-gpu',
   activeDot: 'player-button-active',
 }

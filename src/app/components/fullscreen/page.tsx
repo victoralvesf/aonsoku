@@ -1,12 +1,10 @@
 import { ReactNode } from 'react'
-import { getCoverArtUrl } from '@/api/httpClient'
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
   DrawerTrigger,
 } from '@/app/components/ui/drawer'
-import { usePlayerSonglist } from '@/store/player.store'
 import FullscreenBackdrop from './backdrop'
 import { CloseFullscreenButton, SwitchThemeButton } from './buttons'
 import { FullscreenPlayer } from './player'
@@ -17,12 +15,6 @@ interface FullscreenModeProps {
 }
 
 export default function FullscreenMode({ children }: FullscreenModeProps) {
-  const { currentSong } = usePlayerSonglist()
-
-  if (!currentSong) return <></>
-
-  const songCoverArtUrl = getCoverArtUrl(currentSong.coverArt, '1000')
-
   return (
     <Drawer
       fixed
@@ -35,7 +27,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
         className="h-screen w-screen rounded-t-none border-none select-none cursor-default"
         showHandle={false}
       >
-        <FullscreenBackdrop imageUrl={songCoverArtUrl}>
+        <FullscreenBackdrop>
           <div className="flex flex-col p-8 w-screen h-screen gap-4">
             {/* First Row */}
             <div className="flex justify-between items-center w-full h-[40px]">

@@ -5,7 +5,7 @@ import { usePlayerSonglist } from '@/store/player.store'
 
 export function LyricsTab() {
   const lyricsBoxRef = useRef<HTMLDivElement>(null)
-  const { currentSongIndex, currentSong } = usePlayerSonglist()
+  const { currentSong } = usePlayerSonglist()
   const { t } = useTranslation()
 
   const noLyricsFound = t('fullscreen.noLyrics')
@@ -25,7 +25,7 @@ export function LyricsTab() {
 
   useEffect(() => {
     getLyrics()
-  }, [currentSongIndex, getLyrics])
+  }, [currentSong, getLyrics])
 
   useEffect(() => {
     if (lyricsBoxRef.current) {
@@ -34,17 +34,17 @@ export function LyricsTab() {
         block: 'start',
       })
     }
-  }, [currentSongIndex])
+  }, [currentSong])
 
   const lines = currentLyrics.split('\n')
 
   return (
     <div
-      className="text-center font-semibold text-xl 2xl:text-2xl px-2"
+      className="text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth"
       ref={lyricsBoxRef}
     >
       {lines.map((line, index) => (
-        <p key={index} className="leading-10">
+        <p key={index} className="leading-10 drop-shadow-lg">
           {line}
         </p>
       ))}

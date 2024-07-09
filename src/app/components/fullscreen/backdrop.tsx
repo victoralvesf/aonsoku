@@ -1,15 +1,17 @@
 import { ReactNode } from 'react'
+import { getCoverArtUrl } from '@/api/httpClient'
+import { usePlayerSonglist } from '@/store/player.store'
 
 interface FullscreenBackdropProps {
-  imageUrl: string
   children: ReactNode
 }
 
 export default function FullscreenBackdrop({
-  imageUrl,
   children,
 }: FullscreenBackdropProps) {
-  const backgroundImage = `url(${imageUrl})`
+  const { currentSong } = usePlayerSonglist()
+  const coverArtUrl = getCoverArtUrl(currentSong.coverArt, '1000')
+  const backgroundImage = `url(${coverArtUrl})`
 
   return (
     <div
