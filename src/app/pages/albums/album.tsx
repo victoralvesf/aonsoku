@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Await, useLoaderData } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
+import { AlbumOptions } from '@/app/components/album/options'
 import PlayButtons from '@/app/components/album/play-buttons'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
@@ -102,6 +103,7 @@ export default function Album() {
           likeTooltipResource={memoizedAlbums.name}
           likeState={memoizedAlbums.starred}
           contentId={memoizedAlbums.id}
+          optionsMenuItems={<AlbumOptions album={memoizedAlbums} />}
         />
 
         <div className="mb-6">

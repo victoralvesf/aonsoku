@@ -8,6 +8,7 @@ import PlayButtons from '@/app/components/album/play-buttons'
 import ArtistTopSongs, {
   ArtistTopSongsFallback,
 } from '@/app/components/artist/artist-top-songs'
+import { ArtistOptions } from '@/app/components/artist/options'
 import RelatedArtistsList from '@/app/components/artist/related-artists'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
@@ -86,6 +87,7 @@ export default function Artist() {
           likeTooltipResource={artist.name}
           likeState={artist.starred}
           contentId={artist.id}
+          optionsMenuItems={<ArtistOptions artist={artist} />}
         />
 
         <Suspense fallback={<InfoPanelFallback />}>
