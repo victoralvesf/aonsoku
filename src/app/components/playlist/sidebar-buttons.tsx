@@ -4,7 +4,7 @@ import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { usePlaylists } from '@/store/playlists.store'
 
-export function PlaylistOptionsButtons() {
+export function SidebarPlaylistButtons() {
   const { setPlaylistDialogState, fetchPlaylists } = usePlaylists()
   const { t } = useTranslation()
 

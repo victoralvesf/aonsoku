@@ -1,8 +1,6 @@
-import { Download, Pencil, PlusCircle, PlusSquare, Trash } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { OptionsButtons } from '@/app/components/options/buttons'
 import {
   DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
 import { subsonic } from '@/service/subsonic'
@@ -30,7 +28,6 @@ export function PlaylistOptions({
   disableEdit = false,
   disableDelete = false,
 }: PlaylistOptionsProps) {
-  const { t } = useTranslation()
   const { setPlaylistDialogState, setData } = usePlaylists()
   const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
 
@@ -70,41 +67,29 @@ export function PlaylistOptions({
   return (
     <>
       <DropdownMenuGroup>
-        <DropdownMenuItem
+        <OptionsButtons.PlayNext
           disabled={disablePlayNext}
           onClick={() => handlePlayNext()}
-        >
-          <PlusCircle className="mr-2 h-4 w-4" />
-          <span>{t('options.playNext')}</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem
+        />
+        <OptionsButtons.PlayLast
           disabled={disableAddLast}
           onClick={() => handlePlayLast()}
-        >
-          <PlusSquare className="mr-2 h-4 w-4" />
-          <span>{t('options.addLast')}</span>
-        </DropdownMenuItem>
+        />
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        <DropdownMenuItem disabled={disableDownload}>
-          <Download className="mr-2 h-4 w-4" />
-          <span>{t('options.download')}</span>
-        </DropdownMenuItem>
+        <OptionsButtons.Download disabled={disableDownload} />
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        <DropdownMenuItem onClick={() => handleEdit()} disabled={disableEdit}>
-          <Pencil className="mr-2 h-4 w-4" />
-          <span>{t('options.playlist.edit')}</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem
+        <OptionsButtons.EditPlaylist
+          onClick={() => handleEdit()}
+          disabled={disableEdit}
+        />
+        <OptionsButtons.RemovePlaylist
           onClick={() => onRemovePlaylist()}
           disabled={disableDelete}
-        >
-          <Trash className="mr-2 h-4 w-4 fill-red-300 text-red-500" />
-          <span className="text-red-500">{t('options.playlist.delete')}</span>
-        </DropdownMenuItem>
+        />
       </DropdownMenuGroup>
     </>
   )

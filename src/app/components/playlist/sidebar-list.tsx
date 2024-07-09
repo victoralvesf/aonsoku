@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
-import { PlaylistOptionsButtons } from '@/app/components/playlist/options-buttons'
+import { SidebarPlaylistButtons } from '@/app/components/playlist/sidebar-buttons'
 import { SidebarPlaylistGenerator } from '@/app/components/sidebar-generator'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { usePlaylists } from '@/store/playlists.store'
@@ -21,7 +21,7 @@ export function SidebarPlaylists() {
         <SectionTitle>
           <Fragment>
             {t('sidebar.playlists')}
-            <PlaylistOptionsButtons />
+            <SidebarPlaylistButtons />
           </Fragment>
         </SectionTitle>
       </div>
