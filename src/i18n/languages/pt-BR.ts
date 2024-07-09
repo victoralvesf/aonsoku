@@ -264,6 +264,21 @@ export const brazilianPortuguese = {
       minutes: '{{minutes}}min',
       seconds: '{{seconds}}s',
     },
+    server: {
+      songCount_zero: '{{count}} músicas',
+      songCount_one: '{{count}} música',
+      songCount_other: '{{count}} músicas',
+      folderCount_zero: '{{count}} diretórios',
+      folderCount_one: '{{count}} diretório',
+      folderCount_other: '{{count}} diretórios',
+      lastScan: 'Última varredura: {{date}}',
+      status: 'Status',
+      management: 'Gerenciamento do servidor',
+      buttons: {
+        refresh: 'Atualizar status',
+        startScan: 'Varredura rápida',
+      },
+    },
     dayjs: {
       relativeTime: {
         future: 'em %s',

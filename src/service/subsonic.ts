@@ -1,5 +1,6 @@
 import { albums } from './albums'
 import { artists } from './artists'
+import { library } from './library'
 import { ping } from './ping'
 import { playlists } from './playlists'
 import { radios } from './radios'
@@ -18,4 +19,5 @@ export const subsonic = {
   search,
   scrobble,
   ping,
+  library,
 }
