@@ -10,7 +10,7 @@ interface IError {
   data?: string
 }
 
-export default function ErrorPage() {
+export default function ErrorPage({ status, statusText }: IError) {
   const error = useRouteError() as IError
 
   return (
@@ -23,12 +23,14 @@ export default function ErrorPage() {
 
         <p className="leading-7 text-left mt-6">
           Status Code:{' '}
-          <strong className="font-semibold">{error?.status || 'None'}</strong>
+          <strong className="font-semibold">
+            {(error?.status ?? status) || 'None'}
+          </strong>
         </p>
         <p className="leading-7 mt-2 text-left">
           Description:{' '}
           <strong className="font-semibold">
-            {error?.data || 'Unhandled Error'}
+            {(error?.data ?? statusText) || 'Unhandled Error'}
           </strong>
         </p>
 

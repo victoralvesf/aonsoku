@@ -1,18 +1,9 @@
+import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 
-import BaseLayout from '@/app/layout/base'
-import Album from '@/app/pages/albums/album'
-import AlbumsList from '@/app/pages/albums/list'
-import Artist from '@/app/pages/artists/artist'
-import ArtistsList from '@/app/pages/artists/list'
-import ErrorPage from '@/app/pages/error-page'
-import Home from '@/app/pages/home'
-import Login from '@/app/pages/login'
-import PlaylistsPage from '@/app/pages/playlists/list'
-import Playlist from '@/app/pages/playlists/playlist'
-import Radios from '@/app/pages/radios/radios-list'
-import SongsList from '@/app/pages/songs/list'
-
+import { HomeFallback } from '@/app/components/home/fallbacks'
+import { PlaylistFallback } from '@/app/components/playlist/fallbacks'
+import { SongsListFallback } from '@/app/components/songs/fallbacks'
 import { albumsListLoader, singleAlbumLoader } from '@/routes/loaders/albums'
 import { artistsListLoader, singleArtistLoader } from '@/routes/loaders/artists'
 import { homeLoader } from '@/routes/loaders/home'
@@ -20,6 +11,19 @@ import { playlistLoader } from '@/routes/loaders/playlists'
 import { protectedLoader } from '@/routes/loaders/protected'
 import { songsListLoader } from '@/routes/loaders/songs'
 import { ROUTES } from '@/routes/routesList'
+
+const BaseLayout = lazy(() => import('@/app/layout/base'))
+const Album = lazy(() => import('@/app/pages/albums/album'))
+const AlbumsList = lazy(() => import('@/app/pages/albums/list'))
+const Artist = lazy(() => import('@/app/pages/artists/artist'))
+const ArtistsList = lazy(() => import('@/app/pages/artists/list'))
+const ErrorPage = lazy(() => import('@/app/pages/error-page'))
+const Login = lazy(() => import('@/app/pages/login'))
+const PlaylistsPage = lazy(() => import('@/app/pages/playlists/list'))
+const Playlist = lazy(() => import('@/app/pages/playlists/playlist'))
+const Radios = lazy(() => import('@/app/pages/radios/radios-list'))
+const SongsList = lazy(() => import('@/app/pages/songs/list'))
+const Home = lazy(() => import('@/app/pages/home'))
 
 export const router = createBrowserRouter([
   {
@@ -31,66 +35,118 @@ export const router = createBrowserRouter([
         id: 'home',
         path: ROUTES.LIBRARY.HOME,
         loader: homeLoader,
-        element: <Home />,
+        element: (
+          <Suspense fallback={<HomeFallback />}>
+            <Home />
+          </Suspense>
+        ),
       },
       {
         id: 'albums',
         path: ROUTES.LIBRARY.ALBUMS,
         loader: albumsListLoader,
-        element: <AlbumsList />,
+        element: (
+          <Suspense>
+            <AlbumsList />
+          </Suspense>
+        ),
       },
       {
         id: 'artists',
         path: ROUTES.LIBRARY.ARTISTS,
         loader: artistsListLoader,
-        element: <ArtistsList />,
+        element: (
+          <Suspense>
+            <ArtistsList />
+          </Suspense>
+        ),
       },
       {
         id: 'playlist',
         path: ROUTES.PLAYLIST.PATH,
         loader: playlistLoader,
-        errorElement: <ErrorPage />,
-        element: <Playlist />,
+        errorElement: (
+          <Suspense>
+            <ErrorPage />
+          </Suspense>
+        ),
+        element: (
+          <Suspense fallback={<PlaylistFallback />}>
+            <Playlist />
+          </Suspense>
+        ),
       },
       {
         id: 'playlists',
         path: ROUTES.LIBRARY.PLAYLISTS,
-        errorElement: <ErrorPage />,
-        element: <PlaylistsPage />,
+        errorElement: (
+          <Suspense>
+            <ErrorPage />
+          </Suspense>
+        ),
+        element: (
+          <Suspense>
+            <PlaylistsPage />
+          </Suspense>
+        ),
       },
       {
         id: 'album',
         path: ROUTES.ALBUM.PATH,
         loader: singleAlbumLoader,
-        element: <Album />,
+        element: (
+          <Suspense>
+            <Album />
+          </Suspense>
+        ),
       },
       {
         id: 'artist',
         path: ROUTES.ARTIST.PATH,
         loader: singleArtistLoader,
-        element: <Artist />,
+        element: (
+          <Suspense fallback={<SongsListFallback />}>
+            <Artist />
+          </Suspense>
+        ),
       },
       {
         id: 'radios',
         path: ROUTES.LIBRARY.RADIOS,
-        element: <Radios />,
+        element: (
+          <Suspense>
+            <Radios />
+          </Suspense>
+        ),
       },
       {
         id: 'songs',
         path: ROUTES.LIBRARY.SONGS,
         loader: songsListLoader,
-        element: <SongsList />,
+        element: (
+          <Suspense fallback={<SongsListFallback />}>
+            <SongsList />
+          </Suspense>
+        ),
       },
       {
         id: 'error',
         path: '*',
-        element: <ErrorPage />,
+        element: (
+          <Suspense>
+            <ErrorPage />
+          </Suspense>
+        ),
       },
     ],
   },
   {
     id: 'login',
     path: ROUTES.SERVER_CONFIG,
-    element: <Login />,
+    element: (
+      <Suspense>
+        <Login />
+      </Suspense>
+    ),
   },
 ])

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { ListMusic } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
@@ -15,16 +16,20 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
   const location = useLocation()
   const { t } = useTranslation()
 
-  function isButtonActive(route: string) {
-    return location.pathname === route ? 'secondary' : 'ghost'
+  function isActive(route: string) {
+    return location.pathname === route
   }
 
   return (
     <>
       {list.map((item, index) => (
-        <Link to={item.route} key={index}>
+        <Link
+          to={item.route}
+          key={index}
+          className={clsx(isActive(item.route) && 'pointer-events-none')}
+        >
           <Button
-            variant={isButtonActive(item.route)}
+            variant={isActive(item.route) ? 'secondary' : 'ghost'}
             size="sm"
             className="w-full justify-start"
           >
@@ -46,16 +51,18 @@ export function SidebarPlaylistGenerator({
 
   function isActive(id: string) {
     return location.pathname === ROUTES.PLAYLIST.PAGE(id)
-      ? 'secondary'
-      : 'ghost'
   }
 
   return (
     <>
       {playlists.map((playlist) => (
-        <Link to={ROUTES.PLAYLIST.PAGE(playlist.id)} key={playlist.id}>
+        <Link
+          to={ROUTES.PLAYLIST.PAGE(playlist.id)}
+          key={playlist.id}
+          className={clsx(isActive(playlist.id) && 'pointer-events-none')}
+        >
           <Button
-            variant={isActive(playlist.id)}
+            variant={isActive(playlist.id) ? 'secondary' : 'ghost'}
             size="sm"
             className="w-full justify-start"
           >

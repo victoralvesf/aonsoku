@@ -1,8 +1,25 @@
 import { Skeleton } from '@/app/components/ui/skeleton'
 
-export default function PreviewListFallback() {
+export function HeaderFallback() {
+  return <Skeleton className="w-full rounded-lg h-[200px] 2xl:h-[300px]" />
+}
+
+export function HomeFallback() {
   return (
-    <div className="w-full flex flex-col mb-4">
+    <div className="w-full px-4 py-6 lg:px-8">
+      <HeaderFallback />
+
+      <PreviewListFallback />
+      <PreviewListFallback />
+      <PreviewListFallback />
+      <PreviewListFallback />
+    </div>
+  )
+}
+
+export function PreviewListFallback() {
+  return (
+    <div className="w-full flex flex-col my-4">
       <div className="flex justify-between my-4">
         <Skeleton className="w-52 h-8 rounded" />
         <div className="flex gap-2">

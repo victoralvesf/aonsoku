@@ -4,17 +4,11 @@ import { Link } from 'react-router-dom'
 
 import { getCoverArtUrl } from '@/api/httpClient'
 import { Badge } from '@/app/components/ui/badge'
-import { Skeleton } from '@/app/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
-
-const bgGradient =
-  'bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50'
-
-const imageSize =
-  'w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] aspect-square'
+import { AlbumHeaderFallback } from './fallbacks'
 
 interface ImageHeaderProps {
   type: string
@@ -53,17 +47,16 @@ export default function ImageHeader({
 
   return (
     <>
-      {!loaded && <HeaderFallback />}
+      {!loaded && <AlbumHeaderFallback />}
       <div
         className={cn(
-          'w-full px-4 py-6 lg:px-8 flex gap-4',
-          bgGradient,
+          'w-full px-4 py-6 lg:px-8 flex gap-4 bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50',
           !loaded ? 'hidden' : 'visible',
         )}
         style={{ backgroundColor: bgColor?.hex }}
       >
         <div
-          className={cn(imageSize, 'bg-cover bg-center rounded shadow-lg')}
+          className="w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] aspect-square bg-cover bg-center rounded shadow-lg"
           style={{ backgroundImage: `url(${imageUrl})` }}
         >
           <img
@@ -108,28 +101,5 @@ export default function ImageHeader({
         </div>
       </div>
     </>
-  )
-}
-
-function HeaderFallback() {
-  return (
-    <div
-      className={cn(
-        'w-full px-4 py-6 lg:px-8 bg-muted-foreground flex gap-4',
-        bgGradient,
-      )}
-    >
-      <Skeleton className={cn(imageSize, 'rounded shadow-lg')} />
-      <div className="flex flex-col justify-end">
-        <Skeleton className="h-[20px] w-16 mb-2" />
-        <Skeleton className="h-12 w-[260px] mb-2" />
-
-        <div className="flex gap-2 mt-2">
-          <Skeleton className="h-[22px] w-12 rounded-full" />
-          <Skeleton className="h-[22px] w-12 rounded-full" />
-          <Skeleton className="h-[22px] w-12 rounded-full" />
-        </div>
-      </div>
-    </div>
   )
 }

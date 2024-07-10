@@ -1,9 +1,10 @@
-import { useCallback, useMemo } from 'react'
+import { Suspense, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLoaderData } from 'react-router-dom'
+import { Await, useLoaderData } from 'react-router-dom'
 
+import { ShadowHeader } from '@/app/components/album/shadow-header'
 import ListWrapper from '@/app/components/list-wrapper'
-import { ShadowHeader } from '@/app/components/shadow-header'
+import { SongsListFallback } from '@/app/components/songs/fallbacks'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import { useSongList } from '@/app/hooks/use-song-list'
@@ -11,8 +12,23 @@ import { artistsColumns } from '@/app/tables/artists-columns'
 import { usePlayerActions } from '@/store/player.store'
 import { ArtistSeparator, ISimilarArtist } from '@/types/responses/artist'
 
+interface ArtistsLoaderData {
+  allArtistsPromise: Promise<ArtistSeparator[]>
+}
+
 export default function ArtistsList() {
-  const list = useLoaderData() as ArtistSeparator[]
+  const { allArtistsPromise } = useLoaderData() as ArtistsLoaderData
+
+  return (
+    <Suspense fallback={<SongsListFallback />}>
+      <Await resolve={allArtistsPromise} errorElement={<></>}>
+        {(list: ArtistSeparator[]) => <ResolvedArtists list={list} />}
+      </Await>
+    </Suspense>
+  )
+}
+
+function ResolvedArtists({ list }: { list: ArtistSeparator[] }) {
   const { t } = useTranslation()
   const { getArtistAllSongs } = useSongList()
   const { setSongList } = usePlayerActions()

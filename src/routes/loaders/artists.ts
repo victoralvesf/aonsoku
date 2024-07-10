@@ -2,7 +2,11 @@ import { LoaderFunctionArgs, defer } from 'react-router-dom'
 import { subsonic } from '@/service/subsonic'
 
 export async function artistsListLoader() {
-  return await subsonic.artists.getAll()
+  const allArtistsPromise = subsonic.artists.getAll()
+
+  return defer({
+    allArtistsPromise,
+  })
 }
 
 export async function singleArtistLoader({ params }: LoaderFunctionArgs) {

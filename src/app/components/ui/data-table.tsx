@@ -48,6 +48,7 @@ interface DataTableProps<TData, TValue> {
   showPagination?: boolean
   showSearch?: boolean
   searchColumn?: string
+  noRowsMessage?: string
 }
 
 export function DataTable<TData, TValue>({
@@ -59,6 +60,7 @@ export function DataTable<TData, TValue>({
   showPagination = false,
   showSearch = false,
   searchColumn,
+  noRowsMessage = 'No results.',
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation()
   const newColumns = columns.filter((column) => {
@@ -192,7 +194,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center p-2"
                 >
-                  No results.
+                  {noRowsMessage}
                 </TableCell>
               </TableRow>
             )}

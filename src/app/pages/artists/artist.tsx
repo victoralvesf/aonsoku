@@ -1,18 +1,16 @@
-/* eslint-disable react/no-children-prop */
 import { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Await, useLoaderData } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
 import PlayButtons from '@/app/components/album/play-buttons'
-import ArtistTopSongs, {
-  ArtistTopSongsFallback,
-} from '@/app/components/artist/artist-top-songs'
+import ArtistTopSongs from '@/app/components/artist/artist-top-songs'
 import { ArtistOptions } from '@/app/components/artist/options'
 import RelatedArtistsList from '@/app/components/artist/related-artists'
+import { PreviewListFallback } from '@/app/components/home/fallbacks'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
-import PreviewListFallback from '@/app/components/preview-list-fallback'
+import { TopSongsTableFallback } from '@/app/components/table/fallbacks'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
 import { usePlayerActions } from '@/store/player.store'
@@ -91,10 +89,8 @@ export default function Artist() {
         />
 
         <Suspense fallback={<InfoPanelFallback />}>
-          <Await
-            resolve={artistInfo}
-            errorElement={<></>}
-            children={(info: IArtistInfo) => (
+          <Await resolve={artistInfo} errorElement={<></>}>
+            {(info: IArtistInfo) => (
               <InfoPanel
                 title={artist.name}
                 bio={info.biography}
@@ -102,10 +98,10 @@ export default function Artist() {
                 musicBrainzId={info.musicBrainzId}
               />
             )}
-          />
+          </Await>
         </Suspense>
 
-        <Suspense fallback={<ArtistTopSongsFallback />}>
+        <Suspense fallback={<TopSongsTableFallback />}>
           <Await resolve={topSongs} errorElement={<></>}>
             <ArtistTopSongs />
           </Await>

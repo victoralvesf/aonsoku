@@ -1,3 +1,4 @@
+import { defer } from 'react-router-dom'
 import { subsonic } from '@/service/subsonic'
 import { useAppStore } from '@/store/app.store'
 
@@ -20,25 +21,11 @@ export async function homeLoader() {
     type: 'random',
   })
 
-  const [
-    randomSongs,
-    newestAlbums,
-    frequentAlbums,
-    recentAlbums,
-    randomAlbums,
-  ] = await Promise.all([
+  return defer({
     randomSongsPromise,
     newestAlbumsPromise,
     frequentAlbumsPromise,
     recentAlbumsPromise,
     randomAlbumsPromise,
-  ])
-
-  return {
-    randomSongs,
-    newestAlbums,
-    frequentAlbums,
-    recentAlbums,
-    randomAlbums,
-  }
+  })
 }

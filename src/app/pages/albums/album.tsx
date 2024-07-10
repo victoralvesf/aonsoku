@@ -1,4 +1,3 @@
-/* eslint-disable react/no-children-prop */
 import { Suspense, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Await, useLoaderData } from 'react-router-dom'
@@ -6,9 +5,9 @@ import ImageHeader from '@/app/components/album/image-header'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
 import { AlbumOptions } from '@/app/components/album/options'
 import PlayButtons from '@/app/components/album/play-buttons'
+import { PreviewListFallback } from '@/app/components/home/fallbacks'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
-import PreviewListFallback from '@/app/components/preview-list-fallback'
 import { DataTable } from '@/app/components/ui/data-table'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { ROUTES } from '@/routes/routesList'
@@ -108,17 +107,15 @@ export default function Album() {
 
         <div className="mb-6">
           <Suspense fallback={<InfoPanelFallback />}>
-            <Await
-              resolve={albumInfo}
-              errorElement={<></>}
-              children={(info: IAlbumInfo) => (
+            <Await resolve={albumInfo} errorElement={<></>}>
+              {(info: IAlbumInfo) => (
                 <InfoPanel
                   title={memoizedAlbums.name}
                   bio={info.notes}
                   lastFmUrl={info.lastFmUrl}
                 />
               )}
-            />
+            </Await>
           </Suspense>
         </div>
 
@@ -131,10 +128,8 @@ export default function Album() {
 
         <div className="mt-4">
           <Suspense fallback={<PreviewListFallback />}>
-            <Await
-              resolve={artistAlbums}
-              errorElement={<></>}
-              children={(result: Search) => {
+            <Await resolve={artistAlbums} errorElement={<></>}>
+              {(result: Search) => {
                 const list = formatMoreFromArtist(result.album!)
                 if (list.length === 0) return <></>
                 return (
@@ -147,15 +142,13 @@ export default function Album() {
                   />
                 )
               }}
-            />
+            </Await>
           </Suspense>
 
           {randomGenreAlbums && (
             <Suspense fallback={<PreviewListFallback />}>
-              <Await
-                resolve={randomGenreAlbums}
-                errorElement={<></>}
-                children={({ list }: AlbumsListData) => (
+              <Await resolve={randomGenreAlbums} errorElement={<></>}>
+                {({ list }: AlbumsListData) => (
                   <PreviewList
                     list={list}
                     showMore={false}
@@ -164,7 +157,7 @@ export default function Album() {
                     })}
                   />
                 )}
-              />
+              </Await>
             </Suspense>
           )}
         </div>

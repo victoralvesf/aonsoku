@@ -1,13 +1,15 @@
-import { useMemo, useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLoaderData } from 'react-router-dom'
+import { Await, useLoaderData } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
 import PlayButtons from '@/app/components/album/play-buttons'
 import Image from '@/app/components/image'
+import { PlaylistFallback } from '@/app/components/playlist/fallbacks'
 import { PlaylistOptions } from '@/app/components/playlist/options'
 import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
+import ErrorPage from '@/app/pages/error-page'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { cn } from '@/lib/utils'
 import { usePlayerActions } from '@/store/player.store'
@@ -16,19 +18,28 @@ import { PlaylistWithEntries } from '@/types/responses/playlist'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
 
+interface PlaylistLoaderResponse {
+  playlistPromise: Promise<PlaylistWithEntries>
+}
+
 export default function Playlist() {
+  const { playlistPromise } = useLoaderData() as PlaylistLoaderResponse
+
+  return (
+    <Suspense fallback={<PlaylistFallback />}>
+      <Await resolve={playlistPromise} errorElement={<ErrorPage />}>
+        {(playlist: PlaylistWithEntries) => (
+          <ResolvedPlaylist playlist={playlist} />
+        )}
+      </Await>
+    </Suspense>
+  )
+}
+
+function ResolvedPlaylist({ playlist }: { playlist: PlaylistWithEntries }) {
   const { t } = useTranslation()
-
-  const playlist = useLoaderData() as PlaylistWithEntries
   const columns = songsColumns()
-  const memoizedPlaylist = useMemo(() => playlist, [playlist])
-
   const [removeDialogState, setRemoveDialogState] = useState(false)
-
-  const playlistDuration =
-    memoizedPlaylist.duration > 0
-      ? convertSecondsToHumanRead(memoizedPlaylist.duration)
-      : undefined
   const { setSongList } = usePlayerActions()
 
   const columnsToShow: ColumnFilter[] = [
@@ -42,18 +53,12 @@ export default function Playlist() {
     'starred',
   ]
 
-  const buttonsTooltips = {
-    play: t('playlist.buttons.play', { name: memoizedPlaylist.name }),
-    shuffle: t('playlist.buttons.shuffle', { name: memoizedPlaylist.name }),
-    options: t('playlist.buttons.options', { name: memoizedPlaylist.name }),
-  }
-
   return (
     <div className="w-full px-4 py-6 lg:px-8">
       <div className="flex">
         <Image
-          src={getCoverArtUrl(memoizedPlaylist.coverArt)}
-          alt={memoizedPlaylist.name}
+          src={getCoverArtUrl(playlist.coverArt)}
+          alt={playlist.name}
           className="rounded-lg shadow-md resize-none bg-background aspect-square min-w-[200px] w-[200px] 2xl:w-[250px] 2xl:min-w-[250px]"
         />
         <div className="ml-4 w-full flex flex-col justify-end">
@@ -61,21 +66,25 @@ export default function Playlist() {
           <h2
             className={cn(
               'scroll-m-20 font-bold tracking-tight antialiased',
-              getTextSizeClass(memoizedPlaylist.name),
+              getTextSizeClass(playlist.name),
             )}
           >
-            {memoizedPlaylist.name}
+            {playlist.name}
           </h2>
           <p className="text-xs 2xl:text-sm text-muted-foreground mt-2">
-            {memoizedPlaylist.comment}
+            {playlist.comment}
           </p>
           <div className="flex gap-1 mt-3 text-muted-foreground text-sm">
             <Badge variant="default" className="shadow">
-              {t('playlist.songCount', { count: memoizedPlaylist.songCount })}
+              {t('playlist.songCount', {
+                count: playlist.songCount,
+              })}
             </Badge>
-            {playlistDuration && (
+            {playlist.duration > 0 && (
               <Badge variant="default" className="shadow">
-                {t('playlist.duration', { duration: playlistDuration })}
+                {t('playlist.duration', {
+                  duration: convertSecondsToHumanRead(playlist.duration),
+                })}
               </Badge>
             )}
           </div>
@@ -83,47 +92,44 @@ export default function Playlist() {
       </div>
 
       <PlayButtons
-        playButtonTooltip={buttonsTooltips.play}
-        handlePlayButton={() => setSongList(memoizedPlaylist.entry, 0)}
-        disablePlayButton={!memoizedPlaylist.entry}
-        shuffleButtonTooltip={buttonsTooltips.shuffle}
-        handleShuffleButton={() => setSongList(memoizedPlaylist.entry, 0, true)}
-        disableShuffleButton={!memoizedPlaylist.entry}
-        optionsTooltip={buttonsTooltips.options}
+        playButtonTooltip={t('playlist.buttons.play', {
+          name: playlist.name,
+        })}
+        handlePlayButton={() => setSongList(playlist.entry, 0)}
+        disablePlayButton={!playlist.entry}
+        shuffleButtonTooltip={t('playlist.buttons.shuffle', {
+          name: playlist.name,
+        })}
+        handleShuffleButton={() => setSongList(playlist.entry, 0, true)}
+        disableShuffleButton={!playlist.entry}
+        optionsTooltip={t('playlist.buttons.options', {
+          name: playlist.name,
+        })}
         showLikeButton={false}
         optionsMenuItems={
           <PlaylistOptions
-            playlist={memoizedPlaylist}
+            playlist={playlist}
             onRemovePlaylist={() => setRemoveDialogState(true)}
-            disablePlayNext={!memoizedPlaylist.entry}
-            disableAddLast={!memoizedPlaylist.entry}
-            disableDownload={!memoizedPlaylist.entry}
+            disablePlayNext={!playlist.entry}
+            disableAddLast={!playlist.entry}
+            disableDownload={!playlist.entry}
           />
         }
       />
 
       <RemovePlaylistDialog
-        playlistId={memoizedPlaylist.id}
+        playlistId={playlist.id}
         openDialog={removeDialogState}
         setOpenDialog={setRemoveDialogState}
       />
 
-      {memoizedPlaylist.entry && memoizedPlaylist.entry.length > 0 ? (
-        <DataTable
-          columns={columns}
-          data={memoizedPlaylist.entry}
-          handlePlaySong={(row) =>
-            setSongList(memoizedPlaylist.entry, row.index)
-          }
-          columnFilter={columnsToShow}
-        />
-      ) : (
-        <div className="flex items-center pt-6">
-          <p className="text-lg text-muted-foreground">
-            {t('playlist.noSongList')}
-          </p>
-        </div>
-      )}
+      <DataTable
+        columns={columns}
+        data={playlist.entry ?? []}
+        handlePlaySong={(row) => setSongList(playlist.entry, row.index)}
+        columnFilter={columnsToShow}
+        noRowsMessage={t('playlist.noSongList')}
+      />
     </div>
   )
 }

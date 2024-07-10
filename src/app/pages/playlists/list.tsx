@@ -1,9 +1,9 @@
 import { PlusIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
+import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
-import { ShadowHeader } from '@/app/components/shadow-header'
 import { Button } from '@/app/components/ui/button'
 import { DataTable } from '@/app/components/ui/data-table'
 import { playlistsColumns } from '@/app/tables/playlists-columns'

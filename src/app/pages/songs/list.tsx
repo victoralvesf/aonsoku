@@ -1,21 +1,37 @@
+import { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLoaderData } from 'react-router-dom'
+import { Await, useLoaderData } from 'react-router-dom'
+import { ShadowHeader } from '@/app/components/album/shadow-header'
 import ListWrapper from '@/app/components/list-wrapper'
-import { ShadowHeader } from '@/app/components/shadow-header'
+import { SongsListFallback } from '@/app/components/songs/fallbacks'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
+import { Search } from '@/types/responses/search'
 import { ISong } from '@/types/responses/song'
+import { sortByString } from '@/utils/sort'
 
 interface LoaderData {
-  count: number
-  songs: ISong[]
+  allSongsPromise: Promise<Search>
 }
 
 export default function SongsList() {
-  const { count, songs } = useLoaderData() as LoaderData
+  const { allSongsPromise } = useLoaderData() as LoaderData
+
+  return (
+    <Suspense fallback={<SongsListFallback />}>
+      <Await resolve={allSongsPromise} errorElement={<></>}>
+        {(response: Search) => (
+          <ResolvedSongList songlist={response.song ?? []} />
+        )}
+      </Await>
+    </Suspense>
+  )
+}
+
+function ResolvedSongList({ songlist }: { songlist: ISong[] }) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
 
@@ -34,8 +50,11 @@ export default function SongsList() {
   ]
 
   function handlePlaySong(index: number) {
-    setSongList(songs, index)
+    setSongList(songlist, index)
   }
+
+  const songs = songlist.sort((a, b) => sortByString(a.title, b.title))
+  const count = songlist.length
 
   return (
     <div className="w-full h-full">
