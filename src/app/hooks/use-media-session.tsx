@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { Radio } from '@/types/responses/radios'
 import { ISong } from '@/types/responses/song'
+import { appName } from '@/utils/appName'
 import { manageMediaSession } from '@/utils/setMediaSession'
 
 export default function useMediaSession() {
   const { t } = useTranslation()
   const radioLabel = t('radios.label')
-  const appName = 'Subsonic Player'
 
   function resetTitle() {
     document.title = appName

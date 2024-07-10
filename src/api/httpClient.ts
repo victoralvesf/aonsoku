@@ -1,6 +1,7 @@
 import { FetchOptions, fetch as tauriFetch } from '@tauri-apps/api/http'
 import { useAppStore } from '@/store/app.store'
 import { SubsonicJsonResponse } from '@/types/responses/subsonicResponse'
+import { appName } from '@/utils/appName'
 import { saltWord } from '@/utils/salt'
 import { isTauri } from '@/utils/tauriTools'
 
@@ -12,7 +13,7 @@ function queryParams() {
     t: password ?? '',
     s: saltWord,
     v: '1.16.0',
-    c: 'Subsonic-Player',
+    c: appName,
     f: 'json',
   }
 }

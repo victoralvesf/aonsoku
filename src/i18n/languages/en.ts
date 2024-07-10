@@ -180,7 +180,7 @@ export const english = {
     login: {
       form: {
         server: 'Server',
-        description: 'Connect to your Subsonic Server.',
+        description: 'Connect to your Subsonic server.',
         url: 'URL',
         urlPlaceholder: 'Your server URL',
         username: 'Username',
