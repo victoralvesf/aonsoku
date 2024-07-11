@@ -18,6 +18,19 @@ function queryParams() {
   }
 }
 
+function getUrl(path: string, options?: Record<string, string>) {
+  const serverUrl = useAppStore.getState().data.url
+
+  const params = new URLSearchParams(queryParams())
+  if (options) {
+    Object.keys(options).forEach((key) => {
+      params.append(key, options[key])
+    })
+  }
+
+  return `${serverUrl}/rest/${path}?${params.toString()}`
+}
+
 async function browserFetch<T>(
   url: string,
   options: RequestInit,
@@ -97,52 +110,25 @@ export async function httpClient<T>(
 }
 
 export function getCoverArtUrl(id: string, size = '300') {
-  const { url } = useAppStore.getState().data
-  const baseUrl = `${url}/rest/getCoverArt`
-
-  const params = {
-    ...queryParams(),
+  return getUrl('getCoverArt', {
     id,
     size,
-  }
-
-  const queryString = new URLSearchParams(params).toString()
-  const fullUrl = `${baseUrl}?${queryString}`
-
-  return fullUrl
+  })
 }
 
-export function getSongStreamUrl(id: string) {
-  const { url } = useAppStore.getState().data
-  const baseUrl = `${url}/rest/stream`
-
-  const params = {
-    ...queryParams(),
-    id,
-    maxBitRate: '0',
-    format: 'raw',
-    estimateContentLength: 'true',
-  }
-
-  const queryString = new URLSearchParams(params).toString()
-  const fullUrl = `${baseUrl}?${queryString}`
-
-  return fullUrl
-}
-
-export function getDownloadUrl(id: string, maxBitRate = '0', format = 'raw') {
-  const { url } = useAppStore.getState().data
-  const baseUrl = `${url}/rest/download`
-
-  const params = {
-    ...queryParams(),
+export function getSongStreamUrl(id: string, maxBitRate = '0', format = 'raw') {
+  return getUrl('stream', {
     id,
     maxBitRate,
     format,
-  }
+    estimateContentLength: 'true',
+  })
+}
 
-  const queryString = new URLSearchParams(params).toString()
-  const fullUrl = `${baseUrl}?${queryString}`
-
-  return fullUrl
+export function getDownloadUrl(id: string, maxBitRate = '0', format = 'raw') {
+  return getUrl('download', {
+    id,
+    maxBitRate,
+    format,
+  })
 }
