@@ -12,7 +12,7 @@ import {
   AlertDialogTitle,
 } from '@/app/components/ui/alert-dialog'
 import { ROUTES } from '@/routes/routesList'
-import { useAppActions } from '@/store/app.store'
+import { useAppActions, useAppStore } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { usePlaylists } from '@/store/playlists.store'
 import { useRadios } from '@/store/radios.store'
@@ -27,6 +27,9 @@ export function LogoutConfirmDialog({
   setOpenDialog,
 }: AlertDialogProps) {
   const { removeConfig } = useAppActions()
+  const setLogoutDialogState = useAppStore(
+    (state) => state.actions.setLogoutDialogState,
+  )
   const navigate = useNavigate()
   const { clearPlayerState } = usePlayerActions()
   const { setRadios } = useRadios()
@@ -39,6 +42,7 @@ export function LogoutConfirmDialog({
     setRadios([])
     clearPlaylists()
     clearPlayerState()
+    setLogoutDialogState(false)
     navigate(ROUTES.SERVER_CONFIG, { replace: true })
   }
 
