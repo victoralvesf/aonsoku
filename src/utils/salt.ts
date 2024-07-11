@@ -1,1 +1,1 @@
-export const saltWord = '5ub50n1cPl4y3r'
+export const saltWord = '40n50kuPl4y3r'
