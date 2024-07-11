@@ -1,41 +1,64 @@
 import { once } from '@tauri-apps/api/event'
 import { invoke } from '@tauri-apps/api/tauri'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { isTauri } from '@/utils/tauriTools'
 
 export function useDownload() {
+  const { t } = useTranslation()
+
+  const started = useCallback(() => {
+    toast(t('downloads.started'), {
+      autoClose: false,
+      type: 'default',
+      isLoading: true,
+      toastId: 'download',
+    })
+  }, [t])
+
+  const completed = useCallback(() => {
+    toast.update('download', {
+      render: t('downloads.completed'),
+      type: 'success',
+      autoClose: 5000,
+      isLoading: false,
+    })
+  }, [t])
+
+  const failed = useCallback(() => {
+    toast.update('download', {
+      render: t('downloads.failed'),
+      type: 'error',
+      autoClose: 5000,
+      isLoading: false,
+    })
+  }, [t])
+
   useEffect(() => {
     const setupListeners = async () => {
       if (isTauri()) {
         await once('DOWNLOAD_FINISHED', () => {
-          // TODO: add i18n
-          toast.success('File downloaded successfully', {
-            toastId: 'download-success',
-          })
+          completed()
         })
       }
     }
 
     setupListeners()
-  }, [])
+  }, [completed])
 
   function downloadBrowser(url: string) {
     window.location.href = url
-    // TODO: add i18n
-    toast.success('Download started')
+    toast.success(t('downloads.started'))
   }
 
   async function downloadTauri(url: string, id: string) {
     try {
-      const fileName = `${id}.zip`
-      // TODO: add i18n
-      toast.success('Download started')
+      started()
 
-      await invoke('download_file', { url, fileName, fileId: id })
+      await invoke('download_file', { url, fileId: id })
     } catch (_) {
-      // TODO: add i18n
-      toast.error('Failed to download')
+      failed()
     }
   }
 

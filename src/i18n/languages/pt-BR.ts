@@ -279,6 +279,11 @@ export const brazilianPortuguese = {
         startScan: 'Varredura rápida',
       },
     },
+    downloads: {
+      started: 'Download iniciado.',
+      failed: 'Ocorreu um erro ao baixar o arquivo.',
+      completed: 'Download concluído com sucesso.',
+    },
     dayjs: {
       relativeTime: {
         future: 'em %s',
