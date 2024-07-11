@@ -41,7 +41,7 @@ export default function PlayButtons({
   contentId,
   optionsMenuItems,
 }: PlayButtonsProps) {
-  const [isStarred, setIsStarred] = useState(!!likeState)
+  const [isStarred, setIsStarred] = useState(typeof likeState === 'string')
   const { t } = useTranslation()
 
   async function handleLikeButton() {
@@ -113,7 +113,6 @@ export default function PlayButtons({
           <Button
             className="rounded-full w-14 h-14 data-[state=open]:bg-accent"
             variant="ghost"
-            onClick={handleLikeButton}
           >
             <SimpleTooltip text={optionsTooltip}>
               <div className="min-w-14 h-14 rounded-full flex justify-center items-center">

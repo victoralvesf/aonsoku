@@ -1,8 +1,8 @@
 [package]
-name = "subsonic-player"
+name = "aonsoku"
 version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "A modern desktop client for Navidrome/Subsonic servers."
+authors = ["Victor Alves"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -17,10 +17,15 @@ tauri = { version = "1", features = [
   "global-shortcut-all",
   "os-all",
   "http-all",
+  "http-api",
   "shell-open",
 ] }
+reqwest = { version = "0.12", features = ["json", "stream"] }
+tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+futures-util = "0.3"
+regex = "1.10.5"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!

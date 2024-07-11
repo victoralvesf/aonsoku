@@ -279,6 +279,11 @@ export const english = {
         startScan: 'Quick Scan',
       },
     },
+    downloads: {
+      started: 'Download started.',
+      failed: 'There was an error downloading your file.',
+      completed: 'Your file has been downloaded.',
+    },
     dayjs: {
       relativeTime: {
         future: 'in %s',
