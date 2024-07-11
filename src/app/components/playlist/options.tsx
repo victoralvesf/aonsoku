@@ -1,13 +1,16 @@
+import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
 import {
   DropdownMenuGroup,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
+import { useDownload } from '@/app/hooks/use-download'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { usePlaylists } from '@/store/playlists.store'
 import { Playlist, PlaylistWithEntries } from '@/types/responses/playlist'
 import { ISong } from '@/types/responses/song'
+import { isTauri } from '@/utils/tauriTools'
 
 interface PlaylistOptionsProps {
   playlist: PlaylistWithEntries | Playlist
@@ -30,6 +33,7 @@ export function PlaylistOptions({
 }: PlaylistOptionsProps) {
   const { setPlaylistDialogState, setData } = usePlaylists()
   const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
+  const { downloadBrowser, downloadTauri } = useDownload()
 
   function handleEdit() {
     setData({
@@ -64,6 +68,15 @@ export function PlaylistOptions({
     }
   }
 
+  async function handleDownload() {
+    const url = getDownloadUrl(playlist.id)
+    if (isTauri()) {
+      downloadTauri(url, playlist.id)
+    } else {
+      downloadBrowser(url)
+    }
+  }
+
   return (
     <>
       <DropdownMenuGroup>
@@ -78,7 +91,10 @@ export function PlaylistOptions({
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        <OptionsButtons.Download disabled={disableDownload} />
+        <OptionsButtons.Download
+          disabled={disableDownload}
+          onClick={() => handleDownload()}
+        />
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>

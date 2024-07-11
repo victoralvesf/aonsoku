@@ -129,3 +129,20 @@ export function getSongStreamUrl(id: string) {
 
   return fullUrl
 }
+
+export function getDownloadUrl(id: string, maxBitRate = '0', format = 'raw') {
+  const { url } = useAppStore.getState().data
+  const baseUrl = `${url}/rest/download`
+
+  const params = {
+    ...queryParams(),
+    id,
+    maxBitRate,
+    format,
+  }
+
+  const queryString = new URLSearchParams(params).toString()
+  const fullUrl = `${baseUrl}?${queryString}`
+
+  return fullUrl
+}
