@@ -148,13 +148,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[home-image]: .github/images/home.jpg
-[album-image]: .github/images/album.jpg
-[playlist-image]: .github/images/playlist.jpg
-[albums-image]: .github/images/albums.jpg
-[player-image]: .github/images/player.jpeg
-[lyrics-image]: .github/images/lyrics.jpg
-
 [React.js]: https://img.shields.io/badge/React-000000?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Rust]: https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=F74C00
