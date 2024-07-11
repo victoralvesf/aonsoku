@@ -6,7 +6,7 @@
     <img src="./src-tauri/icons/128x128.png" alt="Aonsoku" width="80" height="80">
   </a>
 
-<h3 align="center">Aonsoku</h3>
+  <h3 align="center">Aonsoku</h3>
   <p align="center">
     A modern desktop client for Navidrome/Subsonic servers built with React and Rust.
     <br />
@@ -27,6 +27,9 @@
   <ol>
     <li>
       <a href="#features">Features</a>
+    </li>
+    <li>
+      <a href="#screenshots">Screenshots</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -51,6 +54,16 @@
 - **Unsynchronized lyrics**: If your songs have embedded unsynchronized lyrics, Aonsoku is able to show them on full screen mode.
 - **Radio:** If your server supports it, listen to radio shows directly within Aonsoku.
 - **Scrobble:** Sync played songs with your server.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Screenshots
+
+<a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/home.jpg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/home.jpg" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/album.jpg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/album.jpg" width="49.5%"/></a>
+
+<a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/playlist.jpg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/playlist.jpg" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/albums.jpg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/albums.jpg" width="49.5%"/></a>
+
+<a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/player.jpeg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/player.jpeg" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/lyrics.jpg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/lyrics.jpg" width="49.5%"/></a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -96,7 +109,12 @@ pnpm tauri dev
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Downloads
+- Downloads:
+  - [x] Playlist
+  - [x] Album
+  - [x] Artist
+  - [ ] Song
+- [ ] Queue page
 - [ ] Playlist editor
 - [ ] Synced lyrics
 - [ ] Podcast support
@@ -130,6 +148,13 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
+[home-image]: .github/images/home.jpg
+[album-image]: .github/images/album.jpg
+[playlist-image]: .github/images/playlist.jpg
+[albums-image]: .github/images/albums.jpg
+[player-image]: .github/images/player.jpeg
+[lyrics-image]: .github/images/lyrics.jpg
+
 [React.js]: https://img.shields.io/badge/React-000000?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Rust]: https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=F74C00
