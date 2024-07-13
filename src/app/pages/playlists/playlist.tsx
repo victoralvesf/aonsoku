@@ -1,22 +1,17 @@
 import { Suspense, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Await, useLoaderData } from 'react-router-dom'
-import { getCoverArtUrl } from '@/api/httpClient'
 import PlayButtons from '@/app/components/album/play-buttons'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
-import Image from '@/app/components/image'
 import { PlaylistOptions } from '@/app/components/playlist/options'
+import { PlaylistPageHeader } from '@/app/components/playlist/page-header'
 import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
-import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import ErrorPage from '@/app/pages/error-page'
 import { songsColumns } from '@/app/tables/songs-columns'
-import { cn } from '@/lib/utils'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { PlaylistWithEntries } from '@/types/responses/playlist'
-import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
-import { getTextSizeClass } from '@/utils/getTextSizeClass'
 
 interface PlaylistLoaderResponse {
   playlistPromise: Promise<PlaylistWithEntries>
@@ -55,41 +50,7 @@ function ResolvedPlaylist({ playlist }: { playlist: PlaylistWithEntries }) {
 
   return (
     <div className="w-full px-8 py-6">
-      <div className="flex">
-        <Image
-          src={getCoverArtUrl(playlist.coverArt)}
-          alt={playlist.name}
-          className="rounded-lg shadow-md resize-none bg-background aspect-square min-w-[200px] w-[200px] 2xl:w-[250px] 2xl:min-w-[250px]"
-        />
-        <div className="ml-4 w-full flex flex-col justify-end">
-          <p className="text-xs 2xl:text-sm mb-2">{t('playlist.headline')}</p>
-          <h2
-            className={cn(
-              'scroll-m-20 font-bold tracking-tight antialiased',
-              getTextSizeClass(playlist.name),
-            )}
-          >
-            {playlist.name}
-          </h2>
-          <p className="text-xs 2xl:text-sm text-muted-foreground mt-2">
-            {playlist.comment}
-          </p>
-          <div className="flex gap-1 mt-3 text-muted-foreground text-sm">
-            <Badge variant="default" className="shadow">
-              {t('playlist.songCount', {
-                count: playlist.songCount,
-              })}
-            </Badge>
-            {playlist.duration > 0 && (
-              <Badge variant="default" className="shadow">
-                {t('playlist.duration', {
-                  duration: convertSecondsToHumanRead(playlist.duration),
-                })}
-              </Badge>
-            )}
-          </div>
-        </div>
-      </div>
+      <PlaylistPageHeader playlist={playlist} />
 
       <PlayButtons
         playButtonTooltip={t('playlist.buttons.play', {

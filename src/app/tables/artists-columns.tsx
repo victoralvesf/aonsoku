@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Link } from 'react-router-dom'
 
-import { getCoverArtUrl } from '@/api/httpClient'
+import { CoverImage } from '@/app/components/table/cover-image'
 import { TableLikeButton } from '@/app/components/table/like-button'
 import PlaySongButton from '@/app/components/table/play-button'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
@@ -45,11 +45,9 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
       ),
       cell: ({ row }) => (
         <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
-          <div
-            className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] aspect-square bg-cover bg-center rounded shadow-md bg-skeleton"
-            style={{
-              backgroundImage: `url(${getCoverArtUrl(row.original.coverArt, '80')})`,
-            }}
+          <CoverImage
+            coverArt={row.original.coverArt}
+            altText={row.original.name}
           />
           <div className="flex flex-col justify-center items-center">
             <Link

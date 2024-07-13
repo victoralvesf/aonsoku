@@ -1,3 +1,4 @@
+import omit from 'lodash/omit'
 import { ImgHTMLAttributes } from 'react'
 import {
   LazyLoadImage,
@@ -13,15 +14,17 @@ interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
 
 const Image = ({
   scrollPosition,
-  effect = 'black-and-white',
+  effect = 'opacity',
   ...props
 }: ImageProps) => {
+  const sanitizedProps = omit(props, 'forwardRef')
+
   return (
     <div className="flex items-center">
       <LazyLoadImage
         effect={effect}
-        {...props}
         scrollPosition={scrollPosition}
+        {...sanitizedProps}
       />
     </div>
   )

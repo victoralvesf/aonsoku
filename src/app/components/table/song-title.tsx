@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getCoverArtUrl } from '@/api/httpClient'
-import Image from '@/app/components/image'
+import { CoverImage } from '@/app/components/table/cover-image'
 import { ROUTES } from '@/routes/routesList'
 import { usePlayerMediaType, usePlayerSonglist } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
@@ -21,13 +20,7 @@ export function TableSongTitle({ song }: { song: ISong }) {
 
   return (
     <div className="flex gap-2 items-center min-w-[200px] max-w-[300px] 2xl:min-w-[350px] 2xl:max-w-[450px]">
-      <Image
-        src={getCoverArtUrl(song.coverArt, '80')}
-        alt={song.title}
-        width={40}
-        height={40}
-        className="rounded shadow-md bg-skeleton"
-      />
+      <CoverImage coverArt={song.coverArt} altText={song.title} />
       <div className="flex flex-col justify-center w-full">
         <p
           className={clsx(
