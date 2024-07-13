@@ -8,8 +8,6 @@ interface ListWrapperProps {
 
 export default function ListWrapper({ children, className }: ListWrapperProps) {
   return (
-    <div className={cn('w-full px-4 py-6 lg:px-8 pt-0', className)}>
-      {children}
-    </div>
+    <div className={cn('w-full px-8 py-6 pt-0', className)}>{children}</div>
   )
 }

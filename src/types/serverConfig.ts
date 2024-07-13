@@ -25,7 +25,13 @@ export interface IAppActions {
   setLogoutDialogState: (value: boolean) => void
 }
 
+export interface IAppCommand {
+  open: boolean
+  setOpen: (value: boolean) => void
+}
+
 export interface IAppContext {
   data: IAppData
+  command: IAppCommand
   actions: IAppActions
 }

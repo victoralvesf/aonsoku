@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { SidebarPlaylistButtons } from '@/app/components/playlist/sidebar-buttons'
-import { SidebarPlaylistGenerator } from '@/app/components/sidebar-generator'
+import { SidebarPlaylistGenerator } from '@/app/components/sidebar/sidebar-generator'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { usePlaylists } from '@/store/playlists.store'
 

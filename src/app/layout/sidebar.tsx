@@ -8,7 +8,7 @@ import {
   SidebarPlaylists,
   SidebarSection,
 } from '@/app/components/playlist/sidebar-list'
-import { SidebarGenerator } from '@/app/components/sidebar-generator'
+import { SidebarGenerator } from '@/app/components/sidebar/sidebar-generator'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 

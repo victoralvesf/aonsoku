@@ -39,7 +39,7 @@ export default function Home() {
   ]
 
   return (
-    <div className="w-full px-4 py-6 lg:px-8">
+    <div className="w-full px-8 py-6">
       <Suspense fallback={<HeaderFallback />}>
         <Await resolve={randomSongsPromise} errorElement={<></>}>
           {(randomSongs: ISong[]) => <HomeHeader songs={randomSongs} />}

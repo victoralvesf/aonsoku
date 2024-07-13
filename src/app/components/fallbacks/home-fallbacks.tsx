@@ -6,7 +6,7 @@ export function HeaderFallback() {
 
 export function HomeFallback() {
   return (
-    <div className="w-full px-4 py-6 lg:px-8">
+    <div className="w-full px-8 py-6">
       <HeaderFallback />
 
       <PreviewListFallback />
@@ -28,9 +28,19 @@ export function PreviewListFallback() {
         </div>
       </div>
 
-      <div className="flex gap-4">
+      <div className="hidden 2xl:flex gap-4">
         {Array.from({ length: 8 }).map((_, index) => (
-          <div className="basis-1/8" key={index}>
+          <div className="basis-1/8" key={'large-' + index}>
+            <Skeleton className="aspect-square" />
+            <Skeleton className="h-4 w-28 mt-2" />
+            <Skeleton className="h-3 w-20 mt-1" />
+          </div>
+        ))}
+      </div>
+
+      <div className="flex 2xl:hidden gap-4">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <div className="basis-1/5" key={'small-' + index}>
             <Skeleton className="aspect-square" />
             <Skeleton className="h-4 w-28 mt-2" />
             <Skeleton className="h-3 w-20 mt-1" />

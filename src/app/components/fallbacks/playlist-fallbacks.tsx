@@ -21,7 +21,7 @@ export function PlaylistHeaderFallback() {
 
 export function PlaylistFallback() {
   return (
-    <div className="w-full px-4 py-6 lg:px-8">
+    <div className="w-full px-8 py-6">
       <PlaylistHeaderFallback />
       <PlayButtonsFallback />
       <TableFallback />

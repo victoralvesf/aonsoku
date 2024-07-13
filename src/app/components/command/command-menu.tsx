@@ -19,6 +19,7 @@ import {
 import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
+import { useAppStore } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { usePlaylists } from '@/store/playlists.store'
 import { useTheme } from '@/store/theme.store'
@@ -31,7 +32,7 @@ import dateTime from '@/utils/dateTime'
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS' | 'SERVER'
 
 export default function CommandMenu() {
-  const [open, setOpen] = useState(false)
+  const { open, setOpen } = useAppStore((state) => state.command)
   const [query, setQuery] = useState('')
   const [albums, setAlbums] = useState<Albums[]>([])
   const [artists, setArtists] = useState<ISimilarArtist[]>([])
@@ -54,7 +55,9 @@ export default function CommandMenu() {
   const showArtistGroup = Boolean(query && artists && artists.length > 0)
   const showSongGroup = Boolean(query && songs && songs.length > 0)
 
-  useHotkeys('/', () => setOpen((state) => !state))
+  useHotkeys(['/', 'mod+f'], () => setOpen(!open), {
+    preventDefault: true,
+  })
 
   const clear = useCallback(() => {
     setQuery('')
@@ -70,7 +73,7 @@ export default function CommandMenu() {
       clear()
       command()
     },
-    [clear],
+    [clear, setOpen],
   )
 
   function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {

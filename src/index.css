@@ -60,6 +60,7 @@
   :root {
     --header-height: 44px;
     --sidebar-width: 280px;
+    --mini-sidebar-width: 100px;
     --player-height: 96px;
 
     --shadow-header-height: 80px;

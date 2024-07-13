@@ -50,7 +50,7 @@ export default function ImageHeader({
       {!loaded && <AlbumHeaderFallback />}
       <div
         className={cn(
-          'w-full px-4 py-6 lg:px-8 flex gap-4 bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50',
+          'w-full px-8 py-6 flex gap-4 bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50',
           !loaded ? 'hidden' : 'visible',
         )}
         style={{ backgroundColor: bgColor?.hex }}

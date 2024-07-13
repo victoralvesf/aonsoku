@@ -22,6 +22,14 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             password: '',
             logoutDialogState: false,
           },
+          command: {
+            open: false,
+            setOpen: (value) => {
+              set((state) => {
+                state.command.open = value
+              })
+            },
+          },
           actions: {
             setOsType: (value) => {
               set((state) => {

@@ -9,6 +9,7 @@ export const english = {
     sidebar: {
       home: 'Home',
       search: 'Search...',
+      miniSearch: 'Search',
       library: 'Library',
       artists: 'Artists',
       songs: 'Songs',

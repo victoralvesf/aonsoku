@@ -2,7 +2,7 @@ import { Skeleton } from '@/app/components/ui/skeleton'
 
 export function AlbumHeaderFallback() {
   return (
-    <div className="w-full px-4 py-6 lg:px-8 bg-muted-foreground flex gap-4 bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50">
+    <div className="w-full px-8 py-6 bg-muted-foreground flex gap-4 bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50">
       <Skeleton className="rounded shadow-lg w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] aspect-square" />
       <div className="flex flex-col justify-end">
         <Skeleton className="h-[20px] w-16 mb-2" />

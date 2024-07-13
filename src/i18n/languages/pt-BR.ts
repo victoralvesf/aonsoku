@@ -9,6 +9,7 @@ export const brazilianPortuguese = {
     sidebar: {
       home: 'Início',
       search: 'Pesquisar...',
+      miniSearch: 'Pesquisar',
       library: 'Biblioteca',
       artists: 'Artistas',
       songs: 'Músicas',

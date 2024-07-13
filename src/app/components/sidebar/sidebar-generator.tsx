@@ -6,7 +6,7 @@ import { Button } from '@/app/components/ui/button'
 import { ROUTES } from '@/routes/routesList'
 import { Playlist } from '@/types/responses/playlist'
 
-interface ISidebarItem {
+export interface ISidebarItem {
   title: string
   route: string
   icon: JSX.Element
