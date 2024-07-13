@@ -3,12 +3,12 @@ import { Fragment, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { getCoverArtUrl } from '@/api/httpClient'
+import { AlbumHeaderFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { Badge } from '@/app/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
-import { AlbumHeaderFallback } from './fallbacks'
 
 interface ImageHeaderProps {
   type: string

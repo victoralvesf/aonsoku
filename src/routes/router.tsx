@@ -1,9 +1,9 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 
-import { HomeFallback } from '@/app/components/home/fallbacks'
-import { PlaylistFallback } from '@/app/components/playlist/fallbacks'
-import { SongsListFallback } from '@/app/components/songs/fallbacks'
+import { HomeFallback } from '@/app/components/fallbacks/home-fallbacks'
+import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
+import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import { albumsListLoader, singleAlbumLoader } from '@/routes/loaders/albums'
 import { artistsListLoader, singleArtistLoader } from '@/routes/loaders/artists'
 import { homeLoader } from '@/routes/loaders/home'
@@ -42,37 +42,32 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        id: 'artists',
+        path: ROUTES.LIBRARY.ARTISTS,
+        loader: artistsListLoader,
+        element: (
+          <Suspense fallback={<SongsListFallback />}>
+            <ArtistsList />
+          </Suspense>
+        ),
+      },
+      {
+        id: 'songs',
+        path: ROUTES.LIBRARY.SONGS,
+        loader: songsListLoader,
+        element: (
+          <Suspense fallback={<SongsListFallback />}>
+            <SongsList />
+          </Suspense>
+        ),
+      },
+      {
         id: 'albums',
         path: ROUTES.LIBRARY.ALBUMS,
         loader: albumsListLoader,
         element: (
           <Suspense>
             <AlbumsList />
-          </Suspense>
-        ),
-      },
-      {
-        id: 'artists',
-        path: ROUTES.LIBRARY.ARTISTS,
-        loader: artistsListLoader,
-        element: (
-          <Suspense>
-            <ArtistsList />
-          </Suspense>
-        ),
-      },
-      {
-        id: 'playlist',
-        path: ROUTES.PLAYLIST.PATH,
-        loader: playlistLoader,
-        errorElement: (
-          <Suspense>
-            <ErrorPage />
-          </Suspense>
-        ),
-        element: (
-          <Suspense fallback={<PlaylistFallback />}>
-            <Playlist />
           </Suspense>
         ),
       },
@@ -91,6 +86,25 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        id: 'radios',
+        path: ROUTES.LIBRARY.RADIOS,
+        element: (
+          <Suspense>
+            <Radios />
+          </Suspense>
+        ),
+      },
+      {
+        id: 'artist',
+        path: ROUTES.ARTIST.PATH,
+        loader: singleArtistLoader,
+        element: (
+          <Suspense>
+            <Artist />
+          </Suspense>
+        ),
+      },
+      {
         id: 'album',
         path: ROUTES.ALBUM.PATH,
         loader: singleAlbumLoader,
@@ -101,31 +115,17 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        id: 'artist',
-        path: ROUTES.ARTIST.PATH,
-        loader: singleArtistLoader,
-        element: (
-          <Suspense fallback={<SongsListFallback />}>
-            <Artist />
-          </Suspense>
-        ),
-      },
-      {
-        id: 'radios',
-        path: ROUTES.LIBRARY.RADIOS,
-        element: (
+        id: 'playlist',
+        path: ROUTES.PLAYLIST.PATH,
+        loader: playlistLoader,
+        errorElement: (
           <Suspense>
-            <Radios />
+            <ErrorPage />
           </Suspense>
         ),
-      },
-      {
-        id: 'songs',
-        path: ROUTES.LIBRARY.SONGS,
-        loader: songsListLoader,
         element: (
-          <Suspense fallback={<SongsListFallback />}>
-            <SongsList />
+          <Suspense fallback={<PlaylistFallback />}>
+            <Playlist />
           </Suspense>
         ),
       },

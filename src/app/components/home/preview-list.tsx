@@ -101,7 +101,7 @@ export default function PreviewList({
         >
           <CarouselContent>
             {list.map((album) => (
-              <CarouselItem key={album.id} className="basis-1/8">
+              <CarouselItem key={album.id} className="basis-1/5 2xl:basis-1/8">
                 <HomeSongCard
                   album={album}
                   onButtonClick={(album) => handlePlayAlbum(album)}

@@ -7,7 +7,10 @@ export async function homeLoader() {
   if (!url || url === '') return null
 
   const randomSongsPromise = subsonic.songs.getRandomSongs()
-  const newestAlbumsPromise = subsonic.albums.getAlbumList({ size: 16 })
+  const newestAlbumsPromise = subsonic.albums.getAlbumList({
+    size: 16,
+    type: 'newest',
+  })
   const frequentAlbumsPromise = subsonic.albums.getAlbumList({
     size: 16,
     type: 'frequent',

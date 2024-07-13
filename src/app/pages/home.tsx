@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { Await, useLoaderData } from 'react-router-dom'
 
 import {
-  PreviewListFallback,
   HeaderFallback,
-} from '@/app/components/home/fallbacks'
+  PreviewListFallback,
+} from '@/app/components/fallbacks/home-fallbacks'
 import HomeHeader from '@/app/components/home/header'
 import PreviewList from '@/app/components/home/preview-list'
 import { ROUTES } from '@/routes/routesList'
@@ -32,9 +32,9 @@ export default function Home() {
   const { t } = useTranslation()
 
   const homeSections = [
-    { title: t('home.recentlyPlayed'), promise: newestAlbumsPromise },
+    { title: t('home.recentlyPlayed'), promise: recentAlbumsPromise },
     { title: t('home.mostPlayed'), promise: frequentAlbumsPromise },
-    { title: t('home.recentlyAdded'), promise: recentAlbumsPromise },
+    { title: t('home.recentlyAdded'), promise: newestAlbumsPromise },
     { title: t('home.explore'), promise: randomAlbumsPromise },
   ]
 

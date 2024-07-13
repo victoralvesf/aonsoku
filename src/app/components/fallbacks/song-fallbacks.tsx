@@ -1,6 +1,6 @@
-import { ShadowHeaderFallback } from '@/app/components/album/shadow-header'
+import { TableFallback } from '@/app/components/fallbacks/table-fallbacks'
+import { ShadowHeaderFallback } from '@/app/components/fallbacks/ui-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
-import { TableFallback } from '@/app/components/table/fallbacks'
 import { Skeleton } from '@/app/components/ui/skeleton'
 
 export function SongsListFallback() {

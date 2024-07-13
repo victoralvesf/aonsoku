@@ -21,7 +21,7 @@ export default function BaseLayout() {
       <Sidebar />
       <Player />
       {/* Routes */}
-      <main className="flex h-full pl-[--sidebar-width] pt-[--header-height] pb-[--player-height]">
+      <main className="flex h-full md:pl-0 lg:pl-[--sidebar-width] pt-[--header-height] pb-[--player-height]">
         <ScrollArea id="main-scroll-area" className="w-full bg-muted/30">
           <Outlet />
         </ScrollArea>

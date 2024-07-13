@@ -1,6 +1,6 @@
 import debounce from 'lodash/debounce'
-import { ListFilter } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ArrowDown, ArrowUp, ListFilter } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLoaderData } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
@@ -14,13 +14,17 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { AlbumListType, Albums, AlbumsListData } from '@/types/responses/album'
+import { albumsPageFilterValues } from '@/utils/albumsPageFilterValues'
 
 export default function AlbumsList() {
   const defaultOffset = 32
-  const toYear = new Date().getFullYear().toString()
+  const oldestYear = '0001'
+  const currentYear = new Date().getFullYear().toString()
+
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
   const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
@@ -31,36 +35,46 @@ export default function AlbumsList() {
   const [hasMore, setHasMore] = useState(true)
   const [offset, setOffset] = useState(defaultOffset)
   const [currentFilter, setCurrentFilter] = useState<AlbumListType>('newest')
+  const [yearFilter, setYearFilter] = useState<'oldest' | 'newest'>('oldest')
 
   useEffect(() => {
     setItems(recentAlbums)
+  }, [recentAlbums])
+
+  useEffect(() => {
     setItemsCount(albumsCount)
+  }, [albumsCount])
+
+  useEffect(() => {
     scrollDivRef.current = document.querySelector(
       '#main-scroll-area #scroll-viewport',
     ) as HTMLDivElement
-  }, [albumsCount, recentAlbums])
+  }, [])
 
   const fetchMoreData = useCallback(async () => {
     const response = await subsonic.albums.getAlbumList({
       type: currentFilter,
       size: defaultOffset,
       offset,
-      toYear,
+      fromYear: yearFilter === 'oldest' ? oldestYear : currentYear,
+      toYear: yearFilter === 'oldest' ? currentYear : oldestYear,
     })
 
-    if (response) {
+    if (response && response.albumsCount) {
       setItems((prevItems) => {
-        const newItems = response.list!.filter(
+        if (!response.list) return prevItems
+
+        const newItems = response.list.filter(
           (album) => !prevItems.some((item) => item.id === album.id),
         )
         return [...prevItems, ...newItems]
       })
-      setItemsCount(response.albumsCount!)
+      setItemsCount(response.albumsCount)
       setHasMore(response.list!.length >= defaultOffset)
     }
 
     setOffset((prevOffset) => prevOffset + defaultOffset)
-  }, [offset, currentFilter, defaultOffset, toYear])
+  }, [currentFilter, offset, yearFilter, currentYear])
 
   const resetList = useCallback(async () => {
     setOffset(defaultOffset)
@@ -70,7 +84,8 @@ export default function AlbumsList() {
       type: currentFilter,
       size: defaultOffset,
       offset: 0,
-      toYear,
+      fromYear: yearFilter === 'oldest' ? oldestYear : currentYear,
+      toYear: yearFilter === 'oldest' ? currentYear : oldestYear,
     })
 
     if (response) {
@@ -78,7 +93,7 @@ export default function AlbumsList() {
       setItemsCount(response.albumsCount!)
       scrollDivRef.current?.scrollTo(0, 0)
     }
-  }, [currentFilter, defaultOffset, toYear])
+  }, [currentFilter, currentYear, yearFilter])
 
   useEffect(() => {
     resetList()
@@ -89,7 +104,7 @@ export default function AlbumsList() {
       if (!scrollDivRef.current) return
 
       const { scrollTop, clientHeight, scrollHeight } = scrollDivRef.current
-      if (scrollTop + clientHeight >= scrollHeight - 40) {
+      if (scrollTop + clientHeight >= scrollHeight - 200) {
         if (hasMore) fetchMoreData()
       }
     }, 200)
@@ -109,52 +124,7 @@ export default function AlbumsList() {
     }
   }
 
-  const filterList = useMemo(() => {
-    return [
-      {
-        key: 'alphabeticalByArtist',
-        label: t('album.list.filter.artist'),
-      },
-      {
-        key: 'byGenre',
-        label: t('album.list.filter.genre'),
-      },
-      {
-        key: 'highest',
-        label: t('album.list.filter.highest'),
-      },
-      {
-        key: 'starred',
-        label: t('album.list.filter.favorites'),
-      },
-      {
-        key: 'frequent',
-        label: t('album.list.filter.mostPlayed'),
-      },
-      {
-        key: 'alphabeticalByName',
-        label: t('album.list.filter.name'),
-      },
-      {
-        key: 'random',
-        label: t('album.list.filter.random'),
-      },
-      {
-        key: 'newest',
-        label: t('album.list.filter.recentlyAdded'),
-      },
-      {
-        key: 'recent',
-        label: t('album.list.filter.recentlyPlayed'),
-      },
-      {
-        key: 'byYear',
-        label: t('album.list.filter.releaseYear'),
-      },
-    ]
-  }, [t])
-
-  const currentFilterLabel = filterList.filter(
+  const currentFilterLabel = albumsPageFilterValues.filter(
     (item) => item.key === currentFilter,
   )[0].label
 
@@ -171,35 +141,61 @@ export default function AlbumsList() {
             </Badge>
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                <ListFilter className="w-4 h-4 mr-2" />
-                {currentFilterLabel}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {filterList.map((item, index) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={index}
-                    checked={item.key === currentFilter}
-                    onCheckedChange={() =>
-                      setCurrentFilter(item.key as AlbumListType)
-                    }
-                    className="cursor-pointer"
-                  >
-                    {item.label}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex gap-2">
+            {currentFilter === 'byYear' && (
+              <SimpleTooltip
+                text={t(
+                  `table.sort.${yearFilter === 'oldest' ? 'asc' : 'desc'}`,
+                )}
+              >
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setYearFilter((current) =>
+                      current === 'newest' ? 'oldest' : 'newest',
+                    )
+                  }}
+                >
+                  {yearFilter === 'oldest' ? (
+                    <ArrowUp className="w-4 h-4" />
+                  ) : (
+                    <ArrowDown className="w-4 h-4" />
+                  )}
+                </Button>
+              </SimpleTooltip>
+            )}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <ListFilter className="w-4 h-4 mr-2" />
+                  {t(currentFilterLabel)}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {albumsPageFilterValues.map((item, index) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={index}
+                      checked={item.key === currentFilter}
+                      onCheckedChange={() =>
+                        setCurrentFilter(item.key as AlbumListType)
+                      }
+                      className="cursor-pointer"
+                    >
+                      {t(item.label)}
+                    </DropdownMenuCheckboxItem>
+                  )
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </ShadowHeader>
 
       <ListWrapper className="pt-[--shadow-header-distance]">
-        <div className="grid grid-cols-8 gap-4 h-full">
+        <div className="grid grid-cols-5 2xl:grid-cols-8 gap-4 h-full">
           {items &&
             items.map((album) => (
               <HomeSongCard

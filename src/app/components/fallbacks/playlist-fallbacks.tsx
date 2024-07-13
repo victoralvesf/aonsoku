@@ -1,5 +1,5 @@
-import { PlayButtonsFallback } from '@/app/components/album/fallbacks'
-import { TableFallback } from '@/app/components/table/fallbacks'
+import { PlayButtonsFallback } from '@/app/components/fallbacks/album-fallbacks'
+import { TableFallback } from '@/app/components/fallbacks/table-fallbacks'
 import { Skeleton } from '@/app/components/ui/skeleton'
 
 export function PlaylistHeaderFallback() {
