@@ -1,5 +1,6 @@
 import Autoplay from 'embla-carousel-autoplay'
 import { Play } from 'lucide-react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { Badge } from '@/app/components/ui/badge'
@@ -60,22 +61,23 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
             >
               <div className="w-full flex-1 h-full inset-0 backdrop-blur-xl bg-gradient-to-b from-white/30 to-white/80 dark:from-black/30 dark:to-black/80">
                 <div className="flex h-[200px] 2xl:h-[300px] p-6 gap-4">
-                  <div className="min-w-[152px] w-[152px] 2xl:min-w-[252px] 2xl:w-[252px] aspect-square group">
-                    <div
-                      className="group flex-1 aspect-square rounded bg-cover bg-center"
-                      style={{
-                        backgroundImage: `url(${getCoverArtUrl(song.coverArt)})`,
-                      }}
-                    >
-                      <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
-                        <Button
-                          className="opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-full w-14 h-14"
-                          variant="outline"
-                          onClick={() => handlePlaySongAlbum(song)}
-                        >
-                          <Play className="fill-foreground" />
-                        </Button>
-                      </div>
+                  <div className="w-[152px] 2xl:w-[252px] h-[152px] 2xl:h-[252px] rounded-lg overflow-hidden relative group bg-skeleton">
+                    <LazyLoadImage
+                      src={getCoverArtUrl(song.coverArt)}
+                      alt={song.title}
+                      effect="opacity"
+                      width="100%"
+                      height="100%"
+                      className="aspect-square object-cover w-full h-full absolute inset-0 z-0"
+                    />
+                    <div className="w-full h-full flex items-center justify-center rounded-lg bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 absolute inset-0 z-10">
+                      <Button
+                        className="opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-full w-14 h-14"
+                        variant="outline"
+                        onClick={() => handlePlaySongAlbum(song)}
+                      >
+                        <Play className="fill-foreground" />
+                      </Button>
                     </div>
                   </div>
                   <div className="flex min-h-[152px] h-[152px] 2xl:min-h-[252px] 2xl:h-[252px] flex-col justify-end">

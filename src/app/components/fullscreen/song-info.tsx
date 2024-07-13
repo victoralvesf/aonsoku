@@ -1,3 +1,4 @@
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import { AspectRatio } from '@/app/components/ui/aspect-ratio'
@@ -12,10 +13,11 @@ export function SongInfo() {
     <div className="flex items-center justify-start h-full min-h-full max-h-full gap-4 2xl:gap-6 flex-1 pt-2">
       <div className="2xl:w-[33%] h-full max-w-[450px] max-h-[450px] 2xl:max-w-[550px] 2xl:max-h-[550px] items-end flex aspect-square">
         <AspectRatio ratio={1 / 1}>
-          <img
+          <LazyLoadImage
             src={imageUrl}
+            effect="opacity"
             alt={`${currentSong.artist} - ${currentSong.title}`}
-            className="rounded-lg 2xl:rounded-2xl aspect-square"
+            className="rounded-lg 2xl:rounded-2xl aspect-square object-cover"
           />
         </AspectRatio>
       </div>

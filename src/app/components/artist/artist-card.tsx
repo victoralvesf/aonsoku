@@ -1,4 +1,5 @@
 import { Play } from 'lucide-react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { Button } from '@/app/components/ui/button'
@@ -14,13 +15,16 @@ export default function ArtistCard({ artist, onButtonClick }: ArtistCardProps) {
   return (
     <div className="cursor-pointer">
       <Link to={ROUTES.ARTIST.PAGE(artist.id)}>
-        <div
-          className="group flex-1 aspect-square rounded bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${getCoverArtUrl(artist.coverArt, '250')})`,
-          }}
-        >
-          <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
+        <div className="group flex-1 aspect-square rounded bg-border relative overflow-hidden">
+          <LazyLoadImage
+            src={getCoverArtUrl(artist.coverArt)}
+            alt={artist.name}
+            effect="opacity"
+            width="100%"
+            height="100%"
+            className="aspect-square object-cover w-full h-full absolute inset-0 z-0"
+          />
+          <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 absolute inset-0 z-10">
             <Button
               className="opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-full w-12 h-12 z-20"
               variant="outline"

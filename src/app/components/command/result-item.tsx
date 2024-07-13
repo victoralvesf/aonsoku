@@ -23,7 +23,7 @@ export function ResultItem({
           src={getCoverArtUrl(coverArt, '100')}
           width={40}
           height={40}
-          className="aspect-square rounded shadow"
+          className="aspect-square object-cover rounded shadow"
           alt={`${artist} - ${title}`}
         />
         <div className="flex flex-col justify-center w-full">

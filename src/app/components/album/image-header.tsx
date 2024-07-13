@@ -1,11 +1,11 @@
-import { FastAverageColorResult } from 'fast-average-color'
-import { Fragment, useRef, useState } from 'react'
+import clsx from 'clsx'
+import { Fragment, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 
 import { getCoverArtUrl } from '@/api/httpClient'
 import { AlbumHeaderFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { Badge } from '@/app/components/ui/badge'
-import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
@@ -31,42 +31,44 @@ export default function ImageHeader({
   coverArtAlt,
   badges,
 }: ImageHeaderProps) {
-  const imageRef = useRef<HTMLImageElement>(null)
   const [loaded, setLoaded] = useState(false)
-  const [bgColor, setBgColor] = useState<FastAverageColorResult>()
+  const [bgColor, setBgColor] = useState('')
 
   async function handleLoadImage() {
-    const img = imageRef.current
-    const color = await getAverageColor(img)
+    const img = document.getElementById('cover-art-image') as HTMLImageElement
+    if (!img) return
 
-    setBgColor(color)
+    const color = await getAverageColor(img)
+    setBgColor(color.hex)
     setLoaded(true)
   }
 
-  const imageUrl = getCoverArtUrl(coverArtId, coverArtSize)
-
   return (
-    <>
-      {!loaded && <AlbumHeaderFallback />}
+    <div
+      className="flex relative w-full h-[calc(3rem+200px)] 2xl:h-[calc(3rem+250px)]"
+      key={`header-${coverArtId}`}
+    >
+      {!loaded && (
+        <div className="absolute inset-0 z-10">
+          <AlbumHeaderFallback />
+        </div>
+      )}
       <div
-        className={cn(
-          'w-full px-8 py-6 flex gap-4 bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50',
-          !loaded ? 'hidden' : 'visible',
-        )}
-        style={{ backgroundColor: bgColor?.hex }}
+        className="w-full px-8 py-6 flex gap-4 bg-gradient-to-b from-white/30 to-white/50 dark:from-black/30 dark:to-black/50 absolute inset-0"
+        style={{ backgroundColor: bgColor }}
       >
-        <div
-          className="w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] bg-skeleton aspect-square bg-cover bg-center rounded shadow-lg"
-          style={{ backgroundImage: `url(${imageUrl})` }}
-        >
-          <img
+        <div className="w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] bg-skeleton aspect-square bg-cover bg-center rounded shadow-lg overflow-hidden">
+          <LazyLoadImage
+            key={coverArtId}
+            effect="opacity"
             crossOrigin="anonymous"
-            ref={imageRef}
-            src={imageUrl}
+            id="cover-art-image"
+            src={getCoverArtUrl(coverArtId, coverArtSize)}
             alt={coverArtAlt}
-            className="hidden"
-            width={250}
-            height={250}
+            className="aspect-square object-cover w-full h-full"
+            width="100%"
+            height="100%"
+            beforeLoad={() => setLoaded(false)}
             onLoad={handleLoadImage}
           />
         </div>
@@ -76,7 +78,7 @@ export default function ImageHeader({
             {type}
           </p>
           <h1
-            className={cn(
+            className={clsx(
               'scroll-m-20 font-bold tracking-tight mb-1 2xl:mb-2 antialiased',
               getTextSizeClass(title),
             )}
@@ -100,6 +102,6 @@ export default function ImageHeader({
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
