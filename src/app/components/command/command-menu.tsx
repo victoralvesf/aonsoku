@@ -1,4 +1,4 @@
-import { delay } from 'lodash'
+import delay from 'lodash/delay'
 import { Loader2, SearchIcon } from 'lucide-react'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'

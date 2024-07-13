@@ -43,8 +43,8 @@ export function radiosColumns(): ColumnDef<Radio>[] {
       ),
       cell: ({ row }) => (
         <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
-          <div className="flex justify-center items-center w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded shadow-md bg-foreground/10">
-            <RadioIcon className="w-5 h-5" />
+          <div className="flex justify-center items-center w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded shadow bg-foreground/20 dark:bg-accent">
+            <RadioIcon className="w-5 h-5 text-foreground" strokeWidth={1.75} />
           </div>
           <div className="flex flex-col justify-center items-center">
             <p>{row.original.name}</p>

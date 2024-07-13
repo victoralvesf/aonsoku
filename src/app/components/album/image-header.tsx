@@ -56,7 +56,7 @@ export default function ImageHeader({
         style={{ backgroundColor: bgColor?.hex }}
       >
         <div
-          className="w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] aspect-square bg-cover bg-center rounded shadow-lg"
+          className="w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] bg-skeleton aspect-square bg-cover bg-center rounded shadow-lg"
           style={{ backgroundImage: `url(${imageUrl})` }}
         >
           <img

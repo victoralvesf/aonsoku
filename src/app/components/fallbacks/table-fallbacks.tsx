@@ -11,6 +11,7 @@ export function TableFallback() {
         <Skeleton className="w-12 h-5 rounded" />
         <Skeleton className="w-16 h-5 rounded" />
         <Skeleton className="w-12 h-5 rounded" />
+        <div className="w-10 h-5 rounded" />
       </div>
       {Array.from({ length: 10 }).map((_, index) => (
         <div
@@ -27,6 +28,7 @@ export function TableFallback() {
           <Skeleton className="w-6 h-5 rounded" />
           <Skeleton className="w-20 h-5 rounded" />
           <Skeleton className="w-14 h-5 rounded-full" />
+          <Skeleton className="w-6 h-6 ml-auto mr-1 rounded-full" />
         </div>
       ))}
     </div>

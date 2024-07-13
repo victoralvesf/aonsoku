@@ -53,7 +53,7 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
       cell: ({ row }) => (
         <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
           <div
-            className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] aspect-square bg-cover bg-center rounded shadow-md bg-foreground/10"
+            className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] aspect-square bg-cover bg-center rounded shadow-md bg-skeleton"
             style={{
               backgroundImage: `url(${getCoverArtUrl(row.original.coverArt, '80')})`,
             }}

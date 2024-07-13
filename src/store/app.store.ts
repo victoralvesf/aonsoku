@@ -1,5 +1,6 @@
 import { MD5 } from 'crypto-js'
-import { merge, omit } from 'lodash'
+import merge from 'lodash/merge'
+import omit from 'lodash/omit'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { createWithEqualityFn } from 'zustand/traditional'

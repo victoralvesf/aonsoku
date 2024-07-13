@@ -1,4 +1,5 @@
 import { FetchOptions, fetch as tauriFetch } from '@tauri-apps/api/http'
+import omit from 'lodash/omit'
 import { useAppStore } from '@/store/app.store'
 import { SubsonicJsonResponse } from '@/types/responses/subsonicResponse'
 import { appName } from '@/utils/appName'
@@ -20,15 +21,21 @@ function queryParams() {
 
 function getUrl(path: string, options?: Record<string, string>) {
   const serverUrl = useAppStore.getState().data.url
-
   const params = new URLSearchParams(queryParams())
+
   if (options) {
     Object.keys(options).forEach((key) => {
       params.append(key, options[key])
     })
   }
 
-  return `${serverUrl}/rest/${path}?${params.toString()}`
+  const queries = params.toString()
+  const pathWithoutSlash = path.startsWith('/') ? path.substring(1) : path
+  let url = `${serverUrl}/rest/${pathWithoutSlash}`
+  url += path.includes('?') ? '&' : '?'
+  url += queries
+
+  return url
 }
 
 async function browserFetch<T>(
@@ -84,20 +91,13 @@ export async function httpClient<T>(
   options: FetchOptions,
 ): Promise<{ count: number; data: T } | undefined> {
   try {
-    const { url } = useAppStore.getState().data
-    let fullUrl = `${url}/rest${path}`
+    const url = getUrl(path, options.query)
 
     if (isTauri()) {
-      return await rustFetch(fullUrl, { ...options })
+      const tauriOptions = omit(options, 'query')
+      return await rustFetch(url, { ...tauriOptions })
     } else {
-      const queries = new URLSearchParams({
-        ...options.query,
-        ...queryParams(),
-      }).toString()
-
-      fullUrl += path.includes('?') ? `&${queries}` : `?${queries}`
-
-      return await browserFetch<T>(fullUrl, {
+      return await browserFetch<T>(url, {
         method: options.method,
         headers: options.headers,
         body: options.body ? JSON.stringify(options.body) : undefined,

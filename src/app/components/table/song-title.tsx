@@ -26,7 +26,7 @@ export function TableSongTitle({ song }: { song: ISong }) {
         alt={song.title}
         width={40}
         height={40}
-        className="rounded shadow-md bg-foreground/10"
+        className="rounded shadow-md bg-skeleton"
       />
       <div className="flex flex-col justify-center w-full">
         <p

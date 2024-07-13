@@ -132,6 +132,10 @@ img {
   filter: invert(1);
 }
 
+.bg-skeleton {
+  @apply bg-foreground/20 dark:bg-accent;
+}
+
 /* Native Scroll Bar */
 ::-webkit-scrollbar {
   width: 7px;
