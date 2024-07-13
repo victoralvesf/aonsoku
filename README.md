@@ -74,8 +74,9 @@ As Aonsoku is currently in early development, to use the desktop app you need to
 ### Prerequisites
 
 * Node.js
-* Rust
 * pnpm, npm or yarn
+* Rust
+* cargo
 
 ### Installation
 
@@ -87,6 +88,10 @@ git clone https://github.com/victoralvesf/aonsoku.git
 ```sh
 pnpm install
 ```
+3. Install tauri-cli
+```sh
+cargo install tauri-cli
+```
 
 ### Running
 
@@ -97,7 +102,7 @@ pnpm dev
 
 * Desktop App
 ```sh
-pnpm tauri dev
+pnpm run tauri dev
 ```
 
 ### Recommended IDE Setup
