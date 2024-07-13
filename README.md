@@ -97,7 +97,7 @@ cargo install tauri-cli
 
 * Web App
 ```sh
-pnpm dev
+pnpm run dev
 ```
 
 * Desktop App
