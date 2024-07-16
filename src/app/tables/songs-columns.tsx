@@ -76,7 +76,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       accessorKey: 'title',
       style: {
         flex: 1,
-        minWidth: '100px',
+        minWidth: 250,
       },
       enableSorting: true,
       sortingFn: 'customSortFn',
@@ -121,6 +121,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         width: '15%',
         maxWidth: '15%',
       },
+      className: 'hidden lg:flex',
       enableSorting: true,
       sortingFn: 'customSortFn',
       header: ({ column }) => (
@@ -180,6 +181,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         width: 140,
         maxWidth: 140,
       },
+      className: 'hidden 2xl:flex',
       enableSorting: true,
       sortingFn: 'basic',
       sortUndefined: -1,
@@ -202,6 +204,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         width: 180,
         maxWidth: 180,
       },
+      className: 'hidden 2xl:flex',
       cell: ({ row }) => {
         const { played } = row.original
 
@@ -230,6 +233,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         width: 140,
         maxWidth: 140,
       },
+      className: 'hidden 2xl:flex',
       cell: ({ row }) => {
         return `${row.original.bitRate} kbps`
       },
@@ -242,6 +246,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         width: 120,
         maxWidth: 120,
       },
+      className: 'hidden 2xl:flex',
       cell: ({ row }) => {
         const { suffix } = row.original
 

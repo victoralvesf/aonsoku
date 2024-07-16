@@ -11,6 +11,7 @@ import {
   getSortedRowModel,
   SortingFn,
 } from '@tanstack/react-table'
+import clsx from 'clsx'
 import { XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -124,6 +125,7 @@ export function DataTable<TData, TValue>({
           </div>
         </div>
       )}
+
       <div className="rounded-md border">
         <div
           className="relative w-full overflow-hidden rounded-md cursor-default caption-bottom bg-background text-sm"
@@ -138,13 +140,17 @@ export function DataTable<TData, TValue>({
                 role="row"
               >
                 {headerGroup.headers.map((header) => {
+                  const columnDef = header.column
+                    .columnDef as ColumnDefType<TData>
+
                   return (
                     <div
                       key={header.id}
-                      className="p-2 h-12 flex items-center justify-start align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-4"
-                      style={
-                        (header.column.columnDef as ColumnDefType<TData>).style
-                      }
+                      className={clsx(
+                        'p-2 h-12 flex items-center justify-start align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-4',
+                        columnDef.className,
+                      )}
+                      style={columnDef.style}
                       role="columnheader"
                     >
                       {header.isPlaceholder
@@ -172,21 +178,27 @@ export function DataTable<TData, TValue>({
                     className="group/tablerow w-full flex flex-row border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
                     role="row"
                   >
-                    {row.getVisibleCells().map((cell) => (
-                      <div
-                        key={cell.id}
-                        className="p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4"
-                        style={
-                          (cell.column.columnDef as ColumnDefType<TData>).style
-                        }
-                        role="cell"
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </div>
-                    ))}
+                    {row.getVisibleCells().map((cell) => {
+                      const columnDef = cell.column
+                        .columnDef as ColumnDefType<TData>
+
+                      return (
+                        <div
+                          key={cell.id}
+                          className={clsx(
+                            'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
+                            columnDef.className,
+                          )}
+                          style={columnDef.style}
+                          role="cell"
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </div>
+                      )
+                    })}
                   </div>
                 ))
               ) : (
@@ -203,6 +215,7 @@ export function DataTable<TData, TValue>({
           </div>
         </div>
       </div>
+
       {showPagination && <DataTablePagination table={table} />}
     </>
   )

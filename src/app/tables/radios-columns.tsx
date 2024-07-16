@@ -41,7 +41,7 @@ export function radiosColumns(): ColumnDefType<Radio>[] {
       sortingFn: 'customSortFn',
       style: {
         flex: 1,
-        minWidth: '100px',
+        minWidth: 250,
       },
       header: ({ column }) => (
         <DataTableColumnHeader column={column}>
@@ -94,7 +94,9 @@ export function radiosColumns(): ColumnDefType<Radio>[] {
       style: {
         width: '25%',
         maxWidth: '25%',
+        marginRight: '1rem',
       },
+      className: 'hidden 2xl:flex',
       header: i18n.t('radios.table.stream'),
       cell: ({ row }) => (
         <div className="truncate">

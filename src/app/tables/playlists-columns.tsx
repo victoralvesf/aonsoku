@@ -49,7 +49,7 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
       sortingFn: 'customSortFn',
       style: {
         flex: 1,
-        minWidth: '100px',
+        minWidth: 250,
       },
       header: ({ column }) => (
         <DataTableColumnHeader column={column}>
@@ -57,17 +57,17 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
         </DataTableColumnHeader>
       ),
       cell: ({ row }) => (
-        <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
+        <div className="flex gap-2 items-center w-full">
           <CoverImage
             coverArt={row.original.coverArt}
             altText={row.original.name}
           />
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col w-full justify-center truncate">
             <Link
               to={ROUTES.PLAYLIST.PAGE(row.original.id)}
-              className="hover:underline flex w-fit"
+              className="hover:underline truncate"
             >
-              <p>{row.original.name}</p>
+              {row.original.name}
             </Link>
           </div>
         </div>
@@ -79,11 +79,13 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
       style: {
         width: '25%',
         maxWidth: '25%',
+        marginRight: '1rem',
       },
+      className: 'hidden 2xl:flex',
       header: i18n.t('table.columns.comment'),
       cell: ({ row }) => (
-        <div className="text-muted-foreground">
-          <p>{row.original.comment}</p>
+        <div className="text-muted-foreground w-full truncate">
+          <p className="truncate">{row.original.comment}</p>
         </div>
       ),
     },

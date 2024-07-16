@@ -6,4 +6,5 @@ export type ColumnDefType<TData, TValue = unknown> = ColumnDef<
   TValue
 > & {
   style?: CSSProperties
+  className?: string
 }
