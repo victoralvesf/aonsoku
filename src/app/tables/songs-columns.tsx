@@ -8,6 +8,7 @@ import {
 } from '@/app/components/table/select-song'
 import { TableSongTitle } from '@/app/components/table/song-title'
 import { Badge } from '@/app/components/ui/badge'
+import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import i18n from '@/i18n'
 import { ROUTES } from '@/routes/routesList'
@@ -77,7 +78,13 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         flex: 1,
         minWidth: '100px',
       },
-      header: i18n.t('table.columns.title'),
+      enableSorting: true,
+      sortingFn: 'customSortFn',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column}>
+          {i18n.t('table.columns.title')}
+        </DataTableColumnHeader>
+      ),
       cell: ({ row }) => <TableSongTitle song={row.original} />,
     },
     {
@@ -87,7 +94,13 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         width: '15%',
         maxWidth: '15%',
       },
-      header: i18n.t('table.columns.artist'),
+      enableSorting: true,
+      sortingFn: 'customSortFn',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column}>
+          {i18n.t('table.columns.artist')}
+        </DataTableColumnHeader>
+      ),
       cell: ({ row }) => {
         if (!row.original.artistId) return row.original.artist
 
@@ -104,11 +117,17 @@ export function songsColumns(): ColumnDefType<ISong>[] {
     {
       id: 'album',
       accessorKey: 'album',
-      header: i18n.t('table.columns.album'),
       style: {
         width: '15%',
         maxWidth: '15%',
       },
+      enableSorting: true,
+      sortingFn: 'customSortFn',
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column}>
+          {i18n.t('table.columns.album')}
+        </DataTableColumnHeader>
+      ),
       cell: ({ row }) => {
         return (
           <Link
@@ -136,9 +155,15 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         width: 80,
         maxWidth: 80,
       },
-      header: () => (
+      enableSorting: true,
+      sortingFn: 'basic',
+      header: ({ column }) => (
         <SimpleTooltip text={i18n.t('table.columns.duration')}>
-          <ClockIcon className="w-4 h-4" />
+          <div>
+            <DataTableColumnHeader column={column}>
+              <ClockIcon className="w-4 h-4" />
+            </DataTableColumnHeader>
+          </div>
         </SimpleTooltip>
       ),
       cell: ({ row }) => {
@@ -151,13 +176,20 @@ export function songsColumns(): ColumnDefType<ISong>[] {
     {
       id: 'playCount',
       accessorKey: 'playCount',
-      header: i18n.t('table.columns.plays'),
       style: {
         width: 140,
         maxWidth: 140,
       },
+      enableSorting: true,
+      sortingFn: 'basic',
+      sortUndefined: -1,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column}>
+          {i18n.t('table.columns.plays')}
+        </DataTableColumnHeader>
+      ),
       cell: ({ row }) => {
-        const playCount = row.original.playCount
+        const { playCount } = row.original
 
         return playCount || 0
       },

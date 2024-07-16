@@ -91,7 +91,7 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
       id: 'songCount',
       accessorKey: 'songCount',
       enableSorting: true,
-      sortingFn: 'alphanumeric',
+      sortingFn: 'basic',
       style: {
         width: 140,
         maxWidth: 140,

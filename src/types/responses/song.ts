@@ -33,14 +33,14 @@ export interface ISong {
   duration: number
   bitRate: number
   path: string
-  playCount: number
+  playCount?: number
   discNumber: number
   created: string
   albumId: string
   artistId?: string
   type: string
   isVideo: boolean
-  played: string
+  played?: string
   bpm: number
   starred?: string
   comment: string

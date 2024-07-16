@@ -71,7 +71,7 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
       id: 'albumCount',
       accessorKey: 'albumCount',
       enableSorting: true,
-      sortingFn: 'alphanumeric',
+      sortingFn: 'basic',
       style: {
         width: 140,
         minWidth: 140,
