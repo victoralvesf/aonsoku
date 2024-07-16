@@ -45,7 +45,7 @@ function ResolvedPlaylist({ playlist }: { playlist: PlaylistWithEntries }) {
     'duration',
     'playCount',
     'contentType',
-    'starred',
+    'select',
   ]
 
   return (

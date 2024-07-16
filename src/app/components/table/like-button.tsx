@@ -52,8 +52,11 @@ export function TableLikeButton({
   return (
     <Button
       variant="ghost"
-      className="rounded-full w-8 h-8 p-1 hover:border hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
-      onClick={handleStarred}
+      className="w-8 h-8 p-1 rounded-full hover:bg-background hover:border hover:border-border hover:shadow-sm"
+      onClick={(e) => {
+        e.stopPropagation()
+        handleStarred()
+      }}
     >
       <Heart
         className={clsx('w-4 h-4', isStarred && 'text-red-500 fill-red-500')}

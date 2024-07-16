@@ -31,7 +31,7 @@ export default function ArtistTopSongs() {
     'playCount',
     'played',
     'contentType',
-    'starred',
+    'select',
   ]
 
   return (

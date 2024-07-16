@@ -46,7 +46,7 @@ function ResolvedSongList({ songlist }: { songlist: ISong[] }) {
     'playCount',
     'played',
     'contentType',
-    'starred',
+    'select',
   ]
 
   function handlePlaySong(index: number) {

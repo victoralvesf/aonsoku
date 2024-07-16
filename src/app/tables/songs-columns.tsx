@@ -1,25 +1,32 @@
-import { ColumnDef } from '@tanstack/react-table'
 import { ClockIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-import { TableLikeButton } from '@/app/components/table/like-button'
 import PlaySongButton from '@/app/components/table/play-button'
+import {
+  SelectSongCell,
+  SelectSongHeader,
+} from '@/app/components/table/select-song'
 import { TableSongTitle } from '@/app/components/table/song-title'
 import { Badge } from '@/app/components/ui/badge'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import i18n from '@/i18n'
 import { ROUTES } from '@/routes/routesList'
+import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISong } from '@/types/responses/song'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 
-export function songsColumns(): ColumnDef<ISong>[] {
+export function songsColumns(): ColumnDefType<ISong>[] {
   return [
     {
       id: 'index',
       accessorKey: 'index',
+      style: {
+        width: 48,
+        minWidth: '48px',
+      },
       header: () => {
-        return <div className="text-center">#</div>
+        return <div className="w-full text-center">#</div>
       },
       cell: ({ row, table }) => {
         const trackNumber = row.index + 1
@@ -38,15 +45,48 @@ export function songsColumns(): ColumnDef<ISong>[] {
       },
     },
     {
+      id: 'trackNumber',
+      accessorKey: 'track',
+      style: {
+        width: 48,
+        minWidth: '48px',
+      },
+      header: () => {
+        return <div className="w-full text-center">#</div>
+      },
+      cell: ({ row, table }) => {
+        const song = row.original
+        const trackNumber = song.track
+
+        return (
+          <PlaySongButton
+            type="song"
+            trackNumber={trackNumber}
+            trackId={song.id}
+            title={song.title}
+            artist={song.artist}
+            handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
+          />
+        )
+      },
+    },
+    {
       id: 'title',
       accessorKey: 'title',
+      style: {
+        flex: 1,
+        minWidth: '100px',
+      },
       header: i18n.t('table.columns.title'),
-      maxSize: 600,
       cell: ({ row }) => <TableSongTitle song={row.original} />,
     },
     {
       id: 'artist',
       accessorKey: 'artist',
+      style: {
+        width: '15%',
+        maxWidth: '15%',
+      },
       header: i18n.t('table.columns.artist'),
       cell: ({ row }) => {
         if (!row.original.artistId) return row.original.artist
@@ -54,7 +94,7 @@ export function songsColumns(): ColumnDef<ISong>[] {
         return (
           <Link
             to={ROUTES.ARTIST.PAGE(row.original.artistId)}
-            className="hover:underline"
+            className="hover:underline truncate"
           >
             {row.original.artist}
           </Link>
@@ -65,16 +105,18 @@ export function songsColumns(): ColumnDef<ISong>[] {
       id: 'album',
       accessorKey: 'album',
       header: i18n.t('table.columns.album'),
+      style: {
+        width: '15%',
+        maxWidth: '15%',
+      },
       cell: ({ row }) => {
         return (
-          <div className="min-w-[200px] max-w-[250px] 2xl:min-w-[350px] 2xl:max-w-[400px]">
-            <Link
-              to={ROUTES.ALBUM.PAGE(row.original.albumId)}
-              className="hover:underline truncate block"
-            >
-              {row.original.album}
-            </Link>
-          </div>
+          <Link
+            to={ROUTES.ALBUM.PAGE(row.original.albumId)}
+            className="hover:underline truncate"
+          >
+            {row.original.album}
+          </Link>
         )
       },
     },
@@ -82,12 +124,18 @@ export function songsColumns(): ColumnDef<ISong>[] {
       id: 'year',
       accessorKey: 'year',
       header: i18n.t('table.columns.year'),
-      minSize: 55,
-      maxSize: 60,
+      style: {
+        width: 80,
+        maxWidth: 80,
+      },
     },
     {
       id: 'duration',
       accessorKey: 'duration',
+      style: {
+        width: 80,
+        maxWidth: 80,
+      },
       header: () => (
         <SimpleTooltip text={i18n.t('table.columns.duration')}>
           <ClockIcon className="w-4 h-4" />
@@ -104,7 +152,10 @@ export function songsColumns(): ColumnDef<ISong>[] {
       id: 'playCount',
       accessorKey: 'playCount',
       header: i18n.t('table.columns.plays'),
-      size: 70,
+      style: {
+        width: 140,
+        maxWidth: 140,
+      },
       cell: ({ row }) => {
         const playCount = row.original.playCount
 
@@ -115,6 +166,10 @@ export function songsColumns(): ColumnDef<ISong>[] {
       id: 'played',
       accessorKey: 'played',
       header: i18n.t('table.columns.lastPlayed'),
+      style: {
+        width: 180,
+        maxWidth: 180,
+      },
       cell: ({ row }) => {
         const { played } = row.original
 
@@ -130,11 +185,19 @@ export function songsColumns(): ColumnDef<ISong>[] {
       id: 'bpm',
       accessorKey: 'bpm',
       header: i18n.t('table.columns.bpm'),
+      style: {
+        width: 80,
+        maxWidth: 80,
+      },
     },
     {
       id: 'bitRate',
       accessorKey: 'bitRate',
       header: i18n.t('table.columns.bitrate'),
+      style: {
+        width: 140,
+        maxWidth: 140,
+      },
       cell: ({ row }) => {
         return `${row.original.bitRate} kbps`
       },
@@ -143,30 +206,25 @@ export function songsColumns(): ColumnDef<ISong>[] {
       id: 'contentType',
       accessorKey: 'contentType',
       header: i18n.t('table.columns.quality'),
-      size: 80,
+      style: {
+        width: 120,
+        maxWidth: 120,
+      },
       cell: ({ row }) => {
         const { suffix } = row.original
 
-        return <Badge variant="secondary">{suffix.toUpperCase()}</Badge>
+        return <Badge>{suffix.toUpperCase()}</Badge>
       },
     },
     {
-      id: 'starred',
-      accessorKey: 'starred',
-      header: '',
-      size: 40,
-      maxSize: 40,
-      cell: ({ row }) => {
-        const { starred, id } = row.original
-
-        return (
-          <TableLikeButton
-            type="song"
-            entityId={id}
-            starred={typeof starred === 'string'}
-          />
-        )
+      id: 'select',
+      style: {
+        width: 120,
+        maxWidth: 120,
+        justifyContent: 'end',
       },
+      header: ({ table }) => <SelectSongHeader table={table} />,
+      cell: ({ row }) => <SelectSongCell row={row} />,
     },
   ]
 }

@@ -57,6 +57,7 @@ export default function Radios() {
           showPagination={true}
           showSearch={true}
           searchColumn="name"
+          allowRowSelection={false}
         />
       </ListWrapper>
 

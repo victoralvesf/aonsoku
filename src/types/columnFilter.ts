@@ -1,5 +1,6 @@
 export type ColumnFilter =
   | 'index'
+  | 'trackNumber'
   | 'title'
   | 'artist'
   | 'album'
@@ -11,3 +12,4 @@ export type ColumnFilter =
   | 'bitRate'
   | 'contentType'
   | 'starred'
+  | 'select'

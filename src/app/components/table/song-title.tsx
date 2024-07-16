@@ -1,8 +1,6 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { CoverImage } from '@/app/components/table/cover-image'
-import { ROUTES } from '@/routes/routesList'
 import { usePlayerMediaType, usePlayerSonglist } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 
@@ -19,29 +17,17 @@ export function TableSongTitle({ song }: { song: ISong }) {
   }, [currentSong, mediaType, song.id])
 
   return (
-    <div className="flex gap-2 items-center min-w-[200px] max-w-[300px] 2xl:min-w-[350px] 2xl:max-w-[450px]">
+    <div className="flex w-full gap-2 items-center">
       <CoverImage coverArt={song.coverArt} altText={song.title} />
-      <div className="flex flex-col justify-center w-full">
-        <p
+      <div className="flex flex-col w-full justify-center truncate">
+        <span
           className={clsx(
             'font-medium truncate',
             songIsPlaying && 'text-primary',
           )}
         >
           {song.title}
-        </p>
-        {song.artistId ? (
-          <Link
-            to={ROUTES.ARTIST.PAGE(song.artistId)}
-            className="hover:underline flex 2xl:hidden w-fit"
-          >
-            <p className="text-xs text-muted-foreground">{song.artist}</p>
-          </Link>
-        ) : (
-          <p className="flex 2xl:hidden text-xs text-muted-foreground">
-            {song.artist}
-          </p>
-        )}
+        </span>
       </div>
     </div>
   )

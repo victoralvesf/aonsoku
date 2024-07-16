@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { ColumnDef } from '@tanstack/react-table'
 import { CheckIcon, ClockIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -13,16 +11,21 @@ import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-hea
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import i18n from '@/i18n'
 import { ROUTES } from '@/routes/routesList'
+import { ColumnDefType } from '@/types/react-table/columnDef'
 import { Playlist } from '@/types/responses/playlist'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
-export function playlistsColumns(): ColumnDef<Playlist>[] {
+export function playlistsColumns(): ColumnDefType<Playlist>[] {
   return [
     {
       id: 'index',
       accessorKey: 'index',
+      style: {
+        width: 48,
+        minWidth: '48px',
+      },
       header: () => {
-        return <div className="text-center">#</div>
+        return <div className="w-full text-center">#</div>
       },
       cell: ({ row, table }) => {
         const index = row.index + 1
@@ -44,6 +47,10 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
       accessorKey: 'name',
       enableSorting: true,
       sortingFn: 'customSortFn',
+      style: {
+        flex: 1,
+        minWidth: '100px',
+      },
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
@@ -70,6 +77,10 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
     {
       id: 'comment',
       accessorKey: 'comment',
+      style: {
+        width: '25%',
+        maxWidth: '25%',
+      },
       header: i18n.t('table.columns.comment'),
       cell: ({ row }) => (
         <div className="text-muted-foreground">
@@ -82,6 +93,10 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
       accessorKey: 'songCount',
       enableSorting: true,
       sortingFn: 'alphanumeric',
+      style: {
+        width: 140,
+        maxWidth: 140,
+      },
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
@@ -92,6 +107,10 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
     {
       id: 'duration',
       accessorKey: 'duration',
+      style: {
+        width: 100,
+        maxWidth: 100,
+      },
       header: () => (
         <SimpleTooltip text={i18n.t('table.columns.duration')}>
           <ClockIcon className="w-4 h-4" />
@@ -107,6 +126,10 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
     {
       id: 'public',
       accessorKey: 'public',
+      style: {
+        width: 100,
+        maxWidth: 100,
+      },
       header: i18n.t('table.columns.public'),
       cell: ({ row }) => (
         <div>
@@ -121,12 +144,15 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
     {
       id: 'actions',
       accessorKey: 'actions',
+      style: {
+        width: 48,
+        maxWidth: 48,
+      },
       header: '',
-      size: 40,
-      maxSize: 40,
       cell: ({ row }) => {
         const playlist = row.original
         const disableOption = playlist.songCount === 0
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [removeDialogState, setRemoveDialogState] = useState(false)
 
         return (

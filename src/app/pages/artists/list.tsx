@@ -72,6 +72,7 @@ function ResolvedArtists({ list }: { list: ArtistSeparator[] }) {
           showSearch={true}
           searchColumn="name"
           handlePlaySong={(row) => handlePlayArtistRadio(row.original)}
+          allowRowSelection={false}
         />
       </ListWrapper>
     </div>

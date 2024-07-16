@@ -1,4 +1,3 @@
-import { ColumnDef } from '@tanstack/react-table'
 import { Link } from 'react-router-dom'
 
 import { CoverImage } from '@/app/components/table/cover-image'
@@ -7,15 +6,20 @@ import PlaySongButton from '@/app/components/table/play-button'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
 import i18n from '@/i18n'
 import { ROUTES } from '@/routes/routesList'
+import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISimilarArtist } from '@/types/responses/artist'
 
-export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
+export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
   return [
     {
       id: 'index',
       accessorKey: 'index',
+      style: {
+        width: 48,
+        minWidth: '48px',
+      },
       header: () => {
-        return <div className="text-center">#</div>
+        return <div className="w-full text-center">#</div>
       },
       cell: ({ row, table }) => {
         const index = row.index + 1
@@ -37,6 +41,10 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
       accessorKey: 'name',
       enableSorting: true,
       sortingFn: 'customSortFn',
+      style: {
+        flex: 1,
+        minWidth: 100,
+      },
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
@@ -65,6 +73,10 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
       accessorKey: 'albumCount',
       enableSorting: true,
       sortingFn: 'alphanumeric',
+      style: {
+        width: 140,
+        minWidth: 140,
+      },
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
@@ -76,8 +88,10 @@ export function artistsColumns(): ColumnDef<ISimilarArtist>[] {
       id: 'starred',
       accessorKey: 'starred',
       header: '',
-      size: 40,
-      maxSize: 40,
+      style: {
+        width: 48,
+        maxWidth: 48,
+      },
       cell: ({ row }) => {
         const { starred, id } = row.original
 
