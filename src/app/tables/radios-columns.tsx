@@ -46,7 +46,7 @@ export function radiosColumns(): ColumnDefType<Radio>[] {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title={i18n.t('radios.table.name')}
+          headerContent={i18n.t('radios.table.name')}
         />
       ),
       cell: ({ row }) => (

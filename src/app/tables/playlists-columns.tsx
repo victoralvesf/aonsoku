@@ -54,7 +54,7 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title={i18n.t('table.columns.name')}
+          headerContent={i18n.t('table.columns.name')}
         />
       ),
       cell: ({ row }) => (
@@ -100,7 +100,7 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title={i18n.t('table.columns.songCount')}
+          headerContent={i18n.t('table.columns.songCount')}
         />
       ),
     },

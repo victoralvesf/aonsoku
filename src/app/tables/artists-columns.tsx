@@ -48,7 +48,7 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title={i18n.t('table.columns.name')}
+          headerContent={i18n.t('table.columns.name')}
         />
       ),
       cell: ({ row }) => (
@@ -80,7 +80,7 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title={i18n.t('table.columns.albumCount')}
+          headerContent={i18n.t('table.columns.albumCount')}
         />
       ),
     },
