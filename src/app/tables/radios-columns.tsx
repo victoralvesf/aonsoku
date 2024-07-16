@@ -44,10 +44,9 @@ export function radiosColumns(): ColumnDefType<Radio>[] {
         minWidth: '100px',
       },
       header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          headerContent={i18n.t('radios.table.name')}
-        />
+        <DataTableColumnHeader column={column}>
+          {i18n.t('radios.table.name')}
+        </DataTableColumnHeader>
       ),
       cell: ({ row }) => (
         <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">

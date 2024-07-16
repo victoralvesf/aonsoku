@@ -52,10 +52,9 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
         minWidth: '100px',
       },
       header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          headerContent={i18n.t('table.columns.name')}
-        />
+        <DataTableColumnHeader column={column}>
+          {i18n.t('table.columns.name')}
+        </DataTableColumnHeader>
       ),
       cell: ({ row }) => (
         <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
@@ -98,10 +97,9 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
         maxWidth: 140,
       },
       header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          headerContent={i18n.t('table.columns.songCount')}
-        />
+        <DataTableColumnHeader column={column}>
+          {i18n.t('table.columns.songCount')}
+        </DataTableColumnHeader>
       ),
     },
     {

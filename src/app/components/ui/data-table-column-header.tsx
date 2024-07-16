@@ -4,19 +4,18 @@ import {
   ChevronUpIcon,
   ChevronsUpDownIcon,
 } from 'lucide-react'
-import { useCallback } from 'react'
+import { HTMLAttributes, useCallback } from 'react'
 import { Button } from '@/app/components/ui/button'
 import { cn } from '@/lib/utils'
 
 interface DataTableColumnHeaderProps<TData, TValue>
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>
-  headerContent: string | JSX.Element
 }
 
 export function DataTableColumnHeader<TData, TValue>({
   column,
-  headerContent,
+  children,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
   const handleFilter = useCallback(() => {
@@ -51,7 +50,7 @@ export function DataTableColumnHeader<TData, TValue>({
   }, [column])
 
   if (!column.getCanSort()) {
-    return <div className={cn(className)}>{headerContent}</div>
+    return <div className={cn(className)}>{children}</div>
   }
 
   return (
@@ -62,7 +61,11 @@ export function DataTableColumnHeader<TData, TValue>({
         className="px-0 h-8 group hover:bg-transparent transition-all duration-150"
         onClick={handleFilter}
       >
-        <span className="group-hover:underline">{headerContent}</span>
+        {typeof children === 'string' ? (
+          <span className="group-hover:underline">{children}</span>
+        ) : (
+          <>{children}</>
+        )}
         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 ml-1">
           {getFilterIcon()}
         </div>
