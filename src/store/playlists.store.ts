@@ -41,7 +41,7 @@ export const usePlaylistsStore = createWithEqualityFn<IPlaylistsContext>()(
             state.playlists = updatedPlaylists
           })
         },
-        createPlaylistWithoutSongs: async (data) => {
+        createPlaylist: async (data) => {
           const playlist = await subsonic.playlists.create(data.name)
 
           if (playlist) {
@@ -49,18 +49,14 @@ export const usePlaylistsStore = createWithEqualityFn<IPlaylistsContext>()(
               playlistId: playlist.id,
               comment: data.comment,
               isPublic: data.isPublic,
+              songIdToAdd: data.songIdToAdd,
             })
           }
 
           await get().fetchPlaylists()
         },
         editPlaylist: async (data) => {
-          await subsonic.playlists.update({
-            playlistId: data.id,
-            name: data.name,
-            comment: data.comment,
-            isPublic: data.isPublic,
-          })
+          await subsonic.playlists.update(data)
 
           await get().fetchPlaylists()
         },

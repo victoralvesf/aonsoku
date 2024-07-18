@@ -215,8 +215,12 @@ export const brazilianPortuguese = {
       addLast: 'Adicionar ao final',
       download: 'Download',
       playlist: {
+        add: 'Adicionar à playlist',
         edit: 'Editar playlist',
         delete: 'Excluir playlist',
+        search: 'Procurar uma playlist',
+        create: 'Nova playlist',
+        notFound: 'Nenhuma playlist encontrada',
       },
     },
     radios: {

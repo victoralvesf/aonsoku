@@ -35,7 +35,7 @@ export function TableActionButton({
         </Button>
       </DropdownMenuTrigger>
       {optionsMenuItems && (
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
           {optionsMenuItems}
         </DropdownMenuContent>
       )}

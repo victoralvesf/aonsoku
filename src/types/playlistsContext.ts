@@ -1,20 +1,10 @@
-import { Playlist } from './responses/playlist'
+import { CreateParams, Playlist, UpdateParams } from './responses/playlist'
 
 export interface PlaylistData {
   id: string
   name: string
   comment: string
   public: boolean
-}
-
-interface CreateData {
-  name: string
-  comment: string
-  isPublic: 'true' | 'false'
-}
-
-interface UpdateData extends CreateData {
-  id: string
 }
 
 export interface IPlaylistsContext {
@@ -24,8 +14,8 @@ export interface IPlaylistsContext {
   removePlaylist: (id: string) => Promise<void>
   playlistDialogState: boolean
   setPlaylistDialogState: (state: boolean) => void
-  createPlaylistWithoutSongs: (data: CreateData) => Promise<void>
-  editPlaylist: (data: UpdateData) => Promise<void>
+  createPlaylist: (data: CreateParams) => Promise<void>
+  editPlaylist: (data: UpdateParams) => Promise<void>
   data: PlaylistData
   setData: (data: PlaylistData) => void
 }

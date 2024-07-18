@@ -1,11 +1,13 @@
 import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
+import { AddToPlaylistSubMenu } from '@/app/components/song/add-to-playlist-sub-menu'
 import {
   DropdownMenuGroup,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
 import { useDownload } from '@/app/hooks/use-download'
 import { usePlayerActions } from '@/store/player.store'
+import { usePlaylists } from '@/store/playlists.store'
 import { ISong } from '@/types/responses/song'
 import { isTauri } from '@/utils/tauriTools'
 
@@ -16,6 +18,7 @@ interface SongOptionsProps {
 export function SongOptions({ song }: SongOptionsProps) {
   const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
   const { downloadBrowser, downloadTauri } = useDownload()
+  const { editPlaylist, createPlaylist } = usePlaylists()
 
   async function handlePlayNext() {
     setNextOnQueue([song])
@@ -34,6 +37,22 @@ export function SongOptions({ song }: SongOptionsProps) {
     }
   }
 
+  async function handleAddToPlaylist(id: string) {
+    await editPlaylist({
+      playlistId: id,
+      songIdToAdd: song.id,
+    })
+  }
+
+  async function handleCreateNewPlaylist() {
+    await createPlaylist({
+      name: song.title,
+      comment: '',
+      isPublic: 'false',
+      songIdToAdd: song.id,
+    })
+  }
+
   return (
     <>
       <DropdownMenuGroup>
@@ -50,6 +69,13 @@ export function SongOptions({ song }: SongOptionsProps) {
           }}
         />
       </DropdownMenuGroup>
+      <DropdownMenuSeparator />
+      <OptionsButtons.AddToPlaylist>
+        <AddToPlaylistSubMenu
+          newPlaylistFn={handleCreateNewPlaylist}
+          addToPlaylistFn={handleAddToPlaylist}
+        />
+      </OptionsButtons.AddToPlaylist>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
         <OptionsButtons.Download
