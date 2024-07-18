@@ -3,6 +3,7 @@ import {
   PlaylistWithEntriesResponse,
   PlaylistsResponse,
   SinglePlaylistResponse,
+  UpdateParams,
 } from '@/types/responses/playlist'
 import { SubsonicResponse } from '@/types/responses/subsonicResponse'
 
@@ -55,23 +56,20 @@ async function create(name: string, songs?: string[]) {
   return response?.data.playlist
 }
 
-interface UpdateParams {
-  playlistId: string
-  name?: string
-  comment?: string
-  isPublic?: 'true' | 'false'
-  songIdToAdd?: string | string[]
-  songIndexToRemove?: string | string[]
-}
-
-async function update({ isPublic = 'true', ...params }: UpdateParams) {
-  const { playlistId, name, comment, songIdToAdd, songIndexToRemove } = params
+async function update({
+  playlistId,
+  name,
+  comment,
+  songIdToAdd,
+  songIndexToRemove,
+  isPublic,
+}: UpdateParams) {
   const query = new URLSearchParams({
     playlistId,
-    public: isPublic,
-    name: name ?? '',
-    comment: comment || ' ',
   })
+  if (name) query.append('name', name)
+  if (comment) query.append('comment', comment)
+  if (isPublic) query.append('public', isPublic)
 
   if (songIdToAdd) {
     if (typeof songIdToAdd === 'string') {

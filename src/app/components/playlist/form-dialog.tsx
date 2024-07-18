@@ -25,7 +25,7 @@ export function CreatePlaylistDialog() {
     setData,
     playlistDialogState,
     setPlaylistDialogState,
-    createPlaylistWithoutSongs,
+    createPlaylist,
     editPlaylist,
   } = usePlaylists()
   const matches = useMatches()
@@ -54,7 +54,7 @@ export function CreatePlaylistDialog() {
 
     if (isCreation) {
       try {
-        await createPlaylistWithoutSongs({
+        await createPlaylist({
           name,
           comment,
           isPublic: isPublic ? 'true' : 'false',
@@ -66,7 +66,7 @@ export function CreatePlaylistDialog() {
     } else {
       try {
         await editPlaylist({
-          id: data.id,
+          playlistId: data.id,
           name,
           comment,
           isPublic: isPublic ? 'true' : 'false',

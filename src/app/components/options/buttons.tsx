@@ -1,12 +1,19 @@
+import omit from 'lodash/omit'
 import {
   DownloadIcon,
   Pencil,
   PlusCircle,
+  PlusIcon,
   PlusSquare,
   Trash,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { DropdownMenuItem } from '@/app/components/ui/dropdown-menu'
+import {
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+} from '@/app/components/ui/dropdown-menu'
 
 type DropdownMenuItemProps = React.ComponentPropsWithoutRef<
   typeof DropdownMenuItem
@@ -67,10 +74,28 @@ function RemovePlaylist(props: DropdownMenuItemProps) {
   )
 }
 
+function AddToPlaylist(props: DropdownMenuItemProps) {
+  const { t } = useTranslation()
+  const propsWithoutChildren = omit(props, 'children')
+
+  return (
+    <DropdownMenuSub {...propsWithoutChildren}>
+      <DropdownMenuSubTrigger>
+        <PlusIcon className="mr-2 h-4 w-4" />
+        <span className="mr-4">{t('options.playlist.add')}</span>
+      </DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <>{props.children}</>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
+  )
+}
+
 export const OptionsButtons = {
   PlayNext,
   PlayLast,
   Download,
+  AddToPlaylist,
   EditPlaylist,
   RemovePlaylist,
 }

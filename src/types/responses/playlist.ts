@@ -30,3 +30,19 @@ export interface PlaylistWithEntries extends Playlist {
 
 export interface PlaylistWithEntriesResponse
   extends SubsonicResponse<{ playlist: PlaylistWithEntries }> {}
+
+export interface UpdateParams {
+  playlistId: string
+  name?: string
+  comment?: string
+  isPublic?: 'true' | 'false'
+  songIdToAdd?: string | string[]
+  songIndexToRemove?: string | string[]
+}
+
+export interface CreateParams {
+  name: string
+  comment: string
+  isPublic: 'true' | 'false'
+  songIdToAdd?: string | string[]
+}

@@ -1,5 +1,4 @@
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   flexRender,
@@ -12,7 +11,7 @@ import {
   getSortedRowModel,
   SortingFn,
 } from '@tanstack/react-table'
-import { clsx } from 'clsx/lite'
+import clsx from 'clsx'
 import { XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,15 +19,8 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { DataTablePagination } from '@/app/components/ui/data-table-pagination'
 import { Input } from '@/app/components/ui/input'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/app/components/ui/table'
 import { ColumnFilter } from '@/types/columnFilter'
+import { ColumnDefType } from '@/types/react-table/columnDef'
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
@@ -40,27 +32,27 @@ declare module '@tanstack/react-table' {
 }
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
+  columns: ColumnDefType<TData, TValue>[]
   data: TData[]
-  onRowClick?: (row: Row<TData>) => void
   handlePlaySong?: (row: Row<TData>) => void
   columnFilter?: ColumnFilter[]
   showPagination?: boolean
   showSearch?: boolean
   searchColumn?: string
   noRowsMessage?: string
+  allowRowSelection?: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  onRowClick,
   handlePlaySong,
   columnFilter,
   showPagination = false,
   showSearch = false,
   searchColumn,
   noRowsMessage = 'No results.',
+  allowRowSelection = true,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation()
   const newColumns = columns.filter((column) => {
@@ -69,6 +61,7 @@ export function DataTable<TData, TValue>({
 
   const [columnSearch, setColumnSearch] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
+  const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
     data,
@@ -79,6 +72,7 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: showSearch ? getFilteredRowModel() : undefined,
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onRowSelectionChange: setRowSelection,
     sortingFns: {
       customSortFn: (rowA, rowB, columnId) => {
         return rowA.original[columnId].localeCompare(rowB.original[columnId])
@@ -90,11 +84,9 @@ export function DataTable<TData, TValue>({
     state: {
       columnFilters: columnSearch,
       sorting,
+      rowSelection,
     },
   })
-
-  const smallerHeaders = ['index', 'starred', 'actions']
-  const hiddenHeaders = ['artist', 'playCount', 'played']
 
   const inputValue =
     searchColumn !== undefined
@@ -104,7 +96,7 @@ export function DataTable<TData, TValue>({
   return (
     <>
       {showSearch && searchColumn && (
-        <div className="flex items-center mb-4">
+        <div className="flex items-center mb-4" data-testid="table-search">
           <div className="max-w-xs relative">
             <Input
               placeholder={t('sidebar.search')}
@@ -133,22 +125,33 @@ export function DataTable<TData, TValue>({
           </div>
         </div>
       )}
+
       <div className="rounded-md border">
-        <Table className="cursor-default">
-          <TableHeader>
+        <div
+          className="relative w-full overflow-hidden rounded-md cursor-default caption-bottom bg-background text-sm"
+          data-testid="data-table"
+          role="table"
+        >
+          <div>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <div
+                key={headerGroup.id}
+                className="w-full flex flex-row border-b"
+                role="row"
+              >
                 {headerGroup.headers.map((header) => {
+                  const columnDef = header.column
+                    .columnDef as ColumnDefType<TData>
+
                   return (
-                    <TableHead
+                    <div
                       key={header.id}
                       className={clsx(
-                        'p-2',
-                        smallerHeaders.includes(header.id) && 'w-8',
-                        header.id === 'albumCount' && 'w-48',
-                        hiddenHeaders.includes(header.id) &&
-                          'hidden 2xl:table-cell',
+                        'p-2 h-12 flex items-center justify-start align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-4',
+                        columnDef.className,
                       )}
+                      style={columnDef.style}
+                      role="columnheader"
                     >
                       {header.isPlaceholder
                         ? null
@@ -156,51 +159,63 @@ export function DataTable<TData, TValue>({
                             header.column.columnDef.header,
                             header.getContext(),
                           )}
-                    </TableHead>
+                    </div>
                   )
                 })}
-              </TableRow>
+              </div>
             ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                  onClick={() => onRowClick?.(row)}
-                  className="group/tablerow"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      className={clsx(
-                        'p-2 max-w-[600px]',
-                        hiddenHeaders.includes(cell.column.id) &&
-                          'hidden 2xl:table-cell',
-                      )}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center p-2"
-                >
-                  {noRowsMessage}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+          </div>
+          <div className="[&_div:last-child]:border-0">
+            <div className="w-full h-full overflow-hidden">
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <div
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                    onClick={() => {
+                      allowRowSelection && row.toggleSelected()
+                    }}
+                    className="group/tablerow w-full flex flex-row border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                    role="row"
+                  >
+                    {row.getVisibleCells().map((cell) => {
+                      const columnDef = cell.column
+                        .columnDef as ColumnDefType<TData>
+
+                      return (
+                        <div
+                          key={cell.id}
+                          className={clsx(
+                            'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
+                            columnDef.className,
+                          )}
+                          style={columnDef.style}
+                          role="cell"
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                ))
+              ) : (
+                <div role="row">
+                  <div
+                    className="flex h-24 items-center justify-center p-2"
+                    role="cell"
+                  >
+                    {noRowsMessage}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
+
       {showPagination && <DataTablePagination table={table} />}
     </>
   )

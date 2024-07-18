@@ -47,12 +47,12 @@ export interface SingleAlbum {
   coverArt: string
   songCount: number
   duration: number
-  playCount: number
+  playCount?: number
   created: string
   starred?: string
   year: number
   genre: string
-  played: string
+  played?: string
   userRating: number
   genres: Genre[]
   musicBrainzId: string

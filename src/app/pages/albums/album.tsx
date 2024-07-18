@@ -53,7 +53,7 @@ export default function Album() {
   ]
 
   const columnsToShow: ColumnFilter[] = [
-    'index',
+    'trackNumber',
     'title',
     'artist',
     'duration',
@@ -61,7 +61,7 @@ export default function Album() {
     'played',
     'bitRate',
     'contentType',
-    'starred',
+    'select',
   ]
 
   function formatMoreFromArtist(moreAlbums: Albums[]) {

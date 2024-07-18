@@ -1,19 +1,23 @@
-import { ColumnDef } from '@tanstack/react-table'
 import { RadioIcon } from 'lucide-react'
 
 import { RadioActionButton } from '@/app/components/radios/action-button'
 import PlaySongButton from '@/app/components/table/play-button'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
 import i18n from '@/i18n'
+import { ColumnDefType } from '@/types/react-table/columnDef'
 import { Radio } from '@/types/responses/radios'
 
-export function radiosColumns(): ColumnDef<Radio>[] {
+export function radiosColumns(): ColumnDefType<Radio>[] {
   return [
     {
       id: 'index',
       accessorKey: 'index',
+      style: {
+        width: 48,
+        minWidth: '48px',
+      },
       header: () => {
-        return <div className="text-center">#</div>
+        return <div className="w-full text-center">#</div>
       },
       cell: ({ row, table }) => {
         const trackNumber = row.index + 1
@@ -35,11 +39,14 @@ export function radiosColumns(): ColumnDef<Radio>[] {
       accessorKey: 'name',
       enableSorting: true,
       sortingFn: 'customSortFn',
+      style: {
+        flex: 1,
+        minWidth: 250,
+      },
       header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title={i18n.t('radios.table.name')}
-        />
+        <DataTableColumnHeader column={column}>
+          {i18n.t('radios.table.name')}
+        </DataTableColumnHeader>
       ),
       cell: ({ row }) => (
         <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
@@ -55,6 +62,10 @@ export function radiosColumns(): ColumnDef<Radio>[] {
     {
       id: 'homePageUrl',
       accessorKey: 'homePageUrl',
+      style: {
+        width: '25%',
+        maxWidth: '25%',
+      },
       header: i18n.t('radios.table.homepage'),
       cell: ({ row }) => {
         const { homePageUrl } = row.original
@@ -62,7 +73,7 @@ export function radiosColumns(): ColumnDef<Radio>[] {
         if (!homePageUrl) return ''
 
         return (
-          <div className="max-w-[250px] 2xl:max-w-[400px]">
+          <div className="truncate">
             <p className="truncate text-primary">
               <a
                 href={homePageUrl}
@@ -80,9 +91,15 @@ export function radiosColumns(): ColumnDef<Radio>[] {
     {
       id: 'streamUrl',
       accessorKey: 'streamUrl',
+      style: {
+        width: '25%',
+        maxWidth: '25%',
+        marginRight: '1rem',
+      },
+      className: 'hidden 2xl:flex',
       header: i18n.t('radios.table.stream'),
       cell: ({ row }) => (
-        <div className="max-w-[250px] 2xl:max-w-[500px]">
+        <div className="truncate">
           <p className="truncate">{row.original.streamUrl}</p>
         </div>
       ),
@@ -90,9 +107,11 @@ export function radiosColumns(): ColumnDef<Radio>[] {
     {
       id: 'actions',
       accessorKey: 'actions',
+      style: {
+        width: 48,
+        maxWidth: 48,
+      },
       header: '',
-      size: 40,
-      maxSize: 40,
       cell: ({ row }) => {
         return <RadioActionButton row={row.original} />
       },

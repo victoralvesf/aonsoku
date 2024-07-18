@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { ColumnDef } from '@tanstack/react-table'
 import { CheckIcon, ClockIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -13,16 +11,21 @@ import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-hea
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import i18n from '@/i18n'
 import { ROUTES } from '@/routes/routesList'
+import { ColumnDefType } from '@/types/react-table/columnDef'
 import { Playlist } from '@/types/responses/playlist'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
-export function playlistsColumns(): ColumnDef<Playlist>[] {
+export function playlistsColumns(): ColumnDefType<Playlist>[] {
   return [
     {
       id: 'index',
       accessorKey: 'index',
+      style: {
+        width: 48,
+        minWidth: '48px',
+      },
       header: () => {
-        return <div className="text-center">#</div>
+        return <div className="w-full text-center">#</div>
       },
       cell: ({ row, table }) => {
         const index = row.index + 1
@@ -44,24 +47,27 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
       accessorKey: 'name',
       enableSorting: true,
       sortingFn: 'customSortFn',
+      style: {
+        flex: 1,
+        minWidth: 250,
+      },
       header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title={i18n.t('table.columns.name')}
-        />
+        <DataTableColumnHeader column={column}>
+          {i18n.t('table.columns.name')}
+        </DataTableColumnHeader>
       ),
       cell: ({ row }) => (
-        <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
+        <div className="flex gap-2 items-center w-full">
           <CoverImage
             coverArt={row.original.coverArt}
             altText={row.original.name}
           />
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col w-full justify-center truncate">
             <Link
               to={ROUTES.PLAYLIST.PAGE(row.original.id)}
-              className="hover:underline flex w-fit"
+              className="hover:underline truncate"
             >
-              <p>{row.original.name}</p>
+              {row.original.name}
             </Link>
           </div>
         </div>
@@ -70,10 +76,16 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
     {
       id: 'comment',
       accessorKey: 'comment',
+      style: {
+        width: '25%',
+        maxWidth: '25%',
+        marginRight: '1rem',
+      },
+      className: 'hidden 2xl:flex',
       header: i18n.t('table.columns.comment'),
       cell: ({ row }) => (
-        <div className="text-muted-foreground">
-          <p>{row.original.comment}</p>
+        <div className="text-muted-foreground w-full truncate">
+          <p className="truncate">{row.original.comment}</p>
         </div>
       ),
     },
@@ -81,17 +93,24 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
       id: 'songCount',
       accessorKey: 'songCount',
       enableSorting: true,
-      sortingFn: 'alphanumeric',
+      sortingFn: 'basic',
+      style: {
+        width: 140,
+        maxWidth: 140,
+      },
       header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title={i18n.t('table.columns.songCount')}
-        />
+        <DataTableColumnHeader column={column}>
+          {i18n.t('table.columns.songCount')}
+        </DataTableColumnHeader>
       ),
     },
     {
       id: 'duration',
       accessorKey: 'duration',
+      style: {
+        width: 100,
+        maxWidth: 100,
+      },
       header: () => (
         <SimpleTooltip text={i18n.t('table.columns.duration')}>
           <ClockIcon className="w-4 h-4" />
@@ -107,6 +126,10 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
     {
       id: 'public',
       accessorKey: 'public',
+      style: {
+        width: 100,
+        maxWidth: 100,
+      },
       header: i18n.t('table.columns.public'),
       cell: ({ row }) => (
         <div>
@@ -121,12 +144,15 @@ export function playlistsColumns(): ColumnDef<Playlist>[] {
     {
       id: 'actions',
       accessorKey: 'actions',
+      style: {
+        width: 48,
+        maxWidth: 48,
+      },
       header: '',
-      size: 40,
-      maxSize: 40,
       cell: ({ row }) => {
         const playlist = row.original
         const disableOption = playlist.songCount === 0
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [removeDialogState, setRemoveDialogState] = useState(false)
 
         return (

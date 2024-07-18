@@ -215,8 +215,12 @@ export const english = {
       addLast: 'Add last',
       download: 'Download',
       playlist: {
+        add: 'Add to playlist',
         edit: 'Edit playlist',
         delete: 'Delete playlist',
+        search: 'Find a playlist',
+        create: 'New playlist',
+        notFound: 'No playlist found',
       },
     },
     radios: {

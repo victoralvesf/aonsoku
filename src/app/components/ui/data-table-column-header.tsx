@@ -3,69 +3,73 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   ChevronsUpDownIcon,
-  RotateCcwIcon,
 } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { HTMLAttributes, useCallback } from 'react'
 import { Button } from '@/app/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/app/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
 
 interface DataTableColumnHeaderProps<TData, TValue>
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>
-  title: string
 }
 
 export function DataTableColumnHeader<TData, TValue>({
   column,
-  title,
+  children,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
-  const { t } = useTranslation()
+  const handleFilter = useCallback(() => {
+    if (!column.getCanSort()) return
+
+    // If has no sort, set to asc
+    if (!column.getIsSorted()) {
+      column.toggleSorting(false)
+    }
+    // If current sort is asc, set to desc
+    if (column.getIsSorted() === 'asc') {
+      column.toggleSorting(true)
+    }
+    // If current sort is desc, reset sort state
+    if (column.getIsSorted() === 'desc') {
+      column.clearSorting()
+    }
+  }, [column])
+
+  const getFilterIcon = useCallback(() => {
+    if (!column.getCanSort()) return
+
+    const className = 'h-4 w-4'
+
+    if (column.getIsSorted() === 'desc') {
+      return <ChevronDownIcon className={className} />
+    } else if (column.getIsSorted() === 'asc') {
+      return <ChevronUpIcon className={className} />
+    } else {
+      return <ChevronsUpDownIcon className={className} />
+    }
+  }, [column])
 
   if (!column.getCanSort()) {
-    return <div className={cn(className)}>{title}</div>
+    return <div className={cn(className)}>{children}</div>
   }
 
   return (
     <div className={cn('flex items-center space-x-2', className)}>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="-ml-3 h-8 data-[state=open]:bg-accent"
-          >
-            <span>{title}</span>
-            {column.getIsSorted() === 'desc' ? (
-              <ChevronDownIcon className="ml-2 h-4 w-4" />
-            ) : column.getIsSorted() === 'asc' ? (
-              <ChevronUpIcon className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronsUpDownIcon className="ml-2 h-4 w-4" />
-            )}
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
-          <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-            <ChevronUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            {t('table.sort.asc')}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-            <ChevronDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            {t('table.sort.desc')}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => column.clearSorting()}>
-            <RotateCcwIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            {t('table.sort.reset')}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="px-0 h-8 group hover:bg-transparent transition-all duration-150"
+        onClick={handleFilter}
+      >
+        {typeof children === 'string' ? (
+          <span className="group-hover:underline">{children}</span>
+        ) : (
+          <>{children}</>
+        )}
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 ml-1">
+          {getFilterIcon()}
+        </div>
+      </Button>
     </div>
   )
 }
