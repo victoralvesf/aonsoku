@@ -34,7 +34,7 @@ export function HeaderItem({ song }: { song: ISong }) {
       <div className="w-full flex-1 h-full inset-0 backdrop-blur-xl bg-gradient-to-b from-white/30 to-white/80 dark:from-black/30 dark:to-black/80">
         <div className="flex h-[200px] 2xl:h-[300px] p-6 gap-4">
           <div
-            className="w-[152px] 2xl:w-[252px] h-[152px] 2xl:h-[252px] rounded-lg overflow-hidden relative group bg-skeleton"
+            className="w-[152px] 2xl:w-[252px] h-[152px] 2xl:h-[252px] min-w-[152px] 2xl:min-w-[252px] min-h-[152px] 2xl:min-h-[252px] rounded-lg overflow-hidden relative group bg-skeleton"
             data-testid="header-image-container"
           >
             <LazyLoadImage
