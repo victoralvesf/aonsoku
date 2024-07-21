@@ -65,12 +65,15 @@ export default function PreviewList({
   return (
     <div className="w-full flex flex-col mt-4">
       <div className="my-4 flex justify-between items-center">
-        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+        <h3
+          className="scroll-m-20 text-2xl font-semibold tracking-tight"
+          data-testid="preview-list-title"
+        >
           {title}
         </h3>
         <div className="flex items-center gap-4">
           {showMore && moreRoute && (
-            <Link to={moreRoute}>
+            <Link to={moreRoute} data-testid="preview-list-show-more">
               <p className="leading-7 text-sm truncate hover:underline text-muted-foreground hover:text-primary">
                 {moreTitle}
               </p>
@@ -81,11 +84,13 @@ export default function PreviewList({
               direction="prev"
               disabled={!canScrollPrev}
               onClick={() => api?.scrollPrev()}
+              data-testid="preview-list-prev-button"
             />
             <CarouselButton
               direction="next"
               disabled={!canScrollNext}
               onClick={() => api?.scrollNext()}
+              data-testid="preview-list-next-button"
             />
           </div>
         </div>
@@ -98,10 +103,15 @@ export default function PreviewList({
             slidesToScroll: 'auto',
           }}
           setApi={setApi}
+          data-testid="preview-list-carousel"
         >
           <CarouselContent>
-            {list.map((album) => (
-              <CarouselItem key={album.id} className="basis-1/5 2xl:basis-1/8">
+            {list.map((album, index) => (
+              <CarouselItem
+                key={album.id}
+                className="basis-1/5 2xl:basis-1/8"
+                data-testid={`preview-list-carousel-item-${index}`}
+              >
                 <HomeSongCard
                   album={album}
                   onButtonClick={(album) => handlePlayAlbum(album)}

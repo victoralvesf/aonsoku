@@ -28,6 +28,7 @@ export default function HomeSongCard({
             width="100%"
             height="100%"
             className="aspect-square object-cover w-full h-full absolute inset-0 z-0"
+            data-testid="song-card-image"
           />
           <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 absolute inset-0 z-10">
             <Button
@@ -46,15 +47,33 @@ export default function HomeSongCard({
       </Link>
       <div className="flex flex-col cursor-default">
         <Link to={ROUTES.ALBUM.PAGE(album.id)}>
-          <p className="leading-7 text-sm font-semibold truncate hover:underline">
+          <p
+            className="leading-7 text-sm font-semibold truncate hover:underline"
+            data-testid="song-card-album-title"
+          >
             {album.title}
           </p>
         </Link>
-        <Link to={ROUTES.ARTIST.PAGE(album.artistId)}>
-          <p className="truncate text-xs text-muted-foreground -mt-1 hover:underline">
+        {!album.artistId ? (
+          <p
+            className="truncate text-xs text-muted-foreground -mt-1"
+            data-testid="song-card-artist"
+          >
             {album.artist}
           </p>
-        </Link>
+        ) : (
+          <Link
+            to={ROUTES.ARTIST.PAGE(album.artistId)}
+            data-testid="song-card-artist-link"
+          >
+            <p
+              className="truncate text-xs text-muted-foreground -mt-1 hover:underline"
+              data-testid="song-card-artist"
+            >
+              {album.artist}
+            </p>
+          </Link>
+        )}
       </div>
     </div>
   )
