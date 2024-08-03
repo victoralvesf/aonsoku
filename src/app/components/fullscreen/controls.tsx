@@ -41,7 +41,7 @@ export function FullscreenControls() {
           isShuffleActive && buttonsStyle.activeDot,
         )}
         onClick={() => toggleShuffle()}
-        disabled={isPlayingOneSong()}
+        disabled={isPlayingOneSong() || !hasNextSong()}
       >
         <Shuffle
           className={clsx(

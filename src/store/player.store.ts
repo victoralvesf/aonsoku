@@ -242,15 +242,15 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             })
           },
           hasNextSong: () => {
-            const { mediaType, isShuffleActive } = get().playerState
+            const { mediaType } = get().playerState
             const { currentList, currentSongIndex, radioList } = get().songlist
 
+            const nextIndex = currentSongIndex + 1
+
             if (mediaType === 'song') {
-              return (
-                isShuffleActive || currentSongIndex + 1 < currentList.length
-              )
+              return nextIndex < currentList.length
             } else {
-              return currentSongIndex + 1 < radioList.length
+              return nextIndex < radioList.length
             }
           },
           hasPrevSong: () => {
