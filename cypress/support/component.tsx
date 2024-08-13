@@ -21,8 +21,8 @@ import './commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-import { mount, MountOptions, MountReturn } from 'cypress/react18'
-import { MemoryRouter, MemoryRouterProps } from 'react-router-dom'
+import { mount } from 'cypress/react18'
+import { MemoryRouter } from 'react-router-dom'
 import '@/index.css'
 import '@/fonts.css'
 
@@ -30,21 +30,6 @@ import '@/fonts.css'
 // your custom command.
 // Alternatively, can be defined in cypress/support/component.d.ts
 // with a <reference path="./component" /> at the top of your spec.
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * Mounts a React node
-       * @param component React Node to mount
-       * @param options Additional options to pass into mount
-       */
-      mount(
-        component: React.ReactNode,
-        options?: MountOptions & { routerProps?: MemoryRouterProps },
-      ): Cypress.Chainable<MountReturn>
-    }
-  }
-}
 
 Cypress.Commands.add('mount', (component, options = {}) => {
   const { routerProps = { initialEntries: ['/'] }, ...mountOptions } = options
@@ -53,6 +38,3 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 
   return mount(wrapped, mountOptions)
 })
-
-// Example use:
-// cy.mount(<MyComponent />)

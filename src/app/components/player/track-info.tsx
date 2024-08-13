@@ -22,6 +22,7 @@ export function TrackInfo({ song }: { song: ISong }) {
           src={getCoverArtUrl(song.coverArt, '140')}
           width={70}
           className="rounded shadow-md"
+          data-testid="track-image"
           alt={`${song.artist} - ${song.title}`}
         />
         <FullscreenMode>
@@ -29,6 +30,7 @@ export function TrackInfo({ song }: { song: ISong }) {
             variant="secondary"
             size="icon"
             className="cursor-pointer w-8 h-8 shadow-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity ease-in-out absolute top-1 right-1"
+            data-testid="track-fullscreen-button"
           >
             <SimpleTooltip text={t('fullscreen.switchButton')}>
               <div className="w-full h-full flex items-center justify-center">
@@ -40,7 +42,9 @@ export function TrackInfo({ song }: { song: ISong }) {
       </div>
       <div className="flex flex-col justify-center w-full overflow-hidden">
         <MarqueeTitle gap="mr-2">
-          <span className="text-sm font-medium">{song.title}</span>
+          <span className="text-sm font-medium" data-testid="track-title">
+            {song.title}
+          </span>
         </MarqueeTitle>
         <Link
           to={ROUTES.ARTIST.PAGE(song.artistId!)}
@@ -48,6 +52,7 @@ export function TrackInfo({ song }: { song: ISong }) {
             'w-fit inline-flex',
             !song.artistId && 'pointer-events-none',
           )}
+          data-testid="track-artist-url"
         >
           <span
             className={cn(
