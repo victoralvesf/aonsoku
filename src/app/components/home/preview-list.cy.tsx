@@ -10,7 +10,7 @@ describe('PreviewList Component', () => {
   }
 
   beforeEach(() => {
-    cy.intercept('/rest/getCoverArt**', { fixture: 'coverArt.jpeg' })
+    cy.mockCoverArt()
   })
 
   it('should mounts the component and show the albums', () => {
@@ -25,28 +25,28 @@ describe('PreviewList Component', () => {
         />,
       )
 
-      cy.get('[data-testid=preview-list-title]').should(
+      cy.getByTestId('preview-list-title').should(
         'have.text',
         componentProps.title,
       )
 
-      cy.get('[data-testid=preview-list-show-more]')
+      cy.getByTestId('preview-list-show-more')
         .should('have.text', componentProps.moreTitle)
         .and('have.attr', 'href', componentProps.moreRoute)
 
-      cy.get('[data-testid=preview-list-prev-button]').as('prevButton')
-      cy.get('[data-testid=preview-list-next-button]').as('nextButton')
+      cy.getByTestId('preview-list-prev-button').as('prevButton')
+      cy.getByTestId('preview-list-next-button').as('nextButton')
 
       cy.get('@prevButton').should('exist').and('be.visible')
       cy.get('@nextButton').should('exist').and('be.visible')
 
       albums.forEach((album, index) => {
-        cy.get(`[data-testid=preview-list-carousel-item-${index}]`).as(
+        cy.getByTestId(`preview-list-carousel-item-${index}`).as(
           'activeCarousel',
         )
 
         if (index === 8) {
-          cy.get('[data-testid=preview-list-next-button]').click()
+          cy.getByTestId('preview-list-next-button').click()
         }
 
         cy.get('@activeCarousel')
@@ -76,18 +76,18 @@ describe('PreviewList Component', () => {
         />,
       )
 
-      cy.get('[data-testid=preview-list-title]').should(
+      cy.getByTestId('preview-list-title').should(
         'have.text',
         componentProps.title,
       )
 
-      cy.get('[data-testid=preview-list-show-more]').should('not.exist')
+      cy.getByTestId('preview-list-show-more').should('not.exist')
 
-      cy.get('[data-testid=preview-list-prev-button]')
+      cy.getByTestId('preview-list-prev-button')
         .should('exist')
         .and('be.visible')
 
-      cy.get('[data-testid=preview-list-next-button]')
+      cy.getByTestId('preview-list-next-button')
         .should('exist')
         .and('be.visible')
     })
@@ -108,7 +108,7 @@ describe('PreviewList Component', () => {
       )
 
       albums.forEach((_, index) => {
-        cy.get(`[data-testid=preview-list-carousel-item-${index}]`).should(
+        cy.getByTestId(`preview-list-carousel-item-${index}`).should(
           'have.css',
           'flex-basis',
           '20%',
@@ -130,7 +130,7 @@ describe('PreviewList Component', () => {
       )
 
       albums.forEach((_, index) => {
-        cy.get(`[data-testid=preview-list-carousel-item-${index}]`).as(
+        cy.getByTestId(`preview-list-carousel-item-${index}`).as(
           'activeCarousel',
         )
 
@@ -161,7 +161,7 @@ describe('PreviewList Component', () => {
       )
 
       albums.forEach((_, index) => {
-        cy.get(`[data-testid=preview-list-carousel-item-${index}]`).as(
+        cy.getByTestId(`preview-list-carousel-item-${index}`).as(
           'activeCarousel',
         )
 

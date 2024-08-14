@@ -5,19 +5,17 @@ describe('HomeHeader Component', () => {
   it('should not show component if songs list is empty', () => {
     cy.mount(<HomeHeader songs={[]} />)
 
-    cy.get('[data-testid=header-carousel]').should('not.exist')
+    cy.getByTestId('header-carousel').should('not.exist')
   })
 
   it('mounts the component and shows the songs correctly', () => {
-    cy.intercept('/rest/getCoverArt**', { fixture: 'coverArt.jpeg' })
+    cy.mockCoverArt()
 
     cy.fixture('songs/random').then((songs: ISong[]) => {
       cy.mount(<HomeHeader songs={songs} />)
 
       songs.forEach((song, index) => {
-        cy.get(`[data-testid=carousel-header-song-${index}]`).as(
-          'activeCarousel',
-        )
+        cy.getByTestId(`carousel-header-song-${index}`).as('activeCarousel')
 
         cy.get('@activeCarousel')
           .find('[data-testid=header-bg]')
@@ -40,10 +38,10 @@ describe('HomeHeader Component', () => {
           .should('have.text', song.year)
       })
 
-      cy.get('[data-testid=header-carousel-previous]')
+      cy.getByTestId('header-carousel-previous')
         .should('be.visible')
         .and('be.enabled')
-      cy.get('[data-testid=header-carousel-next]')
+      cy.getByTestId('header-carousel-next')
         .should('be.visible')
         .and('be.enabled')
     })
