@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { ISong } from '@/types/responses/song'
 
-export function TrackInfo({ song }: { song: ISong }) {
+export function TrackInfo({ song }: { song: ISong | undefined }) {
   const { t } = useTranslation()
 
   return song ? (
@@ -68,10 +68,15 @@ export function TrackInfo({ song }: { song: ISong }) {
   ) : (
     <>
       <div className="w-[70px] h-[70px] flex justify-center items-center bg-muted rounded">
-        <AudioLines />
+        <AudioLines data-testid="song-no-playing-icon" />
       </div>
       <div className="flex flex-col justify-center">
-        <span className="text-sm font-medium">{t('player.noSongPlaying')}</span>
+        <span
+          className="text-sm font-medium"
+          data-testid="song-no-playing-label"
+        >
+          {t('player.noSongPlaying')}
+        </span>
       </div>
     </>
   )

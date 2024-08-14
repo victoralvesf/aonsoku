@@ -10,10 +10,16 @@
 // ***********************************************
 //
 //
+import i18n from '@/i18n'
+
 Cypress.Commands.add('getByTestId', (query) => {
   return cy.get(`[data-testid="${query}"]`)
 })
 
 Cypress.Commands.add('mockCoverArt', () => {
   cy.intercept('/rest/getCoverArt**', { fixture: 'coverArt.jpeg' })
+})
+
+Cypress.Commands.add('changeLang', (lang) => {
+  i18n.changeLanguage(lang)
 })

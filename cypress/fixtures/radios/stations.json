@@ -1,0 +1,74 @@
+[
+  {
+    "id": "46178df7bd02473289d2ce6de03dfb03",
+    "name": "538",
+    "streamUrl": "https://22603.live.streamtheworld.com/RADIO538.mp3",
+    "homePageUrl": "https://www.538.nl/"
+  },
+  {
+    "id": "c1fdd7134a7f45548fc6c0fa69c2b254",
+    "name": "89 FM",
+    "streamUrl": "https://streaming.livespanel.com:2020/stream/radio89fm",
+    "homePageUrl": "https://gcmais.com.br/radio/radio89"
+  },
+  {
+    "id": "6b15f3e83d114c13bf89cca67fe0cbe2",
+    "name": "Cidade 99.1 FM",
+    "streamUrl": "https://streaming.livespanel.com:2020/stream/cidadadefm",
+    "homePageUrl": "https://gcmais.com.br/radio/cidade99/"
+  },
+  {
+    "id": "7ebd6c25e19849b8a4644d6b6488ba68",
+    "name": "FM 93",
+    "streamUrl": "https://fm93proxy.trinitylab.work",
+    "homePageUrl": "https://fm93.com.br"
+  },
+  {
+    "id": "80d59420eb704399949f1e1b250846da",
+    "name": "Jangadeiro 88.9 FM ",
+    "streamUrl": "https://stream.zeno.fm/xuh02vfzurhvv",
+    "homePageUrl": "https://jangadeirofm.com.br/"
+  },
+  {
+    "id": "42adfefa6e2345758867e5ce1ad51ab9",
+    "name": "Jovem Pan 94.7",
+    "streamUrl": "https://streaming.livespanel.com:2020/stream/jovempanfortaleza",
+    "homePageUrl": "https://jovempan.com.br/afiliada/fortaleza-fm"
+  },
+  {
+    "id": "e5693748ea424cd9949be2a94bccad05",
+    "name": "Mix 107.5 FM",
+    "streamUrl": "https://27593.live.streamtheworld.com/MIXFM_FORTA1075.mp3",
+    "homePageUrl": "https://fortaleza.radiomixfm.com.br/home/"
+  },
+  {
+    "id": "ed89ebe4bb3142ee9519a0610e1448ff",
+    "name": "Radio Rock SP",
+    "streamUrl": "https://27393.live.streamtheworld.com/RADIO_89FM.mp3",
+    "homePageUrl": "https://www.radiorock.com.br"
+  },
+  {
+    "id": "2d0c37a210b44a21bff3542b803ee6c2",
+    "name": "SLAM!",
+    "streamUrl": "https://25633.live.streamtheworld.com/SLAM_MP3.mp3",
+    "homePageUrl": "https://www.slam.nl/"
+  },
+  {
+    "id": "56629a73b6c144359075484c7592b22d",
+    "name": "SLAM! 40",
+    "streamUrl": "https://25343.live.streamtheworld.com/WEB14_MP3.mp3",
+    "homePageUrl": "https://www.slam.nl/"
+  },
+  {
+    "id": "92ecaf27e9b1455aa3c5a21c6b17bc32",
+    "name": "SLAM! Non-Stop",
+    "streamUrl": "https://25343.live.streamtheworld.com/WEB10_MP3.mp3",
+    "homePageUrl": "https://www.slam.nl/"
+  },
+  {
+    "id": "bb64a5684eda490bbb0886105ff8b08e",
+    "name": "Vintage 91.7",
+    "streamUrl": "https://streaming.livespanel.com:9170/stream",
+    "homePageUrl": "https://gcmais.com.br/radio/vintagefm/"
+  }
+]

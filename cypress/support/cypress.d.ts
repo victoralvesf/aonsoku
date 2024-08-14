@@ -23,6 +23,11 @@ declare global {
        * @example cy.mockCoverArt()
        */
       mockCoverArt(): Chainable<void>
+      /**
+       * Custom command to change applications language.
+       * @example cy.changeLang()
+       */
+      changeLang(lang: 'en-US' | 'pt-BR'): Chainable<void>
     }
   }
 }

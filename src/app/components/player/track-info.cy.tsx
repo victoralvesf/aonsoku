@@ -1,5 +1,10 @@
+import { ReactNode } from 'react'
 import { ISong } from '@/types/responses/song'
 import { TrackInfo } from './track-info'
+
+function Wrapper({ children }: { children: ReactNode }) {
+  return <div className="flex items-center gap-2 w-full">{children}</div>
+}
 
 describe('TrackInfo Component', () => {
   beforeEach(() => {
@@ -10,9 +15,9 @@ describe('TrackInfo Component', () => {
   it('should display track info without link', () => {
     cy.fixture('songs/song').then((song: ISong) => {
       cy.mount(
-        <div className="flex items-center gap-2 w-full">
+        <Wrapper>
           <TrackInfo song={song} />
-        </div>,
+        </Wrapper>,
       )
 
       cy.getByTestId('track-image').as('trackImage')
@@ -38,9 +43,9 @@ describe('TrackInfo Component', () => {
       const song = songs[1]
 
       cy.mount(
-        <div className="flex items-center gap-2 w-full">
+        <Wrapper>
           <TrackInfo song={song} />
-        </div>,
+        </Wrapper>,
       )
 
       cy.getByTestId('track-image').as('trackImage')
@@ -61,17 +66,81 @@ describe('TrackInfo Component', () => {
     })
   })
 
-  it('should create the fullscreen button', () => {
-    cy.fixture('songs/song').then((song: ISong) => {
+  describe('English', () => {
+    beforeEach(() => {
+      cy.changeLang('en-US')
+    })
+
+    it('should display a message if no audio is playing', () => {
       cy.mount(
-        <div className="flex items-center gap-2 w-full">
-          <TrackInfo song={song} />
-        </div>,
+        <Wrapper>
+          <TrackInfo song={undefined} />
+        </Wrapper>,
       )
 
-      cy.getByTestId('track-fullscreen-button')
-        .should('exist')
-        .and('have.css', 'opacity', '0')
+      cy.getByTestId('song-no-playing-icon')
+        .should('be.visible')
+        .and('have.class', 'lucide-audio-lines')
+
+      cy.getByTestId('song-no-playing-label')
+        .should('be.visible')
+        .and('have.text', 'No song playing')
+    })
+
+    it('should create the fullscreen button and show tooltip', () => {
+      cy.fixture('songs/song').then((song: ISong) => {
+        cy.mount(
+          <Wrapper>
+            <TrackInfo song={song} />
+          </Wrapper>,
+        )
+
+        cy.getByTestId('track-fullscreen-button')
+          .should('exist')
+          .and('have.css', 'opacity', '0')
+
+        cy.getByTestId('track-fullscreen-button').wait(1500).realHover()
+        cy.contains('Switch to fullscreen').should('be.visible')
+      })
+    })
+  })
+
+  describe('Portuguese', () => {
+    beforeEach(() => {
+      cy.changeLang('pt-BR')
+    })
+
+    it('should display a message if no audio is playing', () => {
+      cy.mount(
+        <Wrapper>
+          <TrackInfo song={undefined} />
+        </Wrapper>,
+      )
+
+      cy.getByTestId('song-no-playing-icon')
+        .should('be.visible')
+        .and('have.class', 'lucide-audio-lines')
+
+      cy.getByTestId('song-no-playing-label')
+        .should('be.visible')
+        .and('have.text', 'Nenhuma música tocando')
+    })
+
+    it('should create the fullscreen button and show tooltip', () => {
+      cy.fixture('songs/song').then((song: ISong) => {
+        cy.mount(
+          <Wrapper>
+            <TrackInfo song={song} />
+          </Wrapper>,
+        )
+
+        cy.getByTestId('track-fullscreen-button')
+          .should('exist')
+          .and('have.css', 'opacity', '0')
+
+        cy.getByTestId('track-fullscreen-button').wait(1500).realHover()
+        cy.contains('Mudar para tela cheia').should('be.visible')
+      })
     })
   })
 })
