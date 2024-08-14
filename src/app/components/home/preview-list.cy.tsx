@@ -13,7 +13,7 @@ describe('PreviewList Component', () => {
     cy.mockCoverArt()
   })
 
-  it('should mounts the component and show the albums', () => {
+  it('should mount the component and show the albums', () => {
     cy.fixture('albums/mostPlayed').then((albums: Albums[]) => {
       cy.mount(
         <PreviewList
@@ -50,21 +50,21 @@ describe('PreviewList Component', () => {
         }
 
         cy.get('@activeCarousel')
-          .find('[data-testid=song-card-image]')
+          .findByTestId('song-card-image')
           .should('have.attr', 'alt', album.name)
 
         cy.get('@activeCarousel')
-          .find('[data-testid=song-card-album-title]')
+          .findByTestId('song-card-album-title')
           .should('have.text', album.title)
 
         cy.get('@activeCarousel')
-          .find('[data-testid=song-card-artist]')
+          .findByTestId('song-card-artist')
           .should('have.text', album.artist)
       })
     })
   })
 
-  it('should mounts the component but not show the more route', () => {
+  it('should mount the component but not show the more route', () => {
     cy.fixture('albums/mostPlayed').then((albums: Albums[]) => {
       cy.mount(
         <PreviewList
@@ -135,10 +135,10 @@ describe('PreviewList Component', () => {
         )
 
         cy.get('@activeCarousel')
-          .find('[data-testid=song-card-artist]')
+          .findByTestId('song-card-artist')
           .should('exist')
         cy.get('@activeCarousel')
-          .find('[data-testid=song-card-artist-link]')
+          .findByTestId('song-card-artist-link')
           .should('exist')
       })
     })
@@ -166,10 +166,10 @@ describe('PreviewList Component', () => {
         )
 
         cy.get('@activeCarousel')
-          .find('[data-testid=song-card-artist]')
+          .findByTestId('song-card-artist')
           .should('exist')
         cy.get('@activeCarousel')
-          .find('[data-testid=song-card-artist-link]')
+          .findByTestId('song-card-artist-link')
           .should('not.exist')
       })
     })

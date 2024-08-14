@@ -18,29 +18,30 @@ describe('HomeHeader Component', () => {
         cy.getByTestId(`carousel-header-song-${index}`).as('activeCarousel')
 
         cy.get('@activeCarousel')
-          .find('[data-testid=header-bg]')
+          .findByTestId('header-bg')
           .should('have.css', 'background-image')
 
         cy.get('@activeCarousel')
-          .find('[data-testid=header-title]')
+          .findByTestId('header-title')
           .should('have.text', song.title)
 
         cy.get('@activeCarousel')
-          .find('[data-testid=header-artist]')
+          .findByTestId('header-artist')
           .should('have.text', song.artist)
 
         cy.get('@activeCarousel')
-          .find('[data-testid=header-genre]')
+          .findByTestId('header-genre')
           .should('have.text', song.genre)
 
         cy.get('@activeCarousel')
-          .find('[data-testid=header-year]')
+          .findByTestId('header-year')
           .should('have.text', song.year)
       })
 
       cy.getByTestId('header-carousel-previous')
         .should('be.visible')
         .and('be.enabled')
+
       cy.getByTestId('header-carousel-next')
         .should('be.visible')
         .and('be.enabled')

@@ -19,6 +19,11 @@ declare global {
        */
       getByTestId(value: string): Chainable<JQuery<HTMLElement>>
       /**
+       * Custom command to find DOM children element by data-testid attribute.
+       * @example cy.get('div').findByTestId('greeting')
+       */
+      findByTestId(testId: string): Chainable<JQuery<HTMLElement>>
+      /**
        * Custom command to mock cover art image.
        * @example cy.mockCoverArt()
        */

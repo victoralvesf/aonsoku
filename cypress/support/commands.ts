@@ -23,3 +23,11 @@ Cypress.Commands.add('mockCoverArt', () => {
 Cypress.Commands.add('changeLang', (lang) => {
   i18n.changeLanguage(lang)
 })
+
+Cypress.Commands.add(
+  'findByTestId',
+  { prevSubject: true },
+  (subject, testId) => {
+    return cy.wrap(subject).find(`[data-testid="${testId}"]`)
+  },
+)
