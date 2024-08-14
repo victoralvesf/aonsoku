@@ -73,6 +73,7 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
           )}
           disabled={!song || isPlayingOneSong() || !hasNextSong()}
           onClick={toggleShuffle}
+          data-testid="player-button-shuffle"
         >
           <Shuffle
             className={clsx('w-10 h-10', isShuffleActive && 'text-primary')}
@@ -85,6 +86,7 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
         className="rounded-full w-10 h-10 p-3"
         disabled={(!song && !radio) || !hasPrevSong()}
         onClick={playPrevSong}
+        data-testid="player-button-prev"
       >
         <SkipBack className="w-10 h-10 fill-secondary-foreground" />
       </Button>
@@ -93,6 +95,7 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
         className="rounded-full w-10 h-10 p-3"
         disabled={!song && !radio}
         onClick={togglePlayPause}
+        data-testid={`player-button-${isPlaying ? 'pause' : 'play'}`}
       >
         {isPlaying ? (
           <Pause className="w-10 h-10 fill-slate-50 text-slate-50" />
@@ -106,6 +109,7 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
         className="rounded-full w-10 h-10 p-3"
         disabled={(!song && !radio) || !hasNextSong()}
         onClick={playNextSong}
+        data-testid="player-button-next"
       >
         <SkipForward className="w-10 h-10 fill-secondary-foreground" />
       </Button>
@@ -119,6 +123,7 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
           )}
           disabled={!song}
           onClick={toggleLoop}
+          data-testid="player-button-loop"
         >
           <Repeat
             className={clsx('w-10 h-10', isLoopActive && 'text-primary')}

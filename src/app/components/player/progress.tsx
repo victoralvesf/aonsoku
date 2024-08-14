@@ -78,7 +78,10 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
 
   return (
     <div className="flex w-full justify-center items-center">
-      <small className="text-xs text-muted-foreground min-w-10 text-left">
+      <small
+        className="text-xs text-muted-foreground min-w-10 text-left"
+        data-testid="player-current-time"
+      >
         {convertSecondsToTime(isSeeking ? localProgress : progress)}
       </small>
       {song ? (
@@ -90,6 +93,7 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
           className="cursor-pointer w-[32rem]"
           onValueChange={([value]) => handleSeeking(value)}
           onValueCommit={([value]) => handleSeeked(value)}
+          data-testid="player-progress-slider"
         />
       ) : (
         <Slider
@@ -100,7 +104,10 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
           className="cursor-pointer w-[32rem] pointer-events-none"
         />
       )}
-      <small className="text-xs text-muted-foreground min-w-10 text-right">
+      <small
+        className="text-xs text-muted-foreground min-w-10 text-right"
+        data-testid="player-duration-time"
+      >
         {songDuration}
       </small>
     </div>

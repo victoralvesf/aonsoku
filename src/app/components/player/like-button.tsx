@@ -17,12 +17,14 @@ export function PlayerLikeButton({ disabled }: PlayerLikeButtonProps) {
       className="rounded-full w-10 h-10 p-3"
       disabled={disabled}
       onClick={starCurrentSong}
+      data-testid="player-like-button"
     >
       <Heart
         className={clsx(
           'w-5 h-5',
           isSongStarred && 'text-red-500 fill-red-500',
         )}
+        data-testid="player-like-icon"
       />
     </Button>
   )

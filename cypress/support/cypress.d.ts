@@ -17,17 +17,28 @@ declare global {
        * Custom command to select DOM element by data-testid attribute.
        * @example cy.getByTestId('greeting')
        */
-      getByTestId(value: string): Chainable<JQuery<HTMLElement>>
+      getByTestId<E extends Node = HTMLElement>(
+        testId: string,
+        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>,
+      ): Chainable<JQuery<E>>
       /**
        * Custom command to find DOM children element by data-testid attribute.
        * @example cy.get('div').findByTestId('greeting')
        */
-      findByTestId(testId: string): Chainable<JQuery<HTMLElement>>
+      findByTestId<E extends Node = HTMLElement>(
+        testId: string,
+        options?: Partial<Loggable & Timeoutable & Shadow>,
+      ): Chainable<JQuery<E>>
       /**
        * Custom command to mock cover art image.
        * @example cy.mockCoverArt()
        */
       mockCoverArt(): Chainable<void>
+      /**
+       * Custom command to mock song stream request.
+       * @example cy.mockSongStream()
+       */
+      mockSongStream(): Chainable<void>
       /**
        * Custom command to change applications language.
        * @example cy.changeLang()

@@ -37,6 +37,7 @@ export function PlayerVolume({ disabled, audioRef }: PlayerVolumeProps) {
           disabled && 'pointer-events-none opacity-50',
         )}
         onValueChange={([value]) => setVolume(value)}
+        data-testid="player-volume-slider"
       />
     </div>
   )

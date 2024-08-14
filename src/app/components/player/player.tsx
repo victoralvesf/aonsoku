@@ -151,23 +151,25 @@ export function Player() {
       {mediaType === 'song' && song && (
         <audio
           src={getSongStreamUrl(song.id)}
-          autoPlay={true}
+          autoPlay={isPlaying}
           ref={audioRef}
           loop={isLoopActive}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
           onLoadedMetadata={setupProgressListener}
           onEnded={handleSongEnded}
+          data-testid="player-song-audio"
         />
       )}
 
       {mediaType === 'radio' && radio && (
         <audio
           src={radio.streamUrl}
-          autoPlay={true}
+          autoPlay={isPlaying}
           ref={audioRef}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
+          data-testid="player-radio-audio"
         />
       )}
     </footer>
