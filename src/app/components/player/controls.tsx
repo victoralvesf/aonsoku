@@ -71,7 +71,7 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
             'relative rounded-full w-10 h-10 p-3',
             isShuffleActive && 'player-button-active',
           )}
-          disabled={!song || isPlayingOneSong()}
+          disabled={!song || isPlayingOneSong() || !hasNextSong()}
           onClick={toggleShuffle}
         >
           <Shuffle

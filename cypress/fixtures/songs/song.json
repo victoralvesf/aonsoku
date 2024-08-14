@@ -1,0 +1,41 @@
+{
+  "id": "4d274c1e8654ed67c92fccd183c9e596",
+  "parent": "fced13a19f86bdf8fac8a2d46db6645a",
+  "isDir": false,
+  "title": "Tokyo By Night (Axwell Remix)",
+  "album": "Axtone Ten",
+  "artist": "Hook n Sling",
+  "track": 41,
+  "year": 2015,
+  "genre": "Electro",
+  "coverArt": "mf-4d274c1e8654ed67c92fccd183c9e596_668c7e8e",
+  "size": 47363881,
+  "contentType": "audio/flac",
+  "suffix": "flac",
+  "duration": 333,
+  "bitRate": 1131,
+  "path": "Vários intérpretes/Axtone Ten/41 - Tokyo By Night (Axwell Remix).flac",
+  "discNumber": 1,
+  "created": "2024-07-09T00:58:08.414457436Z",
+  "albumId": "fced13a19f86bdf8fac8a2d46db6645a",
+  "type": "music",
+  "isVideo": false,
+  "bpm": 128,
+  "comment": "",
+  "sortName": "",
+  "mediaType": "song",
+  "musicBrainzId": "",
+  "genres": [
+    {
+      "name": "Electro"
+    },
+    {
+      "name": "Dance"
+    }
+  ],
+  "replayGain": {
+    "trackGain": -11.4,
+    "trackPeak": 1,
+    "albumPeak": 1
+  }
+}

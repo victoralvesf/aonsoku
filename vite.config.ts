@@ -8,6 +8,7 @@ export default defineConfig(async () => ({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      cy: path.resolve(__dirname, './cypress'),
     },
   },
 

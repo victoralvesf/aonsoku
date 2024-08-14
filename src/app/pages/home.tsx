@@ -6,7 +6,7 @@ import {
   HeaderFallback,
   PreviewListFallback,
 } from '@/app/components/fallbacks/home-fallbacks'
-import HomeHeader from '@/app/components/home/header'
+import HomeHeader from '@/app/components/home/carousel/header'
 import PreviewList from '@/app/components/home/preview-list'
 import { ROUTES } from '@/routes/routesList'
 import { AlbumsListData } from '@/types/responses/album'

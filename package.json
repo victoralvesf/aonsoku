@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "lint": "eslint \"src/**\"",
-    "lint:fix": "pnpm lint --fix"
+    "lint:fix": "pnpm lint --fix",
+    "cy:open": "cypress open",
+    "cy:test": "cypress run --component"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.5",
@@ -72,6 +74,8 @@
     "@typescript-eslint/parser": "^7.14.1",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
+    "cypress": "^13.13.2",
+    "cypress-real-events": "^1.13.0",
     "eslint": "8.56.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",

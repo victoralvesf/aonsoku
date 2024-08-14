@@ -1,0 +1,408 @@
+[
+  {
+    "id": "db4f73de82c327b23daf8fbe0c244fd2",
+    "parent": "1eb5bf547edae0b09dc5724859b9f8f8",
+    "isDir": false,
+    "title": "Here I Am",
+    "album": "Born In Babylon",
+    "artist": "SOJA",
+    "track": 14,
+    "year": 2009,
+    "genre": "Reggae",
+    "coverArt": "mf-db4f73de82c327b23daf8fbe0c244fd2_65cdb545",
+    "size": 19682576,
+    "contentType": "audio/flac",
+    "suffix": "flac",
+    "duration": 288,
+    "bitRate": 543,
+    "path": "SOJA/Born In Babylon/14 - Here I Am.flac",
+    "discNumber": 1,
+    "created": "2024-03-06T09:24:14.903687178Z",
+    "albumId": "1eb5bf547edae0b09dc5724859b9f8f8",
+    "artistId": "bdc7645e04618dd9f14f06d96ab6967d",
+    "type": "music",
+    "isVideo": false,
+    "bpm": 0,
+    "comment": "",
+    "sortName": "",
+    "mediaType": "song",
+    "musicBrainzId": "",
+    "genres": [
+      {
+        "name": "Reggae"
+      }
+    ],
+    "replayGain": {
+      "trackGain": -5.5,
+      "trackPeak": 1,
+      "albumPeak": 1
+    }
+  },
+  {
+    "id": "dc30c6358356975515b2ec3533bbb222",
+    "parent": "bef30f4e20d7ef60bf9b32430d67048c",
+    "isDir": false,
+    "title": "Me Love",
+    "album": "Sean Kingston",
+    "artist": "Sean Kingston",
+    "track": 4,
+    "year": 2007,
+    "genre": "Rap",
+    "coverArt": "mf-dc30c6358356975515b2ec3533bbb222_6657da8d",
+    "size": 27404837,
+    "contentType": "audio/flac",
+    "suffix": "flac",
+    "duration": 204,
+    "bitRate": 1069,
+    "path": "Sean Kingston/Sean Kingston/04 - Me Love.flac",
+    "discNumber": 1,
+    "created": "2024-03-06T09:24:10.793679844Z",
+    "albumId": "bef30f4e20d7ef60bf9b32430d67048c",
+    "artistId": "466080a5c1abcd0a55b2f52dda6cac12",
+    "type": "music",
+    "isVideo": false,
+    "bpm": 180,
+    "comment": "",
+    "sortName": "",
+    "mediaType": "song",
+    "musicBrainzId": "",
+    "genres": [
+      {
+        "name": "Rap"
+      },
+      {
+        "name": "Hip Hop"
+      }
+    ],
+    "replayGain": {
+      "trackGain": -9.9,
+      "trackPeak": 1,
+      "albumPeak": 1
+    }
+  },
+  {
+    "id": "d14e0adf1957d891707437d99d6b12ec",
+    "parent": "d1d8e906f370f00f096550fe66a35a0f",
+    "isDir": false,
+    "title": "Baby Can I Hold You",
+    "album": "Tracy Chapman",
+    "artist": "Tracy Chapman",
+    "track": 5,
+    "year": 1988,
+    "genre": "Folk",
+    "coverArt": "mf-d14e0adf1957d891707437d99d6b12ec_65e83553",
+    "size": 20726083,
+    "contentType": "audio/flac",
+    "suffix": "flac",
+    "duration": 193,
+    "bitRate": 853,
+    "path": "Tracy Chapman/Tracy Chapman/05 - Baby Can I Hold You.flac",
+    "discNumber": 1,
+    "created": "2024-03-06T09:31:24.980893368Z",
+    "albumId": "d1d8e906f370f00f096550fe66a35a0f",
+    "artistId": "b95dc3bcafd4318a1eb61e15c06d7fee",
+    "type": "music",
+    "isVideo": false,
+    "bpm": 148,
+    "comment": "",
+    "sortName": "",
+    "mediaType": "song",
+    "musicBrainzId": "",
+    "genres": [
+      {
+        "name": "Folk"
+      }
+    ],
+    "replayGain": {
+      "trackGain": -2.9,
+      "trackPeak": 1,
+      "albumPeak": 1
+    }
+  },
+  {
+    "id": "4d274c1e8654ed67c92fccd183c9e596",
+    "parent": "fced13a19f86bdf8fac8a2d46db6645a",
+    "isDir": false,
+    "title": "Tokyo By Night (Axwell Remix)",
+    "album": "Axtone Ten",
+    "artist": "Hook n Sling",
+    "track": 41,
+    "year": 2015,
+    "genre": "Electro",
+    "coverArt": "mf-4d274c1e8654ed67c92fccd183c9e596_668c7e8e",
+    "size": 47363881,
+    "contentType": "audio/flac",
+    "suffix": "flac",
+    "duration": 333,
+    "bitRate": 1131,
+    "path": "Vários intérpretes/Axtone Ten/41 - Tokyo By Night (Axwell Remix).flac",
+    "discNumber": 1,
+    "created": "2024-07-09T00:58:08.414457436Z",
+    "albumId": "fced13a19f86bdf8fac8a2d46db6645a",
+    "type": "music",
+    "isVideo": false,
+    "bpm": 128,
+    "comment": "",
+    "sortName": "",
+    "mediaType": "song",
+    "musicBrainzId": "",
+    "genres": [
+      {
+        "name": "Electro"
+      },
+      {
+        "name": "Dance"
+      }
+    ],
+    "replayGain": {
+      "trackGain": -11.4,
+      "trackPeak": 1,
+      "albumPeak": 1
+    }
+  },
+  {
+    "id": "53484fdeeeadc5b129feafa318a8b7c8",
+    "parent": "fa3b10bca470ea6834737237929c0dce",
+    "isDir": false,
+    "title": "Cartas Pra Você",
+    "album": "Agora",
+    "artist": "NX Zero",
+    "track": 8,
+    "year": 2008,
+    "genre": "Rock",
+    "coverArt": "mf-53484fdeeeadc5b129feafa318a8b7c8_65cdb4cf",
+    "size": 21304553,
+    "contentType": "audio/flac",
+    "suffix": "flac",
+    "duration": 203,
+    "bitRate": 829,
+    "path": "NX Zero/Agora/08 - Cartas Pra Você.flac",
+    "discNumber": 1,
+    "created": "2024-03-06T09:24:06.057471246Z",
+    "albumId": "fa3b10bca470ea6834737237929c0dce",
+    "artistId": "50e32967e0793f919a71415245d4f530",
+    "type": "music",
+    "isVideo": false,
+    "bpm": 129,
+    "comment": "",
+    "sortName": "",
+    "mediaType": "song",
+    "musicBrainzId": "",
+    "genres": [
+      {
+        "name": "Rock"
+      }
+    ],
+    "replayGain": {
+      "trackGain": -8.1,
+      "trackPeak": 1,
+      "albumPeak": 1
+    }
+  },
+  {
+    "id": "da5ef2b9f75045acc528d5c0b17b7f0b",
+    "parent": "0db42f9e040aeeae34bd35ce63464209",
+    "isDir": false,
+    "title": "My Toy Soldier",
+    "album": "The Massacre",
+    "artist": "50 Cent",
+    "track": 16,
+    "year": 2004,
+    "genre": "Rap",
+    "coverArt": "mf-da5ef2b9f75045acc528d5c0b17b7f0b_6657dbf9",
+    "size": 27024625,
+    "contentType": "audio/flac",
+    "suffix": "flac",
+    "duration": 224,
+    "bitRate": 955,
+    "path": "50 Cent/The Massacre/16 - My Toy Soldier.flac",
+    "discNumber": 1,
+    "created": "2024-03-06T09:24:10.793811871Z",
+    "albumId": "0db42f9e040aeeae34bd35ce63464209",
+    "artistId": "d27e9ceac68a17257c85a4d433e7a4c8",
+    "type": "music",
+    "isVideo": false,
+    "bpm": 103,
+    "comment": "",
+    "sortName": "",
+    "mediaType": "song",
+    "musicBrainzId": "",
+    "genres": [
+      {
+        "name": "Rap"
+      },
+      {
+        "name": "Hip Hop"
+      }
+    ],
+    "replayGain": {
+      "trackGain": -9.5,
+      "trackPeak": 1,
+      "albumPeak": 1
+    }
+  },
+  {
+    "id": "8a22bbe5e7d197dcf2bb05e75c1507d5",
+    "parent": "89b075320a3edfa73f5ac7077d0b7144",
+    "isDir": false,
+    "title": "Live for the Night (Deniz Koyu & Danny Avila Remix)",
+    "album": "Live for the Night (Remix EP)",
+    "artist": "Krewella",
+    "track": 5,
+    "year": 2013,
+    "genre": "Dance",
+    "coverArt": "mf-8a22bbe5e7d197dcf2bb05e75c1507d5_668c9e70",
+    "size": 51156400,
+    "contentType": "audio/flac",
+    "suffix": "flac",
+    "duration": 367,
+    "bitRate": 1110,
+    "path": "Krewella/Live for the Night (Remix EP)/05 - Live for the Night (Deniz Koyu & Danny Avila Remix).flac",
+    "playCount": 1,
+    "discNumber": 1,
+    "created": "2024-07-09T03:02:21.840181809Z",
+    "albumId": "89b075320a3edfa73f5ac7077d0b7144",
+    "artistId": "2de6c05c263ad307e234fdc293124f80",
+    "type": "music",
+    "isVideo": false,
+    "played": "2024-07-13T22:11:12.932Z",
+    "bpm": 128,
+    "comment": "",
+    "sortName": "",
+    "mediaType": "song",
+    "musicBrainzId": "",
+    "genres": [
+      {
+        "name": "Dance"
+      }
+    ],
+    "replayGain": {
+      "trackGain": -10.3,
+      "trackPeak": 1,
+      "albumPeak": 1
+    }
+  },
+  {
+    "id": "40f9341973e864bb07bbf4bbbf1ade2e",
+    "parent": "5da46825b0b5601f07cab7e099281cdd",
+    "isDir": false,
+    "title": "Sorry, Blame It On Me",
+    "album": "Konvicted (Complete Edition)",
+    "artist": "Akon",
+    "track": 13,
+    "year": 2006,
+    "genre": "Rap",
+    "coverArt": "mf-40f9341973e864bb07bbf4bbbf1ade2e_6657d91d",
+    "size": 36230075,
+    "contentType": "audio/flac",
+    "suffix": "flac",
+    "duration": 295,
+    "bitRate": 976,
+    "path": "Akon/Konvicted (Complete Edition)/13 - Sorry, Blame It On Me.flac",
+    "playCount": 3,
+    "discNumber": 1,
+    "created": "2024-03-06T09:24:10.793958894Z",
+    "albumId": "5da46825b0b5601f07cab7e099281cdd",
+    "artistId": "ac6b00dec130960b92aadf44de37df21",
+    "type": "music",
+    "isVideo": false,
+    "played": "2024-07-03T18:11:28.953Z",
+    "bpm": 0,
+    "comment": "",
+    "sortName": "",
+    "mediaType": "song",
+    "musicBrainzId": "",
+    "genres": [
+      {
+        "name": "Rap"
+      },
+      {
+        "name": "Hip Hop"
+      }
+    ],
+    "replayGain": {
+      "trackGain": -10,
+      "trackPeak": 1,
+      "albumPeak": 1
+    }
+  },
+  {
+    "id": "1701636f95ba994ea0494a4801dc2afd",
+    "parent": "922d2452dc05ed5f8019293f8b279991",
+    "isDir": false,
+    "title": "Mesmerize",
+    "album": "The Last Temptation",
+    "artist": "Ja Rule",
+    "track": 3,
+    "year": 2002,
+    "genre": "Pop",
+    "coverArt": "mf-1701636f95ba994ea0494a4801dc2afd_6657dbd0",
+    "size": 35513635,
+    "contentType": "audio/flac",
+    "suffix": "flac",
+    "duration": 273,
+    "bitRate": 1034,
+    "path": "Ja Rule/The Last Temptation/03 - Mesmerize.flac",
+    "playCount": 5,
+    "discNumber": 1,
+    "created": "2024-03-06T09:24:10.79451628Z",
+    "albumId": "922d2452dc05ed5f8019293f8b279991",
+    "artistId": "5498eb4f5d9d3744a2ce3f2fc2c6a46f",
+    "type": "music",
+    "isVideo": false,
+    "played": "2024-07-03T18:34:17.29Z",
+    "bpm": 90,
+    "comment": "",
+    "sortName": "",
+    "mediaType": "song",
+    "musicBrainzId": "",
+    "genres": [
+      {
+        "name": "Pop"
+      }
+    ],
+    "replayGain": {
+      "trackGain": -7.6,
+      "trackPeak": 1,
+      "albumPeak": 1
+    }
+  },
+  {
+    "id": "5b9cb95893f004c3f970c39e27f031b3",
+    "parent": "435e54c7d7038ccce808deac240eff9b",
+    "isDir": false,
+    "title": "Dias De Luta, Dias De Glória (Ao Vivo)",
+    "album": "As 10 Mais (Ao Vivo)",
+    "artist": "Charlie Brown Jr.",
+    "track": 3,
+    "year": 2024,
+    "genre": "Rock",
+    "coverArt": "mf-5b9cb95893f004c3f970c39e27f031b3_65ac660d",
+    "size": 23864865,
+    "contentType": "audio/flac",
+    "suffix": "flac",
+    "duration": 186,
+    "bitRate": 1019,
+    "path": "Charlie Brown Jr./As 10 Mais (Ao Vivo)/03 - Dias De Luta, Dias De Glória (Ao Vivo).flac",
+    "discNumber": 1,
+    "created": "2024-03-06T09:23:58.580118646Z",
+    "albumId": "435e54c7d7038ccce808deac240eff9b",
+    "artistId": "781cacb9f0229fd4c0eb9e4bcf596724",
+    "type": "music",
+    "isVideo": false,
+    "bpm": 0,
+    "comment": "",
+    "sortName": "",
+    "mediaType": "song",
+    "musicBrainzId": "",
+    "genres": [
+      {
+        "name": "Rock"
+      }
+    ],
+    "replayGain": {
+      "trackPeak": 1,
+      "albumPeak": 1
+    }
+  }
+]
