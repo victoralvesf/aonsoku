@@ -42,9 +42,17 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
       </div>
       <div className="flex flex-col justify-center w-full overflow-hidden">
         <MarqueeTitle gap="mr-2">
-          <span className="text-sm font-medium" data-testid="track-title">
-            {song.title}
-          </span>
+          <Link
+            to={ROUTES.ALBUM.PAGE(song.albumId)}
+            className="group cursor-pointer"
+          >
+            <span
+              className="text-sm font-medium group-hover:underline cursor-pointer"
+              data-testid="track-title"
+            >
+              {song.title}
+            </span>
+          </Link>
         </MarqueeTitle>
         <Link
           to={ROUTES.ARTIST.PAGE(song.artistId!)}
@@ -56,7 +64,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
         >
           <span
             className={cn(
-              'text-xs font-light text-muted-foreground',
+              'text-xs font-regular text-muted-foreground',
               song.artistId && 'hover:underline',
             )}
           >

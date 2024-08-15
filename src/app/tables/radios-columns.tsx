@@ -1,7 +1,6 @@
-import { RadioIcon } from 'lucide-react'
-
 import { RadioActionButton } from '@/app/components/radios/action-button'
 import PlaySongButton from '@/app/components/table/play-button'
+import { TableRadioTitle } from '@/app/components/table/radio-title'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
 import i18n from '@/i18n'
 import { ColumnDefType } from '@/types/react-table/columnDef'
@@ -48,16 +47,7 @@ export function radiosColumns(): ColumnDefType<Radio>[] {
           {i18n.t('radios.table.name')}
         </DataTableColumnHeader>
       ),
-      cell: ({ row }) => (
-        <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
-          <div className="flex justify-center items-center w-[40px] h-[40px] min-w-[40px] min-h-[40px] rounded shadow bg-foreground/20 dark:bg-accent">
-            <RadioIcon className="w-5 h-5 text-foreground" strokeWidth={1.75} />
-          </div>
-          <div className="flex flex-col justify-center items-center">
-            <p>{row.original.name}</p>
-          </div>
-        </div>
-      ),
+      cell: ({ row }) => <TableRadioTitle name={row.original.name} />,
     },
     {
       id: 'homePageUrl',

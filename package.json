@@ -11,7 +11,7 @@
     "lint": "eslint \"src/**\"",
     "lint:fix": "pnpm lint --fix",
     "cy:open": "cypress open",
-    "cy:test": "cypress run --component"
+    "test": "cypress run --component"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.5",

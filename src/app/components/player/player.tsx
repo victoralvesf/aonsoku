@@ -10,8 +10,10 @@ import {
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerMediaType,
+  usePlayerProgress,
   usePlayerRef,
   usePlayerSonglist,
+  getVolume,
 } from '@/store/player.store'
 import { PlayerControls } from './controls'
 import { PlayerLikeButton } from './like-button'
@@ -20,6 +22,11 @@ import { PlayerSongListButton } from './song-list-button'
 import { PlayerVolume } from './volume'
 
 const MemoTrackInfo = memo(TrackInfo)
+const MemoRadioInfo = memo(RadioInfo)
+const MemoPlayerControls = memo(PlayerControls)
+const MemoPlayerLikeButton = memo(PlayerLikeButton)
+const MemoPlayerSongListButton = memo(PlayerSongListButton)
+const MemoPlayerVolume = memo(PlayerVolume)
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -38,6 +45,7 @@ export function Player() {
   const isLoopActive = usePlayerLoop()
   const currentDuration = usePlayerDuration()
   const audioPlayerRef = usePlayerRef()
+  const progress = usePlayerProgress()
   const { resetTitle, radioSession, songSession, playbackState } =
     useMediaSession()
 
@@ -95,7 +103,7 @@ export function Player() {
     const audio = audioRef.current
     if (!audio) return
 
-    audio.currentTime = 0
+    audio.currentTime = progress
     const audioDuration = Math.floor(audio.duration)
 
     if (currentDuration !== audioDuration) {
@@ -110,16 +118,17 @@ export function Player() {
     return () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate)
     }
-  }, [currentDuration, setCurrentDuration, setProgress])
+  }, [currentDuration, progress, setCurrentDuration, setProgress])
 
   const handleSongEnded = useCallback(() => {
     if (hasNextSong()) {
       playNextSong()
-      audioRef.current?.play()
+      setPlayingState(true)
     } else {
       clearPlayerState()
+      setPlayingState(false)
     }
-  }, [clearPlayerState, hasNextSong, playNextSong])
+  }, [clearPlayerState, hasNextSong, playNextSong, setPlayingState])
 
   return (
     <footer className="border-t h-[--player-height] w-full flex items-center fixed bottom-0 left-0 right-0 z-20 bg-background">
@@ -127,11 +136,11 @@ export function Player() {
         {/* Track Info */}
         <div className="flex items-center gap-2 w-full">
           {mediaType === 'song' && <MemoTrackInfo song={song} />}
-          {mediaType === 'radio' && <RadioInfo radio={radio} />}
+          {mediaType === 'radio' && <MemoRadioInfo radio={radio} />}
         </div>
         {/* Main Controls */}
         <div className="col-span-2 flex flex-col justify-center items-center px-4 gap-1">
-          <PlayerControls song={song} radio={radio} />
+          <MemoPlayerControls song={song} radio={radio} />
 
           {mediaType === 'song' && (
             <PlayerProgress audioRef={audioRef} song={song} />
@@ -140,10 +149,12 @@ export function Player() {
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
-            {mediaType === 'song' && <PlayerLikeButton disabled={!song} />}
-            {mediaType === 'song' && <PlayerSongListButton disabled={!song} />}
+            {mediaType === 'song' && <MemoPlayerLikeButton disabled={!song} />}
+            {mediaType === 'song' && (
+              <MemoPlayerSongListButton disabled={!song} />
+            )}
 
-            <PlayerVolume audioRef={audioRef} disabled={!song && !radio} />
+            <MemoPlayerVolume audioRef={audioRef} disabled={!song && !radio} />
           </div>
         </div>
       </div>
@@ -158,6 +169,9 @@ export function Player() {
           onPause={() => setPlayingState(false)}
           onLoadedMetadata={setupProgressListener}
           onEnded={handleSongEnded}
+          onLoadStart={() => {
+            if (audioRef.current) audioRef.current.volume = getVolume() / 100
+          }}
           data-testid="player-song-audio"
         />
       )}
@@ -169,6 +183,12 @@ export function Player() {
           ref={audioRef}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
+          // fix a bug where the songlist is playing regular songs
+          // and after change to radio, the progress wasn't cleared
+          onLoadStart={() => {
+            setProgress(0)
+            if (audioRef.current) audioRef.current.volume = getVolume() / 100
+          }}
           data-testid="player-radio-audio"
         />
       )}
