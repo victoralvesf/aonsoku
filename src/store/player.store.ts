@@ -39,6 +39,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
           },
           actions: {
             setSongList: (songlist, index, shuffle = false) => {
+              const { currentList, currentSongIndex } = get().songlist
+              if (currentList !== songlist) {
+                get().actions.resetProgress()
+              }
+              if (currentList === songlist && currentSongIndex !== index) {
+                get().actions.resetProgress()
+              }
+
               set((state) => {
                 state.songlist.originalList = songlist
                 state.songlist.originalSongIndex = index
@@ -83,6 +91,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                   state.playerState.isPlaying = true
                 })
               } else {
+                get().actions.resetProgress()
                 set((state) => {
                   state.playerState.mediaType = 'song'
                   state.songlist.currentList = [song]
@@ -208,6 +217,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
             playNextSong: () => {
               if (get().actions.hasNextSong()) {
+                get().actions.resetProgress()
                 set((state) => {
                   state.songlist.currentSongIndex += 1
                 })
@@ -215,6 +225,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
             playPrevSong: () => {
               if (get().actions.hasPrevSong()) {
+                get().actions.resetProgress()
                 set((state) => {
                   state.songlist.currentSongIndex -= 1
                 })
@@ -232,6 +243,11 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.isPlaying = false
                 state.playerState.isLoopActive = false
                 state.playerState.isShuffleActive = false
+              })
+              get().actions.resetProgress()
+            },
+            resetProgress: () => {
+              set((state) => {
                 state.playerProgress.progress = 0
               })
             },

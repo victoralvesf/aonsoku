@@ -44,6 +44,7 @@ export interface IPlayerActions {
   hasPrevSong: () => boolean
   isPlayingOneSong: () => boolean
   clearPlayerState: () => void
+  resetProgress: () => void
   setProgress: (progress: number) => void
   setVolume: (volume: number) => void
   setCurrentDuration: (duration: number) => void
