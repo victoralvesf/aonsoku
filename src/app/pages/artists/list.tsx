@@ -1,6 +1,5 @@
-import { Suspense, useCallback, useMemo } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Await, useLoaderData } from 'react-router-dom'
 
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
@@ -9,47 +8,30 @@ import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { artistsColumns } from '@/app/tables/artists-columns'
+import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
-import { ArtistSeparator, ISimilarArtist } from '@/types/responses/artist'
-
-interface ArtistsLoaderData {
-  allArtistsPromise: Promise<ArtistSeparator[]>
-}
+import { ISimilarArtist } from '@/types/responses/artist'
 
 export default function ArtistsList() {
-  const { allArtistsPromise } = useLoaderData() as ArtistsLoaderData
-
-  return (
-    <Suspense fallback={<SongsListFallback />}>
-      <Await resolve={allArtistsPromise} errorElement={<></>}>
-        {(list: ArtistSeparator[]) => <ResolvedArtists list={list} />}
-      </Await>
-    </Suspense>
-  )
-}
-
-function ResolvedArtists({ list }: { list: ArtistSeparator[] }) {
   const { t } = useTranslation()
   const { getArtistAllSongs } = useSongList()
   const { setSongList } = usePlayerActions()
 
   const columns = artistsColumns()
 
-  const organizeArtists = useCallback(() => {
-    const artistsList: ISimilarArtist[] = []
-    list.forEach((item) => {
-      artistsList.push(...item.artist)
-    })
-    return artistsList.sort((a, b) => a.name.localeCompare(b.name))
-  }, [list])
-
-  const artists = useMemo(() => organizeArtists(), [organizeArtists])
+  const { data: artists, isLoading } = useQuery({
+    queryKey: ['get-all-artists'],
+    queryFn: subsonic.artists.getAll,
+  })
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
     const songList = await getArtistAllSongs(artist.name)
 
     if (songList) setSongList(songList, 0)
   }
+
+  if (isLoading) return <SongsListFallback />
+  if (!artists) return null
 
   return (
     <div className="w-full h-full">

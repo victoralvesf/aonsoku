@@ -3,6 +3,7 @@ import {
   ArtistInfoResponse,
   ArtistResponse,
   ArtistsResponse,
+  ISimilarArtist,
 } from '@/types/responses/artist'
 
 async function getAll() {
@@ -10,7 +11,15 @@ async function getAll() {
     method: 'GET',
   })
 
-  return response?.data.artists.index
+  if (!response) return []
+
+  const artistsList: ISimilarArtist[] = []
+
+  response.data.artists.index.forEach((item) => {
+    artistsList.push(...item.artist)
+  })
+
+  return artistsList.sort((a, b) => a.name.localeCompare(b.name))
 }
 
 async function getOne(id: string) {
