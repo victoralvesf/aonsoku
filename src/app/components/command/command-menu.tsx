@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import delay from 'lodash/delay'
 import { Loader2, SearchIcon } from 'lucide-react'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
@@ -29,7 +29,7 @@ import { ISimilarArtist } from '@/types/responses/artist'
 import { ScanStatus } from '@/types/responses/library'
 import { ISong } from '@/types/responses/song'
 import dateTime from '@/utils/dateTime'
-import { queryKeys } from '@/utils/queryKeys'
+import { allQueryKeys, queryKeys } from '@/utils/queryKeys'
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS' | 'SERVER'
 
@@ -137,12 +137,19 @@ export default function CommandMenu() {
     }, 1000)
   }
 
+  const queryClient = useQueryClient()
+
   async function startScan() {
     setLoadingStatus(true)
     delay(async () => {
       const response = await subsonic.library.startScan()
 
       if (response) setScanStatus(response)
+
+      queryClient.invalidateQueries({
+        queryKey: allQueryKeys,
+      })
+
       setLoadingStatus(false)
     }, 2000)
   }

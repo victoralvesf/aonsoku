@@ -1,7 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
-import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
+import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
 import { RadioFormDialog } from '@/app/components/radios/form-dialog'
@@ -9,27 +10,31 @@ import { RemoveRadioDialog } from '@/app/components/radios/remove-dialog'
 import { Button } from '@/app/components/ui/button'
 import { DataTable } from '@/app/components/ui/data-table'
 import { radiosColumns } from '@/app/tables/radios-columns'
+import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { useRadios } from '@/store/radios.store'
 import { Radio } from '@/types/responses/radios'
+import { queryKeys } from '@/utils/queryKeys'
 
 export default function Radios() {
-  const { radios, setDialogState, setData, fetchRadios } = useRadios()
+  const { setDialogState, setData } = useRadios()
   const { t } = useTranslation()
+  const { setPlayRadio } = usePlayerActions()
+
+  const { data: radios, isLoading } = useQuery({
+    queryKey: [queryKeys.radio.all],
+    queryFn: subsonic.radios.getAll,
+  })
 
   const columns = radiosColumns()
-  const memoizedRadios = useMemo(() => radios, [radios])
-  const { setPlayRadio } = usePlayerActions()
 
   function handleAddRadio() {
     setData({} as Radio)
     setDialogState(true)
   }
 
-  useEffect(() => {
-    fetchRadios()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  if (isLoading) return <SongsListFallback />
+  if (!radios) return null
 
   return (
     <div className="w-full h-full">
@@ -52,8 +57,8 @@ export default function Radios() {
       <ListWrapper className="pt-[--shadow-header-distance]">
         <DataTable
           columns={columns}
-          data={memoizedRadios}
-          handlePlaySong={(row) => setPlayRadio(memoizedRadios, row.index)}
+          data={radios}
+          handlePlaySong={(row) => setPlayRadio(radios, row.index)}
           showPagination={true}
           showSearch={true}
           searchColumn="name"

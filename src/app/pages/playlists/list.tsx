@@ -3,6 +3,7 @@ import { PlusIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { ShadowHeader } from '@/app/components/album/shadow-header'
+import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
 import { Button } from '@/app/components/ui/button'
@@ -18,7 +19,7 @@ export default function PlaylistsPage() {
   const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
 
-  const { data: playlists } = useQuery({
+  const { data: playlists, isLoading } = useQuery({
     queryKey: [queryKeys.playlist.all],
     queryFn: subsonic.playlists.getAll,
   })
@@ -33,6 +34,7 @@ export default function PlaylistsPage() {
     }
   }
 
+  if (isLoading) return <SongsListFallback />
   if (!playlists) return null
 
   return (
