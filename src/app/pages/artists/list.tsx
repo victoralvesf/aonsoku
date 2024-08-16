@@ -11,6 +11,7 @@ import { artistsColumns } from '@/app/tables/artists-columns'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { ISimilarArtist } from '@/types/responses/artist'
+import { queryKeys } from '@/utils/queryKeys'
 
 export default function ArtistsList() {
   const { t } = useTranslation()
@@ -20,7 +21,7 @@ export default function ArtistsList() {
   const columns = artistsColumns()
 
   const { data: artists, isLoading } = useQuery({
-    queryKey: ['get-all-artists'],
+    queryKey: [queryKeys.artist.all],
     queryFn: subsonic.artists.getAll,
   })
 

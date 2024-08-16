@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import delay from 'lodash/delay'
 import { Loader2, SearchIcon } from 'lucide-react'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
@@ -28,6 +29,7 @@ import { ISimilarArtist } from '@/types/responses/artist'
 import { ScanStatus } from '@/types/responses/library'
 import { ISong } from '@/types/responses/song'
 import dateTime from '@/utils/dateTime'
+import { queryKeys } from '@/utils/queryKeys'
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS' | 'SERVER'
 
@@ -48,12 +50,17 @@ export default function CommandMenu() {
   const { t } = useTranslation()
   const { setTheme } = useTheme()
   const { getArtistAllSongs, getAlbumSongs } = useSongList()
-  const { playlists, setPlaylistDialogState } = usePlaylists()
+  const { setPlaylistDialogState } = usePlaylists()
   const { setSongList, playSong } = usePlayerActions()
 
   const showAlbumGroup = Boolean(query && albums && albums.length > 0)
   const showArtistGroup = Boolean(query && artists && artists.length > 0)
   const showSongGroup = Boolean(query && songs && songs.length > 0)
+
+  const { data: playlists } = useQuery({
+    queryKey: [queryKeys.playlist.all],
+    queryFn: subsonic.playlists.getAll,
+  })
 
   useHotkeys(['/', 'mod+f'], () => setOpen(!open), {
     preventDefault: true,
@@ -342,7 +349,8 @@ export default function CommandMenu() {
 
           {activePage === 'PLAYLISTS' && (
             <CommandGroup heading={t('sidebar.playlists')}>
-              {playlists.length > 0 &&
+              {playlists &&
+                playlists.length > 0 &&
                 playlists.map((playlist) => (
                   <CommandItem
                     key={`playlist-${playlist.id}`}

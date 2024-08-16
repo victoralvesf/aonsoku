@@ -10,10 +10,11 @@ import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { ISong } from '@/types/responses/song'
+import { queryKeys } from '@/utils/queryKeys'
 
 export default function SongsList() {
   const { data: songlist, isLoading } = useQuery<ISong[]>({
-    queryKey: ['get-all-songs'],
+    queryKey: [queryKeys.song.all],
     queryFn: subsonic.songs.getAllSongs,
   })
 

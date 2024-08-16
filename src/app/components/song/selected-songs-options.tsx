@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Row } from '@tanstack/react-table'
 import { OptionsButtons } from '@/app/components/options/buttons'
 
@@ -5,9 +6,10 @@ import {
   DropdownMenuGroup,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
+import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
-import { usePlaylists } from '@/store/playlists.store'
 import { ISong } from '@/types/responses/song'
+import { queryKeys } from '@/utils/queryKeys'
 import { AddToPlaylistSubMenu } from './add-to-playlist-sub-menu'
 
 interface SelectedSongsProps {
@@ -16,7 +18,6 @@ interface SelectedSongsProps {
 
 export function SelectedSongsOptions({ rows }: SelectedSongsProps) {
   const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
-  const { editPlaylist, createPlaylist } = usePlaylists()
 
   async function handlePlayNext() {
     const songs = rows.map((row) => row.original)
@@ -28,20 +29,35 @@ export function SelectedSongsOptions({ rows }: SelectedSongsProps) {
     setLastOnQueue(songs)
   }
 
+  const queryClient = useQueryClient()
+
+  const updateMutation = useMutation({
+    mutationFn: subsonic.playlists.update,
+  })
+
   async function handleAddToPlaylist(id: string) {
     const songs = rows.map((row) => row.original.id)
 
-    await editPlaylist({
+    await updateMutation.mutateAsync({
       playlistId: id,
       songIdToAdd: songs,
     })
   }
 
+  const createMutation = useMutation({
+    mutationFn: subsonic.playlists.createWithDetails,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.playlist.all],
+      })
+    },
+  })
+
   async function handleCreateNewPlaylist() {
     const songsIds = rows.map((row) => row.original.id)
     const firstSong = rows[0].original
 
-    await createPlaylist({
+    await createMutation.mutateAsync({
       name: firstSong.title,
       comment: '',
       isPublic: 'false',

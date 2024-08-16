@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
@@ -10,11 +11,17 @@ import { playlistsColumns } from '@/app/tables/playlists-columns'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { usePlaylists } from '@/store/playlists.store'
+import { queryKeys } from '@/utils/queryKeys'
 
 export default function PlaylistsPage() {
-  const { playlists, setPlaylistDialogState } = usePlaylists()
+  const { setPlaylistDialogState } = usePlaylists()
   const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
+
+  const { data: playlists } = useQuery({
+    queryKey: [queryKeys.playlist.all],
+    queryFn: subsonic.playlists.getAll,
+  })
 
   const columns = playlistsColumns()
 
@@ -25,6 +32,8 @@ export default function PlaylistsPage() {
       setSongList(playlist.entry, 0)
     }
   }
+
+  if (!playlists) return null
 
   return (
     <div className="w-full h-full">

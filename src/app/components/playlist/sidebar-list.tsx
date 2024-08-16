@@ -1,19 +1,20 @@
-import { ReactNode, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { ReactNode } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { SidebarPlaylistButtons } from '@/app/components/playlist/sidebar-buttons'
 import { SidebarPlaylistGenerator } from '@/app/components/sidebar/sidebar-generator'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
-import { usePlaylists } from '@/store/playlists.store'
+import { subsonic } from '@/service/subsonic'
+import { queryKeys } from '@/utils/queryKeys'
 
 export function SidebarPlaylists() {
   const { t } = useTranslation()
-  const { playlists, fetchPlaylists } = usePlaylists()
 
-  useEffect(() => {
-    fetchPlaylists()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { data: playlists } = useQuery({
+    queryKey: [queryKeys.playlist.all],
+    queryFn: subsonic.playlists.getAll,
+  })
 
   return (
     <div className="flex flex-col flex-grow pl-4 pt-0 overflow-y-auto">
@@ -27,7 +28,7 @@ export function SidebarPlaylists() {
       </div>
       <div className="flex flex-col overflow-y-auto">
         <ScrollArea id="playlists" className="pr-4 pb-2">
-          {playlists.length > 0 ? (
+          {playlists && playlists.length > 0 ? (
             <SidebarPlaylistGenerator playlists={playlists} />
           ) : (
             <span className="w-full truncate text-left px-3 pt-2 text-sm">

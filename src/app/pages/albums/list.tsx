@@ -19,6 +19,7 @@ import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { AlbumListType } from '@/types/responses/album'
 import { albumsPageFilterValues } from '@/utils/albumsPageFilterValues'
+import { queryKeys } from '@/utils/queryKeys'
 
 export default function AlbumsList() {
   const defaultOffset = 32
@@ -60,7 +61,7 @@ export default function AlbumsList() {
   }
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ['albums', currentFilter, yearFilter],
+    queryKey: [queryKeys.album.all, currentFilter, yearFilter],
     queryFn: fetchAlbums,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
