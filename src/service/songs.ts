@@ -4,6 +4,8 @@ import {
   RandomSongsResponse,
   TopSongsResponse,
 } from '@/types/responses/song'
+import { sortByString } from '@/utils/sort'
+import { search } from './search'
 
 async function getRandomSongs(size = 10) {
   const response = await httpClient<RandomSongsResponse>('/getRandomSongs', {
@@ -39,7 +41,20 @@ async function getLyrics(artistName: string, songName: string) {
   return response?.data.lyrics
 }
 
+async function getAllSongs() {
+  const response = await search.get({
+    query: '',
+    albumCount: 0,
+    artistCount: 0,
+    songCount: 999999999,
+    songOffset: 0,
+  })
+
+  return response?.song?.sort((a, b) => sortByString(a.title, b.title)) || []
+}
+
 export const songs = {
+  getAllSongs,
   getRandomSongs,
   getTopSongs,
   getLyrics,

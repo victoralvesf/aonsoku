@@ -1,10 +1,6 @@
 import { LoaderFunctionArgs, defer } from 'react-router-dom'
 import { subsonic } from '@/service/subsonic'
 
-export async function albumsListLoader() {
-  return await subsonic.albums.getAlbumList({ type: 'newest', size: 32 })
-}
-
 export async function singleAlbumLoader({ params }: LoaderFunctionArgs) {
   if (params.albumId) {
     const album = await subsonic.albums.getOne(params.albumId)

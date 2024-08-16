@@ -1,37 +1,22 @@
-import { Suspense } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Await, useLoaderData } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import { songsColumns } from '@/app/tables/songs-columns'
+import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
-import { Search } from '@/types/responses/search'
 import { ISong } from '@/types/responses/song'
-import { sortByString } from '@/utils/sort'
-
-interface LoaderData {
-  allSongsPromise: Promise<Search>
-}
 
 export default function SongsList() {
-  const { allSongsPromise } = useLoaderData() as LoaderData
+  const { data: songlist, isLoading } = useQuery<ISong[]>({
+    queryKey: ['get-all-songs'],
+    queryFn: subsonic.songs.getAllSongs,
+  })
 
-  return (
-    <Suspense fallback={<SongsListFallback />}>
-      <Await resolve={allSongsPromise} errorElement={<></>}>
-        {(response: Search) => (
-          <ResolvedSongList songlist={response.song ?? []} />
-        )}
-      </Await>
-    </Suspense>
-  )
-}
-
-function ResolvedSongList({ songlist }: { songlist: ISong[] }) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
 
@@ -50,11 +35,11 @@ function ResolvedSongList({ songlist }: { songlist: ISong[] }) {
   ]
 
   function handlePlaySong(index: number) {
-    setSongList(songlist, index)
+    if (songlist) setSongList(songlist, index)
   }
 
-  const songs = songlist.sort((a, b) => sortByString(a.title, b.title))
-  const count = songlist.length
+  if (isLoading) return <SongsListFallback />
+  if (!songlist) return null
 
   return (
     <div className="w-full h-full">
@@ -64,7 +49,7 @@ function ResolvedSongList({ songlist }: { songlist: ISong[] }) {
             {t('sidebar.songs')}
           </h2>
           <Badge variant="secondary" className="text-foreground/70">
-            {count}
+            {songlist.length}
           </Badge>
         </div>
       </ShadowHeader>
@@ -72,7 +57,7 @@ function ResolvedSongList({ songlist }: { songlist: ISong[] }) {
       <ListWrapper className="pt-[--shadow-header-distance]">
         <DataTable
           columns={columns}
-          data={songs}
+          data={songlist}
           showPagination={true}
           showSearch={true}
           searchColumn="title"
