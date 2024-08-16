@@ -1,5 +1,6 @@
 const playlist = {
   all: 'get-all-playlists',
+  single: 'get-playlist',
 }
 
 const album = {
