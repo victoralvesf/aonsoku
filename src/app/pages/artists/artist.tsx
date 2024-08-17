@@ -1,38 +1,61 @@
-import { Suspense } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Await, useLoaderData } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
 import PlayButtons from '@/app/components/album/play-buttons'
 import ArtistTopSongs from '@/app/components/artist/artist-top-songs'
 import { ArtistOptions } from '@/app/components/artist/options'
 import RelatedArtistsList from '@/app/components/artist/related-artists'
+import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { TopSongsTableFallback } from '@/app/components/fallbacks/table-fallbacks'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
 import { useSongList } from '@/app/hooks/use-song-list'
+import ErrorPage from '@/app/pages/error-page'
 import { ROUTES } from '@/routes/routesList'
+import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
-import { IArtist, IArtistInfo } from '@/types/responses/artist'
-import { ISong } from '@/types/responses/song'
-
-interface ILoaderData {
-  artist: IArtist
-  artistInfo: Promise<IArtistInfo>
-  topSongs: Promise<ISong[]>
-}
 
 export default function Artist() {
   const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
-  const { artist, artistInfo, topSongs } = useLoaderData() as ILoaderData
+  const { artistId } = useParams() as { artistId: string }
   const { getArtistAllSongs } = useSongList()
-  let artistSongCount = 0
+
+  const {
+    data: artist,
+    isLoading: artistIsLoading,
+    isFetched,
+  } = useQuery({
+    queryKey: ['get-artist', artistId],
+    queryFn: () => subsonic.artists.getOne(artistId),
+    enabled: !!artistId,
+  })
+
+  const { data: artistInfo, isLoading: artistInfoIsLoading } = useQuery({
+    queryKey: ['get-artist-info', artistId],
+    queryFn: () => subsonic.artists.getInfo(artistId),
+    enabled: !!artistId,
+  })
+
+  const { data: topSongs, isLoading: topSongsIsLoading } = useQuery({
+    queryKey: ['get-artist-top-songs', artist?.name],
+    queryFn: () => subsonic.songs.getTopSongs(artist?.name || ''),
+    enabled: !!artist?.name,
+  })
+
+  if (artistIsLoading) return <AlbumFallback />
+  if (isFetched && !artist) {
+    return <ErrorPage status={404} statusText="Not Found" />
+  }
+  if (!artist) return <AlbumFallback />
 
   function getSongCount() {
     if (artist?.albumCount === undefined) return null
     if (artist?.albumCount === 0) return null
+    let artistSongCount = 0
 
     artist.album.forEach((album) => {
       artistSongCount += album.songCount
@@ -50,7 +73,7 @@ export default function Artist() {
   const badges = [formatAlbumCount(), getSongCount()]
 
   async function handlePlayArtistRadio(shuffle = false) {
-    const songList = await getArtistAllSongs(artist.name)
+    const songList = await getArtistAllSongs(artist?.name || '')
 
     if (songList) {
       setSongList(songList, 0, shuffle)
@@ -88,24 +111,20 @@ export default function Artist() {
           optionsMenuItems={<ArtistOptions artist={artist} />}
         />
 
-        <Suspense fallback={<InfoPanelFallback />}>
-          <Await resolve={artistInfo} errorElement={<></>}>
-            {(info: IArtistInfo) => (
-              <InfoPanel
-                title={artist.name}
-                bio={info.biography}
-                lastFmUrl={info.lastFmUrl}
-                musicBrainzId={info.musicBrainzId}
-              />
-            )}
-          </Await>
-        </Suspense>
+        {artistInfoIsLoading && <InfoPanelFallback />}
+        {artistInfo && !artistInfoIsLoading && (
+          <InfoPanel
+            title={artist.name}
+            bio={artistInfo.biography}
+            lastFmUrl={artistInfo.lastFmUrl}
+            musicBrainzId={artistInfo.musicBrainzId}
+          />
+        )}
 
-        <Suspense fallback={<TopSongsTableFallback />}>
-          <Await resolve={topSongs} errorElement={<></>}>
-            <ArtistTopSongs />
-          </Await>
-        </Suspense>
+        {topSongsIsLoading && <TopSongsTableFallback />}
+        {topSongs && !topSongsIsLoading && (
+          <ArtistTopSongs topSongs={topSongs} />
+        )}
 
         <PreviewList
           title={t('artist.recentAlbums')}
@@ -114,11 +133,13 @@ export default function Artist() {
           moreRoute={ROUTES.ARTIST.ALBUMS(artist.id)}
         />
 
-        <Suspense fallback={<PreviewListFallback />}>
-          <Await resolve={artistInfo} errorElement={<></>}>
-            <RelatedArtistsList title={t('artist.relatedArtists')} />
-          </Await>
-        </Suspense>
+        {artistInfoIsLoading && <PreviewListFallback />}
+        {artistInfo?.similarArtist && !artistInfoIsLoading && (
+          <RelatedArtistsList
+            title={t('artist.relatedArtists')}
+            similarArtists={artistInfo.similarArtist}
+          />
+        )}
       </ListWrapper>
     </div>
   )

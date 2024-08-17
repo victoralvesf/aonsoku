@@ -8,7 +8,6 @@ import {
 import { HomeFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
-import { singleArtistLoader } from '@/routes/loaders/artists'
 import { homeLoader } from '@/routes/loaders/home'
 import { protectedLoader } from '@/routes/loaders/protected'
 import { ROUTES } from '@/routes/routesList'
@@ -90,7 +89,6 @@ export const router = createBrowserRouter([
       {
         id: 'artist',
         path: ROUTES.ARTIST.PATH,
-        loader: singleArtistLoader,
         element: (
           <Suspense fallback={<AlbumFallback />}>
             <Artist />

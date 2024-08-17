@@ -41,10 +41,10 @@ export default function Album() {
     useGetGenreAlbums(album?.genre || '')
 
   if (albumIsLoading) return <AlbumFallback />
-  if (!album) return <AlbumFallback />
   if (isFetched && !album) {
     return <ErrorPage status={404} statusText="Not Found" />
   }
+  if (!album) return <AlbumFallback />
 
   const columns = songsColumns()
 
