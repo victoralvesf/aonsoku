@@ -5,6 +5,10 @@ const playlist = {
 
 const album = {
   all: 'get-all-albums',
+  single: 'get-album',
+  info: 'get-album-info',
+  moreAlbums: 'get-artist-albums',
+  genreAlbums: 'get-genre-random-albums',
 }
 
 const artist = {

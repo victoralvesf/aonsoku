@@ -1,53 +1,62 @@
-import { Suspense, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Await, useLoaderData } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
 import { AlbumOptions } from '@/app/components/album/options'
 import PlayButtons from '@/app/components/album/play-buttons'
+import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
 import { DataTable } from '@/app/components/ui/data-table'
+import {
+  useGetAlbum,
+  useGetAlbumInfo,
+  useGetArtistAlbums,
+  useGetGenreAlbums,
+} from '@/app/hooks/use-album'
+import ErrorPage from '@/app/pages/error-page'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { ROUTES } from '@/routes/routesList'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
-import {
-  Albums,
-  AlbumsListData,
-  IAlbumInfo,
-  SingleAlbum,
-} from '@/types/responses/album'
-import { Search } from '@/types/responses/search'
+import { Albums } from '@/types/responses/album'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 
-interface ILoaderData {
-  album: SingleAlbum
-  artistAlbums: Promise<Search>
-  albumInfo: Promise<IAlbumInfo>
-  randomGenreAlbums?: Promise<AlbumsListData>
-}
-
 export default function Album() {
-  const { album, artistAlbums, albumInfo, randomGenreAlbums } =
-    useLoaderData() as ILoaderData
-
+  const { albumId } = useParams() as { albumId: string }
   const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
 
-  const columns = songsColumns()
-  const memoizedAlbums = useMemo(() => album, [album])
+  const {
+    data: album,
+    isLoading: albumIsLoading,
+    isFetched,
+  } = useGetAlbum(albumId)
+  const { data: albumInfo, isLoading: albumInfoIsLoading } =
+    useGetAlbumInfo(albumId)
+  const { data: moreAlbums, isLoading: moreAlbumsIsLoading } =
+    useGetArtistAlbums(album?.artist || '')
+  const { data: randomAlbums, isLoading: randomAlbumsIsLoading } =
+    useGetGenreAlbums(album?.genre || '')
 
-  const albumDuration = memoizedAlbums.duration
-    ? convertSecondsToHumanRead(memoizedAlbums.duration)
+  if (albumIsLoading) return <AlbumFallback />
+  if (!album) return <AlbumFallback />
+  if (isFetched && !album) {
+    return <ErrorPage status={404} statusText="Not Found" />
+  }
+
+  const columns = songsColumns()
+
+  const albumDuration = album.duration
+    ? convertSecondsToHumanRead(album.duration)
     : null
 
   const badges = [
-    memoizedAlbums.year || null,
-    memoizedAlbums.genre || null,
-    memoizedAlbums.songCount
-      ? t('playlist.songCount', { count: memoizedAlbums.songCount })
+    album.year || null,
+    album.genre || null,
+    album.songCount
+      ? t('playlist.songCount', { count: album.songCount })
       : null,
     albumDuration ? t('playlist.duration', { duration: albumDuration }) : null,
   ]
@@ -64,101 +73,98 @@ export default function Album() {
     'select',
   ]
 
-  function formatMoreFromArtist(moreAlbums: Albums[]) {
-    let list = moreAlbums.filter((item) => item.id !== memoizedAlbums.id)
+  function removeCurrentAlbumFromList(moreAlbums: Albums[]) {
+    if (moreAlbums.length === 0) return null
 
+    let list = moreAlbums.filter((item) => item.id !== album?.id)
     if (list.length > 16) list = list.slice(0, 16)
+
+    if (list.length === 0) return null
 
     return list
   }
 
+  const artistAlbums = moreAlbums?.album
+    ? removeCurrentAlbumFromList(moreAlbums.album)
+    : null
+
+  const randomGenreAlbums =
+    randomAlbums?.list && album.genre
+      ? removeCurrentAlbumFromList(randomAlbums.list)
+      : null
+
   const buttonsTooltips = {
-    play: t('playlist.buttons.play', { name: memoizedAlbums.name }),
-    shuffle: t('playlist.buttons.shuffle', { name: memoizedAlbums.name }),
-    options: t('playlist.buttons.options', { name: memoizedAlbums.name }),
+    play: t('playlist.buttons.play', { name: album.name }),
+    shuffle: t('playlist.buttons.shuffle', { name: album.name }),
+    options: t('playlist.buttons.options', { name: album.name }),
   }
 
   return (
     <div className="w-full">
       <ImageHeader
         type={t('album.headline')}
-        title={memoizedAlbums.name}
-        subtitle={memoizedAlbums.artist}
-        artistId={memoizedAlbums.artistId}
-        coverArtId={memoizedAlbums.coverArt}
+        title={album.name}
+        subtitle={album.artist}
+        artistId={album.artistId}
+        coverArtId={album.coverArt}
         coverArtSize="350"
-        coverArtAlt={memoizedAlbums.name}
+        coverArtAlt={album.name}
         badges={badges}
       />
 
       <ListWrapper>
         <PlayButtons
           playButtonTooltip={buttonsTooltips.play}
-          handlePlayButton={() => setSongList(memoizedAlbums.song, 0)}
+          handlePlayButton={() => setSongList(album.song, 0)}
           shuffleButtonTooltip={buttonsTooltips.shuffle}
-          handleShuffleButton={() => setSongList(memoizedAlbums.song, 0, true)}
+          handleShuffleButton={() => setSongList(album.song, 0, true)}
           optionsTooltip={buttonsTooltips.options}
           showLikeButton={true}
-          likeTooltipResource={memoizedAlbums.name}
-          likeState={memoizedAlbums.starred}
-          contentId={memoizedAlbums.id}
-          optionsMenuItems={<AlbumOptions album={memoizedAlbums} />}
+          likeTooltipResource={album.name}
+          likeState={album.starred}
+          contentId={album.id}
+          optionsMenuItems={<AlbumOptions album={album} />}
         />
 
         <div className="mb-6">
-          <Suspense fallback={<InfoPanelFallback />}>
-            <Await resolve={albumInfo} errorElement={<></>}>
-              {(info: IAlbumInfo) => (
-                <InfoPanel
-                  title={memoizedAlbums.name}
-                  bio={info.notes}
-                  lastFmUrl={info.lastFmUrl}
-                />
-              )}
-            </Await>
-          </Suspense>
+          {albumInfoIsLoading && <InfoPanelFallback />}
+          {albumInfo && !albumInfoIsLoading && (
+            <InfoPanel
+              title={album.name}
+              bio={albumInfo.notes}
+              lastFmUrl={albumInfo.lastFmUrl}
+            />
+          )}
         </div>
 
         <DataTable
           columns={columns}
-          data={memoizedAlbums.song}
-          handlePlaySong={(row) => setSongList(memoizedAlbums.song, row.index)}
+          data={album.song}
+          handlePlaySong={(row) => setSongList(album.song, row.index)}
           columnFilter={columnsToShow}
         />
 
         <div className="mt-4">
-          <Suspense fallback={<PreviewListFallback />}>
-            <Await resolve={artistAlbums} errorElement={<></>}>
-              {(result: Search) => {
-                const list = formatMoreFromArtist(result.album!)
-                if (list.length === 0) return <></>
-                return (
-                  <PreviewList
-                    list={list}
-                    showMore={true}
-                    title={t('album.more.listTitle')}
-                    moreTitle={t('album.more.discography')}
-                    moreRoute={ROUTES.ARTIST.ALBUMS(memoizedAlbums.artistId)}
-                  />
-                )
-              }}
-            </Await>
-          </Suspense>
+          {moreAlbumsIsLoading && <PreviewListFallback />}
+          {artistAlbums && !moreAlbumsIsLoading && (
+            <PreviewList
+              list={artistAlbums}
+              showMore={true}
+              title={t('album.more.listTitle')}
+              moreTitle={t('album.more.discography')}
+              moreRoute={ROUTES.ARTIST.ALBUMS(album.artistId)}
+            />
+          )}
 
-          {randomGenreAlbums && (
-            <Suspense fallback={<PreviewListFallback />}>
-              <Await resolve={randomGenreAlbums} errorElement={<></>}>
-                {({ list }: AlbumsListData) => (
-                  <PreviewList
-                    list={list}
-                    showMore={false}
-                    title={t('album.more.genreTitle', {
-                      genre: memoizedAlbums.genre,
-                    })}
-                  />
-                )}
-              </Await>
-            </Suspense>
+          {randomAlbumsIsLoading && <PreviewListFallback />}
+          {!randomAlbumsIsLoading && randomGenreAlbums && (
+            <PreviewList
+              list={randomGenreAlbums}
+              showMore={false}
+              title={t('album.more.genreTitle', {
+                genre: album.genre,
+              })}
+            />
           )}
         </div>
       </ListWrapper>
