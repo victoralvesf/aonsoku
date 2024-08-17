@@ -58,12 +58,14 @@ export function HeaderItem({ song }: { song: ISong }) {
             </div>
           </div>
           <div className="flex min-h-[152px] h-[152px] 2xl:min-h-[252px] 2xl:h-[252px] flex-col justify-end">
-            <h1
-              data-testid="header-title"
-              className="w-full scroll-m-20 text-3xl 2xl:text-4xl font-bold tracking-tight mb-0 2xl:mb-2"
-            >
-              {song.title}
-            </h1>
+            <Link to={ROUTES.ALBUM.PAGE(song.albumId)} className="w-fit">
+              <h1
+                data-testid="header-title"
+                className="w-full scroll-m-20 text-3xl 2xl:text-4xl font-bold tracking-tight mb-0 2xl:mb-2 hover:underline"
+              >
+                {song.title}
+              </h1>
+            </Link>
             {!song.artistId ? (
               <h4
                 data-testid="header-artist"
