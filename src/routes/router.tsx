@@ -1,6 +1,10 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 
+import {
+  AlbumFallback,
+  AlbumsFallback,
+} from '@/app/components/fallbacks/album-fallbacks'
 import { HomeFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
@@ -60,7 +64,7 @@ export const router = createBrowserRouter([
         id: 'albums',
         path: ROUTES.LIBRARY.ALBUMS,
         element: (
-          <Suspense>
+          <Suspense fallback={<AlbumsFallback />}>
             <AlbumsList />
           </Suspense>
         ),
@@ -88,7 +92,7 @@ export const router = createBrowserRouter([
         path: ROUTES.ARTIST.PATH,
         loader: singleArtistLoader,
         element: (
-          <Suspense>
+          <Suspense fallback={<AlbumFallback />}>
             <Artist />
           </Suspense>
         ),
@@ -97,7 +101,7 @@ export const router = createBrowserRouter([
         id: 'album',
         path: ROUTES.ALBUM.PATH,
         element: (
-          <Suspense>
+          <Suspense fallback={<AlbumFallback />}>
             <Album />
           </Suspense>
         ),

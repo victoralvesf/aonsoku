@@ -28,6 +28,14 @@ export function PreviewListFallback() {
         </div>
       </div>
 
+      <SongsCarouselFallback />
+    </div>
+  )
+}
+
+export function SongsCarouselFallback() {
+  return (
+    <>
       <div className="hidden 2xl:flex gap-4">
         {Array.from({ length: 8 }).map((_, index) => (
           <div className="basis-1/8" key={'large-' + index}>
@@ -47,6 +55,6 @@ export function PreviewListFallback() {
           </div>
         ))}
       </div>
-    </div>
+    </>
   )
 }
