@@ -17,6 +17,7 @@ import ErrorPage from '@/app/pages/error-page'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
+import { queryKeys } from '@/utils/queryKeys'
 
 export default function Artist() {
   const { setSongList } = usePlayerActions()
@@ -29,19 +30,19 @@ export default function Artist() {
     isLoading: artistIsLoading,
     isFetched,
   } = useQuery({
-    queryKey: ['get-artist', artistId],
+    queryKey: [queryKeys.artist.single, artistId],
     queryFn: () => subsonic.artists.getOne(artistId),
     enabled: !!artistId,
   })
 
   const { data: artistInfo, isLoading: artistInfoIsLoading } = useQuery({
-    queryKey: ['get-artist-info', artistId],
+    queryKey: [queryKeys.artist.info, artistId],
     queryFn: () => subsonic.artists.getInfo(artistId),
     enabled: !!artistId,
   })
 
   const { data: topSongs, isLoading: topSongsIsLoading } = useQuery({
-    queryKey: ['get-artist-top-songs', artist?.name],
+    queryKey: [queryKeys.artist.topSongs, artist?.name],
     queryFn: () => subsonic.songs.getTopSongs(artist?.name || ''),
     enabled: !!artist?.name,
   })

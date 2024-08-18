@@ -1,66 +1,73 @@
-import { Fragment, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Await, useLoaderData } from 'react-router-dom'
-
 import {
   HeaderFallback,
   PreviewListFallback,
 } from '@/app/components/fallbacks/home-fallbacks'
 import HomeHeader from '@/app/components/home/carousel/header'
 import PreviewList from '@/app/components/home/preview-list'
+import {
+  useGetMostPlayed,
+  useGetRandomAlbums,
+  useGetRandomSongs,
+  useGetRecentlyAdded,
+  useGetRecentlyPlayed,
+} from '@/app/hooks/use-home'
 import { ROUTES } from '@/routes/routesList'
-import { AlbumsListData } from '@/types/responses/album'
-import { ISong } from '@/types/responses/song'
-
-interface HomeLoaderData {
-  randomSongsPromise: Promise<ISong[]>
-  newestAlbumsPromise: Promise<AlbumsListData>
-  frequentAlbumsPromise: Promise<AlbumsListData>
-  recentAlbumsPromise: Promise<AlbumsListData>
-  randomAlbumsPromise: Promise<AlbumsListData>
-}
 
 export default function Home() {
-  const {
-    randomSongsPromise,
-    newestAlbumsPromise,
-    frequentAlbumsPromise,
-    recentAlbumsPromise,
-    randomAlbumsPromise,
-  } = useLoaderData() as HomeLoaderData
-
   const { t } = useTranslation()
 
-  const homeSections = [
-    { title: t('home.recentlyPlayed'), promise: recentAlbumsPromise },
-    { title: t('home.mostPlayed'), promise: frequentAlbumsPromise },
-    { title: t('home.recentlyAdded'), promise: newestAlbumsPromise },
-    { title: t('home.explore'), promise: randomAlbumsPromise },
+  const { data: randomSongs, isLoading } = useGetRandomSongs()
+
+  const recentlyPlayed = useGetRecentlyPlayed()
+  const mostPlayed = useGetMostPlayed()
+  const recentlyAdded = useGetRecentlyAdded()
+  const randomAlbums = useGetRandomAlbums()
+
+  const sections = [
+    {
+      title: t('home.recentlyPlayed'),
+      data: recentlyPlayed.data,
+      loader: recentlyPlayed.isLoading,
+    },
+    {
+      title: t('home.mostPlayed'),
+      data: mostPlayed.data,
+      loader: mostPlayed.isLoading,
+    },
+    {
+      title: t('home.recentlyAdded'),
+      data: recentlyAdded.data,
+      loader: recentlyAdded.isLoading,
+    },
+    {
+      title: t('home.explore'),
+      data: randomAlbums.data,
+      loader: randomAlbums.isLoading,
+    },
   ]
 
   return (
     <div className="w-full px-8 py-6">
-      <Suspense fallback={<HeaderFallback />}>
-        <Await resolve={randomSongsPromise} errorElement={<></>}>
-          {(randomSongs: ISong[]) => <HomeHeader songs={randomSongs} />}
-        </Await>
-      </Suspense>
+      {isLoading && <HeaderFallback />}
+      {randomSongs && !isLoading && <HomeHeader songs={randomSongs} />}
 
-      {homeSections.map((section) => (
-        <Fragment key={section.title}>
-          <Suspense fallback={<PreviewListFallback />}>
-            <Await resolve={section.promise} errorElement={<></>}>
-              {(data: AlbumsListData) => (
-                <PreviewList
-                  title={section.title}
-                  moreRoute={ROUTES.LIBRARY.ALBUMS}
-                  list={data.list}
-                />
-              )}
-            </Await>
-          </Suspense>
-        </Fragment>
-      ))}
+      {sections.map((section) => {
+        if (section.loader) {
+          return <PreviewListFallback key={section.title} />
+        }
+
+        if (!section.data || !section.data?.list) return null
+
+        return (
+          <PreviewList
+            key={section.title}
+            title={section.title}
+            moreRoute={ROUTES.LIBRARY.ALBUMS}
+            list={section.data.list}
+          />
+        )
+      })}
     </div>
   )
 }

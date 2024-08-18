@@ -8,8 +8,7 @@ import {
 import { HomeFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
-import { homeLoader } from '@/routes/loaders/home'
-import { protectedLoader } from '@/routes/loaders/protected'
+import { protectedLoader } from '@/routes/protectedLoader'
 import { ROUTES } from '@/routes/routesList'
 
 const BaseLayout = lazy(() => import('@/app/layout/base'))
@@ -34,7 +33,6 @@ export const router = createBrowserRouter([
       {
         id: 'home',
         path: ROUTES.LIBRARY.HOME,
-        loader: homeLoader,
         element: (
           <Suspense fallback={<HomeFallback />}>
             <Home />
