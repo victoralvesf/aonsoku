@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMatches, useNavigate } from 'react-router-dom'
@@ -14,7 +15,8 @@ import {
   AlertDialogTitle,
 } from '@/app/components/ui/alert-dialog'
 import { ROUTES } from '@/routes/routesList'
-import { usePlaylists } from '@/store/playlists.store'
+import { subsonic } from '@/service/subsonic'
+import { queryKeys } from '@/utils/queryKeys'
 
 interface RemovePlaylistDialogProps {
   playlistId: string
@@ -30,25 +32,34 @@ export function RemovePlaylistDialog({
   const { t } = useTranslation()
   const navigate = useNavigate()
   const matches = useMatches()
-  const { removePlaylist } = usePlaylists()
-
-  async function handleRemovePlaylist(e: MouseEvent<HTMLButtonElement>) {
-    e.preventDefault()
-    try {
-      await removePlaylist(playlistId)
-      toast.success(t('playlist.form.delete.toast.success'))
-
-      setOpenDialog(false)
-      navigateIfNeeded()
-    } catch (_) {
-      toast.error(t('playlist.form.delete.toast.error'))
-    }
-  }
 
   function navigateIfNeeded() {
     const isOnPlaylistsPage = matches[1].pathname === ROUTES.LIBRARY.PLAYLISTS
 
     if (!isOnPlaylistsPage) navigate(ROUTES.LIBRARY.HOME)
+  }
+
+  const queryClient = useQueryClient()
+
+  const removeMutation = useMutation({
+    mutationFn: subsonic.playlists.remove,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.playlist.all],
+      })
+      toast.success(t('playlist.form.delete.toast.success'))
+      setOpenDialog(false)
+      navigateIfNeeded()
+    },
+    onError: () => {
+      toast.error(t('playlist.form.delete.toast.error'))
+    },
+  })
+
+  async function handleRemovePlaylist(e: MouseEvent<HTMLButtonElement>) {
+    e.preventDefault()
+
+    await removeMutation.mutateAsync(playlistId)
   }
 
   return (

@@ -1,3 +1,7 @@
+import { SongsCarouselFallback } from '@/app/components/fallbacks/home-fallbacks'
+import { TableFallback } from '@/app/components/fallbacks/table-fallbacks'
+import { ShadowHeaderFallback } from '@/app/components/fallbacks/ui-fallbacks'
+import ListWrapper from '@/app/components/list-wrapper'
 import { Skeleton } from '@/app/components/ui/skeleton'
 
 export function AlbumHeaderFallback() {
@@ -28,6 +32,34 @@ export function PlayButtonsFallback() {
       <div className="flex items-center justify-center w-14 h-14">
         <Skeleton className="rounded-full w-7 h-7" />
       </div>
+    </div>
+  )
+}
+
+export function AlbumFallback() {
+  return (
+    <div className="w-full">
+      <AlbumHeaderFallback />
+      <ListWrapper>
+        <PlayButtonsFallback />
+        <TableFallback />
+      </ListWrapper>
+    </div>
+  )
+}
+
+export function AlbumsFallback() {
+  return (
+    <div className="w-full">
+      <ShadowHeaderFallback />
+
+      <ListWrapper className="mt-8 flex flex-col gap-4">
+        <SongsCarouselFallback />
+        <SongsCarouselFallback />
+        <SongsCarouselFallback />
+        <SongsCarouselFallback />
+        <SongsCarouselFallback />
+      </ListWrapper>
     </div>
   )
 }

@@ -1,15 +1,14 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 
+import {
+  AlbumFallback,
+  AlbumsFallback,
+} from '@/app/components/fallbacks/album-fallbacks'
 import { HomeFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
-import { albumsListLoader, singleAlbumLoader } from '@/routes/loaders/albums'
-import { artistsListLoader, singleArtistLoader } from '@/routes/loaders/artists'
-import { homeLoader } from '@/routes/loaders/home'
-import { playlistLoader } from '@/routes/loaders/playlists'
-import { protectedLoader } from '@/routes/loaders/protected'
-import { songsListLoader } from '@/routes/loaders/songs'
+import { protectedLoader } from '@/routes/protectedLoader'
 import { ROUTES } from '@/routes/routesList'
 
 const BaseLayout = lazy(() => import('@/app/layout/base'))
@@ -34,7 +33,6 @@ export const router = createBrowserRouter([
       {
         id: 'home',
         path: ROUTES.LIBRARY.HOME,
-        loader: homeLoader,
         element: (
           <Suspense fallback={<HomeFallback />}>
             <Home />
@@ -44,7 +42,6 @@ export const router = createBrowserRouter([
       {
         id: 'artists',
         path: ROUTES.LIBRARY.ARTISTS,
-        loader: artistsListLoader,
         element: (
           <Suspense fallback={<SongsListFallback />}>
             <ArtistsList />
@@ -54,7 +51,6 @@ export const router = createBrowserRouter([
       {
         id: 'songs',
         path: ROUTES.LIBRARY.SONGS,
-        loader: songsListLoader,
         element: (
           <Suspense fallback={<SongsListFallback />}>
             <SongsList />
@@ -64,9 +60,8 @@ export const router = createBrowserRouter([
       {
         id: 'albums',
         path: ROUTES.LIBRARY.ALBUMS,
-        loader: albumsListLoader,
         element: (
-          <Suspense>
+          <Suspense fallback={<AlbumsFallback />}>
             <AlbumsList />
           </Suspense>
         ),
@@ -74,13 +69,8 @@ export const router = createBrowserRouter([
       {
         id: 'playlists',
         path: ROUTES.LIBRARY.PLAYLISTS,
-        errorElement: (
-          <Suspense>
-            <ErrorPage />
-          </Suspense>
-        ),
         element: (
-          <Suspense>
+          <Suspense fallback={<SongsListFallback />}>
             <PlaylistsPage />
           </Suspense>
         ),
@@ -89,7 +79,7 @@ export const router = createBrowserRouter([
         id: 'radios',
         path: ROUTES.LIBRARY.RADIOS,
         element: (
-          <Suspense>
+          <Suspense fallback={<SongsListFallback />}>
             <Radios />
           </Suspense>
         ),
@@ -97,9 +87,8 @@ export const router = createBrowserRouter([
       {
         id: 'artist',
         path: ROUTES.ARTIST.PATH,
-        loader: singleArtistLoader,
         element: (
-          <Suspense>
+          <Suspense fallback={<AlbumFallback />}>
             <Artist />
           </Suspense>
         ),
@@ -107,9 +96,8 @@ export const router = createBrowserRouter([
       {
         id: 'album',
         path: ROUTES.ALBUM.PATH,
-        loader: singleAlbumLoader,
         element: (
-          <Suspense>
+          <Suspense fallback={<AlbumFallback />}>
             <Album />
           </Suspense>
         ),
@@ -117,12 +105,6 @@ export const router = createBrowserRouter([
       {
         id: 'playlist',
         path: ROUTES.PLAYLIST.PATH,
-        loader: playlistLoader,
-        errorElement: (
-          <Suspense>
-            <ErrorPage />
-          </Suspense>
-        ),
         element: (
           <Suspense fallback={<PlaylistFallback />}>
             <Playlist />

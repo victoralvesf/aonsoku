@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useAsyncValue } from 'react-router-dom'
 import ArtistCard from '@/app/components/artist/artist-card'
 import {
   Carousel,
@@ -10,24 +9,26 @@ import {
 import { CarouselButton } from '@/app/components/ui/carousel-button'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { usePlayerActions } from '@/store/player.store'
-import { IArtistInfo, ISimilarArtist } from '@/types/responses/artist'
+import { ISimilarArtist } from '@/types/responses/artist'
 
 interface RelatedArtistsListProps {
   title: string
+  similarArtists: ISimilarArtist[]
 }
 
-export default function RelatedArtistsList({ title }: RelatedArtistsListProps) {
-  const data = useAsyncValue() as IArtistInfo
+export default function RelatedArtistsList({
+  title,
+  similarArtists,
+}: RelatedArtistsListProps) {
   const { getArtistAllSongs } = useSongList()
-  let list = data.similarArtist!
 
   const [api, setApi] = useState<CarouselApi>()
   const [canScrollPrev, setCanScrollPrev] = useState<boolean>()
   const [canScrollNext, setCanScrollNext] = useState<boolean>()
   const { setSongList } = usePlayerActions()
 
-  if (list.length > 16) {
-    list = list.slice(0, 16)
+  if (similarArtists.length > 16) {
+    similarArtists = similarArtists.slice(0, 16)
   }
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
@@ -78,7 +79,7 @@ export default function RelatedArtistsList({ title }: RelatedArtistsListProps) {
           setApi={setApi}
         >
           <CarouselContent>
-            {list.map((artist) => (
+            {similarArtists.map((artist) => (
               <CarouselItem key={artist.id} className="basis-1/8">
                 <ArtistCard
                   artist={artist}

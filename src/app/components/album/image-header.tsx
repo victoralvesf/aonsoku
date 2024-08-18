@@ -86,7 +86,7 @@ export default function ImageHeader({
             {title}
           </h1>
           {subtitle && artistId && (
-            <Link to={ROUTES.ARTIST.PAGE(artistId)}>
+            <Link to={ROUTES.ARTIST.PAGE(artistId)} className="w-fit">
               <h4 className="scroll-m-20 text-base 2xl:text-lg font-medium tracking-tight opacity-70 hover:underline">
                 {subtitle}
               </h4>

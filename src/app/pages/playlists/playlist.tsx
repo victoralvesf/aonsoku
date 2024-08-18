@@ -1,6 +1,7 @@
-import { Suspense, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Await, useLoaderData } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import PlayButtons from '@/app/components/album/play-buttons'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import { PlaylistOptions } from '@/app/components/playlist/options'
@@ -9,33 +10,25 @@ import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
 import { DataTable } from '@/app/components/ui/data-table'
 import ErrorPage from '@/app/pages/error-page'
 import { songsColumns } from '@/app/tables/songs-columns'
+import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
-import { PlaylistWithEntries } from '@/types/responses/playlist'
-
-interface PlaylistLoaderResponse {
-  playlistPromise: Promise<PlaylistWithEntries>
-}
+import { queryKeys } from '@/utils/queryKeys'
 
 export default function Playlist() {
-  const { playlistPromise } = useLoaderData() as PlaylistLoaderResponse
-
-  return (
-    <Suspense fallback={<PlaylistFallback />}>
-      <Await resolve={playlistPromise} errorElement={<ErrorPage />}>
-        {(playlist: PlaylistWithEntries) => (
-          <ResolvedPlaylist playlist={playlist} />
-        )}
-      </Await>
-    </Suspense>
-  )
-}
-
-function ResolvedPlaylist({ playlist }: { playlist: PlaylistWithEntries }) {
+  const { playlistId } = useParams()
   const { t } = useTranslation()
   const columns = songsColumns()
   const [removeDialogState, setRemoveDialogState] = useState(false)
   const { setSongList } = usePlayerActions()
+
+  const { data: playlist, isLoading } = useQuery({
+    queryKey: [queryKeys.playlist.single, playlistId],
+    queryFn: async () => await subsonic.playlists.getOne(playlistId!),
+  })
+
+  if (isLoading) return <PlaylistFallback />
+  if (!playlist) return <ErrorPage status={404} statusText="Not Found" />
 
   const columnsToShow: ColumnFilter[] = [
     'index',

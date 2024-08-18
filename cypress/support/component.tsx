@@ -21,6 +21,7 @@ import './commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { mount } from 'cypress/react18'
 import { MemoryRouter } from 'react-router-dom'
 import 'cypress-real-events'
@@ -33,10 +34,16 @@ import '@/i18n'
 // Alternatively, can be defined in cypress/support/component.d.ts
 // with a <reference path="./component" /> at the top of your spec.
 
+const queryClient = new QueryClient()
+
 Cypress.Commands.add('mount', (component, options = {}) => {
   const { routerProps = { initialEntries: ['/'] }, ...mountOptions } = options
 
-  const wrapped = <MemoryRouter {...routerProps}>{component}</MemoryRouter>
+  const wrapped = (
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter {...routerProps}>{component}</MemoryRouter>
+    </QueryClientProvider>
+  )
 
   return mount(wrapped, mountOptions)
 })

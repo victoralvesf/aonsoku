@@ -97,7 +97,7 @@ export function DataTable<TData, TValue>({
     <>
       {showSearch && searchColumn && (
         <div className="flex items-center mb-4" data-testid="table-search">
-          <div className="max-w-xs relative">
+          <div className="w-72 relative">
             <Input
               placeholder={t('sidebar.search')}
               value={inputValue ?? ''}

@@ -14,8 +14,6 @@ import {
 import { ROUTES } from '@/routes/routesList'
 import { useAppActions, useAppStore } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
-import { usePlaylists } from '@/store/playlists.store'
-import { useRadios } from '@/store/radios.store'
 
 interface AlertDialogProps {
   openDialog: boolean
@@ -32,15 +30,11 @@ export function LogoutConfirmDialog({
   )
   const navigate = useNavigate()
   const { clearPlayerState } = usePlayerActions()
-  const { setRadios } = useRadios()
-  const { clearPlaylists } = usePlaylists()
   const { t } = useTranslation()
 
   function handleRemoveConfig(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     removeConfig()
-    setRadios([])
-    clearPlaylists()
     clearPlayerState()
     setLogoutDialogState(false)
     navigate(ROUTES.SERVER_CONFIG, { replace: true })

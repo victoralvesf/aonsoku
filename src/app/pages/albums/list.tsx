@@ -1,8 +1,8 @@
+import { useInfiniteQuery } from '@tanstack/react-query'
 import debounce from 'lodash/debounce'
 import { ArrowDown, ArrowUp, ListFilter } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLoaderData } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import HomeSongCard from '@/app/components/home/song-card'
 import ListWrapper from '@/app/components/list-wrapper'
@@ -17,8 +17,9 @@ import {
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
-import { AlbumListType, Albums, AlbumsListData } from '@/types/responses/album'
+import { AlbumListType } from '@/types/responses/album'
 import { albumsPageFilterValues } from '@/utils/albumsPageFilterValues'
+import { queryKeys } from '@/utils/queryKeys'
 
 export default function AlbumsList() {
   const defaultOffset = 32
@@ -29,21 +30,8 @@ export default function AlbumsList() {
   const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
 
-  const { albumsCount, list: recentAlbums } = useLoaderData() as AlbumsListData
-  const [items, setItems] = useState<Albums[]>([])
-  const [itemsCount, setItemsCount] = useState(0)
-  const [hasMore, setHasMore] = useState(true)
-  const [offset, setOffset] = useState(defaultOffset)
   const [currentFilter, setCurrentFilter] = useState<AlbumListType>('newest')
   const [yearFilter, setYearFilter] = useState<'oldest' | 'newest'>('oldest')
-
-  useEffect(() => {
-    setItems(recentAlbums)
-  }, [recentAlbums])
-
-  useEffect(() => {
-    setItemsCount(albumsCount)
-  }, [albumsCount])
 
   useEffect(() => {
     scrollDivRef.current = document.querySelector(
@@ -51,53 +39,33 @@ export default function AlbumsList() {
     ) as HTMLDivElement
   }, [])
 
-  const fetchMoreData = useCallback(async () => {
+  const fetchAlbums = async ({ pageParam = 0 }) => {
     const response = await subsonic.albums.getAlbumList({
       type: currentFilter,
       size: defaultOffset,
-      offset,
+      offset: pageParam,
       fromYear: yearFilter === 'oldest' ? oldestYear : currentYear,
       toYear: yearFilter === 'oldest' ? currentYear : oldestYear,
     })
 
-    if (response && response.albumsCount) {
-      setItems((prevItems) => {
-        if (!response.list) return prevItems
-
-        const newItems = response.list.filter(
-          (album) => !prevItems.some((item) => item.id === album.id),
-        )
-        return [...prevItems, ...newItems]
-      })
-      setItemsCount(response.albumsCount)
-      setHasMore(response.list!.length >= defaultOffset)
+    let nextOffset = null
+    if (response.list && response.list.length >= defaultOffset) {
+      nextOffset = pageParam + defaultOffset
     }
 
-    setOffset((prevOffset) => prevOffset + defaultOffset)
-  }, [currentFilter, offset, yearFilter, currentYear])
-
-  const resetList = useCallback(async () => {
-    setOffset(defaultOffset)
-    setHasMore(true)
-
-    const response = await subsonic.albums.getAlbumList({
-      type: currentFilter,
-      size: defaultOffset,
-      offset: 0,
-      fromYear: yearFilter === 'oldest' ? oldestYear : currentYear,
-      toYear: yearFilter === 'oldest' ? currentYear : oldestYear,
-    })
-
-    if (response) {
-      setItems(response.list!)
-      setItemsCount(response.albumsCount!)
-      scrollDivRef.current?.scrollTo(0, 0)
+    return {
+      albums: response.list || [],
+      nextOffset,
+      albumsCount: response.albumsCount || 0,
     }
-  }, [currentFilter, currentYear, yearFilter])
+  }
 
-  useEffect(() => {
-    resetList()
-  }, [currentFilter, resetList])
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: [queryKeys.album.all, currentFilter, yearFilter],
+    queryFn: fetchAlbums,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.nextOffset,
+  })
 
   useEffect(() => {
     const handleScroll = debounce(() => {
@@ -105,7 +73,7 @@ export default function AlbumsList() {
 
       const { scrollTop, clientHeight, scrollHeight } = scrollDivRef.current
       if (scrollTop + clientHeight >= scrollHeight - 200) {
-        if (hasMore) fetchMoreData()
+        if (hasNextPage) fetchNextPage()
       }
     }, 200)
 
@@ -114,7 +82,7 @@ export default function AlbumsList() {
     return () => {
       scrollElement?.removeEventListener('scroll', handleScroll)
     }
-  }, [fetchMoreData, hasMore])
+  }, [fetchNextPage, hasNextPage])
 
   async function handlePlayAlbum(albumId: string) {
     const album = await subsonic.albums.getOne(albumId)
@@ -127,6 +95,11 @@ export default function AlbumsList() {
   const currentFilterLabel = albumsPageFilterValues.filter(
     (item) => item.key === currentFilter,
   )[0].label
+
+  if (!data) return null
+
+  const items = data.pages.flatMap((page) => page.albums) || []
+  const itemsCount = data.pages[0].albumsCount || 0
 
   return (
     <div className="w-full h-full">
@@ -196,15 +169,14 @@ export default function AlbumsList() {
 
       <ListWrapper className="pt-[--shadow-header-distance]">
         <div className="grid grid-cols-5 2xl:grid-cols-8 gap-4 h-full">
-          {items &&
-            items.map((album) => (
-              <HomeSongCard
-                key={`album-${album.id}`}
-                album={album}
-                coverArtSize={300}
-                onButtonClick={(album) => handlePlayAlbum(album.id)}
-              />
-            ))}
+          {items.map((album) => (
+            <HomeSongCard
+              key={`album-${album.id}`}
+              album={album}
+              coverArtSize={300}
+              onButtonClick={(album) => handlePlayAlbum(album.id)}
+            />
+          ))}
         </div>
       </ListWrapper>
     </div>

@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,19 +13,14 @@ import {
 } from '@/app/components/ui/dialog'
 import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
+import { subsonic } from '@/service/subsonic'
 import { useRadios } from '@/store/radios.store'
 import { Radio } from '@/types/responses/radios'
+import { queryKeys } from '@/utils/queryKeys'
 
 export function RadioFormDialog() {
   const { t } = useTranslation()
-  const {
-    data,
-    setData,
-    dialogState,
-    setDialogState,
-    createRadio,
-    updateRadio,
-  } = useRadios()
+  const { data, setData, dialogState, setDialogState } = useRadios()
 
   const [name, setName] = useState('')
   const [homePageUrl, setHomePageUrl] = useState('')
@@ -44,34 +40,50 @@ export function RadioFormDialog() {
     }
   }, [data, isCreation])
 
+  const queryClient = useQueryClient()
+
+  const createMutation = useMutation({
+    mutationFn: subsonic.radios.create,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.radio.all],
+      })
+      toast.success(t('radios.form.create.toast.success'))
+    },
+    onError: () => {
+      toast.error(t('radios.form.create.toast.error'))
+    },
+  })
+
+  const updateMutation = useMutation({
+    mutationFn: subsonic.radios.update,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.radio.all],
+      })
+      toast.success(t('radios.form.edit.toast.success'))
+    },
+    onError: () => {
+      toast.success(t('radios.form.edit.toast.error'))
+    },
+  })
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     if (isCreation) {
-      try {
-        await createRadio({
-          name,
-          homePageUrl,
-          streamUrl,
-        })
-
-        toast.success(t('radios.form.create.toast.success'))
-      } catch (_) {
-        toast.error(t('radios.form.create.toast.success'))
-      }
+      await createMutation.mutateAsync({
+        name,
+        homePageUrl,
+        streamUrl,
+      })
     } else {
-      try {
-        await updateRadio({
-          id: data.id,
-          name,
-          homePageUrl,
-          streamUrl,
-        })
-
-        toast.success(t('radios.form.edit.toast.success'))
-      } catch (_) {
-        toast.error(t('radios.form.edit.toast.success'))
-      }
+      await updateMutation.mutateAsync({
+        id: data.id,
+        name,
+        homePageUrl,
+        streamUrl,
+      })
     }
 
     clear()

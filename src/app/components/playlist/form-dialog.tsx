@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMatches, useNavigate } from 'react-router-dom'
@@ -15,19 +16,15 @@ import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
 import { Switch } from '@/app/components/ui/switch'
 import { ROUTES } from '@/routes/routesList'
+import { subsonic } from '@/service/subsonic'
 import { usePlaylists } from '@/store/playlists.store'
 import { PlaylistData } from '@/types/playlistsContext'
+import { queryKeys } from '@/utils/queryKeys'
 
 export function CreatePlaylistDialog() {
   const { t } = useTranslation()
-  const {
-    data,
-    setData,
-    playlistDialogState,
-    setPlaylistDialogState,
-    createPlaylist,
-    editPlaylist,
-  } = usePlaylists()
+  const { data, setData, playlistDialogState, setPlaylistDialogState } =
+    usePlaylists()
   const matches = useMatches()
   const navigate = useNavigate()
 
@@ -49,33 +46,51 @@ export function CreatePlaylistDialog() {
     }
   }, [data, isCreation])
 
+  const queryClient = useQueryClient()
+
+  const createMutation = useMutation({
+    mutationFn: subsonic.playlists.createWithDetails,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.playlist.all],
+      })
+      toast.success(t('playlist.form.create.toast.success'))
+    },
+    onError: () => {
+      toast.error(t('playlist.form.create.toast.success'))
+    },
+  })
+
+  const updateMutation = useMutation({
+    mutationFn: subsonic.playlists.update,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.playlist.all],
+      })
+      revalidateDataIfNeeded()
+      toast.success(t('playlist.form.edit.toast.success'))
+    },
+    onError: () => {
+      toast.error(t('playlist.form.edit.toast.error'))
+    },
+  })
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     if (isCreation) {
-      try {
-        await createPlaylist({
-          name,
-          comment,
-          isPublic: isPublic ? 'true' : 'false',
-        })
-        toast.success(t('playlist.form.create.toast.success'))
-      } catch (_) {
-        toast.error(t('playlist.form.create.toast.success'))
-      }
+      await createMutation.mutateAsync({
+        name,
+        comment,
+        isPublic: isPublic ? 'true' : 'false',
+      })
     } else {
-      try {
-        await editPlaylist({
-          playlistId: data.id,
-          name,
-          comment,
-          isPublic: isPublic ? 'true' : 'false',
-        })
-        revalidateDataIfNeeded()
-        toast.success(t('playlist.form.edit.toast.success'))
-      } catch (_) {
-        toast.error(t('playlist.form.edit.toast.error'))
-      }
+      await updateMutation.mutateAsync({
+        playlistId: data.id,
+        name,
+        comment,
+        isPublic: isPublic ? 'true' : 'false',
+      })
     }
 
     clear()

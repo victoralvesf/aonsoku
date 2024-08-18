@@ -1,5 +1,6 @@
 import { httpClient } from '@/api/httpClient'
 import {
+  CreateParams,
   PlaylistWithEntriesResponse,
   PlaylistsResponse,
   SinglePlaylistResponse,
@@ -94,10 +95,24 @@ async function update({
   })
 }
 
+export async function createWithDetails(data: CreateParams) {
+  const playlist = await create(data.name)
+
+  if (playlist) {
+    await update({
+      playlistId: playlist.id,
+      comment: data.comment,
+      isPublic: data.isPublic,
+      songIdToAdd: data.songIdToAdd,
+    })
+  }
+}
+
 export const playlists = {
   getAll,
   getOne,
   remove,
   create,
+  createWithDetails,
   update,
 }

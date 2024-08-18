@@ -1,23 +1,13 @@
-import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAsyncValue } from 'react-router-dom'
 import { DataTable } from '@/app/components/ui/data-table'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { ISong } from '@/types/responses/song'
 
-export default function ArtistTopSongs() {
-  const topSongs = useAsyncValue() as ISong[]
+export default function ArtistTopSongs({ topSongs }: { topSongs: ISong[] }) {
   const columns = songsColumns()
-
-  const memoizedTopSongs = useMemo(() => {
-    if (topSongs.length > 10) {
-      return topSongs.slice(0, 10)
-    } else {
-      return topSongs
-    }
-  }, [topSongs])
+  const topTenSongs = topSongs.length > 10 ? topSongs.slice(0, 10) : topSongs
 
   const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
@@ -42,8 +32,8 @@ export default function ArtistTopSongs() {
 
       <DataTable
         columns={columns}
-        data={memoizedTopSongs}
-        handlePlaySong={(row) => setSongList(memoizedTopSongs, row.index)}
+        data={topTenSongs}
+        handlePlaySong={(row) => setSongList(topTenSongs, row.index)}
         columnFilter={columnsToShow}
       />
     </div>

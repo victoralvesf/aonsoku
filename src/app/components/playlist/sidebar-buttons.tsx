@@ -1,26 +1,15 @@
-import { PlusIcon, RotateCw } from 'lucide-react'
+import { PlusIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { usePlaylists } from '@/store/playlists.store'
 
 export function SidebarPlaylistButtons() {
-  const { setPlaylistDialogState, fetchPlaylists } = usePlaylists()
+  const { setPlaylistDialogState } = usePlaylists()
   const { t } = useTranslation()
 
   return (
     <div className="flex items-center gap-2">
-      <SimpleTooltip text={t('playlist.refresh')}>
-        <Button
-          size="icon"
-          variant="secondary"
-          className="w-6 h-6 p-[5px]"
-          onClick={() => fetchPlaylists()}
-        >
-          <RotateCw />
-        </Button>
-      </SimpleTooltip>
-
       <SimpleTooltip text={t('playlist.form.create.title')}>
         <Button
           size="icon"

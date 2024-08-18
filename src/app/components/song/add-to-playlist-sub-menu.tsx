@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { CommandItem } from 'cmdk'
 import { PlusIcon } from 'lucide-react'
 import { KeyboardEvent } from 'react'
@@ -13,7 +14,8 @@ import {
   DropdownMenuItem,
   DropdownMenuSubContent,
 } from '@/app/components/ui/dropdown-menu'
-import { usePlaylists } from '@/store/playlists.store'
+import { subsonic } from '@/service/subsonic'
+import { queryKeys } from '@/utils/queryKeys'
 
 interface AddToPlaylistSubMenuProps {
   newPlaylistFn: () => void
@@ -24,8 +26,12 @@ export function AddToPlaylistSubMenu({
   newPlaylistFn,
   addToPlaylistFn,
 }: AddToPlaylistSubMenuProps) {
-  const { playlists } = usePlaylists()
   const { t } = useTranslation()
+
+  const { data: playlists } = useQuery({
+    queryKey: [queryKeys.playlist.all],
+    queryFn: subsonic.playlists.getAll,
+  })
 
   function avoidTypeAhead(e: KeyboardEvent<HTMLInputElement>) {
     const avoidKeys = ['ArrowLeft', 'ArrowRight', 'Escape']
@@ -55,16 +61,17 @@ export function AddToPlaylistSubMenu({
         <CommandList>
           <CommandEmpty>{t('options.playlist.notFound')}</CommandEmpty>
           <CommandGroup>
-            {playlists.map((playlist) => (
-              <CommandItem key={playlist.id} value={playlist.name}>
-                <DropdownMenuItem
-                  className="truncate h-10"
-                  onClick={() => addToPlaylistFn(playlist.id)}
-                >
-                  <span className="truncate pl-1">{playlist.name}</span>
-                </DropdownMenuItem>
-              </CommandItem>
-            ))}
+            {playlists &&
+              playlists.map((playlist) => (
+                <CommandItem key={playlist.id} value={playlist.name}>
+                  <DropdownMenuItem
+                    className="truncate h-10"
+                    onClick={() => addToPlaylistFn(playlist.id)}
+                  >
+                    <span className="truncate pl-1">{playlist.name}</span>
+                  </DropdownMenuItem>
+                </CommandItem>
+              ))}
           </CommandGroup>
         </CommandList>
       </Command>
