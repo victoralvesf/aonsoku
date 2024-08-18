@@ -6,7 +6,6 @@ export const useGetRandomSongs = () => {
   return useQuery({
     queryKey: [queryKeys.song.random],
     queryFn: () => subsonic.songs.getRandomSongs(),
-    gcTime: 0,
   })
 }
 
@@ -18,7 +17,6 @@ export const useGetRecentlyAdded = () => {
         size: 16,
         type: 'newest',
       }),
-    gcTime: 0,
   })
 }
 
@@ -30,7 +28,6 @@ export const useGetMostPlayed = () => {
         size: 16,
         type: 'frequent',
       }),
-    gcTime: 0,
   })
 }
 
@@ -42,7 +39,6 @@ export const useGetRecentlyPlayed = () => {
         size: 16,
         type: 'recent',
       }),
-    gcTime: 0,
   })
 }
 
@@ -54,6 +50,5 @@ export const useGetRandomAlbums = () => {
         size: 16,
         type: 'random',
       }),
-    gcTime: 0,
   })
 }

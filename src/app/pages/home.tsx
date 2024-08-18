@@ -17,7 +17,7 @@ import { ROUTES } from '@/routes/routesList'
 export default function Home() {
   const { t } = useTranslation()
 
-  const { data: randomSongs, isLoading } = useGetRandomSongs()
+  const { data: randomSongs, isLoading, isFetching } = useGetRandomSongs()
 
   const recentlyPlayed = useGetRecentlyPlayed()
   const mostPlayed = useGetMostPlayed()
@@ -49,8 +49,11 @@ export default function Home() {
 
   return (
     <div className="w-full px-8 py-6">
-      {isLoading && <HeaderFallback />}
-      {randomSongs && !isLoading && <HomeHeader songs={randomSongs} />}
+      {isFetching || isLoading ? (
+        <HeaderFallback />
+      ) : (
+        <HomeHeader songs={randomSongs || []} />
+      )}
 
       {sections.map((section) => {
         if (section.loader) {
