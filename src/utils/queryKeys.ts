@@ -38,7 +38,3 @@ export const queryKeys = {
   song,
   radio,
 }
-
-export const allQueryKeys: string[] = Object.values(queryKeys).flatMap(
-  Object.values,
-)

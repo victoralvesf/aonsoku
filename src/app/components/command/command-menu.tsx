@@ -29,7 +29,7 @@ import { ISimilarArtist } from '@/types/responses/artist'
 import { ScanStatus } from '@/types/responses/library'
 import { ISong } from '@/types/responses/song'
 import dateTime from '@/utils/dateTime'
-import { allQueryKeys, queryKeys } from '@/utils/queryKeys'
+import { queryKeys } from '@/utils/queryKeys'
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS' | 'SERVER'
 
@@ -144,11 +144,10 @@ export default function CommandMenu() {
     delay(async () => {
       const response = await subsonic.library.startScan()
 
-      if (response) setScanStatus(response)
-
-      queryClient.invalidateQueries({
-        queryKey: allQueryKeys,
-      })
+      if (response) {
+        setScanStatus(response)
+        await queryClient.invalidateQueries()
+      }
 
       setLoadingStatus(false)
     }, 2000)
