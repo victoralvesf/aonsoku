@@ -165,6 +165,7 @@ export const brazilianPortuguese = {
     },
     fullscreen: {
       noLyrics: 'Letra não encontrada',
+      loadingLyrics: 'Procurando a letra...',
       queue: 'Fila',
       playing: 'Tocando agora',
       lyrics: 'Letra',

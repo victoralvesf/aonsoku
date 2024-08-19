@@ -165,6 +165,7 @@ export const english = {
     },
     fullscreen: {
       noLyrics: 'No lyrics found',
+      loadingLyrics: 'Searching for lyrics...',
       queue: 'Queue',
       playing: 'Playing now',
       lyrics: 'Lyrics',

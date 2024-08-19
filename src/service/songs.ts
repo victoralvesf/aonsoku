@@ -29,12 +29,17 @@ async function getTopSongs(artistName: string) {
   return response?.data.topSongs.song
 }
 
-async function getLyrics(artistName: string, songName: string) {
+interface GetLyricsData {
+  artist: string
+  title: string
+}
+
+async function getLyrics({ artist, title }: GetLyricsData) {
   const response = await httpClient<LyricsResponse>('/getLyrics', {
     method: 'GET',
     query: {
-      artist: artistName,
-      title: songName,
+      artist,
+      title,
     },
   })
 
