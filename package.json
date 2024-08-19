@@ -14,6 +14,7 @@
     "test": "cypress run --component"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-aspect-ratio": "^1.1.0",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -51,6 +52,7 @@
     "react-country-flag": "^3.1.0",
     "react-dom": "^18.2.0",
     "react-fast-marquee": "^1.6.5",
+    "react-hook-form": "^7.52.2",
     "react-hotkeys-hook": "^4.5.0",
     "react-i18next": "^14.1.2",
     "react-lazy-load-image-component": "^1.6.0",
@@ -61,6 +63,7 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.1",
+    "zod": "^3.23.8",
     "zustand": "^4.5.4"
   },
   "devDependencies": {

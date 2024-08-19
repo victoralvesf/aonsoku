@@ -5,19 +5,17 @@ import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { pingServer } from '@/api/pingServer'
-import { IAppContext } from '@/types/serverConfig'
-import { removeSlashFromUrl } from '@/utils/removeSlashFromUrl'
+import { IAppContext, IServerConfig } from '@/types/serverConfig'
 import { saltWord } from '@/utils/salt'
 
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
     persist(
       devtools(
-        immer((set, get) => ({
+        immer((set) => ({
           data: {
             isServerConfigured: false,
             osType: '',
-            protocol: 'http://',
             url: '',
             username: '',
             password: '',
@@ -37,11 +35,6 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.osType = value
               })
             },
-            setProtocol: (value) => {
-              set((state) => {
-                state.data.protocol = value
-              })
-            },
             setUrl: (value) => {
               set((state) => {
                 state.data.url = value
@@ -57,17 +50,15 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.password = value
               })
             },
-            saveConfig: async () => {
-              const { username, password, protocol, url } = get().data
+            saveConfig: async ({ url, username, password }: IServerConfig) => {
               const token = MD5(`${password}${saltWord}`).toString()
-              const serverHost = removeSlashFromUrl(url)
-              const fullUrl = `${protocol}${serverHost}`
 
-              const canConnect = await pingServer(fullUrl, username, token)
+              const canConnect = await pingServer(url, username, token)
 
               if (canConnect) {
                 set((state) => {
-                  state.data.url = fullUrl
+                  state.data.url = url
+                  state.data.username = username
                   state.data.password = token
                   state.data.isServerConfigured = true
                 })
@@ -84,7 +75,6 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               set((state) => {
                 state.data.isServerConfigured = false
                 state.data.osType = ''
-                state.data.protocol = 'http://'
                 state.data.url = ''
                 state.data.username = ''
                 state.data.password = ''
