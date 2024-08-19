@@ -30,3 +30,7 @@ export function convertSecondsToHumanRead(time: number) {
 
   return finalText.join(' ')
 }
+
+export function convertMinutesToMs(minutes: number): number {
+  return 60 * minutes * 1000
+}

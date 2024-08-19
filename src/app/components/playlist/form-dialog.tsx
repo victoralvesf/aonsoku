@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useMatches, useNavigate } from 'react-router-dom'
 
 import { toast } from 'react-toastify'
 import { Button } from '@/app/components/ui/button'
@@ -15,7 +14,6 @@ import {
 import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
 import { Switch } from '@/app/components/ui/switch'
-import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { usePlaylists } from '@/store/playlists.store'
 import { PlaylistData } from '@/types/playlistsContext'
@@ -25,8 +23,6 @@ export function CreatePlaylistDialog() {
   const { t } = useTranslation()
   const { data, setData, playlistDialogState, setPlaylistDialogState } =
     usePlaylists()
-  const matches = useMatches()
-  const navigate = useNavigate()
 
   const [name, setName] = useState('')
   const [comment, setComment] = useState('')
@@ -64,10 +60,14 @@ export function CreatePlaylistDialog() {
   const updateMutation = useMutation({
     mutationFn: subsonic.playlists.update,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [queryKeys.playlist.all],
-      })
-      revalidateDataIfNeeded()
+      Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.playlist.all],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.playlist.single, data.id],
+        }),
+      ])
       toast.success(t('playlist.form.edit.toast.success'))
     },
     onError: () => {
@@ -93,19 +93,12 @@ export function CreatePlaylistDialog() {
       })
     }
 
-    clear()
     setPlaylistDialogState(false)
+    clear()
   }
 
   function clear() {
     setData({} as PlaylistData)
-  }
-
-  function revalidateDataIfNeeded() {
-    const routePath = ROUTES.PLAYLIST.PAGE(data.id)
-    const isOnPlaylistPage = matches[1].pathname === routePath
-
-    if (isOnPlaylistPage) navigate(routePath)
   }
 
   return (

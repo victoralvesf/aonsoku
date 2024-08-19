@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { subsonic } from '@/service/subsonic'
+import { convertMinutesToMs } from '@/utils/convertSecondsToTime'
 import { queryKeys } from '@/utils/queryKeys'
 
 export const useGetRandomSongs = () => {
@@ -39,6 +40,7 @@ export const useGetRecentlyPlayed = () => {
         size: 16,
         type: 'recent',
       }),
+    refetchInterval: convertMinutesToMs(2),
   })
 }
 
