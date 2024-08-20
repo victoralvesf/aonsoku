@@ -136,6 +136,10 @@ img {
   @apply bg-foreground/20 dark:bg-accent;
 }
 
+.required {
+  @apply after:content-['*'] after:text-destructive after:ml-1;
+}
+
 /* Native Scroll Bar */
 ::-webkit-scrollbar {
   width: 7px;

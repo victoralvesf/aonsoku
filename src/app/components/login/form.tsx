@@ -100,7 +100,9 @@ export function LoginForm() {
               name="url"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('login.form.url')}</FormLabel>
+                  <FormLabel className="required">
+                    {t('login.form.url')}
+                  </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -125,7 +127,9 @@ export function LoginForm() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('login.form.username')}</FormLabel>
+                  <FormLabel className="required">
+                    {t('login.form.username')}
+                  </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -148,7 +152,9 @@ export function LoginForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('login.form.password')}</FormLabel>
+                  <FormLabel className="required">
+                    {t('login.form.password')}
+                  </FormLabel>
                   <FormControl>
                     <Input
                       {...field}

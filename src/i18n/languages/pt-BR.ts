@@ -49,7 +49,10 @@ export const brazilianPortuguese = {
         labels: {
           name: 'Nome',
           comment: 'Comentário',
+          commentDescription: 'Escreva uma breve descrição desta playlist',
           isPublic: 'Pública',
+          isPublicDescription:
+            'Selecione esta opção para tornar a playlist pública. Isso permitirá que outros usuários vejam e acessem sua playlist.',
         },
         create: {
           title: 'Criar Playlist',
@@ -74,6 +77,9 @@ export const brazilianPortuguese = {
             success: 'Playlist excluída com sucesso!',
             error: 'Falha ao excluir esta playlist!',
           },
+        },
+        validations: {
+          nameLength: 'O nome da playlist deve conter pelo menos 2 caracteres.',
         },
       },
     },
@@ -194,9 +200,10 @@ export const brazilianPortuguese = {
           url: 'Por favor, insira uma URL válida.',
           protocol: 'A URL deve começar com http:// ou https://',
           username: 'Por favor, forneça um nome de usuário',
-          usernameLength: 'O nome de usuário deve ter pelo menos 2 caracteres.',
+          usernameLength:
+            'O nome de usuário deve conter pelo menos 2 caracteres.',
           password: 'Por favor, forneça uma senha',
-          passwordLength: 'A senha deve ter pelo menos 2 caracteres.',
+          passwordLength: 'A senha deve conter pelo menos 2 caracteres.',
         },
       },
     },

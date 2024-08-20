@@ -49,7 +49,10 @@ export const english = {
         labels: {
           name: 'Name',
           comment: 'Comment',
+          commentDescription: 'Write a short description of this playlist',
           isPublic: 'Public',
+          isPublicDescription:
+            'Select this option to make the playlist public. This will allow other users to view and access your playlist.',
         },
         create: {
           title: 'Create Playlist',
@@ -74,6 +77,9 @@ export const english = {
             success: 'Playlist removed successfully!',
             error: 'Failed to remove playlist!',
           },
+        },
+        validations: {
+          nameLength: 'Playlist name must be at least 2 characters.',
         },
       },
     },
