@@ -278,6 +278,12 @@ export const english = {
             error: 'Failed to remove radio!',
           },
         },
+        validations: {
+          name: 'Radio name must be at least 3 characters.',
+          url: 'Please provide a valid URL.',
+          homepageUrlLength: 'Homepage URL must be at least 10 characters',
+          streamUrlLength: 'Stream URL must be at least 10 characters',
+        },
       },
     },
     time: {

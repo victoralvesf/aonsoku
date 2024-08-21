@@ -1,8 +1,11 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { FormEvent, useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import { toast } from 'react-toastify'
+import { z } from 'zod'
 import { Button } from '@/app/components/ui/button'
 import {
   Dialog,
@@ -11,34 +14,69 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/app/components/ui/dialog'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/app/components/ui/form'
 import { Input } from '@/app/components/ui/input'
-import { Label } from '@/app/components/ui/label'
 import { subsonic } from '@/service/subsonic'
 import { useRadios } from '@/store/radios.store'
 import { Radio } from '@/types/responses/radios'
 import { queryKeys } from '@/utils/queryKeys'
 
+const radioSchema = z.object({
+  name: z.string().min(3, { message: 'radios.form.validations.name' }),
+  homePageUrl: z
+    .string()
+    .url({ message: 'radios.form.validations.url' })
+    .min(10, { message: 'radios.form.validations.homepageUrlLength' })
+    .refine((value) => /^https?:\/\//.test(value), {
+      message: 'login.form.validations.protocol',
+    })
+    .or(z.literal('')),
+  streamUrl: z
+    .string()
+    .url({ message: 'radios.form.validations.url' })
+    .min(10, { message: 'radios.form.validations.streamUrlLength' })
+    .refine((value) => /^https?:\/\//.test(value), {
+      message: 'login.form.validations.protocol',
+    }),
+})
+
+type RadioSchema = z.infer<typeof radioSchema>
+
+const defaultValues: RadioSchema = {
+  name: '',
+  homePageUrl: '',
+  streamUrl: '',
+}
+
 export function RadioFormDialog() {
   const { t } = useTranslation()
   const { data, setData, dialogState, setDialogState } = useRadios()
 
-  const [name, setName] = useState('')
-  const [homePageUrl, setHomePageUrl] = useState('')
-  const [streamUrl, setStreamUrl] = useState('')
-
   const isCreation = Object.keys(data).length === 0
+
+  const form = useForm<RadioSchema>({
+    resolver: zodResolver(radioSchema),
+    defaultValues,
+  })
 
   useEffect(() => {
     if (isCreation) {
-      setName('')
-      setHomePageUrl('')
-      setStreamUrl('')
+      form.reset(defaultValues)
     } else {
-      setName(data.name ?? '')
-      setHomePageUrl(data.homePageUrl ?? '')
-      setStreamUrl(data.streamUrl ?? '')
+      form.reset({
+        name: data.name ?? '',
+        homePageUrl: data.homePageUrl ?? '',
+        streamUrl: data.streamUrl ?? '',
+      })
     }
-  }, [data, isCreation])
+  }, [data, form, isCreation])
 
   const queryClient = useQueryClient()
 
@@ -68,9 +106,7 @@ export function RadioFormDialog() {
     },
   })
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
+  async function onSubmit({ name, homePageUrl, streamUrl }: RadioSchema) {
     if (isCreation) {
       await createMutation.mutateAsync({
         name,
@@ -86,8 +122,8 @@ export function RadioFormDialog() {
       })
     }
 
-    clear()
     setDialogState(false)
+    clear()
   }
 
   function clear() {
@@ -104,63 +140,79 @@ export function RadioFormDialog() {
       }}
     >
       <DialogContent className="max-w-[500px]">
-        <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogTitle>
-              {t(`radios.form.${isCreation ? 'create' : 'edit'}.title`)}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-4">
-            <div className="flex flex-col gap-2 items-start">
-              <Label htmlFor="name" className="text-right font-normal">
-                {t('radios.table.name')} *
-              </Label>
-              <Input
-                id="name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <DialogHeader>
+              <DialogTitle>
+                {t(`radios.form.${isCreation ? 'create' : 'edit'}.title`)}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="my-4 space-y-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="required">
+                      {t('radios.table.name')}
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} id="radio-name" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="homePageUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('radios.table.homepage')}</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        id="radio-home-page-url"
+                        autoCorrect="false"
+                        autoCapitalize="false"
+                        spellCheck="false"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="streamUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="required">
+                      {t('radios.table.stream')}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        id="radio-stream-url"
+                        autoCorrect="false"
+                        autoCapitalize="false"
+                        spellCheck="false"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
-            <div className="flex flex-col gap-2 items-start">
-              <Label htmlFor="home-page-url" className="text-right font-normal">
-                {t('radios.table.homepage')}
-              </Label>
-              <Input
-                id="home-page-url"
-                type="url"
-                pattern="https?://.*"
-                value={homePageUrl}
-                autoCorrect="false"
-                autoCapitalize="false"
-                spellCheck="false"
-                onChange={(e) => setHomePageUrl(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col gap-2 items-start">
-              <Label htmlFor="stream-url" className="text-right font-normal">
-                {t('radios.table.stream')} *
-              </Label>
-              <Input
-                id="stream-url"
-                type="url"
-                pattern="https?://.*"
-                value={streamUrl}
-                required
-                autoCorrect="false"
-                autoCapitalize="false"
-                spellCheck="false"
-                onChange={(e) => setStreamUrl(e.target.value)}
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="submit">
-              {t(`radios.form.${isCreation ? 'create' : 'edit'}.button`)}
-            </Button>
-          </DialogFooter>
-        </form>
+            <DialogFooter>
+              <Button type="submit">
+                {t(`radios.form.${isCreation ? 'create' : 'edit'}.button`)}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   )

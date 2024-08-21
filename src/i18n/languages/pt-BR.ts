@@ -279,6 +279,14 @@ export const brazilianPortuguese = {
             error: 'Falha ao excluir este rádio!',
           },
         },
+        validations: {
+          name: 'O nome do rádio deve conter pelo menos 3 caracteres.',
+          url: 'Por favor, forneça uma URL válida.',
+          homepageUrlLength:
+            'A URL da página inicial deve conter pelo menos 10 caracteres.',
+          streamUrlLength:
+            'A URL de transmissão deve conter pelo menos 10 caracteres.',
+        },
       },
     },
     time: {
