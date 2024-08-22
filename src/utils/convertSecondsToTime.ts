@@ -13,6 +13,7 @@ export function convertSecondsToTime(seconds: number): string {
 }
 
 export function convertSecondsToHumanRead(time: number) {
+  const { t } = i18n
   const dur = dateTime.duration(time, 'seconds')
 
   const numberOfDays = Math.floor(dur.days())
@@ -20,10 +21,10 @@ export function convertSecondsToHumanRead(time: number) {
   const numberOfMinutes = dur.minutes()
   const numberOfSeconds = dur.seconds()
 
-  const days = i18n.t('time.days', { days: dur.format('DD') })
-  const hours = i18n.t('time.hour', { hour: dur.format('HH') })
-  const minutes = i18n.t('time.minutes', { minutes: dur.format('mm') })
-  const seconds = i18n.t('time.seconds', { seconds: dur.format('ss') })
+  const days = t('time.days', { days: dur.format('DD'), count: numberOfDays })
+  const hours = t('time.hour', { hour: dur.format('HH') })
+  const minutes = t('time.minutes', { minutes: dur.format('mm') })
+  const seconds = t('time.seconds', { seconds: dur.format('ss') })
 
   const finalText = []
 

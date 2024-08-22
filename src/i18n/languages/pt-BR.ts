@@ -290,7 +290,8 @@ export const brazilianPortuguese = {
       },
     },
     time: {
-      days: '{{days}} dias',
+      days_one: '{{days}} dia',
+      days_other: '{{days}} dias',
       hour: '{{hour}}h',
       minutes: '{{minutes}}min',
       seconds: '{{seconds}}s',

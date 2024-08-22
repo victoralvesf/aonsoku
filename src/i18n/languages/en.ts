@@ -287,7 +287,8 @@ export const english = {
       },
     },
     time: {
-      days: '{{days}} days',
+      days_one: '{{days}} day',
+      days_other: '{{days}} days',
       hour: '{{hour}} hr',
       minutes: '{{minutes}} min',
       seconds: '{{seconds}} s',
