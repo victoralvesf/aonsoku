@@ -118,8 +118,8 @@ pnpm run tauri dev
   - [x] Playlist
   - [x] Album
   - [x] Artist
-  - [ ] Song
-- [ ] Queue page
+  - [x] Song
+- [x] Queue page
 - [ ] Playlist editor
 - [ ] Synced lyrics
 - [ ] Podcast support
