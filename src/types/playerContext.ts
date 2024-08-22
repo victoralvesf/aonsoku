@@ -20,6 +20,7 @@ export interface IPlayerState {
   currentDuration: number
   mediaType: 'song' | 'radio'
   audioPlayerRef: HTMLAudioElement | null
+  queueDrawerState: boolean
 }
 
 export interface IPlayerProgress {
@@ -52,6 +53,8 @@ export interface IPlayerActions {
   setAudioPlayerRef: (ref: HTMLAudioElement) => void
   setNextOnQueue: (songlist: ISong[]) => void
   setLastOnQueue: (songlist: ISong[]) => void
+  removeSongFromQueue: (id: string) => void
+  setQueueDrawerState: (state: boolean) => void
 }
 
 export interface IPlayerContext {

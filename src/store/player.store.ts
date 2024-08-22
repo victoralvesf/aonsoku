@@ -8,6 +8,7 @@ import { createWithEqualityFn } from 'zustand/traditional'
 import { subsonic } from '@/service/subsonic'
 import { IPlayerContext } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
+import { areSongListsEqual } from '@/utils/compareSongLists'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
 
 export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
@@ -33,6 +34,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             currentDuration: 0,
             mediaType: 'song',
             audioPlayerRef: null,
+            queueDrawerState: false,
           },
           playerProgress: {
             progress: 0,
@@ -40,11 +42,20 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
           actions: {
             setSongList: (songlist, index, shuffle = false) => {
               const { currentList, currentSongIndex } = get().songlist
-              if (currentList !== songlist) {
+
+              const listsAreEqual = areSongListsEqual(currentList, songlist)
+              const songHasChanged = currentSongIndex !== index
+
+              if (!listsAreEqual || (listsAreEqual && songHasChanged)) {
                 get().actions.resetProgress()
               }
-              if (currentList === songlist && currentSongIndex !== index) {
-                get().actions.resetProgress()
+
+              if (listsAreEqual && songHasChanged && !shuffle) {
+                set((state) => {
+                  state.playerState.isPlaying = true
+                  state.songlist.currentSongIndex = index
+                })
+                return
               }
 
               set((state) => {
@@ -243,6 +254,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.isPlaying = false
                 state.playerState.isLoopActive = false
                 state.playerState.isShuffleActive = false
+                state.playerState.queueDrawerState = false
               })
               get().actions.resetProgress()
             },
@@ -361,6 +373,36 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 }),
               )
             },
+            removeSongFromQueue: (id) => {
+              const { currentList, originalList, shuffledList } = get().songlist
+
+              const newCurrentList = currentList.filter(
+                (song) => song.id !== id,
+              )
+
+              if (newCurrentList.length === 0) {
+                get().actions.clearPlayerState()
+                return
+              }
+
+              const newOriginalList = originalList.filter(
+                (song) => song.id !== id,
+              )
+              const newShuffledList = shuffledList.filter(
+                (song) => song.id !== id,
+              )
+
+              set((state) => {
+                state.songlist.currentList = newCurrentList
+                state.songlist.originalList = newOriginalList
+                state.songlist.shuffledList = newShuffledList
+              })
+            },
+            setQueueDrawerState: (status) => {
+              set((state) => {
+                state.playerState.queueDrawerState = status
+              })
+            },
           },
         })),
         { name: 'player_store' },
@@ -376,6 +418,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             'actions',
             'playerState.isPlaying',
             'playerState.audioPlayerRef',
+            'playerState.queueDrawerState',
           ])
 
           return appStore
@@ -430,3 +473,9 @@ export const usePlayerRef = () =>
   usePlayerStore((state) => state.playerState.audioPlayerRef)
 
 export const getVolume = () => usePlayerStore.getState().playerState.volume
+
+export const useQueueDrawerState = () =>
+  usePlayerStore((state) => state.playerState.queueDrawerState)
+
+export const usePlayerCurrentList = () =>
+  usePlayerStore((state) => state.songlist.currentList)

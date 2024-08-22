@@ -40,7 +40,6 @@ interface DrawerContentProps
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   DrawerContentProps
-  // React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
 >(({ className, children, showHandle = true, ...props }, ref) => (
   <DrawerPortal>
     <DrawerOverlay />

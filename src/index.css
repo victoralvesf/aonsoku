@@ -25,6 +25,7 @@
     --input: 220 13% 91%;
     --ring: 142.1 76.2% 36.3%;
     --radius: 0.5rem;
+    --main-background: hsl(240, 14%, 99%);
   }
 
   .dark {
@@ -47,6 +48,7 @@
     --border: 215 27.9% 19.9%;
     --input: 215 27.9% 19.9%;
     --ring: 142.1 70.6% 45.3%;
+    --main-background: hsl(220, 53%, 10%);
   }
 }
 
@@ -138,6 +140,14 @@ img {
 
 .required {
   @apply after:content-['*'] after:text-destructive after:ml-1;
+}
+
+.queue-list-drawer {
+  @apply w-screen;
+  @apply h-[calc(100vh-var(--player-height))];
+  @apply mb-[--player-height] pb-[--player-height];
+  @apply z-30;
+  @apply bg-[--main-background];
 }
 
 /* Native Scroll Bar */

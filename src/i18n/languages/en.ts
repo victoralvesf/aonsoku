@@ -311,6 +311,10 @@ export const english = {
       failed: 'There was an error downloading your file.',
       completed: 'Your file has been downloaded.',
     },
+    queue: {
+      title: 'Queue',
+      clear: 'Clear queue',
+    },
     dayjs: {
       relativeTime: {
         future: 'in %s',

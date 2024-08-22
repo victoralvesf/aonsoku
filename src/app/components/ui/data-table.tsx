@@ -41,6 +41,7 @@ interface DataTableProps<TData, TValue> {
   searchColumn?: string
   noRowsMessage?: string
   allowRowSelection?: boolean
+  showHeader?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -53,6 +54,7 @@ export function DataTable<TData, TValue>({
   searchColumn,
   noRowsMessage = 'No results.',
   allowRowSelection = true,
+  showHeader = true,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation()
   const newColumns = columns.filter((column) => {
@@ -132,39 +134,41 @@ export function DataTable<TData, TValue>({
           data-testid="data-table"
           role="table"
         >
-          <div>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <div
-                key={headerGroup.id}
-                className="w-full flex flex-row border-b"
-                role="row"
-              >
-                {headerGroup.headers.map((header) => {
-                  const columnDef = header.column
-                    .columnDef as ColumnDefType<TData>
+          {showHeader && (
+            <div>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <div
+                  key={headerGroup.id}
+                  className="w-full flex flex-row border-b"
+                  role="row"
+                >
+                  {headerGroup.headers.map((header) => {
+                    const columnDef = header.column
+                      .columnDef as ColumnDefType<TData>
 
-                  return (
-                    <div
-                      key={header.id}
-                      className={clsx(
-                        'p-2 h-12 flex items-center justify-start align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-4',
-                        columnDef.className,
-                      )}
-                      style={columnDef.style}
-                      role="columnheader"
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </div>
-                  )
-                })}
-              </div>
-            ))}
-          </div>
+                    return (
+                      <div
+                        key={header.id}
+                        className={clsx(
+                          'p-2 h-12 flex items-center justify-start align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-4',
+                          columnDef.className,
+                        )}
+                        style={columnDef.style}
+                        role="columnheader"
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
+                      </div>
+                    )
+                  })}
+                </div>
+              ))}
+            </div>
+          )}
           <div className="[&_div:last-child]:border-0">
             <div className="w-full h-full overflow-hidden">
               {table.getRowModel().rows?.length ? (
