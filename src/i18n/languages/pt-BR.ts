@@ -314,6 +314,10 @@ export const brazilianPortuguese = {
       failed: 'Ocorreu um erro ao baixar o arquivo.',
       completed: 'Download concluído com sucesso.',
     },
+    queue: {
+      title: 'Fila de reprodução',
+      clear: 'Limpar fila',
+    },
     dayjs: {
       relativeTime: {
         future: 'em %s',

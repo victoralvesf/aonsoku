@@ -12,11 +12,11 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { Button } from '@/app/components/ui/button'
 import {
   usePlayerActions,
+  usePlayerCurrentList,
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerMediaType,
   usePlayerShuffle,
-  usePlayerSonglist,
 } from '@/store/player.store'
 import { Radio } from '@/types/responses/radios'
 import { ISong } from '@/types/responses/song'
@@ -42,17 +42,12 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
     hasNextSong,
     hasPrevSong,
   } = usePlayerActions()
-  const { currentList } = usePlayerSonglist()
+  const currentList = usePlayerCurrentList()
 
-  useHotkeys(
-    'space',
-    () => {
-      if (currentList.length > 0) {
-        togglePlayPause()
-      }
-    },
-    { preventDefault: true },
-  )
+  useHotkeys('space', () => togglePlayPause(), {
+    preventDefault: true,
+    enabled: currentList.length > 0,
+  })
 
   useEffect(() => {
     manageMediaSession.setHandlers({
