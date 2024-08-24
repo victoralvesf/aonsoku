@@ -35,9 +35,7 @@ export function SelectSongHeader({ table }: { table: Table<ISong> }) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <SelectedSongsOptions
-              rows={table.getFilteredSelectedRowModel().rows}
-            />
+            <SelectedSongsOptions table={table} />
           </DropdownMenuContent>
         </DropdownMenu>
       )}
@@ -50,7 +48,11 @@ export function SelectSongHeader({ table }: { table: Table<ISong> }) {
   )
 }
 
-export function SelectSongCell({ row }: { row: Row<ISong> }) {
+interface SelectSongCellProps {
+  row: Row<ISong>
+}
+
+export function SelectSongCell({ row }: SelectSongCellProps) {
   return (
     <div className="flex gap-1 items-center">
       <TableLikeButton
@@ -59,7 +61,7 @@ export function SelectSongCell({ row }: { row: Row<ISong> }) {
         starred={typeof row.original.starred === 'string'}
       />
       <TableActionButton
-        optionsMenuItems={<SongOptions song={row.original} />}
+        optionsMenuItems={<SongOptions song={row.original} index={row.index} />}
       />
       <Checkbox
         checked={row.getIsSelected()}

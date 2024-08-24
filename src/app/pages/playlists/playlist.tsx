@@ -7,6 +7,7 @@ import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import { PlaylistOptions } from '@/app/components/playlist/options'
 import { PlaylistPageHeader } from '@/app/components/playlist/page-header'
 import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
+import { RemoveSongFromPlaylistDialog } from '@/app/components/playlist/remove-song-dialog'
 import { DataTable } from '@/app/components/ui/data-table'
 import ErrorPage from '@/app/pages/error-page'
 import { songsColumns } from '@/app/tables/songs-columns'
@@ -84,6 +85,8 @@ export default function Playlist() {
         columnFilter={columnsToShow}
         noRowsMessage={t('playlist.noSongList')}
       />
+
+      <RemoveSongFromPlaylistDialog />
     </div>
   )
 }

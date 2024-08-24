@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMatches } from 'react-router-dom'
 import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
 import { AddToPlaylistSubMenu } from '@/app/components/song/add-to-playlist-sub-menu'
@@ -9,17 +10,24 @@ import {
 import { useDownload } from '@/app/hooks/use-download'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
+import { usePlaylistRemoveSong } from '@/store/playlists.store'
 import { ISong } from '@/types/responses/song'
 import { queryKeys } from '@/utils/queryKeys'
 import { isTauri } from '@/utils/tauriTools'
 
 interface SongOptionsProps {
   song: ISong
+  index: number
 }
 
-export function SongOptions({ song }: SongOptionsProps) {
+export function SongOptions({ song, index }: SongOptionsProps) {
   const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
   const { downloadBrowser, downloadTauri } = useDownload()
+  const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
+  const matches = useMatches()
+
+  const isOnPlaylistPage = matches.find((route) => route.id === 'playlist')
+  const playlistId = isOnPlaylistPage?.params.playlistId ?? ''
 
   async function handlePlayNext() {
     setNextOnQueue([song])
@@ -42,6 +50,13 @@ export function SongOptions({ song }: SongOptionsProps) {
 
   const updateMutation = useMutation({
     mutationFn: subsonic.playlists.update,
+    onSuccess: () => {
+      if (isOnPlaylistPage) {
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.playlist.single, playlistId],
+        })
+      }
+    },
   })
 
   async function handleAddToPlaylist(id: string) {
@@ -69,6 +84,14 @@ export function SongOptions({ song }: SongOptionsProps) {
     })
   }
 
+  function handleRemoveSongFromPlaylist() {
+    setActionData({
+      playlistId,
+      songIndexes: [index.toString()],
+    })
+    setConfirmDialogState(true)
+  }
+
   return (
     <>
       <DropdownMenuGroup>
@@ -92,6 +115,11 @@ export function SongOptions({ song }: SongOptionsProps) {
           addToPlaylistFn={handleAddToPlaylist}
         />
       </OptionsButtons.AddToPlaylist>
+      {isOnPlaylistPage && (
+        <OptionsButtons.RemoveFromPlaylist
+          onClick={handleRemoveSongFromPlaylist}
+        />
+      )}
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
         <OptionsButtons.Download
