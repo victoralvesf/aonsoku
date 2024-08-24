@@ -81,6 +81,17 @@ export const english = {
         validations: {
           nameLength: 'Playlist name must be at least 2 characters.',
         },
+        removeSong: {
+          title_one: 'Are you sure you want to remove the selected song?',
+          title_other: 'Are you sure you want to remove the selected songs?',
+          description: 'This action cannot be undone.',
+          toast: {
+            success_one: 'Song removed successfully!',
+            success_other: 'Songs removed successfully!',
+            error_one: 'Failed to remove the song!',
+            error_other: 'Failed to remove the songs!',
+          },
+        },
       },
     },
     album: {
@@ -237,6 +248,7 @@ export const english = {
         search: 'Find a playlist',
         create: 'New playlist',
         notFound: 'No playlist found',
+        removeSong: 'Remove from playlist',
       },
     },
     radios: {

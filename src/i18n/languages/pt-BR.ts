@@ -81,6 +81,19 @@ export const brazilianPortuguese = {
         validations: {
           nameLength: 'O nome da playlist deve conter pelo menos 2 caracteres.',
         },
+        removeSong: {
+          title_one:
+            'Você tem certeza de que deseja remover a música selecionada?',
+          title_other:
+            'Você tem certeza de que deseja remover as músicas selecionadas?',
+          description: 'Essa ação não poderá ser desfeita.',
+          toast: {
+            success_one: 'Música removida com sucesso!',
+            success_other: 'Músicas removidas com sucesso!',
+            error_one: 'Falha ao remover a música!',
+            error_other: 'Falha ao remover as músicas!',
+          },
+        },
       },
     },
     album: {
@@ -238,6 +251,7 @@ export const brazilianPortuguese = {
         search: 'Procurar uma playlist',
         create: 'Nova playlist',
         notFound: 'Nenhuma playlist encontrada',
+        removeSong: 'Remover da playlist',
       },
     },
     radios: {

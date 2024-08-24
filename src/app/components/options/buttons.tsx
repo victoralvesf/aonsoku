@@ -91,6 +91,17 @@ function AddToPlaylist(props: DropdownMenuItemProps) {
   )
 }
 
+function RemoveFromPlaylist(props: DropdownMenuItemProps) {
+  const { t } = useTranslation()
+
+  return (
+    <DropdownMenuItem {...props}>
+      <Trash className="mr-2 h-4 w-4 fill-red-300 text-red-500" />
+      <span className="text-red-500">{t('options.playlist.removeSong')}</span>
+    </DropdownMenuItem>
+  )
+}
+
 export const OptionsButtons = {
   PlayNext,
   PlayLast,
@@ -98,4 +109,5 @@ export const OptionsButtons = {
   AddToPlaylist,
   EditPlaylist,
   RemovePlaylist,
+  RemoveFromPlaylist,
 }
