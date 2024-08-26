@@ -3,27 +3,22 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
-import PlayButtons from '@/app/components/album/play-buttons'
 import ArtistTopSongs from '@/app/components/artist/artist-top-songs'
-import { ArtistOptions } from '@/app/components/artist/options'
+import { ArtistButtons } from '@/app/components/artist/buttons'
 import RelatedArtistsList from '@/app/components/artist/related-artists'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { TopSongsTableFallback } from '@/app/components/fallbacks/table-fallbacks'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
-import { useSongList } from '@/app/hooks/use-song-list'
 import ErrorPage from '@/app/pages/error-page'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
-import { usePlayerActions } from '@/store/player.store'
 import { queryKeys } from '@/utils/queryKeys'
 
 export default function Artist() {
-  const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
   const { artistId } = useParams() as { artistId: string }
-  const { getArtistAllSongs } = useSongList()
 
   const {
     data: artist,
@@ -73,20 +68,6 @@ export default function Artist() {
 
   const badges = [formatAlbumCount(), getSongCount()]
 
-  async function handlePlayArtistRadio(shuffle = false) {
-    const songList = await getArtistAllSongs(artist?.name || '')
-
-    if (songList) {
-      setSongList(songList, 0, shuffle)
-    }
-  }
-
-  const buttonsTooltips = {
-    play: t('artist.buttons.play', { artist: artist.name }),
-    shuffle: t('artist.buttons.shuffle', { artist: artist.name }),
-    options: t('artist.buttons.options', { artist: artist.name }),
-  }
-
   return (
     <div className="w-full">
       <ImageHeader
@@ -99,18 +80,7 @@ export default function Artist() {
       />
 
       <ListWrapper>
-        <PlayButtons
-          playButtonTooltip={buttonsTooltips.play}
-          handlePlayButton={() => handlePlayArtistRadio()}
-          shuffleButtonTooltip={buttonsTooltips.shuffle}
-          handleShuffleButton={() => handlePlayArtistRadio(true)}
-          optionsTooltip={buttonsTooltips.options}
-          showLikeButton={true}
-          likeTooltipResource={artist.name}
-          likeState={artist.starred}
-          contentId={artist.id}
-          optionsMenuItems={<ArtistOptions artist={artist} />}
-        />
+        <ArtistButtons artist={artist} />
 
         {artistInfoIsLoading && <InfoPanelFallback />}
         {artistInfo && !artistInfoIsLoading && (

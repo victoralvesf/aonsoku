@@ -19,7 +19,12 @@ async function unstarItem(id: string) {
   })
 }
 
-async function handleStarItem(id: string, starred: boolean) {
+interface HandleStarItem {
+  id: string
+  starred: boolean
+}
+
+async function handleStarItem({ id, starred }: HandleStarItem) {
   if (starred) {
     await unstarItem(id)
   } else {

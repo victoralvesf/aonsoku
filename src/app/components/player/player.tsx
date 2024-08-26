@@ -183,10 +183,7 @@ export function Player() {
           ref={audioRef}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
-          // fix a bug where the songlist is playing regular songs
-          // and after change to radio, the progress wasn't cleared
           onLoadStart={() => {
-            setProgress(0)
             if (audioRef.current) audioRef.current.volume = getVolume() / 100
           }}
           data-testid="player-radio-audio"

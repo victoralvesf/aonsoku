@@ -144,6 +144,12 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.currentList = newCurrentList
                 state.songlist.originalList = newOriginalList
               })
+
+              const { isPlaying } = get().playerState
+
+              if (!isPlaying) {
+                get().actions.setPlayingState(true)
+              }
             },
             setLastOnQueue: (list) => {
               const { currentList, originalList } = get().songlist
@@ -160,6 +166,12 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.currentList = newCurrentList
                 state.songlist.originalList = newOriginalList
               })
+
+              const { isPlaying } = get().playerState
+
+              if (!isPlaying) {
+                get().actions.setPlayingState(true)
+              }
             },
             setPlayRadio: (list, index) => {
               const { mediaType } = get().playerState
@@ -255,8 +267,8 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.isLoopActive = false
                 state.playerState.isShuffleActive = false
                 state.playerState.queueDrawerState = false
+                state.playerState.currentDuration = 0
               })
-              get().actions.resetProgress()
             },
             resetProgress: () => {
               set((state) => {
@@ -354,7 +366,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
 
               const { id, starred } = get().songlist.currentSong
               const isSongStarred = typeof starred === 'string'
-              await subsonic.star.handleStarItem(id, isSongStarred)
+              await subsonic.star.handleStarItem({ id, starred: isSongStarred })
 
               const songList = [...currentList]
               songList[currentSongIndex] = {
@@ -432,8 +444,17 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
 usePlayerStore.subscribe(
   (state) => [state.songlist.currentList, state.songlist.currentSongIndex],
   () => {
-    usePlayerStore.getState().actions.checkIsSongStarred()
-    usePlayerStore.getState().actions.setCurrentSong()
+    const playerStore = usePlayerStore.getState()
+
+    playerStore.actions.checkIsSongStarred()
+    playerStore.actions.setCurrentSong()
+
+    const { currentList } = playerStore.songlist
+    const { progress } = playerStore.playerProgress
+
+    if (currentList.length === 0 && progress > 0) {
+      playerStore.actions.resetProgress()
+    }
   },
 )
 

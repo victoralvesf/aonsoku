@@ -40,7 +40,10 @@ export function TableLikeButton({
   async function handleStarred() {
     const state = !isStarred
 
-    await subsonic.star.handleStarItem(entityId, isStarred)
+    await subsonic.star.handleStarItem({
+      id: entityId,
+      starred: isStarred,
+    })
     setIsStarred(state)
 
     if (type === 'song' && mediaType === 'song') {

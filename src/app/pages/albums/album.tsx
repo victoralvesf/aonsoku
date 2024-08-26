@@ -1,9 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import { AlbumButtons } from '@/app/components/album/buttons'
 import ImageHeader from '@/app/components/album/image-header'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
-import { AlbumOptions } from '@/app/components/album/options'
-import PlayButtons from '@/app/components/album/play-buttons'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import PreviewList from '@/app/components/home/preview-list'
@@ -93,12 +92,6 @@ export default function Album() {
       ? removeCurrentAlbumFromList(randomAlbums.list)
       : null
 
-  const buttonsTooltips = {
-    play: t('playlist.buttons.play', { name: album.name }),
-    shuffle: t('playlist.buttons.shuffle', { name: album.name }),
-    options: t('playlist.buttons.options', { name: album.name }),
-  }
-
   return (
     <div className="w-full">
       <ImageHeader
@@ -113,18 +106,7 @@ export default function Album() {
       />
 
       <ListWrapper>
-        <PlayButtons
-          playButtonTooltip={buttonsTooltips.play}
-          handlePlayButton={() => setSongList(album.song, 0)}
-          shuffleButtonTooltip={buttonsTooltips.shuffle}
-          handleShuffleButton={() => setSongList(album.song, 0, true)}
-          optionsTooltip={buttonsTooltips.options}
-          showLikeButton={true}
-          likeTooltipResource={album.name}
-          likeState={album.starred}
-          contentId={album.id}
-          optionsMenuItems={<AlbumOptions album={album} />}
-        />
+        <AlbumButtons album={album} />
 
         <div className="mb-6">
           {albumInfoIsLoading && <InfoPanelFallback />}
