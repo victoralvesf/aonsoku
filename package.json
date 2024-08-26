@@ -62,6 +62,7 @@
     "tailwind-extended-shadows-merge": "^0.2.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "use-debounce": "^10.0.3",
     "vaul": "^0.9.1",
     "zod": "^3.23.8",
     "zustand": "^4.5.4"

@@ -31,10 +31,13 @@ const radio = {
   all: 'get-all-radios',
 }
 
+const search = 'search-key'
+
 export const queryKeys = {
   album,
   artist,
   playlist,
   song,
   radio,
+  search,
 }

@@ -1,11 +1,11 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import delay from 'lodash/delay'
 import { Loader2, SearchIcon } from 'lucide-react'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { KeyboardEvent, useCallback, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-
+import { useDebouncedCallback } from 'use-debounce'
 import { Keyboard } from '@/app/components/command/keyboard-key'
 import { ResultItem } from '@/app/components/command/result-item'
 import { Badge } from '@/app/components/ui/badge'
@@ -14,6 +14,7 @@ import {
   CommandDialog,
   CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem,
   CommandList,
 } from '@/app/components/ui/command'
@@ -24,38 +25,53 @@ import { useAppStore } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { usePlaylists } from '@/store/playlists.store'
 import { useTheme } from '@/store/theme.store'
-import { Albums } from '@/types/responses/album'
 import { ISimilarArtist } from '@/types/responses/artist'
 import { ScanStatus } from '@/types/responses/library'
-import { ISong } from '@/types/responses/song'
+import { convertMinutesToMs } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 import { queryKeys } from '@/utils/queryKeys'
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS' | 'SERVER'
 
 export default function CommandMenu() {
-  const { open, setOpen } = useAppStore((state) => state.command)
-  const [query, setQuery] = useState('')
-  const [albums, setAlbums] = useState<Albums[]>([])
-  const [artists, setArtists] = useState<ISimilarArtist[]>([])
-  const [songs, setSongs] = useState<ISong[]>([])
-  const [scanStatus, setScanStatus] = useState<ScanStatus>({} as ScanStatus)
-  const [loadingStatus, setLoadingStatus] = useState(false)
-
-  const [pages, setPages] = useState<CommandPages[]>(['HOME'])
-  const activePage = pages[pages.length - 1]
-  const isHome = activePage === 'HOME'
-
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { setTheme } = useTheme()
   const { getArtistAllSongs, getAlbumSongs } = useSongList()
   const { setPlaylistDialogState } = usePlaylists()
   const { setSongList, playSong } = usePlayerActions()
+  const { open, setOpen } = useAppStore((state) => state.command)
 
-  const showAlbumGroup = Boolean(query && albums && albums.length > 0)
-  const showArtistGroup = Boolean(query && artists && artists.length > 0)
-  const showSongGroup = Boolean(query && songs && songs.length > 0)
+  const [query, setQuery] = useState('')
+  const [scanStatus, setScanStatus] = useState<ScanStatus>({} as ScanStatus)
+  const [loadingStatus, setLoadingStatus] = useState(false)
+  const [pages, setPages] = useState<CommandPages[]>(['HOME'])
+
+  const activePage = pages[pages.length - 1]
+  const isHome = activePage === 'HOME'
+
+  const enableQuery = Boolean(query.length >= 3 && activePage !== 'PLAYLISTS')
+
+  const { data: searchResult } = useQuery({
+    queryKey: [queryKeys.search, query],
+    queryFn: () =>
+      subsonic.search.get({
+        query,
+        albumCount: 4,
+        artistCount: 4,
+        songCount: 4,
+      }),
+    enabled: enableQuery,
+    staleTime: convertMinutesToMs(5),
+  })
+
+  const albums = searchResult?.album ?? []
+  const artists = searchResult?.artist ?? []
+  const songs = searchResult?.song ?? []
+
+  const showAlbumGroup = Boolean(query && albums.length > 0)
+  const showArtistGroup = Boolean(query && artists.length > 0)
+  const showSongGroup = Boolean(query && songs.length > 0)
 
   const { data: playlists } = useQuery({
     queryKey: [queryKeys.playlist.all],
@@ -68,9 +84,6 @@ export default function CommandMenu() {
 
   const clear = useCallback(() => {
     setQuery('')
-    setAlbums([])
-    setArtists([])
-    setSongs([])
     setPages(['HOME'])
   }, [])
 
@@ -83,16 +96,23 @@ export default function CommandMenu() {
     [clear, setOpen],
   )
 
-  function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {
-    if (event.target.value === '/') return
-    setQuery(event.target.value)
+  const debounced = useDebouncedCallback((value: string) => {
+    setQuery(value)
+  }, 1000)
+
+  function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === '/') {
+      event.preventDefault()
+    }
   }
 
-  useEffect(() => {
-    if (query.length === 0) clear()
-
-    if (query.length >= 3) search(query)
-  }, [query, clear])
+  function handleSearchChange(value: string) {
+    if (activePage === 'PLAYLISTS') {
+      setQuery(value)
+    } else {
+      debounced(value)
+    }
+  }
 
   const removeLastPage = useCallback(() => {
     setPages((pages) => {
@@ -101,21 +121,6 @@ export default function CommandMenu() {
       return tempPages
     })
   }, [])
-
-  async function search(searchQuery: string) {
-    const response = await subsonic.search.get({
-      query: searchQuery,
-      albumCount: 4,
-      artistCount: 4,
-      songCount: 4,
-    })
-
-    if (response) {
-      setAlbums(response.album || [])
-      setArtists(response.artist || [])
-      setSongs(response.song || [])
-    }
-  }
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
     const artistSongs = await getArtistAllSongs(artist.name)
@@ -153,6 +158,12 @@ export default function CommandMenu() {
     }, 2000)
   }
 
+  const inputPlaceholder = () => {
+    if (activePage === 'PLAYLISTS') return t('options.playlist.search')
+
+    return t('command.inputPlaceholder')
+  }
+
   return (
     <>
       <Button
@@ -181,14 +192,19 @@ export default function CommandMenu() {
         <input
           type="text"
           id="search"
-          placeholder={t('command.inputPlaceholder')}
+          placeholder={inputPlaceholder()}
           className="px-4 py-3 bg-background border-b outline-none focus:bg-foreground/5"
-          value={query}
           autoCorrect="false"
           autoCapitalize="false"
           spellCheck="false"
-          onChange={handleSearchChange}
+          onChange={(e) => handleSearchChange(e.target.value)}
+          onKeyDown={handleInputKeyDown}
         />
+        {activePage === 'PLAYLISTS' && (
+          <div className="hidden">
+            <CommandInput value={query} />
+          </div>
+        )}
         <CommandList className="max-h-[500px] 2xl:max-h-[700px]">
           <CommandEmpty>{t('command.noResults')}</CommandEmpty>
 
@@ -360,7 +376,7 @@ export default function CommandMenu() {
                 playlists.map((playlist) => (
                   <CommandItem
                     key={`playlist-${playlist.id}`}
-                    value={`playlist-${playlist.id}`}
+                    value={playlist.name}
                     onSelect={() =>
                       runCommand(() =>
                         navigate(ROUTES.PLAYLIST.PAGE(playlist.id)),
