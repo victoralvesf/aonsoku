@@ -22,7 +22,7 @@ import { albumsPageFilterValues } from '@/utils/albumsPageFilterValues'
 import { queryKeys } from '@/utils/queryKeys'
 
 export default function AlbumsList() {
-  const defaultOffset = 32
+  const defaultOffset = 128
   const oldestYear = '0001'
   const currentYear = new Date().getFullYear().toString()
 
@@ -72,7 +72,11 @@ export default function AlbumsList() {
       if (!scrollDivRef.current) return
 
       const { scrollTop, clientHeight, scrollHeight } = scrollDivRef.current
-      if (scrollTop + clientHeight >= scrollHeight - 200) {
+
+      const isNearBottom =
+        scrollTop + clientHeight >= scrollHeight - scrollHeight / 4
+
+      if (isNearBottom) {
         if (hasNextPage) fetchNextPage()
       }
     }, 200)
