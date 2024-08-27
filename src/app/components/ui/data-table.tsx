@@ -12,8 +12,8 @@ import {
   SortingFn,
 } from '@tanstack/react-table'
 import clsx from 'clsx'
-import { XIcon } from 'lucide-react'
-import { useState } from 'react'
+import { Disc2Icon, XIcon } from 'lucide-react'
+import { Fragment, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/app/components/ui/button'
@@ -31,6 +31,10 @@ declare module '@tanstack/react-table' {
   }
 }
 
+type DiscNumber = {
+  discNumber: number
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDefType<TData, TValue>[]
   data: TData[]
@@ -42,6 +46,7 @@ interface DataTableProps<TData, TValue> {
   noRowsMessage?: string
   allowRowSelection?: boolean
   showHeader?: boolean
+  showDiscNumber?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -55,6 +60,7 @@ export function DataTable<TData, TValue>({
   noRowsMessage = 'No results.',
   allowRowSelection = true,
   showHeader = true,
+  showDiscNumber = false,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation()
   const newColumns = columns.filter((column) => {
@@ -94,6 +100,27 @@ export function DataTable<TData, TValue>({
     searchColumn !== undefined
       ? (table.getColumn(searchColumn || '')?.getFilterValue() as string)
       : undefined
+
+  function getDiscIndexes() {
+    if (!showDiscNumber) return []
+
+    const uniqueIndices: number[] = []
+    const seen = new Set<number>()
+
+    table.getRowModel().rows.forEach(({ original }, index) => {
+      const item = original as DiscNumber
+      if (!('discNumber' in item)) return
+
+      if (!seen.has(item.discNumber)) {
+        seen.add(item.discNumber)
+        uniqueIndices.push(index)
+      }
+    })
+
+    return uniqueIndices
+  }
+
+  const discNumberIndexes = getDiscIndexes()
 
   return (
     <>
@@ -172,38 +199,54 @@ export function DataTable<TData, TValue>({
           <div className="[&_div:last-child]:border-0">
             <div className="w-full h-full overflow-hidden">
               {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <div
-                    key={row.id}
-                    data-state={row.getIsSelected() && 'selected'}
-                    onClick={() => {
-                      allowRowSelection && row.toggleSelected()
-                    }}
-                    className="group/tablerow w-full flex flex-row border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-                    role="row"
-                  >
-                    {row.getVisibleCells().map((cell) => {
-                      const columnDef = cell.column
-                        .columnDef as ColumnDefType<TData>
-
-                      return (
-                        <div
-                          key={cell.id}
-                          className={clsx(
-                            'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
-                            columnDef.className,
-                          )}
-                          style={columnDef.style}
-                          role="cell"
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
+                table.getRowModel().rows.map((row, index) => (
+                  <Fragment key={row.id}>
+                    {showDiscNumber && discNumberIndexes.includes(index) && (
+                      <div
+                        className="w-full h-14 flex flex-row items-center border-b transition-colors text-muted-foreground"
+                        role="row"
+                      >
+                        <div className="w-12 flex items-center justify-center">
+                          <Disc2Icon strokeWidth={1.75} />
                         </div>
-                      )
-                    })}
-                  </div>
+                        <span className="font-medium ml-[7px]">
+                          {t('album.table.discNumber', {
+                            number: (row.original as DiscNumber).discNumber,
+                          })}
+                        </span>
+                      </div>
+                    )}
+                    <div
+                      data-state={row.getIsSelected() && 'selected'}
+                      onClick={() => {
+                        allowRowSelection && row.toggleSelected()
+                      }}
+                      className="group/tablerow w-full flex flex-row border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                      role="row"
+                    >
+                      {row.getVisibleCells().map((cell) => {
+                        const columnDef = cell.column
+                          .columnDef as ColumnDefType<TData>
+
+                        return (
+                          <div
+                            key={cell.id}
+                            className={clsx(
+                              'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
+                              columnDef.className,
+                            )}
+                            style={columnDef.style}
+                            role="cell"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </Fragment>
                 ))
               ) : (
                 <div role="row">

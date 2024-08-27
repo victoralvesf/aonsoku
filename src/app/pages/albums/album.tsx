@@ -92,6 +92,8 @@ export default function Album() {
       ? removeCurrentAlbumFromList(randomAlbums.list)
       : null
 
+  const albumHasMoreThanOneDisc = album.discTitles.length > 1
+
   return (
     <div className="w-full">
       <ImageHeader
@@ -124,6 +126,7 @@ export default function Album() {
           data={album.song}
           handlePlaySong={(row) => setSongList(album.song, row.index)}
           columnFilter={columnsToShow}
+          showDiscNumber={albumHasMoreThanOneDisc}
         />
 
         <div className="mt-4">

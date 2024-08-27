@@ -126,6 +126,9 @@ export const brazilianPortuguese = {
           releaseYear: 'Ano de lançamento',
         },
       },
+      table: {
+        discNumber: 'Disco {{number}}',
+      },
     },
     artist: {
       headline: 'Artista',

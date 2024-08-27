@@ -124,6 +124,9 @@ export const english = {
           releaseYear: 'Release Year',
         },
       },
+      table: {
+        discNumber: 'Disc {{number}}',
+      },
     },
     artist: {
       headline: 'Artist',
