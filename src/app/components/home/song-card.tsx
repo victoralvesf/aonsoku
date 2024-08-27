@@ -46,9 +46,9 @@ export default function HomeSongCard({
         </div>
       </Link>
       <div className="flex flex-col cursor-default">
-        <Link to={ROUTES.ALBUM.PAGE(album.id)}>
+        <Link to={ROUTES.ALBUM.PAGE(album.id)} className="w-fit">
           <p
-            className="leading-7 text-sm font-semibold truncate hover:underline"
+            className="leading-7 text-sm font-semibold line-clamp-1 hover:underline"
             data-testid="song-card-album-title"
           >
             {album.title}
@@ -56,7 +56,7 @@ export default function HomeSongCard({
         </Link>
         {!album.artistId ? (
           <p
-            className="truncate text-xs text-muted-foreground -mt-1"
+            className="line-clamp-1 text-xs text-muted-foreground -mt-1"
             data-testid="song-card-artist"
           >
             {album.artist}
@@ -65,9 +65,10 @@ export default function HomeSongCard({
           <Link
             to={ROUTES.ARTIST.PAGE(album.artistId)}
             data-testid="song-card-artist-link"
+            className="w-fit"
           >
             <p
-              className="truncate text-xs text-muted-foreground -mt-1 hover:underline"
+              className="line-clamp-1 text-xs text-muted-foreground -mt-1 hover:underline"
               data-testid="song-card-artist"
             >
               {album.artist}
