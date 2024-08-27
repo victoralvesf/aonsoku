@@ -80,7 +80,7 @@ export default function RelatedArtistsList({
         >
           <CarouselContent>
             {similarArtists.map((artist) => (
-              <CarouselItem key={artist.id} className="basis-1/8">
+              <CarouselItem key={artist.id} className="basis-1/5 2xl:basis-1/8">
                 <ArtistCard
                   artist={artist}
                   onButtonClick={(artist) => handlePlayArtistRadio(artist)}
