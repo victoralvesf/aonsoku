@@ -98,7 +98,7 @@ export default function CommandMenu() {
 
   const debounced = useDebouncedCallback((value: string) => {
     setQuery(value)
-  }, 1000)
+  }, 500)
 
   function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === '/') {
