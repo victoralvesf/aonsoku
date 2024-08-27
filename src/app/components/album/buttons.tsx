@@ -58,12 +58,14 @@ export function AlbumButtons({ album }: AlbumButtonsProps) {
         <Actions.PlayIcon />
       </Actions.Button>
 
-      <Actions.Button
-        tooltip={buttonsTooltips.shuffle}
-        onClick={() => setSongList(album.song, 0, true)}
-      >
-        <Actions.ShuffleIcon />
-      </Actions.Button>
+      {album.song.length > 1 && (
+        <Actions.Button
+          tooltip={buttonsTooltips.shuffle}
+          onClick={() => setSongList(album.song, 0, true)}
+        >
+          <Actions.ShuffleIcon />
+        </Actions.Button>
+      )}
 
       <Actions.Button
         tooltip={buttonsTooltips.like()}
