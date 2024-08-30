@@ -23,13 +23,13 @@ export function HeaderItem({ song }: { song: ISong }) {
     }
   }
 
+  const coverArtUrl = getCoverArtUrl(song.coverArt, '400')
+
   return (
     <div
       className="w-full bg-cover bg-center"
       data-testid="header-bg"
-      style={{
-        backgroundImage: `url(${getCoverArtUrl(song.id, '500')})`,
-      }}
+      style={{ backgroundImage: `url(${coverArtUrl})` }}
     >
       <div className="w-full flex-1 h-full inset-0 backdrop-blur-xl bg-gradient-to-b from-white/30 to-white/80 dark:from-black/30 dark:to-black/80">
         <div className="flex h-[200px] 2xl:h-[300px] p-6 gap-4">
@@ -38,7 +38,7 @@ export function HeaderItem({ song }: { song: ISong }) {
             data-testid="header-image-container"
           >
             <LazyLoadImage
-              src={getCoverArtUrl(song.coverArt)}
+              src={coverArtUrl}
               alt={song.title}
               effect="opacity"
               width="100%"
