@@ -25,7 +25,7 @@
     --input: 220 13% 91%;
     --ring: 142.1 76.2% 36.3%;
     --radius: 0.5rem;
-    --main-background: hsl(240, 14%, 99%);
+    --main-background: hsl(210, 40%, 97%);
   }
 
   .dark {
@@ -48,7 +48,7 @@
     --border: 215 27.9% 19.9%;
     --input: 215 27.9% 19.9%;
     --ring: 142.1 70.6% 45.3%;
-    --main-background: hsl(220, 53%, 10%);
+    --main-background: hsl(222, 47%, 11%);
   }
 }
 
