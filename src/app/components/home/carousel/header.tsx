@@ -18,7 +18,7 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
 
   return (
     <Carousel
-      className="w-full border rounded-lg z-10"
+      className="w-full border rounded-lg overflow-hidden z-10"
       opts={{
         loop: true,
       }}
