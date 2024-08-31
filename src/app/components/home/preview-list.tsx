@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import HomeSongCard from '@/app/components/home/song-card'
+import { getCoverArtUrl } from '@/api/httpClient'
+import { PreviewCard } from '@/app/components/preview-card/card'
 import {
   Carousel,
   type CarouselApi,
@@ -9,6 +10,7 @@ import {
   CarouselItem,
 } from '@/app/components/ui/carousel'
 import { CarouselButton } from '@/app/components/ui/carousel-button'
+import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { Albums } from '@/types/responses/album'
@@ -112,10 +114,28 @@ export default function PreviewList({
                 className="basis-1/5 2xl:basis-1/8"
                 data-testid={`preview-list-carousel-item-${index}`}
               >
-                <HomeSongCard
-                  album={album}
-                  onButtonClick={(album) => handlePlayAlbum(album)}
-                />
+                <PreviewCard.Root>
+                  <PreviewCard.ImageWrapper link={ROUTES.ALBUM.PAGE(album.id)}>
+                    <PreviewCard.Image
+                      src={getCoverArtUrl(album.coverArt)}
+                      alt={album.name}
+                    />
+                    <PreviewCard.PlayButton
+                      onClick={() => handlePlayAlbum(album)}
+                    />
+                  </PreviewCard.ImageWrapper>
+                  <PreviewCard.InfoWrapper>
+                    <PreviewCard.Title link={ROUTES.ALBUM.PAGE(album.id)}>
+                      {album.title}
+                    </PreviewCard.Title>
+                    <PreviewCard.Subtitle
+                      enableLink={album.artistId !== undefined}
+                      link={ROUTES.ARTIST.PAGE(album.artistId)}
+                    >
+                      {album.artist}
+                    </PreviewCard.Subtitle>
+                  </PreviewCard.InfoWrapper>
+                </PreviewCard.Root>
               </CarouselItem>
             ))}
           </CarouselContent>

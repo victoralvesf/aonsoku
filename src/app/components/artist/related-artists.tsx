@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import ArtistCard from '@/app/components/artist/artist-card'
+import { getCoverArtUrl } from '@/api/httpClient'
+import { PreviewCard } from '@/app/components/preview-card/card'
 import {
   Carousel,
   type CarouselApi,
@@ -8,6 +9,7 @@ import {
 } from '@/app/components/ui/carousel'
 import { CarouselButton } from '@/app/components/ui/carousel-button'
 import { useSongList } from '@/app/hooks/use-song-list'
+import { ROUTES } from '@/routes/routesList'
 import { usePlayerActions } from '@/store/player.store'
 import { ISimilarArtist } from '@/types/responses/artist'
 
@@ -81,10 +83,27 @@ export default function RelatedArtistsList({
           <CarouselContent>
             {similarArtists.map((artist) => (
               <CarouselItem key={artist.id} className="basis-1/5 2xl:basis-1/8">
-                <ArtistCard
-                  artist={artist}
-                  onButtonClick={(artist) => handlePlayArtistRadio(artist)}
-                />
+                <PreviewCard.Root>
+                  <PreviewCard.ImageWrapper
+                    link={ROUTES.ARTIST.PAGE(artist.id)}
+                  >
+                    <PreviewCard.Image
+                      src={getCoverArtUrl(artist.coverArt)}
+                      alt={artist.name}
+                    />
+                    <PreviewCard.PlayButton
+                      onClick={() => handlePlayArtistRadio(artist)}
+                    />
+                  </PreviewCard.ImageWrapper>
+                  <PreviewCard.InfoWrapper>
+                    <PreviewCard.Subtitle
+                      link={ROUTES.ARTIST.PAGE(artist.id)}
+                      className="mt-1.5"
+                    >
+                      {artist.name}
+                    </PreviewCard.Subtitle>
+                  </PreviewCard.InfoWrapper>
+                </PreviewCard.Root>
               </CarouselItem>
             ))}
           </CarouselContent>
