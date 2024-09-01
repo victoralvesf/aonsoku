@@ -3,9 +3,10 @@ import debounce from 'lodash/debounce'
 import { ArrowDown, ArrowUp, ListFilter } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { getCoverArtUrl } from '@/api/httpClient'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
-import HomeSongCard from '@/app/components/home/song-card'
 import ListWrapper from '@/app/components/list-wrapper'
+import { PreviewCard } from '@/app/components/preview-card/card'
 import { Badge } from '@/app/components/ui/badge'
 import { Button } from '@/app/components/ui/button'
 import {
@@ -15,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { AlbumListType } from '@/types/responses/album'
@@ -172,14 +174,33 @@ export default function AlbumsList() {
       </ShadowHeader>
 
       <ListWrapper className="pt-[--shadow-header-distance]">
-        <div className="grid grid-cols-5 2xl:grid-cols-8 gap-4 h-full">
+        <div
+          className="grid grid-cols-5 2xl:grid-cols-8 gap-4 h-full"
+          data-testid="albums-grid"
+        >
           {items.map((album) => (
-            <HomeSongCard
-              key={`album-${album.id}`}
-              album={album}
-              coverArtSize={300}
-              onButtonClick={(album) => handlePlayAlbum(album.id)}
-            />
+            <PreviewCard.Root key={`album-${album.id}`}>
+              <PreviewCard.ImageWrapper link={ROUTES.ALBUM.PAGE(album.id)}>
+                <PreviewCard.Image
+                  src={getCoverArtUrl(album.coverArt, '300')}
+                  alt={album.name}
+                />
+                <PreviewCard.PlayButton
+                  onClick={() => handlePlayAlbum(album.id)}
+                />
+              </PreviewCard.ImageWrapper>
+              <PreviewCard.InfoWrapper>
+                <PreviewCard.Title link={ROUTES.ALBUM.PAGE(album.id)}>
+                  {album.title}
+                </PreviewCard.Title>
+                <PreviewCard.Subtitle
+                  enableLink={album.artistId !== undefined}
+                  link={ROUTES.ARTIST.PAGE(album.artistId)}
+                >
+                  {album.artist}
+                </PreviewCard.Subtitle>
+              </PreviewCard.InfoWrapper>
+            </PreviewCard.Root>
           ))}
         </div>
       </ListWrapper>

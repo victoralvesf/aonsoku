@@ -50,15 +50,15 @@ describe('PreviewList Component', () => {
         }
 
         cy.get('@activeCarousel')
-          .findByTestId('song-card-image')
+          .findByTestId('card-image')
           .should('have.attr', 'alt', album.name)
 
         cy.get('@activeCarousel')
-          .findByTestId('song-card-album-title')
+          .findByTestId('card-title')
           .should('have.text', album.title)
 
         cy.get('@activeCarousel')
-          .findByTestId('song-card-artist')
+          .findByTestId('card-subtitle')
           .should('have.text', album.artist)
       })
     })
@@ -134,11 +134,9 @@ describe('PreviewList Component', () => {
           'activeCarousel',
         )
 
+        cy.get('@activeCarousel').findByTestId('card-subtitle').should('exist')
         cy.get('@activeCarousel')
-          .findByTestId('song-card-artist')
-          .should('exist')
-        cy.get('@activeCarousel')
-          .findByTestId('song-card-artist-link')
+          .findByTestId('card-subtitle-link')
           .should('exist')
       })
     })
@@ -165,11 +163,9 @@ describe('PreviewList Component', () => {
           'activeCarousel',
         )
 
+        cy.get('@activeCarousel').findByTestId('card-subtitle').should('exist')
         cy.get('@activeCarousel')
-          .findByTestId('song-card-artist')
-          .should('exist')
-        cy.get('@activeCarousel')
-          .findByTestId('song-card-artist-link')
+          .findByTestId('card-subtitle-link')
           .should('not.exist')
       })
     })
