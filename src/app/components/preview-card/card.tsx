@@ -21,7 +21,9 @@ interface ImageWrapperProps extends Children {
 function ImageWrapper({ children, link }: ImageWrapperProps) {
   return (
     <div className="group flex-1 aspect-square rounded bg-border relative overflow-hidden">
-      <Link to={link}>{children}</Link>
+      <Link to={link} data-testid="card-image-link">
+        {children}
+      </Link>
     </div>
   )
 }
