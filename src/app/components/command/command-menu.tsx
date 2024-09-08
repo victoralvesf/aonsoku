@@ -11,6 +11,7 @@ import { ResultItem } from '@/app/components/command/result-item'
 import { Badge } from '@/app/components/ui/badge'
 import { Button } from '@/app/components/ui/button'
 import {
+  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -27,11 +28,28 @@ import { usePlaylists } from '@/store/playlists.store'
 import { useTheme } from '@/store/theme.store'
 import { ISimilarArtist } from '@/types/responses/artist'
 import { ScanStatus } from '@/types/responses/library'
+import { Theme } from '@/types/themeContext'
 import { convertMinutesToMs } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 import { queryKeys } from '@/utils/queryKeys'
+import { CustomCommandItem } from './command-item'
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS' | 'SERVER'
+
+const gotoPages = [
+  { route: ROUTES.LIBRARY.HOME, label: 'sidebar.home' },
+  { route: ROUTES.LIBRARY.ARTISTS, label: 'sidebar.artists' },
+  { route: ROUTES.LIBRARY.SONGS, label: 'sidebar.songs' },
+  { route: ROUTES.LIBRARY.ALBUMS, label: 'sidebar.albums' },
+  { route: ROUTES.LIBRARY.PLAYLISTS, label: 'sidebar.playlists' },
+  { route: ROUTES.LIBRARY.RADIOS, label: 'sidebar.radios' },
+]
+
+const themes = [
+  { theme: 'light' as Theme, label: 'theme.light' },
+  { theme: 'dark' as Theme, label: 'theme.dark' },
+  { theme: 'system' as Theme, label: 'theme.system' },
+]
 
 export default function CommandMenu() {
   const navigate = useNavigate()
@@ -189,260 +207,234 @@ export default function CommandMenu() {
           }
         }}
       >
-        <input
-          type="text"
-          id="search"
-          placeholder={inputPlaceholder()}
-          className="px-4 py-3 bg-background border-b outline-none focus:bg-foreground/5"
-          autoCorrect="false"
-          autoCapitalize="false"
-          spellCheck="false"
-          onChange={(e) => handleSearchChange(e.target.value)}
-          onKeyDown={handleInputKeyDown}
-        />
-        {activePage === 'PLAYLISTS' && (
-          <div className="hidden">
-            <CommandInput value={query} />
-          </div>
-        )}
-        <CommandList className="max-h-[500px] 2xl:max-h-[700px]">
-          <CommandEmpty>{t('command.noResults')}</CommandEmpty>
+        <Command shouldFilter={activePage === 'PLAYLISTS'}>
+          <CommandInput
+            data-testid="command-menu-input"
+            placeholder={inputPlaceholder()}
+            autoCorrect="false"
+            autoCapitalize="false"
+            spellCheck="false"
+            onValueChange={(value) => handleSearchChange(value)}
+            onKeyDown={handleInputKeyDown}
+          />
+          <CommandList className="max-h-[500px] 2xl:max-h-[700px]">
+            <CommandEmpty>{t('command.noResults')}</CommandEmpty>
 
-          {showAlbumGroup && (
-            <CommandGroup heading={t('sidebar.albums')}>
-              {albums.length > 0 &&
-                albums.map((album) => (
-                  <CommandItem
-                    key={`album-${album.id}`}
-                    value={`album-${album.id}`}
-                    className="border mb-1"
-                    onSelect={() => {
-                      runCommand(() => navigate(ROUTES.ALBUM.PAGE(album.id)))
-                    }}
-                  >
-                    <ResultItem
-                      coverArt={album.coverArt}
-                      title={album.title}
-                      artist={album.artist}
-                      onClick={() => handlePlayAlbum(album.id)}
-                    />
-                  </CommandItem>
-                ))}
-            </CommandGroup>
-          )}
+            {showAlbumGroup && (
+              <CommandGroup heading={t('sidebar.albums')}>
+                {albums.length > 0 &&
+                  albums.map((album) => (
+                    <CommandItem
+                      key={`album-${album.id}`}
+                      value={`album-${album.id}`}
+                      className="border mb-1"
+                      onSelect={() => {
+                        runCommand(() => navigate(ROUTES.ALBUM.PAGE(album.id)))
+                      }}
+                    >
+                      <ResultItem
+                        coverArt={album.coverArt}
+                        title={album.title}
+                        artist={album.artist}
+                        onClick={() => handlePlayAlbum(album.id)}
+                      />
+                    </CommandItem>
+                  ))}
+              </CommandGroup>
+            )}
 
-          {showArtistGroup && (
-            <CommandGroup heading={t('sidebar.artists')}>
-              {artists.length > 0 &&
-                artists.map((artist) => (
-                  <CommandItem
-                    key={`artist-${artist.id}`}
-                    value={`artist-${artist.id}`}
-                    className="border mb-1"
-                    onSelect={() => {
-                      runCommand(() => navigate(ROUTES.ARTIST.PAGE(artist.id)))
-                    }}
-                  >
-                    <ResultItem
-                      coverArt={artist.coverArt}
-                      title={artist.name}
-                      artist={t('artist.info.albumsCount', {
-                        count: artist.albumCount,
-                      })}
-                      onClick={() => handlePlayArtistRadio(artist)}
-                    />
-                  </CommandItem>
-                ))}
-            </CommandGroup>
-          )}
-
-          {showSongGroup && (
-            <CommandGroup heading={t('sidebar.songs')}>
-              {songs.length > 0 &&
-                songs.map((song) => (
-                  <CommandItem
-                    key={`song-${song.id}`}
-                    value={`song-${song.id}`}
-                    className="border mb-1"
-                    onSelect={() => {
-                      runCommand(() =>
-                        navigate(ROUTES.ALBUM.PAGE(song.albumId)),
-                      )
-                    }}
-                  >
-                    <ResultItem
-                      coverArt={song.coverArt}
-                      title={song.title}
-                      artist={song.artist}
-                      onClick={() => playSong(song)}
-                    />
-                  </CommandItem>
-                ))}
-            </CommandGroup>
-          )}
-
-          {isHome && (
-            <CommandGroup heading={t('command.commands.heading')}>
-              <CommandItem onSelect={() => setPages([...pages, 'GOTO'])}>
-                {t('command.commands.pages')}
-              </CommandItem>
-              <CommandItem onSelect={() => setPages([...pages, 'THEME'])}>
-                {t('command.commands.theme')}
-              </CommandItem>
-              <CommandItem onSelect={() => setPages([...pages, 'PLAYLISTS'])}>
-                {t('sidebar.playlists')}
-              </CommandItem>
-              <CommandItem
-                onSelect={() => runCommand(() => setPlaylistDialogState(true))}
-              >
-                {t('playlist.form.create.title')}
-              </CommandItem>
-              <CommandItem
-                onSelect={async () => {
-                  await getScanStatus()
-                  setPages([...pages, 'SERVER'])
-                }}
-              >
-                {t('server.management')}
-              </CommandItem>
-            </CommandGroup>
-          )}
-
-          {activePage === 'GOTO' && (
-            <CommandGroup heading={t('command.pages')}>
-              <CommandItem
-                onSelect={() => runCommand(() => navigate(ROUTES.LIBRARY.HOME))}
-              >
-                {t('sidebar.home')}
-              </CommandItem>
-              <CommandItem
-                onSelect={() =>
-                  runCommand(() => navigate(ROUTES.LIBRARY.ARTISTS))
-                }
-              >
-                {t('sidebar.artists')}
-              </CommandItem>
-              <CommandItem
-                onSelect={() =>
-                  runCommand(() => navigate(ROUTES.LIBRARY.SONGS))
-                }
-              >
-                {t('sidebar.songs')}
-              </CommandItem>
-              <CommandItem
-                onSelect={() =>
-                  runCommand(() => navigate(ROUTES.LIBRARY.ALBUMS))
-                }
-              >
-                {t('sidebar.albums')}
-              </CommandItem>
-              <CommandItem
-                onSelect={() =>
-                  runCommand(() => navigate(ROUTES.LIBRARY.PLAYLISTS))
-                }
-              >
-                {t('sidebar.playlists')}
-              </CommandItem>
-              <CommandItem
-                onSelect={() =>
-                  runCommand(() => navigate(ROUTES.LIBRARY.RADIOS))
-                }
-              >
-                {t('sidebar.radios')}
-              </CommandItem>
-            </CommandGroup>
-          )}
-
-          {activePage === 'THEME' && (
-            <CommandGroup heading={t('theme.label')}>
-              <CommandItem onSelect={() => runCommand(() => setTheme('light'))}>
-                {t('theme.light')}
-              </CommandItem>
-              <CommandItem onSelect={() => runCommand(() => setTheme('dark'))}>
-                {t('theme.dark')}
-              </CommandItem>
-              <CommandItem
-                onSelect={() => runCommand(() => setTheme('system'))}
-              >
-                {t('theme.system')}
-              </CommandItem>
-            </CommandGroup>
-          )}
-
-          {activePage === 'PLAYLISTS' && (
-            <CommandGroup heading={t('sidebar.playlists')}>
-              {playlists &&
-                playlists.length > 0 &&
-                playlists.map((playlist) => (
-                  <CommandItem
-                    key={`playlist-${playlist.id}`}
-                    value={playlist.name}
-                    onSelect={() =>
-                      runCommand(() =>
-                        navigate(ROUTES.PLAYLIST.PAGE(playlist.id)),
-                      )
-                    }
-                  >
-                    {playlist.name}
-                  </CommandItem>
-                ))}
-            </CommandGroup>
-          )}
-
-          {activePage === 'SERVER' && (
-            <CommandGroup heading={t('server.management')}>
-              {loadingStatus ? (
-                <div className="flex justify-center items-center p-2 mb-2">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                </div>
-              ) : (
-                <div className="flex flex-col gap-2 p-2">
-                  <p className="text-sm">{t('server.status')}</p>
-
-                  <div className="flex gap-2 flex-wrap">
-                    <Badge variant="outline">
-                      {t('server.songCount', {
-                        count: parseInt(scanStatus.count),
-                      })}
-                    </Badge>
-                    {scanStatus.folderCount && (
-                      <Badge variant="outline">
-                        {t('server.folderCount', {
-                          count: parseInt(scanStatus.folderCount),
+            {showArtistGroup && (
+              <CommandGroup heading={t('sidebar.artists')}>
+                {artists.length > 0 &&
+                  artists.map((artist) => (
+                    <CommandItem
+                      key={`artist-${artist.id}`}
+                      value={`artist-${artist.id}`}
+                      className="border mb-1"
+                      onSelect={() => {
+                        runCommand(() =>
+                          navigate(ROUTES.ARTIST.PAGE(artist.id)),
+                        )
+                      }}
+                    >
+                      <ResultItem
+                        coverArt={artist.coverArt}
+                        title={artist.name}
+                        artist={t('artist.info.albumsCount', {
+                          count: artist.albumCount,
                         })}
-                      </Badge>
-                    )}
-                    {scanStatus.lastScan && (
-                      <Badge variant="outline">
-                        {t('server.lastScan', {
-                          date: dateTime(scanStatus.lastScan).format('LLLL'),
-                        })}
-                      </Badge>
-                    )}
+                        onClick={() => handlePlayArtistRadio(artist)}
+                      />
+                    </CommandItem>
+                  ))}
+              </CommandGroup>
+            )}
+
+            {showSongGroup && (
+              <CommandGroup heading={t('sidebar.songs')}>
+                {songs.length > 0 &&
+                  songs.map((song) => (
+                    <CommandItem
+                      key={`song-${song.id}`}
+                      value={`song-${song.id}`}
+                      className="border mb-1"
+                      onSelect={() => {
+                        runCommand(() =>
+                          navigate(ROUTES.ALBUM.PAGE(song.albumId)),
+                        )
+                      }}
+                    >
+                      <ResultItem
+                        coverArt={song.coverArt}
+                        title={song.title}
+                        artist={song.artist}
+                        onClick={() => playSong(song)}
+                      />
+                    </CommandItem>
+                  ))}
+              </CommandGroup>
+            )}
+
+            {isHome && (
+              <CommandGroup heading={t('command.commands.heading')}>
+                <CommandItem onSelect={() => setPages([...pages, 'GOTO'])}>
+                  <CustomCommandItem variant="GotoPage">
+                    {t('command.commands.pages')}
+                  </CustomCommandItem>
+                </CommandItem>
+                <CommandItem onSelect={() => setPages([...pages, 'THEME'])}>
+                  <CustomCommandItem variant="ChangeTheme">
+                    {t('command.commands.theme')}
+                  </CustomCommandItem>
+                </CommandItem>
+                <CommandItem onSelect={() => setPages([...pages, 'PLAYLISTS'])}>
+                  <CustomCommandItem variant="Playlists">
+                    {t('sidebar.playlists')}
+                  </CustomCommandItem>
+                </CommandItem>
+                <CommandItem
+                  onSelect={() =>
+                    runCommand(() => setPlaylistDialogState(true))
+                  }
+                >
+                  <CustomCommandItem variant="CreatePlaylist">
+                    {t('playlist.form.create.title')}
+                  </CustomCommandItem>
+                </CommandItem>
+                <CommandItem
+                  onSelect={async () => {
+                    await getScanStatus()
+                    setPages([...pages, 'SERVER'])
+                  }}
+                >
+                  <CustomCommandItem variant="ServerManagement">
+                    {t('server.management')}
+                  </CustomCommandItem>
+                </CommandItem>
+              </CommandGroup>
+            )}
+
+            {activePage === 'GOTO' && (
+              <CommandGroup heading={t('command.pages')}>
+                {gotoPages.map(({ route, label }) => (
+                  <CommandItem
+                    key={route}
+                    onSelect={() => runCommand(() => navigate(route))}
+                  >
+                    {t(label)}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+
+            {activePage === 'THEME' && (
+              <CommandGroup heading={t('theme.label')}>
+                {themes.map(({ theme, label }) => (
+                  <CommandItem
+                    key={label}
+                    onSelect={() => runCommand(() => setTheme(theme))}
+                  >
+                    {t(label)}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+
+            {activePage === 'PLAYLISTS' && (
+              <CommandGroup heading={t('sidebar.playlists')}>
+                {playlists &&
+                  playlists.length > 0 &&
+                  playlists.map((playlist) => (
+                    <CommandItem
+                      key={`playlist-${playlist.id}`}
+                      value={playlist.name}
+                      onSelect={() =>
+                        runCommand(() =>
+                          navigate(ROUTES.PLAYLIST.PAGE(playlist.id)),
+                        )
+                      }
+                    >
+                      {playlist.name}
+                    </CommandItem>
+                  ))}
+              </CommandGroup>
+            )}
+
+            {activePage === 'SERVER' && (
+              <CommandGroup heading={t('server.management')}>
+                {loadingStatus ? (
+                  <div className="flex justify-center items-center p-2 mb-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
                   </div>
-                </div>
-              )}
-              <CommandItem
-                disabled={loadingStatus}
-                onSelect={() => getScanStatus()}
-              >
-                {t('server.buttons.refresh')}
-              </CommandItem>
-              <CommandItem
-                disabled={loadingStatus}
-                onSelect={() => startScan()}
-              >
-                {t('server.buttons.startScan')}
-              </CommandItem>
-            </CommandGroup>
-          )}
-        </CommandList>
-        <div className="flex justify-end p-2 h-10 gap-1 border-t relative">
-          <Keyboard text="ESC" className="static text-sm" />
-          <Keyboard text="↓" className="static text-sm" />
-          <Keyboard text="↑" className="static text-sm" />
-          <Keyboard text="↵" className="static text-sm" />
-        </div>
+                ) : (
+                  <div className="flex flex-col gap-2 p-2">
+                    <p className="text-sm">{t('server.status')}</p>
+
+                    <div className="flex gap-2 flex-wrap">
+                      <Badge variant="outline">
+                        {t('server.songCount', {
+                          count: parseInt(scanStatus.count),
+                        })}
+                      </Badge>
+                      {scanStatus.folderCount && (
+                        <Badge variant="outline">
+                          {t('server.folderCount', {
+                            count: parseInt(scanStatus.folderCount),
+                          })}
+                        </Badge>
+                      )}
+                      {scanStatus.lastScan && (
+                        <Badge variant="outline">
+                          {t('server.lastScan', {
+                            date: dateTime(scanStatus.lastScan).format('LLLL'),
+                          })}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                )}
+                <CommandItem
+                  disabled={loadingStatus}
+                  onSelect={() => getScanStatus()}
+                >
+                  {t('server.buttons.refresh')}
+                </CommandItem>
+                <CommandItem
+                  disabled={loadingStatus}
+                  onSelect={() => startScan()}
+                >
+                  {t('server.buttons.startScan')}
+                </CommandItem>
+              </CommandGroup>
+            )}
+          </CommandList>
+          <div className="flex justify-end p-2 h-10 gap-1 border-t relative">
+            <Keyboard text="ESC" className="static text-sm" />
+            <Keyboard text="↓" className="static text-sm" />
+            <Keyboard text="↑" className="static text-sm" />
+            <Keyboard text="↵" className="static text-sm" />
+          </div>
+        </Command>
       </CommandDialog>
     </>
   )

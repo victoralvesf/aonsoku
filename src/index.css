@@ -17,7 +17,7 @@
     --secondary-foreground: 220.9 39.3% 11%;
     --muted: 220 14.3% 95.9%;
     --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 95.9%;
+    --accent: 220 14.3% 92.9%;
     --accent-foreground: 220.9 39.3% 11%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 20% 98%;
@@ -148,6 +148,21 @@ img {
   @apply mb-[--player-height] pb-[--player-height];
   @apply z-30;
   @apply bg-[--main-background];
+}
+
+.cmdk-custom-style {
+  @apply [&_[cmdk-group-heading]]:px-2;
+  @apply [&_[cmdk-group-heading]]:font-medium;
+  @apply [&_[cmdk-group-heading]]:text-muted-foreground;
+  @apply [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0;
+  @apply [&_[cmdk-group]]:px-2;
+  @apply [&_[cmdk-input-wrapper]_svg]:h-5;
+  @apply [&_[cmdk-input-wrapper]_svg]:w-5;
+  @apply [&_[cmdk-input]]:h-12;
+  @apply [&_[cmdk-item]]:px-2;
+  @apply [&_[cmdk-item]]:py-3;
+  @apply [&_[cmdk-item]_svg]:h-4;
+  @apply [&_[cmdk-item]_svg]:w-4;
 }
 
 /* Native Scroll Bar */
