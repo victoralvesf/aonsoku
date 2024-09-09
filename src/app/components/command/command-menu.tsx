@@ -182,6 +182,10 @@ export default function CommandMenu() {
     return t('command.inputPlaceholder')
   }
 
+  const showNotFoundMessage = Boolean(
+    enableQuery && !showAlbumGroup && !showArtistGroup && !showSongGroup,
+  )
+
   return (
     <>
       <Button
@@ -219,6 +223,12 @@ export default function CommandMenu() {
           />
           <CommandList className="max-h-[500px] 2xl:max-h-[700px]">
             <CommandEmpty>{t('command.noResults')}</CommandEmpty>
+
+            {showNotFoundMessage && (
+              <div className="flex justify-center items-center p-4 mt-2 mx-2 bg-accent/40 rounded border border-border">
+                <p className="text-sm">{t('command.noResults')}</p>
+              </div>
+            )}
 
             {showAlbumGroup && (
               <CommandGroup heading={t('sidebar.albums')}>
