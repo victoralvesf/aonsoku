@@ -36,7 +36,7 @@ export function CoverImage({
         effect="opacity"
         width={size}
         height={size}
-        className="aspect-square object-cover"
+        className="aspect-square object-cover bg-center"
       />
     </div>
   )
