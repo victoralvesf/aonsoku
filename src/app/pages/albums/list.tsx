@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
+import { AlbumsFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { Badge } from '@/app/components/ui/badge'
@@ -62,7 +63,7 @@ export default function AlbumsList() {
     }
   }
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
     queryKey: [queryKeys.album.all, currentFilter, yearFilter],
     queryFn: fetchAlbums,
     initialPageParam: 0,
@@ -106,6 +107,10 @@ export default function AlbumsList() {
 
   const items = data.pages.flatMap((page) => page.albums) || []
   const itemsCount = data.pages[0].albumsCount || 0
+
+  if (isLoading) {
+    return <AlbumsFallback />
+  }
 
   return (
     <div className="w-full h-full">
