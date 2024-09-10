@@ -1,3 +1,8 @@
+export enum AuthType {
+  PASSWORD,
+  TOKEN,
+}
+
 export interface IServerConfig {
   url: string
   username: string
@@ -5,6 +10,7 @@ export interface IServerConfig {
 }
 
 export interface IAppData extends IServerConfig {
+  authType: AuthType | null
   isServerConfigured: boolean
   osType: string
   logoutDialogState: boolean

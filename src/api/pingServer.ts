@@ -1,15 +1,19 @@
 import { fetch as tauriFetch } from '@tauri-apps/api/http'
 import { SubsonicJsonResponse } from '@/types/responses/subsonicResponse'
+import { AuthType } from '@/types/serverConfig'
 import { appName } from '@/utils/appName'
-import { saltWord } from '@/utils/salt'
 import { isTauri } from '@/utils/tauriTools'
+import { authQueryParams } from './httpClient'
 
-export async function pingServer(url: string, user: string, token: string) {
+export async function pingServer(
+  url: string,
+  user: string,
+  password: string,
+  authType: AuthType,
+) {
   try {
     const query = {
-      u: user,
-      t: token,
-      s: saltWord,
+      ...authQueryParams(user, password, authType),
       v: '1.16.0',
       c: appName,
       f: 'json',
