@@ -31,7 +31,7 @@ export function HeaderItem({ song }: { song: ISong }) {
       data-testid="header-bg"
       style={{ backgroundImage: `url(${coverArtUrl})` }}
     >
-      <div className="w-full flex-1 h-full inset-0 backdrop-blur-xl bg-gradient-to-b from-white/30 to-white/80 dark:from-black/30 dark:to-black/80">
+      <div className="w-full flex-1 h-full inset-0 backdrop-blur-xl bg-gradient-to-b from-white/20 to-white/90 dark:from-black/20 dark:to-black/90">
         <div className="flex h-[200px] 2xl:h-[300px] p-6 gap-4">
           <div
             className="w-[152px] 2xl:w-[252px] h-[152px] 2xl:h-[252px] min-w-[152px] 2xl:min-w-[252px] min-h-[152px] 2xl:min-h-[252px] rounded-lg overflow-hidden relative group bg-skeleton"
@@ -61,7 +61,7 @@ export function HeaderItem({ song }: { song: ISong }) {
             <Link to={ROUTES.ALBUM.PAGE(song.albumId)} className="w-fit">
               <h1
                 data-testid="header-title"
-                className="w-full scroll-m-20 text-3xl 2xl:text-4xl font-bold tracking-tight mb-0 2xl:mb-2 hover:underline"
+                className="w-full scroll-m-20 text-3xl 2xl:text-4xl font-bold tracking-tight mb-0 2xl:mb-1 hover:underline"
               >
                 {song.title}
               </h1>
@@ -69,7 +69,7 @@ export function HeaderItem({ song }: { song: ISong }) {
             {!song.artistId ? (
               <h4
                 data-testid="header-artist"
-                className="scroll-m-20 text-lg 2xl:text-xl font-semibold tracking-tight opacity-60"
+                className="scroll-m-20 text-lg 2xl:text-xl font-semibold tracking-tight opacity-70"
               >
                 {song.artist}
               </h4>
@@ -77,7 +77,7 @@ export function HeaderItem({ song }: { song: ISong }) {
               <Link to={ROUTES.ARTIST.PAGE(song.artistId)} className="w-fit">
                 <h4
                   data-testid="header-artist"
-                  className="scroll-m-20 text-lg 2xl:text-xl font-semibold tracking-tight opacity-60 hover:underline"
+                  className="scroll-m-20 text-lg 2xl:text-xl font-semibold tracking-tight opacity-70 hover:underline"
                 >
                   {song.artist}
                 </h4>
@@ -86,7 +86,7 @@ export function HeaderItem({ song }: { song: ISong }) {
             <div className="flex gap-2 mt-1 2xl:mt-2">
               {song.genre !== undefined && (
                 <Badge
-                  variant="secondary"
+                  variant="neutral"
                   className="border"
                   data-testid="header-genre"
                 >
@@ -95,7 +95,7 @@ export function HeaderItem({ song }: { song: ISong }) {
               )}
               {song.year && (
                 <Badge
-                  variant="secondary"
+                  variant="neutral"
                   className="border"
                   data-testid="header-year"
                 >
@@ -103,7 +103,7 @@ export function HeaderItem({ song }: { song: ISong }) {
                 </Badge>
               )}
               <Badge
-                variant="secondary"
+                variant="neutral"
                 className="border"
                 data-testid="header-duration"
               >
