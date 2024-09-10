@@ -38,13 +38,13 @@ export function PlaylistPageHeader({
           {playlist.comment}
         </p>
         <div className="flex gap-1 mt-3 text-muted-foreground text-sm">
-          <Badge className="shadow bg-primary/80">
+          <Badge>
             {t('playlist.songCount', {
               count: playlist.songCount,
             })}
           </Badge>
           {playlist.duration > 0 && (
-            <Badge className="shadow bg-primary/80">
+            <Badge>
               {t('playlist.duration', {
                 duration: convertSecondsToHumanRead(playlist.duration),
               })}
