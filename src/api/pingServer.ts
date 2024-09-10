@@ -1,11 +1,16 @@
 import { fetch as tauriFetch } from '@tauri-apps/api/http'
 import { SubsonicJsonResponse } from '@/types/responses/subsonicResponse'
+import { AuthType } from '@/types/serverConfig'
 import { appName } from '@/utils/appName'
 import { isTauri } from '@/utils/tauriTools'
 import { authQueryParams } from './httpClient'
-import { AuthType } from '@/types/serverConfig'
 
-export async function pingServer(url: string, user: string, password: string, authType: AuthType) {
+export async function pingServer(
+  url: string,
+  user: string,
+  password: string,
+  authType: AuthType,
+) {
   try {
     const query = {
       ...authQueryParams(user, password, authType),

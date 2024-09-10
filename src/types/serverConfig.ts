@@ -1,7 +1,8 @@
 export enum AuthType {
-    PASSWORD,
-    TOKEN,
+  PASSWORD,
+  TOKEN,
 }
+
 export interface IServerConfig {
   url: string
   username: string

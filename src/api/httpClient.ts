@@ -2,31 +2,31 @@ import { FetchOptions, fetch as tauriFetch } from '@tauri-apps/api/http'
 import omit from 'lodash/omit'
 import { useAppStore } from '@/store/app.store'
 import { SubsonicJsonResponse } from '@/types/responses/subsonicResponse'
+import { AuthType } from '@/types/serverConfig'
 import { appName } from '@/utils/appName'
 import { saltWord } from '@/utils/salt'
 import { isTauri } from '@/utils/tauriTools'
-import { AuthType } from '@/types/serverConfig'
 
+type AuthParams = { u: string; t: string; s: string } | { u: string; p: string }
 
-type AuthParams =
-  | { u: string; t: string; s: string }
-  | { u: string; p: string };
-
-export function authQueryParams(username: string, password: string, authType: AuthType | null) : AuthParams {
-    if (authType == AuthType.TOKEN){
-        return {
-            u: username ?? '',
-            t: password ?? '',
-            s: saltWord,
-        }
+export function authQueryParams(
+  username: string,
+  password: string,
+  authType: AuthType | null,
+): AuthParams {
+  if (authType === AuthType.TOKEN) {
+    return {
+      u: username ?? '',
+      t: password ?? '',
+      s: saltWord,
     }
-    else if (authType == AuthType.PASSWORD){
-        return {
-            u: username ?? '',
-            p: password ?? '',
-        }
+  } else if (authType === AuthType.PASSWORD) {
+    return {
+      u: username ?? '',
+      p: password ?? '',
     }
-    throw new Error("Invalid/unspecified auth type")
+  }
+  throw new Error('Invalid/unspecified auth type')
 }
 
 function queryParams() {

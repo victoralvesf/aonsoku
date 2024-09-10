@@ -53,13 +53,18 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             },
             saveConfig: async ({ url, username, password }: IServerConfig) => {
               // try both token and password methods
-              for (const authType of [AuthType.TOKEN, AuthType.PASSWORD]){
+              for (const authType of [AuthType.TOKEN, AuthType.PASSWORD]) {
                 const token =
-                  authType == AuthType.TOKEN
+                  authType === AuthType.TOKEN
                     ? MD5(`${password}${saltWord}`).toString()
                     : `enc:${toHex(password)}`
 
-                const canConnect = await pingServer(url, username, token, authType)
+                const canConnect = await pingServer(
+                  url,
+                  username,
+                  token,
+                  authType,
+                )
 
                 if (canConnect) {
                   set((state) => {
@@ -84,7 +89,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.url = ''
                 state.data.username = ''
                 state.data.password = ''
-                state.data.authType = null;
+                state.data.authType = null
               })
             },
             setLogoutDialogState: (value) => {
