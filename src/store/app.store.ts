@@ -5,8 +5,8 @@ import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { pingServer } from '@/api/pingServer'
-import { IAppContext, IServerConfig } from '@/types/serverConfig'
-import { saltWord } from '@/utils/salt'
+import { AuthType, IAppContext, IServerConfig } from '@/types/serverConfig'
+import { saltWord, toHex } from '@/utils/salt'
 
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
@@ -19,6 +19,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             url: '',
             username: '',
             password: '',
+            authType: null,
             logoutDialogState: false,
           },
           command: {
@@ -51,25 +52,30 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               })
             },
             saveConfig: async ({ url, username, password }: IServerConfig) => {
-              const token = MD5(`${password}${saltWord}`).toString()
+              // try both token and password methods
+              for (const authType of [AuthType.TOKEN, AuthType.PASSWORD]){
+                const token =
+                  authType == AuthType.TOKEN
+                    ? MD5(`${password}${saltWord}`).toString()
+                    : `enc:${toHex(password)}`
 
-              const canConnect = await pingServer(url, username, token)
+                const canConnect = await pingServer(url, username, token, authType)
 
-              if (canConnect) {
-                set((state) => {
-                  state.data.url = url
-                  state.data.username = username
-                  state.data.password = token
-                  state.data.isServerConfigured = true
-                })
-
-                return true
-              } else {
-                set((state) => {
-                  state.data.isServerConfigured = false
-                })
-                return false
+                if (canConnect) {
+                  set((state) => {
+                    state.data.url = url
+                    state.data.username = username
+                    state.data.password = token
+                    state.data.authType = authType
+                    state.data.isServerConfigured = true
+                  })
+                  return true
+                }
               }
+              set((state) => {
+                state.data.isServerConfigured = false
+              })
+              return false
             },
             removeConfig: () => {
               set((state) => {
@@ -78,6 +84,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.url = ''
                 state.data.username = ''
                 state.data.password = ''
+                state.data.authType = null;
               })
             },
             setLogoutDialogState: (value) => {
