@@ -25,7 +25,7 @@ async function getAlbumList(params: Partial<AlbumListParams> = {}) {
     genre,
   } = params
 
-  const response = await httpClient<AlbumListResponse>('/getAlbumList', {
+  const response = await httpClient<AlbumListResponse>('/getAlbumList2', {
     method: 'GET',
     query: {
       type,
@@ -39,7 +39,7 @@ async function getAlbumList(params: Partial<AlbumListParams> = {}) {
 
   return {
     albumsCount: response?.count,
-    list: response?.data.albumList.album,
+    list: response?.data.albumList2.album,
   }
 }
 
@@ -55,7 +55,7 @@ async function getOne(id: string) {
 }
 
 async function getInfo(id: string) {
-  const response = await httpClient<AlbumInfoResponse>('/getAlbumInfo', {
+  const response = await httpClient<AlbumInfoResponse>('/getAlbumInfo2', {
     method: 'GET',
     query: {
       id,

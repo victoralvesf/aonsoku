@@ -196,7 +196,7 @@ export default function AlbumsList() {
               </PreviewCard.ImageWrapper>
               <PreviewCard.InfoWrapper>
                 <PreviewCard.Title link={ROUTES.ALBUM.PAGE(album.id)}>
-                  {album.title}
+                  {album.name}
                 </PreviewCard.Title>
                 <PreviewCard.Subtitle
                   enableLink={album.artistId !== undefined}

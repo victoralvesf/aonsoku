@@ -55,7 +55,7 @@ describe('PreviewList Component', () => {
 
         cy.get('@activeCarousel')
           .findByTestId('card-title')
-          .should('have.text', album.title)
+          .should('have.text', album.name)
 
         cy.get('@activeCarousel')
           .findByTestId('card-subtitle')

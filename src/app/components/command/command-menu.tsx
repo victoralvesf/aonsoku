@@ -244,7 +244,7 @@ export default function CommandMenu() {
                     >
                       <ResultItem
                         coverArt={album.coverArt}
-                        title={album.title}
+                        title={album.name}
                         artist={album.artist}
                         onClick={() => handlePlayAlbum(album.id)}
                       />
