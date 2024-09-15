@@ -8,10 +8,6 @@ export const albumsPageFilterValues = [
     label: 'album.list.filter.genre',
   },
   {
-    key: 'highest',
-    label: 'album.list.filter.highest',
-  },
-  {
     key: 'starred',
     label: 'album.list.filter.favorites',
   },

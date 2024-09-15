@@ -79,7 +79,6 @@ export interface AlbumInfoResponse
 export type AlbumListType =
   | 'random'
   | 'newest'
-  | 'highest'
   | 'frequent'
   | 'recent'
   | 'byGenre'

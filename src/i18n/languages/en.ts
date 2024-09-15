@@ -114,7 +114,6 @@ export const english = {
         filter: {
           artist: 'Artist',
           genre: 'Genre',
-          highest: 'Highest',
           favorites: 'Favorites',
           mostPlayed: 'Most Played',
           name: 'Name',
