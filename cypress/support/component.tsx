@@ -41,7 +41,7 @@ const queryClient = new QueryClient()
 useAppStore.setState((state) => ({
   ...state,
   data: {
-    // fix cy.intercept that wasn't interceptions requests without a base URL
+    // fix cy.intercept that wasn't intercepting requests without a base URL
     url: 'http://localhost:1420',
     // set a default authType to avoid errors
     authType: AuthType.TOKEN,
