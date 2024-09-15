@@ -1,4 +1,4 @@
-import { IReplayGain, ISong } from './song'
+import { ISong } from './song'
 import { SubsonicResponse } from './subsonicResponse'
 
 export interface Genre {
@@ -13,11 +13,7 @@ export interface OriginalReleaseDate {}
 
 export interface Albums {
   id: string
-  parent: string
-  isDir: boolean
-  title: string
   name: string
-  album: string
   artist: string
   year: number
   genre?: string
@@ -28,15 +24,6 @@ export interface Albums {
   starred?: string
   artistId: string
   songCount: number
-  isVideo: boolean
-  played?: string
-  bpm: number
-  comment: string
-  sortName: string
-  mediaType: string
-  musicBrainzId: string
-  genres: Genre[]
-  replayGain: IReplayGain
 }
 
 export interface SingleAlbum {
@@ -68,7 +55,7 @@ export interface AlbumList {
 }
 
 export interface AlbumListResponse
-  extends SubsonicResponse<{ albumList: AlbumList }> {}
+  extends SubsonicResponse<{ albumList2: AlbumList }> {}
 
 export interface GetAlbumResponse
   extends SubsonicResponse<{ album: SingleAlbum }> {}
@@ -79,6 +66,7 @@ export interface IArtistAlbum extends Albums {
 
 export interface IAlbumInfo {
   notes?: string
+  musicBrainzId?: string
   lastFmUrl?: string
   smallImageUrl?: string
   mediumImageUrl?: string
