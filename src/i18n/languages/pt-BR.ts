@@ -116,7 +116,6 @@ export const brazilianPortuguese = {
         filter: {
           artist: 'Artista',
           genre: 'Gênero',
-          highest: 'Mais altos',
           favorites: 'Favoritos',
           mostPlayed: 'Mais reproduzidos',
           name: 'Nome',
