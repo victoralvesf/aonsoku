@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import { useEffect } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { HotkeysEvent } from 'react-hotkeys-hook/dist/types'
 import { Button } from '@/app/components/ui/button'
 import {
   usePlayerActions,
@@ -44,10 +45,26 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
   } = usePlayerActions()
   const currentList = usePlayerCurrentList()
 
-  useHotkeys('space', () => togglePlayPause(), {
-    preventDefault: true,
-    enabled: currentList.length > 0,
-  })
+  useHotkeys(
+    ['space', 'left', 'right'],
+    (_, handler: HotkeysEvent) => {
+      switch (handler.keys?.join('')) {
+        case 'space':
+          togglePlayPause()
+          break
+        case 'left':
+          playPrevSong()
+          break
+        case 'right':
+          playNextSong()
+          break
+      }
+    },
+    {
+      preventDefault: true,
+      enabled: currentList.length > 0,
+    },
+  )
 
   useEffect(() => {
     manageMediaSession.setHandlers({
