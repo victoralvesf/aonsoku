@@ -28,7 +28,7 @@ export function SidebarPlaylists() {
       </div>
       <div className="flex flex-col overflow-y-auto">
         <ScrollArea id="playlists" className="pr-4 pb-2">
-          {playlists && playlists.length > 0 ? (
+          {playlists !== undefined && playlists.length > 0 ? (
             <SidebarPlaylistGenerator playlists={playlists} />
           ) : (
             <span className="w-full truncate text-left px-3 pt-2 text-sm">
