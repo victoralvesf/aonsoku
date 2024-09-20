@@ -213,6 +213,13 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
             toggleShuffle: () => {
               const { isShuffleActive } = get().playerState
+              const { currentList, currentSongIndex } = get().songlist
+
+              const listLength = currentList.length
+              const isPlayingOneOrLess = listLength <= 1
+              const isPlayingLastSong = currentSongIndex === listLength - 1
+
+              if (isPlayingOneOrLess || isPlayingLastSong) return
 
               if (isShuffleActive) {
                 const currentSongId = get().songlist.currentSong.id

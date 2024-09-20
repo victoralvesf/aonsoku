@@ -241,6 +241,22 @@ export const brazilianPortuguese = {
     player: {
       noSongPlaying: 'Nenhuma música tocando',
       noRadioPlaying: 'Nenhum rádio tocando',
+      tooltips: {
+        shuffle: {
+          enable: 'Ativar aleatório',
+          disable: 'Desativar aleatório',
+        },
+        previous: 'Voltar',
+        play: 'Play',
+        pause: 'Pausar',
+        next: 'Avançar',
+        repeat: {
+          enable: 'Repetir',
+          disable: 'Não repetir',
+        },
+        like: 'Curtir {{song}} por {{artist}}',
+        dislike: 'Remover curtida de {{song}} por {{artist}}',
+      },
     },
     options: {
       playNext: 'Tocar a seguir',

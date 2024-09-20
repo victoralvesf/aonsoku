@@ -238,6 +238,22 @@ export const english = {
     player: {
       noSongPlaying: 'No song playing',
       noRadioPlaying: 'No radio playing',
+      tooltips: {
+        shuffle: {
+          enable: 'Enable shuffle',
+          disable: 'Disable shuffle',
+        },
+        previous: 'Previous',
+        play: 'Play',
+        pause: 'Pause',
+        next: 'Next',
+        repeat: {
+          enable: 'Enable repeat',
+          disable: 'Disable repeat',
+        },
+        like: 'Like {{song}} by {{artist}}',
+        dislike: 'Remove like from {{song}} by {{artist}}',
+      },
     },
     options: {
       playNext: 'Play next',
