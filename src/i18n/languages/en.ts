@@ -347,6 +347,23 @@ export const english = {
       title: 'Queue',
       clear: 'Clear queue',
     },
+    shortcuts: {
+      modal: {
+        title: 'Keyboard Shortcuts',
+        description: {
+          first: 'Press',
+          last: 'to toggle this modal.',
+        },
+      },
+      playback: {
+        label: 'Playback',
+        play: 'Play / Pause',
+        shuffle: 'Shuffle',
+        repeat: 'Repeat',
+        previous: 'Skip to previous',
+        next: 'Skip to next',
+      },
+    },
     dayjs: {
       relativeTime: {
         future: 'in %s',
