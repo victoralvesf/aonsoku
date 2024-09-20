@@ -238,6 +238,22 @@ export const english = {
     player: {
       noSongPlaying: 'No song playing',
       noRadioPlaying: 'No radio playing',
+      tooltips: {
+        shuffle: {
+          enable: 'Enable shuffle',
+          disable: 'Disable shuffle',
+        },
+        previous: 'Previous',
+        play: 'Play',
+        pause: 'Pause',
+        next: 'Next',
+        repeat: {
+          enable: 'Enable repeat',
+          disable: 'Disable repeat',
+        },
+        like: 'Like {{song}} by {{artist}}',
+        dislike: 'Remove like from {{song}} by {{artist}}',
+      },
     },
     options: {
       playNext: 'Play next',
@@ -330,6 +346,23 @@ export const english = {
     queue: {
       title: 'Queue',
       clear: 'Clear queue',
+    },
+    shortcuts: {
+      modal: {
+        title: 'Keyboard Shortcuts',
+        description: {
+          first: 'Press',
+          last: 'to toggle this modal.',
+        },
+      },
+      playback: {
+        label: 'Playback',
+        play: 'Play / Pause',
+        shuffle: 'Shuffle',
+        repeat: 'Repeat',
+        previous: 'Skip to previous',
+        next: 'Skip to next',
+      },
     },
     dayjs: {
       relativeTime: {

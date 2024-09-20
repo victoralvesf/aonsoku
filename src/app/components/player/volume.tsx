@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Volume, Volume1, Volume2 } from 'lucide-react'
+import { VolumeX, Volume1, Volume2 } from 'lucide-react'
 import { RefObject, useEffect } from 'react'
 import { Slider } from '@/app/components/ui/slider'
 import { usePlayerVolume } from '@/store/player.store'
@@ -23,7 +23,7 @@ export function PlayerVolume({ disabled, audioRef }: PlayerVolumeProps) {
       <div className={clsx(disabled && 'opacity-50')}>
         {volume >= 50 && <Volume2 className="w-4 h-4" />}
         {volume > 0 && volume < 50 && <Volume1 className="w-4 h-4" />}
-        {volume === 0 && <Volume className="w-4 h-4" />}
+        {volume === 0 && <VolumeX className="w-4 h-4" />}
       </div>
       <Slider
         defaultValue={[100]}
