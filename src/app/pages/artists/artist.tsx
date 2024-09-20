@@ -68,6 +68,8 @@ export default function Artist() {
 
   const badges = [formatAlbumCount(), getSongCount()]
 
+  const recentAlbums = artist.album.sort((a, b) => b.year - a.year)
+
   return (
     <div className="w-full">
       <ImageHeader
@@ -99,7 +101,7 @@ export default function Artist() {
 
         <PreviewList
           title={t('artist.recentAlbums')}
-          list={artist.album}
+          list={recentAlbums}
           moreTitle={t('album.more.discography')}
           moreRoute={ROUTES.ARTIST.ALBUMS(artist.id)}
         />
