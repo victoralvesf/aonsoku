@@ -130,7 +130,10 @@ export async function httpClient<T>(
   }
 }
 
-export function getCoverArtUrl(id: string, size = '300') {
+export function getCoverArtUrl(id: string, size = '300'): string {
+  if (!id) {
+    return '/albumdefault.jpg'
+  }
   return getUrl('getCoverArt', {
     id,
     size,
