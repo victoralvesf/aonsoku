@@ -23,7 +23,7 @@ export function HeaderItem({ song }: { song: ISong }) {
     }
   }
 
-  const coverArtUrl = getCoverArtUrl(song.coverArt, '400')
+  const coverArtUrl = getCoverArtUrl(song.coverArt, 'song', '400')
 
   return (
     <div

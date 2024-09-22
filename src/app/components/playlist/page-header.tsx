@@ -18,7 +18,7 @@ export function PlaylistPageHeader({
     <div className="flex">
       <div className="bg-skeleton overflow-hidden rounded-lg shadow-md aspect-square resize-none min-w-[200px] w-[200px] 2xl:w-[250px] 2xl:min-w-[250px]">
         <LazyLoadImage
-          src={getCoverArtUrl(playlist.coverArt)}
+          src={getCoverArtUrl(playlist.coverArt, 'playlist')}
           alt={playlist.name}
           effect="opacity"
           className="aspect-square object-cover"

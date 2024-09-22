@@ -12,7 +12,7 @@ function setMediaSession(song: ISong) {
     album: song.album,
     artwork: artworkSizes.map((size): MediaImage => {
       return {
-        src: getCoverArtUrl(song.coverArt, size),
+        src: getCoverArtUrl(song.coverArt, 'song', size),
         sizes: [size, size].join('x'),
         type: 'image/jpeg',
       }

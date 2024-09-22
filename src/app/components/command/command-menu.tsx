@@ -244,6 +244,7 @@ export default function CommandMenu() {
                     >
                       <ResultItem
                         coverArt={album.coverArt}
+                        coverArtType="album"
                         title={album.name}
                         artist={album.artist}
                         onClick={() => handlePlayAlbum(album.id)}
@@ -269,6 +270,7 @@ export default function CommandMenu() {
                     >
                       <ResultItem
                         coverArt={artist.coverArt}
+                        coverArtType="artist"
                         title={artist.name}
                         artist={t('artist.info.albumsCount', {
                           count: artist.albumCount,
@@ -296,6 +298,7 @@ export default function CommandMenu() {
                     >
                       <ResultItem
                         coverArt={song.coverArt}
+                        coverArtType="song"
                         title={song.title}
                         artist={song.artist}
                         onClick={() => playSong(song)}

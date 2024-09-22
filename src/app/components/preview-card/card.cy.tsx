@@ -18,7 +18,7 @@ describe('PreviewCard Component', () => {
           <PreviewCard.Root>
             <PreviewCard.ImageWrapper link="/test">
               <PreviewCard.Image
-                src={getCoverArtUrl(album.coverArt)}
+                src={getCoverArtUrl(album.coverArt, 'album')}
                 alt={album.name}
               />
             </PreviewCard.ImageWrapper>
@@ -43,7 +43,7 @@ describe('PreviewCard Component', () => {
           <PreviewCard.Root>
             <PreviewCard.ImageWrapper link="/test">
               <PreviewCard.Image
-                src={getCoverArtUrl(album.coverArt)}
+                src={getCoverArtUrl(album.coverArt, 'album')}
                 alt={album.name}
               />
               <PreviewCard.PlayButton onClick={onClickSpy} />
@@ -68,7 +68,7 @@ describe('PreviewCard Component', () => {
           <PreviewCard.Root>
             <PreviewCard.ImageWrapper link="/test">
               <PreviewCard.Image
-                src={getCoverArtUrl(album.coverArt)}
+                src={getCoverArtUrl(album.coverArt, 'album')}
                 alt={album.name}
               />
             </PreviewCard.ImageWrapper>
