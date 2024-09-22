@@ -54,6 +54,7 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
         <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
           <CoverImage
             coverArt={row.original.coverArt}
+            coverArtType="artist"
             altText={row.original.name}
           />
           <div className="flex flex-col justify-center items-center">

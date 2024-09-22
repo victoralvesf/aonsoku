@@ -76,6 +76,7 @@ export default function Artist() {
         type={t('artist.headline')}
         title={artist.name}
         coverArtId={artist.coverArt}
+        coverArtType="artist"
         coverArtSize="700"
         coverArtAlt={artist.name}
         badges={badges}

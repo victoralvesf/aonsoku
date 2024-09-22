@@ -117,7 +117,7 @@ export default function PreviewList({
                 <PreviewCard.Root>
                   <PreviewCard.ImageWrapper link={ROUTES.ALBUM.PAGE(album.id)}>
                     <PreviewCard.Image
-                      src={getCoverArtUrl(album.coverArt)}
+                      src={getCoverArtUrl(album.coverArt, 'album')}
                       alt={album.name}
                     />
                     <PreviewCard.PlayButton

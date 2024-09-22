@@ -7,6 +7,7 @@ import { getCoverArtUrl } from '@/api/httpClient'
 import { AlbumHeaderFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { Badge } from '@/app/components/ui/badge'
 import { ROUTES } from '@/routes/routesList'
+import { CoverArt } from '@/types/coverArtType'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
 
@@ -16,6 +17,7 @@ interface ImageHeaderProps {
   subtitle?: string
   artistId?: string
   coverArtId: string
+  coverArtType: CoverArt
   coverArtSize: string
   coverArtAlt: string
   badges: (string | number | null)[]
@@ -27,6 +29,7 @@ export default function ImageHeader({
   subtitle,
   artistId,
   coverArtId,
+  coverArtType,
   coverArtSize,
   coverArtAlt,
   badges,
@@ -63,7 +66,7 @@ export default function ImageHeader({
             effect="opacity"
             crossOrigin="anonymous"
             id="cover-art-image"
-            src={getCoverArtUrl(coverArtId, coverArtSize)}
+            src={getCoverArtUrl(coverArtId, coverArtType, coverArtSize)}
             alt={coverArtAlt}
             className="aspect-square object-cover w-full h-full"
             width="100%"

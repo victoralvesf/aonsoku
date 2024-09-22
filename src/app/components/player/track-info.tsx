@@ -19,7 +19,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
     <>
       <div className="group relative">
         <Image
-          src={getCoverArtUrl(song.coverArt, '140')}
+          src={getCoverArtUrl(song.coverArt, 'song', '140')}
           width={70}
           className="rounded shadow-md"
           data-testid="track-image"

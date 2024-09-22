@@ -88,7 +88,7 @@ export default function RelatedArtistsList({
                     link={ROUTES.ARTIST.PAGE(artist.id)}
                   >
                     <PreviewCard.Image
-                      src={getCoverArtUrl(artist.coverArt)}
+                      src={getCoverArtUrl(artist.coverArt, 'artist')}
                       alt={artist.name}
                     />
                     <PreviewCard.PlayButton

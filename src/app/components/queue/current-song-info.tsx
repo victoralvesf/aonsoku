@@ -19,7 +19,7 @@ export function CurrentSongInfo() {
     )
   }
 
-  const imageUrl = getCoverArtUrl(currentSong.coverArt, '400')
+  const imageUrl = getCoverArtUrl(currentSong.coverArt, 'song', '400')
 
   return (
     <div className="mr-12 hidden lg:block w-[260px] lg:w-[320px] 2xl:w-[380px]">
