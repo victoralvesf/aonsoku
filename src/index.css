@@ -150,7 +150,7 @@ img {
   @apply bg-[--main-background];
 }
 
-.cmdk-custom-style {
+#main-command {
   @apply [&_[cmdk-group-heading]]:px-2;
   @apply [&_[cmdk-group-heading]]:font-medium;
   @apply [&_[cmdk-group-heading]]:text-muted-foreground;
