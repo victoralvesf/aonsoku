@@ -1,3 +1,5 @@
+import { AlbumsFilters } from '@/utils/albumsFilter'
+
 const LIBRARY = {
   HOME: '/',
   ARTISTS: '/library/artists',
@@ -19,9 +21,13 @@ const ALBUM = {
 
 const ALBUMS = {
   GENRE: (genre: string) =>
-    `${LIBRARY.ALBUMS}?filter=byGenre&genre=${encodeURIComponent(genre)}`,
+    `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.ByGenre}&genre=${encodeURIComponent(genre)}`,
   ARTIST: (id: string, name: string) =>
     `${LIBRARY.ALBUMS}?artistId=${id}&artistName=${encodeURIComponent(name)}`,
+  RECENTLY_PLAYED: `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.RecentlyPlayed}`,
+  MOST_PLAYED: `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.MostPlayed}`,
+  RECENTLY_ADDED: `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.RecentlyAdded}`,
+  RANDOM: `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.Random}`,
 }
 
 const PLAYLIST = {

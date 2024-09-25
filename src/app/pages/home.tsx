@@ -29,21 +29,25 @@ export default function Home() {
       title: t('home.recentlyPlayed'),
       data: recentlyPlayed.data,
       loader: recentlyPlayed.isLoading,
+      route: ROUTES.ALBUMS.RECENTLY_PLAYED,
     },
     {
       title: t('home.mostPlayed'),
       data: mostPlayed.data,
       loader: mostPlayed.isLoading,
+      route: ROUTES.ALBUMS.MOST_PLAYED,
     },
     {
       title: t('home.recentlyAdded'),
       data: recentlyAdded.data,
       loader: recentlyAdded.isLoading,
+      route: ROUTES.ALBUMS.RECENTLY_ADDED,
     },
     {
       title: t('home.explore'),
       data: randomAlbums.data,
       loader: randomAlbums.isLoading,
+      route: ROUTES.ALBUMS.RANDOM,
     },
   ]
 
@@ -66,7 +70,7 @@ export default function Home() {
           <PreviewList
             key={section.title}
             title={section.title}
-            moreRoute={ROUTES.LIBRARY.ALBUMS}
+            moreRoute={section.route}
             list={section.data.list}
           />
         )
