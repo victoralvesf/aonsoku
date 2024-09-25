@@ -18,6 +18,11 @@ const ALBUM = {
   PATH: `${LIBRARY.ALBUMS}/:albumId`,
 }
 
+const ALBUMS = {
+  GENRE: (genre: string) =>
+    `${LIBRARY.ALBUMS}?filter=byGenre&genre=${encodeURIComponent(genre)}`,
+}
+
 const PLAYLIST = {
   PAGE: (playlistId: string) => `${LIBRARY.PLAYLISTS}/${playlistId}`,
   PATH: `${LIBRARY.PLAYLISTS}/:playlistId`,
@@ -29,6 +34,7 @@ export const ROUTES = {
   LIBRARY,
   ARTIST,
   ALBUM,
+  ALBUMS,
   PLAYLIST,
   SERVER_CONFIG,
 }

@@ -146,7 +146,7 @@ export default function Album() {
           {!randomAlbumsIsLoading && randomGenreAlbums && (
             <PreviewList
               list={randomGenreAlbums}
-              showMore={false}
+              moreRoute={ROUTES.ALBUMS.GENRE(album.genre)}
               title={t('album.more.genreTitle', {
                 genre: album.genre,
               })}
