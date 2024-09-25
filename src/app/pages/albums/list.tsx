@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { EmptyAlbums } from '@/app/components/albums/empty-page'
-import { YearFilter } from '@/app/components/albums/filters'
 import { AlbumsHeader } from '@/app/components/albums/header'
 import { AlbumsFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
@@ -13,6 +12,12 @@ import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { AlbumListType } from '@/types/responses/album'
+import {
+  AlbumsFilters,
+  AlbumsSearchParams,
+  YearFilter,
+  YearSortOptions,
+} from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
@@ -26,16 +31,32 @@ export default function AlbumsList() {
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
   const { setSongList } = usePlayerActions()
 
-  const currentFilter = getSearchParam<AlbumListType>('filter', 'newest')
-  const yearFilter = getSearchParam<YearFilter>('yearFilter', 'oldest')
-  const genre = getSearchParam<string>('genre', '')
-  const artistId = getSearchParam<string>('artistId', '')
+  const currentFilter = getSearchParam<AlbumListType>(
+    AlbumsSearchParams.MainFilter,
+    AlbumsFilters.RecentlyAdded,
+  )
+  const yearFilter = getSearchParam<YearFilter>(
+    AlbumsSearchParams.YearFilter,
+    YearSortOptions.Oldest,
+  )
+  const genre = getSearchParam<string>(AlbumsSearchParams.Genre, '')
+  const artistId = getSearchParam<string>(AlbumsSearchParams.ArtistId, '')
 
   useEffect(() => {
     scrollDivRef.current = document.querySelector(
       '#main-scroll-area #scroll-viewport',
     ) as HTMLDivElement
   }, [])
+
+  function getYearRange() {
+    if (yearFilter === YearSortOptions.Oldest) {
+      return [oldestYear, currentYear]
+    } else {
+      return [currentYear, oldestYear]
+    }
+  }
+
+  const [fromYear, toYear] = getYearRange()
 
   const fetchAlbums = async ({ pageParam = 0 }) => {
     if (artistId !== '') {
@@ -56,8 +77,8 @@ export default function AlbumsList() {
       type: currentFilter,
       size: defaultOffset,
       offset: pageParam,
-      fromYear: yearFilter === 'oldest' ? oldestYear : currentYear,
-      toYear: yearFilter === 'oldest' ? currentYear : oldestYear,
+      fromYear,
+      toYear,
       genre,
     })
 
@@ -74,7 +95,7 @@ export default function AlbumsList() {
   }
 
   function enableMainQuery() {
-    if (currentFilter === 'byGenre' && genre === '') return false
+    if (currentFilter === AlbumsFilters.ByGenre && genre === '') return false
 
     return true
   }

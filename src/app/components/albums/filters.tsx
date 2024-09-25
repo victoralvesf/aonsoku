@@ -33,11 +33,15 @@ import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
 import { subsonic } from '@/service/subsonic'
 import { AlbumListType } from '@/types/responses/album'
-import { albumsPageFilterValues } from '@/utils/albumsPageFilterValues'
+import {
+  AlbumsFilters,
+  albumsFilterValues,
+  AlbumsSearchParams,
+  YearFilter,
+  YearSortOptions,
+} from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
-
-export type YearFilter = 'oldest' | 'newest'
 
 export function AlbumsFilter() {
   const { t } = useTranslation()
@@ -50,23 +54,31 @@ export function AlbumsFilter() {
     queryFn: subsonic.genres.get,
   })
 
-  const currentFilter = getSearchParam<AlbumListType>('filter', 'newest')
-  const yearFilter = getSearchParam<YearFilter>('yearFilter', 'oldest')
-  const genre = getSearchParam<string>('genre', '')
-  const artistName = getSearchParam<string>('artistName', '')
+  const currentFilter = getSearchParam<AlbumListType>(
+    AlbumsSearchParams.MainFilter,
+    AlbumsFilters.RecentlyAdded,
+  )
+  const yearFilter = getSearchParam<YearFilter>(
+    AlbumsSearchParams.YearFilter,
+    YearSortOptions.Oldest,
+  )
+  const genre = getSearchParam<string>(AlbumsSearchParams.Genre, '')
+  const artistName = getSearchParam<string>(AlbumsSearchParams.ArtistName, '')
 
-  const currentFilterLabel = albumsPageFilterValues.filter(
+  const currentFilterLabel = albumsFilterValues.filter(
     (item) => item.key === currentFilter,
   )[0].label
 
   function handleChangeFilter(filter: AlbumListType) {
     setSearchParams((state) => {
-      state.set('filter', filter)
+      state.set(AlbumsSearchParams.MainFilter, filter)
 
-      state.delete('artistId')
-      state.delete('artistName')
-      if (filter !== 'byYear') state.delete('yearFilter')
-      if (filter !== 'byGenre') state.delete('genre')
+      state.delete(AlbumsSearchParams.ArtistId)
+      state.delete(AlbumsSearchParams.ArtistName)
+      if (filter !== AlbumsFilters.ByYear)
+        state.delete(AlbumsSearchParams.YearFilter)
+      if (filter !== AlbumsFilters.ByGenre)
+        state.delete(AlbumsSearchParams.Genre)
 
       return state
     })
@@ -74,8 +86,12 @@ export function AlbumsFilter() {
 
   function handleChangeYearSort() {
     setSearchParams((state) => {
-      const filter = yearFilter === 'newest' ? 'oldest' : 'newest'
-      state.set('yearFilter', filter)
+      const filter =
+        yearFilter === YearSortOptions.Newest
+          ? YearSortOptions.Oldest
+          : YearSortOptions.Newest
+
+      state.set(AlbumsSearchParams.YearFilter, filter)
 
       return state
     })
@@ -83,21 +99,27 @@ export function AlbumsFilter() {
 
   function handleChangeGenreFilter(value: string) {
     setSearchParams((state) => {
-      state.set('genre', value)
+      state.set(AlbumsSearchParams.Genre, value)
 
       return state
     })
     setGenrePopover(false)
   }
 
+  function yearFilterTooltip() {
+    if (yearFilter === YearSortOptions.Oldest) {
+      return t('table.sort.asc')
+    } else {
+      return t('table.sort.desc')
+    }
+  }
+
   return (
     <div className="flex gap-2">
-      {currentFilter === 'byYear' && (
-        <SimpleTooltip
-          text={t(`table.sort.${yearFilter === 'oldest' ? 'asc' : 'desc'}`)}
-        >
+      {currentFilter === AlbumsFilters.ByYear && (
+        <SimpleTooltip text={yearFilterTooltip()}>
           <Button variant="outline" size="sm" onClick={handleChangeYearSort}>
-            {yearFilter === 'oldest' ? (
+            {yearFilter === YearSortOptions.Oldest ? (
               <ArrowUp className="w-4 h-4" />
             ) : (
               <ArrowDown className="w-4 h-4" />
@@ -106,7 +128,7 @@ export function AlbumsFilter() {
         </SimpleTooltip>
       )}
 
-      {currentFilter === 'byGenre' && genres !== undefined && (
+      {currentFilter === AlbumsFilters.ByGenre && genres !== undefined && (
         <Popover open={genrePopover} onOpenChange={setGenrePopover}>
           <PopoverTrigger asChild>
             <Button
@@ -158,7 +180,7 @@ export function AlbumsFilter() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          {albumsPageFilterValues.map((item, index) => {
+          {albumsFilterValues.map((item, index) => {
             return (
               <DropdownMenuCheckboxItem
                 key={index}
