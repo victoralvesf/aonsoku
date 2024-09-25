@@ -121,6 +121,7 @@ export const brazilianPortuguese = {
         genre: {
           label: 'Selecione um gênero...',
           search: 'Procurar um gênero...',
+          loading: 'Carregando gêneros...',
         },
         filter: {
           artist: 'Artista',

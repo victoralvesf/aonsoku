@@ -119,6 +119,7 @@ export const english = {
         genre: {
           label: 'Select a genre...',
           search: 'Find a genre...',
+          loading: 'Loading genres...',
         },
         filter: {
           artist: 'Artist',
