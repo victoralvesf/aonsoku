@@ -211,7 +211,7 @@ export default function CommandMenu() {
           }
         }}
       >
-        <Command shouldFilter={activePage === 'PLAYLISTS'}>
+        <Command shouldFilter={activePage === 'PLAYLISTS'} id="main-command">
           <CommandInput
             data-testid="command-menu-input"
             placeholder={inputPlaceholder()}

@@ -138,7 +138,7 @@ export default function Album() {
               showMore={true}
               title={t('album.more.listTitle')}
               moreTitle={t('album.more.discography')}
-              moreRoute={ROUTES.ARTIST.ALBUMS(album.artistId)}
+              moreRoute={ROUTES.ALBUMS.ARTIST(album.artistId, album.artist)}
             />
           )}
 
@@ -146,7 +146,7 @@ export default function Album() {
           {!randomAlbumsIsLoading && randomGenreAlbums && (
             <PreviewList
               list={randomGenreAlbums}
-              showMore={false}
+              moreRoute={ROUTES.ALBUMS.GENRE(album.genre)}
               title={t('album.more.genreTitle', {
                 genre: album.genre,
               })}

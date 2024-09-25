@@ -113,6 +113,16 @@ export const brazilianPortuguese = {
         genreTitle: 'Mais de {{genre}}',
       },
       list: {
+        empty: {
+          title: 'Nenhum resultado encontrado!',
+          info: 'Não conseguimos encontrar álbuns que correspondam ao seu filtro.',
+          action: 'Modifique os filtros e tente novamente.',
+        },
+        genre: {
+          label: 'Selecione um gênero...',
+          search: 'Procurar um gênero...',
+          loading: 'Carregando gêneros...',
+        },
         filter: {
           artist: 'Artista',
           genre: 'Gênero',

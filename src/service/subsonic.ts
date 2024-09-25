@@ -1,5 +1,6 @@
 import { albums } from './albums'
 import { artists } from './artists'
+import { genres } from './genres'
 import { library } from './library'
 import { ping } from './ping'
 import { playlists } from './playlists'
@@ -12,12 +13,13 @@ import { star } from './star'
 export const subsonic = {
   albums,
   artists,
-  songs,
+  genres,
+  library,
+  ping,
   playlists,
   radios,
-  star,
-  search,
   scrobble,
-  ping,
-  library,
+  search,
+  songs,
+  star,
 }

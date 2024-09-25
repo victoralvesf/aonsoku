@@ -1,40 +1,46 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import debounce from 'lodash/debounce'
-import { ArrowDown, ArrowUp, ListFilter } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
-import { ShadowHeader } from '@/app/components/album/shadow-header'
+import { EmptyAlbums } from '@/app/components/albums/empty-page'
+import { AlbumsHeader } from '@/app/components/albums/header'
 import { AlbumsFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { PreviewCard } from '@/app/components/preview-card/card'
-import { Badge } from '@/app/components/ui/badge'
-import { Button } from '@/app/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/app/components/ui/dropdown-menu'
-import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { AlbumListType } from '@/types/responses/album'
-import { albumsPageFilterValues } from '@/utils/albumsPageFilterValues'
+import {
+  AlbumsFilters,
+  AlbumsSearchParams,
+  YearFilter,
+  YearSortOptions,
+} from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
+import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 export default function AlbumsList() {
+  const [searchParams] = useSearchParams()
+  const { getSearchParam } = new SearchParamsHandler(searchParams)
   const defaultOffset = 128
   const oldestYear = '0001'
   const currentYear = new Date().getFullYear().toString()
 
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
   const { setSongList } = usePlayerActions()
-  const { t } = useTranslation()
 
-  const [currentFilter, setCurrentFilter] = useState<AlbumListType>('newest')
-  const [yearFilter, setYearFilter] = useState<'oldest' | 'newest'>('oldest')
+  const currentFilter = getSearchParam<AlbumListType>(
+    AlbumsSearchParams.MainFilter,
+    AlbumsFilters.RecentlyAdded,
+  )
+  const yearFilter = getSearchParam<YearFilter>(
+    AlbumsSearchParams.YearFilter,
+    YearSortOptions.Oldest,
+  )
+  const genre = getSearchParam<string>(AlbumsSearchParams.Genre, '')
+  const artistId = getSearchParam<string>(AlbumsSearchParams.ArtistId, '')
 
   useEffect(() => {
     scrollDivRef.current = document.querySelector(
@@ -42,13 +48,38 @@ export default function AlbumsList() {
     ) as HTMLDivElement
   }, [])
 
+  function getYearRange() {
+    if (yearFilter === YearSortOptions.Oldest) {
+      return [oldestYear, currentYear]
+    } else {
+      return [currentYear, oldestYear]
+    }
+  }
+
+  const [fromYear, toYear] = getYearRange()
+
   const fetchAlbums = async ({ pageParam = 0 }) => {
+    if (artistId !== '') {
+      const response = await subsonic.artists.getOne(artistId)
+
+      if (!response) {
+        return { albums: [], nextOffset: null, albumsCount: 0 }
+      }
+
+      return {
+        albums: response.album,
+        nextOffset: null,
+        albumsCount: response.album.length,
+      }
+    }
+
     const response = await subsonic.albums.getAlbumList({
       type: currentFilter,
       size: defaultOffset,
       offset: pageParam,
-      fromYear: yearFilter === 'oldest' ? oldestYear : currentYear,
-      toYear: yearFilter === 'oldest' ? currentYear : oldestYear,
+      fromYear,
+      toYear,
+      genre,
     })
 
     let nextOffset = null
@@ -63,11 +94,18 @@ export default function AlbumsList() {
     }
   }
 
+  function enableMainQuery() {
+    if (currentFilter === AlbumsFilters.ByGenre && genre === '') return false
+
+    return true
+  }
+
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
-    queryKey: [queryKeys.album.all, currentFilter, yearFilter],
+    queryKey: [queryKeys.album.all, currentFilter, yearFilter, genre],
     queryFn: fetchAlbums,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
+    enabled: enableMainQuery(),
   })
 
   useEffect(() => {
@@ -99,84 +137,17 @@ export default function AlbumsList() {
     }
   }
 
-  const currentFilterLabel = albumsPageFilterValues.filter(
-    (item) => item.key === currentFilter,
-  )[0].label
-
-  if (!data) return null
+  if (isLoading) {
+    return <AlbumsFallback />
+  }
+  if (!data) return <EmptyAlbums />
 
   const items = data.pages.flatMap((page) => page.albums) || []
   const itemsCount = data.pages[0].albumsCount || 0
 
-  if (isLoading) {
-    return <AlbumsFallback />
-  }
-
   return (
     <div className="w-full h-full">
-      <ShadowHeader>
-        <div className="w-full flex justify-between">
-          <div className="flex gap-2 items-center">
-            <h2 className="text-2xl font-semibold tracking-tight">
-              {t('sidebar.albums')}
-            </h2>
-            <Badge variant="secondary" className="text-foreground/70">
-              {itemsCount}
-            </Badge>
-          </div>
-
-          <div className="flex gap-2">
-            {currentFilter === 'byYear' && (
-              <SimpleTooltip
-                text={t(
-                  `table.sort.${yearFilter === 'oldest' ? 'asc' : 'desc'}`,
-                )}
-              >
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setYearFilter((current) =>
-                      current === 'newest' ? 'oldest' : 'newest',
-                    )
-                  }}
-                >
-                  {yearFilter === 'oldest' ? (
-                    <ArrowUp className="w-4 h-4" />
-                  ) : (
-                    <ArrowDown className="w-4 h-4" />
-                  )}
-                </Button>
-              </SimpleTooltip>
-            )}
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <ListFilter className="w-4 h-4 mr-2" />
-                  {t(currentFilterLabel)}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {albumsPageFilterValues.map((item, index) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={index}
-                      checked={item.key === currentFilter}
-                      onCheckedChange={() =>
-                        setCurrentFilter(item.key as AlbumListType)
-                      }
-                      className="cursor-pointer"
-                    >
-                      {t(item.label)}
-                    </DropdownMenuCheckboxItem>
-                  )
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </ShadowHeader>
+      <AlbumsHeader albumCount={itemsCount} />
 
       <ListWrapper className="pt-[--shadow-header-distance]">
         <div
