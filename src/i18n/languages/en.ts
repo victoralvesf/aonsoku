@@ -111,6 +111,15 @@ export const english = {
         genreTitle: 'More from {{genre}}',
       },
       list: {
+        empty: {
+          title: 'Oops, no albums here!',
+          info: 'Looks like there are no albums with the current filter.',
+          action: 'Maybe try tweaking the filters?',
+        },
+        genre: {
+          label: 'Select a genre...',
+          search: 'Find a genre...',
+        },
         filter: {
           artist: 'Artist',
           genre: 'Genre',
