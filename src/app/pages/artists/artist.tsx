@@ -104,7 +104,7 @@ export default function Artist() {
           title={t('artist.recentAlbums')}
           list={recentAlbums}
           moreTitle={t('album.more.discography')}
-          moreRoute={ROUTES.ARTIST.ALBUMS(artist.id)}
+          moreRoute={ROUTES.ALBUMS.ARTIST(artist.id, artist.name)}
         />
 
         {artistInfoIsLoading && <PreviewListFallback />}

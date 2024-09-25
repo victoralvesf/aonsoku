@@ -138,7 +138,7 @@ export default function Album() {
               showMore={true}
               title={t('album.more.listTitle')}
               moreTitle={t('album.more.discography')}
-              moreRoute={ROUTES.ARTIST.ALBUMS(album.artistId)}
+              moreRoute={ROUTES.ALBUMS.ARTIST(album.artistId, album.artist)}
             />
           )}
 

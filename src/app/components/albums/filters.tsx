@@ -34,6 +34,7 @@ import { cn } from '@/lib/utils'
 import { subsonic } from '@/service/subsonic'
 import { AlbumListType } from '@/types/responses/album'
 import { albumsPageFilterValues } from '@/utils/albumsPageFilterValues'
+import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 export type YearFilter = 'oldest' | 'newest'
@@ -45,13 +46,14 @@ export function AlbumsFilter() {
   const { getSearchParam } = new SearchParamsHandler(searchParams)
 
   const { data: genres } = useQuery({
-    queryKey: ['get-all-genres'],
+    queryKey: [queryKeys.genre],
     queryFn: subsonic.genres.get,
   })
 
   const currentFilter = getSearchParam<AlbumListType>('filter', 'newest')
   const yearFilter = getSearchParam<YearFilter>('yearFilter', 'oldest')
   const genre = getSearchParam<string>('genre', '')
+  const artistName = getSearchParam<string>('artistName', '')
 
   const currentFilterLabel = albumsPageFilterValues.filter(
     (item) => item.key === currentFilter,
@@ -61,6 +63,8 @@ export function AlbumsFilter() {
     setSearchParams((state) => {
       state.set('filter', filter)
 
+      state.delete('artistId')
+      state.delete('artistName')
       if (filter !== 'byYear') state.delete('yearFilter')
       if (filter !== 'byGenre') state.delete('genre')
 
@@ -150,7 +154,7 @@ export function AlbumsFilter() {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm">
             <ListFilter className="w-4 h-4 mr-2" />
-            {t(currentFilterLabel)}
+            {!artistName ? t(currentFilterLabel) : artistName}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -158,7 +162,7 @@ export function AlbumsFilter() {
             return (
               <DropdownMenuCheckboxItem
                 key={index}
-                checked={item.key === currentFilter}
+                checked={!artistName ? item.key === currentFilter : false}
                 onCheckedChange={() =>
                   handleChangeFilter(item.key as AlbumListType)
                 }

@@ -29,6 +29,7 @@ export default function AlbumsList() {
   const currentFilter = getSearchParam<AlbumListType>('filter', 'newest')
   const yearFilter = getSearchParam<YearFilter>('yearFilter', 'oldest')
   const genre = getSearchParam<string>('genre', '')
+  const artistId = getSearchParam<string>('artistId', '')
 
   useEffect(() => {
     scrollDivRef.current = document.querySelector(
@@ -37,6 +38,20 @@ export default function AlbumsList() {
   }, [])
 
   const fetchAlbums = async ({ pageParam = 0 }) => {
+    if (artistId !== '') {
+      const response = await subsonic.artists.getOne(artistId)
+
+      if (!response) {
+        return { albums: [], nextOffset: null, albumsCount: 0 }
+      }
+
+      return {
+        albums: response.album,
+        nextOffset: null,
+        albumsCount: response.album.length,
+      }
+    }
+
     const response = await subsonic.albums.getAlbumList({
       type: currentFilter,
       size: defaultOffset,
