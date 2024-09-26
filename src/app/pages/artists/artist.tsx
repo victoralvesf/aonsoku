@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
+import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
 import ArtistTopSongs from '@/app/components/artist/artist-top-songs'
@@ -11,6 +12,7 @@ import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { TopSongsTableFallback } from '@/app/components/fallbacks/table-fallbacks'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
+import { Badge } from '@/app/components/ui/badge'
 import ErrorPage from '@/app/pages/error-page'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
@@ -66,7 +68,22 @@ export default function Artist() {
     return t('artist.info.albumsCount', { count: artist.albumCount })
   }
 
-  const badges = [formatAlbumCount(), getSongCount()]
+  const albumCount = formatAlbumCount()
+  const songCount = getSongCount()
+
+  const badges = (
+    <Fragment>
+      {albumCount && (
+        <Link
+          to={ROUTES.ALBUMS.ARTIST(artist.id, artist.name)}
+          className="flex"
+        >
+          <Badge variant="secondary">{albumCount}</Badge>
+        </Link>
+      )}
+      {songCount && <Badge variant="secondary">{songCount}</Badge>}
+    </Fragment>
+  )
 
   const recentAlbums = artist.album.sort((a, b) => b.year - a.year)
 
