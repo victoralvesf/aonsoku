@@ -1,3 +1,4 @@
+import randomCSSHexColor from '@chriscodesthings/random-css-hex-color'
 import clsx from 'clsx'
 import { Fragment, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -39,12 +40,34 @@ export default function ImageHeader({
   const [open, setOpen] = useState(false)
   const [bgColor, setBgColor] = useState('')
 
+  function getImage() {
+    return document.getElementById('cover-art-image') as HTMLImageElement
+  }
+
   async function handleLoadImage() {
-    const img = document.getElementById('cover-art-image') as HTMLImageElement
+    const img = getImage()
     if (!img) return
 
-    const color = await getAverageColor(img)
-    setBgColor(color.hex)
+    let color = randomCSSHexColor(true)
+
+    try {
+      color = (await getAverageColor(img)).hex
+    } catch (_) {
+      console.warn(
+        'handleLoadImage: unable to get image color. Using a random color.',
+      )
+    }
+
+    setBgColor(color)
+    setLoaded(true)
+  }
+
+  function handleError() {
+    const img = getImage()
+    if (!img) return
+
+    img.crossOrigin = null
+
     setLoaded(true)
   }
 
@@ -73,8 +96,8 @@ export default function ImageHeader({
             className="aspect-square object-cover w-full h-full cursor-pointer"
             width="100%"
             height="100%"
-            beforeLoad={() => setLoaded(false)}
             onLoad={handleLoadImage}
+            onError={handleError}
             onClick={() => setOpen(true)}
           />
         </div>
