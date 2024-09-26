@@ -12,6 +12,7 @@ import { ROUTES } from '@/routes/routesList'
 import { CoverArt } from '@/types/coverArtType'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
+import { ImageHeaderEffect } from './header-effect'
 
 interface ImageHeaderProps {
   type: string
@@ -85,7 +86,7 @@ export default function ImageHeader({
         className="w-full px-8 py-6 flex gap-4 bg-gradient-to-b from-white/30 to-white/50 dark:from-black/30 dark:to-black/50 absolute inset-0"
         style={{ backgroundColor: bgColor }}
       >
-        <div className="w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] bg-skeleton aspect-square bg-cover bg-center rounded shadow-lg overflow-hidden">
+        <div className="w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] bg-skeleton aspect-square bg-cover bg-center rounded shadow-lg overflow-hidden hover:scale-[1.02] ease-linear duration-100">
           <LazyLoadImage
             key={coverArtId}
             effect="opacity"
@@ -131,6 +132,12 @@ export default function ImageHeader({
           </div>
         </div>
       </div>
+
+      {!loaded ? (
+        <ImageHeaderEffect className="bg-muted-foreground" />
+      ) : (
+        <ImageHeaderEffect style={{ backgroundColor: bgColor }} />
+      )}
 
       <CustomLightBox
         open={open}

@@ -1,3 +1,4 @@
+import { ImageHeaderEffect } from '@/app/components/album/header-effect'
 import { SongsCarouselFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { TableFallback } from '@/app/components/fallbacks/table-fallbacks'
 import { ShadowHeaderFallback } from '@/app/components/fallbacks/ui-fallbacks'
@@ -39,7 +40,10 @@ export function PlayButtonsFallback() {
 export function AlbumFallback() {
   return (
     <div className="w-full">
-      <AlbumHeaderFallback />
+      <div className="relative">
+        <AlbumHeaderFallback />
+        <ImageHeaderEffect className="bg-muted-foreground" />
+      </div>
       <ListWrapper>
         <PlayButtonsFallback />
         <TableFallback />

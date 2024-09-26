@@ -35,8 +35,8 @@ function Button({
     <SimpleTooltip text={tooltip}>
       <ComponentButton
         className={cn(
-          'rounded-full w-14 h-14',
-          buttonStyle === 'primary' && 'hover:scale-[0.97] transform-gpu',
+          'rounded-full w-14 h-14 ease-linear duration-100 transition-all hover:shadow',
+          buttonStyle === 'primary' && 'hover:scale-105',
           className,
         )}
         variant={buttonStyle === 'primary' ? 'default' : 'ghost'}
