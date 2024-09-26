@@ -169,6 +169,14 @@ img {
   @apply [&_[cmdk-item]_svg]:w-4;
 }
 
+.yarl__container {
+  @apply !bg-black/90;
+}
+
+.yarl__slide_image {
+  @apply shadow-2xl -shadow-spread-2 shadow-y-[3px] rounded;
+}
+
 /* Native Scroll Bar */
 ::-webkit-scrollbar {
   width: 7px;

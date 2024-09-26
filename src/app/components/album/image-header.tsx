@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { getCoverArtUrl } from '@/api/httpClient'
 import { AlbumHeaderFallback } from '@/app/components/fallbacks/album-fallbacks'
+import { CustomLightBox } from '@/app/components/lightbox'
 import { Badge } from '@/app/components/ui/badge'
 import { ROUTES } from '@/routes/routesList'
 import { CoverArt } from '@/types/coverArtType'
@@ -35,6 +36,7 @@ export default function ImageHeader({
   badges,
 }: ImageHeaderProps) {
   const [loaded, setLoaded] = useState(false)
+  const [open, setOpen] = useState(false)
   const [bgColor, setBgColor] = useState('')
 
   async function handleLoadImage() {
@@ -68,11 +70,12 @@ export default function ImageHeader({
             id="cover-art-image"
             src={getCoverArtUrl(coverArtId, coverArtType, coverArtSize)}
             alt={coverArtAlt}
-            className="aspect-square object-cover w-full h-full"
+            className="aspect-square object-cover w-full h-full cursor-pointer"
             width="100%"
             height="100%"
             beforeLoad={() => setLoaded(false)}
             onLoad={handleLoadImage}
+            onClick={() => setOpen(true)}
           />
         </div>
 
@@ -105,6 +108,14 @@ export default function ImageHeader({
           </div>
         </div>
       </div>
+
+      <CustomLightBox
+        open={open}
+        close={setOpen}
+        src={getCoverArtUrl(coverArtId, coverArtType, '1000')}
+        alt={coverArtAlt}
+        size={600}
+      />
     </div>
   )
 }
