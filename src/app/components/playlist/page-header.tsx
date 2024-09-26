@@ -7,16 +7,20 @@ import { PlaylistWithEntries } from '@/types/responses/playlist'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
 
-export function PlaylistPageHeader({
-  playlist,
-}: {
+interface PlaylistPageHeaderProps {
   playlist: PlaylistWithEntries
-}) {
+}
+
+export function PlaylistPageHeader({ playlist }: PlaylistPageHeaderProps) {
   const { t } = useTranslation()
+
+  const songCount = t('playlist.songCount', { count: playlist.songCount })
+  const duration = convertSecondsToHumanRead(playlist.duration)
+  const playlistDuration = t('playlist.duration', { duration })
 
   return (
     <div className="flex">
-      <div className="bg-skeleton overflow-hidden rounded-lg shadow-md aspect-square resize-none min-w-[200px] w-[200px] 2xl:w-[250px] 2xl:min-w-[250px]">
+      <div className="bg-skeleton overflow-hidden rounded-lg shadow-lg aspect-square resize-none min-w-[200px] w-[200px] 2xl:w-[250px] 2xl:min-w-[250px]">
         <LazyLoadImage
           src={getCoverArtUrl(playlist.coverArt, 'playlist')}
           alt={playlist.name}
@@ -38,18 +42,8 @@ export function PlaylistPageHeader({
           {playlist.comment}
         </p>
         <div className="flex gap-1 mt-3 text-muted-foreground text-sm">
-          <Badge>
-            {t('playlist.songCount', {
-              count: playlist.songCount,
-            })}
-          </Badge>
-          {playlist.duration > 0 && (
-            <Badge>
-              {t('playlist.duration', {
-                duration: convertSecondsToHumanRead(playlist.duration),
-              })}
-            </Badge>
-          )}
+          <Badge>{songCount}</Badge>
+          {playlist.duration > 0 && <Badge>{playlistDuration}</Badge>}
         </div>
       </div>
     </div>
