@@ -170,11 +170,11 @@ img {
 }
 
 .yarl__container {
-  @apply !bg-black/90;
+  @apply !bg-black/70;
 }
 
 .yarl__slide_image {
-  @apply shadow-2xl -shadow-spread-2 shadow-y-[3px] rounded;
+  @apply shadow-2xl -shadow-spread-2 shadow-y-[3px] rounded-lg;
 }
 
 /* Native Scroll Bar */
