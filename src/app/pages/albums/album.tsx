@@ -1,5 +1,6 @@
+import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { AlbumButtons } from '@/app/components/album/buttons'
 import ImageHeader from '@/app/components/album/image-header'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
@@ -7,6 +8,7 @@ import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
+import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import {
   useGetAlbum,
@@ -51,14 +53,26 @@ export default function Album() {
     ? convertSecondsToHumanRead(album.duration)
     : null
 
-  const badges = [
-    album.year || null,
-    album.genre || null,
-    album.songCount
-      ? t('playlist.songCount', { count: album.songCount })
-      : null,
-    albumDuration ? t('playlist.duration', { duration: albumDuration }) : null,
-  ]
+  const badges = (
+    <Fragment>
+      {album.year && <Badge variant="secondary">{album.year}</Badge>}
+      {album.genre && (
+        <Link to={ROUTES.ALBUMS.GENRE(album.genre)} className="flex">
+          <Badge variant="secondary">{album.genre}</Badge>
+        </Link>
+      )}
+      {album.songCount && (
+        <Badge variant="secondary">
+          {t('playlist.songCount', { count: album.songCount })}
+        </Badge>
+      )}
+      {albumDuration && (
+        <Badge variant="secondary">
+          {t('playlist.duration', { duration: albumDuration })}
+        </Badge>
+      )}
+    </Fragment>
+  )
 
   const columnsToShow: ColumnFilter[] = [
     'trackNumber',

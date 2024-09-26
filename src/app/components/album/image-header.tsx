@@ -1,13 +1,12 @@
 import randomCSSHexColor from '@chriscodesthings/random-css-hex-color'
 import clsx from 'clsx'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 
 import { getCoverArtUrl } from '@/api/httpClient'
 import { AlbumHeaderFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { CustomLightBox } from '@/app/components/lightbox'
-import { Badge } from '@/app/components/ui/badge'
 import { ROUTES } from '@/routes/routesList'
 import { CoverArt } from '@/types/coverArtType'
 import { getAverageColor } from '@/utils/getAverageColor'
@@ -23,7 +22,7 @@ interface ImageHeaderProps {
   coverArtType: CoverArt
   coverArtSize: string
   coverArtAlt: string
-  badges: (string | number | null)[]
+  badges: JSX.Element
 }
 
 export default function ImageHeader({
@@ -123,13 +122,7 @@ export default function ImageHeader({
             </Link>
           )}
 
-          <div className="flex gap-2 mt-1 2xl:mt-2">
-            {badges.map((badge, index) => (
-              <Fragment key={index}>
-                {badge && <Badge variant="secondary">{badge}</Badge>}
-              </Fragment>
-            ))}
-          </div>
+          <div className="flex gap-2 mt-1 2xl:mt-2">{badges}</div>
         </div>
       </div>
 
