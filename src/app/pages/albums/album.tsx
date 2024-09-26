@@ -92,7 +92,9 @@ export default function Album() {
       ? removeCurrentAlbumFromList(randomAlbums.list)
       : null
 
-  const albumHasMoreThanOneDisc = album.discTitles.length > 1
+  const albumHasMoreThanOneDisc = album.discTitles
+    ? album.discTitles.length > 1
+    : false
 
   return (
     <div className="w-full">
