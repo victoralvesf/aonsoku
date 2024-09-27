@@ -36,9 +36,10 @@ function Button({
       <ComponentButton
         className={cn(
           'rounded-full w-14 h-14 ease-linear duration-100 transition',
+          'border-[1px] border-transparent',
           buttonStyle === 'primary'
             ? 'hover:scale-105'
-            : 'hover:bg-background hover:border',
+            : 'hover:bg-background hover:border-border',
           className,
         )}
         variant={buttonStyle === 'primary' ? 'default' : 'ghost'}
@@ -89,7 +90,7 @@ function PlayIcon() {
 }
 
 function ShuffleIcon() {
-  return <Shuffle className="w-5 h-5" strokeWidth={2} />
+  return <Shuffle className="w-5 h-5 drop-shadow-md" strokeWidth={2} />
 }
 
 interface LikeIconProps {
@@ -99,14 +100,17 @@ interface LikeIconProps {
 function LikeIcon({ isStarred }: LikeIconProps) {
   return (
     <Heart
-      className={clsx('w-5 h-5', isStarred && 'text-red-500 fill-red-500')}
+      className={clsx(
+        'w-5 h-5 drop-shadow-md',
+        isStarred && 'text-red-500 fill-red-500',
+      )}
       strokeWidth={2}
     />
   )
 }
 
 function EllipsisIcon() {
-  return <EllipsisVertical className="w-5 h-5" strokeWidth={2} />
+  return <EllipsisVertical className="w-5 h-5 drop-shadow-md" strokeWidth={2} />
 }
 
 export const Actions = {

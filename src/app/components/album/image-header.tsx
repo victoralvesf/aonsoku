@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { AlbumHeaderFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { CustomLightBox } from '@/app/components/lightbox'
+import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { CoverArt } from '@/types/coverArtType'
 import { getAverageColor } from '@/utils/getAverageColor'
@@ -77,15 +78,27 @@ export default function ImageHeader({
       key={`header-${coverArtId}`}
     >
       {!loaded && (
-        <div className="absolute inset-0 z-10">
+        <div className="absolute inset-0 z-20">
           <AlbumHeaderFallback />
         </div>
       )}
       <div
-        className="w-full px-8 py-6 flex gap-4 bg-gradient-to-b from-white/30 to-white/50 dark:from-black/30 dark:to-black/50 absolute inset-0"
+        className={cn(
+          'w-full px-8 py-6 flex gap-4 absolute inset-0',
+          'bg-gradient-to-b from-white/30 to-white/50',
+          'dark:from-black/10 dark:to-black/30',
+        )}
         style={{ backgroundColor: bgColor }}
       >
-        <div className="w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] bg-skeleton aspect-square bg-cover bg-center rounded shadow-lg overflow-hidden hover:scale-[1.02] ease-linear duration-100">
+        <div
+          className={cn(
+            'w-[200px] h-[200px] min-w-[200px] min-h-[200px]',
+            '2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px]',
+            'bg-skeleton aspect-square bg-cover bg-center rounded',
+            'shadow-[0_4px_50px_rgba(0,0,0,0.4)] overflow-hidden',
+            'hover:scale-[1.02] ease-linear duration-100',
+          )}
+        >
           <LazyLoadImage
             key={coverArtId}
             effect="opacity"
@@ -102,7 +115,7 @@ export default function ImageHeader({
           />
         </div>
 
-        <div className="flex flex-col justify-end">
+        <div className="flex flex-col justify-end z-10">
           <p className="text-xs 2xl:text-sm mb-1 2xl:mb-2 font-medium">
             {type}
           </p>
@@ -116,7 +129,7 @@ export default function ImageHeader({
           </h1>
           {subtitle && artistId && (
             <Link to={ROUTES.ARTIST.PAGE(artistId)} className="w-fit">
-              <h4 className="scroll-m-20 text-base 2xl:text-lg font-medium tracking-tight opacity-70 hover:underline">
+              <h4 className="2xl:text-lg font-medium opacity-70 hover:underline">
                 {subtitle}
               </h4>
             </Link>
@@ -127,7 +140,7 @@ export default function ImageHeader({
       </div>
 
       {!loaded ? (
-        <ImageHeaderEffect className="bg-muted-foreground" />
+        <ImageHeaderEffect className="bg-muted-foreground dark:from-black/60" />
       ) : (
         <ImageHeaderEffect style={{ backgroundColor: bgColor }} />
       )}

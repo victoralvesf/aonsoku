@@ -42,7 +42,7 @@ export function AlbumFallback() {
     <div className="w-full">
       <div className="relative">
         <AlbumHeaderFallback />
-        <ImageHeaderEffect className="bg-muted-foreground" />
+        <ImageHeaderEffect className="bg-muted-foreground dark:from-black/60" />
       </div>
       <ListWrapper>
         <PlayButtonsFallback />
