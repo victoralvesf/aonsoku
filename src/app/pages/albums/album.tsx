@@ -119,7 +119,7 @@ export default function Album() {
         artistId={album.artistId}
         coverArtId={album.coverArt}
         coverArtType="album"
-        coverArtSize="350"
+        coverArtSize="700"
         coverArtAlt={album.name}
         badges={badges}
       />
