@@ -116,12 +116,12 @@ export default function ImageHeader({
         </div>
 
         <div className="flex flex-col justify-end z-10">
-          <p className="text-xs 2xl:text-sm mb-1 2xl:mb-2 font-medium">
+          <p className="text-xs 2xl:text-sm mb-1 2xl:mb-2 font-medium drop-shadow-md">
             {type}
           </p>
           <h1
             className={clsx(
-              'scroll-m-20 font-bold tracking-tight mb-1 2xl:mb-2 antialiased',
+              'scroll-m-20 font-bold tracking-tight mb-1 2xl:mb-2 antialiased drop-shadow-md',
               getTextSizeClass(title),
             )}
           >
@@ -129,13 +129,13 @@ export default function ImageHeader({
           </h1>
           {subtitle && artistId && (
             <Link to={ROUTES.ARTIST.PAGE(artistId)} className="w-fit">
-              <h4 className="2xl:text-lg font-medium opacity-70 hover:underline">
+              <h4 className="2xl:text-lg font-medium opacity-70 hover:underline drop-shadow-md">
                 {subtitle}
               </h4>
             </Link>
           )}
 
-          <div className="flex gap-2 mt-1 2xl:mt-2">{badges}</div>
+          <div className="flex gap-2 mt-1 2xl:mt-2 drop-shadow">{badges}</div>
         </div>
       </div>
 
