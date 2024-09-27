@@ -74,8 +74,8 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
       enableSorting: true,
       sortingFn: 'basic',
       style: {
-        width: 140,
-        minWidth: 140,
+        width: '15%',
+        maxWidth: '15%',
       },
       header: ({ column }) => (
         <DataTableColumnHeader column={column}>
