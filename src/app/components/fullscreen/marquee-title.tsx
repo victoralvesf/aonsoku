@@ -51,7 +51,7 @@ export function MarqueeTitle({ children, gap }: MarqueeTitleProps) {
       {/* Not shown in screen, its just for calculations */}
       <div
         key={containerKey}
-        className="w-full overflow-hidden whitespace-nowrap opacity-0 absolute left-0 right-0 bottom-0"
+        className="w-full overflow-hidden whitespace-nowrap opacity-0 absolute left-0 right-0 bottom-0 pointer-events-none"
         ref={containerRef}
       >
         <div className="inline-flex" ref={textRef}>

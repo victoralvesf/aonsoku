@@ -177,6 +177,10 @@ img {
   @apply shadow-2xl -shadow-spread-2 shadow-y-[3px] rounded-lg;
 }
 
+.rfm-marquee {
+  @apply overflow-hidden;
+}
+
 /* Native Scroll Bar */
 ::-webkit-scrollbar {
   width: 7px;
