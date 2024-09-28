@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Check, Loader2, XIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Badge } from '@/app/components/ui/badge'
 import {
   Dialog,
@@ -12,37 +12,28 @@ import {
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
+import { useSongInfo } from '@/store/ui.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 import { formatBytes } from '@/utils/formatBytes'
 import { queryKeys } from '@/utils/queryKeys'
-import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 export function SongInfoModal() {
   const { t } = useTranslation()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const { getSearchParam } = new SearchParamsHandler(searchParams)
-
-  const songId = getSearchParam<string>('songId', '')
-  const songInfoModal = getSearchParam<string>('songInfoModal', '')
-
-  const open = songId !== '' && songInfoModal === 'open'
+  const { songId, modalOpen, reset } = useSongInfo()
 
   const { data: song, isLoading } = useQuery({
     queryKey: [queryKeys.song.info, songId],
     queryFn: () => subsonic.songs.getSong(songId),
-    enabled: open,
+    enabled: modalOpen,
   })
 
   function handleModalChange(value: boolean) {
-    setSearchParams((state) => {
-      if (!value) {
-        state.delete('songId')
-        state.delete('songInfoModal')
-      }
+    if (!value) reset()
+  }
 
-      return state
-    })
+  function handleLinkClick() {
+    reset()
   }
 
   function formatGenres() {
@@ -73,7 +64,7 @@ export function SongInfoModal() {
   }
 
   return (
-    <Dialog open={open} onOpenChange={(value) => handleModalChange(value)}>
+    <Dialog open={modalOpen} onOpenChange={handleModalChange}>
       <DialogContent className="max-w-[620px] p-0 gap-0 overflow-hidden">
         <DialogHeader className="border-b p-6">
           <DialogTitle>{t('songInfo.title')}</DialogTitle>
@@ -105,6 +96,7 @@ export function SongInfoModal() {
                 <Link
                   to={ROUTES.ALBUM.PAGE(song.albumId)}
                   className="text-foreground hover:underline"
+                  onClick={handleLinkClick}
                 >
                   {song.album}
                 </Link>
@@ -115,6 +107,7 @@ export function SongInfoModal() {
                   <Link
                     to={ROUTES.ARTIST.PAGE(song.artistId)}
                     className="text-foreground hover:underline"
+                    onClick={handleLinkClick}
                   >
                     {song.artist}
                   </Link>
@@ -136,6 +129,7 @@ export function SongInfoModal() {
                       to={ROUTES.ALBUMS.GENRE(genre)}
                       key={genre}
                       className="mr-2"
+                      onClick={handleLinkClick}
                     >
                       <Badge variant="neutral">{genre}</Badge>
                     </Link>

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useMatches, useSearchParams } from 'react-router-dom'
+import { useMatches } from 'react-router-dom'
 import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
 import { AddToPlaylistSubMenu } from '@/app/components/song/add-to-playlist-sub-menu'
@@ -11,6 +11,7 @@ import { useDownload } from '@/app/hooks/use-download'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { usePlaylistRemoveSong } from '@/store/playlists.store'
+import { useSongInfo } from '@/store/ui.store'
 import { ISong } from '@/types/responses/song'
 import { queryKeys } from '@/utils/queryKeys'
 import { isTauri } from '@/utils/tauriTools'
@@ -25,7 +26,7 @@ export function SongOptions({ song, index }: SongOptionsProps) {
   const { downloadBrowser, downloadTauri } = useDownload()
   const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
   const matches = useMatches()
-  const setSearchParams = useSearchParams()[1]
+  const { setSongId, setModalOpen } = useSongInfo()
 
   const isOnPlaylistPage = matches.find((route) => route.id === 'playlist')
   const playlistId = isOnPlaylistPage?.params.playlistId ?? ''
@@ -94,12 +95,8 @@ export function SongOptions({ song, index }: SongOptionsProps) {
   }
 
   function handleSongInfoOption() {
-    setSearchParams((state) => {
-      state.set('songId', song.id)
-      state.set('songInfoModal', 'open')
-
-      return state
-    })
+    setSongId(song.id)
+    setModalOpen(true)
   }
 
   return (
