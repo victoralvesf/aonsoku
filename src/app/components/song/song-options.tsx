@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useMatches } from 'react-router-dom'
+import { useMatches, useSearchParams } from 'react-router-dom'
 import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
 import { AddToPlaylistSubMenu } from '@/app/components/song/add-to-playlist-sub-menu'
@@ -25,6 +25,7 @@ export function SongOptions({ song, index }: SongOptionsProps) {
   const { downloadBrowser, downloadTauri } = useDownload()
   const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
   const matches = useMatches()
+  const setSearchParams = useSearchParams()[1]
 
   const isOnPlaylistPage = matches.find((route) => route.id === 'playlist')
   const playlistId = isOnPlaylistPage?.params.playlistId ?? ''
@@ -92,6 +93,15 @@ export function SongOptions({ song, index }: SongOptionsProps) {
     setConfirmDialogState(true)
   }
 
+  function handleSongInfoOption() {
+    setSearchParams((state) => {
+      state.set('songId', song.id)
+      state.set('songInfoModal', 'open')
+
+      return state
+    })
+  }
+
   return (
     <>
       <DropdownMenuGroup>
@@ -129,6 +139,8 @@ export function SongOptions({ song, index }: SongOptionsProps) {
           }}
         />
       </DropdownMenuGroup>
+      <DropdownMenuSeparator />
+      <OptionsButtons.SongInfo onClick={handleSongInfoOption} />
     </>
   )
 }

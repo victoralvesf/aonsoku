@@ -172,6 +172,16 @@ export const brazilianPortuguese = {
         songCount: 'Músicas',
         comment: 'Comentário',
         public: 'Pública',
+        track: 'Faixa',
+        genres: 'Gêneros',
+        size: 'Tamanho',
+        codec: 'Codec',
+        path: 'Caminho',
+        favorite: 'Curtida',
+        discNumber: 'Número do disco',
+        trackGain: 'Ganho da faixa',
+        trackPeak: 'Pico da faixa',
+        albumPeak: 'Pico do álbum',
       },
       buttons: {
         play: 'Tocar {{title}} por {{artist}}',
@@ -281,6 +291,7 @@ export const brazilianPortuguese = {
         notFound: 'Nenhuma playlist encontrada',
         removeSong: 'Remover da playlist',
       },
+      info: 'Mais informações',
     },
     radios: {
       label: 'Rádio',
@@ -378,6 +389,11 @@ export const brazilianPortuguese = {
         previous: 'Voltar à faixa anterior',
         next: 'Pular para a próxima faixa',
       },
+    },
+    songInfo: {
+      title: 'Informações da música',
+      error:
+        'Não foi possível obter as informações da música. Por favor, tente novamente mais tarde!',
     },
     dayjs: {
       relativeTime: {

@@ -170,6 +170,16 @@ export const english = {
         songCount: 'Song count',
         comment: 'Comment',
         public: 'Public',
+        track: 'Track',
+        genres: 'Genres',
+        size: 'Size',
+        codec: 'Codec',
+        path: 'Path',
+        favorite: 'Favorite',
+        discNumber: 'Disc number',
+        trackGain: 'Track gain',
+        trackPeak: 'Track peak',
+        albumPeak: 'Album peak',
       },
       buttons: {
         play: 'Play {{title}} by {{artist}}',
@@ -278,6 +288,7 @@ export const english = {
         notFound: 'No playlist found',
         removeSong: 'Remove from playlist',
       },
+      info: 'Get info',
     },
     radios: {
       label: 'Radio',
@@ -373,6 +384,10 @@ export const english = {
         previous: 'Skip to previous',
         next: 'Skip to next',
       },
+    },
+    songInfo: {
+      title: 'Song Details',
+      error: 'Unable to retrieve song information. Please try again later.',
     },
     dayjs: {
       relativeTime: {
