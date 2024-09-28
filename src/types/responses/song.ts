@@ -62,3 +62,5 @@ export interface TopSongsResponse
   extends SubsonicResponse<{ topSongs: SongList }> {}
 
 export interface LyricsResponse extends SubsonicResponse<{ lyrics: ILyric }> {}
+
+export interface GetSongResponse extends SubsonicResponse<{ song: ISong }> {}

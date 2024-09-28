@@ -1,6 +1,7 @@
 import omit from 'lodash/omit'
 import {
   DownloadIcon,
+  Info,
   Pencil,
   PlusCircle,
   PlusIcon,
@@ -102,6 +103,17 @@ function RemoveFromPlaylist(props: DropdownMenuItemProps) {
   )
 }
 
+function SongInfo(props: DropdownMenuItemProps) {
+  const { t } = useTranslation()
+
+  return (
+    <DropdownMenuItem {...props}>
+      <Info className="mr-2 h-4 w-4" />
+      <span>{t('options.info')}</span>
+    </DropdownMenuItem>
+  )
+}
+
 export const OptionsButtons = {
   PlayNext,
   PlayLast,
@@ -110,4 +122,5 @@ export const OptionsButtons = {
   EditPlaylist,
   RemovePlaylist,
   RemoveFromPlaylist,
+  SongInfo,
 }

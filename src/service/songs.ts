@@ -1,5 +1,6 @@
 import { httpClient } from '@/api/httpClient'
 import {
+  GetSongResponse,
   LyricsResponse,
   RandomSongsResponse,
   TopSongsResponse,
@@ -58,9 +59,21 @@ async function getAllSongs() {
   return response?.song?.sort((a, b) => sortByString(a.title, b.title)) || []
 }
 
+async function getSong(id: string) {
+  const response = await httpClient<GetSongResponse>('/getSong', {
+    method: 'GET',
+    query: {
+      id,
+    },
+  })
+
+  return response?.data.song
+}
+
 export const songs = {
   getAllSongs,
   getRandomSongs,
   getTopSongs,
   getLyrics,
+  getSong,
 }
