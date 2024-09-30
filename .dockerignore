@@ -1,0 +1,9 @@
+README.md
+dist
+node_modules
+src_tauri
+media
+LICENSE.txt
+.git
+.DS_Store
+.vscode
