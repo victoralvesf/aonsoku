@@ -25,13 +25,6 @@ server {
     # Limit request body size
     client_max_body_size 10M;
 
-    # Serve static files with cache and security headers
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
-        access_log off;
-        expires 30d;
-        add_header Cache-Control "public";
-    }
-
     # Add security headers
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-XSS-Protection "1; mode=block";
@@ -40,5 +33,13 @@ server {
     location / {
         alias /usr/share/nginx/html/;
         try_files $uri /index.html =404;
+    }
+
+    # Serve static files with cache and security headers
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        root /usr/share/nginx/html;
+        access_log off;
+        expires 30d;
+        add_header Cache-Control "public";
     }
 }
