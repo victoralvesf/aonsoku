@@ -18,7 +18,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
   return (
     <Drawer
       fixed
-      dismissible={false}
+      dismissible={true}
       handleOnly={true}
       disablePreventScroll={true}
     >
