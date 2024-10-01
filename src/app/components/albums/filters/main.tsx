@@ -14,6 +14,7 @@ import {
   albumsFilterValues,
   AlbumsSearchParams,
 } from '@/utils/albumsFilter'
+import { scrollPageToTop } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 export function AlbumsMainFilter() {
@@ -44,6 +45,7 @@ export function AlbumsMainFilter() {
 
       return state
     })
+    scrollPageToTop()
   }
 
   return (

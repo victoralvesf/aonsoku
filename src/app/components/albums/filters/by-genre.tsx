@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils'
 import { subsonic } from '@/service/subsonic'
 import { AlbumsSearchParams } from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
+import { scrollPageToTop } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 export function AlbumsFilterByGenre() {
@@ -43,6 +44,7 @@ export function AlbumsFilterByGenre() {
       return state
     })
     setOpen(false)
+    scrollPageToTop()
   }
 
   if (isLoading) {

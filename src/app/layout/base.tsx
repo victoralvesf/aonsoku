@@ -7,6 +7,7 @@ import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { Header } from '@/app/layout/header'
 import { MiniSidebar } from '@/app/layout/mini-sidebar'
 import { Sidebar } from '@/app/layout/sidebar'
+import { scrollPageToTop } from '@/utils/scrollPageToTop'
 
 const HeaderMemo = memo(Header)
 const MiniSidebarMemo = memo(MiniSidebar)
@@ -17,9 +18,7 @@ export default function BaseLayout() {
   const { pathname } = useLocation() as Location
 
   useEffect(() => {
-    document
-      .querySelector('#main-scroll-area #scroll-viewport')
-      ?.scrollTo({ top: 0 })
+    scrollPageToTop()
   }, [pathname])
 
   return (

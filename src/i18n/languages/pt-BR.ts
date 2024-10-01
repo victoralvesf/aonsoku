@@ -307,6 +307,10 @@ export const brazilianPortuguese = {
         playTooltip: 'Tocar rádio {{name}}',
         pauseTooltip: 'Pausar rádio {{name}}',
       },
+      empty: {
+        title: 'Nenhuma rádio disponível',
+        info: 'Você ainda não configurou nenhuma rádio.',
+      },
       form: {
         create: {
           title: 'Adicionar Rádio',

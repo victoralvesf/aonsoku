@@ -1,5 +1,6 @@
 import ListWrapper from '@/app/components/list-wrapper'
 import { EmptyAlbumsInfo } from './empty-message'
+import { EmptyWrapper } from './empty-wrapper'
 import { AlbumsHeader } from './header'
 
 export function EmptyAlbums() {
@@ -8,9 +9,9 @@ export function EmptyAlbums() {
       <AlbumsHeader albumCount={0} />
 
       <ListWrapper className="pt-[--shadow-header-distance] h-full">
-        <div className="h-full flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+        <EmptyWrapper>
           <EmptyAlbumsInfo />
-        </div>
+        </EmptyWrapper>
       </ListWrapper>
     </div>
   )

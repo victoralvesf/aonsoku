@@ -145,6 +145,8 @@ export default function AlbumsList() {
   const items = data.pages.flatMap((page) => page.albums) || []
   const itemsCount = data.pages[0].albumsCount || 0
 
+  if (items.length === 0) return <EmptyAlbums />
+
   return (
     <div className="w-full h-full">
       <AlbumsHeader albumCount={itemsCount} />
