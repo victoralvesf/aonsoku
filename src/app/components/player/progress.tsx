@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import {
   RefObject,
   useCallback,
@@ -76,18 +77,26 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
     }
   }, [progress, currentDuration, mediaType, sendScrobble, currentSong.id])
 
+  const currentTime = convertSecondsToTime(isSeeking ? localProgress : progress)
+
   return (
-    <div className="flex w-full justify-center items-center">
+    <div
+      className={clsx(
+        'flex w-full justify-center items-center',
+        !song && 'opacity-50',
+      )}
+    >
       <small
         className="text-xs text-muted-foreground min-w-10 text-left"
         data-testid="player-current-time"
       >
-        {convertSecondsToTime(isSeeking ? localProgress : progress)}
+        {currentTime}
       </small>
       {song ? (
         <Slider
           defaultValue={[0]}
           value={isSeeking ? [localProgress] : [progress]}
+          tooltipValue={currentTime}
           max={currentDuration}
           step={1}
           className="cursor-pointer w-[32rem]"
@@ -100,7 +109,7 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
           defaultValue={[0]}
           max={100}
           step={1}
-          showThumb={false}
+          disabled={true}
           className="cursor-pointer w-[32rem] pointer-events-none"
         />
       )}

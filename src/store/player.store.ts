@@ -1,4 +1,5 @@
 import { produce } from 'immer'
+import clamp from 'lodash/clamp'
 import merge from 'lodash/merge'
 import omit from 'lodash/omit'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
@@ -38,6 +39,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
           },
           playerProgress: {
             progress: 0,
+          },
+          settings: {
+            volume: {
+              min: 0,
+              max: 100,
+              step: 1,
+              wheelStep: 5,
+            },
           },
           actions: {
             setSongList: (songlist, index, shuffle = false) => {
@@ -292,6 +301,18 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.volume = volume
               })
             },
+            handleVolumeWheel: (isScrollingDown) => {
+              const { min, max, wheelStep } = get().settings.volume
+              const { volume } = get().playerState
+
+              const volumeAdjustment = isScrollingDown ? -wheelStep : wheelStep
+              const adjustedVolume = volume + volumeAdjustment
+              const finalVolume = clamp(adjustedVolume, min, max)
+
+              set((state) => {
+                state.playerState.volume = finalVolume
+              })
+            },
             setCurrentDuration: (duration) => {
               set((state) => {
                 state.playerState.currentDuration = duration
@@ -477,7 +498,11 @@ export const usePlayerProgress = () =>
 export const usePlayerVolume = () => ({
   volume: usePlayerStore((state) => state.playerState.volume),
   setVolume: usePlayerStore((state) => state.actions.setVolume),
+  handleVolumeWheel: usePlayerStore((state) => state.actions.handleVolumeWheel),
 })
+
+export const useVolumeSettings = () =>
+  usePlayerStore((state) => state.settings.volume)
 
 export const usePlayerMediaType = () =>
   usePlayerStore((state) => state.playerState.mediaType)
