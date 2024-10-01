@@ -35,16 +35,17 @@ export function FullscreenProgress() {
     [audioPlayerRef, setProgress],
   )
 
+  const currentTime = convertSecondsToTime(isSeeking ? localProgress : progress)
+
   return (
     <div className="flex items-center">
-      <div className="min-w-[55px] text-left drop-shadow-lg">
-        {convertSecondsToTime(isSeeking ? localProgress : progress)}
-      </div>
+      <div className="min-w-[55px] text-left drop-shadow-lg">{currentTime}</div>
 
       <Slider
         variant="secondary"
         defaultValue={[0]}
         value={isSeeking ? [localProgress] : [progress]}
+        tooltipValue={currentTime}
         max={currentDuration}
         step={1}
         className="w-full h-4"

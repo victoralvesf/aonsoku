@@ -27,6 +27,17 @@ export interface IPlayerProgress {
   progress: number
 }
 
+export interface IVolumeSettings {
+  min: number
+  max: number
+  step: number
+  wheelStep: number
+}
+
+export interface IPlayerSettings {
+  volume: IVolumeSettings
+}
+
 export interface IPlayerActions {
   playSong: (song: ISong) => void
   setSongList: (songlist: ISong[], index: number, shuffle?: boolean) => void
@@ -48,6 +59,7 @@ export interface IPlayerActions {
   resetProgress: () => void
   setProgress: (progress: number) => void
   setVolume: (volume: number) => void
+  handleVolumeWheel: (isScrollingDown: boolean) => void
   setCurrentDuration: (duration: number) => void
   setPlayRadio: (list: Radio[], index: number) => void
   setAudioPlayerRef: (ref: HTMLAudioElement) => void
@@ -61,5 +73,6 @@ export interface IPlayerContext {
   songlist: ISongList
   playerState: IPlayerState
   playerProgress: IPlayerProgress
+  settings: IPlayerSettings
   actions: IPlayerActions
 }
