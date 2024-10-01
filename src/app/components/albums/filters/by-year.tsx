@@ -8,6 +8,7 @@ import {
   YearFilter,
   YearSortOptions,
 } from '@/utils/albumsFilter'
+import { scrollPageToTop } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 export function AlbumsFilterByYear() {
@@ -39,6 +40,7 @@ export function AlbumsFilterByYear() {
 
       return state
     })
+    scrollPageToTop()
   }
 
   return (
