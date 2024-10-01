@@ -17,9 +17,11 @@ export function AlbumsHeader({ albumCount }: AlbumsHeaderProps) {
           <h2 className="text-2xl font-semibold tracking-tight">
             {t('sidebar.albums')}
           </h2>
-          <Badge variant="secondary" className="text-foreground/70">
-            {albumCount}
-          </Badge>
+          {albumCount > 0 && (
+            <Badge variant="secondary" className="text-foreground/70">
+              {albumCount}
+            </Badge>
+          )}
         </div>
 
         <AlbumsFilter />

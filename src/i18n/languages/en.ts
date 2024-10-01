@@ -304,6 +304,10 @@ export const english = {
         playTooltip: 'Play {{name}} radio',
         pauseTooltip: 'Pause {{name}} radio',
       },
+      empty: {
+        title: 'You have no radios!',
+        info: 'Click to add your first radio station.',
+      },
       form: {
         create: {
           title: 'Add Radio',
