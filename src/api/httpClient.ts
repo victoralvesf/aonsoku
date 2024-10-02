@@ -47,7 +47,9 @@ function getUrl(path: string, options?: Record<string, string>) {
 
   if (options) {
     Object.keys(options).forEach((key) => {
-      params.append(key, options[key])
+      if (options[key] !== undefined) {
+        params.append(key, options[key])
+      }
     })
   }
 
