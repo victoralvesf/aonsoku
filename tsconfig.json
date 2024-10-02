@@ -31,6 +31,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "typeRoots": [
+      "./src/types"
+    ],
     "types": [
       "cypress",
       "node"
