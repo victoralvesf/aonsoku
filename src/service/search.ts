@@ -20,7 +20,7 @@ async function get({
   songCount = 20,
   songOffset = 0,
 }: SearchQueryOptions) {
-  const response = await httpClient<ISearchResponse>('/search2', {
+  const response = await httpClient<ISearchResponse>('/search3', {
     method: 'GET',
     query: {
       query,
@@ -33,7 +33,7 @@ async function get({
     },
   })
 
-  return response?.data.searchResult2
+  return response?.data.searchResult3
 }
 
 export const search = {

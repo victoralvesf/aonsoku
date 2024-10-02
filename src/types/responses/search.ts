@@ -10,4 +10,4 @@ export interface Search {
 }
 
 export interface ISearchResponse
-  extends SubsonicResponse<{ searchResult2: Search }> {}
+  extends SubsonicResponse<{ searchResult3: Search }> {}
