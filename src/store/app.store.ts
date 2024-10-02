@@ -8,6 +8,8 @@ import { pingServer } from '@/api/pingServer'
 import { AuthType, IAppContext, IServerConfig } from '@/types/serverConfig'
 import { saltWord, toHex } from '@/utils/salt'
 
+const { HIDE_SERVER } = window
+
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
     persist(
@@ -21,6 +23,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             password: '',
             authType: AuthType.TOKEN,
             logoutDialogState: false,
+            hideServer: HIDE_SERVER ?? false,
           },
           command: {
             open: false,
@@ -110,7 +113,11 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
           return merge(currentState, persistedState)
         },
         partialize: (state) => {
-          const appStore = omit(state, 'data.logoutDialogState')
+          const appStore = omit(
+            state,
+            'data.logoutDialogState',
+            'data.hideServer',
+          )
 
           return appStore
         },

@@ -1,0 +1,3 @@
+"use strict";
+window.SERVER_URL="${SERVER_URL}" || undefined;
+window.HIDE_SERVER="${HIDE_SERVER}" === "true";

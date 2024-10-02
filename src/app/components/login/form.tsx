@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
+import clsx from 'clsx'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -30,7 +31,7 @@ import {
 } from '@/app/components/ui/form'
 import { Input } from '@/app/components/ui/input'
 import { ROUTES } from '@/routes/routesList'
-import { useAppActions } from '@/store/app.store'
+import { useAppActions, useAppData } from '@/store/app.store'
 import { removeSlashFromUrl } from '@/utils/removeSlashFromUrl'
 
 const loginSchema = z.object({
@@ -50,17 +51,26 @@ const loginSchema = z.object({
 
 type FormData = z.infer<typeof loginSchema>
 
+const defaultUrl = 'http://'
+const url = window.SERVER_URL || defaultUrl
+const urlIsValid = url !== defaultUrl
+
 export function LoginForm() {
   const [loading, setLoading] = useState(false)
   const { saveConfig } = useAppActions()
+  const { hideServer } = useAppData()
   const navigate = useNavigate()
   const { t } = useTranslation()
   const queryClient = useQueryClient()
 
+  const shouldHideUrlInput = urlIsValid && hideServer
+
   const form = useForm<FormData>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      url: 'http://',
+    values: {
+      url,
+      username: '',
+      password: '',
     },
   })
 
@@ -102,7 +112,7 @@ export function LoginForm() {
               control={form.control}
               name="url"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className={clsx(shouldHideUrlInput && 'hidden')}>
                   <FormLabel className="required">
                     {t('login.form.url')}
                   </FormLabel>
@@ -129,7 +139,7 @@ export function LoginForm() {
               control={form.control}
               name="username"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className={clsx(shouldHideUrlInput && '!mt-0')}>
                   <FormLabel className="required">
                     {t('login.form.username')}
                   </FormLabel>
