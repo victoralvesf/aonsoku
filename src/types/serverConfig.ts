@@ -14,6 +14,7 @@ export interface IAppData extends IServerConfig {
   isServerConfigured: boolean
   osType: string
   logoutDialogState: boolean
+  hideServer: boolean
 }
 
 export interface IAppActions {
