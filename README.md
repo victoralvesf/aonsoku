@@ -116,6 +116,9 @@ services:
     restart: unless-stopped
     ports:
       - 8080:8080
+    environment:
+      - SERVER_URL=http://address:port
+      - HIDE_SERVER=true # When it's true AND SERVER_URL is set, only username and password will be visible on login.
 ```
 
 ### Recommended IDE Setup
