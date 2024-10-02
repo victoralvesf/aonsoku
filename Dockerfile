@@ -6,7 +6,7 @@ WORKDIR /app
 RUN npm install -g pnpm
 COPY package.json ./
 COPY pnpm-lock.yaml ./
-RUN pnpm install --legacy-peer-deps --ignore-scripts
+RUN pnpm install --ignore-scripts
 COPY . .
 RUN pnpm run build
 
