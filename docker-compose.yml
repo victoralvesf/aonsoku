@@ -7,3 +7,7 @@ services:
     restart: unless-stopped
     ports:
       - 8080:8080
+    environment:
+      # When it's true AND SERVER_URL is set, only username and password will be visible on login.
+      # - HIDE_SERVER=true
+      # - SERVER_URL=http://address:port
