@@ -27,4 +27,4 @@ cypress/screenshots
 cypress/videos
 
 # Docker env file
-env-config.js*
+env-config.js
