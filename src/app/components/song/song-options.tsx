@@ -11,6 +11,7 @@ import { useDownload } from '@/app/hooks/use-download'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { usePlaylistRemoveSong } from '@/store/playlists.store'
+import { useSongInfo } from '@/store/ui.store'
 import { ISong } from '@/types/responses/song'
 import { queryKeys } from '@/utils/queryKeys'
 import { isTauri } from '@/utils/tauriTools'
@@ -25,6 +26,7 @@ export function SongOptions({ song, index }: SongOptionsProps) {
   const { downloadBrowser, downloadTauri } = useDownload()
   const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
   const matches = useMatches()
+  const { setSongId, setModalOpen } = useSongInfo()
 
   const isOnPlaylistPage = matches.find((route) => route.id === 'playlist')
   const playlistId = isOnPlaylistPage?.params.playlistId ?? ''
@@ -92,6 +94,11 @@ export function SongOptions({ song, index }: SongOptionsProps) {
     setConfirmDialogState(true)
   }
 
+  function handleSongInfoOption() {
+    setSongId(song.id)
+    setModalOpen(true)
+  }
+
   return (
     <>
       <DropdownMenuGroup>
@@ -129,6 +136,8 @@ export function SongOptions({ song, index }: SongOptionsProps) {
           }}
         />
       </DropdownMenuGroup>
+      <DropdownMenuSeparator />
+      <OptionsButtons.SongInfo onClick={handleSongInfoOption} />
     </>
   )
 }

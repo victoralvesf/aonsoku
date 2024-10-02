@@ -23,7 +23,7 @@ export function HeaderItem({ song }: { song: ISong }) {
     }
   }
 
-  const coverArtUrl = getCoverArtUrl(song.coverArt, '400')
+  const coverArtUrl = getCoverArtUrl(song.coverArt, 'song', '400')
 
   return (
     <div
@@ -85,13 +85,15 @@ export function HeaderItem({ song }: { song: ISong }) {
             )}
             <div className="flex gap-2 mt-1 2xl:mt-2">
               {song.genre !== undefined && (
-                <Badge
-                  variant="neutral"
-                  className="border"
-                  data-testid="header-genre"
-                >
-                  {song.genre}
-                </Badge>
+                <Link to={ROUTES.ALBUMS.GENRE(song.genre)} className="flex">
+                  <Badge
+                    variant="neutral"
+                    className="border"
+                    data-testid="header-genre"
+                  >
+                    {song.genre}
+                  </Badge>
+                </Link>
               )}
               {song.year && (
                 <Badge

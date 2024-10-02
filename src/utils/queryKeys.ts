@@ -25,6 +25,7 @@ const artist = {
 const song = {
   all: 'get-all-songs',
   random: 'get-random-songs',
+  info: 'get-song-info',
 }
 
 const radio = {
@@ -33,6 +34,8 @@ const radio = {
 
 const search = 'search-key'
 
+const genre = 'get-all-genres'
+
 export const queryKeys = {
   album,
   artist,
@@ -40,4 +43,5 @@ export const queryKeys = {
   song,
   radio,
   search,
+  genre,
 }

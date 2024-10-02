@@ -14,7 +14,7 @@ async function getAll() {
     },
   )
 
-  return response?.data.internetRadioStations.internetRadioStation
+  return response?.data.internetRadioStations.internetRadioStation || []
 }
 
 async function create({ name, streamUrl, homePageUrl }: CreateRadio) {

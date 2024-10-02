@@ -111,6 +111,16 @@ export const english = {
         genreTitle: 'More from {{genre}}',
       },
       list: {
+        empty: {
+          title: 'Oops, no albums here!',
+          info: 'Looks like there are no albums with the current filter.',
+          action: 'Maybe try tweaking the filters?',
+        },
+        genre: {
+          label: 'Select a genre...',
+          search: 'Find a genre...',
+          loading: 'Loading genres...',
+        },
         filter: {
           artist: 'Artist',
           genre: 'Genre',
@@ -160,6 +170,16 @@ export const english = {
         songCount: 'Song count',
         comment: 'Comment',
         public: 'Public',
+        track: 'Track',
+        genres: 'Genres',
+        size: 'Size',
+        codec: 'Codec',
+        path: 'Path',
+        favorite: 'Favorite',
+        discNumber: 'Disc number',
+        trackGain: 'Track gain',
+        trackPeak: 'Track peak',
+        albumPeak: 'Album peak',
       },
       buttons: {
         play: 'Play {{title}} by {{artist}}',
@@ -238,6 +258,22 @@ export const english = {
     player: {
       noSongPlaying: 'No song playing',
       noRadioPlaying: 'No radio playing',
+      tooltips: {
+        shuffle: {
+          enable: 'Enable shuffle',
+          disable: 'Disable shuffle',
+        },
+        previous: 'Previous',
+        play: 'Play',
+        pause: 'Pause',
+        next: 'Next',
+        repeat: {
+          enable: 'Enable repeat',
+          disable: 'Disable repeat',
+        },
+        like: 'Like {{song}} by {{artist}}',
+        dislike: 'Remove like from {{song}} by {{artist}}',
+      },
     },
     options: {
       playNext: 'Play next',
@@ -252,6 +288,7 @@ export const english = {
         notFound: 'No playlist found',
         removeSong: 'Remove from playlist',
       },
+      info: 'Get info',
     },
     radios: {
       label: 'Radio',
@@ -266,6 +303,10 @@ export const english = {
         },
         playTooltip: 'Play {{name}} radio',
         pauseTooltip: 'Pause {{name}} radio',
+      },
+      empty: {
+        title: 'You have no radios!',
+        info: 'Click to add your first radio station.',
       },
       form: {
         create: {
@@ -330,6 +371,27 @@ export const english = {
     queue: {
       title: 'Queue',
       clear: 'Clear queue',
+    },
+    shortcuts: {
+      modal: {
+        title: 'Keyboard Shortcuts',
+        description: {
+          first: 'Press',
+          last: 'to toggle this modal.',
+        },
+      },
+      playback: {
+        label: 'Playback',
+        play: 'Play / Pause',
+        shuffle: 'Shuffle',
+        repeat: 'Repeat',
+        previous: 'Skip to previous',
+        next: 'Skip to next',
+      },
+    },
+    songInfo: {
+      title: 'Song Details',
+      error: 'Unable to retrieve song information. Please try again later.',
     },
     dayjs: {
       relativeTime: {

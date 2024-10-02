@@ -2,9 +2,11 @@ import { Play } from 'lucide-react'
 import { getCoverArtUrl } from '@/api/httpClient'
 import Image from '@/app/components/image'
 import { Button } from '@/app/components/ui/button'
+import { CoverArt } from '@/types/coverArtType'
 
 interface ResultItemProps {
   coverArt: string
+  coverArtType: CoverArt
   title: string
   artist: string
   onClick: () => void
@@ -12,6 +14,7 @@ interface ResultItemProps {
 
 export function ResultItem({
   coverArt,
+  coverArtType,
   title,
   artist,
   onClick,
@@ -20,7 +23,7 @@ export function ResultItem({
     <div className="flex w-full justify-between items-center">
       <div className="flex gap-2 w-[420px]">
         <Image
-          src={getCoverArtUrl(coverArt, '100')}
+          src={getCoverArtUrl(coverArt, coverArtType, '100')}
           width={40}
           height={40}
           className="aspect-square object-cover rounded shadow"

@@ -13,7 +13,7 @@ async function getAll() {
     method: 'GET',
   })
 
-  return response?.data.playlists.playlist
+  return response?.data.playlists.playlist ?? []
 }
 
 async function getOne(id: string) {

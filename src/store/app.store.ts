@@ -19,7 +19,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             url: '',
             username: '',
             password: '',
-            authType: null,
+            authType: AuthType.TOKEN,
             logoutDialogState: false,
           },
           command: {
@@ -89,7 +89,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.url = ''
                 state.data.username = ''
                 state.data.password = ''
-                state.data.authType = null
+                state.data.authType = AuthType.TOKEN
               })
             },
             setLogoutDialogState: (value) => {

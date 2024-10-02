@@ -2,7 +2,7 @@ import { Skeleton } from '@/app/components/ui/skeleton'
 
 export function TableFallback() {
   return (
-    <div className="w-full border rounded-md">
+    <div className="w-full border rounded-md bg-background">
       <div className="grid grid-cols-table-fallback px-2 h-12 items-center">
         <Skeleton className="w-5 h-5 ml-2" />
         <Skeleton className="w-8 h-5" />

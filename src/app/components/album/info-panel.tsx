@@ -14,7 +14,7 @@ interface InfoPanelProps {
 }
 
 const containerClasses =
-  'flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all bg-background'
+  'flex flex-col items-start gap-1 rounded-lg border p-5 text-left text-sm transition-all bg-[--main-background]'
 
 export default function InfoPanel({
   title,
@@ -38,10 +38,14 @@ export default function InfoPanel({
 
   return (
     <div className={cn(containerClasses)} id="artist-biography">
-      <h3 className="scroll-m-20 mb-2 text-3xl font-semibold tracking-tight">
+      <h3 className="scroll-m-20 mb-2 text-2xl font-semibold tracking-tight">
         {t('album.info.about', { name: title })}
       </h3>
-      <p id="info-panel" dangerouslySetInnerHTML={{ __html: bio }} />
+      <p
+        id="info-panel"
+        className="leading-6 text-muted-foreground"
+        dangerouslySetInnerHTML={{ __html: bio }}
+      />
 
       <div className="flex w-full mt-2 gap-2">
         {lastFmUrl && (

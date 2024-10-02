@@ -35,8 +35,11 @@ function Button({
     <SimpleTooltip text={tooltip}>
       <ComponentButton
         className={cn(
-          'rounded-full w-14 h-14',
-          buttonStyle === 'primary' && 'hover:scale-[0.97] transform-gpu',
+          'rounded-full w-14 h-14 ease-linear duration-100 transition',
+          'border-[1px] border-transparent',
+          buttonStyle === 'primary'
+            ? 'hover:scale-105'
+            : 'hover:bg-background hover:border-border',
           className,
         )}
         variant={buttonStyle === 'primary' ? 'default' : 'ghost'}
@@ -61,7 +64,7 @@ function Dropdown({ tooltip, options }: DropdownProps) {
         className="outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:ring-transparent focus:ring-transparent"
       >
         <ComponentButton
-          className="rounded-full w-14 h-14 data-[state=open]:bg-accent"
+          className="rounded-full w-14 h-14 data-[state=open]:bg-background data-[state=open]:border hover:bg-background hover:border ease-linear duration-100 transition"
           variant="ghost"
         >
           <SimpleTooltip text={tooltip}>
@@ -87,7 +90,7 @@ function PlayIcon() {
 }
 
 function ShuffleIcon() {
-  return <Shuffle className="w-5 h-5" strokeWidth={2} />
+  return <Shuffle className="w-5 h-5 drop-shadow-md" strokeWidth={2} />
 }
 
 interface LikeIconProps {
@@ -97,14 +100,17 @@ interface LikeIconProps {
 function LikeIcon({ isStarred }: LikeIconProps) {
   return (
     <Heart
-      className={clsx('w-5 h-5', isStarred && 'text-red-500 fill-red-500')}
+      className={clsx(
+        'w-5 h-5 drop-shadow-md',
+        isStarred && 'text-red-500 fill-red-500',
+      )}
       strokeWidth={2}
     />
   )
 }
 
 function EllipsisIcon() {
-  return <EllipsisVertical className="w-5 h-5" strokeWidth={2} />
+  return <EllipsisVertical className="w-5 h-5 drop-shadow-md" strokeWidth={2} />
 }
 
 export const Actions = {

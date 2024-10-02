@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -54,6 +55,7 @@ export function LoginForm() {
   const { saveConfig } = useAppActions()
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const queryClient = useQueryClient()
 
   const form = useForm<FormData>({
     resolver: zodResolver(loginSchema),
@@ -71,6 +73,7 @@ export function LoginForm() {
     })
 
     if (status) {
+      await queryClient.invalidateQueries()
       toast.success(t('toast.server.success'))
       navigate(ROUTES.LIBRARY.HOME, { replace: true })
     } else {

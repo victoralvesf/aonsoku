@@ -19,7 +19,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
     <>
       <div className="group relative">
         <Image
-          src={getCoverArtUrl(song.coverArt, '140')}
+          src={getCoverArtUrl(song.coverArt, 'song', '140')}
           width={70}
           className="rounded shadow-md"
           data-testid="track-image"
@@ -42,12 +42,9 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
       </div>
       <div className="flex flex-col justify-center w-full overflow-hidden">
         <MarqueeTitle gap="mr-2">
-          <Link
-            to={ROUTES.ALBUM.PAGE(song.albumId)}
-            className="group cursor-pointer"
-          >
+          <Link to={ROUTES.ALBUM.PAGE(song.albumId)}>
             <span
-              className="text-sm font-medium group-hover:underline cursor-pointer"
+              className="text-sm font-medium hover:underline cursor-pointer"
               data-testid="track-title"
             >
               {song.title}

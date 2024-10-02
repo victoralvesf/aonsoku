@@ -113,6 +113,16 @@ export const brazilianPortuguese = {
         genreTitle: 'Mais de {{genre}}',
       },
       list: {
+        empty: {
+          title: 'Nenhum resultado encontrado!',
+          info: 'Não conseguimos encontrar álbuns que correspondam ao seu filtro.',
+          action: 'Modifique os filtros e tente novamente.',
+        },
+        genre: {
+          label: 'Selecione um gênero...',
+          search: 'Procurar um gênero...',
+          loading: 'Carregando gêneros...',
+        },
         filter: {
           artist: 'Artista',
           genre: 'Gênero',
@@ -162,6 +172,16 @@ export const brazilianPortuguese = {
         songCount: 'Músicas',
         comment: 'Comentário',
         public: 'Pública',
+        track: 'Faixa',
+        genres: 'Gêneros',
+        size: 'Tamanho',
+        codec: 'Codec',
+        path: 'Caminho',
+        favorite: 'Curtida',
+        discNumber: 'Número do disco',
+        trackGain: 'Ganho da faixa',
+        trackPeak: 'Pico da faixa',
+        albumPeak: 'Pico do álbum',
       },
       buttons: {
         play: 'Tocar {{title}} por {{artist}}',
@@ -241,6 +261,22 @@ export const brazilianPortuguese = {
     player: {
       noSongPlaying: 'Nenhuma música tocando',
       noRadioPlaying: 'Nenhum rádio tocando',
+      tooltips: {
+        shuffle: {
+          enable: 'Ativar aleatório',
+          disable: 'Desativar aleatório',
+        },
+        previous: 'Voltar',
+        play: 'Play',
+        pause: 'Pausar',
+        next: 'Avançar',
+        repeat: {
+          enable: 'Repetir',
+          disable: 'Não repetir',
+        },
+        like: 'Curtir {{song}} por {{artist}}',
+        dislike: 'Remover curtida de {{song}} por {{artist}}',
+      },
     },
     options: {
       playNext: 'Tocar a seguir',
@@ -255,6 +291,7 @@ export const brazilianPortuguese = {
         notFound: 'Nenhuma playlist encontrada',
         removeSong: 'Remover da playlist',
       },
+      info: 'Mais informações',
     },
     radios: {
       label: 'Rádio',
@@ -269,6 +306,10 @@ export const brazilianPortuguese = {
         },
         playTooltip: 'Tocar rádio {{name}}',
         pauseTooltip: 'Pausar rádio {{name}}',
+      },
+      empty: {
+        title: 'Nenhuma rádio disponível',
+        info: 'Você ainda não configurou nenhuma rádio.',
       },
       form: {
         create: {
@@ -335,6 +376,28 @@ export const brazilianPortuguese = {
     queue: {
       title: 'Fila de reprodução',
       clear: 'Limpar fila',
+    },
+    shortcuts: {
+      modal: {
+        title: 'Atalhos de teclado',
+        description: {
+          first: 'Pressione',
+          last: 'para abrir/fechar esta janela.',
+        },
+      },
+      playback: {
+        label: 'Reprodução',
+        play: 'Play / Pausar',
+        shuffle: 'Ordem aleatória',
+        repeat: 'Repetir',
+        previous: 'Voltar à faixa anterior',
+        next: 'Pular para a próxima faixa',
+      },
+    },
+    songInfo: {
+      title: 'Informações da música',
+      error:
+        'Não foi possível obter as informações da música. Por favor, tente novamente mais tarde!',
     },
     dayjs: {
       relativeTime: {

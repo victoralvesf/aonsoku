@@ -60,6 +60,7 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
         <div className="flex gap-2 items-center w-full">
           <CoverImage
             coverArt={row.original.coverArt}
+            coverArtType="playlist"
             altText={row.original.name}
           />
           <div className="flex flex-col w-full justify-center truncate">

@@ -1,5 +1,6 @@
+import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { AlbumButtons } from '@/app/components/album/buttons'
 import ImageHeader from '@/app/components/album/image-header'
 import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
@@ -7,6 +8,7 @@ import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
+import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import {
   useGetAlbum,
@@ -51,14 +53,26 @@ export default function Album() {
     ? convertSecondsToHumanRead(album.duration)
     : null
 
-  const badges = [
-    album.year || null,
-    album.genre || null,
-    album.songCount
-      ? t('playlist.songCount', { count: album.songCount })
-      : null,
-    albumDuration ? t('playlist.duration', { duration: albumDuration }) : null,
-  ]
+  const badges = (
+    <Fragment>
+      {album.year && <Badge variant="secondary">{album.year}</Badge>}
+      {album.genre && (
+        <Link to={ROUTES.ALBUMS.GENRE(album.genre)} className="flex">
+          <Badge variant="secondary">{album.genre}</Badge>
+        </Link>
+      )}
+      {album.songCount && (
+        <Badge variant="secondary">
+          {t('playlist.songCount', { count: album.songCount })}
+        </Badge>
+      )}
+      {albumDuration && (
+        <Badge variant="secondary">
+          {t('playlist.duration', { duration: albumDuration })}
+        </Badge>
+      )}
+    </Fragment>
+  )
 
   const columnsToShow: ColumnFilter[] = [
     'trackNumber',
@@ -92,7 +106,9 @@ export default function Album() {
       ? removeCurrentAlbumFromList(randomAlbums.list)
       : null
 
-  const albumHasMoreThanOneDisc = album.discTitles.length > 1
+  const albumHasMoreThanOneDisc = album.discTitles
+    ? album.discTitles.length > 1
+    : false
 
   return (
     <div className="w-full">
@@ -102,7 +118,8 @@ export default function Album() {
         subtitle={album.artist}
         artistId={album.artistId}
         coverArtId={album.coverArt}
-        coverArtSize="350"
+        coverArtType="album"
+        coverArtSize="700"
         coverArtAlt={album.name}
         badges={badges}
       />
@@ -137,7 +154,7 @@ export default function Album() {
               showMore={true}
               title={t('album.more.listTitle')}
               moreTitle={t('album.more.discography')}
-              moreRoute={ROUTES.ARTIST.ALBUMS(album.artistId)}
+              moreRoute={ROUTES.ALBUMS.ARTIST(album.artistId, album.artist)}
             />
           )}
 
@@ -145,7 +162,7 @@ export default function Album() {
           {!randomAlbumsIsLoading && randomGenreAlbums && (
             <PreviewList
               list={randomGenreAlbums}
-              showMore={false}
+              moreRoute={ROUTES.ALBUMS.GENRE(album.genre)}
               title={t('album.more.genreTitle', {
                 genre: album.genre,
               })}

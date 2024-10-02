@@ -105,6 +105,19 @@ pnpm run dev
 pnpm run tauri dev
 ```
 
+* Docker
+```yml
+version: '3.8'
+
+services:
+  aonsoku:
+    container_name: aonsoku
+    image: ghcr.io/victoralvesf/aonsoku:latest
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+```
+
 ### Recommended IDE Setup
 
 - [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)

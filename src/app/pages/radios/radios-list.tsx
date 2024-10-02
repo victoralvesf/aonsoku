@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
+import clsx from 'clsx'
 import { PlusIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
+import { EmptyWrapper } from '@/app/components/albums/empty-wrapper'
 import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
+import { EmptyRadiosInfo } from '@/app/components/radios/empty-message'
 import { RadioFormDialog } from '@/app/components/radios/form-dialog'
 import { RemoveRadioDialog } from '@/app/components/radios/remove-dialog'
 import { Button } from '@/app/components/ui/button'
@@ -34,13 +37,17 @@ export default function Radios() {
   }
 
   if (isLoading) return <SongsListFallback />
-  if (!radios) return null
+
+  const showTable = radios && radios.length > 0
 
   return (
-    <div className="w-full h-full">
+    <div className={clsx('w-full', showTable ? 'h-full' : 'h-app-screen')}>
       <ShadowHeader>
         <div className="w-full flex items-center justify-between">
-          <HeaderTitle title={t('sidebar.radios')} count={radios.length} />
+          <HeaderTitle
+            title={t('sidebar.radios')}
+            count={radios?.length ?? 0}
+          />
 
           <Button
             size="sm"
@@ -54,17 +61,27 @@ export default function Radios() {
         </div>
       </ShadowHeader>
 
-      <ListWrapper className="pt-[--shadow-header-distance]">
-        <DataTable
-          columns={columns}
-          data={radios}
-          handlePlaySong={(row) => setPlayRadio(radios, row.index)}
-          showPagination={true}
-          showSearch={true}
-          searchColumn="name"
-          allowRowSelection={false}
-        />
-      </ListWrapper>
+      {showTable && (
+        <ListWrapper className="pt-[--shadow-header-distance]">
+          <DataTable
+            columns={columns}
+            data={radios}
+            handlePlaySong={(row) => setPlayRadio(radios, row.index)}
+            showPagination={true}
+            showSearch={true}
+            searchColumn="name"
+            allowRowSelection={false}
+          />
+        </ListWrapper>
+      )}
+
+      {!showTable && (
+        <ListWrapper className="pt-[--shadow-header-distance] h-full">
+          <EmptyWrapper>
+            <EmptyRadiosInfo />
+          </EmptyWrapper>
+        </ListWrapper>
+      )}
 
       <RadioFormDialog />
       <RemoveRadioDialog />

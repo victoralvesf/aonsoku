@@ -1,3 +1,5 @@
+import { AlbumsFilters } from '@/utils/albumsFilter'
+
 const LIBRARY = {
   HOME: '/',
   ARTISTS: '/library/artists',
@@ -10,12 +12,22 @@ const LIBRARY = {
 const ARTIST = {
   PAGE: (artistId: string) => `${LIBRARY.ARTISTS}/${artistId}`,
   PATH: `${LIBRARY.ARTISTS}/:artistId`,
-  ALBUMS: (artistId: string) => `${LIBRARY.ALBUMS}/artist/${artistId}`,
 }
 
 const ALBUM = {
   PAGE: (albumId: string) => `${LIBRARY.ALBUMS}/${albumId}`,
   PATH: `${LIBRARY.ALBUMS}/:albumId`,
+}
+
+const ALBUMS = {
+  GENRE: (genre: string) =>
+    `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.ByGenre}&genre=${encodeURIComponent(genre)}`,
+  ARTIST: (id: string, name: string) =>
+    `${LIBRARY.ALBUMS}?artistId=${id}&artistName=${encodeURIComponent(name)}`,
+  RECENTLY_PLAYED: `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.RecentlyPlayed}`,
+  MOST_PLAYED: `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.MostPlayed}`,
+  RECENTLY_ADDED: `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.RecentlyAdded}`,
+  RANDOM: `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.Random}`,
 }
 
 const PLAYLIST = {
@@ -29,6 +41,7 @@ export const ROUTES = {
   LIBRARY,
   ARTIST,
   ALBUM,
+  ALBUMS,
   PLAYLIST,
   SERVER_CONFIG,
 }

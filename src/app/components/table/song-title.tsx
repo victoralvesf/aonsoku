@@ -18,7 +18,11 @@ export function TableSongTitle({ song }: { song: ISong }) {
 
   return (
     <div className="flex w-full gap-2 items-center">
-      <CoverImage coverArt={song.coverArt} altText={song.title} />
+      <CoverImage
+        coverArt={song.coverArt}
+        coverArtType="song"
+        altText={song.title}
+      />
       <div className="flex flex-col w-full justify-center truncate">
         <span
           className={clsx(

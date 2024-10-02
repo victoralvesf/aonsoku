@@ -1,6 +1,7 @@
 import { FetchOptions, fetch as tauriFetch } from '@tauri-apps/api/http'
 import omit from 'lodash/omit'
 import { useAppStore } from '@/store/app.store'
+import { CoverArt } from '@/types/coverArtType'
 import { SubsonicJsonResponse } from '@/types/responses/subsonicResponse'
 import { AuthType } from '@/types/serverConfig'
 import { appName } from '@/utils/appName'
@@ -130,7 +131,16 @@ export async function httpClient<T>(
   }
 }
 
-export function getCoverArtUrl(id: string, size = '300') {
+export function getCoverArtUrl(
+  id: string,
+  type: CoverArt = 'album',
+  size = '300',
+): string {
+  if (!id) {
+    // everything except artists uses the same default cover art
+    type = type === 'artist' ? 'artist' : 'album'
+    return `/default_${type}_art.png`
+  }
   return getUrl('getCoverArt', {
     id,
     size,

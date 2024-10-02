@@ -150,7 +150,11 @@ img {
   @apply bg-[--main-background];
 }
 
-.cmdk-custom-style {
+.h-app-screen {
+  @apply h-[calc(100vh-var(--player-height)-var(--header-height))];
+}
+
+#main-command {
   @apply [&_[cmdk-group-heading]]:px-2;
   @apply [&_[cmdk-group-heading]]:font-medium;
   @apply [&_[cmdk-group-heading]]:text-muted-foreground;
@@ -163,6 +167,18 @@ img {
   @apply [&_[cmdk-item]]:py-3;
   @apply [&_[cmdk-item]_svg]:h-4;
   @apply [&_[cmdk-item]_svg]:w-4;
+}
+
+.yarl__container {
+  @apply !bg-black/70;
+}
+
+.yarl__slide_image {
+  @apply shadow-2xl -shadow-spread-2 shadow-y-[3px] rounded-lg;
+}
+
+.rfm-marquee {
+  @apply overflow-hidden;
 }
 
 /* Native Scroll Bar */

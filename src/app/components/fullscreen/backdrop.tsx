@@ -10,7 +10,7 @@ export default function FullscreenBackdrop({
   children,
 }: FullscreenBackdropProps) {
   const { currentSong } = usePlayerSonglist()
-  const coverArtUrl = getCoverArtUrl(currentSong.coverArt, '1000')
+  const coverArtUrl = getCoverArtUrl(currentSong.coverArt, 'song', '1000')
   const backgroundImage = `url(${coverArtUrl})`
 
   return (
