@@ -38,8 +38,8 @@ function Button({
           'rounded-full w-14 h-14 ease-linear duration-100 transition',
           'border-[1px] border-transparent',
           buttonStyle === 'primary'
-            ? 'hover:scale-105'
-            : 'hover:bg-background hover:border-border',
+            ? 'hover:scale-105 mr-2'
+            : 'hover:bg-foreground/20',
           className,
         )}
         variant={buttonStyle === 'primary' ? 'default' : 'ghost'}
@@ -64,7 +64,12 @@ function Dropdown({ tooltip, options }: DropdownProps) {
         className="outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:ring-transparent focus:ring-transparent"
       >
         <ComponentButton
-          className="rounded-full w-14 h-14 data-[state=open]:bg-background data-[state=open]:border hover:bg-background hover:border ease-linear duration-100 transition"
+          className={clsx(
+            'rounded-full w-14 h-14 border-transparent',
+            'data-[state=open]:bg-foreground/20',
+            'hover:bg-foreground/20',
+            'ease-linear duration-100 transition',
+          )}
           variant="ghost"
         >
           <SimpleTooltip text={tooltip}>

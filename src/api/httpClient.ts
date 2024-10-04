@@ -134,7 +134,7 @@ export async function httpClient<T>(
 }
 
 export function getCoverArtUrl(
-  id: string,
+  id?: string,
   type: CoverArt = 'album',
   size = '300',
 ): string {

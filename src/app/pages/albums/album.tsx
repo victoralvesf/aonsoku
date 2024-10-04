@@ -144,6 +144,7 @@ export default function Album() {
           handlePlaySong={(row) => setSongList(album.song, row.index)}
           columnFilter={columnsToShow}
           showDiscNumber={albumHasMoreThanOneDisc}
+          variant="modern"
         />
 
         <div className="mt-4">

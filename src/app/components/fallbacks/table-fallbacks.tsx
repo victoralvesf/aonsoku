@@ -1,9 +1,28 @@
+import clsx from 'clsx'
 import { Skeleton } from '@/app/components/ui/skeleton'
 
-export function TableFallback() {
+interface TableFallbackProps {
+  variant?: 'classic' | 'modern'
+}
+
+export function TableFallback({ variant = 'classic' }: TableFallbackProps) {
+  const isClassic = variant === 'classic'
+  const isModern = variant === 'modern'
+
   return (
-    <div className="w-full border rounded-md bg-background">
-      <div className="grid grid-cols-table-fallback px-2 h-12 items-center">
+    <div
+      className={clsx(
+        'w-full rounded-md',
+        isClassic && 'bg-background border',
+        isModern && 'bg-transparent',
+      )}
+    >
+      <div
+        className={clsx(
+          'grid grid-cols-table-fallback px-2 h-12 items-center',
+          isModern && 'mb-2 border-b',
+        )}
+      >
         <Skeleton className="w-5 h-5 ml-2" />
         <Skeleton className="w-8 h-5" />
         <Skeleton className="w-16 h-5" />
@@ -16,7 +35,10 @@ export function TableFallback() {
       {Array.from({ length: 10 }).map((_, index) => (
         <div
           key={index}
-          className="grid grid-cols-table-fallback p-2 items-center border-t"
+          className={clsx(
+            'grid grid-cols-table-fallback p-2 items-center',
+            isClassic && 'border-t',
+          )}
         >
           <Skeleton className="w-5 h-5 ml-2" />
           <div className="flex items-center gap-2">
@@ -44,7 +66,7 @@ export function TopSongsTableFallback() {
     <div className="w-full">
       <Skeleton className="w-28 h-8 mb-4 mt-6 rounded" />
 
-      <TableFallback />
+      <TableFallback variant="modern" />
     </div>
   )
 }

@@ -113,6 +113,9 @@ export const brazilianPortuguese = {
         genreTitle: 'Mais de {{genre}}',
       },
       list: {
+        header: {
+          albumsByArtist: 'Álbuns por {{artist}}',
+        },
         empty: {
           title: 'Nenhum resultado encontrado!',
           info: 'Não conseguimos encontrar álbuns que correspondam ao seu filtro.',
@@ -133,6 +136,7 @@ export const brazilianPortuguese = {
           recentlyAdded: 'Adicionados recentemente',
           recentlyPlayed: 'Reproduzidos recentemente',
           releaseYear: 'Ano de lançamento',
+          discography: 'Discografia',
         },
       },
       table: {

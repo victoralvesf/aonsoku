@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
 import { CoverImage } from '@/app/components/table/cover-image'
 import { usePlayerMediaType, usePlayerSonglist } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
@@ -7,14 +6,14 @@ import { ISong } from '@/types/responses/song'
 export function TableSongTitle({ song }: { song: ISong }) {
   const { currentSong } = usePlayerSonglist()
   const mediaType = usePlayerMediaType()
-  const [songIsPlaying, setSongIsPlaying] = useState(false)
 
-  useEffect(() => {
-    if (mediaType === 'radio') return
+  function getSongIsPlaying() {
+    if (mediaType === 'radio' || !currentSong) return false
 
-    const isPlaying = currentSong.id === song.id
-    setSongIsPlaying(isPlaying)
-  }, [currentSong, mediaType, song.id])
+    return currentSong.id === song.id
+  }
+
+  const songIsPlaying = getSongIsPlaying()
 
   return (
     <div className="flex w-full gap-2 items-center">
@@ -27,7 +26,7 @@ export function TableSongTitle({ song }: { song: ISong }) {
         <span
           className={clsx(
             'font-medium truncate',
-            songIsPlaying && 'text-primary',
+            songIsPlaying && 'text-primary drop-shadow',
           )}
         >
           {song.title}

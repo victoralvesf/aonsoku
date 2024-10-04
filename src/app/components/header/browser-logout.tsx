@@ -1,4 +1,4 @@
-import { Globe, Keyboard, LogOut, User } from 'lucide-react'
+import { Keyboard, LogOut, User } from 'lucide-react'
 import { useState } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -11,6 +11,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
@@ -48,15 +49,15 @@ export function BrowserLogout() {
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem disabled>
-            <User className="mr-2 h-4 w-4" />
-            <span>{username}</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem disabled>
-            <Globe className="mr-2 h-4 w-4" />
-            <span>{url}</span>
-          </DropdownMenuItem>
+        <DropdownMenuContent align="end" className="min-w-64">
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-2">
+              <p className="text-sm font-medium leading-none">{username}</p>
+              <p className="text-xs leading-none text-muted-foreground">
+                {url}
+              </p>
+            </div>
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setShortcutsOpen(true)}>
             <Keyboard className="mr-2 h-4 w-4" />
