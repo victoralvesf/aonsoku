@@ -50,6 +50,7 @@ export default function Playlist() {
         handlePlaySong={(row) => setSongList(playlist.entry, row.index)}
         columnFilter={columnsToShow}
         noRowsMessage={t('playlist.noSongList')}
+        variant="modern"
       />
 
       <RemoveSongFromPlaylistDialog />

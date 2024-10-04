@@ -52,13 +52,14 @@ export function QueueSongList() {
       </div>
       <Separator />
 
-      <ScrollArea className="mt-4 mb-4">
+      <ScrollArea className="mt-4 mb-4 pr-3">
         <DataTable
           data={currentList}
           columns={columns}
           showHeader={false}
           allowRowSelection={false}
           handlePlaySong={(row) => setSongList(currentList, row.index)}
+          variant="modern"
         />
       </ScrollArea>
     </div>

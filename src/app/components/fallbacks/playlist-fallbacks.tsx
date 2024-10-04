@@ -24,7 +24,7 @@ export function PlaylistFallback() {
     <div className="w-full px-8 py-6">
       <PlaylistHeaderFallback />
       <PlayButtonsFallback />
-      <TableFallback />
+      <TableFallback variant="modern" />
     </div>
   )
 }

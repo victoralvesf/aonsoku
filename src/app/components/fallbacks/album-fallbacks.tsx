@@ -46,7 +46,7 @@ export function AlbumFallback() {
       </div>
       <ListWrapper>
         <PlayButtonsFallback />
-        <TableFallback />
+        <TableFallback variant="modern" />
       </ListWrapper>
     </div>
   )
