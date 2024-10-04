@@ -59,11 +59,13 @@
 
 ## Screenshots
 
-<a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/home.jpg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/home.jpg" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/album.jpg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/album.jpg" width="49.5%"/></a>
+<a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/home.png"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/home.png" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/album.png"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/album.png" width="49.5%"/></a>
 
-<a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/playlist.jpg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/playlist.jpg" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/albums.jpg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/albums.jpg" width="49.5%"/></a>
+<a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/playlist.png"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/playlist.png" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/albums.png"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/albums.png" width="49.5%"/></a>
 
-<a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/player.jpeg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/player.jpeg" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/lyrics.jpg"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/lyrics.jpg" width="49.5%"/></a>
+<a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/albumsByArtist.png"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/albumsByArtist.png" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/artist.png"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/artist.png" width="49.5%"/></a>
+
+<a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/player.png"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/player.png" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/lyrics.png"><img src="https://raw.githubusercontent.com/victoralvesf/aonsoku/main/media/lyrics.png" width="49.5%"/></a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
