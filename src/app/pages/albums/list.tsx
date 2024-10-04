@@ -100,15 +100,13 @@ export default function AlbumsList() {
     return true
   }
 
-  const query = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
     queryKey: [queryKeys.album.all, currentFilter, yearFilter, genre],
     queryFn: fetchAlbums,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
     enabled: enableMainQuery(),
   })
-
-  const { data, fetchNextPage, hasNextPage, isLoading, isFetching } = query
 
   useEffect(() => {
     const handleScroll = debounce(() => {
@@ -139,7 +137,7 @@ export default function AlbumsList() {
     }
   }
 
-  if (isLoading || isFetching) return <AlbumsFallback />
+  if (isLoading) return <AlbumsFallback />
   if (!data) return <EmptyAlbums />
 
   const items = data.pages.flatMap((page) => page.albums) || []
