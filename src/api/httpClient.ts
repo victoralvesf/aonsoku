@@ -47,8 +47,10 @@ function getUrl(path: string, options?: Record<string, string | undefined>) {
 
   if (options) {
     Object.keys(options).forEach((key) => {
-      if (options[key] !== undefined) {
-        params.append(key, options[key]!)
+      const query = options[key]
+
+      if (query !== undefined) {
+        params.append(key, query)
       }
     })
   }
