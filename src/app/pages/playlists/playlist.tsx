@@ -27,13 +27,12 @@ export default function Playlist() {
     data: playlist,
     isLoading,
     isFetching,
-    isRefetching,
   } = useQuery({
     queryKey: [queryKeys.playlist.single, playlistId],
     queryFn: () => subsonic.playlists.getOne(playlistId),
   })
 
-  if (isRefetching || isFetching || isLoading) return <PlaylistFallback />
+  if (isFetching || isLoading) return <PlaylistFallback />
   if (!playlist) return <ErrorPage status={404} statusText="Not Found" />
 
   const columnsToShow: ColumnFilter[] = [
