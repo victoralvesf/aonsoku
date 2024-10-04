@@ -139,7 +139,7 @@ export default function ImageHeader({
             </h4>
           )}
 
-          <div className="flex gap-2 mt-1 2xl:mt-2 drop-shadow">{badges}</div>
+          <div className="flex gap-2 mt-1 2xl:mt-2">{badges}</div>
         </div>
       </div>
 
