@@ -23,6 +23,7 @@ export enum AlbumsFilters {
   RecentlyAdded = 'newest',
   RecentlyPlayed = 'recent',
   ByYear = 'byYear',
+  ByDiscography = 'artistDiscography',
 }
 
 export const albumsFilterValues = [
@@ -61,5 +62,9 @@ export const albumsFilterValues = [
   {
     key: AlbumsFilters.ByYear,
     label: 'album.list.filter.releaseYear',
+  },
+  {
+    key: AlbumsFilters.ByDiscography,
+    label: 'album.list.filter.discography',
   },
 ]

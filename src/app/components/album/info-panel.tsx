@@ -27,6 +27,7 @@ export default function InfoPanel({
   // In case the API returns a link without target blank and nofollow
   useEffect(() => {
     const links = document.querySelectorAll('#info-panel a')
+    if (!links) return
 
     links.forEach((link) => {
       link.setAttribute('target', '_blank')
@@ -34,7 +35,7 @@ export default function InfoPanel({
     })
   }, [])
 
-  if (!bio) return <></>
+  if (!bio) return null
 
   return (
     <div className={cn(containerClasses)} id="artist-biography">

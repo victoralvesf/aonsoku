@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { DataTablePagination } from '@/app/components/ui/data-table-pagination'
 import { Input } from '@/app/components/ui/input'
+import { usePlayerSonglist } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 
@@ -47,6 +48,7 @@ interface DataTableProps<TData, TValue> {
   allowRowSelection?: boolean
   showHeader?: boolean
   showDiscNumber?: boolean
+  variant?: 'classic' | 'modern'
 }
 
 export function DataTable<TData, TValue>({
@@ -61,11 +63,13 @@ export function DataTable<TData, TValue>({
   allowRowSelection = true,
   showHeader = true,
   showDiscNumber = false,
+  variant = 'classic',
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation()
   const newColumns = columns.filter((column) => {
     return columnFilter?.includes(column.id as ColumnFilter)
   })
+  const { currentSong } = usePlayerSonglist()
 
   const [columnSearch, setColumnSearch] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
@@ -122,6 +126,20 @@ export function DataTable<TData, TValue>({
 
   const discNumberIndexes = getDiscIndexes()
 
+  function rowIsPlaying(row: Row<TData>) {
+    // @ts-expect-error row.original can't be typed
+    const id = row.original && row.original.id ? row.original.id : ''
+
+    if (id === '' || !currentSong) {
+      return false
+    }
+
+    return id === currentSong.id
+  }
+
+  const isClassic = variant === 'classic'
+  const isModern = variant === 'modern'
+
   return (
     <>
       {showSearch && searchColumn && (
@@ -155,9 +173,12 @@ export function DataTable<TData, TValue>({
         </div>
       )}
 
-      <div className="rounded-md border">
+      <div className={clsx(isClassic && 'rounded-md border')}>
         <div
-          className="relative w-full overflow-hidden rounded-md cursor-default caption-bottom bg-background text-sm"
+          className={clsx(
+            'relative w-full overflow-hidden rounded-md cursor-default caption-bottom text-sm',
+            isClassic ? 'bg-background' : 'bg-transparent',
+          )}
           data-testid="data-table"
           role="table"
         >
@@ -166,7 +187,10 @@ export function DataTable<TData, TValue>({
               {table.getHeaderGroups().map((headerGroup) => (
                 <div
                   key={headerGroup.id}
-                  className="w-full flex flex-row border-b"
+                  className={clsx(
+                    'w-full flex flex-row border-b',
+                    isModern && 'mb-2 border-foreground/20',
+                  )}
                   role="row"
                 >
                   {headerGroup.headers.map((header) => {
@@ -203,7 +227,10 @@ export function DataTable<TData, TValue>({
                   <Fragment key={row.id}>
                     {showDiscNumber && discNumberIndexes.includes(index) && (
                       <div
-                        className="w-full h-14 flex flex-row items-center border-b transition-colors text-muted-foreground"
+                        className={clsx(
+                          'w-full h-14 flex flex-row items-center transition-colors text-muted-foreground',
+                          isClassic && 'border-b',
+                        )}
                         role="row"
                       >
                         <div className="w-12 flex items-center justify-center">
@@ -221,7 +248,16 @@ export function DataTable<TData, TValue>({
                       onClick={() => {
                         allowRowSelection && row.toggleSelected()
                       }}
-                      className="group/tablerow w-full flex flex-row border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                      className={clsx(
+                        'group/tablerow w-full flex flex-row transition-colors',
+                        isClassic &&
+                          'border-b hover:bg-muted/50 data-[state=selected]:bg-muted',
+                        isModern &&
+                          'rounded-md hover:bg-muted-foreground/20 dark:hover:bg-accent',
+                        isModern &&
+                          'data-[state=selected]:bg-muted-foreground/20 dark:data-[state=selected]:bg-accent',
+                        isModern && rowIsPlaying(row) && 'bg-primary/20',
+                      )}
                       role="row"
                     >
                       {row.getVisibleCells().map((cell) => {

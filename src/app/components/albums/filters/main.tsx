@@ -26,7 +26,6 @@ export function AlbumsMainFilter() {
     AlbumsSearchParams.MainFilter,
     AlbumsFilters.RecentlyAdded,
   )
-  const artistName = getSearchParam<string>(AlbumsSearchParams.ArtistName, '')
 
   const currentFilterLabel = albumsFilterValues.filter(
     (item) => item.key === currentFilter,
@@ -53,15 +52,17 @@ export function AlbumsMainFilter() {
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm">
           <ListFilter className="w-4 h-4 mr-2" />
-          {!artistName ? t(currentFilterLabel) : artistName}
+          {t(currentFilterLabel)}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align="end">
         {albumsFilterValues.map((item, index) => {
+          if (item.key === AlbumsFilters.ByDiscography) return null
+
           return (
             <DropdownMenuCheckboxItem
               key={index}
-              checked={!artistName ? item.key === currentFilter : false}
+              checked={item.key === currentFilter}
               onCheckedChange={() =>
                 handleChangeFilter(item.key as AlbumListType)
               }

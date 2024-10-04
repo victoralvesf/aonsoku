@@ -58,8 +58,8 @@ export function SongsCarouselFallback() {
         {Array.from({ length: 8 }).map((_, index) => (
           <div className="basis-1/8" key={'large-' + index}>
             <Skeleton className="aspect-square" />
-            <Skeleton className="h-4 w-28 mt-2" />
-            <Skeleton className="h-3 w-20 mt-1" />
+            <Skeleton className="h-[13px] w-11/12 mt-2" />
+            <Skeleton className="h-3 w-1/2 mt-[7px]" />
           </div>
         ))}
       </div>
@@ -68,8 +68,8 @@ export function SongsCarouselFallback() {
         {Array.from({ length: 5 }).map((_, index) => (
           <div className="basis-1/5" key={'small-' + index}>
             <Skeleton className="aspect-square" />
-            <Skeleton className="h-4 w-28 mt-2" />
-            <Skeleton className="h-3 w-20 mt-1" />
+            <Skeleton className="h-[13px] w-11/12 mt-2" />
+            <Skeleton className="h-3 w-1/2 mt-[7px]" />
           </div>
         ))}
       </div>

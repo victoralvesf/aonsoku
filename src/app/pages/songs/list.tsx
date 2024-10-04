@@ -13,7 +13,11 @@ import { ISong } from '@/types/responses/song'
 import { queryKeys } from '@/utils/queryKeys'
 
 export default function SongsList() {
-  const { data: songlist, isLoading } = useQuery<ISong[]>({
+  const {
+    data: songlist,
+    isLoading,
+    isFetching,
+  } = useQuery<ISong[]>({
     queryKey: [queryKeys.song.all],
     queryFn: subsonic.songs.getAllSongs,
   })
@@ -39,7 +43,7 @@ export default function SongsList() {
     if (songlist) setSongList(songlist, index)
   }
 
-  if (isLoading) return <SongsListFallback />
+  if (isFetching || isLoading) return <SongsListFallback />
   if (!songlist) return null
 
   return (

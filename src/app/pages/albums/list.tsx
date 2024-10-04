@@ -137,9 +137,7 @@ export default function AlbumsList() {
     }
   }
 
-  if (isLoading) {
-    return <AlbumsFallback />
-  }
+  if (isLoading) return <AlbumsFallback />
   if (!data) return <EmptyAlbums />
 
   const items = data.pages.flatMap((page) => page.albums) || []

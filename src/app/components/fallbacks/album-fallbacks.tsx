@@ -26,7 +26,7 @@ export function AlbumHeaderFallback() {
 export function PlayButtonsFallback() {
   return (
     <div className="my-6 flex gap-1 items-center">
-      <Skeleton className="rounded-full w-14 h-14" />
+      <Skeleton className="rounded-full w-14 h-14 mr-2" />
       <div className="flex items-center justify-center w-14 h-14">
         <Skeleton className="rounded-full w-7 h-7" />
       </div>
@@ -46,7 +46,7 @@ export function AlbumFallback() {
       </div>
       <ListWrapper>
         <PlayButtonsFallback />
-        <TableFallback />
+        <TableFallback variant="modern" />
       </ListWrapper>
     </div>
   )
@@ -57,7 +57,7 @@ export function AlbumsFallback() {
     <div className="w-full">
       <ShadowHeaderFallback />
 
-      <ListWrapper className="mt-8 flex flex-col gap-4">
+      <ListWrapper className="mt-6 flex flex-col gap-4">
         <SongsCarouselFallback />
         <SongsCarouselFallback />
         <SongsCarouselFallback />

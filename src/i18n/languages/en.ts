@@ -111,6 +111,9 @@ export const english = {
         genreTitle: 'More from {{genre}}',
       },
       list: {
+        header: {
+          albumsByArtist: 'Albums by {{artist}}',
+        },
         empty: {
           title: 'Oops, no albums here!',
           info: 'Looks like there are no albums with the current filter.',
@@ -131,6 +134,7 @@ export const english = {
           recentlyAdded: 'Recently Added',
           recentlyPlayed: 'Recently Played',
           releaseYear: 'Release Year',
+          discography: 'Discography',
         },
       },
       table: {

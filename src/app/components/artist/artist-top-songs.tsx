@@ -35,6 +35,7 @@ export default function ArtistTopSongs({ topSongs }: { topSongs: ISong[] }) {
         data={topTenSongs}
         handlePlaySong={(row) => setSongList(topTenSongs, row.index)}
         columnFilter={columnsToShow}
+        variant="modern"
       />
     </div>
   )
