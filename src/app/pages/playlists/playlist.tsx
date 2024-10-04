@@ -56,7 +56,7 @@ export default function Playlist() {
   )
 
   return (
-    <div className="w-full">
+    <div className="w-full" key={playlist.id}>
       <ImageHeader
         type={t('playlist.headline')}
         title={playlist.name}
