@@ -1,8 +1,9 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
+import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { PlaylistButtons } from '@/app/components/playlist/buttons'
 import { RemoveSongFromPlaylistDialog } from '@/app/components/playlist/remove-song-dialog'
@@ -13,10 +14,7 @@ import { songsColumns } from '@/app/tables/songs-columns'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
-import {
-  convertMinutesToMs,
-  convertSecondsToHumanRead,
-} from '@/utils/convertSecondsToTime'
+import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { queryKeys } from '@/utils/queryKeys'
 
 export default function Playlist() {
@@ -25,12 +23,17 @@ export default function Playlist() {
   const columns = songsColumns()
   const { setSongList } = usePlayerActions()
 
-  const { data: playlist } = useSuspenseQuery({
+  const {
+    data: playlist,
+    isLoading,
+    isFetching,
+    isRefetching,
+  } = useQuery({
     queryKey: [queryKeys.playlist.single, playlistId],
     queryFn: () => subsonic.playlists.getOne(playlistId),
-    staleTime: convertMinutesToMs(5),
   })
 
+  if (isRefetching || isFetching || isLoading) return <PlaylistFallback />
   if (!playlist) return <ErrorPage status={404} statusText="Not Found" />
 
   const columnsToShow: ColumnFilter[] = [
@@ -57,13 +60,15 @@ export default function Playlist() {
     </Fragment>
   )
 
+  const coverArt = playlist.songCount > 0 ? playlist.coverArt : undefined
+
   return (
     <div className="w-full" key={playlist.id}>
       <ImageHeader
         type={t('playlist.headline')}
         title={playlist.name}
         subtitle={playlist.comment}
-        coverArtId={playlist.coverArt}
+        coverArtId={coverArt}
         coverArtType="album"
         coverArtSize="700"
         coverArtAlt={playlist.name}

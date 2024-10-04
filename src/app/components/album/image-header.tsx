@@ -19,7 +19,7 @@ interface ImageHeaderProps {
   title: string
   subtitle?: string
   artistId?: string
-  coverArtId: string
+  coverArtId?: string
   coverArtType: CoverArt
   coverArtSize: string
   coverArtAlt: string
