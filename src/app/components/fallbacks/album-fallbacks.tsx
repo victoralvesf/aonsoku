@@ -57,7 +57,7 @@ export function AlbumsFallback() {
     <div className="w-full">
       <ShadowHeaderFallback />
 
-      <ListWrapper className="mt-8 flex flex-col gap-4">
+      <ListWrapper className="mt-6 flex flex-col gap-4">
         <SongsCarouselFallback />
         <SongsCarouselFallback />
         <SongsCarouselFallback />
