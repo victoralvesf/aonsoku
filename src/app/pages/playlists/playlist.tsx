@@ -1,9 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
-import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { PlaylistButtons } from '@/app/components/playlist/buttons'
 import { RemoveSongFromPlaylistDialog } from '@/app/components/playlist/remove-song-dialog'
@@ -14,7 +13,10 @@ import { songsColumns } from '@/app/tables/songs-columns'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
-import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
+import {
+  convertMinutesToMs,
+  convertSecondsToHumanRead,
+} from '@/utils/convertSecondsToTime'
 import { queryKeys } from '@/utils/queryKeys'
 
 export default function Playlist() {
@@ -23,12 +25,12 @@ export default function Playlist() {
   const columns = songsColumns()
   const { setSongList } = usePlayerActions()
 
-  const { data: playlist, isLoading } = useQuery({
+  const { data: playlist } = useSuspenseQuery({
     queryKey: [queryKeys.playlist.single, playlistId],
     queryFn: () => subsonic.playlists.getOne(playlistId),
+    staleTime: convertMinutesToMs(5),
   })
 
-  if (isLoading) return <PlaylistFallback />
   if (!playlist) return <ErrorPage status={404} statusText="Not Found" />
 
   const columnsToShow: ColumnFilter[] = [
