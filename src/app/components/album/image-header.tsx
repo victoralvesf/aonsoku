@@ -152,7 +152,7 @@ export default function ImageHeader({
       <CustomLightBox
         open={open}
         close={setOpen}
-        src={getCoverArtUrl(coverArtId, coverArtType, '1000')}
+        src={getCoverArtUrl(coverArtId, coverArtType, coverArtSize)}
         alt={coverArtAlt}
         size={600}
       />
