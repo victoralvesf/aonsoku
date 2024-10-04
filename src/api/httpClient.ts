@@ -41,14 +41,16 @@ function queryParams() {
   }
 }
 
-function getUrl(path: string, options?: Record<string, string>) {
+function getUrl(path: string, options?: Record<string, string | undefined>) {
   const serverUrl = useAppStore.getState().data.url
   const params = new URLSearchParams(queryParams())
 
   if (options) {
     Object.keys(options).forEach((key) => {
-      if (options[key] !== undefined) {
-        params.append(key, options[key])
+      const query = options[key]
+
+      if (query !== undefined) {
+        params.append(key, query)
       }
     })
   }
@@ -149,7 +151,11 @@ export function getCoverArtUrl(
   })
 }
 
-export function getSongStreamUrl(id: string, maxBitRate = '0', format = 'raw') {
+export function getSongStreamUrl(
+  id: string,
+  maxBitRate?: string,
+  format?: string,
+) {
   return getUrl('stream', {
     id,
     maxBitRate,

@@ -40,7 +40,7 @@ const Slider = React.forwardRef<
     <SliderPrimitive.Root
       ref={ref}
       className={cn(
-        'relative h-1.5 flex w-full touch-none select-none items-center cursor-pointer',
+        'relative h-3 flex w-full touch-none select-none items-center cursor-pointer',
         className,
       )}
       onContextMenu={handleContextMenu}
@@ -118,6 +118,9 @@ function SliderTooltip({
               'bg-secondary-foreground border-muted-foreground/50 text-secondary font-semibold text-base',
           )}
           sticky="always"
+          onClick={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
+          style={{ cursor: 'default' }}
         >
           <p>{content}</p>
         </TooltipContent>
