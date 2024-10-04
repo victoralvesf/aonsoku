@@ -127,12 +127,16 @@ export default function ImageHeader({
           >
             {title}
           </h1>
-          {subtitle && artistId && (
+          {subtitle && artistId ? (
             <Link to={ROUTES.ARTIST.PAGE(artistId)} className="w-fit">
               <h4 className="2xl:text-lg font-medium opacity-70 hover:underline drop-shadow-md">
                 {subtitle}
               </h4>
             </Link>
+          ) : (
+            <h4 className="2xl:text-lg font-medium opacity-70 drop-shadow-md">
+              {subtitle}
+            </h4>
           )}
 
           <div className="flex gap-2 mt-1 2xl:mt-2 drop-shadow">{badges}</div>
