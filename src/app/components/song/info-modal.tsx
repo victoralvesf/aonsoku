@@ -128,7 +128,6 @@ export function SongInfoModal() {
                     <Link
                       to={ROUTES.ALBUMS.GENRE(genre)}
                       key={genre}
-                      className="mr-2"
                       onClick={handleLinkClick}
                     >
                       <Badge variant="neutral">{genre}</Badge>
@@ -199,7 +198,7 @@ function InfoGridItem({ title, children }: InfoGridItemProps) {
       <div className="py-1 flex items-center">
         {t(`table.columns.${title}`)}
       </div>
-      <div className="py-1 col-span-3 flex items-center !select-text">
+      <div className="py-1 col-span-3 flex items-center !select-text flex-wrap gap-1">
         {children}
       </div>
     </div>
