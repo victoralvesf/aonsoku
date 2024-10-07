@@ -140,6 +140,11 @@ export function DataTable<TData, TValue>({
   const isClassic = variant === 'classic'
   const isModern = variant === 'modern'
 
+  const selectedRows = Object.keys(rowSelection).map(Number)
+  const isRowSelected = (rowIndex: number) => selectedRows.includes(rowIndex)
+  const isPrevRowSelected = (rowIndex: number) => isRowSelected(rowIndex - 1)
+  const isNextRowSelected = (rowIndex: number) => isRowSelected(rowIndex + 1)
+
   return (
     <>
       {showSearch && searchColumn && (
@@ -252,11 +257,24 @@ export function DataTable<TData, TValue>({
                         'group/tablerow w-full flex flex-row transition-colors',
                         isClassic &&
                           'border-b hover:bg-muted/50 data-[state=selected]:bg-muted',
+                        isModern && [
+                          'hover:bg-gray-300/80 dark:hover:bg-gray-700',
+                          'data-[state=selected]:bg-gray-400/50 dark:data-[state=selected]:bg-gray-700',
+                        ],
                         isModern &&
-                          'rounded-md hover:bg-muted-foreground/20 dark:hover:bg-accent',
+                          !table.getIsSomeRowsSelected() &&
+                          !table.getIsAllRowsSelected() &&
+                          rowIsPlaying(row) &&
+                          'rounded-md bg-gray-400/50 dark:bg-gray-700',
+                        isModern && !row.getIsSelected() && 'rounded-md',
                         isModern &&
-                          'data-[state=selected]:bg-muted-foreground/20 dark:data-[state=selected]:bg-accent',
-                        isModern && rowIsPlaying(row) && 'bg-primary/20',
+                          row.getIsSelected() &&
+                          !isPrevRowSelected(index) &&
+                          'rounded-t-md',
+                        isModern &&
+                          row.getIsSelected() &&
+                          !isNextRowSelected(index) &&
+                          'rounded-b-md',
                       )}
                       role="row"
                     >

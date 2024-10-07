@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { EllipsisVertical } from 'lucide-react'
 import { ReactNode, useState } from 'react'
 import { Button } from '@/app/components/ui/button'
@@ -25,7 +26,11 @@ export function TableActionButton({
         <Button
           variant="ghost"
           size="icon"
-          className="w-8 h-8 p-1 rounded-full data-[state=open]:bg-accent hover:bg-background hover:border hover:border-border hover:shadow-sm"
+          className={clsx(
+            'w-8 h-8 p-1 rounded-full',
+            'data-[state=open]:bg-accent data-[state=open]:opacity-100',
+            'opacity-0 group-hover/tablerow:opacity-100 transition-opacity',
+          )}
           onClick={(e) => {
             e.stopPropagation()
             setOpen(true)
