@@ -1,29 +1,39 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Table } from '@tanstack/react-table'
+import { useTranslation } from 'react-i18next'
 import { useMatches } from 'react-router-dom'
+import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
 
 import {
-  DropdownMenuGroup,
-  DropdownMenuSeparator,
-} from '@/app/components/ui/dropdown-menu'
+  ContextMenuItem,
+  ContextMenuSeparator,
+} from '@/app/components/ui/context-menu'
+import { useDownload } from '@/app/hooks/use-download'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { usePlaylistRemoveSong } from '@/store/playlists.store'
+import { useSongInfo } from '@/store/ui.store'
 import { ISong } from '@/types/responses/song'
 import { queryKeys } from '@/utils/queryKeys'
-import { AddToPlaylistSubMenu } from './add-to-playlist-sub-menu'
+import { isTauri } from '@/utils/tauriTools'
+import { AddToPlaylistSubMenu } from './add-to-playlist'
 
 interface SelectedSongsProps {
   table: Table<ISong>
 }
 
-export function SelectedSongsOptions({ table }: SelectedSongsProps) {
+export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
+  const { t } = useTranslation()
   const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
+  const { downloadBrowser, downloadTauri } = useDownload()
   const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
   const matches = useMatches()
+  const { setSongId, setModalOpen } = useSongInfo()
 
   const { rows } = table.getFilteredSelectedRowModel()
+  const isSingleSelected = rows.length === 1
+  const singleSong = isSingleSelected ? rows[0].original : undefined
 
   const isOnPlaylistPage = matches.find((route) => route.id === 'playlist')
   const playlistId = isOnPlaylistPage?.params.playlistId ?? ''
@@ -38,6 +48,17 @@ export function SelectedSongsOptions({ table }: SelectedSongsProps) {
     const songs = rows.map((row) => row.original)
     setLastOnQueue(songs)
     table.resetRowSelection()
+  }
+
+  async function handleDownload() {
+    if (!singleSong) return
+
+    const url = getDownloadUrl(singleSong.id)
+    if (isTauri()) {
+      downloadTauri(url, singleSong.id)
+    } else {
+      downloadBrowser(url)
+    }
   }
 
   const queryClient = useQueryClient()
@@ -96,37 +117,67 @@ export function SelectedSongsOptions({ table }: SelectedSongsProps) {
     table.resetRowSelection()
   }
 
+  function handleSongInfoOption() {
+    if (!singleSong) return
+
+    setSongId(singleSong.id)
+    setModalOpen(true)
+  }
+
   return (
     <>
-      <DropdownMenuGroup>
-        <OptionsButtons.PlayNext
+      <OptionsButtons.PlayNext
+        variant="context"
+        onClick={(e) => {
+          e.stopPropagation()
+          handlePlayNext()
+        }}
+      />
+      <OptionsButtons.PlayLast
+        variant="context"
+        onClick={(e) => {
+          e.stopPropagation()
+          handlePlayLast()
+        }}
+      />
+      <ContextMenuSeparator />
+      <OptionsButtons.AddToPlaylistOption variant="context">
+        <AddToPlaylistSubMenu
+          type="context"
+          newPlaylistFn={handleCreateNewPlaylist}
+          addToPlaylistFn={handleAddToPlaylist}
+        />
+      </OptionsButtons.AddToPlaylistOption>
+      {isOnPlaylistPage && (
+        <OptionsButtons.RemoveFromPlaylist
+          variant="context"
           onClick={(e) => {
             e.stopPropagation()
-            handlePlayNext()
+            handleRemoveSongsFromPlaylist()
           }}
         />
-        <OptionsButtons.PlayLast
-          onClick={(e) => {
-            e.stopPropagation()
-            handlePlayLast()
-          }}
-        />
-        <DropdownMenuSeparator />
-        <OptionsButtons.AddToPlaylist>
-          <AddToPlaylistSubMenu
-            newPlaylistFn={handleCreateNewPlaylist}
-            addToPlaylistFn={handleAddToPlaylist}
-          />
-        </OptionsButtons.AddToPlaylist>
-        {isOnPlaylistPage && (
-          <OptionsButtons.RemoveFromPlaylist
+      )}
+      {isSingleSelected && (
+        <>
+          <ContextMenuSeparator />
+          <OptionsButtons.Download
+            variant="context"
             onClick={(e) => {
               e.stopPropagation()
-              handleRemoveSongsFromPlaylist()
+              handleDownload()
             }}
           />
-        )}
-      </DropdownMenuGroup>
+          <ContextMenuSeparator />
+          <OptionsButtons.SongInfo
+            variant="context"
+            onClick={handleSongInfoOption}
+          />
+        </>
+      )}
+      <ContextMenuSeparator />
+      <ContextMenuItem disabled inset>
+        {t('table.menu.selectedCount', { count: rows.length })}
+      </ContextMenuItem>
     </>
   )
 }

@@ -71,6 +71,7 @@ export default function Radios() {
             showSearch={true}
             searchColumn="name"
             allowRowSelection={false}
+            dataType="radio"
           />
         </ListWrapper>
       )}

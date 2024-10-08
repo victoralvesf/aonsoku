@@ -56,6 +56,7 @@ export default function ArtistsList() {
           searchColumn="name"
           handlePlaySong={(row) => handlePlayArtistRadio(row.original)}
           allowRowSelection={false}
+          dataType="artist"
         />
       </ListWrapper>
     </div>

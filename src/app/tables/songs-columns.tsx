@@ -1,11 +1,8 @@
-import { ClockIcon } from 'lucide-react'
+import { ClockIcon, HeartIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
+import { TableLikeButton } from '@/app/components/table/like-button'
 import PlaySongButton from '@/app/components/table/play-button'
-import {
-  SelectSongCell,
-  SelectSongHeader,
-} from '@/app/components/table/select-song'
 import { TableSongTitle } from '@/app/components/table/song-title'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
@@ -260,8 +257,18 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         maxWidth: 120,
         justifyContent: 'end',
       },
-      header: ({ table }) => <SelectSongHeader table={table} />,
-      cell: ({ row }) => <SelectSongCell row={row} />,
+      header: () => (
+        <SimpleTooltip text={i18n.t('table.columns.favorite')}>
+          <HeartIcon className="w-4 h-4 mr-2" />
+        </SimpleTooltip>
+      ),
+      cell: ({ row }) => (
+        <TableLikeButton
+          type="song"
+          entityId={row.original.id}
+          starred={typeof row.original.starred === 'string'}
+        />
+      ),
     },
   ]
 }

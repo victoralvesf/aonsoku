@@ -123,6 +123,7 @@ export const english = {
           label: 'Select a genre...',
           search: 'Find a genre...',
           loading: 'Loading genres...',
+          notFound: 'No genre found.',
         },
         filter: {
           artist: 'Artist',
@@ -204,6 +205,10 @@ export const english = {
         asc: 'Ascending',
         desc: 'Descending',
         reset: 'Reset',
+      },
+      menu: {
+        selectedCount_one: '{{count}} selected',
+        selectedCount_other: '{{count}} selected',
       },
     },
     fullscreen: {

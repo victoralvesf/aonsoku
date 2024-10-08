@@ -9,108 +9,134 @@ import {
   Trash,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import {
-  DropdownMenuItem,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-} from '@/app/components/ui/dropdown-menu'
+import { ContextMenuItem } from '@/app/components/ui/context-menu'
+import { DropdownMenuItem } from '@/app/components/ui/dropdown-menu'
+import { MenuItemFactory } from './menu-item-factory'
+import { SubMenuFactory } from './sub-menu-factory'
 
 type DropdownMenuItemProps = React.ComponentPropsWithoutRef<
-  typeof DropdownMenuItem
->
+  typeof DropdownMenuItem | typeof ContextMenuItem
+> & {
+  variant?: 'dropdown' | 'context'
+}
 
-function PlayNext(props: DropdownMenuItemProps) {
+function PlayNext({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   const { t } = useTranslation()
 
   return (
-    <DropdownMenuItem {...props}>
-      <PlusCircle className="mr-2 h-4 w-4" />
-      <span>{t('options.playNext')}</span>
-    </DropdownMenuItem>
+    <MenuItemFactory
+      variant={variant}
+      icon={<PlusCircle className="mr-2 h-4 w-4" />}
+      label={t('options.playNext')}
+      {...props}
+    />
   )
 }
 
-function PlayLast(props: DropdownMenuItemProps) {
+function PlayLast({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   const { t } = useTranslation()
 
   return (
-    <DropdownMenuItem {...props}>
-      <PlusSquare className="mr-2 h-4 w-4" />
-      <span>{t('options.addLast')}</span>
-    </DropdownMenuItem>
+    <MenuItemFactory
+      variant={variant}
+      icon={<PlusSquare className="mr-2 h-4 w-4" />}
+      label={t('options.addLast')}
+      {...props}
+    />
   )
 }
 
-function Download(props: DropdownMenuItemProps) {
+function Download({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   const { t } = useTranslation()
 
   return (
-    <DropdownMenuItem {...props}>
-      <DownloadIcon className="mr-2 h-4 w-4" />
-      <span>{t('options.download')}</span>
-    </DropdownMenuItem>
+    <MenuItemFactory
+      variant={variant}
+      icon={<DownloadIcon className="mr-2 h-4 w-4" />}
+      label={t('options.download')}
+      {...props}
+    />
   )
 }
 
-function EditPlaylist(props: DropdownMenuItemProps) {
+function EditPlaylist({
+  variant = 'dropdown',
+  ...props
+}: DropdownMenuItemProps) {
   const { t } = useTranslation()
 
   return (
-    <DropdownMenuItem {...props}>
-      <Pencil className="mr-2 h-4 w-4" />
-      <span>{t('options.playlist.edit')}</span>
-    </DropdownMenuItem>
+    <MenuItemFactory
+      variant={variant}
+      icon={<Pencil className="mr-2 h-4 w-4" />}
+      label={t('options.playlist.edit')}
+      {...props}
+    />
   )
 }
 
-function RemovePlaylist(props: DropdownMenuItemProps) {
+function RemovePlaylist({
+  variant = 'dropdown',
+  ...props
+}: DropdownMenuItemProps) {
   const { t } = useTranslation()
 
   return (
-    <DropdownMenuItem {...props}>
-      <Trash className="mr-2 h-4 w-4 fill-red-300 text-red-500" />
-      <span className="text-red-500">{t('options.playlist.delete')}</span>
-    </DropdownMenuItem>
+    <MenuItemFactory
+      variant={variant}
+      icon={<Trash className="mr-2 h-4 w-4 fill-red-300 text-red-500" />}
+      label={t('options.playlist.delete')}
+      {...props}
+    />
   )
 }
 
-function AddToPlaylist(props: DropdownMenuItemProps) {
+export function AddToPlaylistOption({
+  variant = 'dropdown',
+  children,
+  ...props
+}: DropdownMenuItemProps) {
   const { t } = useTranslation()
   const propsWithoutChildren = omit(props, 'children')
 
   return (
-    <DropdownMenuSub {...propsWithoutChildren}>
-      <DropdownMenuSubTrigger>
-        <PlusIcon className="mr-2 h-4 w-4" />
-        <span className="mr-4">{t('options.playlist.add')}</span>
-      </DropdownMenuSubTrigger>
-      <DropdownMenuPortal>
-        <>{props.children}</>
-      </DropdownMenuPortal>
-    </DropdownMenuSub>
+    <SubMenuFactory
+      variant={variant}
+      icon={<PlusIcon className="mr-2 h-4 w-4" />}
+      label={t('options.playlist.add')}
+      {...propsWithoutChildren}
+    >
+      {children}
+    </SubMenuFactory>
   )
 }
 
-function RemoveFromPlaylist(props: DropdownMenuItemProps) {
+function RemoveFromPlaylist({
+  variant = 'dropdown',
+  ...props
+}: DropdownMenuItemProps) {
   const { t } = useTranslation()
 
   return (
-    <DropdownMenuItem {...props}>
-      <Trash className="mr-2 h-4 w-4 fill-red-300 text-red-500" />
-      <span className="text-red-500">{t('options.playlist.removeSong')}</span>
-    </DropdownMenuItem>
+    <MenuItemFactory
+      variant={variant}
+      icon={<Trash className="mr-2 h-4 w-4 fill-red-300 text-red-500" />}
+      label={t('options.playlist.removeSong')}
+      {...props}
+    />
   )
 }
 
-function SongInfo(props: DropdownMenuItemProps) {
+function SongInfo({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   const { t } = useTranslation()
 
   return (
-    <DropdownMenuItem {...props}>
-      <Info className="mr-2 h-4 w-4" />
-      <span>{t('options.info')}</span>
-    </DropdownMenuItem>
+    <MenuItemFactory
+      variant={variant}
+      icon={<Info className="mr-2 h-4 w-4" />}
+      label={t('options.info')}
+      {...props}
+    />
   )
 }
 
@@ -118,7 +144,7 @@ export const OptionsButtons = {
   PlayNext,
   PlayLast,
   Download,
-  AddToPlaylist,
+  AddToPlaylistOption,
   EditPlaylist,
   RemovePlaylist,
   RemoveFromPlaylist,

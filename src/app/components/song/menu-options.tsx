@@ -2,11 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useMatches } from 'react-router-dom'
 import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
-import { AddToPlaylistSubMenu } from '@/app/components/song/add-to-playlist-sub-menu'
-import {
-  DropdownMenuGroup,
-  DropdownMenuSeparator,
-} from '@/app/components/ui/dropdown-menu'
+import { ContextMenuSeparator } from '@/app/components/ui/context-menu'
 import { useDownload } from '@/app/hooks/use-download'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
@@ -15,13 +11,14 @@ import { useSongInfo } from '@/store/ui.store'
 import { ISong } from '@/types/responses/song'
 import { queryKeys } from '@/utils/queryKeys'
 import { isTauri } from '@/utils/tauriTools'
+import { AddToPlaylistSubMenu } from './add-to-playlist'
 
-interface SongOptionsProps {
+interface SongMenuOptionsProps {
   song: ISong
   index: number
 }
 
-export function SongOptions({ song, index }: SongOptionsProps) {
+export function SongMenuOptions({ song, index }: SongMenuOptionsProps) {
   const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
   const { downloadBrowser, downloadTauri } = useDownload()
   const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
@@ -101,43 +98,47 @@ export function SongOptions({ song, index }: SongOptionsProps) {
 
   return (
     <>
-      <DropdownMenuGroup>
-        <OptionsButtons.PlayNext
-          onClick={(e) => {
-            e.stopPropagation()
-            handlePlayNext()
-          }}
-        />
-        <OptionsButtons.PlayLast
-          onClick={(e) => {
-            e.stopPropagation()
-            handlePlayLast()
-          }}
-        />
-      </DropdownMenuGroup>
-      <DropdownMenuSeparator />
-      <OptionsButtons.AddToPlaylist>
+      <OptionsButtons.PlayNext
+        variant="context"
+        onClick={(e) => {
+          e.stopPropagation()
+          handlePlayNext()
+        }}
+      />
+      <OptionsButtons.PlayLast
+        variant="context"
+        onClick={(e) => {
+          e.stopPropagation()
+          handlePlayLast()
+        }}
+      />
+      <ContextMenuSeparator />
+      <OptionsButtons.AddToPlaylistOption variant="context">
         <AddToPlaylistSubMenu
+          type="context"
           newPlaylistFn={handleCreateNewPlaylist}
           addToPlaylistFn={handleAddToPlaylist}
         />
-      </OptionsButtons.AddToPlaylist>
+      </OptionsButtons.AddToPlaylistOption>
       {isOnPlaylistPage && (
         <OptionsButtons.RemoveFromPlaylist
+          variant="context"
           onClick={handleRemoveSongFromPlaylist}
         />
       )}
-      <DropdownMenuSeparator />
-      <DropdownMenuGroup>
-        <OptionsButtons.Download
-          onClick={(e) => {
-            e.stopPropagation()
-            handleDownload()
-          }}
-        />
-      </DropdownMenuGroup>
-      <DropdownMenuSeparator />
-      <OptionsButtons.SongInfo onClick={handleSongInfoOption} />
+      <ContextMenuSeparator />
+      <OptionsButtons.Download
+        variant="context"
+        onClick={(e) => {
+          e.stopPropagation()
+          handleDownload()
+        }}
+      />
+      <ContextMenuSeparator />
+      <OptionsButtons.SongInfo
+        variant="context"
+        onClick={handleSongInfoOption}
+      />
     </>
   )
 }

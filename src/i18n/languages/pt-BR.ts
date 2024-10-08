@@ -125,6 +125,7 @@ export const brazilianPortuguese = {
           label: 'Selecione um gênero...',
           search: 'Procurar um gênero...',
           loading: 'Carregando gêneros...',
+          notFound: 'Nenhum gênero encontrado.',
         },
         filter: {
           artist: 'Artista',
@@ -206,6 +207,10 @@ export const brazilianPortuguese = {
         asc: 'Crescente',
         desc: 'Decrescente',
         reset: 'Restaurar',
+      },
+      menu: {
+        selectedCount_one: '{{count}} selecionado',
+        selectedCount_other: '{{count}} selecionados',
       },
     },
     fullscreen: {
