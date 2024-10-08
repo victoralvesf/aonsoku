@@ -51,8 +51,6 @@ export function TableFallback({ variant = 'classic' }: TableFallbackProps) {
           <Skeleton className="w-20 h-5" />
           <Skeleton className="w-14 h-5 rounded-full" />
           <div className="flex items-center justify-end gap-4 w-full">
-            <Skeleton className="w-5 h-5 rounded-full" />
-            <Skeleton className="w-5 h-5 rounded-full" />
             <Skeleton className="w-5 h-5 mr-2" />
           </div>
         </div>
