@@ -1,8 +1,8 @@
 import { ClockIcon, HeartIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-import { TableLikeButton } from '@/app/components/table/like-button'
 import PlaySongButton from '@/app/components/table/play-button'
+import { SongTableActions } from '@/app/components/table/song-actions'
 import { TableSongTitle } from '@/app/components/table/song-title'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
@@ -105,6 +105,10 @@ export function songsColumns(): ColumnDefType<ISong>[] {
           <Link
             to={ROUTES.ARTIST.PAGE(row.original.artistId)}
             className="hover:underline truncate"
+            onContextMenu={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+            }}
           >
             {row.original.artist}
           </Link>
@@ -131,6 +135,10 @@ export function songsColumns(): ColumnDefType<ISong>[] {
           <Link
             to={ROUTES.ALBUM.PAGE(row.original.albumId)}
             className="hover:underline truncate"
+            onContextMenu={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+            }}
           >
             {row.original.album}
           </Link>
@@ -262,13 +270,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
           <HeartIcon className="w-4 h-4 mr-2" />
         </SimpleTooltip>
       ),
-      cell: ({ row }) => (
-        <TableLikeButton
-          type="song"
-          entityId={row.original.id}
-          starred={typeof row.original.starred === 'string'}
-        />
-      ),
+      cell: ({ row }) => <SongTableActions row={row} />,
     },
   ]
 }

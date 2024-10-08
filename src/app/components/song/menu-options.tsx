@@ -14,11 +14,16 @@ import { isTauri } from '@/utils/tauriTools'
 import { AddToPlaylistSubMenu } from './add-to-playlist'
 
 interface SongMenuOptionsProps {
+  variant: 'context' | 'dropdown'
   song: ISong
   index: number
 }
 
-export function SongMenuOptions({ song, index }: SongMenuOptionsProps) {
+export function SongMenuOptions({
+  variant,
+  song,
+  index,
+}: SongMenuOptionsProps) {
   const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
   const { downloadBrowser, downloadTauri } = useDownload()
   const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
@@ -99,36 +104,36 @@ export function SongMenuOptions({ song, index }: SongMenuOptionsProps) {
   return (
     <>
       <OptionsButtons.PlayNext
-        variant="context"
+        variant={variant}
         onClick={(e) => {
           e.stopPropagation()
           handlePlayNext()
         }}
       />
       <OptionsButtons.PlayLast
-        variant="context"
+        variant={variant}
         onClick={(e) => {
           e.stopPropagation()
           handlePlayLast()
         }}
       />
       <ContextMenuSeparator />
-      <OptionsButtons.AddToPlaylistOption variant="context">
+      <OptionsButtons.AddToPlaylistOption variant={variant}>
         <AddToPlaylistSubMenu
-          type="context"
+          type={variant}
           newPlaylistFn={handleCreateNewPlaylist}
           addToPlaylistFn={handleAddToPlaylist}
         />
       </OptionsButtons.AddToPlaylistOption>
       {isOnPlaylistPage && (
         <OptionsButtons.RemoveFromPlaylist
-          variant="context"
+          variant={variant}
           onClick={handleRemoveSongFromPlaylist}
         />
       )}
       <ContextMenuSeparator />
       <OptionsButtons.Download
-        variant="context"
+        variant={variant}
         onClick={(e) => {
           e.stopPropagation()
           handleDownload()
@@ -136,7 +141,7 @@ export function SongMenuOptions({ song, index }: SongMenuOptionsProps) {
       />
       <ContextMenuSeparator />
       <OptionsButtons.SongInfo
-        variant="context"
+        variant={variant}
         onClick={handleSongInfoOption}
       />
     </>

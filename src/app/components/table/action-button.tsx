@@ -21,7 +21,7 @@ export function TableActionButton({
     <DropdownMenu open={open} onOpenChange={(state) => setOpen(state)}>
       <DropdownMenuTrigger
         asChild
-        className="outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+        className="outline-none focus-visible:ring-0 focus-visible:ring-transparent ring-0 ring-offset-transparent"
       >
         <Button
           variant="ghost"

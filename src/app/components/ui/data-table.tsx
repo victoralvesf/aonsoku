@@ -184,7 +184,11 @@ export function DataTable<TData, TValue>({
           )
         } else {
           return (
-            <SongMenuOptions index={row.index} song={row.original as ISong} />
+            <SongMenuOptions
+              variant="context"
+              index={row.index}
+              song={row.original as ISong}
+            />
           )
         }
       }
