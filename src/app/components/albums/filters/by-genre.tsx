@@ -80,7 +80,9 @@ export function AlbumsFilterByGenre() {
         <Command>
           <CommandInput placeholder={t('album.list.genre.search')} />
           <CommandList>
-            <CommandEmpty>No genre found.</CommandEmpty>
+            <CommandEmpty>
+              <div className="px-2">{t('album.list.genre.notFound')}</div>
+            </CommandEmpty>
             <CommandGroup>
               {genres.map(({ value }) => (
                 <CommandItem

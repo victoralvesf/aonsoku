@@ -55,7 +55,10 @@ export function TableLikeButton({
   return (
     <Button
       variant="ghost"
-      className="w-8 h-8 p-1 rounded-full hover:bg-background hover:border hover:border-border hover:shadow-sm"
+      className={clsx(
+        'w-8 h-8 p-1 rounded-full transition-opacity',
+        !isStarred && 'opacity-0 group-hover/tablerow:opacity-100',
+      )}
       onClick={(e) => {
         e.stopPropagation()
         handleStarred()

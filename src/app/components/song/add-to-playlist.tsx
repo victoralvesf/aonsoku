@@ -10,21 +10,21 @@ import {
   CommandInput,
   CommandList,
 } from '@/app/components/ui/command'
-import {
-  DropdownMenuItem,
-  DropdownMenuSubContent,
-} from '@/app/components/ui/dropdown-menu'
+import { ContextMenuItem } from '@/app/components/ui/context-menu'
+import { DropdownMenuItem } from '@/app/components/ui/dropdown-menu'
 import { subsonic } from '@/service/subsonic'
 import { queryKeys } from '@/utils/queryKeys'
 
 interface AddToPlaylistSubMenuProps {
   newPlaylistFn: () => void
   addToPlaylistFn: (id: string) => void
+  type?: 'context' | 'dropdown'
 }
 
 export function AddToPlaylistSubMenu({
   newPlaylistFn,
   addToPlaylistFn,
+  type = 'dropdown',
 }: AddToPlaylistSubMenuProps) {
   const { t } = useTranslation()
 
@@ -42,21 +42,32 @@ export function AddToPlaylistSubMenu({
   }
 
   return (
-    <DropdownMenuSubContent className="p-0 max-w-[300px]">
+    <>
       <Command>
         <CommandInput
           placeholder={t('options.playlist.search')}
           onKeyDown={avoidTypeAhead}
         />
         <div className="p-1 border-b">
-          <DropdownMenuItem
-            className="flex p-1 items-center h-10"
-            onClick={newPlaylistFn}
-            autoFocus={false}
-          >
-            <PlusIcon className="w-4 h-4 mr-2 ml-1" />
-            <span>{t('options.playlist.create')}</span>
-          </DropdownMenuItem>
+          {type === 'dropdown' ? (
+            <DropdownMenuItem
+              className="flex p-1 items-center h-10"
+              onClick={newPlaylistFn}
+              autoFocus={false}
+            >
+              <PlusIcon className="w-4 h-4 mr-2 ml-1" />
+              <span>{t('options.playlist.create')}</span>
+            </DropdownMenuItem>
+          ) : (
+            <ContextMenuItem
+              className="flex p-1 items-center h-10"
+              onClick={newPlaylistFn}
+              autoFocus={false}
+            >
+              <PlusIcon className="w-4 h-4 mr-2 ml-1" />
+              <span>{t('options.playlist.create')}</span>
+            </ContextMenuItem>
+          )}
         </div>
         <CommandList>
           <CommandEmpty>{t('options.playlist.notFound')}</CommandEmpty>
@@ -64,17 +75,26 @@ export function AddToPlaylistSubMenu({
             {playlists &&
               playlists.map((playlist) => (
                 <CommandItem key={playlist.id} value={playlist.name}>
-                  <DropdownMenuItem
-                    className="truncate h-10"
-                    onClick={() => addToPlaylistFn(playlist.id)}
-                  >
-                    <span className="truncate pl-1">{playlist.name}</span>
-                  </DropdownMenuItem>
+                  {type === 'dropdown' ? (
+                    <DropdownMenuItem
+                      className="truncate h-10"
+                      onClick={() => addToPlaylistFn(playlist.id)}
+                    >
+                      <span className="truncate pl-1">{playlist.name}</span>
+                    </DropdownMenuItem>
+                  ) : (
+                    <ContextMenuItem
+                      className="truncate h-10"
+                      onClick={() => addToPlaylistFn(playlist.id)}
+                    >
+                      <span className="truncate pl-1">{playlist.name}</span>
+                    </ContextMenuItem>
+                  )}
                 </CommandItem>
               ))}
           </CommandGroup>
         </CommandList>
       </Command>
-    </DropdownMenuSubContent>
+    </>
   )
 }

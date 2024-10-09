@@ -61,6 +61,10 @@ export function queueColumns(): ColumnDefType<ISong>[] {
             to={ROUTES.ARTIST.PAGE(row.original.artistId)}
             className="hover:underline truncate"
             onClick={() => setQueueDrawerState(false)}
+            onContextMenu={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+            }}
           >
             {row.original.artist}
           </Link>

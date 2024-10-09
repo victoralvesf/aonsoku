@@ -67,6 +67,7 @@ export default function PlaylistsPage() {
           searchColumn="name"
           handlePlaySong={(row) => handlePlayPlaylist(row.original.id)}
           allowRowSelection={false}
+          dataType="playlist"
         />
       </ListWrapper>
     </div>

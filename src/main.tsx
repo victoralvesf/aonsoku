@@ -12,6 +12,9 @@ import '@/i18n'
 import App from '@/App'
 
 import { queryClient } from '@/lib/queryClient'
+import { preventContextMenu } from '@/utils/browser'
+
+preventContextMenu()
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>

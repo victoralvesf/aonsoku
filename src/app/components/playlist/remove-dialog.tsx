@@ -34,9 +34,10 @@ export function RemovePlaylistDialog({
   const matches = useMatches()
 
   function navigateIfNeeded() {
-    const isOnPlaylistsPage = matches[1].pathname === ROUTES.LIBRARY.PLAYLISTS
+    const isOnPlaylistPage = matches.find((route) => route.id === 'playlist')
+    const pageId = isOnPlaylistPage?.params.playlistId ?? ''
 
-    if (!isOnPlaylistsPage) navigate(ROUTES.LIBRARY.HOME)
+    if (pageId === playlistId) navigate(ROUTES.LIBRARY.HOME)
   }
 
   const queryClient = useQueryClient()

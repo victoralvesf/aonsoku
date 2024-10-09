@@ -1,20 +1,16 @@
-import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
-import {
-  DropdownMenuGroup,
-  DropdownMenuSeparator,
-} from '@/app/components/ui/dropdown-menu'
-import { useDownload } from '@/app/hooks/use-download'
+import { DropdownMenuSeparator } from '@/app/components/ui/dropdown-menu'
+import { useOptions } from '@/app/hooks/use-options'
 import { subsonic } from '@/service/subsonic'
-import { usePlayerActions } from '@/store/player.store'
 import { usePlaylists } from '@/store/playlists.store'
 import { Playlist, PlaylistWithEntries } from '@/types/responses/playlist'
 import { ISong } from '@/types/responses/song'
-import { isTauri } from '@/utils/tauriTools'
 
 interface PlaylistOptionsProps {
   playlist: PlaylistWithEntries | Playlist
   onRemovePlaylist: () => void
+  variant?: 'context' | 'dropdown'
+  showPlay?: boolean
   disablePlayNext?: boolean
   disableAddLast?: boolean
   disableDownload?: boolean
@@ -25,6 +21,8 @@ interface PlaylistOptionsProps {
 export function PlaylistOptions({
   playlist,
   onRemovePlaylist,
+  variant = 'dropdown',
+  showPlay = false,
   disablePlayNext = false,
   disableAddLast = false,
   disableDownload = false,
@@ -32,8 +30,7 @@ export function PlaylistOptions({
   disableDelete = false,
 }: PlaylistOptionsProps) {
   const { setPlaylistDialogState, setData } = usePlaylists()
-  const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
-  const { downloadBrowser, downloadTauri } = useDownload()
+  const { play, playNext, playLast, startDownload } = useOptions()
 
   function handleEdit() {
     setData({
@@ -52,61 +49,87 @@ export function PlaylistOptions({
     callback(playlistWithEntries.entry)
   }
 
+  async function handlePlay() {
+    if ('entry' in playlist) {
+      play(playlist.entry)
+    } else {
+      await getSongsToQueue(play)
+    }
+  }
+
   async function handlePlayNext() {
     if ('entry' in playlist) {
-      setNextOnQueue(playlist.entry)
+      playNext(playlist.entry)
     } else {
-      await getSongsToQueue((songs) => setNextOnQueue(songs))
+      await getSongsToQueue(playNext)
     }
   }
 
   async function handlePlayLast() {
     if ('entry' in playlist) {
-      setLastOnQueue(playlist.entry)
+      playLast(playlist.entry)
     } else {
-      await getSongsToQueue((songs) => setLastOnQueue(songs))
+      await getSongsToQueue(playLast)
     }
   }
 
-  async function handleDownload() {
-    const url = getDownloadUrl(playlist.id)
-    if (isTauri()) {
-      downloadTauri(url, playlist.id)
-    } else {
-      downloadBrowser(url)
-    }
+  function handleDownload() {
+    startDownload(playlist.id)
   }
 
   return (
     <>
-      <DropdownMenuGroup>
-        <OptionsButtons.PlayNext
-          disabled={disablePlayNext}
-          onClick={() => handlePlayNext()}
+      {showPlay && (
+        <OptionsButtons.Play
+          variant={variant}
+          onClick={(e) => {
+            e.stopPropagation()
+            handlePlay()
+          }}
         />
-        <OptionsButtons.PlayLast
-          disabled={disableAddLast}
-          onClick={() => handlePlayLast()}
-        />
-      </DropdownMenuGroup>
+      )}
+      <OptionsButtons.PlayNext
+        variant={variant}
+        disabled={disablePlayNext}
+        onClick={(e) => {
+          e.stopPropagation()
+          handlePlayNext()
+        }}
+      />
+      <OptionsButtons.PlayLast
+        variant={variant}
+        disabled={disableAddLast}
+        onClick={(e) => {
+          e.stopPropagation()
+          handlePlayLast()
+        }}
+      />
       <DropdownMenuSeparator />
-      <DropdownMenuGroup>
-        <OptionsButtons.Download
-          disabled={disableDownload}
-          onClick={() => handleDownload()}
-        />
-      </DropdownMenuGroup>
+      <OptionsButtons.Download
+        variant={variant}
+        disabled={disableDownload}
+        onClick={(e) => {
+          e.stopPropagation()
+          handleDownload()
+        }}
+      />
       <DropdownMenuSeparator />
-      <DropdownMenuGroup>
-        <OptionsButtons.EditPlaylist
-          onClick={() => handleEdit()}
-          disabled={disableEdit}
-        />
-        <OptionsButtons.RemovePlaylist
-          onClick={() => onRemovePlaylist()}
-          disabled={disableDelete}
-        />
-      </DropdownMenuGroup>
+      <OptionsButtons.EditPlaylist
+        variant={variant}
+        onClick={(e) => {
+          e.stopPropagation()
+          handleEdit()
+        }}
+        disabled={disableEdit}
+      />
+      <OptionsButtons.RemovePlaylist
+        variant={variant}
+        onClick={(e) => {
+          e.stopPropagation()
+          onRemovePlaylist()
+        }}
+        disabled={disableDelete}
+      />
     </>
   )
 }

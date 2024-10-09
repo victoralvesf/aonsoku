@@ -125,6 +125,7 @@ export const brazilianPortuguese = {
           label: 'Selecione um gênero...',
           search: 'Procurar um gênero...',
           loading: 'Carregando gêneros...',
+          notFound: 'Nenhum gênero encontrado.',
         },
         filter: {
           artist: 'Artista',
@@ -207,6 +208,10 @@ export const brazilianPortuguese = {
         desc: 'Decrescente',
         reset: 'Restaurar',
       },
+      menu: {
+        selectedCount_one: '{{count}} selecionado',
+        selectedCount_other: '{{count}} selecionados',
+      },
     },
     fullscreen: {
       noLyrics: 'Letra não encontrada',
@@ -283,6 +288,7 @@ export const brazilianPortuguese = {
       },
     },
     options: {
+      play: 'Reproduzir',
       playNext: 'Tocar a seguir',
       addLast: 'Adicionar ao final',
       download: 'Download',

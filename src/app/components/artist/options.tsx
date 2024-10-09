@@ -1,59 +1,47 @@
-import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
 import {
   DropdownMenuGroup,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
-import { useDownload } from '@/app/hooks/use-download'
+import { useOptions } from '@/app/hooks/use-options'
 import { useSongList } from '@/app/hooks/use-song-list'
-import { usePlayerActions } from '@/store/player.store'
 import { IArtist } from '@/types/responses/artist'
 import { ISong } from '@/types/responses/song'
-import { isTauri } from '@/utils/tauriTools'
 
 interface ArtistOptionsProps {
   artist: IArtist
 }
 
 export function ArtistOptions({ artist }: ArtistOptionsProps) {
-  const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
   const { getArtistAllSongs } = useSongList()
-  const { downloadBrowser, downloadTauri } = useDownload()
+  const { playLast, playNext, startDownload } = useOptions()
 
-  async function getSongsToQueue(
-    artistName: string,
-    callback: (songs: ISong[]) => void,
-  ) {
-    const songs = await getArtistAllSongs(artistName)
+  async function getSongsToQueue(callback: (songs: ISong[]) => void) {
+    const songs = await getArtistAllSongs(artist.name)
     if (!songs) return
 
     callback(songs)
   }
 
   async function handlePlayNext() {
-    await getSongsToQueue(artist.name, (songs) => setNextOnQueue(songs))
+    await getSongsToQueue(playNext)
   }
 
   async function handlePlayLast() {
-    await getSongsToQueue(artist.name, (songs) => setLastOnQueue(songs))
+    await getSongsToQueue(playLast)
   }
 
-  async function handleDownload() {
-    const url = getDownloadUrl(artist.id)
-    if (isTauri()) {
-      downloadTauri(url, artist.id)
-    } else {
-      downloadBrowser(url)
-    }
+  function handleDownload() {
+    startDownload(artist.id)
   }
 
   return (
     <>
       <DropdownMenuGroup>
-        <OptionsButtons.PlayNext onClick={() => handlePlayNext()} />
-        <OptionsButtons.PlayLast onClick={() => handlePlayLast()} />
+        <OptionsButtons.PlayNext onClick={handlePlayNext} />
+        <OptionsButtons.PlayLast onClick={handlePlayLast} />
         <DropdownMenuSeparator />
-        <OptionsButtons.Download onClick={() => handleDownload()} />
+        <OptionsButtons.Download onClick={handleDownload} />
       </DropdownMenuGroup>
     </>
   )

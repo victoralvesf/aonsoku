@@ -24,6 +24,7 @@ interface ImageHeaderProps {
   coverArtSize: string
   coverArtAlt: string
   badges: JSX.Element
+  isPlaylist?: boolean
 }
 
 export default function ImageHeader({
@@ -36,6 +37,7 @@ export default function ImageHeader({
   coverArtSize,
   coverArtAlt,
   badges,
+  isPlaylist = false,
 }: ImageHeaderProps) {
   const [loaded, setLoaded] = useState(false)
   const [open, setOpen] = useState(false)
@@ -121,25 +123,35 @@ export default function ImageHeader({
           </p>
           <h1
             className={clsx(
-              'scroll-m-20 font-bold tracking-tight mb-1 2xl:mb-2 antialiased drop-shadow-md',
+              'scroll-m-20 font-bold tracking-tight antialiased drop-shadow-md',
               getTextSizeClass(title),
+              subtitle ? 'mb-1 2xl:mb-2' : 'mb-1',
             )}
           >
             {title}
           </h1>
-          {subtitle && artistId ? (
-            <Link to={ROUTES.ARTIST.PAGE(artistId)} className="w-fit">
-              <h4 className="2xl:text-lg font-medium opacity-70 hover:underline drop-shadow-md">
-                {subtitle}
-              </h4>
-            </Link>
-          ) : (
-            <h4 className="2xl:text-lg font-medium opacity-70 drop-shadow-md">
-              {subtitle}
+
+          {!isPlaylist && subtitle && (
+            <h4
+              className={clsx(
+                'font-medium opacity-70 drop-shadow-md',
+                '2xl:text-lg w-fit',
+                artistId && 'hover:underline',
+              )}
+            >
+              {artistId ? (
+                <Link to={ROUTES.ARTIST.PAGE(artistId)}>{subtitle}</Link>
+              ) : (
+                subtitle
+              )}
             </h4>
           )}
 
-          <div className="flex gap-2 mt-1 2xl:mt-2">{badges}</div>
+          {isPlaylist && subtitle && (
+            <p className="text-sm opacity-70 drop-shadow-md">{subtitle}</p>
+          )}
+
+          <div className="flex gap-2 mt-2">{badges}</div>
         </div>
       </div>
 

@@ -10,18 +10,24 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
   SortingFn,
+  Table,
 } from '@tanstack/react-table'
 import clsx from 'clsx'
 import { Disc2Icon, XIcon } from 'lucide-react'
-import { Fragment, useState } from 'react'
+import { Fragment, MouseEvent, useCallback, useMemo, useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
 
+import { SongMenuOptions } from '@/app/components/song/menu-options'
+import { SelectedSongsMenuOptions } from '@/app/components/song/selected-options'
+import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { Button } from '@/app/components/ui/button'
 import { DataTablePagination } from '@/app/components/ui/data-table-pagination'
 import { Input } from '@/app/components/ui/input'
-import { usePlayerSonglist } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { ColumnDefType } from '@/types/react-table/columnDef'
+import { ISong } from '@/types/responses/song'
+import { isMacOS, MouseButton } from '@/utils/browser'
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
@@ -49,6 +55,7 @@ interface DataTableProps<TData, TValue> {
   showHeader?: boolean
   showDiscNumber?: boolean
   variant?: 'classic' | 'modern'
+  dataType?: 'song' | 'artist' | 'playlist' | 'radio'
 }
 
 export function DataTable<TData, TValue>({
@@ -64,16 +71,37 @@ export function DataTable<TData, TValue>({
   showHeader = true,
   showDiscNumber = false,
   variant = 'classic',
+  dataType = 'song',
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation()
   const newColumns = columns.filter((column) => {
     return columnFilter?.includes(column.id as ColumnFilter)
   })
-  const { currentSong } = usePlayerSonglist()
 
   const [columnSearch, setColumnSearch] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
   const [rowSelection, setRowSelection] = useState({})
+  const [lastRowSelected, setLastRowSelected] = useState<number | null>(null)
+
+  const isClassic = variant === 'classic'
+  const isModern = variant === 'modern'
+
+  const selectedRows = useMemo(
+    () => Object.keys(rowSelection).map(Number),
+    [rowSelection],
+  )
+  const isRowSelected = useCallback(
+    (rowIndex: number) => selectedRows.includes(rowIndex),
+    [selectedRows],
+  )
+  const isPrevRowSelected = useCallback(
+    (rowIndex: number) => isRowSelected(rowIndex - 1),
+    [isRowSelected],
+  )
+  const isNextRowSelected = useCallback(
+    (rowIndex: number) => isRowSelected(rowIndex + 1),
+    [isRowSelected],
+  )
 
   const table = useReactTable({
     data,
@@ -100,12 +128,31 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const selectAllShortcut = useCallback(
+    (state = true) => {
+      if (allowRowSelection) {
+        table.toggleAllPageRowsSelected(state)
+      }
+    },
+    [allowRowSelection, table],
+  )
+
+  useHotkeys('mod+a', () => selectAllShortcut(), {
+    preventDefault: true,
+    enabled: !table.getIsAllRowsSelected(),
+  })
+
+  useHotkeys('esc', () => selectAllShortcut(false), {
+    preventDefault: true,
+    enabled: table.getIsAllRowsSelected() || table.getIsSomeRowsSelected(),
+  })
+
   const inputValue =
     searchColumn !== undefined
       ? (table.getColumn(searchColumn || '')?.getFilterValue() as string)
       : undefined
 
-  function getDiscIndexes() {
+  const getDiscIndexes = useCallback(() => {
     if (!showDiscNumber) return []
 
     const uniqueIndices: number[] = []
@@ -122,23 +169,109 @@ export function DataTable<TData, TValue>({
     })
 
     return uniqueIndices
-  }
+  }, [showDiscNumber, table])
 
   const discNumberIndexes = getDiscIndexes()
 
-  function rowIsPlaying(row: Row<TData>) {
-    // @ts-expect-error row.original can't be typed
-    const id = row.original && row.original.id ? row.original.id : ''
+  const getContextMenuOptions = useCallback(
+    (row: Row<TData>) => {
+      if (dataType === 'song') {
+        if (table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()) {
+          return (
+            <SelectedSongsMenuOptions
+              table={table as unknown as Table<ISong>}
+            />
+          )
+        } else {
+          return (
+            <SongMenuOptions
+              variant="context"
+              index={row.index}
+              song={row.original as ISong}
+            />
+          )
+        }
+      }
 
-    if (id === '' || !currentSong) {
-      return false
-    }
+      return undefined
+    },
+    [dataType, table],
+  )
 
-    return id === currentSong.id
-  }
+  const handleLeftClick = useCallback(
+    (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => {
+      if (!allowRowSelection) return
 
-  const isClassic = variant === 'classic'
-  const isModern = variant === 'modern'
+      const { rows } = table.getRowModel()
+
+      // Check the correct key depending on the OS (Meta for macOS, Ctrl for others)
+      const isMultiSelectKey = isMacOS() ? e.metaKey : e.ctrlKey
+
+      if (isMultiSelectKey) {
+        row.toggleSelected()
+        setLastRowSelected(row.index)
+        return
+      }
+
+      if (e.shiftKey && lastRowSelected !== null) {
+        const start = Math.min(lastRowSelected, row.index)
+        const end = Math.max(lastRowSelected, row.index)
+
+        for (let i = start; i <= end; i++) {
+          rows[i].toggleSelected(true)
+        }
+        return
+      }
+
+      // Deselect all rows, except current one
+      rows.forEach((r) => {
+        if (r.index !== row.index) r.toggleSelected(false)
+      })
+      if (!isRowSelected(row.index)) {
+        row.toggleSelected()
+      }
+      setLastRowSelected(row.index)
+    },
+    [allowRowSelection, isRowSelected, lastRowSelected, table],
+  )
+
+  const handleRightClick = useCallback(
+    (row: Row<TData>) => {
+      if (!allowRowSelection) return
+
+      const hasSelectedRows = selectedRows.length > 0
+      const isSelected = isRowSelected(row.index)
+
+      if (hasSelectedRows && !isSelected) {
+        table.resetRowSelection()
+      }
+
+      row.toggleSelected(true)
+      setLastRowSelected(row.index)
+    },
+    [allowRowSelection, isRowSelected, selectedRows.length, table],
+  )
+
+  const handleClicks = useCallback(
+    (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => {
+      if (e.nativeEvent.button === MouseButton.Left) {
+        handleLeftClick(e, row)
+      }
+      if (e.nativeEvent.button === MouseButton.Right) {
+        handleRightClick(row)
+      }
+    },
+    [handleLeftClick, handleRightClick],
+  )
+
+  const handleRowDbClick = useCallback(
+    (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => {
+      if (!handlePlaySong) return
+      e.stopPropagation()
+      handlePlaySong(row)
+    },
+    [handlePlaySong],
+  )
 
   return (
     <>
@@ -243,45 +376,58 @@ export function DataTable<TData, TValue>({
                         </span>
                       </div>
                     )}
-                    <div
-                      data-state={row.getIsSelected() && 'selected'}
-                      onClick={() => {
-                        allowRowSelection && row.toggleSelected()
-                      }}
-                      className={clsx(
-                        'group/tablerow w-full flex flex-row transition-colors',
-                        isClassic &&
-                          'border-b hover:bg-muted/50 data-[state=selected]:bg-muted',
-                        isModern &&
-                          'rounded-md hover:bg-muted-foreground/20 dark:hover:bg-accent',
-                        isModern &&
-                          'data-[state=selected]:bg-muted-foreground/20 dark:data-[state=selected]:bg-accent',
-                        isModern && rowIsPlaying(row) && 'bg-primary/20',
-                      )}
-                      role="row"
-                    >
-                      {row.getVisibleCells().map((cell) => {
-                        const columnDef = cell.column
-                          .columnDef as ColumnDefType<TData>
+                    <ContextMenuProvider options={getContextMenuOptions(row)}>
+                      <div
+                        role="row"
+                        data-state={row.getIsSelected() && 'selected'}
+                        onClick={(e) => handleClicks(e, row)}
+                        onDoubleClick={(e) => handleRowDbClick(e, row)}
+                        onContextMenu={(e) => handleClicks(e, row)}
+                        className={clsx(
+                          'group/tablerow w-full flex flex-row transition-colors',
+                          isModern &&
+                            row.getIsSelected() &&
+                            !isPrevRowSelected(index) &&
+                            'rounded-t-md',
+                          isModern &&
+                            row.getIsSelected() &&
+                            !isNextRowSelected(index) &&
+                            'rounded-b-md',
+                          isModern && !row.getIsSelected() && 'rounded-md',
+                          isClassic && [
+                            'border-b',
+                            'hover:bg-gray-200 dark:hover:bg-gray-800',
+                            'data-[state=selected]:bg-gray-300 dark:data-[state=selected]:bg-gray-700',
+                          ],
+                          isModern && [
+                            'hover:bg-gray-300 dark:hover:bg-gray-700',
+                            'data-[state=selected]:bg-gray-400/50 dark:data-[state=selected]:bg-gray-600',
+                          ],
+                        )}
+                      >
+                        {row.getVisibleCells().map((cell) => {
+                          const columnDef = cell.column
+                            .columnDef as ColumnDefType<TData>
 
-                        return (
-                          <div
-                            key={cell.id}
-                            className={clsx(
-                              'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
-                              columnDef.className,
-                            )}
-                            style={columnDef.style}
-                            role="cell"
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </div>
-                        )
-                      })}
-                    </div>
+                          return (
+                            <div
+                              key={cell.id}
+                              className={clsx(
+                                'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
+                                columnDef.className,
+                              )}
+                              style={columnDef.style}
+                              role="cell"
+                            >
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </ContextMenuProvider>
                   </Fragment>
                 ))
               ) : (

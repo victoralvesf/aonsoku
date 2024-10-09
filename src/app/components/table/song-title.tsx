@@ -26,7 +26,7 @@ export function TableSongTitle({ song }: { song: ISong }) {
         <span
           className={clsx(
             'font-medium truncate',
-            songIsPlaying && 'text-primary drop-shadow',
+            songIsPlaying && 'text-primary',
           )}
         >
           {song.title}
