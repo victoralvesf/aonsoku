@@ -1,8 +1,5 @@
 import { OptionsButtons } from '@/app/components/options/buttons'
-import {
-  DropdownMenuGroup,
-  DropdownMenuSeparator,
-} from '@/app/components/ui/dropdown-menu'
+import { DropdownMenuSeparator } from '@/app/components/ui/dropdown-menu'
 import { useOptions } from '@/app/hooks/use-options'
 import { subsonic } from '@/service/subsonic'
 import { usePlaylists } from '@/store/playlists.store'
@@ -12,6 +9,8 @@ import { ISong } from '@/types/responses/song'
 interface PlaylistOptionsProps {
   playlist: PlaylistWithEntries | Playlist
   onRemovePlaylist: () => void
+  variant?: 'context' | 'dropdown'
+  showPlay?: boolean
   disablePlayNext?: boolean
   disableAddLast?: boolean
   disableDownload?: boolean
@@ -22,6 +21,8 @@ interface PlaylistOptionsProps {
 export function PlaylistOptions({
   playlist,
   onRemovePlaylist,
+  variant = 'dropdown',
+  showPlay = false,
   disablePlayNext = false,
   disableAddLast = false,
   disableDownload = false,
@@ -29,7 +30,7 @@ export function PlaylistOptions({
   disableDelete = false,
 }: PlaylistOptionsProps) {
   const { setPlaylistDialogState, setData } = usePlaylists()
-  const { playNext, playLast, startDownload } = useOptions()
+  const { play, playNext, playLast, startDownload } = useOptions()
 
   function handleEdit() {
     setData({
@@ -46,6 +47,14 @@ export function PlaylistOptions({
     if (!playlistWithEntries) return
 
     callback(playlistWithEntries.entry)
+  }
+
+  async function handlePlay() {
+    if ('entry' in playlist) {
+      play(playlist.entry)
+    } else {
+      await getSongsToQueue(play)
+    }
   }
 
   async function handlePlayNext() {
@@ -70,34 +79,57 @@ export function PlaylistOptions({
 
   return (
     <>
-      <DropdownMenuGroup>
-        <OptionsButtons.PlayNext
-          disabled={disablePlayNext}
-          onClick={handlePlayNext}
+      {showPlay && (
+        <OptionsButtons.Play
+          variant={variant}
+          onClick={(e) => {
+            e.stopPropagation()
+            handlePlay()
+          }}
         />
-        <OptionsButtons.PlayLast
-          disabled={disableAddLast}
-          onClick={handlePlayLast}
-        />
-      </DropdownMenuGroup>
+      )}
+      <OptionsButtons.PlayNext
+        variant={variant}
+        disabled={disablePlayNext}
+        onClick={(e) => {
+          e.stopPropagation()
+          handlePlayNext()
+        }}
+      />
+      <OptionsButtons.PlayLast
+        variant={variant}
+        disabled={disableAddLast}
+        onClick={(e) => {
+          e.stopPropagation()
+          handlePlayLast()
+        }}
+      />
       <DropdownMenuSeparator />
-      <DropdownMenuGroup>
-        <OptionsButtons.Download
-          disabled={disableDownload}
-          onClick={handleDownload}
-        />
-      </DropdownMenuGroup>
+      <OptionsButtons.Download
+        variant={variant}
+        disabled={disableDownload}
+        onClick={(e) => {
+          e.stopPropagation()
+          handleDownload()
+        }}
+      />
       <DropdownMenuSeparator />
-      <DropdownMenuGroup>
-        <OptionsButtons.EditPlaylist
-          onClick={handleEdit}
-          disabled={disableEdit}
-        />
-        <OptionsButtons.RemovePlaylist
-          onClick={onRemovePlaylist}
-          disabled={disableDelete}
-        />
-      </DropdownMenuGroup>
+      <OptionsButtons.EditPlaylist
+        variant={variant}
+        onClick={(e) => {
+          e.stopPropagation()
+          handleEdit()
+        }}
+        disabled={disableEdit}
+      />
+      <OptionsButtons.RemovePlaylist
+        variant={variant}
+        onClick={(e) => {
+          e.stopPropagation()
+          onRemovePlaylist()
+        }}
+        disabled={disableDelete}
+      />
     </>
   )
 }

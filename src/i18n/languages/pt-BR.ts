@@ -288,6 +288,7 @@ export const brazilianPortuguese = {
       },
     },
     options: {
+      play: 'Reproduzir',
       playNext: 'Tocar a seguir',
       addLast: 'Adicionar ao final',
       download: 'Download',

@@ -285,6 +285,7 @@ export const english = {
       },
     },
     options: {
+      play: 'Play',
       playNext: 'Play next',
       addLast: 'Add last',
       download: 'Download',

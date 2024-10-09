@@ -3,6 +3,7 @@ import {
   DownloadIcon,
   Info,
   Pencil,
+  PlayIcon,
   PlusCircle,
   PlusIcon,
   PlusSquare,
@@ -18,6 +19,19 @@ type DropdownMenuItemProps = React.ComponentPropsWithoutRef<
   typeof DropdownMenuItem | typeof ContextMenuItem
 > & {
   variant?: 'dropdown' | 'context'
+}
+
+function Play({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
+  const { t } = useTranslation()
+
+  return (
+    <MenuItemFactory
+      variant={variant}
+      icon={<PlayIcon className="mr-2 h-4 w-4" />}
+      label={t('options.play')}
+      {...props}
+    />
+  )
 }
 
 function PlayNext({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
@@ -141,6 +155,7 @@ function SongInfo({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
 }
 
 export const OptionsButtons = {
+  Play,
   PlayNext,
   PlayLast,
   Download,

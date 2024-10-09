@@ -14,7 +14,7 @@ import { useDownload } from './use-download'
 type SongIdToAdd = Pick<UpdateParams, 'songIdToAdd'>['songIdToAdd']
 
 export function useOptions() {
-  const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
+  const { setNextOnQueue, setLastOnQueue, setSongList } = usePlayerActions()
   const { downloadBrowser, downloadTauri } = useDownload()
   const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
   const matches = useMatches()
@@ -24,6 +24,10 @@ export function useOptions() {
   const playlistId = isOnPlaylistPage?.params.playlistId ?? ''
 
   const queryClient = useQueryClient()
+
+  function play(list: ISong[]) {
+    setSongList(list, 0)
+  }
 
   function playNext(list: ISong[]) {
     setNextOnQueue(list)
@@ -92,6 +96,7 @@ export function useOptions() {
   }
 
   return {
+    play,
     playNext,
     playLast,
     startDownload,
