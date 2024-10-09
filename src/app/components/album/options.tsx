@@ -1,83 +1,54 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
 import { AddToPlaylistSubMenu } from '@/app/components/song/add-to-playlist'
 import {
   DropdownMenuGroup,
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
-import { useDownload } from '@/app/hooks/use-download'
-import { subsonic } from '@/service/subsonic'
-import { usePlayerActions } from '@/store/player.store'
+import { useOptions } from '@/app/hooks/use-options'
 import { SingleAlbum } from '@/types/responses/album'
-import { queryKeys } from '@/utils/queryKeys'
-import { isTauri } from '@/utils/tauriTools'
 
 interface AlbumOptionsProps {
   album: SingleAlbum
 }
 
 export function AlbumOptions({ album }: AlbumOptionsProps) {
-  const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
-  const { downloadBrowser, downloadTauri } = useDownload()
+  const {
+    playNext,
+    playLast,
+    startDownload,
+    addToPlaylist,
+    createNewPlaylist,
+  } = useOptions()
 
-  async function handlePlayNext() {
-    setNextOnQueue(album.song)
+  function handlePlayNext() {
+    playNext(album.song)
   }
 
-  async function handlePlayLast() {
-    setLastOnQueue(album.song)
+  function handlePlayLast() {
+    playLast(album.song)
   }
 
-  async function handleDownload() {
-    const url = getDownloadUrl(album.id)
-    if (isTauri()) {
-      downloadTauri(url, album.id)
-    } else {
-      downloadBrowser(url)
-    }
+  function handleDownload() {
+    startDownload(album.id)
   }
 
-  const queryClient = useQueryClient()
+  function handleAddToPlaylist(id: string) {
+    const songIdToAdd = album.song.map((song) => song.id)
 
-  const updateMutation = useMutation({
-    mutationFn: subsonic.playlists.update,
-  })
-
-  async function handleAddToPlaylist(id: string) {
-    const albumSongsIds = album.song.map((song) => song.id)
-
-    await updateMutation.mutateAsync({
-      playlistId: id,
-      songIdToAdd: albumSongsIds,
-    })
+    addToPlaylist(id, songIdToAdd)
   }
 
-  const createMutation = useMutation({
-    mutationFn: subsonic.playlists.createWithDetails,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [queryKeys.playlist.all],
-      })
-    },
-  })
+  function handleCreateNewPlaylist() {
+    const songIdToAdd = album.song.map((song) => song.id)
 
-  async function handleCreateNewPlaylist() {
-    const albumSongsIds = album.song.map((song) => song.id)
-
-    await createMutation.mutateAsync({
-      name: album.name,
-      comment: '',
-      isPublic: 'false',
-      songIdToAdd: albumSongsIds,
-    })
+    createNewPlaylist(album.name, songIdToAdd)
   }
 
   return (
     <>
       <DropdownMenuGroup>
-        <OptionsButtons.PlayNext onClick={() => handlePlayNext()} />
-        <OptionsButtons.PlayLast onClick={() => handlePlayLast()} />
+        <OptionsButtons.PlayNext onClick={handlePlayNext} />
+        <OptionsButtons.PlayLast onClick={handlePlayLast} />
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <OptionsButtons.AddToPlaylistOption variant="dropdown">
@@ -89,7 +60,7 @@ export function AlbumOptions({ album }: AlbumOptionsProps) {
       </OptionsButtons.AddToPlaylistOption>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        <OptionsButtons.Download onClick={() => handleDownload()} />
+        <OptionsButtons.Download onClick={handleDownload} />
       </DropdownMenuGroup>
     </>
   )
