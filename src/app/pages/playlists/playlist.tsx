@@ -72,6 +72,7 @@ export default function Playlist() {
         coverArtSize="700"
         coverArtAlt={playlist.name}
         badges={badges}
+        isPlaylist={true}
       />
 
       <ListWrapper>
