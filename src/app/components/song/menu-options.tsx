@@ -1,16 +1,7 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useMatches } from 'react-router-dom'
-import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
 import { ContextMenuSeparator } from '@/app/components/ui/context-menu'
-import { useDownload } from '@/app/hooks/use-download'
-import { subsonic } from '@/service/subsonic'
-import { usePlayerActions } from '@/store/player.store'
-import { usePlaylistRemoveSong } from '@/store/playlists.store'
-import { useSongInfo } from '@/store/ui.store'
+import { useOptions } from '@/app/hooks/use-options'
 import { ISong } from '@/types/responses/song'
-import { queryKeys } from '@/utils/queryKeys'
-import { isTauri } from '@/utils/tauriTools'
 import { AddToPlaylistSubMenu } from './add-to-playlist'
 
 interface SongMenuOptionsProps {
@@ -24,125 +15,50 @@ export function SongMenuOptions({
   song,
   index,
 }: SongMenuOptionsProps) {
-  const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
-  const { downloadBrowser, downloadTauri } = useDownload()
-  const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
-  const matches = useMatches()
-  const { setSongId, setModalOpen } = useSongInfo()
-
-  const isOnPlaylistPage = matches.find((route) => route.id === 'playlist')
-  const playlistId = isOnPlaylistPage?.params.playlistId ?? ''
-
-  async function handlePlayNext() {
-    setNextOnQueue([song])
-  }
-
-  async function handlePlayLast() {
-    setLastOnQueue([song])
-  }
-
-  async function handleDownload() {
-    const url = getDownloadUrl(song.id)
-    if (isTauri()) {
-      downloadTauri(url, song.id)
-    } else {
-      downloadBrowser(url)
-    }
-  }
-
-  const queryClient = useQueryClient()
-
-  const updateMutation = useMutation({
-    mutationFn: subsonic.playlists.update,
-    onSuccess: () => {
-      if (isOnPlaylistPage) {
-        queryClient.invalidateQueries({
-          queryKey: [queryKeys.playlist.single, playlistId],
-        })
-      }
-    },
-  })
-
-  async function handleAddToPlaylist(id: string) {
-    await updateMutation.mutateAsync({
-      playlistId: id,
-      songIdToAdd: song.id,
-    })
-  }
-
-  const createMutation = useMutation({
-    mutationFn: subsonic.playlists.createWithDetails,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [queryKeys.playlist.all],
-      })
-    },
-  })
-
-  async function handleCreateNewPlaylist() {
-    await createMutation.mutateAsync({
-      name: song.title,
-      comment: '',
-      isPublic: 'false',
-      songIdToAdd: song.id,
-    })
-  }
-
-  function handleRemoveSongFromPlaylist() {
-    setActionData({
-      playlistId,
-      songIndexes: [index.toString()],
-    })
-    setConfirmDialogState(true)
-  }
-
-  function handleSongInfoOption() {
-    setSongId(song.id)
-    setModalOpen(true)
-  }
+  const songOptions = useOptions()
+  const songIndexes = [index.toString()]
 
   return (
     <>
       <OptionsButtons.PlayNext
         variant={variant}
-        onClick={(e) => {
-          e.stopPropagation()
-          handlePlayNext()
+        onClick={() => {
+          songOptions.playNext([song])
         }}
       />
       <OptionsButtons.PlayLast
         variant={variant}
-        onClick={(e) => {
-          e.stopPropagation()
-          handlePlayLast()
+        onClick={() => {
+          songOptions.playLast([song])
         }}
       />
       <ContextMenuSeparator />
       <OptionsButtons.AddToPlaylistOption variant={variant}>
         <AddToPlaylistSubMenu
           type={variant}
-          newPlaylistFn={handleCreateNewPlaylist}
-          addToPlaylistFn={handleAddToPlaylist}
+          newPlaylistFn={() =>
+            songOptions.createNewPlaylist(song.title, song.id)
+          }
+          addToPlaylistFn={(id) => songOptions.addToPlaylist(id, song.id)}
         />
       </OptionsButtons.AddToPlaylistOption>
-      {isOnPlaylistPage && (
+      {songOptions.isOnPlaylistPage && (
         <OptionsButtons.RemoveFromPlaylist
           variant={variant}
-          onClick={handleRemoveSongFromPlaylist}
+          onClick={() => songOptions.removeSongFromPlaylist(songIndexes)}
         />
       )}
       <ContextMenuSeparator />
       <OptionsButtons.Download
         variant={variant}
-        onClick={(e) => {
-          e.stopPropagation()
-          handleDownload()
+        onClick={() => {
+          songOptions.startDownload(song.id)
         }}
       />
       <ContextMenuSeparator />
       <OptionsButtons.SongInfo
         variant={variant}
-        onClick={handleSongInfoOption}
+        onClick={() => songOptions.openSongInfo(song.id)}
       />
     </>
   )

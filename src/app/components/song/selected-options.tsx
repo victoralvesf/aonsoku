@@ -1,22 +1,13 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Table } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
-import { useMatches } from 'react-router-dom'
-import { getDownloadUrl } from '@/api/httpClient'
 import { OptionsButtons } from '@/app/components/options/buttons'
 
 import {
   ContextMenuItem,
   ContextMenuSeparator,
 } from '@/app/components/ui/context-menu'
-import { useDownload } from '@/app/hooks/use-download'
-import { subsonic } from '@/service/subsonic'
-import { usePlayerActions } from '@/store/player.store'
-import { usePlaylistRemoveSong } from '@/store/playlists.store'
-import { useSongInfo } from '@/store/ui.store'
+import { useOptions } from '@/app/hooks/use-options'
 import { ISong } from '@/types/responses/song'
-import { queryKeys } from '@/utils/queryKeys'
-import { isTauri } from '@/utils/tauriTools'
 import { AddToPlaylistSubMenu } from './add-to-playlist'
 
 interface SelectedSongsProps {
@@ -25,103 +16,54 @@ interface SelectedSongsProps {
 
 export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
   const { t } = useTranslation()
-  const { setNextOnQueue, setLastOnQueue } = usePlayerActions()
-  const { downloadBrowser, downloadTauri } = useDownload()
-  const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
-  const matches = useMatches()
-  const { setSongId, setModalOpen } = useSongInfo()
+  const songOptions = useOptions()
 
   const { rows } = table.getFilteredSelectedRowModel()
   const isSingleSelected = rows.length === 1
-  const singleSong = isSingleSelected ? rows[0].original : undefined
+  const songs = rows.map((row) => row.original)
+  const firstSong = songs[0]
 
-  const isOnPlaylistPage = matches.find((route) => route.id === 'playlist')
-  const playlistId = isOnPlaylistPage?.params.playlistId ?? ''
+  function reset(action: () => void) {
+    action()
+    table.resetRowSelection()
+  }
 
   async function handlePlayNext() {
-    const songs = rows.map((row) => row.original)
-    setNextOnQueue(songs)
-    table.resetRowSelection()
+    reset(() => songOptions.playNext(songs))
   }
 
   async function handlePlayLast() {
-    const songs = rows.map((row) => row.original)
-    setLastOnQueue(songs)
-    table.resetRowSelection()
+    reset(() => songOptions.playLast(songs))
   }
 
   async function handleDownload() {
-    if (!singleSong) return
+    if (!isSingleSelected) return
 
-    const url = getDownloadUrl(singleSong.id)
-    if (isTauri()) {
-      downloadTauri(url, singleSong.id)
-    } else {
-      downloadBrowser(url)
-    }
+    reset(() => songOptions.startDownload(firstSong.id))
   }
-
-  const queryClient = useQueryClient()
-
-  const updateMutation = useMutation({
-    mutationFn: subsonic.playlists.update,
-    onSuccess: () => {
-      if (isOnPlaylistPage) {
-        queryClient.invalidateQueries({
-          queryKey: [queryKeys.playlist.single, playlistId],
-        })
-      }
-    },
-  })
 
   async function handleAddToPlaylist(id: string) {
-    const songs = rows.map((row) => row.original.id)
+    const songIdToAdd = songs.map((s) => s.id)
 
-    await updateMutation.mutateAsync({
-      playlistId: id,
-      songIdToAdd: songs,
-    })
-    table.resetRowSelection()
+    reset(() => songOptions.addToPlaylist(id, songIdToAdd))
   }
 
-  const createMutation = useMutation({
-    mutationFn: subsonic.playlists.createWithDetails,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [queryKeys.playlist.all],
-      })
-    },
-  })
-
   async function handleCreateNewPlaylist() {
-    const songsIds = rows.map((row) => row.original.id)
-    const firstSong = rows[0].original
+    const songIdToAdd = songs.map((s) => s.id)
 
-    await createMutation.mutateAsync({
-      name: firstSong.title,
-      comment: '',
-      isPublic: 'false',
-      songIdToAdd: songsIds,
-    })
-    table.resetRowSelection()
+    reset(() => songOptions.createNewPlaylist(firstSong.title, songIdToAdd))
   }
 
   function handleRemoveSongsFromPlaylist() {
     const songIndexes = rows.map((row) => row.index.toString())
 
-    setActionData({
-      playlistId,
-      songIndexes,
-    })
-    setConfirmDialogState(true)
-    table.resetRowSelection()
+    reset(() => songOptions.removeSongFromPlaylist(songIndexes))
   }
 
   function handleSongInfoOption() {
-    if (!singleSong) return
+    if (!isSingleSelected) return
 
-    setSongId(singleSong.id)
-    setModalOpen(true)
+    reset(() => songOptions.openSongInfo(firstSong.id))
   }
 
   return (
@@ -148,7 +90,7 @@ export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
           addToPlaylistFn={handleAddToPlaylist}
         />
       </OptionsButtons.AddToPlaylistOption>
-      {isOnPlaylistPage && (
+      {songOptions.isOnPlaylistPage && (
         <OptionsButtons.RemoveFromPlaylist
           variant="context"
           onClick={(e) => {
@@ -170,7 +112,10 @@ export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
           <ContextMenuSeparator />
           <OptionsButtons.SongInfo
             variant="context"
-            onClick={handleSongInfoOption}
+            onClick={(e) => {
+              e.stopPropagation()
+              handleSongInfoOption()
+            }}
           />
         </>
       )}
