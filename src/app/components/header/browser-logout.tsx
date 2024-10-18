@@ -19,6 +19,7 @@ import {
 import { LogoutObserver } from '@/app/observers/logout-observer'
 import { useAppData, useAppStore } from '@/store/app.store'
 import { LangSelect } from './lang-select'
+import { ThemeSelect } from './theme-select'
 
 export function BrowserLogout() {
   const { username, url } = useAppData()
@@ -60,13 +61,14 @@ export function BrowserLogout() {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <LangSelect />
+          <ThemeSelect />
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setShortcutsOpen(true)}>
             <Keyboard className="mr-2 h-4 w-4" />
             <span>{t('shortcuts.modal.title')}</span>
             <DropdownMenuShortcut>{'⌘/'}</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <LangSelect />
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setLogoutDialogState(true)}>
             <LogOut className="mr-2 h-4 w-4" />
