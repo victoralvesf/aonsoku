@@ -21,7 +21,7 @@ import { useAppData, useAppStore } from '@/store/app.store'
 import { LangSelect } from './lang-select'
 import { ThemeSelect } from './theme-select'
 
-export function BrowserLogout() {
+export function UserDropdown() {
   const { username, url } = useAppData()
   const setLogoutDialogState = useAppStore(
     (state) => state.actions.setLogoutDialogState,
