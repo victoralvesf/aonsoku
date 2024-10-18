@@ -1,5 +1,4 @@
 import { BrowserLogout } from '@/app/components/header/browser-logout'
-import { LangSelect } from '@/app/components/header/lang-select'
 import { NavigationButtons } from '@/app/components/header/navigation-buttons'
 import { ThemeToggle } from '@/app/components/header/theme-toggle'
 import { usePlayerSonglist } from '@/store/player.store'
@@ -36,7 +35,6 @@ export function Header() {
         </div>
       </div>
       <div className="flex justify-end items-center gap-2">
-        <LangSelect />
         <ThemeToggle />
         <BrowserLogout />
       </div>
