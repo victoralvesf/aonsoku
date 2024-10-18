@@ -28,7 +28,10 @@ export function LangSelect() {
               key={language.langCode}
               checked={language.langCode === langCode}
               disabled={language.langCode === langCode}
-              onSelect={() => setLang(language.langCode)}
+              onSelect={(e) => {
+                e.preventDefault()
+                setLang(language.langCode)
+              }}
             >
               <ReactCountryFlag countryCode={language.flag} svg />
               <span className="ml-1">{language.nativeName}</span>
