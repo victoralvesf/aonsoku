@@ -30,7 +30,7 @@ export function Header() {
         <NavigationButtons />
       </div>
       <div className="col-span-2 flex justify-center items-center">
-        <div className="flex w-full justify-center subpixel-antialiased font-medium text-sm text-foreground/80">
+        <div className="flex w-full justify-center subpixel-antialiased font-medium text-sm text-muted-foreground">
           <p className="leading-7 mr-1">{formatSongCount()}</p>
           <p className="leading-7 truncate">{getCurrentSongInfo()}</p>
         </div>
