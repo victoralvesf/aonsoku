@@ -123,7 +123,7 @@ export default function ImageHeader({
           </p>
           <h1
             className={clsx(
-              'scroll-m-20 font-bold tracking-tight antialiased drop-shadow-md',
+              'scroll-m-20 font-bold tracking-tight antialiased drop-shadow-md line-clamp-2',
               getTextSizeClass(title),
               subtitle ? 'mb-1 2xl:mb-2' : 'mb-1',
             )}
@@ -148,7 +148,9 @@ export default function ImageHeader({
           )}
 
           {isPlaylist && subtitle && (
-            <p className="text-sm opacity-70 drop-shadow-md">{subtitle}</p>
+            <p className="text-sm opacity-70 drop-shadow-md line-clamp-2">
+              {subtitle}
+            </p>
           )}
 
           <div className="flex gap-2 mt-2">{badges}</div>
