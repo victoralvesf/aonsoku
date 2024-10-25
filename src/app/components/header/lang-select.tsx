@@ -1,39 +1,44 @@
+import { LanguagesIcon } from 'lucide-react'
 import { ReactCountryFlag } from 'react-country-flag'
+import { useTranslation } from 'react-i18next'
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/app/components/ui/select'
+  DropdownMenuCheckboxItem,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+} from '@/app/components/ui/dropdown-menu'
 import { currentLanguages } from '@/i18n/languages'
 import { useLang } from '@/store/lang.store'
 
 export function LangSelect() {
-  const { langCode, setLang, flag } = useLang()
+  const { t } = useTranslation()
+  const { langCode, setLang } = useLang()
 
   return (
-    <Select value={langCode} onValueChange={(lang) => setLang(lang)}>
-      <SelectTrigger className="w-[70px] h-8 ring-offset-transparent focus:ring-0">
-        <SelectValue>
-          <ReactCountryFlag countryCode={flag} svg />
-        </SelectValue>
-      </SelectTrigger>
-      <SelectContent align="end">
-        <SelectGroup>
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>
+        <LanguagesIcon className="mr-2 h-4 w-4" />
+        <span>{t('menu.language')}</span>
+      </DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent>
           {currentLanguages.map((language) => (
-            <SelectItem
+            <DropdownMenuCheckboxItem
               key={language.langCode}
-              value={language.langCode}
+              checked={language.langCode === langCode}
               disabled={language.langCode === langCode}
+              onSelect={(e) => {
+                e.preventDefault()
+                setLang(language.langCode)
+              }}
             >
               <ReactCountryFlag countryCode={language.flag} svg />
               <span className="ml-1">{language.nativeName}</span>
-            </SelectItem>
+            </DropdownMenuCheckboxItem>
           ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
   )
 }

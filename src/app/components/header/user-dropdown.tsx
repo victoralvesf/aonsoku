@@ -18,8 +18,10 @@ import {
 } from '@/app/components/ui/dropdown-menu'
 import { LogoutObserver } from '@/app/observers/logout-observer'
 import { useAppData, useAppStore } from '@/store/app.store'
+import { LangSelect } from './lang-select'
+import { ThemeSelect } from './theme-select'
 
-export function BrowserLogout() {
+export function UserDropdown() {
   const { username, url } = useAppData()
   const setLogoutDialogState = useAppStore(
     (state) => state.actions.setLogoutDialogState,
@@ -58,6 +60,9 @@ export function BrowserLogout() {
               </p>
             </div>
           </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <LangSelect />
+          <ThemeSelect />
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setShortcutsOpen(true)}>
             <Keyboard className="mr-2 h-4 w-4" />
