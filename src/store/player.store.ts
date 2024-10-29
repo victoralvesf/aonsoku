@@ -7,7 +7,7 @@ import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { subsonic } from '@/service/subsonic'
-import { IPlayerContext } from '@/types/playerContext'
+import { IPlayerContext, LoopState } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { areSongListsEqual } from '@/utils/compareSongLists'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
@@ -28,7 +28,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
           },
           playerState: {
             isPlaying: false,
-            isLoopActive: false,
+            loopState: LoopState.Off,
             isShuffleActive: false,
             isSongStarred: false,
             volume: 100,
@@ -216,8 +216,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               })
             },
             toggleLoop: () => {
+              const { loopState } = get().playerState
+
+              // Cycles to the next state
+              const newState =
+                (loopState + 1) % (Object.keys(LoopState).length / 2)
+
               set((state) => {
-                state.playerState.isLoopActive = !state.playerState.isLoopActive
+                state.playerState.loopState = newState
               })
             },
             toggleShuffle: () => {
@@ -255,11 +261,18 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               }
             },
             playNextSong: () => {
-              if (get().actions.hasNextSong()) {
-                get().actions.resetProgress()
+              const { loopState } = get().playerState
+              const { hasNextSong, resetProgress, playFirstSongInQueue } =
+                get().actions
+
+              if (hasNextSong()) {
+                resetProgress()
                 set((state) => {
                   state.songlist.currentSongIndex += 1
                 })
+              } else if (loopState === LoopState.All) {
+                resetProgress()
+                playFirstSongInQueue()
               }
             },
             playPrevSong: () => {
@@ -280,7 +293,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.originalSongIndex = 0
                 state.songlist.currentSongIndex = 0
                 state.playerState.isPlaying = false
-                state.playerState.isLoopActive = false
+                state.playerState.loopState = LoopState.Off
                 state.playerState.isShuffleActive = false
                 state.playerState.queueDrawerState = false
                 state.playerState.currentDuration = 0
@@ -443,6 +456,28 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.queueDrawerState = status
               })
             },
+            playFirstSongInQueue: () => {
+              set((state) => {
+                state.songlist.currentSongIndex = 0
+              })
+            },
+            handleSongEnded: () => {
+              const { loopState } = get().playerState
+              const {
+                hasNextSong,
+                playNextSong,
+                setPlayingState,
+                clearPlayerState,
+              } = get().actions
+
+              if (hasNextSong() || loopState === LoopState.All) {
+                playNextSong()
+                setPlayingState(true)
+              } else {
+                clearPlayerState()
+                setPlayingState(false)
+              }
+            },
           },
         })),
         { name: 'player_store' },
@@ -520,7 +555,7 @@ export const usePlayerShuffle = () =>
   usePlayerStore((state) => state.playerState.isShuffleActive)
 
 export const usePlayerLoop = () =>
-  usePlayerStore((state) => state.playerState.isLoopActive)
+  usePlayerStore((state) => state.playerState.loopState)
 
 export const usePlayerRef = () =>
   usePlayerStore((state) => state.playerState.audioPlayerRef)

@@ -15,6 +15,7 @@ import {
   usePlayerSonglist,
   getVolume,
 } from '@/store/player.store'
+import { LoopState } from '@/types/playerContext'
 import { PlayerControls } from './controls'
 import { PlayerLikeButton } from './like-button'
 import { PlayerProgress } from './progress'
@@ -34,15 +35,13 @@ export function Player() {
     setAudioPlayerRef,
     setCurrentDuration,
     setProgress,
-    hasNextSong,
-    playNextSong,
-    clearPlayerState,
     setPlayingState,
+    handleSongEnded,
   } = usePlayerActions()
   const { currentList, currentSongIndex, radioList } = usePlayerSonglist()
   const isPlaying = usePlayerIsPlaying()
   const mediaType = usePlayerMediaType()
-  const isLoopActive = usePlayerLoop()
+  const loopState = usePlayerLoop()
   const currentDuration = usePlayerDuration()
   const audioPlayerRef = usePlayerRef()
   const progress = usePlayerProgress()
@@ -120,16 +119,6 @@ export function Player() {
     }
   }, [currentDuration, progress, setCurrentDuration, setProgress])
 
-  const handleSongEnded = useCallback(() => {
-    if (hasNextSong()) {
-      playNextSong()
-      setPlayingState(true)
-    } else {
-      clearPlayerState()
-      setPlayingState(false)
-    }
-  }, [clearPlayerState, hasNextSong, playNextSong, setPlayingState])
-
   return (
     <footer className="border-t h-[--player-height] w-full flex items-center fixed bottom-0 left-0 right-0 z-40 bg-background">
       <div className="w-full h-full grid grid-cols-player gap-2 px-4">
@@ -164,7 +153,7 @@ export function Player() {
           src={getSongStreamUrl(song.id)}
           autoPlay={isPlaying}
           ref={audioRef}
-          loop={isLoopActive}
+          loop={loopState === LoopState.One}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
           onLoadedMetadata={setupProgressListener}

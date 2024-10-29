@@ -281,6 +281,7 @@ export const brazilianPortuguese = {
         next: 'Avançar',
         repeat: {
           enable: 'Repetir',
+          enableOne: 'Repetir uma faixa',
           disable: 'Não repetir',
         },
         like: 'Curtir {{song}} por {{artist}}',

@@ -278,6 +278,7 @@ export const english = {
         next: 'Next',
         repeat: {
           enable: 'Enable repeat',
+          enableOne: 'Enable repeat one',
           disable: 'Disable repeat',
         },
         like: 'Like {{song}} by {{artist}}',

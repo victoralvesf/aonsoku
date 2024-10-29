@@ -10,6 +10,7 @@ import {
 import { useEffect } from 'react'
 import { type HotkeyCallback, type Keys, useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
+import RepeatOne from '@/app/components/icons/repeat-one'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import {
@@ -20,6 +21,7 @@ import {
   usePlayerMediaType,
   usePlayerShuffle,
 } from '@/store/player.store'
+import { LoopState } from '@/types/playerContext'
 import { Radio } from '@/types/responses/radios'
 import { ISong } from '@/types/responses/song'
 import { manageMediaSession } from '@/utils/setMediaSession'
@@ -33,7 +35,7 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
   const { t } = useTranslation()
   const mediaType = usePlayerMediaType()
   const isShuffleActive = usePlayerShuffle()
-  const isLoopActive = usePlayerLoop()
+  const loopState = usePlayerLoop()
   const isPlaying = usePlayerIsPlaying()
   const {
     isPlayingOneSong,
@@ -74,9 +76,15 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
   const playTooltip = isPlaying
     ? t('player.tooltips.pause')
     : t('player.tooltips.play')
-  const repeatTooltip = isLoopActive
-    ? t('player.tooltips.repeat.disable')
-    : t('player.tooltips.repeat.enable')
+
+  const repeatTooltips = {
+    0: t('player.tooltips.repeat.enable'),
+    1: t('player.tooltips.repeat.enableOne'),
+    2: t('player.tooltips.repeat.disable'),
+  }
+  const repeatTooltip = repeatTooltips[loopState]
+
+  const cannotGotoNextSong = !hasNextSong() && loopState !== LoopState.All
 
   return (
     <div className="flex w-full gap-1 justify-center items-center mb-1">
@@ -130,7 +138,7 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
         <Button
           variant="ghost"
           className="rounded-full w-10 h-10 p-3"
-          disabled={(!song && !radio) || !hasNextSong()}
+          disabled={(!song && !radio) || cannotGotoNextSong}
           onClick={playNextSong}
           data-testid="player-button-next"
         >
@@ -144,15 +152,19 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
             variant="ghost"
             className={clsx(
               'relative rounded-full w-10 h-10 p-3',
-              isLoopActive && 'player-button-active',
+              loopState !== LoopState.Off && 'player-button-active',
             )}
             disabled={!song}
             onClick={toggleLoop}
             data-testid="player-button-loop"
           >
-            <Repeat
-              className={clsx('w-10 h-10', isLoopActive && 'text-primary')}
-            />
+            {loopState === LoopState.Off && <Repeat className="w-10 h-10" />}
+            {loopState === LoopState.All && (
+              <Repeat className="w-10 h-10 text-primary" />
+            )}
+            {loopState === LoopState.One && (
+              <RepeatOne className="w-10 h-10 text-primary" />
+            )}
           </Button>
         </SimpleTooltip>
       )}
