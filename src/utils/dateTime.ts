@@ -8,7 +8,7 @@ import utc from 'dayjs/plugin/utc'
 import 'dayjs/locale/pt-br'
 
 import i18n from '@/i18n'
-import { currentLanguages, languages } from '@/i18n/languages'
+import { languages, resources } from '@/i18n/languages'
 
 dayjs.extend(duration)
 dayjs.extend(relativeTime)
@@ -17,9 +17,9 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.extend(localizedFormat)
 
-currentLanguages.forEach((lang) => {
-  const langCode = lang.langCode as keyof typeof languages
-  dayjs.updateLocale(lang.dayjsLocale, languages[langCode].translation.dayjs)
+languages.forEach((lang) => {
+  const langCode = lang.langCode as keyof typeof resources
+  dayjs.updateLocale(lang.dayjsLocale, resources[langCode].translation.dayjs)
 })
 
 const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
