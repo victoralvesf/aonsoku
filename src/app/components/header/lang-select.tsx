@@ -8,7 +8,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from '@/app/components/ui/dropdown-menu'
-import { currentLanguages } from '@/i18n/languages'
+import { languages } from '@/i18n/languages'
 import { useLang } from '@/store/lang.store'
 
 export function LangSelect() {
@@ -23,7 +23,7 @@ export function LangSelect() {
       </DropdownMenuSubTrigger>
       <DropdownMenuPortal>
         <DropdownMenuSubContent>
-          {currentLanguages.map((language) => (
+          {languages.map((language) => (
             <DropdownMenuCheckboxItem
               key={language.langCode}
               checked={language.langCode === langCode}
