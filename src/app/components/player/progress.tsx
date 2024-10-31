@@ -35,6 +35,16 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
   const { setProgress } = usePlayerActions()
   const isScrobbleSentRef = useRef(false)
 
+  const updateAudioCurrentTime = useCallback(
+    (value: number) => {
+      isSeeking = false
+      if (audioRef.current) {
+        audioRef.current.currentTime = value
+      }
+    },
+    [audioRef],
+  )
+
   const handleSeeking = useCallback(
     (amount: number) => {
       isSeeking = true
@@ -45,21 +55,19 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
 
   const handleSeeked = useCallback(
     (amount: number) => {
-      isSeeking = false
-      if (audioRef.current) {
-        audioRef.current.currentTime = amount
-      }
+      updateAudioCurrentTime(amount)
       setProgress(amount)
       setLocalProgress(amount)
     },
-    [audioRef, setProgress],
+    [setProgress, updateAudioCurrentTime],
   )
 
-  function handleSeekedFallback() {
+  const handleSeekedFallback = useCallback(() => {
     if (localProgress !== progress) {
+      updateAudioCurrentTime(localProgress)
       setProgress(localProgress)
     }
-  }
+  }, [localProgress, progress, setProgress, updateAudioCurrentTime])
 
   const songDuration = useMemo(
     () => convertSecondsToTime(currentDuration ?? 0),
