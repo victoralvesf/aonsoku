@@ -1,12 +1,12 @@
-import { english } from './en'
-import { brazilianPortuguese } from './pt-BR'
+import en from './locales/en.json'
+import ptBr from './locales/pt-BR.json'
 
-export const languages = {
-  'en-US': english,
-  'pt-BR': brazilianPortuguese,
+export const resources = {
+  'en-US': { translation: en },
+  'pt-BR': { translation: ptBr },
 }
 
-export const currentLanguages = [
+export const languages = [
   {
     nativeName: 'English (US)',
     langCode: 'en-US',

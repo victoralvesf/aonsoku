@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/components/ui/select'
-import { currentLanguages } from '@/i18n/languages'
+import { languages } from '@/i18n/languages'
 import { useLang } from '@/store/lang.store'
 
 export function LangToggle() {
@@ -22,7 +22,7 @@ export function LangToggle() {
       </SelectTrigger>
       <SelectContent align="end">
         <SelectGroup>
-          {currentLanguages.map((language) => (
+          {languages.map((language) => (
             <SelectItem
               key={language.langCode}
               value={language.langCode}

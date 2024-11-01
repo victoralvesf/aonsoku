@@ -35,6 +35,16 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
   const { setProgress } = usePlayerActions()
   const isScrobbleSentRef = useRef(false)
 
+  const updateAudioCurrentTime = useCallback(
+    (value: number) => {
+      isSeeking = false
+      if (audioRef.current) {
+        audioRef.current.currentTime = value
+      }
+    },
+    [audioRef],
+  )
+
   const handleSeeking = useCallback(
     (amount: number) => {
       isSeeking = true
@@ -45,15 +55,19 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
 
   const handleSeeked = useCallback(
     (amount: number) => {
-      isSeeking = false
-      if (audioRef.current) {
-        audioRef.current.currentTime = amount
-      }
+      updateAudioCurrentTime(amount)
       setProgress(amount)
       setLocalProgress(amount)
     },
-    [audioRef, setProgress],
+    [setProgress, updateAudioCurrentTime],
   )
+
+  const handleSeekedFallback = useCallback(() => {
+    if (localProgress !== progress) {
+      updateAudioCurrentTime(localProgress)
+      setProgress(localProgress)
+    }
+  }, [localProgress, progress, setProgress, updateAudioCurrentTime])
 
   const songDuration = useMemo(
     () => convertSecondsToTime(currentDuration ?? 0),
@@ -102,6 +116,11 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
           className="cursor-pointer w-[32rem]"
           onValueChange={([value]) => handleSeeking(value)}
           onValueCommit={([value]) => handleSeeked(value)}
+          // Sometimes onValueCommit doesn't work properly
+          // so we also have to set the value on pointer/mouse up events
+          // see https://github.com/radix-ui/primitives/issues/1760
+          onPointerUp={handleSeekedFallback}
+          onMouseUp={handleSeekedFallback}
           data-testid="player-progress-slider"
         />
       ) : (

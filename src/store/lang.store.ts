@@ -2,7 +2,7 @@ import merge from 'lodash/merge'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { createWithEqualityFn } from 'zustand/traditional'
-import { currentLanguages } from '@/i18n/languages'
+import { languages } from '@/i18n/languages'
 import { ILangContext } from '@/types/langContext'
 
 export const useLangStore = createWithEqualityFn<ILangContext>()(
@@ -16,7 +16,7 @@ export const useLangStore = createWithEqualityFn<ILangContext>()(
           setLang: (lang: string) => {
             if (!lang) return
 
-            const langObject = currentLanguages.filter(
+            const langObject = languages.filter(
               (language) => language.langCode === lang,
             )[0]
 
