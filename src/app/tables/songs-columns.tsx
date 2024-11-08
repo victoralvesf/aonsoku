@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { ClockIcon, HeartIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -77,8 +78,8 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       },
       enableSorting: true,
       sortingFn: 'customSortFn',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column}>
+      header: ({ column, table }) => (
+        <DataTableColumnHeader column={column} table={table}>
           {i18n.t('table.columns.title')}
         </DataTableColumnHeader>
       ),
@@ -93,24 +94,27 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       },
       enableSorting: true,
       sortingFn: 'customSortFn',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column}>
+      header: ({ column, table }) => (
+        <DataTableColumnHeader column={column} table={table}>
           {i18n.t('table.columns.artist')}
         </DataTableColumnHeader>
       ),
       cell: ({ row }) => {
-        if (!row.original.artistId) return row.original.artist
+        const { artist, artistId } = row.original
 
         return (
           <Link
-            to={ROUTES.ARTIST.PAGE(row.original.artistId)}
-            className="hover:underline truncate"
+            to={ROUTES.ARTIST.PAGE(artistId ?? '')}
+            className={clsx(
+              'truncate',
+              artistId ? 'hover:underline' : 'pointer-events-none',
+            )}
             onContextMenu={(e) => {
               e.stopPropagation()
               e.preventDefault()
             }}
           >
-            {row.original.artist}
+            {artist}
           </Link>
         )
       },
@@ -125,8 +129,8 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       className: 'hidden lg:flex',
       enableSorting: true,
       sortingFn: 'customSortFn',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column}>
+      header: ({ column, table }) => (
+        <DataTableColumnHeader column={column} table={table}>
           {i18n.t('table.columns.album')}
         </DataTableColumnHeader>
       ),
@@ -163,10 +167,10 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       },
       enableSorting: true,
       sortingFn: 'basic',
-      header: ({ column }) => (
+      header: ({ column, table }) => (
         <SimpleTooltip text={i18n.t('table.columns.duration')}>
           <div>
-            <DataTableColumnHeader column={column}>
+            <DataTableColumnHeader column={column} table={table}>
               <ClockIcon className="w-4 h-4" />
             </DataTableColumnHeader>
           </div>
@@ -190,8 +194,8 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       enableSorting: true,
       sortingFn: 'basic',
       sortUndefined: -1,
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column}>
+      header: ({ column, table }) => (
+        <DataTableColumnHeader column={column} table={table}>
           {i18n.t('table.columns.plays')}
         </DataTableColumnHeader>
       ),
