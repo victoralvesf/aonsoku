@@ -118,6 +118,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             state,
             'data.logoutDialogState',
             'data.hideServer',
+            'data.songCount',
           )
 
           return appStore
