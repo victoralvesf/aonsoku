@@ -94,6 +94,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.username = ''
                 state.data.password = ''
                 state.data.authType = AuthType.TOKEN
+                state.data.songCount = null
               })
             },
             setLogoutDialogState: (value) => {
