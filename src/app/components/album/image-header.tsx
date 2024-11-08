@@ -118,14 +118,14 @@ export default function ImageHeader({
         </div>
 
         <div className="flex flex-col justify-end z-10">
-          <p className="text-xs 2xl:text-sm mb-1 2xl:mb-2 font-medium drop-shadow-md">
+          <p className="text-xs 2xl:text-sm font-medium drop-shadow-md">
             {type}
           </p>
           <h1
             className={clsx(
               'scroll-m-20 font-bold tracking-tight antialiased drop-shadow-md line-clamp-2',
               getTextSizeClass(title),
-              subtitle ? 'mb-1 2xl:mb-2' : 'mb-1',
+              subtitle && 'mb-1',
             )}
           >
             {title}
