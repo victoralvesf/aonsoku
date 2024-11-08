@@ -3,11 +3,18 @@ import { Skeleton } from '@/app/components/ui/skeleton'
 
 interface TableFallbackProps {
   variant?: 'classic' | 'modern'
+  type?: 'regular' | 'infinity'
+  length?: number
 }
 
-export function TableFallback({ variant = 'classic' }: TableFallbackProps) {
+export function TableFallback({
+  variant = 'classic',
+  type = 'regular',
+  length = 10,
+}: TableFallbackProps) {
   const isClassic = variant === 'classic'
   const isModern = variant === 'modern'
+  const isRegular = type === 'regular'
 
   return (
     <div
@@ -19,8 +26,10 @@ export function TableFallback({ variant = 'classic' }: TableFallbackProps) {
     >
       <div
         className={clsx(
-          'grid grid-cols-table-fallback px-2 h-12 items-center',
-          isModern && 'mb-2 border-b',
+          'grid grid-cols-table-fallback px-2 items-center',
+          isModern && 'border-b',
+          isModern && isRegular && 'mb-2',
+          isRegular ? 'h-12' : 'h-[41px]',
         )}
       >
         <Skeleton className="w-5 h-5 ml-2" />
@@ -32,7 +41,7 @@ export function TableFallback({ variant = 'classic' }: TableFallbackProps) {
         <Skeleton className="w-12 h-5" />
         <Skeleton className="w-5 h-5 ml-auto mr-2" />
       </div>
-      {Array.from({ length: 10 }).map((_, index) => (
+      {Array.from({ length }).map((_, index) => (
         <div
           key={index}
           className={clsx(
