@@ -46,10 +46,11 @@ interface DataTableProps<TData, TValue> {
   handlePlaySong?: (row: Row<TData>) => void
   columnFilter?: ColumnFilter[]
   noRowsMessage?: string
+  showHeader?: boolean
   allowRowSelection?: boolean
   dataType?: 'song' | 'artist' | 'playlist' | 'radio'
-  fetchNextPage: () => void
-  hasNextPage: boolean
+  fetchNextPage?: () => void
+  hasNextPage?: boolean
 }
 
 export function DataTableList<TData, TValue>({
@@ -58,6 +59,7 @@ export function DataTableList<TData, TValue>({
   handlePlaySong,
   columnFilter,
   noRowsMessage = 'No results.',
+  showHeader = true,
   allowRowSelection = true,
   dataType = 'song',
   fetchNextPage,
@@ -236,6 +238,8 @@ export function DataTableList<TData, TValue>({
   )
 
   useEffect(() => {
+    if (!fetchNextPage || !hasNextPage) return
+
     const handleScroll = debounce(() => {
       if (!parentRef.current) return
 
@@ -264,7 +268,7 @@ export function DataTableList<TData, TValue>({
           data-testid="data-table"
           role="table"
         >
-          <div>
+          <div className={clsx(!showHeader && 'hidden')}>
             {table.getHeaderGroups().map((headerGroup) => (
               <div
                 key={headerGroup.id}
@@ -301,7 +305,10 @@ export function DataTableList<TData, TValue>({
           </div>
           <div
             ref={parentRef}
-            className="[&_div:last-child]:border-0 h-[calc(100%-41px)] overflow-auto"
+            className={clsx(
+              '[&_div:last-child]:border-0 overflow-auto',
+              showHeader ? 'h-[calc(100%-41px)]' : 'h-full',
+            )}
           >
             <div
               className="w-full pr-0.5"

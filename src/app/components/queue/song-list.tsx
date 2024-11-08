@@ -2,8 +2,7 @@ import { ListXIcon } from 'lucide-react'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
-import { DataTable } from '@/app/components/ui/data-table'
-import { ScrollArea } from '@/app/components/ui/scroll-area'
+import { DataTableList } from '@/app/components/ui/data-table-list'
 import { Separator } from '@/app/components/ui/separator'
 import { queueColumns } from '@/app/tables/queue-columns'
 import { usePlayerActions, usePlayerStore } from '@/store/player.store'
@@ -52,16 +51,14 @@ export function QueueSongList() {
       </div>
       <Separator />
 
-      <ScrollArea className="mt-4 mb-4 pr-3">
-        <DataTable
+      <div className="w-full h-full overflow-auto">
+        <DataTableList
           data={currentList}
           columns={columns}
           showHeader={false}
-          allowRowSelection={false}
           handlePlaySong={(row) => setSongList(currentList, row.index)}
-          variant="modern"
         />
-      </ScrollArea>
+      </div>
     </div>
   )
 }
