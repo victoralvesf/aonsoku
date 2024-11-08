@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
-import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
+import { SongListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
@@ -43,7 +43,7 @@ export default function SongsList() {
     if (songlist) setSongList(songlist, index)
   }
 
-  if (isFetching || isLoading) return <SongsListFallback />
+  if (isFetching || isLoading) return <SongListFallback />
   if (!songlist) return null
 
   return (

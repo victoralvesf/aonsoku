@@ -4,7 +4,7 @@ import { PlusIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { EmptyWrapper } from '@/app/components/albums/empty-wrapper'
-import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
+import { SongListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EmptyRadiosInfo } from '@/app/components/radios/empty-message'
@@ -36,7 +36,7 @@ export default function Radios() {
     setDialogState(true)
   }
 
-  if (isLoading) return <SongsListFallback />
+  if (isLoading) return <SongListFallback />
 
   const showTable = radios && radios.length > 0
 
