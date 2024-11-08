@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { subsonic } from '@/service/subsonic'
+import { useAppStore } from '@/store/app.store'
 import { queryKeys } from '@/utils/queryKeys'
 
 async function fetchSongs(offset: number, count: number) {
@@ -14,6 +15,12 @@ async function fetchSongs(offset: number, count: number) {
 }
 
 async function fetchTotalSongs() {
+  const storedSongCount = useAppStore.getState().data.songCount
+
+  if (storedSongCount !== null) {
+    return storedSongCount
+  }
+
   const songCount = 100
   let lowerBound = 0
   let upperBound = songCount
@@ -48,6 +55,10 @@ async function fetchTotalSongs() {
   if (songs.length > 0) {
     totalSongs += songs.length
   }
+
+  useAppStore.setState((state) => {
+    state.data.songCount = totalSongs
+  })
 
   return totalSongs
 }

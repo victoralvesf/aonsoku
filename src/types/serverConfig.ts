@@ -15,6 +15,7 @@ export interface IAppData extends IServerConfig {
   osType: string
   logoutDialogState: boolean
   hideServer: boolean
+  songCount: number | null
 }
 
 export interface IAppActions {
