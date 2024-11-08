@@ -490,6 +490,9 @@ export const usePlayerActions = () => usePlayerStore((state) => state.actions)
 
 export const usePlayerSonglist = () => usePlayerStore((state) => state.songlist)
 
+export const usePlayerCurrentSongIndex = () =>
+  usePlayerStore((state) => state.songlist.currentSongIndex)
+
 export const usePlayerState = () => usePlayerStore((state) => state.playerState)
 
 export const usePlayerProgress = () =>

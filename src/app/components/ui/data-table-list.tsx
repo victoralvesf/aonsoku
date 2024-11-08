@@ -51,6 +51,8 @@ interface DataTableProps<TData, TValue> {
   dataType?: 'song' | 'artist' | 'playlist' | 'radio'
   fetchNextPage?: () => void
   hasNextPage?: boolean
+  scrollToIndex?: boolean
+  currentSongIndex?: number
 }
 
 export function DataTableList<TData, TValue>({
@@ -64,6 +66,8 @@ export function DataTableList<TData, TValue>({
   dataType = 'song',
   fetchNextPage,
   hasNextPage,
+  scrollToIndex = false,
+  currentSongIndex,
 }: DataTableProps<TData, TValue>) {
   const newColumns = columns.filter((column) => {
     return columnFilter?.includes(column.id as ColumnFilter)
@@ -259,6 +263,14 @@ export function DataTableList<TData, TValue>({
       scrollElement?.removeEventListener('scroll', handleScroll)
     }
   }, [fetchNextPage, hasNextPage])
+
+  useEffect(() => {
+    if (!scrollToIndex || !currentSongIndex) return
+
+    virtualizer.scrollToIndex(currentSongIndex, {
+      align: 'start',
+    })
+  }, [currentSongIndex, scrollToIndex, virtualizer])
 
   return (
     <>

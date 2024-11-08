@@ -5,12 +5,17 @@ import { Button } from '@/app/components/ui/button'
 import { DataTableList } from '@/app/components/ui/data-table-list'
 import { Separator } from '@/app/components/ui/separator'
 import { queueColumns } from '@/app/tables/queue-columns'
-import { usePlayerActions, usePlayerStore } from '@/store/player.store'
+import {
+  usePlayerActions,
+  usePlayerCurrentList,
+  usePlayerCurrentSongIndex,
+} from '@/store/player.store'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 
 export function QueueSongList() {
   const { t } = useTranslation()
-  const currentList = usePlayerStore((state) => state.songlist.currentList)
+  const currentList = usePlayerCurrentList()
+  const currentSongIndex = usePlayerCurrentSongIndex()
   const { clearPlayerState, setSongList } = usePlayerActions()
 
   const trackListCount = currentList.length
@@ -57,6 +62,8 @@ export function QueueSongList() {
           columns={columns}
           showHeader={false}
           handlePlaySong={(row) => setSongList(currentList, row.index)}
+          scrollToIndex={true}
+          currentSongIndex={currentSongIndex}
         />
       </div>
     </div>
