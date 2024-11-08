@@ -21,7 +21,6 @@ export default function SongList() {
 
   async function fetchSongs({ pageParam = 0 }) {
     const response = await subsonic.search.get({
-      query: '""',
       artistCount: 0,
       albumCount: 0,
       songCount: DEFAULT_OFFSET,

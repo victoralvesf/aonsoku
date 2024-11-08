@@ -2,7 +2,7 @@ import { httpClient } from '@/api/httpClient'
 import { ISearchResponse } from '@/types/responses/search'
 
 interface SearchQueryOptions {
-  query: string
+  query?: string
   artistCount?: number
   artistOffset?: number
   albumCount?: number
@@ -12,7 +12,7 @@ interface SearchQueryOptions {
 }
 
 async function get({
-  query,
+  query = '',
   artistCount = 20,
   artistOffset = 0,
   albumCount = 20,

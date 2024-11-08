@@ -5,7 +5,6 @@ import { queryKeys } from '@/utils/queryKeys'
 
 async function fetchSongs(offset: number, count: number) {
   const response = await subsonic.search.get({
-    query: '""',
     artistCount: 0,
     albumCount: 0,
     songCount: count,
