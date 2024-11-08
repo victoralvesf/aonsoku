@@ -113,6 +113,7 @@ export function DataTable<TData, TValue>({
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onRowSelectionChange: setRowSelection,
+    enableSorting: true,
     sortingFns: {
       customSortFn: (rowA, rowB, columnId) => {
         return rowA.original[columnId].localeCompare(rowB.original[columnId])
