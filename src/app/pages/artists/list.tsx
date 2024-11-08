@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
 import { ShadowHeader } from '@/app/components/album/shadow-header'
-import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
+import { SongListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
@@ -31,7 +31,7 @@ export default function ArtistsList() {
     if (songList) setSongList(songList, 0)
   }
 
-  if (isLoading) return <SongsListFallback />
+  if (isLoading) return <SongListFallback />
   if (!artists) return null
 
   return (

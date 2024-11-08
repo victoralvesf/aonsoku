@@ -24,6 +24,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             authType: AuthType.TOKEN,
             logoutDialogState: false,
             hideServer: HIDE_SERVER ?? false,
+            songCount: null,
           },
           command: {
             open: false,

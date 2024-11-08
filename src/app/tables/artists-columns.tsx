@@ -45,8 +45,8 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
         flex: 1,
         minWidth: 100,
       },
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column}>
+      header: ({ column, table }) => (
+        <DataTableColumnHeader column={column} table={table}>
           {i18n.t('table.columns.name')}
         </DataTableColumnHeader>
       ),
@@ -77,8 +77,8 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
         width: '15%',
         maxWidth: '15%',
       },
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column}>
+      header: ({ column, table }) => (
+        <DataTableColumnHeader column={column} table={table}>
           {i18n.t('table.columns.albumCount')}
         </DataTableColumnHeader>
       ),

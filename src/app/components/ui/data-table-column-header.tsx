@@ -1,4 +1,4 @@
-import { Column } from '@tanstack/react-table'
+import { Column, Table } from '@tanstack/react-table'
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -11,12 +11,14 @@ import { cn } from '@/lib/utils'
 interface DataTableColumnHeaderProps<TData, TValue>
   extends HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>
+  table: Table<TData>
 }
 
 export function DataTableColumnHeader<TData, TValue>({
   column,
   children,
   className,
+  table,
 }: DataTableColumnHeaderProps<TData, TValue>) {
   const handleFilter = useCallback(() => {
     if (!column.getCanSort()) return
@@ -49,7 +51,7 @@ export function DataTableColumnHeader<TData, TValue>({
     }
   }, [column])
 
-  if (!column.getCanSort()) {
+  if (!column.getCanSort() || !table.options.enableSorting) {
     return <div className={cn(className)}>{children}</div>
   }
 

@@ -3,7 +3,7 @@ import { ShadowHeaderFallback } from '@/app/components/fallbacks/ui-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { Skeleton } from '@/app/components/ui/skeleton'
 
-export function SongsListFallback() {
+export function SongListFallback() {
   return (
     <div className="w-full h-full">
       <ShadowHeaderFallback />
@@ -15,6 +15,16 @@ export function SongsListFallback() {
 
         <TableFallback />
       </ListWrapper>
+    </div>
+  )
+}
+
+export function InfinitySongListFallback() {
+  return (
+    <div className="w-full h-full">
+      <ShadowHeaderFallback />
+
+      <TableFallback variant="modern" length={20} type="infinity" />
     </div>
   )
 }

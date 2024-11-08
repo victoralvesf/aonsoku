@@ -42,8 +42,8 @@ export function radiosColumns(): ColumnDefType<Radio>[] {
         flex: 1,
         minWidth: 250,
       },
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column}>
+      header: ({ column, table }) => (
+        <DataTableColumnHeader column={column} table={table}>
           {i18n.t('radios.table.name')}
         </DataTableColumnHeader>
       ),
