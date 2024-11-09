@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { subsonic } from '@/service/subsonic'
 import { useAppStore } from '@/store/app.store'
+import { convertMinutesToMs } from '@/utils/convertSecondsToTime'
 import { queryKeys } from '@/utils/queryKeys'
 
 async function fetchSongs(offset: number, count: number) {
@@ -66,7 +67,7 @@ export function useTotalSongs() {
   return useQuery({
     queryKey: [queryKeys.song.count],
     queryFn: fetchTotalSongs,
-    staleTime: Infinity,
-    gcTime: Infinity,
+    staleTime: convertMinutesToMs(5),
+    gcTime: convertMinutesToMs(5),
   })
 }
