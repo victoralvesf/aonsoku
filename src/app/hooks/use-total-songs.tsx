@@ -17,7 +17,7 @@ async function fetchSongs(offset: number, count: number) {
 async function fetchTotalSongs() {
   const storedSongCount = useAppStore.getState().data.songCount
 
-  if (storedSongCount !== null || storedSongCount !== 0) {
+  if (storedSongCount && storedSongCount > 0) {
     return storedSongCount
   }
 
