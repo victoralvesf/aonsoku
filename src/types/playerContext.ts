@@ -1,6 +1,12 @@
 import { Radio } from './responses/radios'
 import { ISong } from './responses/song'
 
+export enum LoopState {
+  Off = 0,
+  All = 1,
+  One = 2,
+}
+
 export interface ISongList {
   shuffledList: ISong[]
   currentList: ISong[]
@@ -13,7 +19,7 @@ export interface ISongList {
 
 export interface IPlayerState {
   isPlaying: boolean
-  isLoopActive: boolean
+  loopState: LoopState
   isShuffleActive: boolean
   isSongStarred: boolean
   volume: number
@@ -67,6 +73,8 @@ export interface IPlayerActions {
   setLastOnQueue: (songlist: ISong[]) => void
   removeSongFromQueue: (id: string) => void
   setQueueDrawerState: (state: boolean) => void
+  playFirstSongInQueue: () => void
+  handleSongEnded: () => void
 }
 
 export interface IPlayerContext {

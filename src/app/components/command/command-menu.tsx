@@ -170,6 +170,10 @@ export default function CommandMenu() {
       if (response) {
         setScanStatus(response)
         await queryClient.invalidateQueries()
+
+        useAppStore.setState((state) => {
+          state.data.songCount = null
+        })
       }
 
       setLoadingStatus(false)

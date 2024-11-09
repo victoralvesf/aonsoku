@@ -7,7 +7,10 @@ import {
 } from '@/app/components/fallbacks/album-fallbacks'
 import { HomeFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
-import { SongsListFallback } from '@/app/components/fallbacks/song-fallbacks'
+import {
+  InfinitySongListFallback,
+  SongListFallback,
+} from '@/app/components/fallbacks/song-fallbacks'
 import { protectedLoader } from '@/routes/protectedLoader'
 import { ROUTES } from '@/routes/routesList'
 
@@ -21,7 +24,7 @@ const Login = lazy(() => import('@/app/pages/login'))
 const PlaylistsPage = lazy(() => import('@/app/pages/playlists/list'))
 const Playlist = lazy(() => import('@/app/pages/playlists/playlist'))
 const Radios = lazy(() => import('@/app/pages/radios/radios-list'))
-const SongsList = lazy(() => import('@/app/pages/songs/list'))
+const SongList = lazy(() => import('@/app/pages/songs/songlist'))
 const Home = lazy(() => import('@/app/pages/home'))
 
 export const router = createBrowserRouter([
@@ -43,7 +46,7 @@ export const router = createBrowserRouter([
         id: 'artists',
         path: ROUTES.LIBRARY.ARTISTS,
         element: (
-          <Suspense fallback={<SongsListFallback />}>
+          <Suspense fallback={<SongListFallback />}>
             <ArtistsList />
           </Suspense>
         ),
@@ -52,8 +55,8 @@ export const router = createBrowserRouter([
         id: 'songs',
         path: ROUTES.LIBRARY.SONGS,
         element: (
-          <Suspense fallback={<SongsListFallback />}>
-            <SongsList />
+          <Suspense fallback={<InfinitySongListFallback />}>
+            <SongList />
           </Suspense>
         ),
       },
@@ -70,7 +73,7 @@ export const router = createBrowserRouter([
         id: 'playlists',
         path: ROUTES.LIBRARY.PLAYLISTS,
         element: (
-          <Suspense fallback={<SongsListFallback />}>
+          <Suspense fallback={<SongListFallback />}>
             <PlaylistsPage />
           </Suspense>
         ),
@@ -79,7 +82,7 @@ export const router = createBrowserRouter([
         id: 'radios',
         path: ROUTES.LIBRARY.RADIOS,
         element: (
-          <Suspense fallback={<SongsListFallback />}>
+          <Suspense fallback={<SongListFallback />}>
             <Radios />
           </Suspense>
         ),

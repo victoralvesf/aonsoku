@@ -71,6 +71,9 @@ dependencies:
   '@tanstack/react-table':
     specifier: ^8.17.3
     version: 8.17.3(react-dom@18.3.1)(react@18.3.1)
+  '@tanstack/react-virtual':
+    specifier: ^3.10.8
+    version: 3.10.8(react-dom@18.3.1)(react@18.3.1)
   '@tauri-apps/api':
     specifier: ^1
     version: 1.5.6
@@ -2613,9 +2616,24 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
     dev: false
 
+  /@tanstack/react-virtual@3.10.8(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-VbzbVGSsZlQktyLrP5nxE+vE1ZR+U0NFAWPbJLoG2+DKPwd2D7dVICTVIIaYlJqX1ZCEnYDbaOpmMwbsyhBoIA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@tanstack/virtual-core': 3.10.8
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
   /@tanstack/table-core@8.17.3:
     resolution: {integrity: sha512-mPBodDGVL+fl6d90wUREepHa/7lhsghg2A3vFpakEhrhtbIlgNAZiMr7ccTgak5qbHqF14Fwy+W1yFWQt+WmYQ==}
     engines: {node: '>=12'}
+    dev: false
+
+  /@tanstack/virtual-core@3.10.8:
+    resolution: {integrity: sha512-PBu00mtt95jbKFi6Llk9aik8bnR3tR/oQP1o3TSi+iG//+Q2RTIzCEgKkHG8BB86kxMNW6O8wku+Lmi+QFR6jA==}
     dev: false
 
   /@tauri-apps/api@1.5.6:

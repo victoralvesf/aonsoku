@@ -8,6 +8,7 @@ import {
   SkipForward,
 } from 'lucide-react'
 import { Fragment } from 'react/jsx-runtime'
+import RepeatOne from '@/app/components/icons/repeat-one'
 import { Button } from '@/app/components/ui/button'
 import {
   usePlayerActions,
@@ -15,11 +16,12 @@ import {
   usePlayerLoop,
   usePlayerShuffle,
 } from '@/store/player.store'
+import { LoopState } from '@/types/playerContext'
 
 export function FullscreenControls() {
   const isPlaying = usePlayerIsPlaying()
   const isShuffleActive = usePlayerShuffle()
-  const isLoopActive = usePlayerLoop()
+  const loopState = usePlayerLoop()
   const {
     isPlayingOneSong,
     toggleShuffle,
@@ -76,7 +78,7 @@ export function FullscreenControls() {
         variant="ghost"
         className={buttonsStyle.secondary}
         onClick={() => playNextSong()}
-        disabled={!hasNextSong()}
+        disabled={!hasNextSong() && loopState !== LoopState.All}
       >
         <SkipForward className={buttonsStyle.secondaryIconFilled} />
       </Button>
@@ -85,16 +87,23 @@ export function FullscreenControls() {
         variant="ghost"
         className={clsx(
           buttonsStyle.secondary,
-          isLoopActive && buttonsStyle.activeDot,
+          loopState !== LoopState.Off && buttonsStyle.activeDot,
         )}
         onClick={() => toggleLoop()}
       >
-        <Repeat
-          className={clsx(
-            buttonsStyle.secondaryIcon,
-            isLoopActive && 'text-primary',
-          )}
-        />
+        {loopState === LoopState.Off && (
+          <Repeat className={clsx(buttonsStyle.secondaryIcon)} />
+        )}
+        {loopState === LoopState.All && (
+          <Repeat
+            className={clsx(buttonsStyle.secondaryIcon, 'text-primary')}
+          />
+        )}
+        {loopState === LoopState.One && (
+          <RepeatOne
+            className={clsx(buttonsStyle.secondaryIcon, 'text-primary')}
+          />
+        )}
       </Button>
     </Fragment>
   )

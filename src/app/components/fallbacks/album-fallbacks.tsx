@@ -10,8 +10,9 @@ export function AlbumHeaderFallback() {
     <div className="w-full px-8 py-6 bg-muted-foreground flex gap-4 bg-gradient-to-b from-white/50 to-white/50 dark:from-black/50 dark:to-black/50">
       <Skeleton className="rounded shadow-lg w-[200px] h-[200px] min-w-[200px] min-h-[200px] 2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px] aspect-square" />
       <div className="flex flex-col justify-end">
-        <Skeleton className="h-[20px] w-16 mb-2" />
-        <Skeleton className="h-12 w-[260px] mb-2" />
+        <Skeleton className="h-[20px] w-16 mb-4" />
+        <Skeleton className="h-12 w-[260px] mb-4" />
+        <Skeleton className="h-5 w-[340px] mb-1" />
 
         <div className="flex gap-2 mt-2">
           <Skeleton className="h-[22px] w-12 rounded-full" />

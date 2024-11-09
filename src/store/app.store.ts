@@ -24,6 +24,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             authType: AuthType.TOKEN,
             logoutDialogState: false,
             hideServer: HIDE_SERVER ?? false,
+            songCount: null,
           },
           command: {
             open: false,
@@ -93,6 +94,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.username = ''
                 state.data.password = ''
                 state.data.authType = AuthType.TOKEN
+                state.data.songCount = null
               })
             },
             setLogoutDialogState: (value) => {

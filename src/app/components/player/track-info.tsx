@@ -32,7 +32,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
             className="cursor-pointer w-8 h-8 shadow-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity ease-in-out absolute top-1 right-1"
             data-testid="track-fullscreen-button"
           >
-            <SimpleTooltip text={t('fullscreen.switchButton')}>
+            <SimpleTooltip text={t('fullscreen.switchButton')} align="start">
               <div className="w-full h-full flex items-center justify-center">
                 <Maximize2 className="w-4 h-4" />
               </div>

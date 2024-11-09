@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "Aonsoku",
-    "version": "0.3.2"
+    "version": "0.4.0"
   },
   "tauri": {
     "allowlist": {
@@ -52,7 +52,8 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": null,
+      "dangerousUseHttpScheme": true
     },
     "bundle": {
       "active": true,
