@@ -45,7 +45,7 @@ export function UserDropdown() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="w-8 h-8 p-0 rounded-full">
             <Avatar className="w-8 h-8">
-              <AvatarFallback className="text-sm">
+              <AvatarFallback className="text-sm hover:bg-accent">
                 <User className="w-4 h-4" />
               </AvatarFallback>
             </Avatar>
