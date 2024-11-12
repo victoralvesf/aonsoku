@@ -14,7 +14,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
     persist(
       devtools(
-        immer((set) => ({
+        immer((set, get) => ({
           data: {
             isServerConfigured: false,
             osType: '',
@@ -25,6 +25,9 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             logoutDialogState: false,
             hideServer: HIDE_SERVER ?? false,
             songCount: null,
+            pages: {
+              showInfoPanel: true,
+            },
           },
           command: {
             open: false,
@@ -102,6 +105,13 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.logoutDialogState = value
               })
             },
+            toggleShowInfoPanel: () => {
+              const { showInfoPanel } = get().data.pages
+
+              set((state) => {
+                state.data.pages.showInfoPanel = !showInfoPanel
+              })
+            },
           },
         })),
         {
@@ -129,4 +139,5 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
 )
 
 export const useAppData = () => useAppStore((state) => state.data)
+export const useAppDataPages = () => useAppStore((state) => state.data.pages)
 export const useAppActions = () => useAppStore((state) => state.actions)
