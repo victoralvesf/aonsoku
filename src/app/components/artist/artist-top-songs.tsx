@@ -26,7 +26,7 @@ export default function ArtistTopSongs({ topSongs }: { topSongs: ISong[] }) {
 
   return (
     <div className="w-full mb-4">
-      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-4 mt-6">
+      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-4">
         {t('artist.topSongs')}
       </h3>
 
