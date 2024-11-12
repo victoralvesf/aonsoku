@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Actions } from '@/app/components/actions'
 import { subsonic } from '@/service/subsonic'
+import { useAppActions, useAppDataPages } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { SingleAlbum } from '@/types/responses/album'
 import { queryKeys } from '@/utils/queryKeys'
@@ -9,11 +10,14 @@ import { AlbumOptions } from './options'
 
 interface AlbumButtonsProps {
   album: SingleAlbum
+  showInfoButton: boolean
 }
 
-export function AlbumButtons({ album }: AlbumButtonsProps) {
+export function AlbumButtons({ album, showInfoButton }: AlbumButtonsProps) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
+  const { showInfoPanel } = useAppDataPages()
+  const { toggleShowInfoPanel } = useAppActions()
 
   const isAlbumStarred = album.starred !== undefined
 
@@ -46,6 +50,9 @@ export function AlbumButtons({ album }: AlbumButtonsProps) {
         ? t('album.buttons.dislike', { name: album.name })
         : t('album.buttons.like', { name: album.name })
     },
+    info: () => {
+      return showInfoPanel ? t('generic.hideDetails') : t('generic.showDetails')
+    },
   }
 
   return (
@@ -73,6 +80,15 @@ export function AlbumButtons({ album }: AlbumButtonsProps) {
       >
         <Actions.LikeIcon isStarred={isAlbumStarred} />
       </Actions.Button>
+
+      {showInfoButton && (
+        <Actions.Button
+          tooltip={buttonsTooltips.info()}
+          onClick={toggleShowInfoPanel}
+        >
+          <Actions.InfoIcon />
+        </Actions.Button>
+      )}
 
       <Actions.Dropdown
         tooltip={buttonsTooltips.options}

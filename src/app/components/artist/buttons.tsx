@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Actions } from '@/app/components/actions'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { subsonic } from '@/service/subsonic'
+import { useAppActions, useAppDataPages } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { IArtist } from '@/types/responses/artist'
 import { queryKeys } from '@/utils/queryKeys'
@@ -10,11 +11,14 @@ import { ArtistOptions } from './options'
 
 interface ArtistButtonsProps {
   artist: IArtist
+  showInfoButton: boolean
 }
 
-export function ArtistButtons({ artist }: ArtistButtonsProps) {
+export function ArtistButtons({ artist, showInfoButton }: ArtistButtonsProps) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
+  const { showInfoPanel } = useAppDataPages()
+  const { toggleShowInfoPanel } = useAppActions()
   const { getArtistAllSongs } = useSongList()
 
   const isArtistStarred = artist.starred !== undefined
@@ -55,6 +59,9 @@ export function ArtistButtons({ artist }: ArtistButtonsProps) {
         ? t('album.buttons.dislike', { name: artist.name })
         : t('album.buttons.like', { name: artist.name })
     },
+    info: () => {
+      return showInfoPanel ? t('generic.hideDetails') : t('generic.showDetails')
+    },
   }
 
   return (
@@ -80,6 +87,15 @@ export function ArtistButtons({ artist }: ArtistButtonsProps) {
       >
         <Actions.LikeIcon isStarred={isArtistStarred} />
       </Actions.Button>
+
+      {showInfoButton && (
+        <Actions.Button
+          tooltip={buttonsTooltips.info()}
+          onClick={toggleShowInfoPanel}
+        >
+          <Actions.InfoIcon />
+        </Actions.Button>
+      )}
 
       <Actions.Dropdown
         tooltip={buttonsTooltips.options}
