@@ -201,3 +201,7 @@ img {
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+.user-dropdown-trigger[data-state="open"] > :first-child {
+  @apply bg-accent;
+}
