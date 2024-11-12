@@ -10,18 +10,18 @@ export function NavigationButtons() {
 
   return (
     <div className="flex gap-1">
-      <div className={clsx(!canGoBack && 'cursor-not-allowed')}>
+      <div className={clsx('w-8 h-8', !canGoBack && 'cursor-not-allowed')}>
         <Button
           variant="ghost"
           size="sm"
-          className="h-8 w-8 p-0 rounded-md disabled:cursor-not-allowed"
+          className="h-8 w-8 p-0 rounded-md"
           disabled={!canGoBack}
           onClick={() => navigate(-1)}
         >
           <ChevronLeft className="w-6 h-6" strokeWidth={1.5} />
         </Button>
       </div>
-      <div className={clsx(!canGoForward && 'cursor-not-allowed')}>
+      <div className={clsx('w-8 h-8', !canGoForward && 'cursor-not-allowed')}>
         <Button
           variant="ghost"
           size="sm"
