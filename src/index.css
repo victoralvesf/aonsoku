@@ -202,6 +202,12 @@ img {
   background: transparent;
 }
 
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+
 .user-dropdown-trigger[data-state="open"] > :first-child {
   @apply bg-accent;
 }
