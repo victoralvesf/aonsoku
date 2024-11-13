@@ -38,7 +38,7 @@ async function setRadioMediaSession(label: string, radioName: string) {
 }
 
 function setPlaybackState(state: boolean | null) {
-  if (!navigator.mediaSession.playbackState) return
+  if (!navigator.mediaSession) return
 
   if (state === null) navigator.mediaSession.playbackState = 'none'
 
