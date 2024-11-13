@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { EllipsisVertical, Heart, Play, Shuffle } from 'lucide-react'
+import { EllipsisVertical, Heart, Info, Play, Shuffle } from 'lucide-react'
 import { ButtonHTMLAttributes } from 'react'
 import { Button as ComponentButton } from '@/app/components/ui/button'
 import {
@@ -114,6 +114,10 @@ function LikeIcon({ isStarred }: LikeIconProps) {
   )
 }
 
+function InfoIcon() {
+  return <Info className="w-5 h-5 drop-shadow-md" strokeWidth={2} />
+}
+
 function EllipsisIcon() {
   return <EllipsisVertical className="w-5 h-5 drop-shadow-md" strokeWidth={2} />
 }
@@ -124,6 +128,7 @@ export const Actions = {
   PlayIcon,
   ShuffleIcon,
   LikeIcon,
+  InfoIcon,
   EllipsisIcon,
   Dropdown,
 }

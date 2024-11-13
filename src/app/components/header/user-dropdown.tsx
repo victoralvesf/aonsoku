@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 
 import { ShortcutsDialog } from '@/app/components/shortcuts/dialog'
 import { Avatar, AvatarFallback } from '@/app/components/ui/avatar'
-import { Button } from '@/app/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,14 +41,12 @@ export function UserDropdown() {
       />
 
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="w-8 h-8 p-0 rounded-full">
-            <Avatar className="w-8 h-8">
-              <AvatarFallback className="text-sm">
-                <User className="w-4 h-4" />
-              </AvatarFallback>
-            </Avatar>
-          </Button>
+        <DropdownMenuTrigger asChild className="user-dropdown-trigger">
+          <Avatar className="w-8 h-8 rounded-full cursor-pointer">
+            <AvatarFallback className="text-sm hover:bg-accent">
+              <User className="w-4 h-4" />
+            </AvatarFallback>
+          </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-64">
           <DropdownMenuLabel className="font-normal">

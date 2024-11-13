@@ -76,11 +76,21 @@ module.exports = {
           '55%': { transform: 'translate3d(var(--tw-translate-x-end), 0, 0)' },
           '100%': { transform: 'translate3d(0, 0, 0)' },
         },
+        'slide-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-collapsible-content-height)' },
+        },
+        'slide-up': {
+          from: { height: 'var(--radix-collapsible-content-height)' },
+          to: { height: '0' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         marquee: 'marquee var(--tw-marquee-time) linear 2s infinite',
+        'slide-down': 'slide-down 0.3s ease-out',
+        'slide-up': 'slide-up 0.3s ease-out',
       },
       gridTemplateColumns: {
         player:

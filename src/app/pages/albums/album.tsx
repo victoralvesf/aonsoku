@@ -1,9 +1,8 @@
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
-import { AlbumButtons } from '@/app/components/album/buttons'
 import ImageHeader from '@/app/components/album/image-header'
-import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
+import { AlbumInfo } from '@/app/components/album/info'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import PreviewList from '@/app/components/home/preview-list'
@@ -12,7 +11,6 @@ import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import {
   useGetAlbum,
-  useGetAlbumInfo,
   useGetArtistAlbums,
   useGetGenreAlbums,
 } from '@/app/hooks/use-album'
@@ -34,8 +32,6 @@ export default function Album() {
     isLoading: albumIsLoading,
     isFetched,
   } = useGetAlbum(albumId)
-  const { data: albumInfo, isLoading: albumInfoIsLoading } =
-    useGetAlbumInfo(albumId)
   const { data: moreAlbums, isLoading: moreAlbumsIsLoading } =
     useGetArtistAlbums(album?.artist || '')
   const { data: randomAlbums, isLoading: randomAlbumsIsLoading } =
@@ -125,18 +121,7 @@ export default function Album() {
       />
 
       <ListWrapper>
-        <AlbumButtons album={album} />
-
-        <div className="mb-6">
-          {albumInfoIsLoading && <InfoPanelFallback />}
-          {albumInfo && !albumInfoIsLoading && (
-            <InfoPanel
-              title={album.name}
-              bio={albumInfo.notes}
-              lastFmUrl={albumInfo.lastFmUrl}
-            />
-          )}
-        </div>
+        <AlbumInfo album={album} />
 
         <DataTable
           columns={columns}

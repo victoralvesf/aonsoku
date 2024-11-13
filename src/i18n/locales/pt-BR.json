@@ -23,7 +23,9 @@
     "serverLogout": "Desconectar"
   },
   "generic": {
-    "seeMore": "Ver mais"
+    "seeMore": "Ver mais",
+    "showDetails": "Exibir detalhes",
+    "hideDetails": "Ocultar detalhes"
   },
   "theme": {
     "label": "Tema",

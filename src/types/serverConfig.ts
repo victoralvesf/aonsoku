@@ -9,6 +9,10 @@ export interface IServerConfig {
   password: string
 }
 
+interface IAppPages {
+  showInfoPanel: boolean
+}
+
 export interface IAppData extends IServerConfig {
   authType: AuthType | null
   isServerConfigured: boolean
@@ -16,6 +20,7 @@ export interface IAppData extends IServerConfig {
   logoutDialogState: boolean
   hideServer: boolean
   songCount: number | null
+  pages: IAppPages
 }
 
 export interface IAppActions {
@@ -26,6 +31,7 @@ export interface IAppActions {
   saveConfig: (data: IServerConfig) => Promise<boolean>
   removeConfig: () => void
   setLogoutDialogState: (value: boolean) => void
+  toggleShowInfoPanel: () => void
 }
 
 export interface IAppCommand {

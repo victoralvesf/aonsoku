@@ -83,9 +83,9 @@ interface TitleProps {
 
 function Title({ link, children }: TitleProps) {
   return (
-    <Link to={link} className="w-fit" data-testid="card-title-link">
+    <Link to={link} className="w-full" data-testid="card-title-link">
       <p
-        className="leading-7 text-sm font-semibold line-clamp-1 hover:underline"
+        className="leading-7 text-sm font-semibold truncate hover:underline"
         data-testid="card-title"
       >
         {children}
@@ -109,23 +109,25 @@ function Subtitle({
 }: SubtitleProps) {
   if (!enableLink) {
     return (
-      <p
-        className={cn(
-          'leading-5 line-clamp-1 text-xs text-muted-foreground -mt-1',
-          className,
-        )}
-        data-testid="card-subtitle"
-      >
-        {children}
-      </p>
+      <div className="w-full">
+        <p
+          className={cn(
+            'leading-5 truncate text-xs text-muted-foreground -mt-1',
+            className,
+          )}
+          data-testid="card-subtitle"
+        >
+          {children}
+        </p>
+      </div>
     )
   }
 
   return (
-    <Link to={link} data-testid="card-subtitle-link" className="w-fit">
+    <Link to={link} data-testid="card-subtitle-link" className="w-full">
       <p
         className={cn(
-          'line-clamp-1 text-xs text-muted-foreground -mt-1 hover:underline',
+          'truncate text-xs text-muted-foreground -mt-1 hover:underline',
           className,
         )}
         data-testid="card-subtitle"
