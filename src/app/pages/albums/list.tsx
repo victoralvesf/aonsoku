@@ -120,7 +120,7 @@ export default function AlbumsList() {
   }
 
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
-    queryKey: [queryKeys.album.all, currentFilter, yearFilter, genre],
+    queryKey: [queryKeys.album.all, currentFilter, yearFilter, genre, query],
     queryFn: fetchAlbums,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
