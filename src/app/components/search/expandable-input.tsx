@@ -2,13 +2,13 @@ import clsx from 'clsx'
 import { SearchIcon, XIcon } from 'lucide-react'
 import {
   ComponentPropsWithoutRef,
+  FormEvent,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { useDebouncedCallback } from 'use-debounce'
 import { Input } from '@/app/components/ui/input'
 import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
@@ -63,10 +63,13 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
     }
   }, [close, searchActive])
 
-  const debounced = useDebouncedCallback((value: string) => {
-    setSearchValue(value)
-    if (value !== '') setParams(value)
-  }, 750)
+  const handleSubmit = useCallback(
+    (event: FormEvent) => {
+      event.preventDefault()
+      setParams(searchValue)
+    },
+    [searchValue, setParams],
+  )
 
   useEffect(() => {
     setSearchActive(filter === AlbumsFilters.Search)
@@ -102,39 +105,41 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
   }, [close, searchValue])
 
   return (
-    <div
-      ref={searchRef}
-      className="relative inline-block w-fit min-w-9 h-9 align-bottom rounded-md"
-    >
-      <Input
-        id="search"
-        ref={inputRef}
-        onChange={(e) => debounced(e.target.value)}
-        className={clsx(
-          'bg-background h-full z-10 left-auto outline-none duration-300 focus-visible:ring-transparent',
-          searchActive
-            ? 'w-[260px] pr-9 text-foreground placeholder:opacity-100'
-            : 'w-9 text-transparent placeholder:opacity-0',
-        )}
-        {...props}
-      />
-      <label
-        htmlFor="search"
-        className={clsx(
-          'absolute w-9 h-9 m-0 right-0 top-0',
-          'inline-flex items-center justify-center',
-          'leading-10 cursor-pointer text-center z-30',
-          'hover:bg-accent rounded-md',
-        )}
-        aria-label={props.placeholder}
-        onClick={toggleSearchActive}
+    <form onSubmit={handleSubmit}>
+      <div
+        ref={searchRef}
+        className="relative inline-block w-fit min-w-9 h-9 align-bottom rounded-md"
       >
-        {searchActive ? (
-          <XIcon className="w-5 h-5 text-muted-foreground pointer-events-none" />
-        ) : (
-          <SearchIcon className="w-4 h-4 text-muted-foreground pointer-events-none" />
-        )}
-      </label>
-    </div>
+        <Input
+          id="search"
+          ref={inputRef}
+          onChange={(e) => setSearchValue(e.target.value)}
+          className={clsx(
+            'bg-background h-full z-10 left-auto outline-none duration-300 focus-visible:ring-transparent',
+            searchActive
+              ? 'w-[260px] pr-9 text-foreground placeholder:opacity-100'
+              : 'w-9 text-transparent placeholder:opacity-0',
+          )}
+          {...props}
+        />
+        <label
+          htmlFor="search"
+          className={clsx(
+            'absolute w-9 h-9 m-0 right-0 top-0',
+            'inline-flex items-center justify-center',
+            'leading-10 cursor-pointer text-center z-30',
+            'hover:bg-accent rounded-md',
+          )}
+          aria-label={props.placeholder}
+          onClick={toggleSearchActive}
+        >
+          {searchActive ? (
+            <XIcon className="w-5 h-5 text-muted-foreground pointer-events-none" />
+          ) : (
+            <SearchIcon className="w-4 h-4 text-muted-foreground pointer-events-none" />
+          )}
+        </label>
+      </div>
+    </form>
   )
 }
