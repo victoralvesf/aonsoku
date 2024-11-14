@@ -99,7 +99,9 @@ export default function SongList() {
         </div>
 
         <div className="flex gap-2 flex-1 justify-end">
-          <ExpandableSearchInput placeholder="Search for songs..." />
+          <ExpandableSearchInput
+            placeholder={t('songs.list.search.placeholder')}
+          />
         </div>
       </ShadowHeader>
 

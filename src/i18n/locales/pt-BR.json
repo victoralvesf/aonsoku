@@ -94,6 +94,13 @@
       }
     }
   },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Buscar músicas..."
+      }
+    }
+  },
   "album": {
     "headline": "Álbum",
     "buttons": {
