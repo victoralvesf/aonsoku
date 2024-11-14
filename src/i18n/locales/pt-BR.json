@@ -137,6 +137,9 @@
         "releaseYear": "Ano de lançamento",
         "discography": "Discografia",
         "search": "Pesquisa"
+      },
+      "search": {
+        "placeholder": "Buscar álbuns..."
       }
     },
     "table": {
