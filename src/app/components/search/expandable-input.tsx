@@ -46,14 +46,11 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
   const close = useCallback(() => {
     setSearchActive(false)
     setSearchValue('')
-    if (filter !== '' || query !== '') {
-      setSearchParams(new URLSearchParams())
-    }
     if (inputRef.current) {
       inputRef.current.blur()
       inputRef.current.value = ''
     }
-  }, [filter, query, setSearchParams])
+  }, [])
 
   const toggleSearchActive = useCallback(() => {
     if (!searchActive) {
@@ -88,21 +85,6 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
 
     inputRef.current.value = query
   }, [filter, query])
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (!searchRef.current) return
-
-      const targetIsOnInput = searchRef.current.contains(event.target as Node)
-
-      if (!targetIsOnInput && searchValue === '') {
-        close()
-      }
-    }
-
-    document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
-  }, [close, searchValue])
 
   return (
     <form onSubmit={handleSubmit}>
