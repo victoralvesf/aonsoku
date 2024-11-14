@@ -21,6 +21,8 @@ import {
 import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
+const emptyResponse = { albums: [], nextOffset: null, albumsCount: 0 }
+
 export default function AlbumsList() {
   const [searchParams] = useSearchParams()
   const { getSearchParam } = new SearchParamsHandler(searchParams)
@@ -41,6 +43,7 @@ export default function AlbumsList() {
   )
   const genre = getSearchParam<string>(AlbumsSearchParams.Genre, '')
   const artistId = getSearchParam<string>(AlbumsSearchParams.ArtistId, '')
+  const query = getSearchParam<string>(AlbumsSearchParams.Query, '')
 
   useEffect(() => {
     scrollDivRef.current = document.querySelector(
@@ -62,9 +65,25 @@ export default function AlbumsList() {
     if (artistId !== '') {
       const response = await subsonic.artists.getOne(artistId)
 
-      if (!response) {
-        return { albums: [], nextOffset: null, albumsCount: 0 }
+      if (!response) return emptyResponse
+
+      return {
+        albums: response.album,
+        nextOffset: null,
+        albumsCount: response.album.length,
       }
+    }
+
+    if (currentFilter === AlbumsFilters.Search && query !== '') {
+      const response = await subsonic.search.get({
+        query,
+        songCount: 0,
+        artistCount: 0,
+        albumCount: 500,
+      })
+
+      if (!response) return emptyResponse
+      if (!response.album) return emptyResponse
 
       return {
         albums: response.album,

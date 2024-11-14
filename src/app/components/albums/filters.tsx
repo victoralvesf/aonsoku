@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router-dom'
+import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
 import { AlbumListType } from '@/types/responses/album'
 import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
@@ -16,12 +17,14 @@ export function AlbumsFilter() {
   )
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 flex-1 justify-end">
       {currentFilter === AlbumsFilters.ByYear && <AlbumsFilterByYear />}
 
       {currentFilter === AlbumsFilters.ByGenre && <AlbumsFilterByGenre />}
 
       <AlbumsMainFilter />
+
+      <ExpandableSearchInput placeholder="Search for albums..." />
     </div>
   )
 }

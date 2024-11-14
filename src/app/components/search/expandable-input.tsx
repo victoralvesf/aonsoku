@@ -10,6 +10,7 @@ import {
 import { useSearchParams } from 'react-router-dom'
 import { useDebouncedCallback } from 'use-debounce'
 import { Input } from '@/app/components/ui/input'
+import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 type SearchInputProps = ComponentPropsWithoutRef<typeof Input>
@@ -18,11 +19,11 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
   const [searchParams, setSearchParams] = useSearchParams()
   const { getSearchParam } = new SearchParamsHandler(searchParams)
 
-  const filter = getSearchParam<string>('filter', '')
-  const query = getSearchParam<string>('query', '')
+  const filter = getSearchParam<string>(AlbumsSearchParams.MainFilter, '')
+  const query = getSearchParam<string>(AlbumsSearchParams.Query, '')
 
   const [searchActive, setSearchActive] = useState(false)
-  const [searchValue, setSearchValue] = useState(query !== '' ? query : '')
+  const [searchValue, setSearchValue] = useState('')
   const searchRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -31,8 +32,8 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
       const params = new URLSearchParams()
 
       if (value) {
-        params.append('filter', 'search')
-        params.append('query', value)
+        params.append(AlbumsSearchParams.MainFilter, AlbumsFilters.Search)
+        params.append(AlbumsSearchParams.Query, value)
 
         setSearchParams(params)
       } else {
@@ -68,13 +69,17 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
   }, 750)
 
   useEffect(() => {
-    setSearchActive(filter === 'search')
+    setSearchActive(filter === AlbumsFilters.Search)
   }, [filter])
+
+  useEffect(() => {
+    setSearchValue(query)
+  }, [query])
 
   useEffect(() => {
     if (!inputRef.current) return
 
-    if (filter === 'search' && query !== '') {
+    if (filter === AlbumsFilters.Search && query !== '') {
       inputRef.current.focus()
     }
 
@@ -83,11 +88,11 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchRef.current &&
-        !searchRef.current.contains(event.target as Node) &&
-        !searchValue
-      ) {
+      if (!searchRef.current) return
+
+      const targetIsOnInput = searchRef.current.contains(event.target as Node)
+
+      if (!targetIsOnInput && searchValue === '') {
         close()
       }
     }

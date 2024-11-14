@@ -4,6 +4,7 @@ export enum AlbumsSearchParams {
   Genre = 'genre',
   ArtistId = 'artistId',
   ArtistName = 'artistName',
+  Query = 'query',
 }
 
 export enum YearSortOptions {
@@ -24,6 +25,7 @@ export enum AlbumsFilters {
   RecentlyPlayed = 'recent',
   ByYear = 'byYear',
   ByDiscography = 'artistDiscography',
+  Search = 'search',
 }
 
 export const albumsFilterValues = [
@@ -66,5 +68,9 @@ export const albumsFilterValues = [
   {
     key: AlbumsFilters.ByDiscography,
     label: 'album.list.filter.discography',
+  },
+  {
+    key: AlbumsFilters.Search,
+    label: 'album.list.filter.search',
   },
 ]

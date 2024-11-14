@@ -86,6 +86,7 @@ export type AlbumListType =
   | 'alphabeticalByArtist'
   | 'starred'
   | 'byYear'
+  | 'search'
 
 export interface AlbumsListData {
   albumsCount: number
