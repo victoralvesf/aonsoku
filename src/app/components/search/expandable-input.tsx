@@ -133,11 +133,14 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
           aria-label={props.placeholder}
           onClick={toggleSearchActive}
         >
-          {searchActive ? (
-            <XIcon className="w-5 h-5 text-muted-foreground pointer-events-none" />
-          ) : (
-            <SearchIcon className="w-4 h-4 text-muted-foreground pointer-events-none" />
-          )}
+          <SearchIcon
+            data-visible={searchActive ? 'hide' : 'show'}
+            className="w-4 h-4 text-muted-foreground pointer-events-none rotate-0 scale-100 transition-transform data-[visible=hide]:-rotate-90 data-[visible=hide]:scale-0"
+          />
+          <XIcon
+            data-visible={searchActive ? 'show' : 'hide'}
+            className="absolute w-5 h-5 text-muted-foreground pointer-events-none rotate-90 scale-0 transition-transform data-[visible=show]:rotate-0 data-[visible=show]:scale-100"
+          />
         </label>
       </div>
     </form>
