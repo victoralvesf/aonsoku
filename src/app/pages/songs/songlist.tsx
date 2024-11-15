@@ -9,15 +9,13 @@ import { Badge } from '@/app/components/ui/badge'
 import { DataTableList } from '@/app/components/ui/data-table-list'
 import { useTotalSongs } from '@/app/hooks/use-total-songs'
 import { songsColumns } from '@/app/tables/songs-columns'
-import { subsonic } from '@/service/subsonic'
+import { songsSearch } from '@/queries/songs'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 const DEFAULT_OFFSET = 250
-
-const emptyResponse = { songs: [], nextOffset: null }
 
 export default function SongList() {
   const { t } = useTranslation()
@@ -32,26 +30,11 @@ export default function SongList() {
   const searchFilterIsSet = filter === 'search' && query !== ''
 
   async function fetchSongs({ pageParam = 0 }) {
-    const response = await subsonic.search.get({
+    return songsSearch({
       query: searchFilterIsSet ? query : '',
-      artistCount: 0,
-      albumCount: 0,
       songCount: DEFAULT_OFFSET,
       songOffset: pageParam,
     })
-
-    if (!response) return emptyResponse
-    if (!response.song) return emptyResponse
-
-    let nextOffset = null
-    if (response.song.length >= DEFAULT_OFFSET) {
-      nextOffset = pageParam + DEFAULT_OFFSET
-    }
-
-    return {
-      songs: response.song,
-      nextOffset,
-    }
   }
 
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
