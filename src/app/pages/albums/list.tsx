@@ -79,16 +79,22 @@ export default function AlbumsList() {
         query,
         songCount: 0,
         artistCount: 0,
-        albumCount: 500,
+        albumCount: defaultOffset,
+        albumOffset: pageParam,
       })
 
       if (!response) return emptyResponse
       if (!response.album) return emptyResponse
 
+      let nextOffset = null
+      if (response.album.length >= defaultOffset) {
+        nextOffset = pageParam + defaultOffset
+      }
+
       return {
         albums: response.album,
-        nextOffset: null,
-        albumsCount: response.album.length,
+        nextOffset,
+        albumsCount: pageParam + response.album.length,
       }
     }
 
@@ -160,7 +166,7 @@ export default function AlbumsList() {
   if (!data) return <EmptyAlbums />
 
   const items = data.pages.flatMap((page) => page.albums) || []
-  const itemsCount = data.pages[0].albumsCount || 0
+  const itemsCount = data.pages[data.pages.length - 1].albumsCount || 0
 
   if (items.length === 0) return <EmptyAlbums />
 
