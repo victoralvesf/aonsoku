@@ -8,6 +8,11 @@ import { AlbumsHeader } from '@/app/components/albums/header'
 import { AlbumsFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { PreviewCard } from '@/app/components/preview-card/card'
+import {
+  albumSearch,
+  getAlbumList,
+  getArtistDiscography,
+} from '@/queries/albums'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
@@ -20,8 +25,6 @@ import {
 } from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
-
-const emptyResponse = { albums: [], nextOffset: null, albumsCount: 0 }
 
 export default function AlbumsList() {
   const [searchParams] = useSearchParams()
@@ -63,42 +66,18 @@ export default function AlbumsList() {
 
   const fetchAlbums = async ({ pageParam = 0 }) => {
     if (artistId !== '') {
-      const response = await subsonic.artists.getOne(artistId)
-
-      if (!response) return emptyResponse
-
-      return {
-        albums: response.album,
-        nextOffset: null,
-        albumsCount: response.album.length,
-      }
+      return getArtistDiscography(artistId)
     }
 
     if (currentFilter === AlbumsFilters.Search && query !== '') {
-      const response = await subsonic.search.get({
+      return albumSearch({
         query,
-        songCount: 0,
-        artistCount: 0,
-        albumCount: defaultOffset,
-        albumOffset: pageParam,
+        count: defaultOffset,
+        offset: pageParam,
       })
-
-      if (!response) return emptyResponse
-      if (!response.album) return emptyResponse
-
-      let nextOffset = null
-      if (response.album.length >= defaultOffset) {
-        nextOffset = pageParam + defaultOffset
-      }
-
-      return {
-        albums: response.album,
-        nextOffset,
-        albumsCount: pageParam + response.album.length,
-      }
     }
 
-    const response = await subsonic.albums.getAlbumList({
+    return getAlbumList({
       type: currentFilter,
       size: defaultOffset,
       offset: pageParam,
@@ -106,17 +85,6 @@ export default function AlbumsList() {
       toYear,
       genre,
     })
-
-    let nextOffset = null
-    if (response.list && response.list.length >= defaultOffset) {
-      nextOffset = pageParam + defaultOffset
-    }
-
-    return {
-      albums: response.list || [],
-      nextOffset,
-      albumsCount: response.albumsCount || 0,
-    }
   }
 
   function enableMainQuery() {
