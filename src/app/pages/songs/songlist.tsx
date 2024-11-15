@@ -17,6 +17,8 @@ import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 const DEFAULT_OFFSET = 250
 
+const emptyResponse = { songs: [], nextOffset: null }
+
 export default function SongList() {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
@@ -34,17 +36,20 @@ export default function SongList() {
       query: searchFilterIsSet ? query : '',
       artistCount: 0,
       albumCount: 0,
-      songCount: searchFilterIsSet ? 500 : DEFAULT_OFFSET,
-      songOffset: searchFilterIsSet ? 0 : pageParam,
+      songCount: DEFAULT_OFFSET,
+      songOffset: pageParam,
     })
 
+    if (!response) return emptyResponse
+    if (!response.song) return emptyResponse
+
     let nextOffset = null
-    if (response?.song && response.song.length >= DEFAULT_OFFSET) {
+    if (response.song.length >= DEFAULT_OFFSET) {
       nextOffset = pageParam + DEFAULT_OFFSET
     }
 
     return {
-      songs: response?.song ?? [],
+      songs: response.song,
       nextOffset,
     }
   }
