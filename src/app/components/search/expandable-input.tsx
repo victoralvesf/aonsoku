@@ -46,11 +46,14 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
   const close = useCallback(() => {
     setSearchActive(false)
     setSearchValue('')
+    if (filter !== '' || query !== '') {
+      setSearchParams(new URLSearchParams())
+    }
     if (inputRef.current) {
       inputRef.current.blur()
       inputRef.current.value = ''
     }
-  }, [])
+  }, [filter, query, setSearchParams])
 
   const toggleSearchActive = useCallback(() => {
     if (!searchActive) {
