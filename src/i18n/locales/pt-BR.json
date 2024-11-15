@@ -94,6 +94,13 @@
       }
     }
   },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Buscar músicas..."
+      }
+    }
+  },
   "album": {
     "headline": "Álbum",
     "buttons": {
@@ -135,7 +142,11 @@
         "recentlyAdded": "Adicionados recentemente",
         "recentlyPlayed": "Reproduzidos recentemente",
         "releaseYear": "Ano de lançamento",
-        "discography": "Discografia"
+        "discography": "Discografia",
+        "search": "Pesquisa"
+      },
+      "search": {
+        "placeholder": "Buscar álbuns..."
       }
     },
     "table": {

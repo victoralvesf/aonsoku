@@ -17,6 +17,8 @@ import {
 import { scrollPageToTop } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
+const hiddenFilters = [AlbumsFilters.ByDiscography, AlbumsFilters.Search]
+
 export function AlbumsMainFilter() {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -57,7 +59,7 @@ export function AlbumsMainFilter() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {albumsFilterValues.map((item, index) => {
-          if (item.key === AlbumsFilters.ByDiscography) return null
+          if (hiddenFilters.includes(item.key)) return null
 
           return (
             <DropdownMenuCheckboxItem

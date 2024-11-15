@@ -36,7 +36,7 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
         {songs.map((song, index) => (
           <CarouselItem
             key={song.id}
-            className="pl-0 basis-full"
+            className="pl-0 basis-full maskImage-carousel-item"
             data-testid={`carousel-header-song-${index}`}
           >
             <HeaderItem song={song} />

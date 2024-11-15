@@ -6,7 +6,7 @@ import {
   GetAlbumResponse,
 } from '@/types/responses/album'
 
-interface AlbumListParams {
+export interface AlbumListParams {
   type: AlbumListType
   size?: number
   offset?: number
