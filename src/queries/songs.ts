@@ -27,3 +27,24 @@ export async function songsSearch(params: SongSearchParams) {
     nextOffset,
   }
 }
+
+export async function getArtistAllSongs(artistId: string) {
+  const artist = await subsonic.artists.getOne(artistId)
+
+  if (!artist) return emptyResponse
+
+  const results = await Promise.all(
+    artist.album.map((a) => subsonic.albums.getOne(a.id)),
+  )
+
+  const songs = results.flatMap((result) => {
+    if (!result) return []
+
+    return result.song
+  })
+
+  return {
+    songs,
+    nextOffset: null,
+  }
+}

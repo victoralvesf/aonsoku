@@ -71,7 +71,14 @@ export default function Artist() {
           <Badge variant="secondary">{albumCount}</Badge>
         </Link>
       )}
-      {songCount && <Badge variant="secondary">{songCount}</Badge>}
+      {songCount && (
+        <Link
+          to={ROUTES.SONGS.ARTIST_TRACKS(artist.id, artist.name)}
+          className="flex"
+        >
+          <Badge variant="secondary">{songCount}</Badge>
+        </Link>
+      )}
     </Fragment>
   )
 
@@ -94,7 +101,7 @@ export default function Artist() {
 
         {topSongsIsLoading && <TopSongsTableFallback />}
         {topSongs && !topSongsIsLoading && (
-          <ArtistTopSongs topSongs={topSongs} />
+          <ArtistTopSongs topSongs={topSongs} artist={artist} />
         )}
 
         <PreviewList

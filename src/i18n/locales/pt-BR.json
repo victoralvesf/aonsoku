@@ -25,7 +25,8 @@
   "generic": {
     "seeMore": "Ver mais",
     "showDetails": "Exibir detalhes",
-    "hideDetails": "Ocultar detalhes"
+    "hideDetails": "Ocultar detalhes",
+    "viewAll": "Ver tudo"
   },
   "theme": {
     "label": "Tema",
@@ -98,6 +99,10 @@
     "list": {
       "search": {
         "placeholder": "Buscar músicas..."
+      },
+      "byArtist": "Músicas por {{artist}}",
+      "filter": {
+        "clear": "Limpar filtro"
       }
     }
   },
