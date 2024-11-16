@@ -1,13 +1,12 @@
-import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import { AlbumInfo } from '@/app/components/album/info'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
+import { BadgesData } from '@/app/components/header-info'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
-import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import {
   useGetAlbum,
@@ -49,26 +48,26 @@ export default function Album() {
     ? convertSecondsToHumanRead(album.duration)
     : null
 
-  const badges = (
-    <Fragment>
-      {album.year && <Badge variant="secondary">{album.year}</Badge>}
-      {album.genre && (
-        <Link to={ROUTES.ALBUMS.GENRE(album.genre)} className="flex">
-          <Badge variant="secondary">{album.genre}</Badge>
-        </Link>
-      )}
-      {album.songCount && (
-        <Badge variant="secondary">
-          {t('playlist.songCount', { count: album.songCount })}
-        </Badge>
-      )}
-      {albumDuration && (
-        <Badge variant="secondary">
-          {t('playlist.duration', { duration: albumDuration })}
-        </Badge>
-      )}
-    </Fragment>
-  )
+  const badges: BadgesData = [
+    { content: album.year.toString(), type: 'text' },
+    {
+      content: album.genre,
+      type: 'link',
+      link: ROUTES.ALBUMS.GENRE(album.genre),
+    },
+    {
+      content: album.songCount
+        ? t('playlist.songCount', { count: album.songCount })
+        : null,
+      type: 'text',
+    },
+    {
+      content: albumDuration
+        ? t('playlist.duration', { duration: albumDuration })
+        : null,
+      type: 'text',
+    },
+  ]
 
   const columnsToShow: ColumnFilter[] = [
     'trackNumber',

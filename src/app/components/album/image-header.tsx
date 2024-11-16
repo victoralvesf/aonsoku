@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 import { getCoverArtUrl } from '@/api/httpClient'
 import { AlbumHeaderFallback } from '@/app/components/fallbacks/album-fallbacks'
+import { BadgesData, HeaderInfoGenerator } from '@/app/components/header-info'
 import { CustomLightBox } from '@/app/components/lightbox'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
@@ -23,7 +24,7 @@ interface ImageHeaderProps {
   coverArtType: CoverArt
   coverArtSize: string
   coverArtAlt: string
-  badges: JSX.Element
+  badges: BadgesData
   isPlaylist?: boolean
 }
 
@@ -87,8 +88,8 @@ export default function ImageHeader({
       <div
         className={cn(
           'w-full px-8 py-6 flex gap-4 absolute inset-0',
-          'bg-gradient-to-b from-white/30 to-white/50',
-          'dark:from-black/10 dark:to-black/30',
+          'bg-gradient-to-b from-white/20 to-white/50',
+          'dark:from-black/10 dark:to-black/50',
         )}
         style={{ backgroundColor: bgColor }}
       >
@@ -97,7 +98,7 @@ export default function ImageHeader({
             'w-[200px] h-[200px] min-w-[200px] min-h-[200px]',
             '2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px]',
             'bg-skeleton aspect-square bg-cover bg-center rounded',
-            'shadow-[0_4px_50px_rgba(0,0,0,0.4)] overflow-hidden',
+            'shadow-[0_4px_35px_rgba(0,0,0,0.6)] overflow-hidden',
             'hover:scale-[1.02] ease-linear duration-100',
           )}
         >
@@ -117,43 +118,57 @@ export default function ImageHeader({
           />
         </div>
 
-        <div className="flex flex-col justify-end z-10">
-          <p className="text-xs 2xl:text-sm font-medium drop-shadow-md">
-            {type}
-          </p>
+        <div className="flex w-full flex-col justify-end z-10">
+          <p className="text-xs 2xl:text-sm font-medium drop-shadow">{type}</p>
           <h1
             className={clsx(
               'scroll-m-20 font-bold tracking-tight antialiased drop-shadow-md line-clamp-2',
               getTextSizeClass(title),
-              subtitle && 'mb-1',
             )}
           >
             {title}
           </h1>
 
           {!isPlaylist && subtitle && (
-            <h4
-              className={clsx(
-                'font-medium opacity-70 drop-shadow-md',
-                '2xl:text-lg w-fit',
-                artistId && 'hover:underline',
-              )}
-            >
+            <>
               {artistId ? (
-                <Link to={ROUTES.ARTIST.PAGE(artistId)}>{subtitle}</Link>
+                <div className="flex items-center mt-2">
+                  <div className="w-6 h-6 rounded-full bg-accent/50 drop-shadow">
+                    <LazyLoadImage
+                      effect="opacity"
+                      src={getCoverArtUrl(artistId, 'artist', '100')}
+                      alt={subtitle}
+                      className="w-full h-full rounded-full aspect-square object-cover"
+                    />
+                  </div>
+                  <Link
+                    className="flex items-center ml-2 hover:underline text-sm font-medium drop-shadow"
+                    to={ROUTES.ARTIST.PAGE(artistId)}
+                  >
+                    {subtitle}
+                  </Link>
+                  <HeaderInfoGenerator badges={badges} />
+                </div>
               ) : (
-                subtitle
+                <p className="opacity-80 text-sm font-medium">{subtitle}</p>
               )}
-            </h4>
+            </>
           )}
 
           {isPlaylist && subtitle && (
-            <p className="text-sm opacity-70 drop-shadow-md line-clamp-2">
-              {subtitle}
-            </p>
+            <>
+              <p className="text-sm opacity-80 drop-shadow line-clamp-2 mt-1 mb-2">
+                {subtitle}
+              </p>
+              <HeaderInfoGenerator badges={badges} showFirstDot={false} />
+            </>
           )}
 
-          <div className="flex gap-2 mt-2">{badges}</div>
+          {!subtitle && (
+            <div className="mt-1">
+              <HeaderInfoGenerator badges={badges} showFirstDot={false} />
+            </div>
+          )}
         </div>
       </div>
 

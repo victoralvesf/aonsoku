@@ -170,7 +170,7 @@
       "albumsCount_one": "{{count}} álbum",
       "albumsCount_other": "{{count}} álbuns"
     },
-    "topSongs": "Músicas mais populares",
+    "topSongs": "Populares",
     "recentAlbums": "Álbuns recentes",
     "relatedArtists": "Artistas relacionados"
   },

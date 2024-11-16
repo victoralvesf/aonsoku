@@ -1,6 +1,5 @@
-import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import ArtistTopSongs from '@/app/components/artist/artist-top-songs'
 import { ArtistInfo } from '@/app/components/artist/info'
@@ -8,9 +7,9 @@ import RelatedArtistsList from '@/app/components/artist/related-artists'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { TopSongsTableFallback } from '@/app/components/fallbacks/table-fallbacks'
+import { BadgesData } from '@/app/components/header-info'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
-import { Badge } from '@/app/components/ui/badge'
 import {
   useGetArtist,
   useGetArtistInfo,
@@ -61,26 +60,18 @@ export default function Artist() {
   const albumCount = formatAlbumCount()
   const songCount = getSongCount()
 
-  const badges = (
-    <Fragment>
-      {albumCount && (
-        <Link
-          to={ROUTES.ALBUMS.ARTIST(artist.id, artist.name)}
-          className="flex"
-        >
-          <Badge variant="secondary">{albumCount}</Badge>
-        </Link>
-      )}
-      {songCount && (
-        <Link
-          to={ROUTES.SONGS.ARTIST_TRACKS(artist.id, artist.name)}
-          className="flex"
-        >
-          <Badge variant="secondary">{songCount}</Badge>
-        </Link>
-      )}
-    </Fragment>
-  )
+  const badges: BadgesData = [
+    {
+      content: albumCount,
+      type: 'link',
+      link: ROUTES.ALBUMS.ARTIST(artist.id, artist.name),
+    },
+    {
+      content: songCount,
+      type: 'link',
+      link: ROUTES.SONGS.ARTIST_TRACKS(artist.id, artist.name),
+    },
+  ]
 
   const recentAlbums = artist.album.sort((a, b) => b.year - a.year)
 

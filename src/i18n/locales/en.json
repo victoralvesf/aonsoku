@@ -170,7 +170,7 @@
       "albumsCount_one": "{{count}} album",
       "albumsCount_other": "{{count}} albums"
     },
-    "topSongs": "Top songs",
+    "topSongs": "Popular",
     "recentAlbums": "Recent albums",
     "relatedArtists": "Related artists"
   },
