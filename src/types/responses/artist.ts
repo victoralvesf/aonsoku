@@ -1,4 +1,4 @@
-import { IArtistAlbum } from './album'
+import { Albums } from './album'
 import { SubsonicResponse } from './subsonicResponse'
 
 export interface IArtist {
@@ -8,7 +8,7 @@ export interface IArtist {
   albumCount: number
   starred?: string
   artistImageUrl: string
-  album: IArtistAlbum[]
+  album: Albums[]
 }
 
 export interface ISimilarArtist {

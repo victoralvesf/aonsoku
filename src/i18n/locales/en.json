@@ -25,7 +25,8 @@
   "generic": {
     "seeMore": "See more",
     "showDetails": "Show details",
-    "hideDetails": "Hide details"
+    "hideDetails": "Hide details",
+    "viewAll": "View all"
   },
   "theme": {
     "label": "Theme",
@@ -98,6 +99,10 @@
     "list": {
       "search": {
         "placeholder": "Search songs..."
+      },
+      "byArtist": "Songs by {{artist}}",
+      "filter": {
+        "clear": "Clear filter"
       }
     }
   },
@@ -165,7 +170,7 @@
       "albumsCount_one": "{{count}} album",
       "albumsCount_other": "{{count}} albums"
     },
-    "topSongs": "Top songs",
+    "topSongs": "Popular",
     "recentAlbums": "Recent albums",
     "relatedArtists": "Related artists"
   },

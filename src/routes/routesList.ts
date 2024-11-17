@@ -35,6 +35,8 @@ const ALBUMS = {
 const SONGS = {
   SEARCH: (query: string) =>
     `${LIBRARY.SONGS}?filter=${AlbumsFilters.Search}&query=${encodeURIComponent(query)}`,
+  ARTIST_TRACKS: (id: string, name: string) =>
+    `${LIBRARY.SONGS}?artistId=${id}&artistName=${encodeURIComponent(name)}`,
 }
 
 const PLAYLIST = {
