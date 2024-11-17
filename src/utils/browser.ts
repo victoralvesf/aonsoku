@@ -24,3 +24,28 @@ export function preventContextMenu() {
     e.preventDefault()
   })
 }
+
+function isAnyModifierKeyPressed(e: MouseEvent) {
+  return e.ctrlKey || e.metaKey || e.shiftKey || e.altKey
+}
+
+export function preventNewTabAndScroll() {
+  // Prevent new tab on middle click
+  document.addEventListener('auxclick', (e) => {
+    e.preventDefault()
+  })
+
+  // Prevent scroll circle and new tab
+  document.addEventListener('mousedown', (e) => {
+    if (e.button === MouseButton.Middle || isAnyModifierKeyPressed(e)) {
+      e.preventDefault()
+    }
+  })
+
+  // Prevent new tab if clicking with special key
+  document.addEventListener('click', (e) => {
+    if (isAnyModifierKeyPressed(e)) {
+      e.preventDefault()
+    }
+  })
+}
