@@ -12,10 +12,15 @@ import '@/i18n'
 import App from '@/App'
 
 import { queryClient } from '@/lib/queryClient'
-import { preventContextMenu, preventNewTabAndScroll } from '@/utils/browser'
+import {
+  preventContextMenu,
+  preventNewTabAndScroll,
+  preventReload,
+} from '@/utils/browser'
 
 preventContextMenu()
 preventNewTabAndScroll()
+preventReload()
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>

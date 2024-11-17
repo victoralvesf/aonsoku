@@ -420,6 +420,9 @@
     "title": "Informações da música",
     "error": "Não foi possível obter as informações da música. Por favor, tente novamente mais tarde!"
   },
+  "warnings": {
+    "reload": "Há uma música tocando!\nVocê tem certeza que deseja recarregar a página?"
+  },
   "dayjs": {
     "relativeTime": {
       "future": "em %s",

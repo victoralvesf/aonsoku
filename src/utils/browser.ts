@@ -1,3 +1,7 @@
+import i18n from '@/i18n'
+import { usePlayerStore } from '@/store/player.store'
+import { isTauri } from './tauriTools'
+
 export enum MouseButton {
   Left = 0,
   Middle = 1,
@@ -47,5 +51,29 @@ export function preventNewTabAndScroll() {
     if (isAnyModifierKeyPressed(e)) {
       e.preventDefault()
     }
+  })
+}
+
+export function preventReload() {
+  document.addEventListener('keydown', (e) => {
+    const isF5 = e.key === 'F5'
+    const isReloadCmd = (e.ctrlKey || e.metaKey) && e.key === 'r'
+
+    if (!isF5 && !isReloadCmd) return
+
+    e.preventDefault()
+
+    if (isTauri()) return
+
+    const { isPlaying } = usePlayerStore.getState().playerState
+
+    if (isPlaying) {
+      const message = i18n.t('warnings.reload')
+
+      const shouldReload = window.confirm(message)
+      if (!shouldReload) return
+    }
+
+    window.location.reload()
   })
 }
