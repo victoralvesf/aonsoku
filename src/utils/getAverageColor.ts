@@ -12,7 +12,6 @@ export async function getAverageColor(img: HTMLImageElement | null) {
       [0, 0, 0, 0, 40], // Transparent
       [255, 255, 50, 255, 70], // Bright Yellow
       [100, 255, 10, 255, 50], // Bright Green
-      [120, 30, 10, 255, 50], // Dark Red / Brownish Red
       [200, 20, 200, 255, 30], // Vibrant Purple
     ],
     // if the image only contains ignored colors, returns the primary color instead.
