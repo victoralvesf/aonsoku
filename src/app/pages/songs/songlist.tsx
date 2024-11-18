@@ -47,23 +47,17 @@ export default function SongList() {
     })
   }
 
-  const {
-    data,
-    isLoading,
-    isFetching,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: [queryKeys.song.all, filter, query, artistId],
-    initialPageParam: 0,
-    queryFn: fetchSongs,
-    getNextPageParam: (lastPage) => lastPage.nextOffset,
-  })
+  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: [queryKeys.song.all, filter, query, artistId],
+      initialPageParam: 0,
+      queryFn: fetchSongs,
+      getNextPageParam: (lastPage) => lastPage.nextOffset,
+    })
 
   const { data: songCountData, isLoading: songCountIsLoading } = useTotalSongs()
 
-  if ((isLoading || isFetching) && !isFetchingNextPage) {
+  if (isLoading && !isFetchingNextPage) {
     return <InfinitySongListFallback />
   }
   if (!data) return null
