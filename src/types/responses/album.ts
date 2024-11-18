@@ -60,10 +60,6 @@ export interface AlbumListResponse
 export interface GetAlbumResponse
   extends SubsonicResponse<{ album: SingleAlbum }> {}
 
-export interface IArtistAlbum extends Albums {
-  starred?: string
-}
-
 export interface IAlbumInfo {
   notes?: string
   musicBrainzId?: string
@@ -86,6 +82,7 @@ export type AlbumListType =
   | 'alphabeticalByArtist'
   | 'starred'
   | 'byYear'
+  | 'search'
 
 export interface AlbumsListData {
   albumsCount: number

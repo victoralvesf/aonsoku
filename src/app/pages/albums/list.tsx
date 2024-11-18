@@ -8,6 +8,11 @@ import { AlbumsHeader } from '@/app/components/albums/header'
 import { AlbumsFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { PreviewCard } from '@/app/components/preview-card/card'
+import {
+  albumSearch,
+  getAlbumList,
+  getArtistDiscography,
+} from '@/queries/albums'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
@@ -41,6 +46,7 @@ export default function AlbumsList() {
   )
   const genre = getSearchParam<string>(AlbumsSearchParams.Genre, '')
   const artistId = getSearchParam<string>(AlbumsSearchParams.ArtistId, '')
+  const query = getSearchParam<string>(AlbumsSearchParams.Query, '')
 
   useEffect(() => {
     scrollDivRef.current = document.querySelector(
@@ -60,20 +66,18 @@ export default function AlbumsList() {
 
   const fetchAlbums = async ({ pageParam = 0 }) => {
     if (artistId !== '') {
-      const response = await subsonic.artists.getOne(artistId)
-
-      if (!response) {
-        return { albums: [], nextOffset: null, albumsCount: 0 }
-      }
-
-      return {
-        albums: response.album,
-        nextOffset: null,
-        albumsCount: response.album.length,
-      }
+      return getArtistDiscography(artistId)
     }
 
-    const response = await subsonic.albums.getAlbumList({
+    if (currentFilter === AlbumsFilters.Search && query !== '') {
+      return albumSearch({
+        query,
+        count: defaultOffset,
+        offset: pageParam,
+      })
+    }
+
+    return getAlbumList({
       type: currentFilter,
       size: defaultOffset,
       offset: pageParam,
@@ -81,17 +85,6 @@ export default function AlbumsList() {
       toYear,
       genre,
     })
-
-    let nextOffset = null
-    if (response.list && response.list.length >= defaultOffset) {
-      nextOffset = pageParam + defaultOffset
-    }
-
-    return {
-      albums: response.list || [],
-      nextOffset,
-      albumsCount: response.albumsCount || 0,
-    }
   }
 
   function enableMainQuery() {
@@ -101,7 +94,7 @@ export default function AlbumsList() {
   }
 
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
-    queryKey: [queryKeys.album.all, currentFilter, yearFilter, genre],
+    queryKey: [queryKeys.album.all, currentFilter, yearFilter, genre, query],
     queryFn: fetchAlbums,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
@@ -141,7 +134,7 @@ export default function AlbumsList() {
   if (!data) return <EmptyAlbums />
 
   const items = data.pages.flatMap((page) => page.albums) || []
-  const itemsCount = data.pages[0].albumsCount || 0
+  const itemsCount = data.pages[data.pages.length - 1].albumsCount || 0
 
   if (items.length === 0) return <EmptyAlbums />
 

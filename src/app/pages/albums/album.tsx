@@ -1,18 +1,15 @@
-import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
-import { Link, useParams } from 'react-router-dom'
-import { AlbumButtons } from '@/app/components/album/buttons'
+import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
-import InfoPanel, { InfoPanelFallback } from '@/app/components/album/info-panel'
+import { AlbumInfo } from '@/app/components/album/info'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
+import { BadgesData } from '@/app/components/header-info'
 import PreviewList from '@/app/components/home/preview-list'
 import ListWrapper from '@/app/components/list-wrapper'
-import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import {
   useGetAlbum,
-  useGetAlbumInfo,
   useGetArtistAlbums,
   useGetGenreAlbums,
 } from '@/app/hooks/use-album'
@@ -34,8 +31,6 @@ export default function Album() {
     isLoading: albumIsLoading,
     isFetched,
   } = useGetAlbum(albumId)
-  const { data: albumInfo, isLoading: albumInfoIsLoading } =
-    useGetAlbumInfo(albumId)
   const { data: moreAlbums, isLoading: moreAlbumsIsLoading } =
     useGetArtistAlbums(album?.artist || '')
   const { data: randomAlbums, isLoading: randomAlbumsIsLoading } =
@@ -53,26 +48,26 @@ export default function Album() {
     ? convertSecondsToHumanRead(album.duration)
     : null
 
-  const badges = (
-    <Fragment>
-      {album.year && <Badge variant="secondary">{album.year}</Badge>}
-      {album.genre && (
-        <Link to={ROUTES.ALBUMS.GENRE(album.genre)} className="flex">
-          <Badge variant="secondary">{album.genre}</Badge>
-        </Link>
-      )}
-      {album.songCount && (
-        <Badge variant="secondary">
-          {t('playlist.songCount', { count: album.songCount })}
-        </Badge>
-      )}
-      {albumDuration && (
-        <Badge variant="secondary">
-          {t('playlist.duration', { duration: albumDuration })}
-        </Badge>
-      )}
-    </Fragment>
-  )
+  const badges: BadgesData = [
+    { content: album.year.toString(), type: 'text' },
+    {
+      content: album.genre,
+      type: 'link',
+      link: ROUTES.ALBUMS.GENRE(album.genre),
+    },
+    {
+      content: album.songCount
+        ? t('playlist.songCount', { count: album.songCount })
+        : null,
+      type: 'text',
+    },
+    {
+      content: albumDuration
+        ? t('playlist.duration', { duration: albumDuration })
+        : null,
+      type: 'text',
+    },
+  ]
 
   const columnsToShow: ColumnFilter[] = [
     'trackNumber',
@@ -125,18 +120,7 @@ export default function Album() {
       />
 
       <ListWrapper>
-        <AlbumButtons album={album} />
-
-        <div className="mb-6">
-          {albumInfoIsLoading && <InfoPanelFallback />}
-          {albumInfo && !albumInfoIsLoading && (
-            <InfoPanel
-              title={album.name}
-              bio={albumInfo.notes}
-              lastFmUrl={albumInfo.lastFmUrl}
-            />
-          )}
-        </div>
+        <AlbumInfo album={album} />
 
         <DataTable
           columns={columns}

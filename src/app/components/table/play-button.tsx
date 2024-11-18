@@ -86,7 +86,7 @@ export default function PlaySongButton({
         <div className="w-8 flex items-center">
           <SimpleTooltip text={tooltips.playTooltip}>
             <Button
-              className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
+              className="w-8 h-8 rounded-full group hover:bg-background hover:shadow-sm border-0"
               size="icon"
               variant="outline"
               onClick={(e) => {
@@ -95,7 +95,7 @@ export default function PlaySongButton({
               }}
             >
               <PlayIcon
-                className="w-3 h-3 opacity-80 group-hover:opacity-100 fill-inherit dark:fill-slate-50"
+                className="w-3 h-3 opacity-70 group-hover:opacity-100 fill-inherit dark:fill-foreground transition-opacity"
                 strokeWidth={4}
               />
             </Button>
@@ -117,7 +117,7 @@ export default function PlaySongButton({
           <div className="hidden group-hover/tablerow:flex justify-center">
             <SimpleTooltip text={tooltips.pauseTooltip}>
               <Button
-                className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
+                className="w-8 h-8 rounded-full group hover:bg-background hover:shadow-sm border-0"
                 size="icon"
                 variant="outline"
                 onClick={(e) => {
@@ -126,7 +126,7 @@ export default function PlaySongButton({
                 }}
               >
                 <PauseIcon
-                  className="w-4 h-4 opacity-80 group-hover:opacity-100 fill-inherit dark:fill-slate-50"
+                  className="w-4 h-4 opacity-70 group-hover:opacity-100 fill-inherit dark:fill-foreground transition-opacity"
                   strokeWidth={1}
                 />
               </Button>
@@ -142,7 +142,7 @@ export default function PlaySongButton({
           <div className="hidden group-hover/tablerow:block">
             <SimpleTooltip text={tooltips.playTooltip}>
               <Button
-                className="w-8 h-8 rounded-full group hover:bg-white dark:hover:bg-slate-950 hover:shadow-sm"
+                className="w-8 h-8 rounded-full group hover:bg-background hover:shadow-sm border-0"
                 size="icon"
                 variant="outline"
                 onClick={(e) => {
@@ -151,7 +151,7 @@ export default function PlaySongButton({
                 }}
               >
                 <PlayIcon
-                  className="w-3 h-3 opacity-80 group-hover:opacity-100 fill-inherit dark:fill-slate-50"
+                  className="w-3 h-3 opacity-70 group-hover:opacity-100 fill-inherit dark:fill-foreground transition-opacity"
                   strokeWidth={4}
                 />
               </Button>

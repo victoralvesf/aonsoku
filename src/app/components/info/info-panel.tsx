@@ -4,7 +4,6 @@ import LastFmIcon from '@/app/components/icons/last-fm'
 import MusicbrainzIcon from '@/app/components/icons/musicbrainz'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { Skeleton } from '@/app/components/ui/skeleton'
-import { cn } from '@/lib/utils'
 
 interface InfoPanelProps {
   title: string
@@ -38,7 +37,7 @@ export default function InfoPanel({
   if (!bio) return null
 
   return (
-    <div className={cn(containerClasses)} id="artist-biography">
+    <div className={containerClasses} id="artist-biography">
       <h3 className="scroll-m-20 mb-2 text-2xl font-semibold tracking-tight">
         {t('album.info.about', { name: title })}
       </h3>

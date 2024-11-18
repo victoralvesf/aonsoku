@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
+import { BadgesData } from '@/app/components/header-info'
 import ListWrapper from '@/app/components/list-wrapper'
 import { PlaylistButtons } from '@/app/components/playlist/buttons'
 import { RemoveSongFromPlaylistDialog } from '@/app/components/playlist/remove-song-dialog'
-import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import ErrorPage from '@/app/pages/error-page'
 import { songsColumns } from '@/app/tables/songs-columns'
@@ -50,14 +49,13 @@ export default function Playlist() {
   const duration = convertSecondsToHumanRead(playlist.duration)
   const playlistDuration = t('playlist.duration', { duration })
 
-  const badges = (
-    <Fragment>
-      <Badge variant="secondary">{songCount}</Badge>
-      {playlist.duration > 0 && (
-        <Badge variant="secondary">{playlistDuration}</Badge>
-      )}
-    </Fragment>
-  )
+  const badges: BadgesData = [
+    { content: songCount, type: 'text' },
+    {
+      content: playlistDuration,
+      type: 'text',
+    },
+  ]
 
   const coverArt = playlist.songCount > 0 ? playlist.coverArt : undefined
 

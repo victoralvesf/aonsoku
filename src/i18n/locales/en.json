@@ -23,7 +23,10 @@
     "serverLogout": "Logout"
   },
   "generic": {
-    "seeMore": "See more"
+    "seeMore": "See more",
+    "showDetails": "Show details",
+    "hideDetails": "Hide details",
+    "viewAll": "View all"
   },
   "theme": {
     "label": "Theme",
@@ -92,6 +95,17 @@
       }
     }
   },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Search songs..."
+      },
+      "byArtist": "Songs by {{artist}}",
+      "filter": {
+        "clear": "Clear filter"
+      }
+    }
+  },
   "album": {
     "headline": "Album",
     "buttons": {
@@ -133,7 +147,11 @@
         "recentlyAdded": "Recently Added",
         "recentlyPlayed": "Recently Played",
         "releaseYear": "Release Year",
-        "discography": "Discography"
+        "discography": "Discography",
+        "search": "Search"
+      },
+      "search": {
+        "placeholder": "Search albums..."
       }
     },
     "table": {
@@ -152,7 +170,7 @@
       "albumsCount_one": "{{count}} album",
       "albumsCount_other": "{{count}} albums"
     },
-    "topSongs": "Top songs",
+    "topSongs": "Popular",
     "recentAlbums": "Recent albums",
     "relatedArtists": "Related artists"
   },
@@ -401,6 +419,9 @@
   "songInfo": {
     "title": "Song Details",
     "error": "Unable to retrieve song information. Please try again later."
+  },
+  "warnings": {
+    "reload": "There is a song playing!\nAre you sure you want to reload the page?"
   },
   "dayjs": {
     "relativeTime": {

@@ -32,6 +32,11 @@ import { Theme } from '@/types/themeContext'
 import { convertMinutesToMs } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 import { queryKeys } from '@/utils/queryKeys'
+import {
+  CustomGroup,
+  CustomGroupHeader,
+  CustomHeaderLink,
+} from './command-group'
 import { CustomCommandItem } from './command-item'
 
 type CommandPages = 'HOME' | 'GOTO' | 'THEME' | 'PLAYLISTS' | 'SERVER'
@@ -235,81 +240,112 @@ export default function CommandMenu() {
             )}
 
             {showAlbumGroup && (
-              <CommandGroup heading={t('sidebar.albums')}>
-                {albums.length > 0 &&
-                  albums.map((album) => (
-                    <CommandItem
-                      key={`album-${album.id}`}
-                      value={`album-${album.id}`}
-                      className="border mb-1"
-                      onSelect={() => {
-                        runCommand(() => navigate(ROUTES.ALBUM.PAGE(album.id)))
-                      }}
-                    >
-                      <ResultItem
-                        coverArt={album.coverArt}
-                        coverArtType="album"
-                        title={album.name}
-                        artist={album.artist}
-                        onClick={() => handlePlayAlbum(album.id)}
-                      />
-                    </CommandItem>
-                  ))}
-              </CommandGroup>
-            )}
-
-            {showArtistGroup && (
-              <CommandGroup heading={t('sidebar.artists')}>
-                {artists.length > 0 &&
-                  artists.map((artist) => (
-                    <CommandItem
-                      key={`artist-${artist.id}`}
-                      value={`artist-${artist.id}`}
-                      className="border mb-1"
-                      onSelect={() => {
-                        runCommand(() =>
-                          navigate(ROUTES.ARTIST.PAGE(artist.id)),
-                        )
-                      }}
-                    >
-                      <ResultItem
-                        coverArt={artist.coverArt}
-                        coverArtType="artist"
-                        title={artist.name}
-                        artist={t('artist.info.albumsCount', {
-                          count: artist.albumCount,
-                        })}
-                        onClick={() => handlePlayArtistRadio(artist)}
-                      />
-                    </CommandItem>
-                  ))}
-              </CommandGroup>
+              <CustomGroup>
+                <CustomGroupHeader>
+                  <span>{t('sidebar.albums')}</span>
+                  <CustomHeaderLink
+                    onClick={() =>
+                      runCommand(() => navigate(ROUTES.ALBUMS.SEARCH(query)))
+                    }
+                  >
+                    {t('generic.seeMore')}
+                  </CustomHeaderLink>
+                </CustomGroupHeader>
+                <CommandGroup>
+                  {albums.length > 0 &&
+                    albums.map((album) => (
+                      <CommandItem
+                        key={`album-${album.id}`}
+                        value={`album-${album.id}`}
+                        className="border mb-1"
+                        onSelect={() => {
+                          runCommand(() =>
+                            navigate(ROUTES.ALBUM.PAGE(album.id)),
+                          )
+                        }}
+                      >
+                        <ResultItem
+                          coverArt={album.coverArt}
+                          coverArtType="album"
+                          title={album.name}
+                          artist={album.artist}
+                          onClick={() => handlePlayAlbum(album.id)}
+                        />
+                      </CommandItem>
+                    ))}
+                </CommandGroup>
+              </CustomGroup>
             )}
 
             {showSongGroup && (
-              <CommandGroup heading={t('sidebar.songs')}>
-                {songs.length > 0 &&
-                  songs.map((song) => (
-                    <CommandItem
-                      key={`song-${song.id}`}
-                      value={`song-${song.id}`}
-                      className="border mb-1"
-                      onSelect={() => {
-                        runCommand(() =>
-                          navigate(ROUTES.ALBUM.PAGE(song.albumId)),
-                        )
-                      }}
-                    >
-                      <ResultItem
-                        coverArt={song.coverArt}
-                        coverArtType="song"
-                        title={song.title}
-                        artist={song.artist}
-                        onClick={() => playSong(song)}
-                      />
-                    </CommandItem>
-                  ))}
-              </CommandGroup>
+              <CustomGroup>
+                <CustomGroupHeader>
+                  <span>{t('sidebar.songs')}</span>
+                  <CustomHeaderLink
+                    onClick={() =>
+                      runCommand(() => navigate(ROUTES.SONGS.SEARCH(query)))
+                    }
+                  >
+                    {t('generic.seeMore')}
+                  </CustomHeaderLink>
+                </CustomGroupHeader>
+                <CommandGroup>
+                  {songs.length > 0 &&
+                    songs.map((song) => (
+                      <CommandItem
+                        key={`song-${song.id}`}
+                        value={`song-${song.id}`}
+                        className="border mb-1"
+                        onSelect={() => {
+                          runCommand(() =>
+                            navigate(ROUTES.ALBUM.PAGE(song.albumId)),
+                          )
+                        }}
+                      >
+                        <ResultItem
+                          coverArt={song.coverArt}
+                          coverArtType="song"
+                          title={song.title}
+                          artist={song.artist}
+                          onClick={() => playSong(song)}
+                        />
+                      </CommandItem>
+                    ))}
+                </CommandGroup>
+              </CustomGroup>
+            )}
+
+            {showArtistGroup && (
+              <CustomGroup>
+                <CustomGroupHeader>
+                  <span>{t('sidebar.artists')}</span>
+                </CustomGroupHeader>
+                <CommandGroup>
+                  {artists.length > 0 &&
+                    artists.map((artist) => (
+                      <CommandItem
+                        key={`artist-${artist.id}`}
+                        value={`artist-${artist.id}`}
+                        className="border mb-1"
+                        onSelect={() => {
+                          runCommand(() =>
+                            navigate(ROUTES.ARTIST.PAGE(artist.id)),
+                          )
+                        }}
+                      >
+                        <ResultItem
+                          coverArt={artist.coverArt}
+                          coverArtType="artist"
+                          title={artist.name}
+                          artist={t('artist.info.albumsCount', {
+                            count: artist.albumCount,
+                          })}
+                          onClick={() => handlePlayArtistRadio(artist)}
+                        />
+                      </CommandItem>
+                    ))}
+                </CommandGroup>
+              </CustomGroup>
             )}
 
             {isHome && (

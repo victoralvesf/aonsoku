@@ -1,7 +1,7 @@
 import { httpClient } from '@/api/httpClient'
 import { ISearchResponse } from '@/types/responses/search'
 
-interface SearchQueryOptions {
+export interface SearchQueryOptions {
   query?: string
   artistCount?: number
   artistOffset?: number

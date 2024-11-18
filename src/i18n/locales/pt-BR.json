@@ -23,7 +23,10 @@
     "serverLogout": "Desconectar"
   },
   "generic": {
-    "seeMore": "Ver mais"
+    "seeMore": "Ver mais",
+    "showDetails": "Exibir detalhes",
+    "hideDetails": "Ocultar detalhes",
+    "viewAll": "Ver tudo"
   },
   "theme": {
     "label": "Tema",
@@ -92,6 +95,17 @@
       }
     }
   },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Buscar músicas..."
+      },
+      "byArtist": "Músicas por {{artist}}",
+      "filter": {
+        "clear": "Limpar filtro"
+      }
+    }
+  },
   "album": {
     "headline": "Álbum",
     "buttons": {
@@ -133,7 +147,11 @@
         "recentlyAdded": "Adicionados recentemente",
         "recentlyPlayed": "Reproduzidos recentemente",
         "releaseYear": "Ano de lançamento",
-        "discography": "Discografia"
+        "discography": "Discografia",
+        "search": "Pesquisa"
+      },
+      "search": {
+        "placeholder": "Buscar álbuns..."
       }
     },
     "table": {
@@ -152,7 +170,7 @@
       "albumsCount_one": "{{count}} álbum",
       "albumsCount_other": "{{count}} álbuns"
     },
-    "topSongs": "Músicas mais populares",
+    "topSongs": "Populares",
     "recentAlbums": "Álbuns recentes",
     "relatedArtists": "Artistas relacionados"
   },
@@ -401,6 +419,9 @@
   "songInfo": {
     "title": "Informações da música",
     "error": "Não foi possível obter as informações da música. Por favor, tente novamente mais tarde!"
+  },
+  "warnings": {
+    "reload": "Há uma música tocando!\nVocê tem certeza que deseja recarregar a página?"
   },
   "dayjs": {
     "relativeTime": {
