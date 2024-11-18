@@ -23,7 +23,7 @@ export function CustomHeaderLink({
 }: HeaderLinkProps) {
   return (
     <Button
-      className={cn('text-xs p-0 m-0 h-fit', className)}
+      className={cn('text-xs p-0 m-0 h-fit underline-offset-1', className)}
       size="sm"
       variant="link"
       {...props}
