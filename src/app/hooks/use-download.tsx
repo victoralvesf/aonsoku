@@ -1,5 +1,5 @@
+import { invoke } from '@tauri-apps/api/core'
 import { once } from '@tauri-apps/api/event'
-import { invoke } from '@tauri-apps/api/tauri'
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -57,7 +57,8 @@ export function useDownload() {
       started()
 
       await invoke('download_file', { url, fileId: id })
-    } catch (_) {
+    } catch (err) {
+      console.error(err)
       failed()
     }
   }

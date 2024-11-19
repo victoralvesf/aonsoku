@@ -2,43 +2,29 @@
   "build": {
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420"
   },
-  "package": {
-    "productName": "Aonsoku",
-    "version": "0.5.0"
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
   },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-      },
-      "http": {
-        "all": true,
-        "request": true,
-        "scope": [
-          "http://*",
-          "https://*"
-        ]
-      },
-      "os": {
-        "all": true
-      },
-      "globalShortcut": {
-        "all": true
-      },
-      "clipboard": {
-        "all": true
-      },
-      "process": {
-        "all": false,
-        "exit": true,
-        "relaunch": false,
-        "relaunchDangerousAllowSymlinkMacos": false
-      }
+  "productName": "Aonsoku",
+  "mainBinaryName": "Aonsoku",
+  "version": "0.5.0",
+  "identifier": "com.victoralvesf.aonsoku",
+  "plugins": {},
+  "app": {
+    "withGlobalTauri": true,
+    "security": {
+      "csp": null
     },
     "windows": [
       {
@@ -48,24 +34,9 @@
         "minWidth": 1280,
         "height": 720,
         "minHeight": 720,
-        "maximized": true
+        "maximized": true,
+        "useHttpsScheme": false
       }
-    ],
-    "security": {
-      "csp": null,
-      "dangerousUseHttpScheme": true
-    },
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "com.victoralvesf.aonsoku",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ]
-    }
+    ]
   }
 }
