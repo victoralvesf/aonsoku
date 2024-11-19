@@ -95,7 +95,8 @@
                     "error_other": "¡Error al eliminar las canciones!"
                 }
             }
-        }
+        },
+        "duration": "Cerca de {{duration}}"
     },
     "songs": {
         "list": {
@@ -200,7 +201,9 @@
             "albumPeak": "Pico de álbum",
             "comment": "Comentario",
             "track": "Pista",
-            "genres": "Géneros"
+            "genres": "Géneros",
+            "albumCount": "Número de álbumes",
+            "songCount": "Número de canciones"
         },
         "buttons": {
             "play": "Reproducir {{title}} de {{artist}}",
