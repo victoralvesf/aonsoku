@@ -35,7 +35,8 @@
         "height": 720,
         "minHeight": 720,
         "maximized": true,
-        "useHttpsScheme": false
+        "useHttpsScheme": false,
+        "decorations": false
       }
     ]
   }
