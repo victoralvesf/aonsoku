@@ -1,6 +1,5 @@
 import { Keyboard, LogOut, User } from 'lucide-react'
-import { useState } from 'react'
-import { Fragment } from 'react/jsx-runtime'
+import { Fragment, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
 
@@ -17,6 +16,7 @@ import {
 } from '@/app/components/ui/dropdown-menu'
 import { LogoutObserver } from '@/app/observers/logout-observer'
 import { useAppData, useAppStore } from '@/store/app.store'
+import { isMac } from '@/utils/osType'
 import { isTauri } from '@/utils/tauriTools'
 import { LangSelect } from './lang-select'
 import { ThemeSelect } from './theme-select'
@@ -31,6 +31,14 @@ export function UserDropdown() {
 
   useHotkeys('shift+ctrl+q', () => setLogoutDialogState(true))
   useHotkeys('mod+/', () => setShortcutsOpen((prev) => !prev))
+
+  function getAlignPosition() {
+    if (!isTauri()) return 'end'
+
+    if (isMac) return 'end'
+
+    return 'center'
+  }
 
   return (
     <Fragment>
@@ -49,10 +57,7 @@ export function UserDropdown() {
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          align={isTauri() ? 'center' : 'end'}
-          className="min-w-64"
-        >
+        <DropdownMenuContent align={getAlignPosition()} className="min-w-64">
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-2">
               <p className="text-sm font-medium leading-none">{username}</p>

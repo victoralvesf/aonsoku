@@ -12,38 +12,44 @@ extern crate cocoa;
 #[macro_use]
 extern crate objc;
 
+#[cfg(target_os = "macos")]
+mod mac;
+
 mod commands;
 mod progress;
-mod tlpos;
 mod utils;
 
 fn main() {
-    tauri::Builder::default()
+    let mut app_builder = tauri::Builder::default();
+
+    #[cfg(target_os = "macos")]
+    {
+        app_builder = app_builder.plugin(mac::window::init());
+    }
+
+    app_builder
+        .invoke_handler(tauri::generate_handler![commands::download_file])
+        .plugin(tauri_plugin_os::init())
         .setup(|app| {
-            // Create a custom titlebar for main window
-            // On Windows this hides decoration and creates custom window controls
-            // On macOS it needs hiddenTitle: true and titleBarStyle: overlay
             let main_window = app.get_webview_window("main").unwrap();
             main_window.create_overlay_titlebar().unwrap();
 
-            // Some macOS-specific helpers
             #[cfg(target_os = "macos")]
             {
+                use mac::window::setup_traffic_light_positioner;
+
                 let window = app.get_window("main").unwrap();
                 let window_ = window.clone();
 
                 window.on_window_event(move |event| {
                     if let tauri::WindowEvent::ThemeChanged(_theme) = event {
-                        tlpos::setup_traffic_light_positioner(window_.clone())
+                        setup_traffic_light_positioner(window_.clone())
                     }
                 });
             }
 
             Ok(())
         })
-        .plugin(tlpos::init())
-        .plugin(tauri_plugin_os::init())
-        .invoke_handler(tauri::generate_handler![commands::download_file])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
