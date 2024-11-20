@@ -11,7 +11,7 @@ export function Header() {
     <header className="w-full grid grid-cols-header px-4 h-[--header-height] fixed top-0 right-0 left-0 z-20 bg-background border-b">
       <div data-tauri-drag-region className="flex items-center">
         {isMac && (
-          <div className="mr-2">
+          <div className="mr-3">
             <MacOS />
           </div>
         )}
@@ -23,16 +23,8 @@ export function Header() {
         className="flex justify-end items-center gap-2"
       >
         <UserDropdown />
-        {isLinux && (
-          <div className="flex items-center h-full">
-            <Gnome />
-          </div>
-        )}
-        {isWindows && (
-          <div className="flex items-center h-full">
-            <Windows />
-          </div>
-        )}
+        {isLinux && <Gnome />}
+        {isWindows && <Windows />}
       </div>
     </header>
   )

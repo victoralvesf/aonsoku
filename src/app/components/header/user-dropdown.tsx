@@ -17,6 +17,7 @@ import {
 } from '@/app/components/ui/dropdown-menu'
 import { LogoutObserver } from '@/app/observers/logout-observer'
 import { useAppData, useAppStore } from '@/store/app.store'
+import { isTauri } from '@/utils/tauriTools'
 import { LangSelect } from './lang-select'
 import { ThemeSelect } from './theme-select'
 
@@ -48,7 +49,10 @@ export function UserDropdown() {
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="min-w-64">
+        <DropdownMenuContent
+          align={isTauri() ? 'center' : 'end'}
+          className="min-w-64"
+        >
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-2">
               <p className="text-sm font-medium leading-none">{username}</p>
