@@ -5,6 +5,7 @@ import { getOsType } from '@/utils/osType'
 interface AppWindowType {
   appWindow: Window | null
   isWindowMaximized: boolean
+  isFullscreen: boolean
   minimizeWindow: () => Promise<void>
   maximizeWindow: () => Promise<void>
   fullscreenWindow: () => Promise<void>
@@ -14,6 +15,18 @@ interface AppWindowType {
 export function useAppWindow(): AppWindowType {
   const [appWindow, setAppWindow] = useState<Window | null>(null)
   const [isWindowMaximized, setIsWindowMaximized] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
+
+  useEffect(() => {
+    const fetchFullscreenStatus = async () => {
+      if (appWindow) {
+        const fullscreenStatus = await appWindow.isFullscreen()
+        setIsFullscreen(fullscreenStatus)
+      }
+    }
+
+    fetchFullscreenStatus()
+  }, [appWindow])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -29,27 +42,33 @@ export function useAppWindow(): AppWindowType {
     }
   }, [appWindow])
 
+  const updateIsFullscreen = useCallback(async () => {
+    if (appWindow) {
+      const _isFullscreen = await appWindow.isFullscreen()
+      setIsFullscreen(_isFullscreen)
+    }
+  }, [appWindow])
+
   useEffect(() => {
-    getOsType().then((osname) => {
-      console.log(osname)
-      if (osname !== 'macos') {
-        updateIsWindowMaximized()
-        let unlisten: () => void = () => {}
+    getOsType().then(() => {
+      updateIsWindowMaximized()
+      updateIsFullscreen()
+      let unlisten: () => void = () => {}
 
-        const listen = async () => {
-          if (appWindow) {
-            unlisten = await appWindow.onResized(() => {
-              updateIsWindowMaximized()
-            })
-          }
+      const listen = async () => {
+        if (appWindow) {
+          unlisten = await appWindow.onResized(() => {
+            updateIsWindowMaximized()
+            updateIsFullscreen()
+          })
         }
-        listen()
-
-        // Cleanup the listener when the component unmounts
-        return () => unlisten && unlisten()
       }
+      listen()
+
+      // Cleanup the listener when the component unmounts
+      return () => unlisten && unlisten()
     })
-  }, [appWindow, updateIsWindowMaximized])
+  }, [appWindow, updateIsFullscreen, updateIsWindowMaximized])
 
   const minimizeWindow = async () => {
     if (appWindow) {
@@ -83,6 +102,7 @@ export function useAppWindow(): AppWindowType {
   return {
     appWindow,
     isWindowMaximized,
+    isFullscreen,
     minimizeWindow,
     maximizeWindow,
     closeWindow,

@@ -36,7 +36,8 @@
         "minHeight": 720,
         "maximized": true,
         "useHttpsScheme": false,
-        "decorations": false
+        "hiddenTitle": true,
+        "titleBarStyle": "Overlay"
       }
     ]
   }
