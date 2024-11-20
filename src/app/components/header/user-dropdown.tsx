@@ -1,5 +1,6 @@
 import { Keyboard, LogOut, User } from 'lucide-react'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
+import { Fragment } from 'react/jsx-runtime'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
 
