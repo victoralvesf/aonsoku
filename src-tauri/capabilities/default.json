@@ -16,6 +16,6 @@
         "core:window:allow-set-size",
         "core:window:allow-set-focus",
         "core:window:allow-is-maximized",
-        "decorum:allow-show-snap-overlay"
+        "core:window:allow-set-fullscreen"
     ]
 }

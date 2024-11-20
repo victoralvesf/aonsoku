@@ -20,7 +20,6 @@ futures-util = "0.3"
 regex = "1.10.5"
 tauri-plugin-os = "2"
 dirs = "5.0.1"
-tauri-plugin-decorum = "1.1.1"
 [target."cfg(target_os = \"macos\")".dependencies]
 cocoa = "0.25.0"
 objc = "0.2.7"

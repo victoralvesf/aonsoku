@@ -1,6 +1,7 @@
 import { getCurrentWindow, Window } from '@tauri-apps/api/window'
 import { useCallback, useEffect, useState } from 'react'
 import { getOsType } from '@/utils/osType'
+import { isTauri } from '@/utils/tauriTools'
 
 interface AppWindowType {
   appWindow: Window | null
@@ -8,7 +9,8 @@ interface AppWindowType {
   isFullscreen: boolean
   minimizeWindow: () => Promise<void>
   maximizeWindow: () => Promise<void>
-  fullscreenWindow: () => Promise<void>
+  enterFullscreenWindow: () => Promise<void>
+  exitFullscreenWindow: () => Promise<void>
   closeWindow: () => Promise<void>
 }
 
@@ -29,7 +31,7 @@ export function useAppWindow(): AppWindowType {
   }, [appWindow])
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && isTauri()) {
       setAppWindow(getCurrentWindow())
     }
   }, [])
@@ -50,6 +52,8 @@ export function useAppWindow(): AppWindowType {
   }, [appWindow])
 
   useEffect(() => {
+    if (!isTauri()) return
+
     getOsType().then(() => {
       updateIsWindowMaximized()
       updateIsFullscreen()
@@ -82,13 +86,22 @@ export function useAppWindow(): AppWindowType {
     }
   }
 
-  const fullscreenWindow = async () => {
+  const enterFullscreenWindow = async () => {
+    if (appWindow) {
+      const fullscreen = await appWindow.isFullscreen()
+      if (!fullscreen) {
+        await appWindow.setFullscreen(true)
+        updateIsFullscreen()
+      }
+    }
+  }
+
+  const exitFullscreenWindow = async () => {
     if (appWindow) {
       const fullscreen = await appWindow.isFullscreen()
       if (fullscreen) {
         await appWindow.setFullscreen(false)
-      } else {
-        await appWindow.setFullscreen(true)
+        updateIsFullscreen()
       }
     }
   }
@@ -106,6 +119,7 @@ export function useAppWindow(): AppWindowType {
     minimizeWindow,
     maximizeWindow,
     closeWindow,
-    fullscreenWindow,
+    enterFullscreenWindow,
+    exitFullscreenWindow,
   }
 }
