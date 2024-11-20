@@ -10,6 +10,8 @@ export function useDetectSticky(
 
   // mount
   useEffect(() => {
+    if (!ref) return
+
     const cachedRef = ref.current
 
     const observer = new IntersectionObserver(
