@@ -6,7 +6,7 @@ import { ControlButton } from './button'
 import { Icons } from './icons'
 
 export function MacOS({ className, ...props }: HTMLProps<HTMLDivElement>) {
-  const { minimizeWindow, maximizeWindow, fullscreenWindow, closeWindow } =
+  const { minimizeWindow, maximizeWindow, toggleFullscreen, closeWindow } =
     useAppWindow()
 
   const [isAltKeyPressed, setIsAltKeyPressed] = useState(false)
@@ -61,7 +61,7 @@ export function MacOS({ className, ...props }: HTMLProps<HTMLDivElement>) {
         />
       </ControlButton>
       <ControlButton
-        onClick={isAltKeyPressed ? maximizeWindow : fullscreenWindow}
+        onClick={isAltKeyPressed ? maximizeWindow : toggleFullscreen}
         className="relative aspect-square h-3 w-3 cursor-default content-center items-center justify-center self-center rounded-full border border-black/[.12] bg-[#28c93f] text-center text-black/60 hover:bg-[#28c93f] active:bg-[#1e9930] active:text-black/60 dark:border-none"
       >
         <Icons.fullMac

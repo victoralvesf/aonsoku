@@ -9,6 +9,7 @@ interface AppWindowType {
   isFullscreen: boolean
   minimizeWindow: () => Promise<void>
   maximizeWindow: () => Promise<void>
+  toggleFullscreen: () => Promise<void>
   enterFullscreenWindow: () => Promise<void>
   exitFullscreenWindow: () => Promise<void>
   closeWindow: () => Promise<void>
@@ -86,6 +87,13 @@ export function useAppWindow(): AppWindowType {
     }
   }
 
+  const toggleFullscreen = async () => {
+    if (appWindow) {
+      const fullscreen = await appWindow.isFullscreen()
+      fullscreen ? exitFullscreenWindow() : enterFullscreenWindow()
+    }
+  }
+
   const enterFullscreenWindow = async () => {
     if (appWindow) {
       const fullscreen = await appWindow.isFullscreen()
@@ -119,6 +127,7 @@ export function useAppWindow(): AppWindowType {
     minimizeWindow,
     maximizeWindow,
     closeWindow,
+    toggleFullscreen,
     enterFullscreenWindow,
     exitFullscreenWindow,
   }
