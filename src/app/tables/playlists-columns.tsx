@@ -96,8 +96,8 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
       enableSorting: true,
       sortingFn: 'basic',
       style: {
-        width: 140,
-        maxWidth: 140,
+        width: 190,
+        maxWidth: 190,
       },
       header: ({ column, table }) => (
         <DataTableColumnHeader column={column} table={table}>

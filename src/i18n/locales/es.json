@@ -1,0 +1,448 @@
+{
+    "home": {
+        "recentlyPlayed": "Reproducido recientemente",
+        "mostPlayed": "Más reproducidos",
+        "explore": "Explorar",
+        "recentlyAdded": "Añadido recientemente"
+    },
+    "sidebar": {
+        "home": "Inicio",
+        "search": "Buscar...",
+        "miniSearch": "Buscar",
+        "library": "Biblioteca",
+        "artists": "Artistas",
+        "songs": "Canciones",
+        "albums": "Álbumes",
+        "playlists": "Listas de reproducción",
+        "radios": "Radios",
+        "emptyPlaylist": "Aún no se han creado listas de reproducción"
+    },
+    "menu": {
+        "language": "Idioma",
+        "server": "Servidor",
+        "serverLogout": "Cerrar sesión"
+    },
+    "generic": {
+        "seeMore": "Ver más",
+        "showDetails": "Mostrar detalles",
+        "hideDetails": "Ocultar detalles",
+        "viewAll": "Ver todos"
+    },
+    "theme": {
+        "label": "Tema",
+        "light": "Claro",
+        "dark": "Oscuro",
+        "system": "Predeterminado del sistema"
+    },
+    "playlist": {
+        "headline": "Lista de reproducción",
+        "songCount_one": "{{count}} canción",
+        "songCount_many": "{{count}} canciones",
+        "songCount_other": "{{count}} canciones",
+        "refresh": "Actualizar listas de reproducción",
+        "buttons": {
+            "play": "Reproducir {{name}}",
+            "shuffle": "Reproducir {{name}} en modo aleatorio",
+            "options": "Más opciones para {{name}}"
+        },
+        "noSongList": "¡Esta lista de reproducción todavía no tiene canciones!",
+        "form": {
+            "labels": {
+                "name": "Nombre",
+                "commentDescription": "Escriba una breve descripción para esta lista de reproducción",
+                "isPublic": "Pública",
+                "comment": "Comentario",
+                "isPublicDescription": "Seleccione esta opción para hacer la lista de reproducción pública. Esto permitirá que otros usuarios puedan ver y acceder a su lista de reproducción."
+            },
+            "create": {
+                "title": "Crear lista de reproducción",
+                "button": "Crear",
+                "toast": {
+                    "success": "¡Lista de reproducción creada con éxito!",
+                    "error": "¡Error al crear lista de reproducción!"
+                }
+            },
+            "edit": {
+                "title": "Editar lista de reproducción",
+                "button": "Actualizar",
+                "toast": {
+                    "success": "¡Lista de reproducción actualizada con éxito!",
+                    "error": "¡Error al actualizar la lista de reproducción!"
+                }
+            },
+            "delete": {
+                "description": "Esta acción no se puede deshacer.",
+                "toast": {
+                    "error": "¡Error al eliminar la lista de reproducción!",
+                    "success": "¡Lista de reproducción eliminada con éxito!"
+                },
+                "title": "¿Seguro que quiere eliminar esta lista de reproducción?"
+            },
+            "validations": {
+                "nameLength": "La lista de reproducción debe tener al menos 2 caracteres."
+            },
+            "removeSong": {
+                "title_one": "¿Seguro que quiere eliminar la canción seleccionada?",
+                "title_many": "¿Seguro que quiere eliminar las canciones seleccionadas?",
+                "title_other": "¿Seguro que quiere eliminar las canciones seleccionadas?",
+                "description": "Esta acción no se puede deshacer.",
+                "toast": {
+                    "success_one": "¡Canción eliminada con éxito!",
+                    "success_many": "¡Canciones eliminadas con éxito!",
+                    "success_other": "¡Canciones eliminadas con éxito!",
+                    "error_one": "¡Error al eliminar la canción!",
+                    "error_many": "¡Error al eliminar las canciones!",
+                    "error_other": "¡Error al eliminar las canciones!"
+                }
+            }
+        },
+        "duration": "Cerca de {{duration}}"
+    },
+    "songs": {
+        "list": {
+            "search": {
+                "placeholder": "Buscar canciones..."
+            },
+            "filter": {
+                "clear": "Borrar filtro"
+            },
+            "byArtist": "Canciones de {{artist}}"
+        }
+    },
+    "album": {
+        "headline": "Álbum",
+        "buttons": {
+            "like": "Me gusta {{name}}",
+            "dislike": "Eliminar me gusta de {{name}}"
+        },
+        "info": {
+            "about": "Sobre {{name}}",
+            "lastfm": "Abrir en Last.fm",
+            "musicbrainz": "Abrir en MusicBrainz"
+        },
+        "more": {
+            "listTitle": "Más sobre este artista",
+            "discography": "Discografía del artista",
+            "genreTitle": "Más sobre {{genre}}"
+        },
+        "list": {
+            "header": {
+                "albumsByArtist": "Álbumes de {{artist}}"
+            },
+            "empty": {
+                "title": "¡Vaya, no hay álbumes aquí!",
+                "info": "Parece que no hay álbumes con el filtro actual.",
+                "action": "¿Intente ajustar los filtros?"
+            },
+            "genre": {
+                "search": "Encontrar un género...",
+                "loading": "Cargando géneros...",
+                "notFound": "No se ha encontrado el género.",
+                "label": "Seleccionar un género..."
+            },
+            "filter": {
+                "artist": "Artista",
+                "genre": "Género",
+                "favorites": "Favoritos",
+                "mostPlayed": "Más reproducidos",
+                "name": "Nombre",
+                "random": "Aleatorio",
+                "recentlyAdded": "Añadido recientemente",
+                "recentlyPlayed": "Reproducido recientemente",
+                "releaseYear": "Año de lanzamiento",
+                "discography": "Discografía",
+                "search": "Buscar"
+            },
+            "search": {
+                "placeholder": "Buscar álbumes..."
+            }
+        },
+        "table": {
+            "discNumber": "Disco {{number}}"
+        }
+    },
+    "artist": {
+        "headline": "Artista",
+        "buttons": {
+            "options": "Más opciones para {{artist}}",
+            "shuffle": "Reproducir radio de {{artist}} en modo aleatorio",
+            "play": "Reproducir radio de {{artist}}"
+        },
+        "info": {
+            "albumsCount_one": "{{count}} álbum",
+            "albumsCount_many": "{{count}} álbumes",
+            "albumsCount_other": "{{count}} álbumes"
+        },
+        "topSongs": "Popular",
+        "recentAlbums": "Álbumes recientes",
+        "relatedArtists": "Artistas relacionados"
+    },
+    "table": {
+        "columns": {
+            "title": "Título",
+            "artist": "Artista",
+            "album": "Álbum",
+            "year": "Año",
+            "duration": "Duración",
+            "plays": "Reproducciones",
+            "lastPlayed": "Última vez reproducido",
+            "bpm": "PPM",
+            "bitrate": "Tasa de bits",
+            "quality": "Calidad",
+            "name": "Nombre",
+            "public": "Público",
+            "size": "Tamaño",
+            "codec": "Códec",
+            "path": "Ruta",
+            "favorite": "Favorito",
+            "discNumber": "Número de disco",
+            "trackGain": "Ganancia de pista",
+            "trackPeak": "Pico de pista",
+            "albumPeak": "Pico de álbum",
+            "comment": "Comentario",
+            "track": "Pista",
+            "genres": "Géneros",
+            "albumCount": "Número de álbumes",
+            "songCount": "Número de canciones"
+        },
+        "buttons": {
+            "play": "Reproducir {{title}} de {{artist}}",
+            "pause": "Pausar {{title}} de {{artist}}"
+        },
+        "lastPlayed": "Hace {{date}}",
+        "pagination": {
+            "screenReader": {
+                "firstPage": "Ir a la primera página",
+                "previousPage": "Ir a la página anterior",
+                "nextPage": "Ir a la siguiente página",
+                "lastPage": "Ir a la última página"
+            },
+            "rowsPerPage": "Filas por página",
+            "currentPage": "Página {{currentPage}} de {{totalPages}}"
+        },
+        "sort": {
+            "desc": "Descendente",
+            "reset": "Restablecer",
+            "asc": "Ascendente"
+        },
+        "menu": {
+            "selectedCount_one": "{{count}} seleccionado",
+            "selectedCount_many": "{{count}} seleccionados",
+            "selectedCount_other": "{{count}} seleccionados"
+        }
+    },
+    "fullscreen": {
+        "playing": "En reproducción",
+        "noLyrics": "No se ha encontrado letra",
+        "lyrics": "Letra",
+        "switchButton": "Cambiar a pantalla completa",
+        "queue": "Cola",
+        "loadingLyrics": "Buscando letra..."
+    },
+    "logout": {
+        "dialog": {
+            "cancel": "Cancelar",
+            "confirm": "Continuar",
+            "description": "Confirmar para cerrar sesión.",
+            "title": "¿Preparado para despedirse por ahora?"
+        }
+    },
+    "login": {
+        "form": {
+            "server": "Servidor",
+            "description": "Conectar a su servidor de Subsonic.",
+            "username": "Nombre de usuario",
+            "connect": "Conectar",
+            "connecting": "Conectando...",
+            "validations": {
+                "url": "Por favor introduce una dirección URL válida.",
+                "protocol": "La dirección URL debe comenzar con http:// o https://",
+                "username": "Por favor, proporcione un nombre de usuario",
+                "passwordLength": "La contraseña debe tener al menos 2 caracteres.",
+                "password": "Por favor, proporcione una contraseña",
+                "usernameLength": "El nombre de usuario debe tener al menos 2 caracteres."
+            },
+            "urlDescription": "Esta es su dirección URL",
+            "url": "Dirección URL",
+            "password": "Contraseña",
+            "usernamePlaceholder": "Su nombre de usuario"
+        }
+    },
+    "toast": {
+        "server": {
+            "success": "¡El servidor se ha guardado con éxito!",
+            "error": "¡Error de comunicación con el servidor!"
+        }
+    },
+    "command": {
+        "inputPlaceholder": "Buscar un álbum, artista o canción",
+        "noResults": "No se han encontrado resultados.",
+        "commands": {
+            "theme": "Cambiar tema",
+            "heading": "Comandos",
+            "pages": "Ir a página"
+        },
+        "pages": "Páginas"
+    },
+    "player": {
+        "noSongPlaying": "No se reproduce ninguna canción",
+        "tooltips": {
+            "shuffle": {
+                "enable": "Activar aleatorio",
+                "disable": "Desactivar aleatorio"
+            },
+            "previous": "Anterior",
+            "play": "Reproducir",
+            "next": "Siguiente",
+            "repeat": {
+                "enable": "Activar repetir",
+                "disable": "Desactivar repetir",
+                "enableOne": "Activar repetir una vez"
+            },
+            "like": "Me gusta {{song}} de {{artist}}",
+            "dislike": "Eliminar me gusta de {{song}} de {{artist}}",
+            "pause": "Pausa"
+        },
+        "noRadioPlaying": "No se reproduce ninguna radio"
+    },
+    "options": {
+        "play": "Reproducir",
+        "addLast": "Añadir al final",
+        "download": "Descargar",
+        "playlist": {
+            "add": "Añadir a lista de reproducción",
+            "edit": "Editar lista de reproducción",
+            "delete": "Eliminar lista de reproducción",
+            "search": "Encontrar una lista de reproducción",
+            "create": "Nueva lista de reproducción",
+            "notFound": "No se ha encontrado la lista de reproducción",
+            "removeSong": "Eliminar de la lista de reproducción"
+        },
+        "info": "Obtener información",
+        "playNext": "Reproducir siguiente"
+    },
+    "radios": {
+        "label": "Radio",
+        "addRadio": "Añadir radio",
+        "table": {
+            "name": "Nombre",
+            "stream": "Dirección URL de retransmisión",
+            "actions": {
+                "edit": "Editar radio",
+                "delete": "Eliminar radio"
+            },
+            "playTooltip": "Reproducir radio {{name}}",
+            "homepage": "Dirección URL de la página de inicio",
+            "pauseTooltip": "Pausar radio {{name}}"
+        },
+        "empty": {
+            "info": "Haga clic para añadir su primera emisora de radio.",
+            "title": "¡No tienes ninguna radio!"
+        },
+        "form": {
+            "create": {
+                "title": "Añadir radio",
+                "button": "Guardar",
+                "toast": {
+                    "success": "¡Radio añadida con éxito!",
+                    "error": "¡Error al crear una radio!"
+                }
+            },
+            "edit": {
+                "button": "Actualizar",
+                "title": "Editar radio",
+                "toast": {
+                    "success": "¡Radio actualizada con éxito!",
+                    "error": "¡Error al actualizar la radio!"
+                }
+            },
+            "delete": {
+                "title": "¿Seguro que quiere eliminar esta emisora de radio?",
+                "description": "Esta acción no se puede deshacer.",
+                "toast": {
+                    "error": "¡Errro al eliminar la radio!",
+                    "success": "¡Radio eliminada con éxito!"
+                }
+            },
+            "validations": {
+                "name": "El nombre de la radio debe tener al menos 3 caracteres.",
+                "homepageUrlLength": "La dirección URL de la página de inicio debe tener al menos 10 caracteres",
+                "streamUrlLength": "La dirección URL de retransmisión debe tener al menos 10 caracteres",
+                "url": "Por favor, proporcione una dirección URL válida."
+            }
+        }
+    },
+    "time": {
+        "days_one": "{{days}} día",
+        "days_many": "{{days}} días",
+        "days_other": "{{days}} días",
+        "hour": "{{hour}} h",
+        "minutes": "{{minutes}} min",
+        "seconds": "{{seconds}} s"
+    },
+    "server": {
+        "songCount_one": "{{count}} canción",
+        "songCount_many": "{{count}} canciones",
+        "songCount_other": "{{count}} canciones",
+        "folderCount_one": "{{count}} carpeta",
+        "folderCount_many": "{{count}} carpetas",
+        "folderCount_other": "{{count}} carpetas",
+        "lastScan": "Última exploración: {{date}}",
+        "status": "Estado",
+        "buttons": {
+            "refresh": "Actualizar estado",
+            "startScan": "Exploración rápida"
+        },
+        "management": "Gestión de servidor"
+    },
+    "downloads": {
+        "started": "Descarga iniciada.",
+        "failed": "Hubo un error al descargar su archivo.",
+        "completed": "Se ha descargado su archivo."
+    },
+    "queue": {
+        "clear": "Limpiar cola",
+        "title": "Cola"
+    },
+    "shortcuts": {
+        "modal": {
+            "title": "Atajos de teclado",
+            "description": {
+                "first": "Presionar",
+                "last": "para activar esta ventana modal."
+            }
+        },
+        "playback": {
+            "label": "Reproducción",
+            "repeat": "Repetir",
+            "previous": "Saltar a la anterior",
+            "next": "Saltar a la siguiente",
+            "play": "Reproducir / Pausar",
+            "shuffle": "Aleatorio"
+        }
+    },
+    "songInfo": {
+        "title": "Detalles de la canción",
+        "error": "No se pudo recuperar la información de la canción. Por favor, inténtelo de nuevo más tarde."
+    },
+    "dayjs": {
+        "relativeTime": {
+            "future": "en %s",
+            "past": "Hace %s",
+            "s": "unos segundos",
+            "m": "1 minuto",
+            "mm": "%d minutos",
+            "M": "1 mes",
+            "MM": "%d meses",
+            "d": "1 día",
+            "dd": "%d días",
+            "y": "1 año",
+            "yy": "%d años",
+            "hh": "%d horas",
+            "h": "1 hora"
+        }
+    },
+    "warnings": {
+        "reload": "¡Hay una canción en reproducción!\n¿Seguro que quiere recargar la página?"
+    }
+}
