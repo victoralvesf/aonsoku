@@ -7,6 +7,7 @@ import {
 } from '@/app/components/ui/drawer'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { enterFullscreen, exitFullscreen } from '@/utils/browser'
+import { isWindows } from '@/utils/osType'
 import { isTauri } from '@/utils/tauriTools'
 import FullscreenBackdrop from './backdrop'
 import { CloseFullscreenButton, SwitchThemeButton } from './buttons'
@@ -22,6 +23,9 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
 
   function handleFullscreen(open: boolean) {
     if (isTauri()) {
+      // flag to prevent enter fullscreen on windows
+      // because it's not fully supported by tauri
+      if (isWindows) return
       open ? enterFullscreenWindow() : exitFullscreenWindow()
     } else {
       open ? enterFullscreen() : exitFullscreen()
