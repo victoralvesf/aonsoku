@@ -1,6 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+#[cfg(not(target_os = "linux"))]
 use tauri::Manager;
 
 #[cfg(target_os = "macos")]
@@ -42,7 +43,7 @@ fn main() {
         .expect("error while running tauri application");
 }
 
-#[cfg(not(target_os = "macos"))]
+#[cfg(target_os = "windows")]
 fn main() {
     tauri::Builder::default()
         .setup(|app| {
@@ -51,6 +52,15 @@ fn main() {
 
             Ok(())
         })
+        .plugin(tauri_plugin_os::init())
+        .invoke_handler(tauri::generate_handler![commands::download_file])
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
+}
+
+#[cfg(target_os = "linux")]
+fn main() {
+    tauri::Builder::default()
         .plugin(tauri_plugin_os::init())
         .invoke_handler(tauri::generate_handler![commands::download_file])
         .run(tauri::generate_context!())
