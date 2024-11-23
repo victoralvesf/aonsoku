@@ -17,8 +17,7 @@ import {
 } from '@/app/components/ui/dropdown-menu'
 import { LogoutObserver } from '@/app/observers/logout-observer'
 import { useAppData, useAppStore } from '@/store/app.store'
-import { isMac } from '@/utils/osType'
-import { isTauri } from '@/utils/tauriTools'
+import { isWindows } from '@/utils/osType'
 import { LangSelect } from './lang-select'
 import { ThemeSelect } from './theme-select'
 
@@ -34,11 +33,9 @@ export function UserDropdown() {
   useHotkeys('mod+/', () => setShortcutsOpen((prev) => !prev))
 
   function getAlignPosition() {
-    if (!isTauri()) return 'end'
+    if (isWindows) return 'center'
 
-    if (isMac) return 'end'
-
-    return 'center'
+    return 'end'
   }
 
   return (
