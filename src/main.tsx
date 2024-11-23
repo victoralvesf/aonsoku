@@ -13,6 +13,11 @@ import App from '@/App'
 
 import { queryClient } from '@/lib/queryClient'
 import { blockFeatures } from '@/utils/browser'
+import { isLinux } from '@/utils/osType'
+
+if (isLinux) {
+  import('@/tw-fix-linux.css')
+}
 
 blockFeatures()
 
