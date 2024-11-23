@@ -37,6 +37,7 @@
     "@tanstack/query/exhaustive-deps": "error"
   },
   "ignorePatterns": [
-    "src/**/*.css"
+    "src/**/*.css",
+    "src/**/*.json"
   ]
 }
