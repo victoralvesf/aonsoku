@@ -1,4 +1,5 @@
 import { usePlayerSonglist } from '@/store/player.store'
+import { isLinux } from '@/utils/osType'
 import { tauriDragRegion } from '@/utils/tauriDragRegion'
 import { AppTitle } from './header/app-title'
 
@@ -23,9 +24,8 @@ export function HeaderSongInfo() {
       {...tauriDragRegion}
       className="col-span-2 flex justify-center items-center"
     >
-      {isPlaylistEmpty ? (
-        <AppTitle />
-      ) : (
+      {!isLinux && isPlaylistEmpty && <AppTitle />}
+      {!isPlaylistEmpty && (
         <div
           {...tauriDragRegion}
           className="flex w-full justify-center subpixel-antialiased font-medium text-sm text-muted-foreground"
