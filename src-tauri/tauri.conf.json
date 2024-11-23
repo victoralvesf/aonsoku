@@ -37,7 +37,9 @@
         "maximized": true,
         "useHttpsScheme": false,
         "hiddenTitle": true,
-        "titleBarStyle": "Overlay"
+        "titleBarStyle": "Overlay",
+        "backgroundColor": "#0f1729",
+        "theme": "Dark"
       }
     ]
   }
