@@ -425,6 +425,21 @@
         "title": "Detalles de la canción",
         "error": "No se pudo recuperar la información de la canción. Por favor, inténtelo de nuevo más tarde."
     },
+    "warnings": {
+        "reload": "¡Hay una canción en reproducción!\n¿Seguro que quiere recargar la página?"
+    },
+    "update": {
+        "dialog": {
+            "title": "¡Nueva Versión Disponible!",
+            "remindLater": "Recordarme Más Tarde",
+            "install": "Instalar y Reiniciar"
+        },
+        "toasts": {
+            "started": "El proceso de actualización ha comenzado.",
+            "success": "¡La actualización se ha instalado! La aplicación se reiniciará ahora.",
+            "error": "Error al instalar la actualización. Por favor, intente descargarla directamente desde GitHub."
+        }
+    },
     "dayjs": {
         "relativeTime": {
             "future": "en %s",
@@ -441,8 +456,5 @@
             "hh": "%d horas",
             "h": "1 hora"
         }
-    },
-    "warnings": {
-        "reload": "¡Hay una canción en reproducción!\n¿Seguro que quiere recargar la página?"
     }
 }

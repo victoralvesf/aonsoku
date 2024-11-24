@@ -423,6 +423,18 @@
   "warnings": {
     "reload": "Há uma música tocando!\nVocê tem certeza que deseja recarregar a página?"
   },
+  "update": {
+    "dialog": {
+      "title": "Nova Versão Disponível!",
+      "remindLater": "Lembrar-me Mais Tarde",
+      "install": "Instalar e Reiniciar"
+    },
+    "toasts": {
+      "started": "O processo de atualização foi iniciado.",
+      "success": "A atualização foi instalada! O aplicativo será reiniciado agora.",
+      "error": "Falha ao instalar a atualização. Por favor, tente baixá-la diretamente do GitHub."
+    }
+  },
   "dayjs": {
     "relativeTime": {
       "future": "em %s",

@@ -7,6 +7,7 @@
   },
   "bundle": {
     "active": true,
+    "createUpdaterArtifacts": true,
     "targets": "all",
     "icon": [
       "icons/32x32.png",
@@ -20,7 +21,14 @@
   "mainBinaryName": "Aonsoku",
   "version": "0.5.0",
   "identifier": "com.victoralvesf.aonsoku",
-  "plugins": {},
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDRDNTlENjZCNTJFRDdDRDAKUldUUWZPMVNhOVpaVENsbXg5RTM1TzFnME43TmZoaHU5bWplS1VSSW9YcE1QT0w1ZHRIWHNUOVoK",
+      "endpoints": [
+        "https://github.com/victoralvesf/aonsoku/releases/latest/download/latest.json"
+      ]
+    }
+  },
   "app": {
     "withGlobalTauri": true,
     "security": {

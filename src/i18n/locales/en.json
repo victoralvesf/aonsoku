@@ -423,6 +423,18 @@
   "warnings": {
     "reload": "There is a song playing!\nAre you sure you want to reload the page?"
   },
+  "update": {
+    "dialog": {
+      "title": "New Version Available!",
+      "remindLater": "Remind Me Later",
+      "install": "Install and Restart"
+    },
+    "toasts": {
+      "started": "The update process has started.",
+      "success": "The update has been installed! The app will now restart.",
+      "error": "Failed to install the update. Please try downloading it directly from GitHub."
+    }
+  },
   "dayjs": {
     "relativeTime": {
       "future": "in %s",
