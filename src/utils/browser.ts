@@ -1,5 +1,6 @@
 import i18n from '@/i18n'
 import { usePlayerStore } from '@/store/player.store'
+import { isMac } from './osType'
 import { isTauri } from './tauriTools'
 
 export enum MouseButton {
@@ -107,9 +108,18 @@ export function exitFullscreen() {
   }
 }
 
+function setFontSmoothing() {
+  if (isMacOS() || isMac) {
+    document.body.classList.add('mac')
+  } else {
+    document.body.classList.add('windows-linux')
+  }
+}
+
 export function blockFeatures() {
   preventContextMenu()
   preventNewTabAndScroll()
   preventReload()
   preventAltBehaviour()
+  setFontSmoothing()
 }

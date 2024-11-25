@@ -57,7 +57,13 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
+  }
+  body.windows-linux {
+    @apply antialiased;
+  }
+  body.mac {
+    @apply subpixel-antialiased;
   }
   :root {
     --header-height: 44px;
