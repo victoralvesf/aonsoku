@@ -17,6 +17,7 @@ import {
 import { Badge } from '@/app/components/ui/badge'
 import { Button } from '@/app/components/ui/button'
 import { useAppUpdate } from '@/store/app.store'
+import { queryKeys } from '@/utils/queryKeys'
 
 export function UpdateObserver() {
   const { t } = useTranslation()
@@ -25,7 +26,7 @@ export function UpdateObserver() {
   const [updateHasStarted, setUpdateHasStarted] = useState(false)
 
   const { data: updateInfo } = useQuery({
-    queryKey: ['checkUpdates'],
+    queryKey: [queryKeys.update.check],
     queryFn: () => check(),
     enabled: !remindOnNextBoot,
     refetchOnWindowFocus: false,
