@@ -7,6 +7,7 @@
   },
   "bundle": {
     "active": true,
+    "category": "Music",
     "createUpdaterArtifacts": true,
     "targets": "all",
     "icon": [
@@ -15,11 +16,15 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "macOS": {
+      "dmg": {
+        "background": "./images/dmg.png"
+      }
+    }
   },
   "productName": "Aonsoku",
   "mainBinaryName": "Aonsoku",
-  "version": "0.5.0",
   "identifier": "com.victoralvesf.aonsoku",
   "plugins": {
     "updater": {
