@@ -1,7 +1,7 @@
 {
   "name": "aonsoku",
   "private": true,
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,6 +12,9 @@
     "lint:fix": "pnpm lint --fix",
     "cy:open": "cypress open",
     "test": "cypress run --component"
+  },
+  "repository": {
+    "url": "https://github.com/victoralvesf/aonsoku"
   },
   "dependencies": {
     "@chriscodesthings/random-css-hex-color": "^1.1.0",
@@ -38,7 +41,11 @@
     "@tanstack/react-query": "^5.51.23",
     "@tanstack/react-table": "^8.17.3",
     "@tanstack/react-virtual": "^3.10.8",
-    "@tauri-apps/api": "^1",
+    "@tauri-apps/api": "^2.0.0",
+    "@tauri-apps/plugin-os": "^2.0.0",
+    "@tauri-apps/plugin-process": "^2.0.0",
+    "@tauri-apps/plugin-shell": "~2",
+    "@tauri-apps/plugin-updater": "~2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
@@ -60,8 +67,10 @@
     "react-hotkeys-hook": "^4.5.0",
     "react-i18next": "^14.1.2",
     "react-lazy-load-image-component": "^1.6.0",
+    "react-markdown": "^9.0.1",
     "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
+    "remark-gfm": "^4.0.0",
     "tailwind-extended-shadows": "^0.4.0",
     "tailwind-extended-shadows-merge": "^0.2.1",
     "tailwind-merge": "^2.3.0",
@@ -75,11 +84,11 @@
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.2.2",
     "@tanstack/eslint-plugin-query": "^5.51.15",
-    "@tauri-apps/cli": "^1",
+    "@tauri-apps/cli": "^2.1.0",
     "@types/crypto-js": "^4.2.2",
     "@types/lodash": "^4.17.4",
     "@types/node": "^20.12.12",
-    "@types/react": "^18.2.15",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.2.7",
     "@types/react-lazy-load-image-component": "^1.6.4",
     "@typescript-eslint/parser": "^7.14.1",

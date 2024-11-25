@@ -1,4 +1,3 @@
-use regex::Regex;
 use reqwest::header::{HeaderMap, CONTENT_DISPOSITION, CONTENT_TYPE};
 
 pub fn get_filename(headers: &HeaderMap, file_id: &str) -> Option<String> {
@@ -20,9 +19,8 @@ pub fn get_filename(headers: &HeaderMap, file_id: &str) -> Option<String> {
 pub fn get_filename_from_headers(headers: &HeaderMap) -> Option<String> {
     if let Some(content_disposition) = headers.get(CONTENT_DISPOSITION) {
         if let Ok(content_disposition) = content_disposition.to_str() {
-            let re = Regex::new(r#"filename="?([^"]+)"?"#).unwrap();
-            if let Some(caps) = re.captures(content_disposition) {
-                let filename = &caps[1];
+            if let Some(filename_part) = content_disposition.strip_prefix("attachment; filename=") {
+                let filename = filename_part.trim_matches('"');
                 let sanitized_filename = sanitize_filename(filename);
                 return Some(sanitized_filename);
             }
@@ -34,19 +32,18 @@ pub fn get_filename_from_headers(headers: &HeaderMap) -> Option<String> {
 pub fn sanitize_filename(filename: &str) -> String {
     filename
         .chars()
-        .map(|c| {
-            if c.is_alphanumeric()
+        .filter(|&c| {
+            c.is_alphanumeric()
                 || c == '.'
                 || c == '_'
                 || c == '-'
                 || c == ' '
                 || c == '('
                 || c == ')'
-            {
-                c
-            } else {
-                '_'
-            }
+                || c == '['
+                || c == ']'
+                || c == ','
+                || c == '\''
         })
         .collect()
 }

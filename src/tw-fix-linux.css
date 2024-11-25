@@ -1,0 +1,28 @@
+.backdrop-blur-sm {
+  -webkit-backdrop-filter: blur(4px) !important;
+  backdrop-filter: blur(4px) !important;
+}
+.backdrop-blur {
+  -webkit-backdrop-filter: blur(8px) !important;
+  backdrop-filter: blur(8px) !important;
+}
+.backdrop-blur-md {
+  -webkit-backdrop-filter: blur(12px) !important;
+  backdrop-filter: blur(12px) !important;
+}
+.backdrop-blur-lg {
+  -webkit-backdrop-filter: blur(16px) !important;
+  backdrop-filter: blur(16px) !important;
+}
+.backdrop-blur-xl {
+  -webkit-backdrop-filter: blur(24px) !important;
+  backdrop-filter: blur(24px) !important;
+}
+.backdrop-blur-2xl {
+  -webkit-backdrop-filter: blur(40px) !important;
+  backdrop-filter: blur(40px) !important;
+}
+.backdrop-blur-3xl {
+  -webkit-backdrop-filter: blur(64px) !important;
+  backdrop-filter: blur(64px) !important;
+}

@@ -39,8 +39,16 @@ export interface IAppCommand {
   setOpen: (value: boolean) => void
 }
 
+export interface IAppUpdate {
+  openDialog: boolean
+  setOpenDialog: (value: boolean) => void
+  remindOnNextBoot: boolean
+  setRemindOnNextBoot: (value: boolean) => void
+}
+
 export interface IAppContext {
   data: IAppData
   command: IAppCommand
   actions: IAppActions
+  update: IAppUpdate
 }

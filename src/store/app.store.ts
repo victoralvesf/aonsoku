@@ -37,6 +37,20 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               })
             },
           },
+          update: {
+            openDialog: false,
+            setOpenDialog: (value) => {
+              set((state) => {
+                state.update.openDialog = value
+              })
+            },
+            remindOnNextBoot: false,
+            setRemindOnNextBoot: (value) => {
+              set((state) => {
+                state.update.remindOnNextBoot = value
+              })
+            },
+          },
           actions: {
             setOsType: (value) => {
               set((state) => {
@@ -129,6 +143,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             state,
             'data.logoutDialogState',
             'data.hideServer',
+            'command.open',
+            'update',
           )
 
           return appStore
@@ -141,3 +157,4 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
 export const useAppData = () => useAppStore((state) => state.data)
 export const useAppDataPages = () => useAppStore((state) => state.data.pages)
 export const useAppActions = () => useAppStore((state) => state.actions)
+export const useAppUpdate = () => useAppStore((state) => state.update)

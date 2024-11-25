@@ -57,7 +57,13 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground subpixel-antialiased;
+    @apply bg-background text-foreground;
+  }
+  body.windows-linux {
+    @apply antialiased;
+  }
+  body.mac {
+    @apply subpixel-antialiased;
   }
   :root {
     --header-height: 44px;
@@ -113,7 +119,6 @@ textarea {
 }
 
 img {
-  user-drag: none;
   -webkit-user-drag: none;
   user-select: none;
   -moz-user-select: none;
@@ -210,4 +215,16 @@ img {
 
 .user-dropdown-trigger[data-state="open"] > :first-child {
   @apply bg-accent;
+}
+
+#update-info-body ul {
+  @apply list-disc list-inside;
+}
+
+#update-info-body h1,
+#update-info-body h2,
+#update-info-body h3,
+#update-info-body h4,
+#update-info-body h5 {
+  @apply font-semibold text-foreground;
 }

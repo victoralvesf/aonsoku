@@ -12,15 +12,14 @@ import '@/i18n'
 import App from '@/App'
 
 import { queryClient } from '@/lib/queryClient'
-import {
-  preventContextMenu,
-  preventNewTabAndScroll,
-  preventReload,
-} from '@/utils/browser'
+import { blockFeatures } from '@/utils/browser'
+import { isLinux } from '@/utils/osType'
 
-preventContextMenu()
-preventNewTabAndScroll()
-preventReload()
+if (isLinux) {
+  import('@/tw-fix-linux.css')
+}
+
+blockFeatures()
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>

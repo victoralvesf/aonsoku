@@ -36,7 +36,8 @@
       "./src/types"
     ],
     "types": [
-      "cypress"
+      "cypress",
+      "node"
     ]
   },
   "include": [

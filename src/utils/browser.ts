@@ -1,5 +1,6 @@
 import i18n from '@/i18n'
 import { usePlayerStore } from '@/store/player.store'
+import { isMac } from './osType'
 import { isTauri } from './tauriTools'
 
 export enum MouseButton {
@@ -15,7 +16,7 @@ export function isMacOS() {
   return isMac ?? false
 }
 
-export function preventContextMenu() {
+function preventContextMenu() {
   document.addEventListener('contextmenu', (e) => {
     if (
       e.target instanceof HTMLInputElement ||
@@ -33,7 +34,7 @@ function isAnyModifierKeyPressed(e: MouseEvent) {
   return e.ctrlKey || e.metaKey || e.shiftKey || e.altKey
 }
 
-export function preventNewTabAndScroll() {
+function preventNewTabAndScroll() {
   // Prevent new tab on middle click
   document.addEventListener('auxclick', (e) => {
     e.preventDefault()
@@ -54,7 +55,7 @@ export function preventNewTabAndScroll() {
   })
 }
 
-export function preventReload() {
+function preventReload() {
   document.addEventListener('keydown', (e) => {
     const isF5 = e.key === 'F5'
     const isReloadCmd = (e.ctrlKey || e.metaKey) && e.key === 'r'
@@ -76,4 +77,49 @@ export function preventReload() {
 
     window.location.reload()
   })
+}
+
+function preventAltBehaviour() {
+  document.addEventListener('keydown', (e) => {
+    if (e.altKey) {
+      e.preventDefault()
+    }
+  })
+}
+
+export function enterFullscreen() {
+  const element = document.documentElement
+  if (element.requestFullscreen) {
+    element.requestFullscreen()
+  }
+  if ('webkitRequestFullscreen' in element) {
+    // @ts-expect-error no types for webkit
+    element.webkitRequestFullscreen()
+  }
+}
+
+export function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen()
+  }
+  if ('webkitExitFullscreen' in document) {
+    // @ts-expect-error no types for webkit
+    document.webkitExitFullscreen()
+  }
+}
+
+function setFontSmoothing() {
+  if (isMacOS() || isMac) {
+    document.body.classList.add('mac')
+  } else {
+    document.body.classList.add('windows-linux')
+  }
+}
+
+export function blockFeatures() {
+  preventContextMenu()
+  preventNewTabAndScroll()
+  preventReload()
+  preventAltBehaviour()
+  setFontSmoothing()
 }

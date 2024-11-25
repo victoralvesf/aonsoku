@@ -5,6 +5,10 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from '@/app/components/ui/drawer'
+import { useAppWindow } from '@/app/hooks/use-app-window'
+import { enterFullscreen, exitFullscreen } from '@/utils/browser'
+import { isWindows } from '@/utils/osType'
+import { isTauri } from '@/utils/tauriTools'
 import FullscreenBackdrop from './backdrop'
 import { CloseFullscreenButton, SwitchThemeButton } from './buttons'
 import { FullscreenPlayer } from './player'
@@ -15,16 +19,30 @@ interface FullscreenModeProps {
 }
 
 export default function FullscreenMode({ children }: FullscreenModeProps) {
+  const { enterFullscreenWindow, exitFullscreenWindow } = useAppWindow()
+
+  function handleFullscreen(open: boolean) {
+    if (isTauri()) {
+      // flag to prevent enter fullscreen on windows
+      // because it's not fully supported by tauri
+      if (isWindows) return
+      open ? enterFullscreenWindow() : exitFullscreenWindow()
+    } else {
+      open ? enterFullscreen() : exitFullscreen()
+    }
+  }
+
   return (
     <Drawer
       fixed
       dismissible={true}
       handleOnly={true}
       disablePreventScroll={true}
+      onOpenChange={handleFullscreen}
     >
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent
-        className="h-screen w-screen rounded-t-none border-none select-none cursor-default"
+        className="h-screen w-screen rounded-t-none border-none select-none cursor-default mt-0"
         showHandle={false}
       >
         <FullscreenBackdrop>

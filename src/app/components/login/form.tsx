@@ -30,9 +30,11 @@ import {
   FormMessage,
 } from '@/app/components/ui/form'
 import { Input } from '@/app/components/ui/input'
+import { Password } from '@/app/components/ui/password'
 import { ROUTES } from '@/routes/routesList'
 import { useAppActions, useAppData } from '@/store/app.store'
 import { removeSlashFromUrl } from '@/utils/removeSlashFromUrl'
+import { isTauri } from '@/utils/tauriTools'
 
 const loginSchema = z.object({
   url: z
@@ -51,7 +53,7 @@ const loginSchema = z.object({
 
 type FormData = z.infer<typeof loginSchema>
 
-const defaultUrl = 'http://'
+const defaultUrl = isTauri() ? 'http://' : 'https://'
 const url = window.SERVER_URL || defaultUrl
 const urlIsValid = url !== defaultUrl
 
@@ -169,12 +171,7 @@ export function LoginForm() {
                     {t('login.form.password')}
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      value={field.value ?? ''}
-                      id="password"
-                      type="password"
-                    />
+                    <Password {...field} value={field.value ?? ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

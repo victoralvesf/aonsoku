@@ -20,13 +20,15 @@
   "menu": {
     "language": "Language",
     "server": "Server",
+    "about": "About",
     "serverLogout": "Logout"
   },
   "generic": {
     "seeMore": "See more",
     "showDetails": "Show details",
     "hideDetails": "Hide details",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "loading": "Loading..."
   },
   "theme": {
     "label": "Theme",
@@ -422,6 +424,28 @@
   },
   "warnings": {
     "reload": "There is a song playing!\nAre you sure you want to reload the page?"
+  },
+  "update": {
+    "dialog": {
+      "title": "New Version Available!",
+      "remindLater": "Remind Me Later",
+      "install": "Install and Restart"
+    },
+    "toasts": {
+      "started": "The update process has started.",
+      "success": "The update has been installed! The app will now restart.",
+      "error": "Failed to install the update. Please try downloading it directly from GitHub."
+    }
+  },
+  "about": {
+    "client": "Client",
+    "server": "Server",
+    "version": "Version:",
+    "type": "Type:",
+    "apiVersion": "API Version:",
+    "toasts": {
+      "copy": "Link copied to clipboard!"
+    }
   },
   "dayjs": {
     "relativeTime": {
