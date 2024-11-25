@@ -1,10 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 import { Dialog, DialogContent, DialogHeader } from '@/app/components/ui/dialog'
 import { subsonic } from '@/service/subsonic'
 import { getAppInfo } from '@/utils/appName'
-import { isLinux } from '@/utils/osType'
 import { queryKeys } from '@/utils/queryKeys'
 
 interface AboutDialogProps {
@@ -78,38 +76,19 @@ export function AboutDialog({ open, onOpenChange }: AboutDialogProps) {
           </div>
 
           <div>
-            {isLinux ? (
-              <button
-                className="w-fit px-2 py-1 rounded-md bg-primary/60 hover:bg-primary/50 border border-primary text-sm font-medium flex items-center"
-                onClick={() => {
-                  navigator.clipboard.writeText(url)
-                  toast.success(t('about.toasts.copy'), {
-                    toastId: 'clipboard',
-                  })
-                }}
-              >
-                <img
-                  src="/icons/github-mark-white.svg"
-                  alt="Github"
-                  className="w-4 h-4 mr-2"
-                />
-                Github
-              </button>
-            ) : (
-              <a
-                className="w-fit px-2 py-1 rounded-md bg-primary/60 hover:bg-primary/50 border border-primary text-sm font-medium flex items-center"
-                href={url}
-                target="_blank"
-                rel="nofollow noreferrer"
-              >
-                <img
-                  src="/icons/github-mark-white.svg"
-                  alt="Github"
-                  className="w-4 h-4 mr-2"
-                />
-                Github
-              </a>
-            )}
+            <a
+              className="w-full px-2 py-1 rounded-md bg-primary/60 hover:bg-primary/50 border border-primary text-sm font-medium flex items-center justify-center"
+              href={url}
+              target="_blank"
+              rel="nofollow noreferrer"
+            >
+              <img
+                src="/icons/github-mark-white.svg"
+                alt="Github"
+                className="w-4 h-4 mr-2"
+              />
+              Github
+            </a>
           </div>
         </div>
       </DialogContent>
