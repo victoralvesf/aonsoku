@@ -1,9 +1,10 @@
-import { Keyboard, LogOut, User } from 'lucide-react'
+import { Info, Keyboard, LogOut, User } from 'lucide-react'
 import { useState } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
 
+import { AboutDialog } from '@/app/components/about/dialog'
 import { ShortcutsDialog } from '@/app/components/shortcuts/dialog'
 import { Avatar, AvatarFallback } from '@/app/components/ui/avatar'
 import {
@@ -28,6 +29,7 @@ export function UserDropdown() {
   )
   const { t } = useTranslation()
   const [shortcutsOpen, setShortcutsOpen] = useState(false)
+  const [aboutOpen, setAboutOpen] = useState(false)
 
   useHotkeys('shift+ctrl+q', () => setLogoutDialogState(true))
   useHotkeys('mod+/', () => setShortcutsOpen((prev) => !prev))
@@ -42,10 +44,8 @@ export function UserDropdown() {
     <Fragment>
       <LogoutObserver />
 
-      <ShortcutsDialog
-        open={shortcutsOpen}
-        onOpenChange={(open) => setShortcutsOpen(open)}
-      />
+      <ShortcutsDialog open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
+      <AboutDialog open={aboutOpen} onOpenChange={setAboutOpen} />
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="user-dropdown-trigger">
@@ -72,6 +72,11 @@ export function UserDropdown() {
             <Keyboard className="mr-2 h-4 w-4" />
             <span>{t('shortcuts.modal.title')}</span>
             <DropdownMenuShortcut>{'⌘/'}</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => setAboutOpen(true)}>
+            <Info className="mr-2 h-4 w-4" />
+            <span>{t('menu.about')}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setLogoutDialogState(true)}>

@@ -20,13 +20,15 @@
     "menu": {
         "language": "Idioma",
         "server": "Servidor",
+        "about": "Acerca de",
         "serverLogout": "Cerrar sesión"
     },
     "generic": {
         "seeMore": "Ver más",
         "showDetails": "Mostrar detalles",
         "hideDetails": "Ocultar detalles",
-        "viewAll": "Ver todos"
+        "viewAll": "Ver todos",
+        "loading": "Cargando..."
     },
     "theme": {
         "label": "Tema",
@@ -438,6 +440,16 @@
             "started": "El proceso de actualización ha comenzado.",
             "success": "¡La actualización se ha instalado! La aplicación se reiniciará ahora.",
             "error": "Error al instalar la actualización. Por favor, intente descargarla directamente desde GitHub."
+        }
+    },
+    "about": {
+        "client": "Cliente",
+        "server": "Servidor",
+        "version": "Versión:",
+        "type": "Tipo:",
+        "apiVersion": "Versión de la API:",
+        "toasts": {
+            "copy": "¡Enlace copiado al portapapeles!"
         }
     },
     "dayjs": {

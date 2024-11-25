@@ -20,13 +20,15 @@
   "menu": {
     "language": "Linguagem",
     "server": "Servidor",
+    "about": "Sobre",
     "serverLogout": "Desconectar"
   },
   "generic": {
     "seeMore": "Ver mais",
     "showDetails": "Exibir detalhes",
     "hideDetails": "Ocultar detalhes",
-    "viewAll": "Ver tudo"
+    "viewAll": "Ver tudo",
+    "loading": "Carregando..."
   },
   "theme": {
     "label": "Tema",
@@ -433,6 +435,16 @@
       "started": "O processo de atualização foi iniciado.",
       "success": "A atualização foi instalada! O aplicativo será reiniciado agora.",
       "error": "Falha ao instalar a atualização. Por favor, tente baixá-la diretamente do GitHub."
+    }
+  },
+  "about": {
+    "client": "Cliente",
+    "server": "Servidor",
+    "version": "Versão:",
+    "type": "Tipo:",
+    "apiVersion": "Versão da API:",
+    "toasts": {
+        "copy": "Link copiado para a área de transferência!"
     }
   },
   "dayjs": {

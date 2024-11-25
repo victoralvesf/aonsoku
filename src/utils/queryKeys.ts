@@ -37,6 +37,11 @@ const search = 'search-key'
 
 const genre = 'get-all-genres'
 
+const update = {
+  serverInfo: 'get-server-info',
+  check: 'check-for-updates',
+}
+
 export const queryKeys = {
   album,
   artist,
@@ -45,4 +50,5 @@ export const queryKeys = {
   radio,
   search,
   genre,
+  update,
 }

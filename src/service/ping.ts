@@ -1,17 +1,19 @@
 import { httpClient } from '@/api/httpClient'
 import { SubsonicResponse } from '@/types/responses/subsonicResponse'
 
+async function pingInfo() {
+  const response = await httpClient<SubsonicResponse>('/ping.view', {
+    method: 'GET',
+  })
+
+  return response?.data
+}
+
 async function pingView() {
   try {
-    const response = await httpClient<SubsonicResponse>('/ping.view', {
-      method: 'GET',
-    })
+    const info = await pingInfo()
 
-    if (response?.data.status === 'ok') {
-      return true
-    } else {
-      return false
-    }
+    return info?.status === 'ok'
   } catch (error) {
     console.error(error)
     return false
@@ -19,5 +21,6 @@ async function pingView() {
 }
 
 export const ping = {
+  pingInfo,
   pingView,
 }
