@@ -13,6 +13,9 @@
     "cy:open": "cypress open",
     "test": "cypress run --component"
   },
+  "repository": {
+    "url": "https://github.com/victoralvesf/aonsoku"
+  },
   "dependencies": {
     "@chriscodesthings/random-css-hex-color": "^1.1.0",
     "@hookform/resolvers": "^3.9.0",
