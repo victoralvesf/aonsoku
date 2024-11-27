@@ -19,6 +19,8 @@
   </p>
 
   [![React][React.js]][React-url] [![Tauri][Tauri]][Tauri-url] [![Rust][Rust]][Rust-url]
+
+  [![Download][Release-badge]][Release-url]
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -42,6 +44,7 @@
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#translation">Translation</a></li>
     <li><a href="#license">License</a></li>
   </ol>
 </details>
@@ -70,8 +73,6 @@
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started
-
-As Aonsoku is currently in early development, to use the desktop app you need to build it yourself.
 
 ### Prerequisites
 
@@ -162,6 +163,15 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- WEBLATE -->
+## Translation
+
+This project uses [Weblate](https://hosted.weblate.org/projects/aonsoku/) for translations. If you'd like to help, please visit the link to submit your contribution.
+
+<a href="https://hosted.weblate.org/engage/aonsoku/"><img src="https://hosted.weblate.org/widget/aonsoku/translation/multi-auto.svg" alt="Translation status" /></a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- LICENSE -->
 ## License
 
@@ -177,3 +187,5 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [Rust-url]: https://www.rust-lang.org
 [Tauri]: https://img.shields.io/badge/Tauri-000000?style=for-the-badge&logo=tauri&logoColor=24C8DB
 [Tauri-url]: https://tauri.app
+[Release-badge]: https://img.shields.io/github/v/release/victoralvesf/aonsoku?display_name=release&style=for-the-badge&label=Download&labelColor=%23000&color=%2310B77F&logo=rocket&logoColor=%2310B77F&logoSize=auto
+[Release-url]: https://github.com/victoralvesf/aonsoku/releases/latest
