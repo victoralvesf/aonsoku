@@ -22,26 +22,26 @@ export function FullscreenTabs() {
       <TabsList className="w-full bg-background/30 mb-4">
         <TabsTrigger
           value="queue"
-          className="w-full data-[state=active]:bg-primary dark:data-[state=active]:bg-primary/80 hover:data-[state=inactive]:bg-background/50 text-foreground"
+          className="w-full data-[state=active]:bg-foreground data-[state=active]:text-secondary text-foreground"
         >
           {t('fullscreen.queue')}
         </TabsTrigger>
         <TabsTrigger
           value="playing"
-          className="w-full data-[state=active]:bg-primary dark:data-[state=active]:bg-primary/80 hover:data-[state=inactive]:bg-background/50 text-foreground"
+          className="w-full data-[state=active]:bg-foreground data-[state=active]:text-secondary text-foreground"
         >
           {t('fullscreen.playing')}
         </TabsTrigger>
         <TabsTrigger
           value="lyrics"
-          className="w-full data-[state=active]:bg-primary dark:data-[state=active]:bg-primary/80 hover:data-[state=inactive]:bg-background/50 text-foreground"
+          className="w-full data-[state=active]:bg-foreground data-[state=active]:text-secondary text-foreground"
         >
           {t('fullscreen.lyrics')}
         </TabsTrigger>
       </TabsList>
       <TabsContent
         value="queue"
-        className="mt-0 h-[calc(100%-64px)] overflow-y-auto pr-1"
+        className="mt-0 h-[calc(100%-64px)] overflow-y-auto"
       >
         <MemoSongQueue />
       </TabsContent>
@@ -53,7 +53,7 @@ export function FullscreenTabs() {
       </TabsContent>
       <TabsContent
         value="lyrics"
-        className="mt-0 h-[calc(100%-64px)] overflow-y-auto pr-1"
+        className="mt-0 h-[calc(100%-64px)] overflow-y-auto"
       >
         <MemoLyricsTab />
       </TabsContent>

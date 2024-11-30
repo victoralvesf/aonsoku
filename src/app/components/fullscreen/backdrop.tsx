@@ -1,25 +1,18 @@
-import { ReactNode } from 'react'
 import { getCoverArtUrl } from '@/api/httpClient'
-import { usePlayerSonglist } from '@/store/player.store'
+import { usePlayerCurrentSong } from '@/store/player.store'
 
-interface FullscreenBackdropProps {
-  children: ReactNode
-}
-
-export default function FullscreenBackdrop({
-  children,
-}: FullscreenBackdropProps) {
-  const { currentSong } = usePlayerSonglist()
-  const coverArtUrl = getCoverArtUrl(currentSong.coverArt, 'song', '1000')
+export default function FullscreenBackdrop() {
+  const currentSong = usePlayerCurrentSong()
+  const coverArtUrl = getCoverArtUrl(currentSong.coverArt, 'song', '600')
   const backgroundImage = `url(${coverArtUrl})`
 
   return (
-    <div
-      className="w-full h-full bg-cover bg-center backdrop-blur shadow-inner bg-foreground"
-      style={{ backgroundImage }}
-    >
-      <div className="w-full flex-1 h-full inset-0 bg-background/40 backdrop-blur-3xl supports-[backdrop-filter]:bg-background/40">
-        {children}
+    <div className="absolute inset-0 w-full h-full z-0">
+      <div className="relative w-full h-full bg-black/60">
+        <div
+          className="absolute -inset-20 bg-cover bg-center z-0"
+          style={{ backgroundImage, filter: 'blur(54px)' }}
+        />
       </div>
     </div>
   )
