@@ -42,6 +42,7 @@ export function FullscreenControls() {
           buttonsStyle.secondary,
           isShuffleActive && buttonsStyle.activeDot,
         )}
+        style={{ ...buttonsStyle.style }}
         onClick={() => toggleShuffle()}
         disabled={isPlayingOneSong() || !hasNextSong()}
       >
@@ -56,6 +57,7 @@ export function FullscreenControls() {
         size="icon"
         variant="ghost"
         className={buttonsStyle.secondary}
+        style={{ ...buttonsStyle.style }}
         onClick={() => playPrevSong()}
         disabled={!hasPrevSong()}
       >
@@ -65,6 +67,7 @@ export function FullscreenControls() {
         size="icon"
         variant="link"
         className={buttonsStyle.main}
+        style={{ ...buttonsStyle.style }}
         onClick={() => togglePlayPause()}
       >
         {isPlaying ? (
@@ -77,6 +80,7 @@ export function FullscreenControls() {
         size="icon"
         variant="ghost"
         className={buttonsStyle.secondary}
+        style={{ ...buttonsStyle.style }}
         onClick={() => playNextSong()}
         disabled={!hasNextSong() && loopState !== LoopState.All}
       >
@@ -90,6 +94,7 @@ export function FullscreenControls() {
           loopState !== LoopState.Off && buttonsStyle.activeDot,
         )}
         onClick={() => toggleLoop()}
+        style={{ ...buttonsStyle.style }}
       >
         {loopState === LoopState.Off && (
           <Repeat className={clsx(buttonsStyle.secondaryIcon)} />
@@ -110,12 +115,14 @@ export function FullscreenControls() {
 }
 
 export const buttonsStyle = {
-  main: 'w-14 h-14 rounded-full shadow-lg bg-secondary-foreground hover:scale-105 transition-transform transform-gpu',
-  mainIcon: 'w-6 h-6 text-background fill-background transform-gpu',
+  main: 'w-14 h-14 rounded-full shadow-lg bg-secondary-foreground hover:scale-105 transition-transform will-change-transform',
+  mainIcon: 'w-6 h-6 text-background fill-background',
   secondary:
-    'relative w-12 h-12 rounded-full hover:bg-transparent hover:scale-110 transition-transform transform-gpu',
-  secondaryIcon: 'w-6 h-6 drop-shadow-lg transform-gpu',
-  secondaryIconFilled:
-    'w-6 h-6 fill-secondary-foreground drop-shadow-lg transform-gpu',
+    'relative w-12 h-12 rounded-full hover:bg-transparent hover:scale-110 transition-transform will-change-transform',
+  secondaryIcon: 'w-6 h-6 drop-shadow-lg',
+  secondaryIconFilled: 'w-6 h-6 fill-secondary-foreground drop-shadow-lg',
   activeDot: 'player-button-active',
+  style: {
+    backfaceVisibility: 'hidden' as const,
+  },
 }

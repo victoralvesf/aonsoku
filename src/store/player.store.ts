@@ -525,6 +525,9 @@ export const usePlayerActions = () => usePlayerStore((state) => state.actions)
 
 export const usePlayerSonglist = () => usePlayerStore((state) => state.songlist)
 
+export const usePlayerCurrentSong = () =>
+  usePlayerStore((state) => state.songlist.currentSong)
+
 export const usePlayerCurrentSongIndex = () =>
   usePlayerStore((state) => state.songlist.currentSongIndex)
 

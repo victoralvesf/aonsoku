@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { memo, ReactNode } from 'react'
 import {
   Drawer,
   DrawerClose,
@@ -17,6 +17,8 @@ import { FullscreenTabs } from './tabs'
 interface FullscreenModeProps {
   children: ReactNode
 }
+
+const MemoFullscreenBackdrop = memo(FullscreenBackdrop)
 
 export default function FullscreenMode({ children }: FullscreenModeProps) {
   const { enterFullscreenWindow, exitFullscreenWindow } = useAppWindow()
@@ -38,6 +40,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
       dismissible={true}
       handleOnly={true}
       disablePreventScroll={true}
+      modal={false}
       onOpenChange={handleFullscreen}
     >
       <DrawerTrigger asChild>{children}</DrawerTrigger>
@@ -45,32 +48,31 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
         className="h-screen w-screen rounded-t-none border-none select-none cursor-default mt-0"
         showHandle={false}
       >
-        <FullscreenBackdrop>
-          <div className="flex flex-col p-8 w-screen h-screen gap-4">
-            {/* First Row */}
-            <div className="flex justify-between items-center w-full h-[40px]">
-              <DrawerClose>
-                <CloseFullscreenButton />
-              </DrawerClose>
+        <MemoFullscreenBackdrop />
+        <div className="absolute inset-0 flex flex-col p-8 w-full h-full gap-4 bg-black/0 z-10">
+          {/* First Row */}
+          <div className="flex justify-between items-center w-full h-[40px]">
+            <DrawerClose>
+              <CloseFullscreenButton />
+            </DrawerClose>
 
-              <SwitchThemeButton />
-            </div>
+            <SwitchThemeButton />
+          </div>
 
-            {/* Second Row */}
-            <div className="w-full max-h-[calc(100%-220px)] min-h-[calc(100%-220px)] px-16">
-              <div className="min-h-[300px] h-full max-h-full">
-                <FullscreenTabs />
-              </div>
-            </div>
-
-            {/* Third Row */}
-            <div className="h-[150px] min-h-[150px] px-16 py-2">
-              <div className="flex items-center">
-                <FullscreenPlayer />
-              </div>
+          {/* Second Row */}
+          <div className="w-full max-h-[calc(100%-220px)] min-h-[calc(100%-220px)] px-16">
+            <div className="min-h-[300px] h-full max-h-full">
+              <FullscreenTabs />
             </div>
           </div>
-        </FullscreenBackdrop>
+
+          {/* Third Row */}
+          <div className="h-[150px] min-h-[150px] px-16 py-2">
+            <div className="flex items-center">
+              <FullscreenPlayer />
+            </div>
+          </div>
+        </div>
       </DrawerContent>
     </Drawer>
   )
