@@ -13,8 +13,8 @@ export default function FullscreenBackdrop() {
       <div className={clsx('relative w-full h-full', !isMac && 'bg-black/60')}>
         <div
           className={clsx(
-            'absolute w-full h-full bg-cover bg-center z-0',
-            isMac ? 'inset-0' : '-inset-10',
+            'absolute -inset-10 bg-cover bg-center z-0',
+            isMac && 'w-full h-full',
           )}
           style={{
             backgroundImage,
