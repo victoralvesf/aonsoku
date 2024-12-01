@@ -49,7 +49,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
         showHandle={false}
       >
         <MemoFullscreenBackdrop />
-        <div className="absolute inset-0 flex flex-col p-8 w-full h-full gap-4 bg-background/50 z-10">
+        <div className="absolute inset-0 flex flex-col p-8 w-full h-full gap-4 bg-black/0 z-10">
           {/* First Row */}
           <div className="flex justify-between items-center w-full h-[40px]">
             <DrawerClose>
