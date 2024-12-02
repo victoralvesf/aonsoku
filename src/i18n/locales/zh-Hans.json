@@ -1,1 +1,454 @@
-{}
+{
+  "home": {
+    "mostPlayed": "最常播放",
+    "explore": "发现",
+    "recentlyPlayed": "最近播放",
+    "recentlyAdded": "最近添加"
+  },
+  "sidebar": {
+    "home": "首页",
+    "library": "资料库",
+    "artists": "艺术家",
+    "songs": "歌曲",
+    "playlists": "播放列表",
+    "radios": "电台",
+    "emptyPlaylist": "还没有创建播放列表",
+    "albums": "专辑",
+    "search": "搜索…",
+    "miniSearch": "搜索"
+  },
+  "menu": {
+    "about": "关于",
+    "serverLogout": "登出",
+    "language": "语言",
+    "server": "服务器"
+  },
+  "generic": {
+    "seeMore": "查看更多",
+    "viewAll": "查看所有",
+    "loading": "加载中…",
+    "showDetails": "显示详情",
+    "hideDetails": "隐藏详情"
+  },
+  "theme": {
+    "label": "主题",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "系统"
+  },
+  "playlist": {
+    "headline": "播放列表",
+    "duration": "大约 {{duration}}",
+    "refresh": "刷新播放列表",
+    "buttons": {
+      "play": "播放 {{name}}",
+      "shuffle": "随机播放 {{name}}",
+      "options": "{{name}} 的更多选项"
+    },
+    "songCount_other": "{{count}} 首歌曲",
+    "noSongList": "这个播放列表没有任何歌曲！",
+    "form": {
+      "labels": {
+        "name": "名称",
+        "comment": "注解",
+        "isPublicDescription": "选择这个选项使得这个播放列表变成公开状态，这将会允许其他用户查看以及访问你的播放列表。",
+        "commentDescription": "为这个播放列表写一个简短的描述",
+        "isPublic": "公开"
+      },
+      "create": {
+        "title": "创建播放列表",
+        "button": "创建",
+        "toast": {
+          "error": "播放列表创建失败！",
+          "success": "播放列表创建成功！"
+        }
+      },
+      "edit": {
+        "title": "编辑播放列表",
+        "button": "更新",
+        "toast": {
+          "error": "播放列表更新失败！",
+          "success": "播放列表更新成功！"
+        }
+      },
+      "delete": {
+        "title": "你确定要删除这个播放列表吗？",
+        "description": "这个操作不能被撤销。",
+        "toast": {
+          "success": "播放列表删除成功！",
+          "error": "播放列表删除失败！"
+        }
+      },
+      "removeSong": {
+        "title_other": "你确定要删除选择的歌曲吗？",
+        "toast": {
+          "success_other": "歌曲删除成功！",
+          "error_other": "歌曲删除失败！"
+        },
+        "description": "这个操作不能被撤销。"
+      },
+      "validations": {
+        "nameLength": "播放列表名称必须至少有 2 个字符。"
+      }
+    }
+  },
+  "songs": {
+    "list": {
+      "byArtist": "{{artist}} 的歌曲",
+      "filter": {
+        "clear": "清空过滤条件"
+      },
+      "search": {
+        "placeholder": "搜索歌曲…"
+      }
+    }
+  },
+  "album": {
+    "headline": "专辑",
+    "buttons": {
+      "like": "喜欢 {{name}}",
+      "dislike": "取消对 {{name}} 的喜欢"
+    },
+    "info": {
+      "lastfm": "在 Last.fm 中打开",
+      "musicbrainz": "在 MusicBrainz 中打开",
+      "about": "关于 {{name}}"
+    },
+    "more": {
+      "listTitle": "更多来自这个艺术家",
+      "discography": "艺术家作品目录",
+      "genreTitle": "更多来自 {{genre}}"
+    },
+    "list": {
+      "empty": {
+        "action": "或许可以尝试调整一下过滤条件？",
+        "info": "看起来在当前过滤条件下没有任何专辑。",
+        "title": "哎呀，这里没有专辑！"
+      },
+      "genre": {
+        "search": "查找一个流派…",
+        "notFound": "没有找到流派。",
+        "label": "选择一个流派…",
+        "loading": "加载流派中…"
+      },
+      "filter": {
+        "mostPlayed": "最常播放",
+        "name": "名称",
+        "random": "随机",
+        "releaseYear": "发行年份",
+        "discography": "作品目录",
+        "search": "搜索",
+        "favorites": "收藏",
+        "artist": "艺术家",
+        "genre": "流派",
+        "recentlyPlayed": "最近播放",
+        "recentlyAdded": "最近添加"
+      },
+      "search": {
+        "placeholder": "搜索专辑…"
+      },
+      "header": {
+        "albumsByArtist": "{{artist}} 的专辑"
+      }
+    },
+    "table": {
+      "discNumber": "碟片 {{number}}"
+    }
+  },
+  "artist": {
+    "headline": "艺术家",
+    "buttons": {
+      "shuffle": "随机播放 {{artist}} 的电台",
+      "options": "{{artist}} 的更多选项",
+      "play": "播放 {{artist}} 的电台"
+    },
+    "recentAlbums": "最新专辑",
+    "relatedArtists": "相关艺术家",
+    "info": {
+      "albumsCount_other": "{{count}} 张专辑"
+    },
+    "topSongs": "热门"
+  },
+  "table": {
+    "columns": {
+      "title": "标题",
+      "year": "年份",
+      "lastPlayed": "上次播放",
+      "bpm": "BPM",
+      "bitrate": "比特率",
+      "quality": "质量",
+      "name": "名称",
+      "albumCount": "专辑数量",
+      "songCount": "歌曲数量",
+      "genres": "流派",
+      "size": "大小",
+      "codec": "编码",
+      "path": "路径",
+      "track": "音轨",
+      "discNumber": "碟片编号",
+      "trackPeak": "音轨峰值",
+      "trackGain": "音轨增益",
+      "albumPeak": "专辑峰值",
+      "artist": "艺术家",
+      "album": "专辑",
+      "duration": "时长",
+      "plays": "播放次数",
+      "comment": "注解",
+      "public": "公开",
+      "favorite": "收藏"
+    },
+    "buttons": {
+      "play": "播放 {{artist}} 的 {{title}}",
+      "pause": "暂停 {{artist}} 的 {{title}}"
+    },
+    "pagination": {
+      "rowsPerPage": "每页的行数",
+      "currentPage": "{{currentPage}}/{{totalPages}}",
+      "screenReader": {
+        "nextPage": "前往下一页",
+        "firstPage": "前往第一页",
+        "lastPage": "前往最后一页",
+        "previousPage": "前往上一页"
+      }
+    },
+    "sort": {
+      "asc": "升序",
+      "desc": "降序",
+      "reset": "重置"
+    },
+    "menu": {
+      "selectedCount_other": "{{count}} 个被选中"
+    },
+    "lastPlayed": "{{date}}前"
+  },
+  "fullscreen": {
+    "playing": "立即播放",
+    "lyrics": "歌词",
+    "switchButton": "切换到全屏模式",
+    "noLyrics": "没有找到歌词",
+    "loadingLyrics": "搜索歌词…",
+    "queue": "队列"
+  },
+  "logout": {
+    "dialog": {
+      "description": "确认登出。",
+      "title": "准备好说再见了吗？",
+      "cancel": "取消",
+      "confirm": "继续"
+    }
+  },
+  "login": {
+    "form": {
+      "server": "服务器",
+      "description": "连接你的 Subsonic 服务器。",
+      "password": "密码",
+      "validations": {
+        "url": "请输入一个有效的 URL。",
+        "protocol": "URL 必须以 http:// 或 https:// 开头",
+        "usernameLength": "用户名必须至少有 2 个字符。",
+        "password": "请提供一个密码",
+        "passwordLength": "密码必须至少有 2 个字符。",
+        "username": "请提供一个用户名"
+      },
+      "url": "URL",
+      "urlDescription": "这是你的服务器 URL",
+      "username": "用户名",
+      "usernamePlaceholder": "你的用户名",
+      "connect": "连接",
+      "connecting": "连接中…"
+    }
+  },
+  "command": {
+    "noResults": "没有任何结果。",
+    "commands": {
+      "heading": "命令",
+      "pages": "前往页面",
+      "theme": "修改主题"
+    },
+    "pages": "页面",
+    "inputPlaceholder": "搜索专辑、艺术家或者歌曲"
+  },
+  "player": {
+    "noRadioPlaying": "没有正在播放的电台",
+    "tooltips": {
+      "shuffle": {
+        "enable": "开启随机播放",
+        "disable": "关闭随机播放"
+      },
+      "repeat": {
+        "enable": "开启循环播放",
+        "enableOne": "开启单曲循环",
+        "disable": "关闭循环播放"
+      },
+      "like": "喜欢 {{artist}} 的 {{song}}",
+      "play": "播放",
+      "pause": "暂停",
+      "next": "下一曲",
+      "previous": "上一曲",
+      "dislike": "取消喜欢 {{artist}} 的 {{song}}"
+    },
+    "noSongPlaying": "没有正在播放的歌曲"
+  },
+  "options": {
+    "playNext": "从下一首开始播放",
+    "download": "下载",
+    "playlist": {
+      "add": "添加到播放列表",
+      "delete": "删除播放列表",
+      "search": "查找一个播放列表",
+      "create": "创建播放列表",
+      "notFound": "没有找到播放列表",
+      "removeSong": "从播放列表中删除",
+      "edit": "编辑播放列表"
+    },
+    "play": "播放",
+    "addLast": "添加到队列末尾",
+    "info": "获取信息"
+  },
+  "radios": {
+    "label": "电台",
+    "addRadio": "添加电台",
+    "table": {
+      "name": "名称",
+      "homepage": "主页 URL",
+      "stream": "电台流 URL",
+      "pauseTooltip": "暂停 {{name}} 电台",
+      "actions": {
+        "edit": "编辑电台",
+        "delete": "删除电台"
+      },
+      "playTooltip": "播放 {{name}} 电台"
+    },
+    "form": {
+      "create": {
+        "title": "添加电台",
+        "toast": {
+          "success": "电台创建成功！",
+          "error": "电台创建失败！"
+        },
+        "button": "保存"
+      },
+      "edit": {
+        "title": "编辑电台",
+        "button": "更新",
+        "toast": {
+          "error": "电台更新失败！",
+          "success": "电台更新成功！"
+        }
+      },
+      "delete": {
+        "title": "你确定你要删除这个电台吗？",
+        "description": "这个操作不能被撤销。",
+        "toast": {
+          "success": "电台删除成功！",
+          "error": "电台删除失败！"
+        }
+      },
+      "validations": {
+        "url": "请提供一个有效的 URL。",
+        "homepageUrlLength": "主页 URL 必须至少有 10 个字符",
+        "streamUrlLength": "电台流 URL 必须至少有 10 个字符",
+        "name": "电台名称必须至少有 3 个字符。"
+      }
+    },
+    "empty": {
+      "title": "你还没有任何电台！",
+      "info": "点击添加你的第一个电台。"
+    }
+  },
+  "time": {
+    "seconds": "{{seconds}} 秒",
+    "minutes": "{{minutes}} 分钟",
+    "days_other": "{{days}} 天",
+    "hour": "{{hour}} 小时"
+  },
+  "server": {
+    "folderCount_other": "{{count}} 个文件夹",
+    "lastScan": "上次扫描：{{date}}",
+    "status": "状态",
+    "songCount_other": "{{count}} 首歌曲",
+    "management": "服务器管理",
+    "buttons": {
+      "refresh": "刷新状态",
+      "startScan": "快速刷新"
+    }
+  },
+  "downloads": {
+    "started": "下载已经开始。",
+    "failed": "下载你的文件时出现了一个错误。",
+    "completed": "你的文件已经被成功下载。"
+  },
+  "shortcuts": {
+    "modal": {
+      "title": "键盘快捷键",
+      "description": {
+        "first": "按",
+        "last": "来切换这个窗口。"
+      }
+    },
+    "playback": {
+      "label": "播放",
+      "play": "播放／暂停",
+      "shuffle": "随机播放",
+      "repeat": "循环播放",
+      "previous": "跳到上一曲",
+      "next": "跳到下一曲"
+    }
+  },
+  "songInfo": {
+    "error": "不能获取歌曲信息，请稍候重试。",
+    "title": "歌曲详情"
+  },
+  "update": {
+    "toasts": {
+      "error": "更新安装失败，请尝试直接从 GitHub 上下载。",
+      "started": "更新已经开始。",
+      "success": "更新已经被成功安装！这个 app 即将重启。"
+    },
+    "dialog": {
+      "title": "发现了一个新版本！",
+      "remindLater": "稍候提醒我",
+      "install": "安装并重启"
+    }
+  },
+  "about": {
+    "version": "版本：",
+    "type": "类型：",
+    "toasts": {
+      "copy": "链接已经复制到剪贴板！"
+    },
+    "client": "客户端",
+    "server": "服务器",
+    "apiVersion": "API 版本："
+  },
+  "dayjs": {
+    "relativeTime": {
+      "mm": "%d 分钟",
+      "y": "1 年",
+      "yy": "%d 年",
+      "s": "几秒",
+      "MM": "%d 个月",
+      "future": "在%s",
+      "past": "%s前",
+      "m": "1 分钟",
+      "h": "1 小时",
+      "hh": "%d 小时",
+      "d": "1 天",
+      "dd": "%d 天",
+      "M": "1 个月"
+    }
+  },
+  "toast": {
+    "server": {
+      "success": "服务器保存成功！",
+      "error": "服务器通信失败！"
+    }
+  },
+  "queue": {
+    "title": "队列",
+    "clear": "清空队列"
+  },
+  "warnings": {
+    "reload": "有一首歌曲正在播放！\n你确定要重新加载页面吗？"
+  }
+}
