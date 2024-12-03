@@ -7,9 +7,15 @@ import updateLocale from 'dayjs/plugin/updateLocale'
 import utc from 'dayjs/plugin/utc'
 import 'dayjs/locale/pt-br'
 import 'dayjs/locale/es'
+import 'dayjs/locale/zh-cn'
 
 import i18n from '@/i18n'
 import { languages, resources } from '@/i18n/languages'
+
+function getDayJsLocale(langCode: string) {
+  const lang = languages.find((lang) => lang.langCode === langCode)
+  return lang?.dayjsLocale ?? 'en-US'
+}
 
 dayjs.extend(duration)
 dayjs.extend(relativeTime)
@@ -20,17 +26,19 @@ dayjs.extend(localizedFormat)
 
 languages.forEach((lang) => {
   const langCode = lang.langCode as keyof typeof resources
-  dayjs.updateLocale(lang.dayjsLocale, resources[langCode].translation.dayjs)
+  if ('dayjs' in resources[langCode].translation) {
+    dayjs.updateLocale(lang.dayjsLocale, resources[langCode].translation.dayjs)
+  }
 })
 
 const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 dayjs.tz.setDefault(browserTimezone)
 
-const savedLang = localStorage.getItem('i18nextLng') || 'en'
-dayjs.locale(savedLang)
+const savedLang = localStorage.getItem('i18nextLng') || 'en-US'
+dayjs.locale(getDayJsLocale(savedLang))
 
 i18n.on('languageChanged', (lang: string) => {
-  dayjs.locale(lang)
+  dayjs.locale(getDayJsLocale(lang))
 })
 
 const dateTime = dayjs
