@@ -230,7 +230,7 @@ export default function CommandMenu() {
             onKeyDown={handleInputKeyDown}
           />
           <ScrollArea className="max-h-[500px] 2xl:max-h-[700px]">
-            <CommandList className="max-h-fit p-0.5">
+            <CommandList className="max-h-fit pr-1">
               <CommandEmpty>{t('command.noResults')}</CommandEmpty>
 
               {showNotFoundMessage && (
