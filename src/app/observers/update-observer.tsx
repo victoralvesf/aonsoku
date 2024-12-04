@@ -91,7 +91,7 @@ export function UpdateObserver() {
 
         <div
           id="update-info-body"
-          className="w-full min-h-16 max-h-80 overflow-auto text-muted-foreground bg-[--main-background] p-4 border rounded-md"
+          className="w-full min-h-16 max-h-80 overflow-auto text-muted-foreground bg-background-foreground p-4 border rounded-md"
         >
           <Markdown className="space-y-2 text-sm" remarkPlugins={[remarkGfm]}>
             {updateInfo.body}

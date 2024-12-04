@@ -13,7 +13,7 @@ interface InfoPanelProps {
 }
 
 const containerClasses =
-  'flex flex-col items-start gap-1 rounded-lg border p-5 text-left text-sm transition-all bg-[--main-background]'
+  'flex flex-col items-start gap-1 rounded-lg border p-5 text-left text-sm transition-all bg-background-foreground'
 
 export default function InfoPanel({
   title,

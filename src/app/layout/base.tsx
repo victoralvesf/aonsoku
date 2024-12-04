@@ -31,7 +31,7 @@ export default function BaseLayout() {
       <main className="flex h-full pl-[--mini-sidebar-width] lg:pl-[--sidebar-width] pt-[--header-height] pb-[--player-height]">
         <ScrollArea
           id="main-scroll-area"
-          className="w-full bg-[--main-background]"
+          className="w-full bg-background-foreground"
         >
           <Outlet />
         </ScrollArea>

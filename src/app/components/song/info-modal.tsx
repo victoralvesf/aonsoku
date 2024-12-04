@@ -194,7 +194,7 @@ function InfoGridItem({ title, children }: InfoGridItemProps) {
   const { t } = useTranslation()
 
   return (
-    <div className="grid grid-cols-4 py-1 px-2 text-sm text-muted-foreground odd:bg-[--main-background]">
+    <div className="grid grid-cols-4 py-1 px-2 text-sm text-muted-foreground odd:bg-background-foreground">
       <div className="py-1 flex items-center">
         {t(`table.columns.${title}`)}
       </div>
