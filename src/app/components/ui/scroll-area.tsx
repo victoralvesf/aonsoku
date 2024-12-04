@@ -3,6 +3,8 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
+export const scrollAreaViewportSelector = '[data-radix-scroll-area-viewport]'
+
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>

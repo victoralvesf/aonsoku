@@ -17,7 +17,7 @@ import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
-const DEFAULT_OFFSET = 250
+const DEFAULT_OFFSET = 100
 
 export default function SongList() {
   const { t } = useTranslation()
