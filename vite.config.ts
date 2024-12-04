@@ -25,4 +25,19 @@ export default defineConfig(async () => ({
       ignored: ['**/src-tauri/**'],
     },
   },
+
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          i18next: [
+            'i18next',
+            'i18next-browser-languagedetector',
+            'react-i18next',
+          ],
+        },
+      },
+    },
+  },
 }))
