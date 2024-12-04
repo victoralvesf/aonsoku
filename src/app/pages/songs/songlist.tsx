@@ -83,7 +83,11 @@ export default function SongList() {
 
   return (
     <div className="w-full h-app-screen">
-      <ShadowHeader className="relative w-full top-0 left-0 lg:left-0 justify-between items-center">
+      <ShadowHeader
+        showGlassEffect={false}
+        fixed={false}
+        className="relative w-full justify-between items-center"
+      >
         <div className="flex gap-2 items-center">
           <h2 className="text-2xl font-semibold tracking-tight">
             {filterByArtist
