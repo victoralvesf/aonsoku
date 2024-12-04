@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { ComponentPropsWithRef } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { getCoverArtUrl } from '@/api/httpClient'
+import { EqualizerBars } from '@/app/components/icons/equalizer-bars'
 import { ISong } from '@/types/responses/song'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
@@ -38,10 +39,10 @@ export function QueueItem({
         {isPlaying ? (
           <div className="w-6 flex items-center">
             <div className="w-6 h-6 flex items-center justify-center">
-              <LazyLoadImage
-                src="/equalizer.gif"
-                className="w-4 h-4 dark:invert"
-                alt="Audio bars animation"
+              <EqualizerBars
+                width={20}
+                height={20}
+                className="text-secondary"
               />
             </div>
           </div>

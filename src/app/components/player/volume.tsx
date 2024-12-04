@@ -26,7 +26,9 @@ export function PlayerVolume({ disabled, audioRef }: PlayerVolumeProps) {
 
   return (
     <div className="flex gap-2 ml-2 items-center">
-      <div className={clsx(disabled && 'opacity-50')}>
+      <div
+        className={clsx('text-secondary-foreground', disabled && 'opacity-50')}
+      >
         {volume >= 50 && <Volume2 className="w-[18px] h-[18px]" />}
         {volume > 0 && volume < 50 && <Volume1 className="w-[18px] h-[18px]" />}
         {volume === 0 && <VolumeX className="w-[18px] h-[18px]" />}

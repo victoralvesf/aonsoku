@@ -101,7 +101,10 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
             data-testid="player-button-shuffle"
           >
             <Shuffle
-              className={clsx('w-10 h-10', isShuffleActive && 'text-primary')}
+              className={clsx(
+                'w-10 h-10',
+                isShuffleActive ? 'text-primary' : 'text-secondary-foreground',
+              )}
             />
           </Button>
         </SimpleTooltip>
@@ -115,7 +118,7 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
           onClick={playPrevSong}
           data-testid="player-button-prev"
         >
-          <SkipBack className="w-10 h-10 fill-secondary-foreground" />
+          <SkipBack className="w-10 h-10 text-secondary-foreground fill-secondary-foreground" />
         </Button>
       </SimpleTooltip>
 
@@ -127,9 +130,9 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
           data-testid={`player-button-${isPlaying ? 'pause' : 'play'}`}
         >
           {isPlaying ? (
-            <Pause className="w-10 h-10 fill-primary-foreground" />
+            <Pause className="w-10 h-10 text-primary-foreground fill-primary-foreground" />
           ) : (
-            <Play className="w-10 h-10 fill-primary-foreground" />
+            <Play className="w-10 h-10 text-primary-foreground fill-primary-foreground" />
           )}
         </Button>
       </SimpleTooltip>
@@ -142,7 +145,7 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
           onClick={playNextSong}
           data-testid="player-button-next"
         >
-          <SkipForward className="w-10 h-10 fill-secondary-foreground" />
+          <SkipForward className="w-10 h-10 text-secondary-foreground fill-secondary-foreground" />
         </Button>
       </SimpleTooltip>
 
@@ -158,7 +161,9 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
             onClick={toggleLoop}
             data-testid="player-button-loop"
           >
-            {loopState === LoopState.Off && <Repeat className="w-10 h-10" />}
+            {loopState === LoopState.Off && (
+              <Repeat className="w-10 h-10 text-secondary-foreground" />
+            )}
             {loopState === LoopState.All && (
               <Repeat className="w-10 h-10 text-primary" />
             )}

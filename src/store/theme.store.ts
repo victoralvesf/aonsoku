@@ -9,7 +9,7 @@ export const useThemeStore = createWithEqualityFn<IThemeContext>()(
     persist(
       devtools(
         immer((set) => ({
-          theme: 'dark',
+          theme: Theme.Dark,
           setTheme: (theme: Theme) => {
             set((state) => {
               state.theme = theme

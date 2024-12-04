@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useTheme } from '@/store/theme.store'
 import { Theme } from '@/types/themeContext'
 
-export const appThemes: Theme[] = ['light', 'dark', 'black']
+export const appThemes: Theme[] = Object.values(Theme)
 
 export function ThemeObserver() {
   const { theme } = useTheme()

@@ -86,10 +86,6 @@ img {
   @apply after:content-['•'] after:block after:absolute after:-bottom-1 after:text-primary;
 }
 
-:root.light #equalizer-image {
-  filter: invert(1);
-}
-
 .bg-skeleton {
   @apply bg-accent;
 }
@@ -178,4 +174,72 @@ img {
 #update-info-body h4,
 #update-info-body h5 {
   @apply font-semibold text-foreground;
+}
+
+#bars .eq-bar {
+  transform: scale(1, -1) translate(0, -24px);
+}
+
+#bars .eq-bar--1 {
+  animation-name: short-eq;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-delay: 0s;
+}
+
+#bars .eq-bar--2 {
+  animation-name: tall-eq;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.07s;
+}
+
+#bars .eq-bar--3 {
+  animation-name: short-eq;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.27s;
+}
+
+#bars .eq-bar--4 {
+  animation-name: medium-eq;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.14s;
+}
+
+@keyframes short-eq {
+  0% {
+    height: 10px
+  }
+  50% {
+    height: 6px
+  }
+  100% {
+    height: 10px
+  }
+}
+
+@keyframes medium-eq {
+  0% {
+    height: 7px;
+  }
+  50% {
+    height: 14px;
+  }
+  100% {
+    height: 7px;
+  }
+}
+
+@keyframes tall-eq {
+  0% {
+    height: 18px
+  }
+  50% {
+    height: 8px
+  }
+  100% {
+    height: 18px
+  }
 }

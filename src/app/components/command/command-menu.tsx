@@ -54,7 +54,7 @@ const gotoPages = [
 export default function CommandMenu() {
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const { setTheme } = useTheme()
+  const { theme: currentTheme, setTheme } = useTheme()
   const { getArtistAllSongs, getAlbumSongs } = useSongList()
   const { setPlaylistDialogState } = usePlaylists()
   const { setSongList, playSong } = usePlayerActions()
@@ -408,6 +408,7 @@ export default function CommandMenu() {
                     <CommandItem
                       key={theme}
                       onSelect={() => runCommand(() => setTheme(theme))}
+                      disabled={theme === currentTheme}
                     >
                       {t(`theme.${theme}`)}
                     </CommandItem>
