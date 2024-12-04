@@ -89,9 +89,7 @@ function Dropdown({ tooltip, options }: DropdownProps) {
 }
 
 function PlayIcon() {
-  return (
-    <Play className="w-5 h-5 fill-slate-50 text-slate-50" strokeWidth={6} />
-  )
+  return <Play className="w-5 h-5 fill-primary-foreground" strokeWidth={6} />
 }
 
 function ShuffleIcon() {

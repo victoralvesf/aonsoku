@@ -395,15 +395,8 @@ export function DataTable<TData, TValue>({
                             !isNextRowSelected(index) &&
                             'rounded-b-md',
                           isModern && !row.getIsSelected() && 'rounded-md',
-                          isClassic && [
-                            'border-b',
-                            'hover:bg-gray-200 dark:hover:bg-gray-800',
-                            'data-[state=selected]:bg-gray-300 dark:data-[state=selected]:bg-gray-700',
-                          ],
-                          isModern && [
-                            'hover:bg-gray-300 dark:hover:bg-gray-700',
-                            'data-[state=selected]:bg-gray-400/50 dark:data-[state=selected]:bg-gray-600',
-                          ],
+                          'hover:bg-foreground/20 data-[state=selected]:bg-foreground/30',
+                          isClassic && 'border-b',
                         )}
                       >
                         {row.getVisibleCells().map((cell) => {

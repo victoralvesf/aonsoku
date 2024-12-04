@@ -95,7 +95,7 @@ export default function PlaySongButton({
               }}
             >
               <PlayIcon
-                className="w-3 h-3 opacity-70 group-hover:opacity-100 fill-inherit dark:fill-foreground transition-opacity"
+                className="w-3 h-3 opacity-70 group-hover:opacity-100 fill-foreground transition-opacity"
                 strokeWidth={4}
               />
             </Button>
@@ -126,7 +126,7 @@ export default function PlaySongButton({
                 }}
               >
                 <PauseIcon
-                  className="w-4 h-4 opacity-70 group-hover:opacity-100 fill-inherit dark:fill-foreground transition-opacity"
+                  className="w-4 h-4 opacity-70 group-hover:opacity-100 fill-foreground transition-opacity"
                   strokeWidth={1}
                 />
               </Button>
@@ -151,7 +151,7 @@ export default function PlaySongButton({
                 }}
               >
                 <PlayIcon
-                  className="w-3 h-3 opacity-70 group-hover:opacity-100 fill-inherit dark:fill-foreground transition-opacity"
+                  className="w-3 h-3 opacity-70 group-hover:opacity-100 fill-foreground transition-opacity"
                   strokeWidth={4}
                 />
               </Button>

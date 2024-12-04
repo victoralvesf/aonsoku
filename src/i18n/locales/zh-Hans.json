@@ -34,7 +34,8 @@
     "label": "主题",
     "light": "浅色",
     "dark": "深色",
-    "system": "系统"
+    "system": "系统",
+    "black": "黑白"
   },
   "playlist": {
     "headline": "播放列表",

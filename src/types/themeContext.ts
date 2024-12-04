@@ -1,4 +1,4 @@
-export type Theme = 'dark' | 'light' | 'system'
+export type Theme = 'dark' | 'light' | 'black'
 
 export interface IThemeContext {
   theme: Theme

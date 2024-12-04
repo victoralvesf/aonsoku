@@ -9,8 +9,7 @@ export const ImageHeaderEffect = forwardRef<
     <div
       ref={ref}
       className={cn(
-        'bg-gradient-to-b from-white/60 to-background-foreground',
-        'dark:from-black/60 dark:to-background-foreground',
+        'bg-gradient-to-b from-background/60 to-background-foreground',
         'w-full h-64 z-0',
         'absolute top-[calc(3rem+200px)] 2xl:top-[calc(3rem+250px)]',
         className,

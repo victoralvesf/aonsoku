@@ -11,7 +11,7 @@ export function PlaylistFallback() {
     <div className="w-full">
       <div className="relative">
         <AlbumHeaderFallback />
-        <ImageHeaderEffect className="bg-muted-foreground dark:from-black/60" />
+        <ImageHeaderEffect className="bg-muted-foreground" />
       </div>
 
       <ListWrapper>

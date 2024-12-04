@@ -4,55 +4,6 @@
 
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --background-foreground: 210 20% 98%;
-    --foreground: 224 10% 15%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 10% 15%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 10% 15%;
-    --primary: 161 94% 30%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 92.9%;
-    --accent-foreground: 220.9 39.3% 11%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 161 94% 30%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 224 71.4% 8.1%;
-    --background-foreground: 222 47% 11%;
-    --foreground: 210 20% 95%;
-    --card: 224 71.4% 8.1%;
-    --card-foreground: 210 20% 95%;
-    --popover: 224 71.4% 8.1%;
-    --popover-foreground: 210 20% 95%;
-    --primary: 160 84% 39%;
-    --primary-foreground: 210 20% 95%;
-    --secondary: 215 27.9% 19.9%;
-    --secondary-foreground: 210 20% 95%;
-    --muted: 215 27.9% 14.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
-    --accent: 215 27.9% 19.9%;
-    --accent-foreground: 210 20% 95%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 95%;
-    --border: 215 27.9% 19.9%;
-    --input: 215 27.9% 19.9%;
-    --ring: 160 84% 39%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
@@ -140,7 +91,7 @@ img {
 }
 
 .bg-skeleton {
-  @apply bg-foreground/20 dark:bg-accent;
+  @apply bg-accent;
 }
 
 .required {

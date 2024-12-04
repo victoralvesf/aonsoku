@@ -98,6 +98,7 @@
         "label": "Thème",
         "dark": "Sombre",
         "light": "Clair",
-        "system": "Système"
+        "system": "Système",
+        "black": "Noir et Blanc"
     }
 }

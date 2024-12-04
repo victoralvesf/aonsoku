@@ -34,7 +34,8 @@
         "label": "Tema",
         "light": "Claro",
         "dark": "Oscuro",
-        "system": "Predeterminado del sistema"
+        "system": "Predeterminado del sistema",
+        "black": "Blanco y Negro"
     },
     "playlist": {
         "headline": "Lista de reproducción",

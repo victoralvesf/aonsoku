@@ -34,7 +34,8 @@
         "label": "Theme",
         "light": "Light",
         "dark": "Dark",
-        "system": "System"
+        "system": "System",
+        "black": "Black and White"
     },
     "playlist": {
         "headline": "Playlist",

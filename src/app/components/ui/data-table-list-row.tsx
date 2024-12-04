@@ -32,8 +32,7 @@ export function TableListRow<TData>({
         onContextMenu={(e) => handleClicks(e, row)}
         className={clsx(
           'group/tablerow w-full flex flex-row transition-colors',
-          'hover:bg-gray-300 dark:hover:bg-gray-700',
-          'data-[state=selected]:bg-gray-400/50 dark:data-[state=selected]:bg-gray-600',
+          'hover:bg-foreground/20 data-[state=selected]:bg-foreground/30',
         )}
         style={{
           height: `${virtualRow.size}px`,

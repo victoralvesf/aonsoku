@@ -127,9 +127,9 @@ export function PlayerControls({ song, radio }: PlayerControlsProps) {
           data-testid={`player-button-${isPlaying ? 'pause' : 'play'}`}
         >
           {isPlaying ? (
-            <Pause className="w-10 h-10 fill-slate-50 text-slate-50" />
+            <Pause className="w-10 h-10 fill-primary-foreground" />
           ) : (
-            <Play className="w-10 h-10 fill-slate-50 text-slate-50" />
+            <Play className="w-10 h-10 fill-primary-foreground" />
           )}
         </Button>
       </SimpleTooltip>

@@ -21,6 +21,7 @@ import {
 } from '@/app/components/ui/command'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { useSongList } from '@/app/hooks/use-song-list'
+import { appThemes } from '@/app/observers/theme-observer'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { useAppStore } from '@/store/app.store'
@@ -29,7 +30,6 @@ import { usePlaylists } from '@/store/playlists.store'
 import { useTheme } from '@/store/theme.store'
 import { ISimilarArtist } from '@/types/responses/artist'
 import { ScanStatus } from '@/types/responses/library'
-import { Theme } from '@/types/themeContext'
 import { convertMinutesToMs } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 import { queryKeys } from '@/utils/queryKeys'
@@ -49,12 +49,6 @@ const gotoPages = [
   { route: ROUTES.LIBRARY.ALBUMS, label: 'sidebar.albums' },
   { route: ROUTES.LIBRARY.PLAYLISTS, label: 'sidebar.playlists' },
   { route: ROUTES.LIBRARY.RADIOS, label: 'sidebar.radios' },
-]
-
-const themes = [
-  { theme: 'light' as Theme, label: 'theme.light' },
-  { theme: 'dark' as Theme, label: 'theme.dark' },
-  { theme: 'system' as Theme, label: 'theme.system' },
 ]
 
 export default function CommandMenu() {
@@ -410,12 +404,12 @@ export default function CommandMenu() {
 
               {activePage === 'THEME' && (
                 <CommandGroup heading={t('theme.label')}>
-                  {themes.map(({ theme, label }) => (
+                  {appThemes.map((theme) => (
                     <CommandItem
-                      key={label}
+                      key={theme}
                       onSelect={() => runCommand(() => setTheme(theme))}
                     >
-                      {t(label)}
+                      {t(`theme.${theme}`)}
                     </CommandItem>
                   ))}
                 </CommandGroup>
