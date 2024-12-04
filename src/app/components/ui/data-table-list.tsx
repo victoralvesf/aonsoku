@@ -317,7 +317,7 @@ export function DataTableList<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <div
                 key={headerGroup.id}
-                className="w-full flex flex-row border-b pr-[10px] bg-accent/50"
+                className="w-full flex flex-row border-b pr-[10px] bg-muted"
                 role="row"
               >
                 {headerGroup.headers.map((header) => {
