@@ -1,5 +1,6 @@
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { useEffect, useRef } from 'react'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import {
   usePlayerActions,
   usePlayerIsPlaying,
@@ -14,9 +15,15 @@ export function FullscreenSongQueue() {
 
   const parentRef = useRef<HTMLDivElement>(null)
 
+  const getScrollElement = () => {
+    if (!parentRef.current) return null
+
+    return parentRef.current.querySelector('[data-radix-scroll-area-viewport]')
+  }
+
   const virtualizer = useVirtualizer({
     count: currentList.length,
-    getScrollElement: () => parentRef.current,
+    getScrollElement,
     estimateSize: () => 64,
     overscan: 5,
   })
@@ -35,7 +42,7 @@ export function FullscreenSongQueue() {
     )
 
   return (
-    <div ref={parentRef} className="min-h-full h-full overflow-auto">
+    <ScrollArea ref={parentRef} className="min-h-full h-full overflow-auto">
       <div
         style={{
           height: `${virtualizer.getTotalSize()}px`,
@@ -67,6 +74,6 @@ export function FullscreenSongQueue() {
           )
         })}
       </div>
-    </div>
+    </ScrollArea>
   )
 }
