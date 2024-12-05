@@ -2,49 +2,37 @@ import { ComponentPropsWithoutRef } from 'react'
 
 type EqualizerBarsProps = ComponentPropsWithoutRef<'svg'>
 
+const rects = [
+  { x: 1, height: 8 },
+  { x: 7, height: 16 },
+  { x: 13, height: 12 },
+  { x: 19, height: 4 },
+]
+
 export function EqualizerBars(props: EqualizerBarsProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={22}
-      height={22}
-      viewBox="0 0 23 23"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
       className="text-foreground"
       id="bars"
       {...props}
     >
-      <rect
-        className="eq-bar eq-bar--1"
-        x="3"
-        y="4"
-        width="3"
-        height="8"
-        fill="currentColor"
-      />
-      <rect
-        className="eq-bar eq-bar--2"
-        x="8"
-        y="4"
-        width="3"
-        height="16"
-        fill="currentColor"
-      />
-      <rect
-        className="eq-bar eq-bar--3"
-        x="13"
-        y="4"
-        width="3"
-        height="12"
-        fill="currentColor"
-      />
-      <rect
-        className="eq-bar eq-bar--4"
-        x="18"
-        y="4"
-        width="3"
-        height="4"
-        fill="currentColor"
-      />
+      {rects.map((rect, index) => (
+        <rect
+          key={index}
+          className={`eq-bar eq-bar--${index + 1}`}
+          x={rect.x}
+          y={2}
+          width={4}
+          height={rect.height}
+          rx={1}
+          fill="currentColor"
+          shapeRendering="geometricPrecision"
+        />
+      ))}
     </svg>
   )
 }
