@@ -3,9 +3,9 @@ export enum Theme {
   Dark = 'dark',
   Black = 'black',
   OneDark = 'one-dark',
-  GruvboxLightHard = 'gruvbox-light',
+  NightOwlLight = 'night-owl-light',
   MarmaladeBeaver = 'marmalade-beaver',
-  GreenVelvetSkink = 'green-velvet-skink',
+  NoctisLilac = 'noctis-lilac',
   MaterialTheme = 'material-theme',
   MonokaiPro = 'monokai-pro',
   GithubDark = 'github-dark',
@@ -13,6 +13,12 @@ export enum Theme {
   BeardedThemeSolarized = 'bearded-theme-solarized',
   CatppuccinMocha = 'catppuccin-mocha',
   NuclearDark = 'nuclear-dark',
+  Achiever = 'achiever',
+  Cool = 'cool',
+  Discord = 'discord',
+  HuacatPink = 'huacat-pink',
+  VueDark = 'vue-dark',
+  VimDarkSoft = 'vim-dark-soft',
 }
 
 export interface IThemeContext {

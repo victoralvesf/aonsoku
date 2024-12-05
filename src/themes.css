@@ -94,28 +94,27 @@
     --ring: 220 13% 86%;
   }
 
-  .gruvbox-light-hard {
-    --background: 43.64 59.14% 81.76%;
-    --background-foreground: 52.94 73.91% 90.98%;
-    --foreground: 0 0% 15.69%;
-    --muted: 40.75 41.09% 74.71%;
-    --muted-foreground: 24 8.57% 34.31%;
-    --popover: 45.31 60.49% 84.12%;
-    --popover-foreground: 0 0% 15.69%;
-    --card: 52.94 73.91% 90.98%;
-    --card-foreground: 0 0% 15.69%;
-    --border: 39.57 29.94% 69.22%;
-    --input: 39.57 29.94% 69.22%;
-    --primary: 182.69 32.68% 40.2%;
-    --primary-foreground: 52.94 73.91% 90.98%;
-    --secondary: 62.5 26.67% 82.35%;
-    --secondary-foreground: 0 0% 15.69%;
-    --accent: 39.57 29.94% 69.22%;
-    --accent-foreground: 0 0% 15.69%;
-    --destructive: 2.4 75.11% 45.69%;
-    --destructive-foreground: 52.94 73.91% 90.98%;
-    --ring: 182.69 32.68% 40.2%;
-    --radius: 0.5rem;
+  .night-owl-light {
+    --background: 0 0% 98%;
+    --background-foreground: 0 0% 96%;
+    --foreground: 243 14% 29%;
+    --muted: 0 12% 90%;
+    --muted-foreground: 0 12% 30%;
+    --popover: 0 0% 95%;
+    --popover-foreground: 243 14% 19%;
+    --card: 0 0% 96%;
+    --card-foreground: 243 14% 24%;
+    --border: 0 0% 93%;
+    --input: 0 0% 90%;
+    --primary: 243 14% 29%;
+    --primary-foreground: 243 14% 89%;
+    --secondary: 243 4% 75%;
+    --secondary-foreground: 243 4% 15%;
+    --accent: 0 0% 83%;
+    --accent-foreground: 0 0% 23%;
+    --destructive: 8 94% 20%;
+    --destructive-foreground: 8 94% 80%;
+    --ring: 243 14% 29%;
   }
 
   .marmalade-beaver {
@@ -141,28 +140,27 @@
     --ring: 44 100% 71%;
   }
 
-  .green-velvet-skink {
-    --background: 155 36% 100%;
-    --background-foreground: 155 36% 100%;
-    --foreground: 155 71% 1%;
-    --muted: 155 5% 95%;
-    --muted-foreground: 155 8% 33%;
-    --popover: 155 36% 100%;
-    --popover-foreground: 155 71% 1%;
-    --card: 155 36% 100%;
-    --card-foreground: 155 71% 1%;
-    --border: 155 13% 90%;
-    --input: 155 13% 90%;
-    --primary: 155 58% 29%;
+  .noctis-lilac {
+    --background: 249 33% 96%;
+    --background-foreground: 250 100% 97.6%;
+    --foreground: 247 100% 21%;
+    --muted: 249 12% 90%;
+    --muted-foreground: 249 12% 30%;
+    --popover: 249 33% 93%;
+    --popover-foreground: 247 100% 11%;
+    --card: 249 33% 94%;
+    --card-foreground: 247 100% 16%;
+    --border: 249 23% 91%;
+    --input: 249 23% 88%;
+    --primary: 247 78% 65%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 155 14% 80%;
-    --secondary-foreground: 155 14% 20%;
-    --accent: 155 23% 71%;
-    --accent-foreground: 155 23% 11%;
-    --destructive: 8 87% 43%;
-    --destructive-foreground: 0 0% 100%;
-    --ring: 155 58% 29%;
-    --radius: 0.5rem;
+    --secondary: 247 30% 75%;
+    --secondary-foreground: 247 30% 15%;
+    --accent: 249 33% 81%;
+    --accent-foreground: 249 33% 21%;
+    --destructive: 3 93% 20%;
+    --destructive-foreground: 3 93% 80%;
+    --ring: 247 78% 65%;
   }
 
   .material-theme {
@@ -324,5 +322,143 @@
     --destructive: 344.15 100% 46.54%;
     --destructive-foreground: 0 0% 100%;
     --ring: 331 100% 68%;
+  }
+
+  .achiever {
+    --background: 18 51% 98%;
+    --background-foreground: 33.3 100% 98%;
+    --foreground: 18 50% 0%;
+    --muted: 18 10% 87%;
+    --muted-foreground: 18 15% 32%;
+    --popover: 18 51% 98%;
+    --popover-foreground: 18 50% 0%;
+    --card: 18 51% 98%;
+    --card-foreground: 18 50% 0%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --primary: 18 83% 58%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 18 5% 87%;
+    --secondary-foreground: 18 5% 27%;
+    --accent: 18 14% 80%;
+    --accent-foreground: 18 14% 20%;
+    --destructive: 20 87% 25%;
+    --destructive-foreground: 20 87% 85%;
+    --ring: 18 83% 58%;
+  }
+
+  .cool {
+    --background: 74 56% 98%;
+    --background-foreground: 74 56% 96%;
+    --foreground: 74 56% 3%;
+    --muted: 44 34% 85%;
+    --muted-foreground: 44 8% 34%;
+    --popover: 74 56% 97%;
+    --popover-foreground: 74 56% 2%;
+    --card: 74 56% 97%;
+    --card-foreground: 74 56% 2%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --primary: 74 53% 85%;
+    --primary-foreground: 74 53% 5%;
+    --secondary: 44 53% 85%;
+    --secondary-foreground: 44 53% 25%;
+    --accent: 104 53% 85%;
+    --accent-foreground: 104 53% 5%;
+    --destructive: 2 81% 25%;
+    --destructive-foreground: 2 81% 85%;
+    --ring: 74 53% 85%;
+  }
+
+  .discord {
+    --background: 217.5 9.09% 17.25%;
+    --background-foreground: 221 4% 15%;
+    --foreground: 334 34% 98%;
+    --muted: 210 9.09% 12.94%;
+    --muted-foreground: 334 0% 60.77%;
+    --popover: 210 9.09% 12.94%;
+    --popover-foreground: 334 34% 98%;
+    --card: 210 9.09% 12.94%;
+    --card-foreground: 334 34% 98%;
+    --border: 218 3% 22%;
+    --input: 214.29 5.04% 27.25%;
+    --primary: 226.73 58.43% 65.1%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214.29 5.04% 27.25%;
+    --secondary-foreground: 334 0% 100%;
+    --accent: 217.5 3.22% 22.19%;
+    --accent-foreground: 226.73 58.43% 65.1%;
+    --destructive: 358.16 68.78% 53.53%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 226.73 58.43% 65.1%;
+  }
+
+  .huacat-pink {
+    --background: 300 35% 94%;
+    --background-foreground: 300 35% 92%;
+    --foreground: 300 35% 34%;
+    --muted: 300 12% 90%;
+    --muted-foreground: 300 12% 30%;
+    --popover: 300 35% 91%;
+    --popover-foreground: 300 35% 24%;
+    --card: 300 35% 92%;
+    --card-foreground: 300 35% 29%;
+    --border: 300 29.34% 85.12%;
+    --input: 300 25% 86%;
+    --primary: 320 61% 65%;
+    --primary-foreground: 320 61% 5%;
+    --secondary: 320 30% 25%;
+    --secondary-foreground: 320 30% 85%;
+    --accent: 300 35% 79%;
+    --accent-foreground: 300 35% 19%;
+    --destructive: 8 100% 26%;
+    --destructive-foreground: 8 100% 86%;
+    --ring: 320 61% 65%;
+  }
+
+  .vue-dark {
+    --background: 192 100% 10%;
+    --background-foreground: 192 100% 8%;
+    --foreground: 0 0% 90%;
+    --muted: 192 12% 15%;
+    --muted-foreground: 192 12% 65%;
+    --popover: 192 100% 7%;
+    --popover-foreground: 0 0% 100%;
+    --card: 192 100% 8%;
+    --card-foreground: 0 0% 95%;
+    --border: 192 90% 15%;
+    --input: 192 90% 18%;
+    --primary: 171 82% 43%;
+    --primary-foreground: 171 82% 3%;
+    --secondary: 171 30% 25%;
+    --secondary-foreground: 171 30% 85%;
+    --accent: 192 100% 25%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 2 95% 56%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 171 82% 43%;
+  }
+
+  .vim-dark-soft {
+    --background: 20 3% 19%;
+    --background-foreground: 20 3% 16%;
+    --foreground: 43 59% 81%;
+    --muted: 20 12% 23%;
+    --muted-foreground: 20 12% 73%;
+    --popover: 20 3% 16%;
+    --popover-foreground: 43 59% 91%;
+    --card: 20 3% 17%;
+    --card-foreground: 43 59% 86%;
+    --border: 0 0% 24%;
+    --input: 0 0% 27%;
+    --primary: 43 59% 81%;
+    --primary-foreground: 43 59% 21%;
+    --secondary: 43 30% 25%;
+    --secondary-foreground: 43 30% 85%;
+    --accent: 20 3% 34%;
+    --accent-foreground: 20 3% 94%;
+    --destructive: 6 85% 47%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 43 59% 81%;
   }
 }
