@@ -143,9 +143,13 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
         name: 'app_store',
         version: 1,
         merge: (persistedState, currentState) => {
+          const persisted = persistedState as Partial<IAppContext>
+
           if (hasValidConfig) {
             const newState = {
+              ...persisted,
               data: {
+                ...persisted.data,
                 isServerConfigured: true,
                 url: SERVER_URL as string,
                 username: genUser(),
@@ -159,7 +163,15 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             return merge(currentState, newState)
           }
 
-          return merge(currentState, persistedState)
+          const withoutLockUser = {
+            ...persisted,
+            data: {
+              ...persisted.data,
+              lockUser: false,
+            },
+          }
+
+          return merge(currentState, withoutLockUser)
         },
         partialize: (state) => {
           const appStore = omit(
