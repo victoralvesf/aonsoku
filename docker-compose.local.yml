@@ -2,11 +2,12 @@ version: '3.8'
 
 services:
   aonsoku:
-    container_name: aonsoku
-    image: ghcr.io/victoralvesf/aonsoku:latest
-    restart: unless-stopped
+    container_name: aonsoku-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - "${PORT:-8080}:8080"
     environment:
       # When it's true AND SERVER_URL is set, only username and password will be visible on login.
       # - HIDE_SERVER=true
