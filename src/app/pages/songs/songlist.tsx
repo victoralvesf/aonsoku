@@ -1,12 +1,11 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { Loader2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { InfinitySongListFallback } from '@/app/components/fallbacks/song-fallbacks'
+import { HeaderTitle } from '@/app/components/header-title'
 import { ClearFilterButton } from '@/app/components/search/clear-filter-button'
 import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
-import { Badge } from '@/app/components/ui/badge'
 import { DataTableList } from '@/app/components/ui/data-table-list'
 import { useTotalSongs } from '@/app/hooks/use-total-songs'
 import { songsColumns } from '@/app/tables/songs-columns'
@@ -81,6 +80,10 @@ export default function SongList() {
     'select',
   ]
 
+  const title = filterByArtist
+    ? t('songs.list.byArtist', { artist: artistName })
+    : t('sidebar.songs')
+
   return (
     <div className="w-full h-app-screen">
       <ShadowHeader
@@ -88,20 +91,11 @@ export default function SongList() {
         fixed={false}
         className="relative w-full justify-between items-center"
       >
-        <div className="flex gap-2 items-center">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            {filterByArtist
-              ? t('songs.list.byArtist', { artist: artistName })
-              : t('sidebar.songs')}
-          </h2>
-          <Badge variant="secondary" className="text-foreground/70">
-            {songCountIsLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              songCount
-            )}
-          </Badge>
-        </div>
+        <HeaderTitle
+          title={title}
+          count={songCount}
+          loading={songCountIsLoading}
+        />
 
         <div className="flex gap-2 flex-1 justify-end">
           {filterByArtist && <ClearFilterButton />}
