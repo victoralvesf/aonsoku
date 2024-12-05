@@ -1,4 +1,3 @@
-import { MD5 } from 'crypto-js'
 import merge from 'lodash/merge'
 import omit from 'lodash/omit'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
@@ -6,9 +5,16 @@ import { immer } from 'zustand/middleware/immer'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { pingServer } from '@/api/pingServer'
 import { AuthType, IAppContext, IServerConfig } from '@/types/serverConfig'
-import { saltWord, toHex } from '@/utils/salt'
+import {
+  genEncodedPassword,
+  genPassword,
+  genPasswordToken,
+  genUser,
+  getAuthType,
+  hasValidConfig,
+} from '@/utils/salt'
 
-const { HIDE_SERVER } = window
+const { SERVER_URL, HIDE_SERVER } = window
 
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
@@ -16,14 +22,15 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
       devtools(
         immer((set, get) => ({
           data: {
-            isServerConfigured: false,
+            isServerConfigured: hasValidConfig,
             osType: '',
-            url: '',
-            username: '',
-            password: '',
-            authType: AuthType.TOKEN,
+            url: SERVER_URL ?? '',
+            username: genUser(),
+            password: genPassword(),
+            authType: getAuthType(),
             logoutDialogState: false,
             hideServer: HIDE_SERVER ?? false,
+            lockUser: hasValidConfig,
             songCount: null,
             pages: {
               showInfoPanel: true,
@@ -77,8 +84,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               for (const authType of [AuthType.TOKEN, AuthType.PASSWORD]) {
                 const token =
                   authType === AuthType.TOKEN
-                    ? MD5(`${password}${saltWord}`).toString()
-                    : `enc:${toHex(password)}`
+                    ? genPasswordToken(password)
+                    : genEncodedPassword(password)
 
                 const canConnect = await pingServer(
                   url,
@@ -136,6 +143,22 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
         name: 'app_store',
         version: 1,
         merge: (persistedState, currentState) => {
+          if (hasValidConfig) {
+            const newState = {
+              data: {
+                isServerConfigured: true,
+                url: SERVER_URL as string,
+                username: genUser(),
+                password: genPassword(),
+                authType: getAuthType(),
+                hideServer: HIDE_SERVER ?? false,
+                lockUser: true,
+              },
+            }
+
+            return merge(currentState, newState)
+          }
+
           return merge(currentState, persistedState)
         },
         partialize: (state) => {

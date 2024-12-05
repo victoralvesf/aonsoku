@@ -11,6 +11,7 @@ import {
   InfinitySongListFallback,
   SongListFallback,
 } from '@/app/components/fallbacks/song-fallbacks'
+import { loginLoader } from '@/routes/loginLoader'
 import { protectedLoader } from '@/routes/protectedLoader'
 import { ROUTES } from '@/routes/routesList'
 
@@ -128,6 +129,7 @@ export const router = createBrowserRouter([
   {
     id: 'login',
     path: ROUTES.SERVER_CONFIG,
+    loader: loginLoader,
     element: (
       <Suspense>
         <Login />

@@ -23,7 +23,7 @@ import { LangSelect } from './lang-select'
 import { ThemeSelect } from './theme-select'
 
 export function UserDropdown() {
-  const { username, url } = useAppData()
+  const { username, url, lockUser } = useAppData()
   const setLogoutDialogState = useAppStore(
     (state) => state.actions.setLogoutDialogState,
   )
@@ -78,12 +78,16 @@ export function UserDropdown() {
             <Info className="mr-2 h-4 w-4" />
             <span>{t('menu.about')}</span>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setLogoutDialogState(true)}>
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>{t('menu.serverLogout')}</span>
-            <DropdownMenuShortcut>{'⇧⌃Q'}</DropdownMenuShortcut>
-          </DropdownMenuItem>
+          {!lockUser && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setLogoutDialogState(true)}>
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>{t('menu.serverLogout')}</span>
+                <DropdownMenuShortcut>{'⇧⌃Q'}</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </Fragment>
