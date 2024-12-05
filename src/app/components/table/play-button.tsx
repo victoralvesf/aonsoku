@@ -95,7 +95,7 @@ export default function PlaySongButton({
               }}
             >
               <PlayIcon
-                className="w-3 h-3 opacity-70 group-hover:opacity-100 fill-foreground transition-opacity"
+                className="w-3 h-3 opacity-70 group-hover:opacity-100 text-foreground fill-foreground transition-opacity"
                 strokeWidth={4}
               />
             </Button>
@@ -106,7 +106,7 @@ export default function PlaySongButton({
         <div className="relative w-full h-full flex items-center justify-center">
           <div className="absolute opacity-100 group-hover/tablerow:opacity-0 w-8 h-8 flex items-center">
             <div className="w-8 h-8 flex items-center justify-center">
-              <EqualizerBars width={20} height={20} className="text-primary" />
+              <EqualizerBars width={18} height={18} className="text-primary" />
             </div>
           </div>
           <div className="absolute opacity-0 group-hover/tablerow:opacity-100 flex justify-center">
@@ -121,7 +121,7 @@ export default function PlaySongButton({
                 }}
               >
                 <PauseIcon
-                  className="w-4 h-4 opacity-70 group-hover:opacity-100 fill-foreground transition-opacity"
+                  className="w-4 h-4 opacity-70 group-hover:opacity-100 text-foreground fill-foreground transition-opacity"
                   strokeWidth={1}
                 />
               </Button>
@@ -146,7 +146,7 @@ export default function PlaySongButton({
                 }}
               >
                 <PlayIcon
-                  className="w-3 h-3 opacity-70 group-hover:opacity-100 fill-foreground transition-opacity"
+                  className="w-3 h-3 opacity-70 group-hover:opacity-100 text-foreground fill-foreground transition-opacity"
                   strokeWidth={4}
                 />
               </Button>
