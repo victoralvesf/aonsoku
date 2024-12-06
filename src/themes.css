@@ -74,11 +74,11 @@
   .one-dark {
     --background: 220 13% 18%;
     --background-foreground: 220 13% 16%;
-    --foreground: 219 14% 71%;
+    --foreground: 219 14% 84%;
     --muted: 220 12% 22%;
     --muted-foreground: 220 12% 72%;
     --popover: 220 13% 15%;
-    --popover-foreground: 219 14% 81%;
+    --popover-foreground: 219 14% 84%;
     --card: 220 13% 16%;
     --card-foreground: 219 14% 76%;
     --border: 220 3% 23%;
@@ -255,7 +255,7 @@
     --ring: 50 100% 49%;
   }
 
-  .bearded-theme-solarized {
+  .bearded-solarized {
     --background: 195 46% 14%;
     --background-foreground: 195 46% 12%;
     --foreground: 194 37% 84%;

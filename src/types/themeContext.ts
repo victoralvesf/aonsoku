@@ -10,7 +10,7 @@ export enum Theme {
   MonokaiPro = 'monokai-pro',
   GithubDark = 'github-dark',
   ShadesOfPurple = 'shades-of-purple',
-  BeardedThemeSolarized = 'bearded-theme-solarized',
+  BeardedSolarized = 'bearded-solarized',
   CatppuccinMocha = 'catppuccin-mocha',
   NuclearDark = 'nuclear-dark',
   Achiever = 'achiever',
