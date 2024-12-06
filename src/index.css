@@ -26,6 +26,8 @@
     --shadow-header-distance: calc(var(--shadow-header-height) + 1.5rem);
 
     --toastify-toast-top: calc(var(--header-height) + 0.5rem);
+
+    --windows-red: 5 75% 44%;
   }
 }
 
