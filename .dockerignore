@@ -1,9 +1,17 @@
+# Ignore README and LICENSE files
 README.md
-dist
-node_modules
-src_tauri
-media
 LICENSE.txt
-.git
+
+# Ignore dependency and build folders
+dist/
+node_modules/
+src-tauri/
+media/
+cypress/
+
+# Ignore local metadata and configuration files
+.git/
 .DS_Store
-.vscode
+.vscode/
+.github/
+.env

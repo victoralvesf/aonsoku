@@ -8,13 +8,8 @@ services:
     ports:
       - 8080:8080
     environment:
-      # When it's true AND SERVER_URL is set, only username and password will be visible on login.
-      # - HIDE_SERVER=true
-      # - SERVER_URL=http://address:port
-      # To enable automatic login for your user across all devices accessing your instance,
-      # you HAVE to set the variables above and below:
-      # - APP_USER=your-username
-      # - APP_PASSWORD=your-password
-      # Specify the authentication method: either 'token' or 'password'.
-      # Note: The 'password' method is intended for legacy authentication servers.
-      # - APP_AUTH_TYPE=token
+      - APP_USER=${APP_USER}
+      - APP_PASSWORD=${APP_PASSWORD}
+      - APP_AUTH_TYPE=${APP_AUTH_TYPE}
+      - SERVER_URL=${SERVER_URL}
+      - HIDE_SERVER=${HIDE_SERVER}
