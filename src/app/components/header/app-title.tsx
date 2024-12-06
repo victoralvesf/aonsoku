@@ -4,7 +4,7 @@ import { tauriDragRegion } from '@/utils/tauriDragRegion'
 export function AppTitle() {
   return (
     <div {...tauriDragRegion} className="flex gap-2 items-center">
-      <div className="w-6 h-6 rounded bg-accent flex items-center justify-center">
+      <div className="w-6 h-6 rounded bg-green-950 flex items-center justify-center">
         <LazyLoadImage
           {...tauriDragRegion}
           src="/icon_transparent.svg"
