@@ -7,7 +7,6 @@ dist/
 node_modules/
 src-tauri/
 media/
-cypress/
 
 # Ignore local metadata and configuration files
 .git/
