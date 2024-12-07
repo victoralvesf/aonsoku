@@ -49,9 +49,9 @@ export default function Album() {
     : null
 
   const badges: BadgesData = [
-    { content: album.year.toString(), type: 'text' },
+    { content: album.year?.toString() ?? null, type: 'text' },
     {
-      content: album.genre,
+      content: album.genre ?? null,
       type: 'link',
       link: ROUTES.ALBUMS.GENRE(album.genre),
     },
