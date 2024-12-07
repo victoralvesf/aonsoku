@@ -65,7 +65,7 @@ export function SongsCarouselFallback() {
       </div>
 
       <div className="flex 2xl:hidden gap-4">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: 6 }).map((_, index) => (
           <div className="basis-1/5" key={'small-' + index}>
             <Skeleton className="aspect-square" />
             <Skeleton className="h-[13px] w-11/12 mt-2" />
