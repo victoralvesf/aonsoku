@@ -2,7 +2,7 @@ import { Skeleton } from '@/app/components/ui/skeleton'
 
 export function HeaderFallback() {
   return (
-    <div className="flex w-full rounded-lg bg-skeleton h-[250px] 2xl:h-[300px] p-4 2xl:p-6 gap-4">
+    <div className="flex w-full rounded-lg bg-skeleton h-[250px] 2xl:h-[300px] p-4 2xl:p-6 gap-4 border border-border">
       <Skeleton className="bg-background/50 h-full aspect-square rounded-lg" />
       <div className="flex flex-col gap-3 w-full h-full justify-end">
         <Skeleton className="w-96 h-10 bg-background/50" />
