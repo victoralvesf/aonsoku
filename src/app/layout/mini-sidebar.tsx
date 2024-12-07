@@ -13,7 +13,7 @@ import { ROUTES } from '@/routes/routesList'
 
 export function MiniSidebar() {
   return (
-    <aside className="flex lg:hidden flex-col items-center justify-center gap-1 min-w-[--mini-sidebar-width] max-w-[--mini-sidebar-width] border-r fixed top-[--header-height] left-0 bottom-0 pb-[--player-height] bg-background z-10 px-2">
+    <aside className="flex 2xl:hidden flex-col items-center justify-start gap-1 min-w-[--mini-sidebar-width] max-w-[--mini-sidebar-width] border-r fixed top-[--header-height] left-0 bottom-0 pb-[--player-height] bg-background z-10 p-2">
       <MiniSidebarSearch title={searchItem.title} icon={searchItem.icon} />
 
       {menuItems.map((item) => (
@@ -23,7 +23,7 @@ export function MiniSidebar() {
   )
 }
 
-const iconClassName = 'h-6 w-6'
+const iconClassName = 'h-4 w-4'
 
 const menuItems = [
   {

@@ -28,7 +28,7 @@ export default function BaseLayout() {
       <SidebarMemo />
       <PlayerMemo />
       {/* Routes */}
-      <main className="flex h-full pl-[--mini-sidebar-width] lg:pl-[--sidebar-width] pt-[--header-height] pb-[--player-height]">
+      <main className="flex h-full pl-[--mini-sidebar-width] 2xl:pl-[--sidebar-width] pt-[--header-height] pb-[--player-height]">
         <ScrollArea
           id="main-scroll-area"
           className="w-full bg-background-foreground"

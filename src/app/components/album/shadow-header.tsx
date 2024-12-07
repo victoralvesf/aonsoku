@@ -18,7 +18,7 @@ export function ShadowHeader({
       className={cn(
         'flex items-center justify-start px-8 h-[--shadow-header-height] border-b bg-background',
         fixed &&
-          'fixed top-[--header-height] right-0 left-[--mini-sidebar-width] lg:left-[--sidebar-width] z-30',
+          'fixed top-[--header-height] right-0 left-[--mini-sidebar-width] 2xl:left-[--sidebar-width] z-30',
         showGlassEffect &&
           'backdrop-blur-xl supports-[backdrop-filter]:bg-background/60',
         className,
