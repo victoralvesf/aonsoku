@@ -111,7 +111,7 @@ export default function PreviewList({
             {list.map((album, index) => (
               <CarouselItem
                 key={album.id}
-                className="basis-1/5 2xl:basis-1/8"
+                className="basis-1/6 2xl:basis-1/8"
                 data-testid={`preview-list-carousel-item-${index}`}
               >
                 <PreviewCard.Root>

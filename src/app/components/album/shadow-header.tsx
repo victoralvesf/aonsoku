@@ -20,7 +20,7 @@ export function ShadowHeader({
         fixed &&
           'fixed top-[--header-height] right-0 left-[--mini-sidebar-width] 2xl:left-[--sidebar-width] z-30',
         showGlassEffect &&
-          'backdrop-blur-xl supports-[backdrop-filter]:bg-background/60',
+          'backdrop-blur-lg supports-[backdrop-filter]:bg-background/80',
         className,
       )}
       {...rest}
