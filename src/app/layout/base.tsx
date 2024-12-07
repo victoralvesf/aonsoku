@@ -2,6 +2,7 @@ import { memo, useEffect } from 'react'
 import { Outlet, useLocation, Location } from 'react-router-dom'
 
 import { Player } from '@/app/components/player/player'
+import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
 import { SongInfoModal } from '@/app/components/song/info-modal'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { Header } from '@/app/layout/header'
@@ -37,6 +38,7 @@ export default function BaseLayout() {
         </ScrollArea>
       </main>
       <SongInfoModal />
+      <RemovePlaylistDialog />
     </div>
   )
 }

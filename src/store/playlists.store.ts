@@ -36,6 +36,20 @@ export const usePlaylistsStore = createWithEqualityFn<IPlaylistsContext>()(
             })
           },
         },
+        removePlaylist: {
+          confirmDialogState: false,
+          setConfirmDialogState: (status) => {
+            set((state) => {
+              state.removePlaylist.confirmDialogState = status
+            })
+          },
+          playlistId: '',
+          setPlaylistId: (id) => {
+            set((state) => {
+              state.removePlaylist.playlistId = id
+            })
+          },
+        },
       })),
       {
         name: 'playlists_store',
@@ -48,3 +62,6 @@ export const usePlaylists = () => usePlaylistsStore((state) => state)
 
 export const usePlaylistRemoveSong = () =>
   usePlaylistsStore((state) => state.removeSong)
+
+export const useRemovePlaylist = () =>
+  usePlaylistsStore((state) => state.removePlaylist)
