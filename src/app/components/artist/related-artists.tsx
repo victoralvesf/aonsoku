@@ -82,7 +82,7 @@ export default function RelatedArtistsList({
         >
           <CarouselContent>
             {similarArtists.map((artist) => (
-              <CarouselItem key={artist.id} className="basis-1/5 2xl:basis-1/8">
+              <CarouselItem key={artist.id} className="basis-1/6 2xl:basis-1/8">
                 <PreviewCard.Root>
                   <PreviewCard.ImageWrapper
                     link={ROUTES.ARTIST.PAGE(artist.id)}
