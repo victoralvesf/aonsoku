@@ -383,13 +383,13 @@
     --border: 218 3% 22%;
     --input: 214.29 5.04% 27.25%;
     --primary: 226.73 58.43% 65.1%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 334 34% 98%;
     --secondary: 214.29 5.04% 27.25%;
-    --secondary-foreground: 334 0% 100%;
+    --secondary-foreground: 334 34% 98%;
     --accent: 217.5 3.22% 22.19%;
-    --accent-foreground: 226.73 58.43% 65.1%;
+    --accent-foreground: 334 34% 98%;
     --destructive: 358.16 68.78% 53.53%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 334 34% 98%;
     --ring: 226.73 58.43% 65.1%;
   }
 
