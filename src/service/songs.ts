@@ -7,11 +7,26 @@ import {
 } from '@/types/responses/song'
 import { search } from './search'
 
-async function getRandomSongs(size = 10) {
+interface GetRandomSongsParams {
+  size?: number
+  genre?: string
+  fromYear?: number
+  toYear?: number
+}
+
+async function getRandomSongs({
+  size,
+  genre,
+  fromYear,
+  toYear,
+}: GetRandomSongsParams) {
   const response = await httpClient<RandomSongsResponse>('/getRandomSongs', {
     method: 'GET',
     query: {
-      size: size.toString(),
+      size: size?.toString(),
+      genre,
+      fromYear: fromYear?.toString(),
+      toYear: toYear?.toString(),
     },
   })
 
