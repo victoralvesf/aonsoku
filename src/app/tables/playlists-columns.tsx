@@ -63,7 +63,7 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
             coverArtType="playlist"
             altText={row.original.name}
           />
-          <div className="flex flex-col w-full justify-center truncate">
+          <div className="flex flex-col max-w-full justify-center truncate">
             <Link
               to={ROUTES.PLAYLIST.PAGE(row.original.id)}
               className="hover:underline truncate"
