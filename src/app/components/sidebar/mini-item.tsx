@@ -21,10 +21,7 @@ export function MiniSidebarItem({ item }: { item: ISidebarItem }) {
       <SimpleTooltip text={t(item.title)} side="right" delay={50}>
         <Button
           variant={isActive(item.route) ? 'secondary' : 'ghost'}
-          className={clsx(
-            'w-full h-fit flex flex-col justify-center items-center gap-1',
-            isActive(item.route) && 'text-primary',
-          )}
+          className="w-full h-fit flex flex-col justify-center items-center gap-1"
         >
           {item.icon}
         </Button>
