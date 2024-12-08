@@ -14,7 +14,7 @@ export function VolumeContainer() {
   }
 
   return (
-    <div className="flex justify-center items-center gap-4">
+    <div className="flex justify-center items-center gap-4 text-secondary-foreground">
       {volume >= 50 && <Volume2 className={buttonsStyle.secondaryIcon} />}
       {volume > 0 && volume < 50 && (
         <Volume1 className={buttonsStyle.secondaryIcon} />
