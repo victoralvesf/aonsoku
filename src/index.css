@@ -99,14 +99,10 @@ img {
 
 .queue-list-drawer {
   @apply w-screen;
-  @apply h-[--content-height];
+  @apply h-content;
   @apply mb-[--player-height] pb-[--player-height];
   @apply z-30;
   @apply bg-background-foreground;
-}
-
-.h-app-screen {
-  @apply h-[--content-height];
 }
 
 #main-command {

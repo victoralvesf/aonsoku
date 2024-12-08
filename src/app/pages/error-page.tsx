@@ -13,7 +13,7 @@ export default function ErrorPage({ status, statusText }: IError) {
   const error = useRouteError() as IError
 
   return (
-    <div className="w-full h-app-screen flex flex-col justify-center items-center">
+    <div className="w-full h-content flex flex-col justify-center items-center">
       <h1 className="scroll-m-20 text-4xl font-bold tracking-tight lg:text-5xl">
         Oops!
       </h1>
