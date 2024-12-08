@@ -21,6 +21,7 @@
     --sidebar-width: 280px;
     --mini-sidebar-width: 48px;
     --player-height: 96px;
+    --content-height: calc(100vh - var(--header-height) - var(--player-height));
 
     --shadow-header-height: 80px;
     --shadow-header-distance: calc(var(--shadow-header-height) + 1.5rem);
@@ -98,14 +99,14 @@ img {
 
 .queue-list-drawer {
   @apply w-screen;
-  @apply h-[calc(100vh-var(--player-height))];
+  @apply h-[--content-height];
   @apply mb-[--player-height] pb-[--player-height];
   @apply z-30;
   @apply bg-background-foreground;
 }
 
 .h-app-screen {
-  @apply h-[calc(100vh-var(--player-height)-var(--header-height))];
+  @apply h-[--content-height];
 }
 
 #main-command {
