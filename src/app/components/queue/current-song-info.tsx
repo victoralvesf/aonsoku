@@ -29,6 +29,8 @@ export function CurrentSongInfo() {
           effect="opacity"
           alt={`${currentSong.artist} - ${currentSong.title}`}
           className="rounded-md aspect-square object-cover"
+          width="100%"
+          height="100%"
         />
       </AspectRatio>
 
