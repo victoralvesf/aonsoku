@@ -14,9 +14,9 @@ export enum Theme {
   CatppuccinMocha = 'catppuccin-mocha',
   NuclearDark = 'nuclear-dark',
   Achiever = 'achiever',
-  Cool = 'cool',
+  Dracula = 'dracula',
   Discord = 'discord',
-  HuacatPink = 'huacat-pink',
+  TinaciousDesign = 'tinacious-design',
   VueDark = 'vue-dark',
   VimDarkSoft = 'vim-dark-soft',
 }

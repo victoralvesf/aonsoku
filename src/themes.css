@@ -347,27 +347,27 @@
     --ring: 18 83% 58%;
   }
 
-  .cool {
-    --background: 74 56% 98%;
-    --background-foreground: 74 56% 96%;
-    --foreground: 74 56% 3%;
-    --muted: 44 34% 85%;
-    --muted-foreground: 44 8% 34%;
-    --popover: 74 56% 97%;
-    --popover-foreground: 74 56% 2%;
-    --card: 74 56% 97%;
-    --card-foreground: 74 56% 2%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --primary: 74 53% 85%;
-    --primary-foreground: 74 53% 5%;
-    --secondary: 44 53% 85%;
-    --secondary-foreground: 44 53% 25%;
-    --accent: 104 53% 85%;
-    --accent-foreground: 104 53% 5%;
-    --destructive: 2 81% 25%;
-    --destructive-foreground: 2 81% 85%;
-    --ring: 74 53% 85%;
+  .dracula {
+    --background: 231 15% 18%;
+    --background-foreground: 231 15% 20%;
+    --foreground: 60 30% 96%;
+    --muted: 232 14% 31%;
+    --muted-foreground: 60 30% 96%;
+    --popover: 231 15% 18%;
+    --popover-foreground: 60 30% 96%;
+    --card: 232 14% 31%;
+    --card-foreground: 60 30% 96%;
+    --border: 232 14% 31%;
+    --input: 225 27% 31%;
+    --primary: 265 89% 78%;
+    --primary-foreground: 60 30% 96%;
+    --secondary: 326 100% 74%;
+    --secondary-foreground: 60 30% 96%;
+    --accent: 225 27% 31%;
+    --accent-foreground: 60 30% 96%;
+    --destructive: 0 100% 67%;
+    --destructive-foreground: 60 30% 96%;
+    --ring: 265 89% 78%;
   }
 
   .discord {
@@ -393,27 +393,27 @@
     --ring: 226.73 58.43% 65.1%;
   }
 
-  .huacat-pink {
-    --background: 300 35% 94%;
-    --background-foreground: 300 35% 92%;
-    --foreground: 300 35% 34%;
-    --muted: 300 12% 90%;
-    --muted-foreground: 300 12% 30%;
-    --popover: 300 35% 91%;
-    --popover-foreground: 300 35% 24%;
-    --card: 300 35% 92%;
-    --card-foreground: 300 35% 29%;
-    --border: 300 29.34% 85.12%;
-    --input: 300 25% 86%;
-    --primary: 320 61% 65%;
-    --primary-foreground: 320 61% 5%;
-    --secondary: 320 30% 25%;
-    --secondary-foreground: 320 30% 85%;
-    --accent: 300 35% 79%;
-    --accent-foreground: 300 35% 19%;
-    --destructive: 8 100% 26%;
-    --destructive-foreground: 8 100% 86%;
-    --ring: 320 61% 65%;
+  .tinacious-design {
+    --background: 240 100% 99%;
+    --background-foreground: 240 100% 98%;
+    --foreground: 244 18% 21%;
+    --muted: 240 12% 90%;
+    --muted-foreground: 240 12% 30%;
+    --popover: 240 100% 96%;
+    --popover-foreground: 244 18% 21%;
+    --card: 240 100% 97%;
+    --card-foreground: 244 18% 26%;
+    --border: 240 90% 94%;
+    --input: 240 90% 91%;
+    --primary: 330 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 330 30% 65%;
+    --secondary-foreground: 330 30% 15%;
+    --accent: 240 90% 94%;
+    --accent-foreground: 240 100% 24%;
+    --destructive: 5 89% 27%;
+    --destructive-foreground: 5 89% 87%;
+    --ring: 330 100% 60%;
   }
 
   .vue-dark {
