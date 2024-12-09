@@ -10,7 +10,12 @@ export function NavigationButtons() {
 
   return (
     <div className="flex gap-1">
-      <div className={clsx('w-8 h-8', !canGoBack && 'cursor-not-allowed')}>
+      <div
+        className={clsx(
+          'w-8 h-8',
+          !canGoBack && !queueDrawerState && 'cursor-not-allowed',
+        )}
+      >
         <Button
           variant="ghost"
           size="sm"
@@ -21,7 +26,12 @@ export function NavigationButtons() {
           <ChevronLeft className="w-6 h-6" strokeWidth={1.5} />
         </Button>
       </div>
-      <div className={clsx('w-8 h-8', !canGoForward && 'cursor-not-allowed')}>
+      <div
+        className={clsx(
+          'w-8 h-8',
+          !canGoForward && !queueDrawerState && 'cursor-not-allowed',
+        )}
+      >
         <Button
           variant="ghost"
           size="sm"
