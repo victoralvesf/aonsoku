@@ -17,10 +17,18 @@ interface RemoveSong {
   setActionData: (data: RemoveSongFromPlaylistData) => void
 }
 
+interface RemovePlaylist {
+  confirmDialogState: boolean
+  setConfirmDialogState: (status: boolean) => void
+  playlistId: string
+  setPlaylistId: (id: string) => void
+}
+
 export interface IPlaylistsContext {
   playlistDialogState: boolean
   setPlaylistDialogState: (state: boolean) => void
   data: PlaylistData
   setData: (data: PlaylistData) => void
   removeSong: RemoveSong
+  removePlaylist: RemovePlaylist
 }

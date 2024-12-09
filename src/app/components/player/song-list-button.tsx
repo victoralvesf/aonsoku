@@ -20,7 +20,7 @@ export function PlayerSongListButton({ disabled }: PlayerSongListButtonProps) {
       <SimpleTooltip text={t('queue.title')}>
         <Button
           variant="ghost"
-          className="rounded-full w-10 h-10 p-2"
+          className="rounded-full w-10 h-10 p-2 text-secondary-foreground"
           disabled={disabled}
           onClick={() => setQueueDrawerState(!queueDrawerState)}
         >

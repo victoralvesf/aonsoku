@@ -27,7 +27,7 @@ export function TableActionButton({
           variant="ghost"
           size="icon"
           className={clsx(
-            'w-8 h-8 p-1 rounded-full',
+            'w-8 h-8 p-1 rounded-full hover:bg-background/80',
             'data-[state=open]:bg-accent data-[state=open]:opacity-100',
             'opacity-0 group-hover/tablerow:opacity-100 transition-opacity',
           )}

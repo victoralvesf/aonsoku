@@ -1,9 +1,7 @@
 import { CheckIcon, ClockIcon, XIcon } from 'lucide-react'
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { PlaylistOptions } from '@/app/components/playlist/options'
-import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
 import { TableActionButton } from '@/app/components/table/action-button'
 import { CoverImage } from '@/app/components/table/cover-image'
 import PlaySongButton from '@/app/components/table/play-button'
@@ -63,7 +61,7 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
             coverArtType="playlist"
             altText={row.original.name}
           />
-          <div className="flex flex-col w-full justify-center truncate">
+          <div className="flex flex-col max-w-full justify-center truncate">
             <Link
               to={ROUTES.PLAYLIST.PAGE(row.original.id)}
               className="hover:underline truncate"
@@ -153,8 +151,6 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
       cell: ({ row }) => {
         const playlist = row.original
         const disableOption = playlist.songCount === 0
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [removeDialogState, setRemoveDialogState] = useState(false)
 
         return (
           <>
@@ -162,17 +158,11 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
               optionsMenuItems={
                 <PlaylistOptions
                   playlist={playlist}
-                  onRemovePlaylist={() => setRemoveDialogState(true)}
                   disablePlayNext={disableOption}
                   disableAddLast={disableOption}
                   disableDownload={disableOption}
                 />
               }
-            />
-            <RemovePlaylistDialog
-              playlistId={playlist.id}
-              openDialog={removeDialogState}
-              setOpenDialog={setRemoveDialogState}
             />
           </>
         )

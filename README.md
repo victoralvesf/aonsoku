@@ -119,10 +119,29 @@ services:
     restart: unless-stopped
     ports:
       - 8080:8080
-    environment:
-      - SERVER_URL=http://address:port
-      - HIDE_SERVER=true # When it's true AND SERVER_URL is set, only username and password will be visible on login.
 ```
+
+<details>
+  <summary>Environment Variables</summary>
+  </br>
+
+Below is a table describing the environment variables that can be used in this project. Adjust them as necessary in your `.env` file.
+
+| Variable        | Default   | Description                                                                                                       | Required for Automatic Login |
+|-----------------|-----------|-------------------------------------------------------------------------------------------------------------------|------------------------------|
+| `PORT`          | `8080`    | The port the application runs on.                                                                                 | No                           |
+| `SERVER_URL`    |           | If you want the app to access a predefined Subsonic server. </br> **Format:** `http://your-subsonic-server:port`. | Yes                          |
+| `HIDE_SERVER`   | `false`   | Set to `true` to hide the server URL field on login and only show username and password.                          | Yes                          |
+| `APP_USER`      |           | The username for automatic login.                                                                                 | Yes                          |
+| `APP_PASSWORD`  |           | The password for automatic login.                                                                                 | Yes                          |
+| `APP_AUTH_TYPE` | `token`   | Specifies the authentication method. </br> **Options:** `token` or `password`.                                    | No                           |
+
+**Notes:**
+- **Automatic Login:** To enable automatic login across devices. This should only be used in secure local environments to avoid password compromise.
+- **Legacy Authentication:** Use `APP_AUTH_TYPE=password` only if your server does not support token-based authentication.
+
+</details>
+
 
 ### Recommended IDE Setup
 

@@ -3,6 +3,8 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
+export const scrollAreaViewportSelector = '[data-radix-scroll-area-viewport]'
+
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
@@ -32,7 +34,7 @@ const ScrollBar = React.forwardRef<
     ref={ref}
     orientation={orientation}
     className={cn(
-      'flex touch-none select-none transition-colors',
+      'flex touch-none select-none transition-colors z-30',
       orientation === 'vertical' &&
         'h-full w-2.5 border-l border-l-transparent p-[1px]',
       orientation === 'horizontal' &&

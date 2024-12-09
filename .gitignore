@@ -28,3 +28,4 @@ cypress/videos
 
 # Docker env file
 env-config.js
+.env

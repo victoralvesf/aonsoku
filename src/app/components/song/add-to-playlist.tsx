@@ -12,6 +12,7 @@ import {
 } from '@/app/components/ui/command'
 import { ContextMenuItem } from '@/app/components/ui/context-menu'
 import { DropdownMenuItem } from '@/app/components/ui/dropdown-menu'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
 import { queryKeys } from '@/utils/queryKeys'
 
@@ -69,31 +70,37 @@ export function AddToPlaylistSubMenu({
             </ContextMenuItem>
           )}
         </div>
-        <CommandList>
-          <CommandEmpty>{t('options.playlist.notFound')}</CommandEmpty>
-          <CommandGroup>
-            {playlists &&
-              playlists.map((playlist) => (
-                <CommandItem key={playlist.id} value={playlist.name}>
-                  {type === 'dropdown' ? (
-                    <DropdownMenuItem
-                      className="truncate h-10"
-                      onClick={() => addToPlaylistFn(playlist.id)}
-                    >
-                      <span className="truncate pl-1">{playlist.name}</span>
-                    </DropdownMenuItem>
-                  ) : (
-                    <ContextMenuItem
-                      className="truncate h-10"
-                      onClick={() => addToPlaylistFn(playlist.id)}
-                    >
-                      <span className="truncate pl-1">{playlist.name}</span>
-                    </ContextMenuItem>
-                  )}
-                </CommandItem>
-              ))}
-          </CommandGroup>
-        </CommandList>
+        <ScrollArea className="h-[300px]" type="always">
+          <CommandList className="max-h-fit max-w-[298px]">
+            <CommandEmpty>{t('options.playlist.notFound')}</CommandEmpty>
+            <CommandGroup>
+              {playlists &&
+                playlists.map((playlist) => (
+                  <CommandItem
+                    key={playlist.id}
+                    value={playlist.name}
+                    className="mr-1.5"
+                  >
+                    {type === 'dropdown' ? (
+                      <DropdownMenuItem
+                        className="truncate h-10"
+                        onClick={() => addToPlaylistFn(playlist.id)}
+                      >
+                        <span className="truncate pl-1">{playlist.name}</span>
+                      </DropdownMenuItem>
+                    ) : (
+                      <ContextMenuItem
+                        className="truncate h-10"
+                        onClick={() => addToPlaylistFn(playlist.id)}
+                      >
+                        <span className="truncate pl-1">{playlist.name}</span>
+                      </ContextMenuItem>
+                    )}
+                  </CommandItem>
+                ))}
+            </CommandGroup>
+          </CommandList>
+        </ScrollArea>
       </Command>
     </>
   )

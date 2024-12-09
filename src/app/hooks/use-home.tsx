@@ -6,7 +6,7 @@ import { queryKeys } from '@/utils/queryKeys'
 export const useGetRandomSongs = () => {
   return useQuery({
     queryKey: [queryKeys.song.random],
-    queryFn: () => subsonic.songs.getRandomSongs(),
+    queryFn: () => subsonic.songs.getRandomSongs({ size: 10 }),
   })
 }
 

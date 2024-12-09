@@ -21,14 +21,14 @@ export function Sidebar({ className }: SidebarProps) {
     <aside>
       <div
         className={cn(
-          'hidden lg:flex flex-col min-w-[--sidebar-width] max-w-[--sidebar-width] border-r fixed top-[--header-height] left-0 bottom-0 pb-[--player-height] bg-background z-10',
+          'hidden 2xl:flex flex-col min-w-[--sidebar-width] max-w-[--sidebar-width] border-r fixed top-[--header-height] left-0 bottom-0 pb-[--player-height] bg-background z-10',
           className,
         )}
       >
         <div className="p-4">
           <CommandMenu />
         </div>
-        <div className="space-y-4 py-4 pt-0 min-w-[275px] max-w-[275px]">
+        <div className="space-y-4 py-4 pt-0">
           <SidebarSection>
             <div className="space-y-1">
               <SidebarGenerator list={mainMenuItems} />

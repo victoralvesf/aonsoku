@@ -7,7 +7,7 @@
   },
   "sidebar": {
     "home": "Início",
-    "search": "Pesquisar...",
+    "search": "Pesquisar…",
     "miniSearch": "Pesquisar",
     "library": "Biblioteca",
     "artists": "Artistas",
@@ -28,18 +28,19 @@
     "showDetails": "Exibir detalhes",
     "hideDetails": "Ocultar detalhes",
     "viewAll": "Ver tudo",
-    "loading": "Carregando..."
+    "loading": "Carregando…"
   },
   "theme": {
     "label": "Tema",
     "light": "Claro",
     "dark": "Escuro",
-    "system": "Sistema"
+    "system": "Sistema",
+    "black": "Preto e Branco"
   },
   "playlist": {
     "headline": "Playlist",
-    "songCount_zero": "{{count}} músicas",
     "songCount_one": "{{count}} música",
+    "songCount_many": "{{count}} músicas",
     "songCount_other": "{{count}} músicas",
     "duration": "cerca de {{duration}}",
     "refresh": "Atualizar playlists",
@@ -86,12 +87,15 @@
       },
       "removeSong": {
         "title_one": "Você tem certeza de que deseja remover a música selecionada?",
+        "title_many": "Você tem certeza de que deseja remover as músicas selecionadas?",
         "title_other": "Você tem certeza de que deseja remover as músicas selecionadas?",
         "description": "Essa ação não poderá ser desfeita.",
         "toast": {
           "success_one": "Música removida com sucesso!",
+          "success_many": "Músicas removidas com sucesso!",
           "success_other": "Músicas removidas com sucesso!",
           "error_one": "Falha ao remover a música!",
+          "error_many": "Falha ao remover as músicas!",
           "error_other": "Falha ao remover as músicas!"
         }
       }
@@ -100,7 +104,7 @@
   "songs": {
     "list": {
       "search": {
-        "placeholder": "Buscar músicas..."
+        "placeholder": "Buscar músicas…"
       },
       "byArtist": "Músicas por {{artist}}",
       "filter": {
@@ -134,9 +138,9 @@
         "action": "Modifique os filtros e tente novamente."
       },
       "genre": {
-        "label": "Selecione um gênero...",
-        "search": "Procurar um gênero...",
-        "loading": "Carregando gêneros...",
+        "label": "Selecione um gênero…",
+        "search": "Procurar um gênero…",
+        "loading": "Carregando gêneros…",
         "notFound": "Nenhum gênero encontrado."
       },
       "filter": {
@@ -153,7 +157,7 @@
         "search": "Pesquisa"
       },
       "search": {
-        "placeholder": "Buscar álbuns..."
+        "placeholder": "Buscar álbuns…"
       }
     },
     "table": {
@@ -168,8 +172,8 @@
       "options": "Mais opções para {{artist}}"
     },
     "info": {
-      "albumsCount_zero": "{{count}} álbuns",
       "albumsCount_one": "{{count}} álbum",
+      "albumsCount_many": "{{count}} álbuns",
       "albumsCount_other": "{{count}} álbuns"
     },
     "topSongs": "Populares",
@@ -226,12 +230,13 @@
     },
     "menu": {
       "selectedCount_one": "{{count}} selecionado",
+      "selectedCount_many": "{{count}} selecionados",
       "selectedCount_other": "{{count}} selecionados"
     }
   },
   "fullscreen": {
     "noLyrics": "Letra não encontrada",
-    "loadingLyrics": "Procurando a letra...",
+    "loadingLyrics": "Procurando a letra…",
     "queue": "Fila",
     "playing": "Tocando agora",
     "lyrics": "Letra",
@@ -255,7 +260,7 @@
       "usernamePlaceholder": "Seu usuário",
       "password": "Senha",
       "connect": "Conectar",
-      "connecting": "Conectando...",
+      "connecting": "Conectando…",
       "validations": {
         "url": "Por favor, insira uma URL válida.",
         "protocol": "A URL deve começar com http:// ou https://",
@@ -334,7 +339,7 @@
       "pauseTooltip": "Pausar rádio {{name}}"
     },
     "empty": {
-      "title": "Nenhuma rádio disponível",
+      "title": "Nenhuma rádio disponível!",
       "info": "Você ainda não configurou nenhuma rádio."
     },
     "form": {
@@ -365,24 +370,25 @@
       "validations": {
         "name": "O nome do rádio deve conter pelo menos 3 caracteres.",
         "url": "Por favor, forneça uma URL válida.",
-        "homepageUrlLength": "A URL da página inicial deve conter pelo menos 10 caracteres.",
-        "streamUrlLength": "A URL de transmissão deve conter pelo menos 10 caracteres."
+        "homepageUrlLength": "A URL da página inicial deve conter pelo menos 10 caracteres",
+        "streamUrlLength": "A URL de transmissão deve conter pelo menos 10 caracteres"
       }
     }
   },
   "time": {
     "days_one": "{{days}} dia",
+    "days_many": "{{days}} dias",
     "days_other": "{{days}} dias",
     "hour": "{{hour}}h",
     "minutes": "{{minutes}}min",
     "seconds": "{{seconds}}s"
   },
   "server": {
-    "songCount_zero": "{{count}} músicas",
     "songCount_one": "{{count}} música",
+    "songCount_many": "{{count}} músicas",
     "songCount_other": "{{count}} músicas",
-    "folderCount_zero": "{{count}} diretórios",
     "folderCount_one": "{{count}} diretório",
+    "folderCount_many": "{{count}} diretórios",
     "folderCount_other": "{{count}} diretórios",
     "lastScan": "Última varredura: {{date}}",
     "status": "Status",
@@ -420,7 +426,7 @@
   },
   "songInfo": {
     "title": "Informações da música",
-    "error": "Não foi possível obter as informações da música. Por favor, tente novamente mais tarde!"
+    "error": "Não foi possível obter as informações da música. Por favor, tente novamente mais tarde."
   },
   "warnings": {
     "reload": "Há uma música tocando!\nVocê tem certeza que deseja recarregar a página?"
@@ -444,7 +450,7 @@
     "type": "Tipo:",
     "apiVersion": "Versão da API:",
     "toasts": {
-        "copy": "Link copiado para a área de transferência!"
+      "copy": "Link copiado para a área de transferência!"
     }
   },
   "dayjs": {

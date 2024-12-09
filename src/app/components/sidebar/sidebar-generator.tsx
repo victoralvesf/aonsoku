@@ -1,10 +1,9 @@
 import clsx from 'clsx'
 import { ListMusic } from 'lucide-react'
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import { PlaylistOptions } from '@/app/components/playlist/options'
-import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { Button } from '@/app/components/ui/button'
 import { ROUTES } from '@/routes/routesList'
@@ -52,8 +51,6 @@ export function SidebarPlaylistGenerator({
   playlists: Playlist[]
 }) {
   const location = useLocation()
-  const [playlistId, setPlaylistId] = useState('')
-  const [removeDialogState, setRemoveDialogState] = useState(false)
 
   function isActive(id: string) {
     return location.pathname === ROUTES.PLAYLIST.PAGE(id)
@@ -77,10 +74,6 @@ export function SidebarPlaylistGenerator({
                   variant="context"
                   playlist={playlist}
                   showPlay={true}
-                  onRemovePlaylist={() => {
-                    setPlaylistId(playlist.id)
-                    setRemoveDialogState(true)
-                  }}
                 />
               }
             >
@@ -101,11 +94,6 @@ export function SidebarPlaylistGenerator({
           </Link>
         </Fragment>
       ))}
-      <RemovePlaylistDialog
-        playlistId={playlistId}
-        openDialog={removeDialogState}
-        setOpenDialog={setRemoveDialogState}
-      />
     </Fragment>
   )
 }

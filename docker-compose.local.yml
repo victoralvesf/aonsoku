@@ -2,11 +2,12 @@ version: '3.8'
 
 services:
   aonsoku:
-    container_name: aonsoku
-    image: ghcr.io/victoralvesf/aonsoku:latest
-    restart: unless-stopped
+    container_name: aonsoku-local
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - "${PORT:-8080}:8080"
     environment:
       - APP_USER=${APP_USER}
       - APP_PASSWORD=${APP_PASSWORD}

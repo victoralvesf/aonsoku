@@ -16,22 +16,16 @@ import {
 } from '@/app/components/ui/alert-dialog'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
+import { useRemovePlaylist } from '@/store/playlists.store'
 import { queryKeys } from '@/utils/queryKeys'
 
-interface RemovePlaylistDialogProps {
-  playlistId: string
-  openDialog: boolean
-  setOpenDialog: (value: boolean) => void
-}
-
-export function RemovePlaylistDialog({
-  playlistId,
-  openDialog,
-  setOpenDialog,
-}: RemovePlaylistDialogProps) {
+export function RemovePlaylistDialog() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const matches = useMatches()
+
+  const { playlistId, confirmDialogState, setConfirmDialogState } =
+    useRemovePlaylist()
 
   function navigateIfNeeded() {
     const isOnPlaylistPage = matches.find((route) => route.id === 'playlist')
@@ -49,7 +43,7 @@ export function RemovePlaylistDialog({
         queryKey: [queryKeys.playlist.all],
       })
       toast.success(t('playlist.form.delete.toast.success'))
-      setOpenDialog(false)
+      setConfirmDialogState(false)
       navigateIfNeeded()
     },
     onError: () => {
@@ -64,7 +58,7 @@ export function RemovePlaylistDialog({
   }
 
   return (
-    <AlertDialog open={openDialog}>
+    <AlertDialog open={confirmDialogState}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t('playlist.form.delete.title')}</AlertDialogTitle>
@@ -73,7 +67,7 @@ export function RemovePlaylistDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setOpenDialog(!openDialog)}>
+          <AlertDialogCancel onClick={() => setConfirmDialogState(false)}>
             {t('logout.dialog.cancel')}
           </AlertDialogCancel>
           <AlertDialogAction onClick={handleRemovePlaylist}>

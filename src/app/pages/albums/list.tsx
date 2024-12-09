@@ -144,7 +144,7 @@ export default function AlbumsList() {
 
       <ListWrapper className="pt-[--shadow-header-distance]">
         <div
-          className="grid grid-cols-5 2xl:grid-cols-8 gap-4 h-full"
+          className="grid grid-cols-6 2xl:grid-cols-8 gap-4 h-full"
           data-testid="albums-grid"
         >
           {items.map((album) => (

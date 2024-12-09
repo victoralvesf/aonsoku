@@ -88,8 +88,7 @@ export default function ImageHeader({
       <div
         className={cn(
           'w-full px-8 py-6 flex gap-4 absolute inset-0',
-          'bg-gradient-to-b from-white/20 to-white/50',
-          'dark:from-black/10 dark:to-black/50',
+          'bg-gradient-to-b from-background/20 to-background/50',
         )}
         style={{ backgroundColor: bgColor }}
       >
@@ -173,7 +172,7 @@ export default function ImageHeader({
       </div>
 
       {!loaded ? (
-        <ImageHeaderEffect className="bg-muted-foreground dark:from-black/60" />
+        <ImageHeaderEffect className="bg-muted-foreground" />
       ) : (
         <ImageHeaderEffect style={{ backgroundColor: bgColor }} />
       )}

@@ -2,13 +2,12 @@ import { OptionsButtons } from '@/app/components/options/buttons'
 import { DropdownMenuSeparator } from '@/app/components/ui/dropdown-menu'
 import { useOptions } from '@/app/hooks/use-options'
 import { subsonic } from '@/service/subsonic'
-import { usePlaylists } from '@/store/playlists.store'
+import { usePlaylists, useRemovePlaylist } from '@/store/playlists.store'
 import { Playlist, PlaylistWithEntries } from '@/types/responses/playlist'
 import { ISong } from '@/types/responses/song'
 
 interface PlaylistOptionsProps {
   playlist: PlaylistWithEntries | Playlist
-  onRemovePlaylist: () => void
   variant?: 'context' | 'dropdown'
   showPlay?: boolean
   disablePlayNext?: boolean
@@ -20,7 +19,6 @@ interface PlaylistOptionsProps {
 
 export function PlaylistOptions({
   playlist,
-  onRemovePlaylist,
   variant = 'dropdown',
   showPlay = false,
   disablePlayNext = false,
@@ -31,6 +29,7 @@ export function PlaylistOptions({
 }: PlaylistOptionsProps) {
   const { setPlaylistDialogState, setData } = usePlaylists()
   const { play, playNext, playLast, startDownload } = useOptions()
+  const { setPlaylistId, setConfirmDialogState } = useRemovePlaylist()
 
   function handleEdit() {
     setData({
@@ -126,7 +125,8 @@ export function PlaylistOptions({
         variant={variant}
         onClick={(e) => {
           e.stopPropagation()
-          onRemovePlaylist()
+          setPlaylistId(playlist.id)
+          setConfirmDialogState(true)
         }}
         disabled={disableDelete}
       />

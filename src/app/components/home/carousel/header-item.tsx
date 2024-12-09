@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { Play } from 'lucide-react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
@@ -9,6 +10,7 @@ import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
+import { isMac } from '@/utils/osType'
 
 export function HeaderItem({ song }: { song: ISong }) {
   const { setSongList } = usePlayerActions()
@@ -27,14 +29,31 @@ export function HeaderItem({ song }: { song: ISong }) {
 
   return (
     <div
-      className="w-full bg-cover bg-center"
-      data-testid="header-bg"
-      style={{ backgroundImage: `url(${coverArtUrl})` }}
+      className={clsx(
+        'w-full h-[250px] 2xl:h-[300px] relative',
+        !isMac && 'bg-black/60',
+      )}
     >
-      <div className="w-full flex-1 h-full inset-0 backdrop-blur-xl bg-gradient-to-b from-white/20 to-white/90 dark:from-black/20 dark:to-black/90">
-        <div className="flex h-[200px] 2xl:h-[300px] p-6 gap-4">
+      <div
+        data-testid="header-bg"
+        className={clsx(
+          'absolute -inset-10 bg-cover bg-center z-0',
+          isMac && 'w-full h-full',
+        )}
+        style={{
+          backgroundImage: `url(${coverArtUrl})`,
+          filter: !isMac ? 'blur(24px)' : undefined,
+        }}
+      />
+      <div
+        className={clsx(
+          'w-full h-full inset-0 bg-gradient-to-b from-background/40 to-background/80 absolute z-10',
+          isMac && 'backdrop-blur-xl',
+        )}
+      >
+        <div className="flex h-full p-4 2xl:p-6 gap-4">
           <div
-            className="w-[152px] 2xl:w-[252px] h-[152px] 2xl:h-[252px] min-w-[152px] 2xl:min-w-[252px] min-h-[152px] 2xl:min-h-[252px] rounded-lg overflow-hidden relative group bg-skeleton"
+            className="h-full aspect-square relative group bg-skeleton rounded-lg"
             data-testid="header-image-container"
           >
             <LazyLoadImage
@@ -43,12 +62,12 @@ export function HeaderItem({ song }: { song: ISong }) {
               effect="opacity"
               width="100%"
               height="100%"
-              className="aspect-square object-cover w-full h-full absolute inset-0 z-0"
+              className="aspect-square rounded-lg object-cover bg-center absolute inset-0 z-0"
               data-testid="header-image"
             />
-            <div className="w-full h-full flex items-center justify-center rounded-lg bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 absolute inset-0 z-10">
+            <div className="w-full h-full flex items-center justify-center rounded-lg bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-colors duration-300 absolute inset-0 z-10">
               <Button
-                className="opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-full w-14 h-14"
+                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full w-14 h-14"
                 variant="outline"
                 onClick={() => handlePlaySongAlbum(song)}
                 data-testid="header-play-button"
@@ -57,7 +76,7 @@ export function HeaderItem({ song }: { song: ISong }) {
               </Button>
             </div>
           </div>
-          <div className="flex min-h-[152px] h-[152px] 2xl:min-h-[252px] 2xl:h-[252px] flex-col justify-end">
+          <div className="flex flex-1 h-full flex-col justify-end">
             <Link to={ROUTES.ALBUM.PAGE(song.albumId)} className="w-fit">
               <h1
                 data-testid="header-title"

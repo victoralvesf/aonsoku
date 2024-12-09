@@ -117,9 +117,12 @@ function setFontSmoothing() {
 }
 
 export function blockFeatures() {
+  setFontSmoothing()
+
+  if (process.env.NODE_ENV === 'development') return
+
   preventContextMenu()
   preventNewTabAndScroll()
   preventReload()
   preventAltBehaviour()
-  setFontSmoothing()
 }

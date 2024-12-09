@@ -53,7 +53,7 @@ const Slider = React.forwardRef<
         className={clsx(
           'relative h-1 w-full grow overflow-hidden rounded-full select-none',
           variant === 'default' && 'bg-secondary',
-          variant === 'secondary' && 'bg-foreground/40',
+          variant === 'secondary' && 'bg-muted-foreground',
         )}
       >
         <SliderPrimitive.Range

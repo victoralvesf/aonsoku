@@ -15,7 +15,7 @@ export interface Albums {
   id: string
   name: string
   artist: string
-  year: number
+  year?: number
   genre?: string
   coverArt: string
   duration: number
@@ -37,7 +37,7 @@ export interface SingleAlbum {
   playCount?: number
   created: string
   starred?: string
-  year: number
+  year?: number
   genre: string
   played?: string
   userRating: number

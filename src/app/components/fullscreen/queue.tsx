@@ -1,40 +1,38 @@
-import { useCallback, useEffect, useRef } from 'react'
-import Image from '@/app/components/image'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from '@/app/components/ui/table'
-import { cn } from '@/lib/utils'
+import { useVirtualizer } from '@tanstack/react-virtual'
+import { useEffect, useRef } from 'react'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import {
   usePlayerActions,
   usePlayerIsPlaying,
   usePlayerSonglist,
 } from '@/store/player.store'
-import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
+import { QueueItem } from './queue-item'
 
 export function FullscreenSongQueue() {
   const { setSongList } = usePlayerActions()
   const { currentList, currentSongIndex, currentSong } = usePlayerSonglist()
   const isPlaying = usePlayerIsPlaying()
 
-  const songRef = useRef<HTMLTableSectionElement>(null)
+  const parentRef = useRef<HTMLDivElement>(null)
 
-  const moveSongToTop = useCallback(() => {
-    if (songRef.current) {
-      const activeSong = songRef.current.querySelector('[data-state=active]')
+  const getScrollElement = () => {
+    if (!parentRef.current) return null
 
-      activeSong?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    }
-  }, [])
+    return parentRef.current.querySelector('[data-radix-scroll-area-viewport]')
+  }
+
+  const virtualizer = useVirtualizer({
+    count: currentList.length,
+    getScrollElement,
+    estimateSize: () => 64,
+    overscan: 5,
+  })
 
   useEffect(() => {
-    moveSongToTop()
-  }, [currentSongIndex, moveSongToTop])
+    if (currentSongIndex >= 0) {
+      virtualizer.scrollToIndex(currentSongIndex, { align: 'start' })
+    }
+  }, [currentSongIndex, virtualizer])
 
   if (currentList.length === 0)
     return (
@@ -44,55 +42,38 @@ export function FullscreenSongQueue() {
     )
 
   return (
-    <Table className="min-h-full h-full bg-transparent">
-      <TableBody ref={songRef}>
-        {currentList.map((entry, index) => (
-          <TableRow
-            key={entry.id}
-            data-state={currentSong.id === entry.id ? 'active' : 'inactive'}
-            className={cn(
-              'hover:shadow-md hover:bg-background/30 dark:hover:bg-muted-foreground/30 border-0 cursor-pointer',
-              currentSong.id === entry.id &&
-                'bg-primary/80 hover:bg-primary dark:hover:bg-primary/70',
-            )}
-            onClick={() => {
-              if (currentSong.id !== entry.id) {
-                setSongList(currentList, index)
-              }
-            }}
-          >
-            <TableCell className="w-[30px] text-center font-medium">
-              {currentSong.id === entry.id && isPlaying ? (
-                <div className="w-6 flex items-center">
-                  <div className="w-6 h-6 flex items-center justify-center">
-                    <Image
-                      src="/equalizer.gif"
-                      className="w-5 h-5"
-                      id="equalizer-image"
-                      alt="Audio bars animation"
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div className="w-6 h-6 text-center flex justify-center items-center drop-shadow-lg">
-                  <p>{index + 1}</p>
-                </div>
-              )}
-            </TableCell>
-            <TableCell>
-              <span className="font-semibold drop-shadow-lg">
-                {entry.title}
-              </span>
-              <p className="font-normal text-sm text-foreground/70 drop-shadow-lg">
-                {entry.artist}
-              </p>
-            </TableCell>
-            <TableCell className="w-[100px] text-center drop-shadow-lg">
-              {convertSecondsToTime(entry.duration)}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <ScrollArea ref={parentRef} className="min-h-full h-full overflow-auto">
+      <div
+        style={{
+          height: `${virtualizer.getTotalSize()}px`,
+          width: '100%',
+          position: 'relative',
+        }}
+      >
+        {virtualizer.getVirtualItems().map((virtualRow) => {
+          const entry = currentList[virtualRow.index]
+          return (
+            <QueueItem
+              key={entry.id}
+              data-row-index={virtualRow.index}
+              data-state={currentSong.id === entry.id ? 'active' : 'inactive'}
+              index={virtualRow.index}
+              song={entry}
+              isPlaying={currentSong.id === entry.id && isPlaying}
+              onClick={() => {
+                if (currentSong.id !== entry.id) {
+                  setSongList(currentList, virtualRow.index)
+                }
+              }}
+              style={{
+                position: 'absolute',
+                top: 0,
+                transform: `translateY(${virtualRow.start}px)`,
+              }}
+            />
+          )
+        })}
+      </div>
+    </ScrollArea>
   )
 }

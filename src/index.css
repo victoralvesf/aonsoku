@@ -4,55 +4,6 @@
 
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 224 10% 15%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 10% 15%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 10% 15%;
-    --primary: 161 94% 30%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 92.9%;
-    --accent-foreground: 220.9 39.3% 11%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 161 94% 30%;
-    --radius: 0.5rem;
-    --main-background: hsl(210, 40%, 97%);
-  }
-
-  .dark {
-    --background: 224 71.4% 8.1%;
-    --foreground: 210 20% 95%;
-    --card: 224 71.4% 8.1%;
-    --card-foreground: 210 20% 95%;
-    --popover: 224 71.4% 8.1%;
-    --popover-foreground: 210 20% 95%;
-    --primary: 160 84% 39%;
-    --primary-foreground: 210 20% 95%;
-    --secondary: 215 27.9% 19.9%;
-    --secondary-foreground: 210 20% 95%;
-    --muted: 215 27.9% 14.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
-    --accent: 215 27.9% 19.9%;
-    --accent-foreground: 210 20% 95%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 95%;
-    --border: 215 27.9% 19.9%;
-    --input: 215 27.9% 19.9%;
-    --ring: 160 84% 39%;
-    --main-background: hsl(222, 47%, 11%);
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
@@ -68,13 +19,16 @@
   :root {
     --header-height: 44px;
     --sidebar-width: 280px;
-    --mini-sidebar-width: 100px;
+    --mini-sidebar-width: 48px;
     --player-height: 96px;
+    --content-height: calc(100vh - var(--header-height) - var(--player-height));
 
     --shadow-header-height: 80px;
     --shadow-header-distance: calc(var(--shadow-header-height) + 1.5rem);
 
     --toastify-toast-top: calc(var(--header-height) + 0.5rem);
+
+    --windows-red: 5 75% 44%;
   }
 }
 
@@ -135,12 +89,8 @@ img {
   @apply after:content-['•'] after:block after:absolute after:-bottom-1 after:text-primary;
 }
 
-:root.light #equalizer-image {
-  filter: invert(1);
-}
-
 .bg-skeleton {
-  @apply bg-foreground/20 dark:bg-accent;
+  @apply bg-accent;
 }
 
 .required {
@@ -149,14 +99,10 @@ img {
 
 .queue-list-drawer {
   @apply w-screen;
-  @apply h-[calc(100vh-var(--player-height))];
+  @apply h-content;
   @apply mb-[--player-height] pb-[--player-height];
   @apply z-30;
-  @apply bg-[--main-background];
-}
-
-.h-app-screen {
-  @apply h-[calc(100vh-var(--player-height)-var(--header-height))];
+  @apply bg-background-foreground;
 }
 
 #main-command {
@@ -227,4 +173,60 @@ img {
 #update-info-body h4,
 #update-info-body h5 {
   @apply font-semibold text-foreground;
+}
+
+svg#bars {
+  overflow: visible;
+}
+
+svg#bars .eq-bar {
+  transform: scale(1, -1) translate(0, -24px);
+}
+
+svg#bars .eq-bar--1 {
+  animation-name: eq-1;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-delay: 0s;
+}
+
+svg#bars .eq-bar--2 {
+  animation-name: eq-2;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.07s;
+}
+
+svg#bars .eq-bar--3 {
+  animation-name: eq-3;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.14s;
+}
+
+svg#bars .eq-bar--4 {
+  animation-name: eq-4;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-delay: 0s;
+}
+
+@keyframes eq-1 {
+  0%, 100% { height: 10px }
+  50% { height: 6px }
+}
+
+@keyframes eq-2 {
+  0%, 100% { height: 18px }
+  50% { height: 8px }
+}
+
+@keyframes eq-3 {
+  0%, 100% { height: 7px }
+  50% { height: 14px }
+}
+
+@keyframes eq-4 {
+  0%, 100% { height: 8px }
+  50% { height: 16px }
 }

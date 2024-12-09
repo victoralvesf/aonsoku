@@ -18,6 +18,7 @@ import { Fragment, MouseEvent, useCallback, useMemo, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
 
+import { PlaylistOptions } from '@/app/components/playlist/options'
 import { SongMenuOptions } from '@/app/components/song/menu-options'
 import { SelectedSongsMenuOptions } from '@/app/components/song/selected-options'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
@@ -26,6 +27,7 @@ import { DataTablePagination } from '@/app/components/ui/data-table-pagination'
 import { Input } from '@/app/components/ui/input'
 import { ColumnFilter } from '@/types/columnFilter'
 import { ColumnDefType } from '@/types/react-table/columnDef'
+import { Playlist } from '@/types/responses/playlist'
 import { ISong } from '@/types/responses/song'
 import { isMacOS, MouseButton } from '@/utils/browser'
 
@@ -192,6 +194,16 @@ export function DataTable<TData, TValue>({
             />
           )
         }
+      }
+
+      if (dataType === 'playlist') {
+        return (
+          <PlaylistOptions
+            variant="context"
+            playlist={row.original as Playlist}
+            showPlay={true}
+          />
+        )
       }
 
       return undefined
@@ -395,15 +407,8 @@ export function DataTable<TData, TValue>({
                             !isNextRowSelected(index) &&
                             'rounded-b-md',
                           isModern && !row.getIsSelected() && 'rounded-md',
-                          isClassic && [
-                            'border-b',
-                            'hover:bg-gray-200 dark:hover:bg-gray-800',
-                            'data-[state=selected]:bg-gray-300 dark:data-[state=selected]:bg-gray-700',
-                          ],
-                          isModern && [
-                            'hover:bg-gray-300 dark:hover:bg-gray-700',
-                            'data-[state=selected]:bg-gray-400/50 dark:data-[state=selected]:bg-gray-600',
-                          ],
+                          'hover:bg-foreground/20 data-[state=selected]:bg-foreground/30',
+                          isClassic && 'border-b',
                         )}
                       >
                         {row.getVisibleCells().map((cell) => {

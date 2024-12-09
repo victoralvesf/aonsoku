@@ -2,12 +2,9 @@ import { VolumeX, Volume1, Volume2 } from 'lucide-react'
 import { WheelEvent } from 'react'
 import { Slider } from '@/app/components/ui/slider'
 import { usePlayerVolume, useVolumeSettings } from '@/store/player.store'
+import { buttonsStyle } from './controls'
 
-interface VolumeContainerProps {
-  className: string
-}
-
-export function VolumeContainer({ className }: VolumeContainerProps) {
+export function VolumeContainer() {
   const { volume, setVolume, handleVolumeWheel } = usePlayerVolume()
   const { min, max, step } = useVolumeSettings()
 
@@ -17,10 +14,12 @@ export function VolumeContainer({ className }: VolumeContainerProps) {
   }
 
   return (
-    <div className="flex justify-center items-center gap-4">
-      {volume >= 50 && <Volume2 className={className} />}
-      {volume > 0 && volume < 50 && <Volume1 className={className} />}
-      {volume === 0 && <VolumeX className={className} />}
+    <div className="flex justify-center items-center gap-4 text-secondary-foreground">
+      {volume >= 50 && <Volume2 className={buttonsStyle.secondaryIcon} />}
+      {volume > 0 && volume < 50 && (
+        <Volume1 className={buttonsStyle.secondaryIcon} />
+      )}
+      {volume === 0 && <VolumeX className={buttonsStyle.secondaryIcon} />}
       <Slider
         variant="secondary"
         defaultValue={[100]}

@@ -18,6 +18,8 @@ export function SongInfo() {
             effect="opacity"
             alt={`${currentSong.artist} - ${currentSong.title}`}
             className="rounded-lg 2xl:rounded-2xl aspect-square object-cover"
+            width="100%"
+            height="100%"
           />
         </AspectRatio>
       </div>
@@ -28,13 +30,16 @@ export function SongInfo() {
             {currentSong.title}
           </h2>
         </MarqueeTitle>
-        <p className="leading-7 text-lg 2xl:text-xl text-foreground/70 truncate -mt-1 drop-shadow-lg">
+        <p className="leading-7 text-lg 2xl:text-xl text-foreground/70 truncate drop-shadow-lg">
           {currentSong.artist} {'•'} {currentSong.album}
         </p>
         <div className="flex gap-2 mt-2 2xl:mt-3">
-          <Badge>{currentSong.suffix.toUpperCase()}</Badge>
-          {currentSong.genre && <Badge>{currentSong.genre}</Badge>}
-          <Badge>{currentSong.year}</Badge>
+          {currentSong.genre && (
+            <Badge variant="neutral">{currentSong.genre}</Badge>
+          )}
+          {currentSong.year && (
+            <Badge variant="neutral">{currentSong.year}</Badge>
+          )}
         </div>
       </div>
     </div>

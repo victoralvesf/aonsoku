@@ -7,7 +7,7 @@
     },
     "sidebar": {
         "home": "Inicio",
-        "search": "Buscar...",
+        "search": "Buscar…",
         "miniSearch": "Buscar",
         "library": "Biblioteca",
         "artists": "Artistas",
@@ -28,13 +28,14 @@
         "showDetails": "Mostrar detalles",
         "hideDetails": "Ocultar detalles",
         "viewAll": "Ver todos",
-        "loading": "Cargando..."
+        "loading": "Cargando…"
     },
     "theme": {
         "label": "Tema",
         "light": "Claro",
         "dark": "Oscuro",
-        "system": "Predeterminado del sistema"
+        "system": "Predeterminado del sistema",
+        "black": "Blanco y Negro"
     },
     "playlist": {
         "headline": "Lista de reproducción",
@@ -103,7 +104,7 @@
     "songs": {
         "list": {
             "search": {
-                "placeholder": "Buscar canciones..."
+                "placeholder": "Buscar canciones…"
             },
             "filter": {
                 "clear": "Borrar filtro"
@@ -137,10 +138,10 @@
                 "action": "¿Intente ajustar los filtros?"
             },
             "genre": {
-                "search": "Encontrar un género...",
-                "loading": "Cargando géneros...",
+                "search": "Encontrar un género…",
+                "loading": "Cargando géneros…",
                 "notFound": "No se ha encontrado el género.",
-                "label": "Seleccionar un género..."
+                "label": "Seleccionar un género…"
             },
             "filter": {
                 "artist": "Artista",
@@ -156,7 +157,7 @@
                 "search": "Buscar"
             },
             "search": {
-                "placeholder": "Buscar álbumes..."
+                "placeholder": "Buscar álbumes…"
             }
         },
         "table": {
@@ -239,7 +240,7 @@
         "lyrics": "Letra",
         "switchButton": "Cambiar a pantalla completa",
         "queue": "Cola",
-        "loadingLyrics": "Buscando letra..."
+        "loadingLyrics": "Buscando letra…"
     },
     "logout": {
         "dialog": {
@@ -255,7 +256,7 @@
             "description": "Conectar a su servidor de Subsonic.",
             "username": "Nombre de usuario",
             "connect": "Conectar",
-            "connecting": "Conectando...",
+            "connecting": "Conectando…",
             "validations": {
                 "url": "Por favor introduce una dirección URL válida.",
                 "protocol": "La dirección URL debe comenzar con http:// o https://",

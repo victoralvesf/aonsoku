@@ -12,6 +12,7 @@ interface TooltipContent {
   text: string
   side?: 'top' | 'right' | 'bottom' | 'left'
   align?: 'center' | 'end' | 'start'
+  delay?: number
 }
 
 export function SimpleTooltip({
@@ -19,9 +20,10 @@ export function SimpleTooltip({
   text,
   side = 'top',
   align = 'center',
+  delay = 700,
 }: TooltipContent) {
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={delay}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipPortal>

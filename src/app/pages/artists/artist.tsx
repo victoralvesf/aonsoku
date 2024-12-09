@@ -73,7 +73,13 @@ export default function Artist() {
     },
   ]
 
-  const recentAlbums = artist.album.sort((a, b) => b.year - a.year)
+  const recentAlbums = artist.album.sort((a, b) => {
+    // if the album does not have a year, send to the end of list
+    const yearA = a.year ?? -Infinity
+    const yearB = b.year ?? -Infinity
+
+    return yearB - yearA
+  })
 
   return (
     <div className="w-full">

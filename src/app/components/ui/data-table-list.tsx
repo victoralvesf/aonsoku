@@ -25,11 +25,12 @@ import {
 import { useHotkeys } from 'react-hotkeys-hook'
 import { SongMenuOptions } from '@/app/components/song/menu-options'
 import { SelectedSongsMenuOptions } from '@/app/components/song/selected-options'
-import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { ColumnFilter } from '@/types/columnFilter'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISong } from '@/types/responses/song'
 import { isMacOS, MouseButton } from '@/utils/browser'
+import { TableListRow } from './data-table-list-row'
+import { ScrollArea, scrollAreaViewportSelector } from './scroll-area'
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
@@ -87,39 +88,65 @@ export function DataTableList<TData, TValue>({
     [selectedRows],
   )
 
-  const table = useReactTable({
-    data,
-    columns: columnFilter ? newColumns : columns,
-    getCoreRowModel: getCoreRowModel(),
-    onColumnFiltersChange: setColumnSearch,
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onRowSelectionChange: setRowSelection,
-    enableSorting: false,
-    sortingFns: {
-      customSortFn: (rowA, rowB, columnId) => {
-        return rowA.original[columnId].localeCompare(rowB.original[columnId])
+  const tableConfig = useMemo(
+    () => ({
+      data,
+      columns: columnFilter ? newColumns : columns,
+      getCoreRowModel: getCoreRowModel(),
+      onColumnFiltersChange: setColumnSearch,
+      onSortingChange: setSorting,
+      getSortedRowModel: getSortedRowModel(),
+      onRowSelectionChange: setRowSelection,
+      enableSorting: false,
+      sortingFns: {
+        customSortFn: <T extends { original: Record<string, string> }>(
+          rowA: T,
+          rowB: T,
+          columnId: string,
+        ) => {
+          return rowA.original[columnId].localeCompare(rowB.original[columnId])
+        },
       },
-    },
-    meta: {
+      meta: {
+        handlePlaySong,
+      },
+      state: {
+        columnFilters: columnSearch,
+        sorting,
+        rowSelection,
+      },
+    }),
+    [
+      data,
+      columns,
+      newColumns,
+      columnFilter,
       handlePlaySong,
-    },
-    state: {
-      columnFilters: columnSearch,
+      columnSearch,
       sorting,
       rowSelection,
-    },
-  })
+    ],
+  )
+
+  const table = useReactTable(tableConfig)
 
   const { rows } = table.getRowModel()
 
   const parentRef = useRef<HTMLDivElement>(null)
 
+  const getScrollElement = () => {
+    if (!parentRef.current) return null
+
+    return parentRef.current.querySelector(scrollAreaViewportSelector)
+  }
+
+  const estimateSize = useCallback(() => 56, [])
+
   const virtualizer = useVirtualizer({
     count: rows.length,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => 56,
-    overscan: 10,
+    getScrollElement,
+    estimateSize,
+    overscan: 5,
   })
 
   const selectAllShortcut = useCallback(
@@ -241,28 +268,34 @@ export function DataTableList<TData, TValue>({
     [handlePlaySong],
   )
 
-  useEffect(() => {
-    if (!fetchNextPage || !hasNextPage) return
+  const handleScroll = useCallback(() => {
+    if (!virtualizer.scrollElement || !hasNextPage || !fetchNextPage) return
 
-    const handleScroll = debounce(() => {
-      if (!parentRef.current) return
+    const { scrollTop, clientHeight, scrollHeight } = virtualizer.scrollElement
 
-      const { scrollTop, clientHeight, scrollHeight } = parentRef.current
+    const scrollThreshold = scrollHeight - scrollHeight / 8
+    const isNearBottom = scrollTop + clientHeight >= scrollThreshold
 
-      const isNearBottom =
-        scrollTop + clientHeight >= scrollHeight - scrollHeight / 8
-
-      if (isNearBottom) {
-        if (hasNextPage) fetchNextPage()
-      }
-    }, 200)
-
-    const scrollElement = parentRef.current
-    scrollElement?.addEventListener('scroll', handleScroll)
-    return () => {
-      scrollElement?.removeEventListener('scroll', handleScroll)
+    if (isNearBottom) {
+      fetchNextPage()
     }
-  }, [fetchNextPage, hasNextPage])
+  }, [fetchNextPage, hasNextPage, virtualizer.scrollElement])
+
+  const debouncedHandleScroll = useMemo(
+    () => debounce(handleScroll, 200),
+    [handleScroll],
+  )
+
+  useEffect(() => {
+    if (!virtualizer.scrollElement) return
+
+    const scrollElement = virtualizer.scrollElement
+
+    scrollElement.addEventListener('scroll', debouncedHandleScroll)
+    return () => {
+      scrollElement.removeEventListener('scroll', debouncedHandleScroll)
+    }
+  }, [virtualizer.scrollElement, debouncedHandleScroll])
 
   useEffect(() => {
     if (!scrollToIndex || !currentSongIndex) return
@@ -284,7 +317,7 @@ export function DataTableList<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <div
                 key={headerGroup.id}
-                className="w-full flex flex-row border-b pr-2 bg-accent/50"
+                className="w-full flex flex-row border-b pr-[10px] bg-muted"
                 role="row"
               >
                 {headerGroup.headers.map((header) => {
@@ -315,15 +348,16 @@ export function DataTableList<TData, TValue>({
               </div>
             ))}
           </div>
-          <div
+          <ScrollArea
             ref={parentRef}
+            type="always"
             className={clsx(
               '[&_div:last-child]:border-0 overflow-auto',
               showHeader ? 'h-[calc(100%-41px)]' : 'h-full',
             )}
           >
             <div
-              className="w-full pr-0.5"
+              className="w-full pr-[10px]"
               style={{ height: `${virtualizer.getTotalSize()}px` }}
             >
               {virtualizer.getVirtualItems().length ? (
@@ -332,49 +366,14 @@ export function DataTableList<TData, TValue>({
 
                   return (
                     <Fragment key={row.id}>
-                      <ContextMenuProvider options={getContextMenuOptions(row)}>
-                        <div
-                          role="row"
-                          data-row-index={virtualRow.index}
-                          data-state={row.getIsSelected() && 'selected'}
-                          onClick={(e) => handleClicks(e, row)}
-                          onDoubleClick={(e) => handleRowDbClick(e, row)}
-                          onContextMenu={(e) => handleClicks(e, row)}
-                          className={clsx(
-                            'group/tablerow w-full flex flex-row transition-colors',
-                            'hover:bg-gray-300 dark:hover:bg-gray-700',
-                            'data-[state=selected]:bg-gray-400/50 dark:data-[state=selected]:bg-gray-600',
-                          )}
-                          style={{
-                            height: `${virtualRow.size}px`,
-                            transform: `translateY(${
-                              virtualRow.start - index * virtualRow.size
-                            }px)`,
-                          }}
-                        >
-                          {row.getVisibleCells().map((cell) => {
-                            const columnDef = cell.column
-                              .columnDef as ColumnDefType<TData>
-
-                            return (
-                              <div
-                                key={cell.id}
-                                className={clsx(
-                                  'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
-                                  columnDef.className,
-                                )}
-                                style={columnDef.style}
-                                role="cell"
-                              >
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext(),
-                                )}
-                              </div>
-                            )
-                          })}
-                        </div>
-                      </ContextMenuProvider>
+                      <TableListRow
+                        row={row}
+                        virtualRow={virtualRow}
+                        index={index}
+                        handleClicks={handleClicks}
+                        handleRowDbClick={handleRowDbClick}
+                        getContextMenuOptions={getContextMenuOptions}
+                      />
                     </Fragment>
                   )
                 })
@@ -389,7 +388,7 @@ export function DataTableList<TData, TValue>({
                 </div>
               )}
             </div>
-          </div>
+          </ScrollArea>
         </div>
       </div>
     </>

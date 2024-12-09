@@ -8,13 +8,14 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
+import { appThemes } from '@/app/observers/theme-observer'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/store/theme.store'
 
 interface ThemeToggleProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
-  const { theme, setTheme } = useTheme()
+  const { theme: currentTheme, setTheme } = useTheme()
   const { t } = useTranslation()
 
   return (
@@ -31,27 +32,16 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuCheckboxItem
-          onClick={() => setTheme('light')}
-          checked={theme === 'light'}
-          disabled={theme === 'light'}
-        >
-          {t('theme.light')}
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          onClick={() => setTheme('dark')}
-          checked={theme === 'dark'}
-          disabled={theme === 'dark'}
-        >
-          {t('theme.dark')}
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          onClick={() => setTheme('system')}
-          checked={theme === 'system'}
-          disabled={theme === 'system'}
-        >
-          {t('theme.system')}
-        </DropdownMenuCheckboxItem>
+        {appThemes.map((theme) => (
+          <DropdownMenuCheckboxItem
+            key={theme}
+            onClick={() => setTheme(theme)}
+            checked={currentTheme === theme}
+            disabled={currentTheme === theme}
+          >
+            {t(`theme.${theme}`)}
+          </DropdownMenuCheckboxItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   )

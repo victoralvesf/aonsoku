@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { SongListFallback } from '@/app/components/fallbacks/song-fallbacks'
+import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
-import { Badge } from '@/app/components/ui/badge'
 import { DataTable } from '@/app/components/ui/data-table'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { artistsColumns } from '@/app/tables/artists-columns'
@@ -37,14 +37,7 @@ export default function ArtistsList() {
   return (
     <div className="w-full h-full">
       <ShadowHeader>
-        <div className="flex gap-2 items-center">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            {t('sidebar.artists')}
-          </h2>
-          <Badge variant="secondary" className="text-foreground/70">
-            {artists.length}
-          </Badge>
-        </div>
+        <HeaderTitle title={t('sidebar.artists')} count={artists.length} />
       </ShadowHeader>
 
       <ListWrapper className="pt-[--shadow-header-distance]">

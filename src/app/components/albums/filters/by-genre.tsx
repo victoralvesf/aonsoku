@@ -17,6 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/app/components/ui/popover'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { subsonic } from '@/service/subsonic'
 import { AlbumsSearchParams } from '@/utils/albumsFilter'
@@ -79,30 +80,33 @@ export function AlbumsFilterByGenre() {
       <PopoverContent className="w-[220px] p-0" align="end">
         <Command>
           <CommandInput placeholder={t('album.list.genre.search')} />
-          <CommandList>
-            <CommandEmpty>
-              <div className="px-2">{t('album.list.genre.notFound')}</div>
-            </CommandEmpty>
-            <CommandGroup>
-              {genres.map(({ value }) => (
-                <CommandItem
-                  key={value}
-                  value={value}
-                  onSelect={(currentValue) =>
-                    handleChangeGenreFilter(currentValue)
-                  }
-                >
-                  <Check
-                    className={cn(
-                      'mr-2 h-4 w-4',
-                      genre === value ? 'opacity-100' : 'opacity-0',
-                    )}
-                  />
-                  {value}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
+          <ScrollArea className="h-[300px]" type="always">
+            <CommandList className="max-h-fit">
+              <CommandEmpty>
+                <div className="px-2">{t('album.list.genre.notFound')}</div>
+              </CommandEmpty>
+              <CommandGroup>
+                {genres.map(({ value }) => (
+                  <CommandItem
+                    key={value}
+                    value={value}
+                    onSelect={(currentValue) =>
+                      handleChangeGenreFilter(currentValue)
+                    }
+                    className="mr-1.5"
+                  >
+                    <Check
+                      className={cn(
+                        'mr-2 h-4 w-4',
+                        genre === value ? 'opacity-100' : 'opacity-0',
+                      )}
+                    />
+                    {value}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </ScrollArea>
         </Command>
       </PopoverContent>
     </Popover>

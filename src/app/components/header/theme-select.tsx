@@ -8,10 +8,8 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from '@/app/components/ui/dropdown-menu'
+import { appThemes } from '@/app/observers/theme-observer'
 import { useTheme } from '@/store/theme.store'
-import { Theme } from '@/types/themeContext'
-
-const themes: Theme[] = ['light', 'dark', 'system']
 
 export function ThemeSelect() {
   const { theme: currentTheme, setTheme } = useTheme()
@@ -25,7 +23,7 @@ export function ThemeSelect() {
       </DropdownMenuSubTrigger>
       <DropdownMenuPortal>
         <DropdownMenuSubContent>
-          {themes.map((theme) => (
+          {appThemes.map((theme) => (
             <DropdownMenuCheckboxItem
               key={theme}
               checked={currentTheme === theme}

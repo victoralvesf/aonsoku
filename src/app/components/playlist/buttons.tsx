@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Actions } from '@/app/components/actions'
 import { usePlayerActions } from '@/store/player.store'
 import { PlaylistWithEntries } from '@/types/responses/playlist'
 import { PlaylistOptions } from './options'
-import { RemovePlaylistDialog } from './remove-dialog'
 
 interface PlaylistButtonsProps {
   playlist: PlaylistWithEntries
@@ -13,7 +11,6 @@ interface PlaylistButtonsProps {
 export function PlaylistButtons({ playlist }: PlaylistButtonsProps) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
-  const [removeDialogState, setRemoveDialogState] = useState(false)
 
   const buttonsTooltips = {
     play: t('playlist.buttons.play', { name: playlist.name }),
@@ -45,18 +42,11 @@ export function PlaylistButtons({ playlist }: PlaylistButtonsProps) {
         options={
           <PlaylistOptions
             playlist={playlist}
-            onRemovePlaylist={() => setRemoveDialogState(true)}
             disablePlayNext={!playlist.entry}
             disableAddLast={!playlist.entry}
             disableDownload={!playlist.entry}
           />
         }
-      />
-
-      <RemovePlaylistDialog
-        playlistId={playlist.id}
-        openDialog={removeDialogState}
-        setOpenDialog={setRemoveDialogState}
       />
     </Actions.Container>
   )

@@ -28,7 +28,7 @@ export function PlayerLikeButton({ disabled }: PlayerLikeButtonProps) {
     <SimpleTooltip text={likeTooltip}>
       <Button
         variant="ghost"
-        className="rounded-full w-10 h-10 p-3"
+        className="rounded-full w-10 h-10 p-3 text-secondary-foreground"
         disabled={disabled}
         onClick={starCurrentSong}
         data-testid="player-like-button"

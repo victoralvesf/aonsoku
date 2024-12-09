@@ -1,6 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import {
+  ScrollArea,
+  scrollAreaViewportSelector,
+} from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerSonglist } from '@/store/player.store'
 
@@ -22,9 +26,13 @@ export function LyricsTab() {
 
   useEffect(() => {
     if (lyricsBoxRef.current) {
-      lyricsBoxRef.current.scrollIntoView({
+      const scrollArea = lyricsBoxRef.current.querySelector(
+        scrollAreaViewportSelector,
+      ) as HTMLDivElement
+
+      scrollArea.scrollTo({
+        top: 0,
         behavior: 'smooth',
-        block: 'start',
       })
     }
   }, [currentSong])
@@ -39,8 +47,8 @@ export function LyricsTab() {
   }
 
   return (
-    <div
-      className="text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth"
+    <ScrollArea
+      className="h-full overflow-y-auto text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth"
       ref={lyricsBoxRef}
     >
       {isLoading && (
@@ -52,6 +60,6 @@ export function LyricsTab() {
             {line}
           </p>
         ))}
-    </div>
+    </ScrollArea>
   )
 }
