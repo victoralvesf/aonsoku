@@ -177,8 +177,8 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         </SimpleTooltip>
       ),
       cell: ({ row }) => {
-        const duration = row.original.duration
-        const formattedDuration = convertSecondsToTime(duration)
+        const { duration } = row.original
+        const formattedDuration = convertSecondsToTime(duration ?? 0)
 
         return formattedDuration
       },
@@ -199,11 +199,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
           {i18n.t('table.columns.plays')}
         </DataTableColumnHeader>
       ),
-      cell: ({ row }) => {
-        const { playCount } = row.original
-
-        return playCount || 0
-      },
+      cell: ({ row }) => row.original.playCount ?? 0,
     },
     {
       id: 'played',

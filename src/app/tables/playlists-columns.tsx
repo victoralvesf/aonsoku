@@ -116,8 +116,8 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
         </SimpleTooltip>
       ),
       cell: ({ row }) => {
-        const duration = row.original.duration
-        const formattedDuration = convertSecondsToTime(duration)
+        const { duration } = row.original
+        const formattedDuration = convertSecondsToTime(duration ?? 0)
 
         return formattedDuration
       },
