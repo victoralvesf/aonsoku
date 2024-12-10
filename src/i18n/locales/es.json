@@ -47,12 +47,14 @@
     "marmalade-beaver": "Marmalade Beaver",
     "bearded-solarized": "Bearded Solarized",
     "nuclear-dark": "Nuclear Dark",
-    "achiever": "Achiever",
+    "achiever": "Triunfador",
     "cool": "Cool",
     "discord": "Discord",
     "huacat-pink": "Huacat Pink",
     "vue-dark": "Vue oscuro",
-    "vim-dark-soft": "Vim oscuro claro"
+    "vim-dark-soft": "Vim oscuro claro",
+    "dracula": "Drácula",
+    "tinacious-design": "Tinacious Design"
   },
   "playlist": {
     "headline": "Lista de reproducción",
