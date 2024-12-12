@@ -1,3 +1,4 @@
+import { engineName } from 'react-device-detect'
 import i18n from '@/i18n'
 import { usePlayerStore } from '@/store/player.store'
 import { isMac } from './osType'
@@ -15,6 +16,8 @@ export function isMacOS() {
 
   return isMac ?? false
 }
+
+export const isChromeOrFirefox = ['Blink', 'Gecko'].includes(engineName)
 
 function preventContextMenu() {
   document.addEventListener('contextmenu', (e) => {
