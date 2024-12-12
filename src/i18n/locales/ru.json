@@ -1,1 +1,31 @@
-{}
+{
+  "menu": {
+    "serverLogout": "Выйти из аккаунта",
+    "language": "Язык",
+    "server": "Сервер"
+  },
+  "home": {
+    "recentlyAdded": "Недавно добавлено"
+  },
+  "sidebar": {
+    "artists": "Исполнители",
+    "radios": "Радио",
+    "miniSearch": "Поиск",
+    "albums": "Альбомы",
+    "playlists": "Плейлисты",
+    "songs": "Треки",
+    "library": "Библиотека",
+    "search": "Поиск…",
+    "home": "Главная"
+  },
+  "generic": {
+    "loading": "Загрузка…"
+  },
+  "theme": {
+    "label": "Тема",
+    "light": "Светлая",
+    "dark": "Темная",
+    "system": "Как в системе",
+    "black": "Черно-белая"
+  }
+}
