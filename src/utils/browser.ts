@@ -1,20 +1,12 @@
-import { engineName } from 'react-device-detect'
+import { engineName, isMacOs } from 'react-device-detect'
 import i18n from '@/i18n'
 import { usePlayerStore } from '@/store/player.store'
-import { isMac } from './osType'
 import { isTauri } from './tauriTools'
 
 export enum MouseButton {
   Left = 0,
   Middle = 1,
   Right = 2,
-}
-
-export function isMacOS() {
-  const isMac =
-    navigator.userAgent.includes('Mac') || navigator.platform.includes('Mac')
-
-  return isMac ?? false
 }
 
 export const isChromeOrFirefox = ['Blink', 'Gecko'].includes(engineName)
@@ -112,7 +104,7 @@ export function exitFullscreen() {
 }
 
 function setFontSmoothing() {
-  if (isMacOS() || isMac) {
+  if (isMacOs) {
     document.body.classList.add('mac')
   } else {
     document.body.classList.add('windows-linux')
