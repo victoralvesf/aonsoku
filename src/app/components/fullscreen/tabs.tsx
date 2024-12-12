@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { memo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -7,7 +6,6 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/app/components/ui/tabs'
-import { isMac } from '@/utils/osType'
 import { LyricsTab } from './lyrics'
 import { FullscreenSongQueue } from './queue'
 import { SongInfo } from './song-info'
@@ -47,17 +45,15 @@ const getTransform = (currentTab: TabValue, tabValue: TabValue) => {
   return `translate3d(${translation}, 0, 0)`
 }
 
+const tabStyles =
+  'absolute inset-0 mt-0 h-[calc(100%-64px)] overflow-y-auto transition-transform duration-300'
+
+const triggerStyles =
+  'w-full data-[state=active]:bg-foreground data-[state=active]:text-secondary text-foreground'
+
 export function FullscreenTabs() {
   const [tab, setTab] = useState<TabValue>(TabsEnum.Playing)
   const { t } = useTranslation()
-
-  const baseTabStyles = clsx(
-    'absolute inset-0 mt-0 h-[calc(100%-64px)] overflow-y-auto transition-transform duration-300 will-change-transform',
-    isMac && 'will-change-transform',
-  )
-
-  const baseTabTriggerStyles =
-    'w-full data-[state=active]:bg-foreground data-[state=active]:text-secondary text-foreground'
 
   return (
     <Tabs
@@ -66,20 +62,20 @@ export function FullscreenTabs() {
       className="w-full h-full min-h-full"
     >
       <TabsList className="w-full bg-background/30 mb-4">
-        <TabsTrigger value={TabsEnum.Queue} className={baseTabTriggerStyles}>
+        <TabsTrigger value={TabsEnum.Queue} className={triggerStyles}>
           {t('fullscreen.queue')}
         </TabsTrigger>
-        <TabsTrigger value={TabsEnum.Playing} className={baseTabTriggerStyles}>
+        <TabsTrigger value={TabsEnum.Playing} className={triggerStyles}>
           {t('fullscreen.playing')}
         </TabsTrigger>
-        <TabsTrigger value={TabsEnum.Lyrics} className={baseTabTriggerStyles}>
+        <TabsTrigger value={TabsEnum.Lyrics} className={triggerStyles}>
           {t('fullscreen.lyrics')}
         </TabsTrigger>
       </TabsList>
       <div className="relative w-full h-full">
         <TabsContent
           value={TabsEnum.Queue}
-          className={baseTabStyles}
+          className={tabStyles}
           style={{
             backfaceVisibility: 'hidden',
             transform: getTransform(tab, TabsEnum.Queue),
@@ -90,7 +86,7 @@ export function FullscreenTabs() {
         </TabsContent>
         <TabsContent
           value={TabsEnum.Playing}
-          className={clsx(baseTabStyles, 'overflow-hidden')}
+          className={tabStyles}
           style={{
             backfaceVisibility: 'hidden',
             transform: getTransform(tab, TabsEnum.Playing),
@@ -101,7 +97,7 @@ export function FullscreenTabs() {
         </TabsContent>
         <TabsContent
           value={TabsEnum.Lyrics}
-          className={baseTabStyles}
+          className={tabStyles}
           style={{
             backfaceVisibility: 'hidden',
             transform: getTransform(tab, TabsEnum.Lyrics),
