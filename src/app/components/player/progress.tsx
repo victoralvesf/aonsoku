@@ -45,13 +45,10 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
     [audioRef],
   )
 
-  const handleSeeking = useCallback(
-    (amount: number) => {
-      isSeeking = true
-      setLocalProgress(amount)
-    },
-    [setLocalProgress],
-  )
+  const handleSeeking = useCallback((amount: number) => {
+    isSeeking = true
+    setLocalProgress(amount)
+  }, [])
 
   const handleSeeked = useCallback(
     (amount: number) => {

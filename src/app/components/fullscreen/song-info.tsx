@@ -7,7 +7,7 @@ import { usePlayerStore } from '@/store/player.store'
 
 export function SongInfo() {
   const currentSong = usePlayerStore((state) => state.songlist.currentSong)
-  const imageUrl = getCoverArtUrl(currentSong.coverArt, 'song', '1000')
+  const imageUrl = getCoverArtUrl(currentSong.coverArt, 'song', '800')
 
   return (
     <div className="flex items-center justify-start h-full min-h-full max-h-full gap-4 2xl:gap-6 flex-1 pt-2">
