@@ -223,7 +223,7 @@
     "lastPlayed": "{{date}}前"
   },
   "fullscreen": {
-    "playing": "立即播放",
+    "playing": "正在播放",
     "lyrics": "歌词",
     "switchButton": "切换到全屏模式",
     "noLyrics": "没有找到歌词",
