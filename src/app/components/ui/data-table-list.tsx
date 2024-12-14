@@ -22,13 +22,15 @@ import {
   useRef,
   useState,
 } from 'react'
+import { isMacOs } from 'react-device-detect'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { SongMenuOptions } from '@/app/components/song/menu-options'
 import { SelectedSongsMenuOptions } from '@/app/components/song/selected-options'
 import { ColumnFilter } from '@/types/columnFilter'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISong } from '@/types/responses/song'
-import { isMacOS, MouseButton } from '@/utils/browser'
+import { MouseButton } from '@/utils/browser'
+import { computeMultiSelectedRows } from '@/utils/dataTable'
 import { TableListRow } from './data-table-list-row'
 import { ScrollArea, scrollAreaViewportSelector } from './scroll-area'
 
@@ -152,7 +154,7 @@ export function DataTableList<TData, TValue>({
   const selectAllShortcut = useCallback(
     (state = true) => {
       if (allowRowSelection) {
-        table.toggleAllPageRowsSelected(state)
+        table.toggleAllRowsSelected(state)
       }
     },
     [allowRowSelection, table],
@@ -197,10 +199,8 @@ export function DataTableList<TData, TValue>({
     (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => {
       if (!allowRowSelection) return
 
-      const { rows } = table.getRowModel()
-
       // Check the correct key depending on the OS (Meta for macOS, Ctrl for others)
-      const isMultiSelectKey = isMacOS() ? e.metaKey : e.ctrlKey
+      const isMultiSelectKey = isMacOs ? e.metaKey : e.ctrlKey
 
       if (isMultiSelectKey) {
         row.toggleSelected()
@@ -209,25 +209,21 @@ export function DataTableList<TData, TValue>({
       }
 
       if (e.shiftKey && lastRowSelected !== null) {
-        const start = Math.min(lastRowSelected, row.index)
-        const end = Math.max(lastRowSelected, row.index)
-
-        for (let i = start; i <= end; i++) {
-          rows[i].toggleSelected(true)
-        }
+        const selectedRowsUpdater = computeMultiSelectedRows(
+          lastRowSelected,
+          row.index,
+        )
+        table.setRowSelection(selectedRowsUpdater)
         return
       }
 
       // Deselect all rows, except current one
-      rows.forEach((r) => {
-        if (r.index !== row.index) r.toggleSelected(false)
+      table.setRowSelection({
+        [row.index]: true,
       })
-      if (!isRowSelected(row.index)) {
-        row.toggleSelected()
-      }
       setLastRowSelected(row.index)
     },
-    [allowRowSelection, isRowSelected, lastRowSelected, table],
+    [allowRowSelection, lastRowSelected, table],
   )
 
   const handleRightClick = useCallback(

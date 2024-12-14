@@ -1,6 +1,6 @@
+import { engineName, isMacOs } from 'react-device-detect'
 import i18n from '@/i18n'
 import { usePlayerStore } from '@/store/player.store'
-import { isMac } from './osType'
 import { isTauri } from './tauriTools'
 
 export enum MouseButton {
@@ -9,12 +9,7 @@ export enum MouseButton {
   Right = 2,
 }
 
-export function isMacOS() {
-  const isMac =
-    navigator.userAgent.includes('Mac') || navigator.platform.includes('Mac')
-
-  return isMac ?? false
-}
+export const isChromeOrFirefox = ['Blink', 'Gecko'].includes(engineName)
 
 function preventContextMenu() {
   document.addEventListener('contextmenu', (e) => {
@@ -109,7 +104,7 @@ export function exitFullscreen() {
 }
 
 function setFontSmoothing() {
-  if (isMacOS() || isMac) {
+  if (isMacOs) {
     document.body.classList.add('mac')
   } else {
     document.body.classList.add('windows-linux')

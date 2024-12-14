@@ -15,6 +15,7 @@ import {
 import clsx from 'clsx'
 import { Disc2Icon, XIcon } from 'lucide-react'
 import { Fragment, MouseEvent, useCallback, useMemo, useState } from 'react'
+import { isMacOs } from 'react-device-detect'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
 
@@ -29,7 +30,8 @@ import { ColumnFilter } from '@/types/columnFilter'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 import { Playlist } from '@/types/responses/playlist'
 import { ISong } from '@/types/responses/song'
-import { isMacOS, MouseButton } from '@/utils/browser'
+import { MouseButton } from '@/utils/browser'
+import { computeMultiSelectedRows } from '@/utils/dataTable'
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
@@ -131,10 +133,12 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const { rows } = table.getRowModel()
+
   const selectAllShortcut = useCallback(
     (state = true) => {
       if (allowRowSelection) {
-        table.toggleAllPageRowsSelected(state)
+        table.toggleAllRowsSelected(state)
       }
     },
     [allowRowSelection, table],
@@ -161,7 +165,7 @@ export function DataTable<TData, TValue>({
     const uniqueIndices: number[] = []
     const seen = new Set<number>()
 
-    table.getRowModel().rows.forEach(({ original }, index) => {
+    rows.forEach(({ original }, index) => {
       const item = original as DiscNumber
       if (!('discNumber' in item)) return
 
@@ -172,7 +176,7 @@ export function DataTable<TData, TValue>({
     })
 
     return uniqueIndices
-  }, [showDiscNumber, table])
+  }, [rows, showDiscNumber])
 
   const discNumberIndexes = getDiscIndexes()
 
@@ -215,10 +219,8 @@ export function DataTable<TData, TValue>({
     (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => {
       if (!allowRowSelection) return
 
-      const { rows } = table.getRowModel()
-
       // Check the correct key depending on the OS (Meta for macOS, Ctrl for others)
-      const isMultiSelectKey = isMacOS() ? e.metaKey : e.ctrlKey
+      const isMultiSelectKey = isMacOs ? e.metaKey : e.ctrlKey
 
       if (isMultiSelectKey) {
         row.toggleSelected()
@@ -227,25 +229,21 @@ export function DataTable<TData, TValue>({
       }
 
       if (e.shiftKey && lastRowSelected !== null) {
-        const start = Math.min(lastRowSelected, row.index)
-        const end = Math.max(lastRowSelected, row.index)
-
-        for (let i = start; i <= end; i++) {
-          rows[i].toggleSelected(true)
-        }
+        const selectedRowsUpdater = computeMultiSelectedRows(
+          lastRowSelected,
+          row.index,
+        )
+        table.setRowSelection(selectedRowsUpdater)
         return
       }
 
       // Deselect all rows, except current one
-      rows.forEach((r) => {
-        if (r.index !== row.index) r.toggleSelected(false)
+      table.setRowSelection({
+        [row.index]: true,
       })
-      if (!isRowSelected(row.index)) {
-        row.toggleSelected()
-      }
       setLastRowSelected(row.index)
     },
-    [allowRowSelection, isRowSelected, lastRowSelected, table],
+    [allowRowSelection, lastRowSelected, table],
   )
 
   const handleRightClick = useCallback(
@@ -368,8 +366,8 @@ export function DataTable<TData, TValue>({
           )}
           <div className="[&_div:last-child]:border-0">
             <div className="w-full h-full overflow-hidden">
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row, index) => (
+              {rows?.length ? (
+                rows.map((row, index) => (
                   <Fragment key={row.id}>
                     {showDiscNumber && discNumberIndexes.includes(index) && (
                       <div

@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import { Play } from 'lucide-react'
+import { isFirefox } from 'react-device-detect'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
@@ -10,7 +11,6 @@ import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
-import { isMac } from '@/utils/osType'
 
 export function HeaderItem({ song }: { song: ISong }) {
   const { setSongList } = usePlayerActions()
@@ -31,24 +31,21 @@ export function HeaderItem({ song }: { song: ISong }) {
     <div
       className={clsx(
         'w-full h-[250px] 2xl:h-[300px] relative',
-        !isMac && 'bg-black/60',
+        isFirefox && 'bg-black/60',
       )}
     >
       <div
         data-testid="header-bg"
-        className={clsx(
-          'absolute -inset-10 bg-cover bg-center z-0',
-          isMac && 'w-full h-full',
-        )}
+        className="absolute -inset-10 bg-cover bg-center z-0"
         style={{
           backgroundImage: `url(${coverArtUrl})`,
-          filter: !isMac ? 'blur(24px)' : undefined,
+          filter: isFirefox ? 'blur(24px)' : undefined,
         }}
       />
       <div
         className={clsx(
-          'w-full h-full inset-0 bg-gradient-to-b from-background/40 to-background/80 absolute z-10',
-          isMac && 'backdrop-blur-xl',
+          'w-full h-full bg-gradient-to-b from-background/40 to-background/80 absolute z-10',
+          !isFirefox && 'backdrop-blur-xl',
         )}
       >
         <div className="flex h-full p-4 2xl:p-6 gap-4">
