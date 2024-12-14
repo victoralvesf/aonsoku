@@ -453,6 +453,10 @@
       "copy": "Link copiado para a área de transferência!"
     }
   },
+  "mobile": {
+    "unsupported_message": "Este aplicativo não é suportado em dispositivos móveis.",
+    "access_recommendation": "Por favor, acesse-o a partir de um computador para a melhor experiência."
+  },
   "dayjs": {
     "relativeTime": {
       "future": "em %s",
