@@ -478,6 +478,9 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 setPlayingState(false)
               }
             },
+            getCurrentProgress: () => {
+              return get().playerProgress.progress
+            },
           },
         })),
         { name: 'player_store' },

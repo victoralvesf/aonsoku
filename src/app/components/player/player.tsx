@@ -10,12 +10,12 @@ import {
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerMediaType,
-  usePlayerProgress,
   usePlayerRef,
   usePlayerSonglist,
   getVolume,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
+import { AudioPlayer } from './audio'
 import { PlayerControls } from './controls'
 import { PlayerLikeButton } from './like-button'
 import { PlayerProgress } from './progress'
@@ -37,6 +37,7 @@ export function Player() {
     setProgress,
     setPlayingState,
     handleSongEnded,
+    getCurrentProgress,
   } = usePlayerActions()
   const { currentList, currentSongIndex, radioList } = usePlayerSonglist()
   const isPlaying = usePlayerIsPlaying()
@@ -44,7 +45,7 @@ export function Player() {
   const loopState = usePlayerLoop()
   const currentDuration = usePlayerDuration()
   const audioPlayerRef = usePlayerRef()
-  const progress = usePlayerProgress()
+  const progress = getCurrentProgress()
   const { resetTitle, radioSession, songSession, playbackState } =
     useMediaSession()
 
@@ -149,10 +150,12 @@ export function Player() {
       </div>
 
       {mediaType === 'song' && song && (
-        <audio
+        <AudioPlayer
+          replayGain={song.replayGain?.trackGain ?? undefined}
+          crossOrigin="anonymous"
           src={getSongStreamUrl(song.id)}
           autoPlay={isPlaying}
-          ref={audioRef}
+          audioRef={audioRef}
           loop={loopState === LoopState.One}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
@@ -166,10 +169,10 @@ export function Player() {
       )}
 
       {mediaType === 'radio' && radio && (
-        <audio
+        <AudioPlayer
           src={radio.streamUrl}
           autoPlay={isPlaying}
-          ref={audioRef}
+          audioRef={audioRef}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
           onLoadStart={() => {

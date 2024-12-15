@@ -75,6 +75,7 @@ export interface IPlayerActions {
   setQueueDrawerState: (state: boolean) => void
   playFirstSongInQueue: () => void
   handleSongEnded: () => void
+  getCurrentProgress: () => number
 }
 
 export interface IPlayerContext {
