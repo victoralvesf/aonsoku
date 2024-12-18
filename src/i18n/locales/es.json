@@ -488,5 +488,9 @@
       "hh": "%d horas",
       "h": "1 hora"
     }
+  },
+  "mobile": {
+    "access_recommendation": "Por favor, acceda desde un ordenador de sobremesa para una mejor experiencia.",
+    "unsupported_message": "Esta aplicación no es compatible con dispositivos móviles."
   }
 }
