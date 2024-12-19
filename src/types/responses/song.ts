@@ -3,6 +3,7 @@ import { SubsonicResponse } from './subsonicResponse'
 export interface IReplayGain {
   trackGain: number
   trackPeak: number
+  albumGain: number
   albumPeak: number
 }
 

@@ -1,89 +1,137 @@
 import {
   ComponentPropsWithoutRef,
   RefObject,
+  useMemo,
   useCallback,
   useEffect,
-  useRef,
 } from 'react'
-import { usePlayerIsPlaying } from '@/store/player.store'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import { useAudioContext } from '@/app/hooks/use-audio-context'
+import { useVolumeSynchronization } from '@/app/hooks/use-volume-sync'
+import {
+  usePlayerActions,
+  usePlayerMediaType,
+  useReplayGainActions,
+  useReplayGainState,
+} from '@/store/player.store'
+import { logger } from '@/utils/logger'
+import { calculateReplayGain, ReplayGainParams } from '@/utils/replayGain'
 
 type AudioPlayerProps = ComponentPropsWithoutRef<'audio'> & {
   audioRef: RefObject<HTMLAudioElement>
-  replayGain?: number
+  replayGain?: ReplayGainParams
 }
-
-const DEFAULT_REPLAY_GAIN = -6
 
 export function AudioPlayer({
   audioRef,
-  replayGain = DEFAULT_REPLAY_GAIN,
+  replayGain,
   ...props
 }: AudioPlayerProps) {
-  const isPlaying = usePlayerIsPlaying()
-  const audioContextRef = useRef<AudioContext | null>(null)
-  const sourceNodeRef = useRef<MediaElementAudioSourceNode | null>(null)
-  const gainNodeRef = useRef<GainNode | null>(null)
+  const { t } = useTranslation()
+  const { replayGainEnabled, replayGainError } = useReplayGainState()
+  const mediaType = usePlayerMediaType()
+  const { setPlayingState } = usePlayerActions()
+  const { setReplayGainEnabled, setReplayGainError } = useReplayGainActions()
+  const gainValue = useMemo(() => {
+    if (!replayGain) return 1
 
-  const gainValue = Math.pow(10, replayGain / 20)
+    return calculateReplayGain(replayGain)
+  }, [replayGain])
 
-  const setup = useCallback(async () => {
-    const audio = audioRef.current
-    if (!audio) return
+  const isRadio = mediaType === 'radio'
+  const isSong = mediaType === 'song'
 
-    if (!audioContextRef.current) {
-      audioContextRef.current = new window.AudioContext()
+  if (isSong) {
+    logger.info('Replay Gain Is Active', replayGainEnabled)
+  }
+
+  const { audioContextRef, gainNodeRef, sourceNodeRef } = useAudioContext(
+    audioRef.current,
+  )
+
+  const setupGain = useCallback(() => {
+    if (audioContextRef.current && gainNodeRef.current) {
+      logger.info('Track Replay Gain', {
+        gainValue,
+        ...replayGain,
+      })
+
+      gainNodeRef.current.gain.setValueAtTime(
+        gainValue,
+        audioContextRef.current.currentTime,
+      )
     }
-
-    const audioContext = audioContextRef.current
-
-    console.log(audioContext.state)
-    if (isPlaying && audioContext.state === 'suspended') {
-      try {
-        console.log('AUDIO CONTEXT IS SUSPENDED, RESUMING NOW')
-        await audioContext.resume()
-      } catch (_) {
-        console.error('UNABLE TO RESUME AUDIO CONTEXT', audioContext)
-      }
-    }
-
-    if (!sourceNodeRef.current) {
-      sourceNodeRef.current = audioContext.createMediaElementSource(audio)
-    }
-
-    if (!gainNodeRef.current) {
-      gainNodeRef.current = audioContext.createGain()
-      sourceNodeRef.current.connect(gainNodeRef.current)
-      gainNodeRef.current.connect(audioContext.destination)
-    }
-
-    console.log('AUDIO REPLAY GAIN VALUE', replayGain)
-    console.log('PLAYER GAIN VALUE', gainValue)
-
-    gainNodeRef.current.gain.value = gainValue
-  }, [audioRef, gainValue, isPlaying, replayGain])
+  }, [audioContextRef, gainNodeRef, gainValue, replayGain])
 
   useEffect(() => {
-    setup()
+    if (replayGainEnabled && isSong) setupGain()
+  }, [isSong, replayGainEnabled, setupGain])
+
+  useVolumeSynchronization({
+    audio: audioRef.current,
+    gainNode: gainNodeRef.current,
+    gainValue,
+    enabled: replayGainEnabled,
+  })
+
+  const handleError = useCallback(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    logger.error('Audio load error', {
+      src: audio.src,
+      networkState: audio.networkState,
+      readyState: audio.readyState,
+      error: audio.error,
+    })
+
+    if (isRadio) {
+      toast.error(t('radios.error'))
+      setPlayingState(false)
+    }
+
+    if (isSong) {
+      audioContextRef.current?.close()
+      gainNodeRef.current?.disconnect()
+      sourceNodeRef.current?.disconnect()
+
+      setReplayGainEnabled(false)
+      setReplayGainError(true)
+    }
+  }, [
+    audioRef,
+    isRadio,
+    isSong,
+    t,
+    setPlayingState,
+    audioContextRef,
+    gainNodeRef,
+    sourceNodeRef,
+    setReplayGainEnabled,
+    setReplayGainError,
+  ])
+
+  useEffect(() => {
+    if (!replayGainError) return
+    if (isRadio) return
 
     const audio = audioRef.current
     if (!audio) return
 
-    const handleVolumeChange = () => {
-      if (gainNodeRef.current) {
-        // Sync native volume with Web Audio API gain
-        gainNodeRef.current.gain.value = audio.volume * gainValue
-      }
+    try {
+      audioRef.current.load()
+    } catch (reloadError) {
+      logger.error('Failed to reload audio', reloadError)
     }
+  }, [replayGainError, audioRef, isRadio])
 
-    audio.addEventListener('volumechange', handleVolumeChange)
-
-    handleVolumeChange()
-
-    // Cleanup
-    return () => {
-      audio.removeEventListener('volumechange', handleVolumeChange)
-    }
-  }, [audioRef, gainValue, replayGain, setup, isPlaying])
-
-  return <audio ref={audioRef} {...props} />
+  return (
+    <audio
+      ref={audioRef}
+      {...props}
+      crossOrigin={replayGainEnabled && isSong ? 'anonymous' : undefined}
+      onError={handleError}
+    />
+  )
 }

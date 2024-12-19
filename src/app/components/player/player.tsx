@@ -13,8 +13,10 @@ import {
   usePlayerRef,
   usePlayerSonglist,
   getVolume,
+  useReplayGainState,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
+import { ReplayGainParams } from '@/utils/replayGain'
 import { AudioPlayer } from './audio'
 import { PlayerControls } from './controls'
 import { PlayerLikeButton } from './like-button'
@@ -48,6 +50,7 @@ export function Player() {
   const progress = getCurrentProgress()
   const { resetTitle, radioSession, songSession, playbackState } =
     useMediaSession()
+  const { replayGainType, replayGainPreAmp } = useReplayGainState()
 
   const song = currentList[currentSongIndex]
   const radio = radioList[currentSongIndex]
@@ -120,6 +123,20 @@ export function Player() {
     }
   }, [currentDuration, progress, setCurrentDuration, setProgress])
 
+  function getTrackReplayGain(): ReplayGainParams {
+    if (!song || !song.replayGain) return { gain: 1, peak: 1, preAmp: 0 }
+
+    const preAmp = replayGainPreAmp
+
+    if (replayGainType === 'album') {
+      const { albumGain = 1, albumPeak = 1 } = song.replayGain
+      return { gain: albumGain, peak: albumPeak, preAmp }
+    }
+
+    const { trackGain = 1, trackPeak = 1 } = song.replayGain
+    return { gain: trackGain, peak: trackPeak, preAmp }
+  }
+
   return (
     <footer className="border-t h-[--player-height] w-full flex items-center fixed bottom-0 left-0 right-0 z-40 bg-background">
       <div className="w-full h-full grid grid-cols-player gap-2 px-4">
@@ -151,8 +168,7 @@ export function Player() {
 
       {mediaType === 'song' && song && (
         <AudioPlayer
-          replayGain={song.replayGain?.trackGain ?? undefined}
-          crossOrigin="anonymous"
+          replayGain={getTrackReplayGain()}
           src={getSongStreamUrl(song.id)}
           autoPlay={isPlaying}
           audioRef={audioRef}

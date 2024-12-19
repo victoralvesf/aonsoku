@@ -359,6 +359,7 @@
       "title": "Nenhuma rádio disponível!",
       "info": "Você ainda não configurou nenhuma rádio."
     },
+    "error": "Não foi possível reproduzir a Rádio, verifique o URL de Transmissão!",
     "form": {
       "create": {
         "title": "Adicionar Rádio",
