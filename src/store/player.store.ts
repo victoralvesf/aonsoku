@@ -47,6 +47,36 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               step: 1,
               wheelStep: 5,
             },
+            replayGain: {
+              values: {
+                enabled: false,
+                type: 'track',
+                preAmp: 0,
+                error: false,
+              },
+              actions: {
+                setReplayGainEnabled: (value) => {
+                  set((state) => {
+                    state.settings.replayGain.values.enabled = value
+                  })
+                },
+                setReplayGainType: (value) => {
+                  set((state) => {
+                    state.settings.replayGain.values.type = value
+                  })
+                },
+                setReplayGainPreAmp: (value) => {
+                  set((state) => {
+                    state.settings.replayGain.values.preAmp = value
+                  })
+                },
+                setReplayGainError: (value) => {
+                  set((state) => {
+                    state.settings.replayGain.values.error = value
+                  })
+                },
+              },
+            },
           },
           actions: {
             setSongList: (songlist, index, shuffle = false) => {
@@ -297,6 +327,10 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.isShuffleActive = false
                 state.playerState.queueDrawerState = false
                 state.playerState.currentDuration = 0
+                state.settings.replayGain.values.enabled = false
+                state.settings.replayGain.values.type = 'track'
+                state.settings.replayGain.values.preAmp = 0
+                state.settings.replayGain.values.error = false
               })
             },
             resetProgress: () => {
@@ -478,6 +512,9 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 setPlayingState(false)
               }
             },
+            getCurrentProgress: () => {
+              return get().playerProgress.progress
+            },
           },
         })),
         { name: 'player_store' },
@@ -544,6 +581,24 @@ export const usePlayerVolume = () => ({
 
 export const useVolumeSettings = () =>
   usePlayerStore((state) => state.settings.volume)
+
+export const useReplayGainState = () => {
+  const { enabled, type, preAmp, error } = usePlayerStore(
+    (state) => state.settings.replayGain.values,
+  )
+
+  return {
+    replayGainEnabled: enabled,
+    replayGainType: type,
+    replayGainPreAmp: preAmp,
+    replayGainError: error,
+  }
+}
+
+export const useReplayGainActions = () =>
+  usePlayerStore((state) => state.settings.replayGain.actions)
+
+export const usePlayerSettings = () => usePlayerStore((state) => state.settings)
 
 export const usePlayerMediaType = () =>
   usePlayerStore((state) => state.playerState.mediaType)

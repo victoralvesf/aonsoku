@@ -17,7 +17,7 @@ export function ToastContainer() {
       }}
       bodyClassName="flex text-sm block p-3"
       pauseOnHover={false}
-      autoClose={3000}
+      autoClose={5000}
       closeButton={(props) => (
         <Button
           variant="link"

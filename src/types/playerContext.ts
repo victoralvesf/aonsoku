@@ -40,8 +40,30 @@ export interface IVolumeSettings {
   wheelStep: number
 }
 
+type ReplayGainType = 'track' | 'album'
+
+interface IReplayGainData {
+  enabled: boolean
+  type: ReplayGainType
+  preAmp: number
+  error: boolean
+}
+
+interface IReplayGainActions {
+  setReplayGainEnabled: (value: boolean) => void
+  setReplayGainType: (value: ReplayGainType) => void
+  setReplayGainPreAmp: (value: number) => void
+  setReplayGainError: (value: boolean) => void
+}
+
+interface IReplayGain {
+  values: IReplayGainData
+  actions: IReplayGainActions
+}
+
 export interface IPlayerSettings {
   volume: IVolumeSettings
+  replayGain: IReplayGain
 }
 
 export interface IPlayerActions {
@@ -75,6 +97,7 @@ export interface IPlayerActions {
   setQueueDrawerState: (state: boolean) => void
   playFirstSongInQueue: () => void
   handleSongEnded: () => void
+  getCurrentProgress: () => number
 }
 
 export interface IPlayerContext {

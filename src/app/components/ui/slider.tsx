@@ -119,7 +119,10 @@ function SliderTooltip({
           )}
           sticky="always"
           onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+          onMouseUp={(e) => e.stopPropagation()}
           onPointerDown={(e) => e.stopPropagation()}
+          onPointerUp={(e) => e.stopPropagation()}
           style={{ cursor: 'default' }}
         >
           <p>{content}</p>
