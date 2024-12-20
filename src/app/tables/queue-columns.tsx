@@ -15,7 +15,7 @@ export function queueColumns(): ColumnDefType<ISong>[] {
       accessorKey: 'index',
       style: {
         width: 48,
-        minWidth: '48px',
+        minWidth: 48,
       },
       header: '',
       cell: ({ row, table }) => {
@@ -39,7 +39,7 @@ export function queueColumns(): ColumnDefType<ISong>[] {
       accessorKey: 'title',
       style: {
         flex: 1,
-        minWidth: 250,
+        minWidth: 150,
       },
       header: '',
       cell: ({ row }) => <TableSongTitle song={row.original} />,
@@ -77,6 +77,7 @@ export function queueColumns(): ColumnDefType<ISong>[] {
       style: {
         width: 80,
         maxWidth: 80,
+        minWidth: 80,
       },
       header: '',
       cell: ({ row }) => {
@@ -91,6 +92,7 @@ export function queueColumns(): ColumnDefType<ISong>[] {
       style: {
         width: 60,
         maxWidth: 60,
+        minWidth: 60,
       },
       cell: ({ row }) => <QueueActions row={row} />,
     },
