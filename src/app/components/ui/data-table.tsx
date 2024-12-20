@@ -56,6 +56,7 @@ interface DataTableProps<TData, TValue> {
   searchColumn?: string
   noRowsMessage?: string
   allowRowSelection?: boolean
+  showContextMenu?: boolean
   showHeader?: boolean
   showDiscNumber?: boolean
   variant?: 'classic' | 'modern'
@@ -72,6 +73,7 @@ export function DataTable<TData, TValue>({
   searchColumn,
   noRowsMessage = 'No results.',
   allowRowSelection = true,
+  showContextMenu = true,
   showHeader = true,
   showDiscNumber = false,
   variant = 'classic',
@@ -182,6 +184,8 @@ export function DataTable<TData, TValue>({
 
   const getContextMenuOptions = useCallback(
     (row: Row<TData>) => {
+      if (!showContextMenu) return undefined
+
       if (dataType === 'song') {
         if (table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()) {
           return (
@@ -212,7 +216,7 @@ export function DataTable<TData, TValue>({
 
       return undefined
     },
-    [dataType, table],
+    [dataType, showContextMenu, table],
   )
 
   const handleLeftClick = useCallback(

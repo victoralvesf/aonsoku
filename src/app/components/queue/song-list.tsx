@@ -64,6 +64,8 @@ export function QueueSongList() {
           handlePlaySong={(row) => setSongList(currentList, row.index)}
           scrollToIndex={true}
           currentSongIndex={currentSongIndex}
+          allowRowSelection={false}
+          showContextMenu={false}
         />
       </div>
     </div>
