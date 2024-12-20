@@ -223,6 +223,7 @@
       "discNumber": "Número do disco",
       "trackGain": "Ganho da faixa",
       "trackPeak": "Pico da faixa",
+      "albumGain": "Ganho do álbum",
       "albumPeak": "Pico do álbum"
     },
     "buttons": {

@@ -170,10 +170,13 @@ export function SongInfoModal() {
                     {song.replayGain.trackGain ?? 0} dB
                   </InfoGridItem>
                   <InfoGridItem title="trackPeak">
-                    {song.replayGain.trackPeak ?? 0}
+                    {song.replayGain.trackPeak ?? 1}
+                  </InfoGridItem>
+                  <InfoGridItem title="albumGain">
+                    {song.replayGain.albumGain ?? 0} dB
                   </InfoGridItem>
                   <InfoGridItem title="albumPeak">
-                    {song.replayGain.albumPeak ?? 0}
+                    {song.replayGain.albumPeak ?? 1}
                   </InfoGridItem>
                 </>
               )}
