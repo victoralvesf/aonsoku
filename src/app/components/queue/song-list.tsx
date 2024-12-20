@@ -18,15 +18,15 @@ export function QueueSongList() {
   const currentSongIndex = usePlayerCurrentSongIndex()
   const { clearPlayerState, setSongList } = usePlayerActions()
 
-  const trackListCount = currentList.length
+  const columns = useMemo(() => queueColumns(), [])
+  const trackListCount = useMemo(() => currentList.length, [currentList])
+
   const trackListDuration = useMemo(() => {
     let minutes = 0
     currentList.forEach((song) => (minutes += song.duration))
 
     return convertSecondsToHumanRead(minutes)
   }, [currentList])
-
-  const columns = queueColumns()
 
   return (
     <div className="flex flex-1 flex-col h-full min-w-[300px]">
