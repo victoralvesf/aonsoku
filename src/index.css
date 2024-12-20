@@ -63,15 +63,6 @@ textarea {
   -ms-user-select: text;
 }
 
-#main-scroll-area #scroll-viewport > div {
-  display: flex !important;
-}
-
-#playlists #scroll-viewport > div {
-  display: flex !important;
-  flex-direction: column !important;
-}
-
 img {
   -webkit-user-drag: none;
   user-select: none;
