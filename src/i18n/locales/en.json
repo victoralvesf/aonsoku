@@ -467,6 +467,14 @@
         "unsupported_message": "This application is not supported on mobile devices.",
         "access_recommendation": "Please access it from a desktop for the best experience."
     },
+    "settings": {
+        "label": "Settings",
+        "options": {
+            "appearance": "Appearance",
+            "language": "Language",
+            "audio": "Audio"
+        }
+    },
     "dayjs": {
         "relativeTime": {
             "future": "in %s",

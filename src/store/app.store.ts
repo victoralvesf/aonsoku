@@ -58,6 +58,20 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               })
             },
           },
+          settings: {
+            openDialog: false,
+            setOpenDialog: (value) => {
+              set((state) => {
+                state.settings.openDialog = value
+              })
+            },
+            currentPage: 'appearance',
+            setCurrentPage: (page) => {
+              set((state) => {
+                state.settings.currentPage = page
+              })
+            },
+          },
           actions: {
             setOsType: (value) => {
               set((state) => {
@@ -180,6 +194,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             'data.hideServer',
             'command.open',
             'update',
+            'settings',
           )
 
           return appStore
@@ -193,3 +208,4 @@ export const useAppData = () => useAppStore((state) => state.data)
 export const useAppDataPages = () => useAppStore((state) => state.data.pages)
 export const useAppActions = () => useAppStore((state) => state.actions)
 export const useAppUpdate = () => useAppStore((state) => state.update)
+export const useAppSettings = () => useAppStore((state) => state.settings)

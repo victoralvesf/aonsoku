@@ -1,3 +1,5 @@
+import { SettingsOptions } from '@/app/components/settings/options'
+
 export enum AuthType {
   PASSWORD,
   TOKEN,
@@ -47,9 +49,17 @@ export interface IAppUpdate {
   setRemindOnNextBoot: (value: boolean) => void
 }
 
+interface IAppSettings {
+  openDialog: boolean
+  setOpenDialog: (value: boolean) => void
+  currentPage: SettingsOptions
+  setCurrentPage: (page: SettingsOptions) => void
+}
+
 export interface IAppContext {
   data: IAppData
   command: IAppCommand
   actions: IAppActions
   update: IAppUpdate
+  settings: IAppSettings
 }
