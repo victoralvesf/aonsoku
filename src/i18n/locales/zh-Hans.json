@@ -35,7 +35,24 @@
     "light": "浅色",
     "dark": "深色",
     "system": "系统",
-    "black": "黑白"
+    "black": "黑白",
+    "bearded-solarized": "Bearded Solarized",
+    "material-theme": "Material Theme",
+    "one-dark": "One Dark",
+    "night-owl-light": "Night Owl Light",
+    "monokai-pro": "Monokai Pro",
+    "shades-of-purple": "Shades Of Purple",
+    "marmalade-beaver": "Marmalade Beaver",
+    "noctis-lilac": "Noctis Lilac",
+    "github-dark": "GitHub Dark",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "nuclear-dark": "Nuclear Dark",
+    "achiever": "Achiever",
+    "discord": "Discord",
+    "vue-dark": "Vue Dark",
+    "vim-dark-soft": "Vim Dark Soft",
+    "dracula": "Dracula",
+    "tinacious-design": "Tinacious Design"
   },
   "playlist": {
     "headline": "播放列表",
@@ -451,5 +468,9 @@
   },
   "warnings": {
     "reload": "有一首歌曲正在播放！\n你确定要重新加载页面吗？"
+  },
+  "mobile": {
+    "unsupported_message": "这个应用不支持移动设备。",
+    "access_recommendation": "请从桌面端访问以获得最佳体验。"
   }
 }
