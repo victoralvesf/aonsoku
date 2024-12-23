@@ -471,8 +471,21 @@
         "label": "Settings",
         "options": {
             "appearance": "Appearance",
-            "language": "Language",
+            "language": "Language & region",
             "audio": "Audio"
+        },
+        "audio": {
+            "replayGain": {
+                "group": "Replay Gain",
+                "description": "Automatically normalize audio playback levels for a consistent listening experience.",
+                "enabled": "Enabled",
+                "mode": {
+                    "label": "Mode",
+                    "track": "Track gain",
+                    "album": "Album gain"
+                },
+                "preAmp": "PreAmp (dB)"
+            }
         }
     },
     "dayjs": {

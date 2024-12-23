@@ -480,8 +480,21 @@
     "label": "Configurações",
     "options": {
       "appearance": "Aparência",
-      "language": "Linguagem",
+      "language": "Linguagem & região",
       "audio": "Áudio"
+    },
+    "audio": {
+      "replayGain": {
+        "group": "Replay Gain",
+        "description": "Automaticamente normaliza o nível do áudio para uma melhor experiência sonora.",
+        "enabled": "Habilitado",
+        "mode": {
+          "label": "Modo",
+          "track": "Ganho da faixa",
+          "album": "Ganho do álbum"
+        },
+        "preAmp": "Pré-amplificador (dB)"
+      }
     }
   },
   "dayjs": {
