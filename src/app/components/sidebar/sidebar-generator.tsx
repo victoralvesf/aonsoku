@@ -29,6 +29,7 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
   return (
     <>
       {list.map((item) => {
+        // Setting to show/hide Radios section
         if (!showRadiosSection && item.id === 'radios') return null
 
         return (
