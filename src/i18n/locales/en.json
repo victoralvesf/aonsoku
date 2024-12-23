@@ -472,7 +472,7 @@
         "options": {
             "appearance": "Appearance",
             "language": "Language & region",
-            "audio": "Audio",
+            "audio": "Player & audio",
             "content": "Content"
         },
         "audio": {
