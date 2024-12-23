@@ -1,4 +1,4 @@
-import { Globe, Headphones, Paintbrush } from 'lucide-react'
+import { FileText, Globe, Headphones, Paintbrush } from 'lucide-react'
 import { ComponentType } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -10,7 +10,7 @@ import {
 } from '@/app/components/ui/sidebar'
 import { useAppSettings } from '@/store/app.store'
 
-export type SettingsOptions = 'appearance' | 'language' | 'audio'
+export type SettingsOptions = 'appearance' | 'language' | 'audio' | 'content'
 
 interface OptionsData {
   id: SettingsOptions
@@ -21,6 +21,7 @@ const options: OptionsData[] = [
   { id: 'appearance', icon: Paintbrush },
   { id: 'language', icon: Globe },
   { id: 'audio', icon: Headphones },
+  { id: 'content', icon: FileText },
 ]
 
 export function SettingsOptions() {

@@ -32,8 +32,21 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             hideServer: HIDE_SERVER ?? false,
             lockUser: hasValidConfig,
             songCount: null,
-            pages: {
-              showInfoPanel: true,
+          },
+          pages: {
+            showInfoPanel: true,
+            toggleShowInfoPanel: () => {
+              const { showInfoPanel } = get().pages
+
+              set((state) => {
+                state.pages.showInfoPanel = !showInfoPanel
+              })
+            },
+            showRadiosSection: true,
+            setShowRadiosSection: (value) => {
+              set((state) => {
+                state.pages.showRadiosSection = value
+              })
             },
           },
           command: {
@@ -140,13 +153,6 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.logoutDialogState = value
               })
             },
-            toggleShowInfoPanel: () => {
-              const { showInfoPanel } = get().data.pages
-
-              set((state) => {
-                state.data.pages.showInfoPanel = !showInfoPanel
-              })
-            },
           },
         })),
         {
@@ -205,7 +211,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
 )
 
 export const useAppData = () => useAppStore((state) => state.data)
-export const useAppDataPages = () => useAppStore((state) => state.data.pages)
+export const useAppPages = () => useAppStore((state) => state.pages)
 export const useAppActions = () => useAppStore((state) => state.actions)
 export const useAppUpdate = () => useAppStore((state) => state.update)
 export const useAppSettings = () => useAppStore((state) => state.settings)

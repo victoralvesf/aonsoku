@@ -13,6 +13,9 @@ export interface IServerConfig {
 
 interface IAppPages {
   showInfoPanel: boolean
+  toggleShowInfoPanel: () => void
+  showRadiosSection: boolean
+  setShowRadiosSection: (value: boolean) => void
 }
 
 export interface IAppData extends IServerConfig {
@@ -23,7 +26,6 @@ export interface IAppData extends IServerConfig {
   hideServer: boolean
   lockUser: boolean
   songCount: number | null
-  pages: IAppPages
 }
 
 export interface IAppActions {
@@ -34,7 +36,6 @@ export interface IAppActions {
   saveConfig: (data: IServerConfig) => Promise<boolean>
   removeConfig: () => void
   setLogoutDialogState: (value: boolean) => void
-  toggleShowInfoPanel: () => void
 }
 
 export interface IAppCommand {
@@ -58,6 +59,7 @@ interface IAppSettings {
 
 export interface IAppContext {
   data: IAppData
+  pages: IAppPages
   command: IAppCommand
   actions: IAppActions
   update: IAppUpdate

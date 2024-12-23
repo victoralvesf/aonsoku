@@ -481,7 +481,8 @@
     "options": {
       "appearance": "Aparência",
       "language": "Linguagem & região",
-      "audio": "Áudio"
+      "audio": "Áudio",
+      "content": "Conteúdo"
     },
     "audio": {
       "replayGain": {
@@ -494,6 +495,15 @@
           "album": "Ganho do álbum"
         },
         "preAmp": "Pré-amplificador (dB)"
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Menu lateral",
+        "description": "Gerencie a visibilidade e a organização das seções exibidas no menu lateral.",
+        "radios": {
+          "section": "Mostrar seção de rádios"
+        }
       }
     }
   },

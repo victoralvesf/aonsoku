@@ -472,7 +472,8 @@
         "options": {
             "appearance": "Appearance",
             "language": "Language & region",
-            "audio": "Audio"
+            "audio": "Audio",
+            "content": "Content"
         },
         "audio": {
             "replayGain": {
@@ -485,6 +486,15 @@
                     "album": "Album gain"
                 },
                 "preAmp": "PreAmp (dB)"
+            }
+        },
+        "content": {
+            "sidebar": {
+                "group": "Sidebar",
+                "description": "Manage the visibility and organization of sections displayed in the sidebar.",
+                "radios": {
+                    "section": "Show radios section"
+                }
             }
         }
     },

@@ -23,7 +23,7 @@ export function MiniSidebarItem({ item }: { item: ISidebarItem }) {
           variant={isActive(item.route) ? 'secondary' : 'ghost'}
           className="w-full h-fit flex flex-col justify-center items-center gap-1"
         >
-          {item.icon}
+          <item.icon className="w-4 h-4" />
         </Button>
       </SimpleTooltip>
     </Link>

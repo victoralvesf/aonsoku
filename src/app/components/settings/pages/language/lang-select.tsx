@@ -5,6 +5,7 @@ import {
   ContentItem,
   ContentItemForm,
   ContentItemTitle,
+  ContentSeparator,
   Root,
 } from '@/app/components/settings/section'
 import {
@@ -61,6 +62,7 @@ export function LangSelect() {
           </ContentItemForm>
         </ContentItem>
       </Content>
+      <ContentSeparator />
     </Root>
   )
 }

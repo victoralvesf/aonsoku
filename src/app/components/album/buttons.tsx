@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Actions } from '@/app/components/actions'
 import { subsonic } from '@/service/subsonic'
-import { useAppActions, useAppDataPages } from '@/store/app.store'
+import { useAppPages } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { SingleAlbum } from '@/types/responses/album'
 import { queryKeys } from '@/utils/queryKeys'
@@ -16,8 +16,7 @@ interface AlbumButtonsProps {
 export function AlbumButtons({ album, showInfoButton }: AlbumButtonsProps) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
-  const { showInfoPanel } = useAppDataPages()
-  const { toggleShowInfoPanel } = useAppActions()
+  const { showInfoPanel, toggleShowInfoPanel } = useAppPages()
 
   const isAlbumStarred = album.starred !== undefined
 

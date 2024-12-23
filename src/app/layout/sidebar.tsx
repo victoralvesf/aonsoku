@@ -50,40 +50,44 @@ export function Sidebar({ className }: SidebarProps) {
   )
 }
 
-const iconClassName = 'mr-2 h-4 w-4'
-
-const mainMenuItems = [
+export const mainMenuItems = [
   {
+    id: 'home',
     title: 'sidebar.home',
     route: ROUTES.LIBRARY.HOME,
-    icon: <Home className={iconClassName} />,
+    icon: Home,
   },
 ]
 
-const libraryItems = [
+export const libraryItems = [
   {
+    id: 'artists',
     title: 'sidebar.artists',
     route: ROUTES.LIBRARY.ARTISTS,
-    icon: <Mic2 className={iconClassName} />,
+    icon: Mic2,
   },
   {
+    id: 'songs',
     title: 'sidebar.songs',
     route: ROUTES.LIBRARY.SONGS,
-    icon: <Music2 className={iconClassName} />,
+    icon: Music2,
   },
   {
+    id: 'albums',
     title: 'sidebar.albums',
     route: ROUTES.LIBRARY.ALBUMS,
-    icon: <Library className={iconClassName} />,
+    icon: Library,
   },
   {
+    id: 'playlists',
     title: 'sidebar.playlists',
     route: ROUTES.LIBRARY.PLAYLISTS,
-    icon: <ListMusic className={iconClassName} />,
+    icon: ListMusic,
   },
   {
+    id: 'radios',
     title: 'sidebar.radios',
     route: ROUTES.LIBRARY.RADIOS,
-    icon: <Radio className={iconClassName} />,
+    icon: Radio,
   },
 ]
