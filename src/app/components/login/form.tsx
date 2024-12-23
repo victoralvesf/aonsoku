@@ -9,8 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { toast } from 'react-toastify'
 import { z } from 'zod'
-import { LangToggle } from '@/app/components/header/lang-toggle'
-import { ThemeToggle } from '@/app/components/header/theme-toggle'
+import { LangToggle } from '@/app/components/login/lang-toggle'
 import { Button } from '@/app/components/ui/button'
 import {
   Card,
@@ -103,7 +102,6 @@ export function LoginForm() {
               {t('login.form.server')}
               <div className="flex gap-2 items-center">
                 <LangToggle />
-                <ThemeToggle />
               </div>
             </CardTitle>
             <CardDescription>{t('login.form.description')}</CardDescription>
