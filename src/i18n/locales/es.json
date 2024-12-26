@@ -225,7 +225,8 @@
       "track": "Pista",
       "genres": "Géneros",
       "albumCount": "Número de álbumes",
-      "songCount": "Número de canciones"
+      "songCount": "Número de canciones",
+      "albumGain": "Ganancia del álbum"
     },
     "buttons": {
       "play": "Reproducir {{title}} de {{artist}}",
@@ -392,7 +393,8 @@
         "streamUrlLength": "La dirección URL de retransmisión debe tener al menos 10 caracteres",
         "url": "Por favor, proporcione una dirección URL válida."
       }
-    }
+    },
+    "error": "No se puede reproducir la radio, ¡verifique la URL de la transmisión!"
   },
   "time": {
     "days_one": "{{days}} día",
