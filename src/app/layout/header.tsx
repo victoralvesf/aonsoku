@@ -10,7 +10,7 @@ export function Header() {
   const { isFullscreen } = useAppWindow()
 
   return (
-    <header className="w-full grid grid-cols-header px-4 h-[--header-height] fixed top-0 right-0 left-0 z-20 bg-background border-b">
+    <header className="w-full grid grid-cols-header px-1 h-[--header-height] fixed top-0 right-0 left-0 z-20 bg-background border-b">
       <div {...tauriDragRegion} className="flex items-center">
         {isMac && !isFullscreen && <div className="w-[70px]" />}
         <NavigationButtons />

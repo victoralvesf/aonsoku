@@ -121,7 +121,7 @@ export function Player() {
 
   return (
     <footer className="border-t h-[--player-height] w-full flex items-center fixed bottom-0 left-0 right-0 z-40 bg-background">
-      <div className="w-full h-full grid grid-cols-player gap-2 px-4">
+      <div className="w-full h-full grid grid-cols-player gap-2 px-3">
         {/* Track Info */}
         <div className="flex items-center gap-2 w-full">
           {mediaType === 'song' && <MemoTrackInfo song={song} />}
