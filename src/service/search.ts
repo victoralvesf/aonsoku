@@ -23,7 +23,7 @@ async function get({
   const response = await httpClient<ISearchResponse>('/search3', {
     method: 'GET',
     query: {
-      query,
+      query: query || '""',
       artistCount: artistCount.toString(),
       artistOffset: artistOffset.toString(),
       albumCount: albumCount.toString(),
