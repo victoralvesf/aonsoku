@@ -7,6 +7,7 @@ export interface IServerConfig {
   url: string
   username: string
   password: string
+  protocolVersion?: string
 }
 
 interface IAppPages {
