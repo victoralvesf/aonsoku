@@ -1,7 +1,6 @@
 import { httpClient } from '@/api/httpClient'
 import {
   GetSongResponse,
-  LyricsResponse,
   RandomSongsResponse,
   TopSongsResponse,
 } from '@/types/responses/song'
