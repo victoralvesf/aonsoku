@@ -34,16 +34,18 @@ export function LyricsTab() {
   const loadingLyrics = t('fullscreen.loadingLyrics')
 
   if (isLoading) {
-    return <p className="leading-10 drop-shadow-lg">{loadingLyrics}</p>
+    return <UnsyncedLyrics lyrics={{ value: loadingLyrics}}/>
   }
   else if (lyrics && lyrics.value) {
     return (areLyricsSynced(lyrics)) ? <SyncedLyrics lyrics={lyrics}/> : <UnsyncedLyrics lyrics={lyrics}/>
   }
   else {
-    return <p className="leading-10 drop-shadow-lg">{noLyricsFound}</p>
+    return <UnsyncedLyrics lyrics={{ value: noLyricsFound }}/>
   }
 
 }
+
+
 
 function SyncedLyrics({ lyrics }: LyricProps) {
 
@@ -63,7 +65,7 @@ function SyncedLyrics({ lyrics }: LyricProps) {
   return (
     <>
       <div
-        className="h-full overflow-y-auto text-center font-semibold text-3xl px-2 scroll-smooth lrc-box"
+        className="h-full overflow-y-auto text-center font-semibold text-2xl 2xl:text-3xl px-2 scroll-smooth lrc-box"
       >
           <Lrc
             lrc={lyrics.value!}
@@ -71,7 +73,7 @@ function SyncedLyrics({ lyrics }: LyricProps) {
             currentMillisecond={progress}
             className="max-h-full"
             lineRenderer={({ active, line: { content } }) => (
-              <p style={{ opacity: active ? 1 : 0.7 }} className="leading-20 drop-shadow-lg my-3 transition-opacity">{content}</p>
+              <p style={{ opacity: active ? 1 : 0.7 }} className="leading-20 drop-shadow-lg my-3 duration-500 transition-opacity">{content}</p>
             )}
           />
       </div>
@@ -101,7 +103,7 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
 
   return (
     <ScrollArea
-      className="h-full overflow-y-auto text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth"
+      className="h-full overflow-y-auto text-center font-semibold text-2xl 2xl:text-3xl px-2 scroll-smooth"
       ref={lyricsBoxRef}
     >
       {
