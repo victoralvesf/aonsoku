@@ -62,6 +62,12 @@ function SyncedLyrics({ lyrics }: LyricProps) {
     setProgress(newProgress)
   }, 50)
 
+  const skipToTime = (timeMs: number) => {
+    if (!!playerRef) {
+      playerRef!.currentTime = (timeMs / 1000)
+    }
+  }
+
   return (
     <>
       <div
@@ -72,8 +78,8 @@ function SyncedLyrics({ lyrics }: LyricProps) {
             recoverAutoScrollInterval={1500}
             currentMillisecond={progress}
             className="max-h-full"
-            lineRenderer={({ active, line: { content } }) => (
-              <p style={{ opacity: active ? 1 : 0.7 }} className="leading-20 drop-shadow-lg my-3 duration-500 transition-opacity">{content}</p>
+            lineRenderer={({ active, line }) => (
+              <p style={{ opacity: active ? 1 : 0.7 }} onClick={() => skipToTime(line.startMillisecond)} className="leading-20 drop-shadow-lg my-3 cursor-pointer duration-500 transition-opacity">{line.content}</p>
             )}
           />
       </div>
