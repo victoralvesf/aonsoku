@@ -6,8 +6,8 @@ import {
   scrollAreaViewportSelector,
 } from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
-import { usePlayerSonglist, usePlayerProgress, usePlayerRef } from '@/store/player.store'
-import { Lrc, useRecoverAutoScrollImmediately } from 'react-lrc';
+import { usePlayerSonglist, usePlayerRef } from '@/store/player.store'
+import { Lrc } from 'react-lrc';
 import { ILyric } from '@/types/responses/song'
 
 interface LyricProps {
@@ -37,7 +37,7 @@ export function LyricsTab() {
     return <p className="leading-10 drop-shadow-lg">{loadingLyrics}</p>
   }
   else if (lyrics && lyrics.value) {
-    return <AutoLyrics lyrics={lyrics}></AutoLyrics>
+    return (areLyricsSynced(lyrics)) ? <SyncedLyrics lyrics={lyrics}/> : <UnsyncedLyrics lyrics={lyrics}/>
   }
   else {
     return <p className="leading-10 drop-shadow-lg">{noLyricsFound}</p>
@@ -45,23 +45,25 @@ export function LyricsTab() {
 
 }
 
-// Chooses between synced and unsynced based on the contents of the lyric text
-function AutoLyrics({ lyrics }: LyricProps) {
-  // TODO: better method of detecting lrc files
-  return (lyrics!.value?.trim().includes("[00:")) ? <SyncedLyrics lyrics={lyrics}/> : <UnsyncedLyrics lyrics={lyrics}/>
-}
-
 function SyncedLyrics({ lyrics }: LyricProps) {
 
   const playerRef = usePlayerRef()
   const [progress, setProgress] = useState(0)
 
-  setTimeout(() => setProgress((playerRef?.currentTime || 0) * 1000), 50)
+  setTimeout(() => {
+    let newProgress = (playerRef?.currentTime || 0) * 1000
+
+    if (newProgress == progress) {
+      newProgress += 1 // Prevents the lyrics from getting stuck when the audio is still loading
+    }
+
+    setProgress(newProgress)
+  }, 50)
 
   return (
     <>
       <div
-        className="h-full overflow-y-auto text-center font-semibold text-3xl 2xl:text-2xl px-2 scroll-smooth lrc-box"
+        className="h-full overflow-y-auto text-center font-semibold text-3xl px-2 scroll-smooth lrc-box"
       >
           <Lrc
             lrc={lyrics.value!}
@@ -111,4 +113,10 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
       }
     </ScrollArea>
   )
+}
+
+function areLyricsSynced(lyrics: ILyric) {
+  // Most LRC files will contain the string "[00:"
+  // If there's a better method of detecting LRC files, implement it here
+  return lyrics!.value?.trim().includes("[00:")
 }
