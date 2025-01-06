@@ -2,7 +2,8 @@ import { AuthType } from '@/types/serverConfig'
 import { appName } from '@/utils/appName'
 import { authQueryParams } from './httpClient'
 
-export async function queryServerVersion(
+
+export async function queryServerInfo(
   url: string,
 ) {
   try {
@@ -20,8 +21,14 @@ export async function queryServerVersion(
     })
     const data = await response.json()
 
-    return data['subsonic-response'].version
+    return {
+      protocolVersion: data['subsonic-response'].version,
+      serverType: data['subsonic-response'].type.toLowerCase() || "subsonic"
+    }
   } catch (_) {
-    return '1.16.0'
+    return {
+      protocolVersion: "1.16.0",
+      serverType: "subsonic"
+    }
   }
 }
