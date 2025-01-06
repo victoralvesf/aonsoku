@@ -23,7 +23,7 @@ export function LyricsTab() {
   const { data: lyrics, isLoading } = useQuery({
     queryKey: ['get-lyrics', artist, title],
     queryFn: () =>
-      subsonic.songs.getLyrics({
+      subsonic.lyrics.getLyrics({
         artist,
         title,
       }),
