@@ -23,11 +23,13 @@ export async function queryServerInfo(
 
     return {
       protocolVersion: data['subsonic-response'].version,
+      protocolVersionNumber: parseInt(data['subsonic-response'].version.replaceAll(".", "")),
       serverType: data['subsonic-response'].type.toLowerCase() || "subsonic"
     }
   } catch (_) {
     return {
       protocolVersion: "1.16.0",
+      protocolVersionNumber: 1160,
       serverType: "subsonic"
     }
   }
