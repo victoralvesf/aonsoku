@@ -49,7 +49,7 @@ async function getLyricsFromLRCLib({ artist, title }: GetLyricsData) {
             return {
                 artist,
                 title,
-                value: response?.syncedLyrics || response?.plainLyrics || ""
+                value: formatLyrics(response?.syncedLyrics) || formatLyrics(response?.plainLyrics) || ""
             }
         }
     }
@@ -60,6 +60,10 @@ async function getLyricsFromLRCLib({ artist, title }: GetLyricsData) {
         title,
         value: ""
     }
+}
+
+function formatLyrics(lyrics: string) {
+    return lyrics.trim().replaceAll("\r\n", "\n")
 }
 
 export const lyrics = {
