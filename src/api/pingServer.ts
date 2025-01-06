@@ -8,7 +8,7 @@ export async function pingServer(
   password: string,
   authType: AuthType,
   protocolVersion?: string
-) {
+): Promise<boolean> {
   try {
     const query = {
       ...authQueryParams(user, password, authType),

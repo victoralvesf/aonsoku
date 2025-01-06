@@ -114,7 +114,7 @@ export function LoginForm() {
     <>
       <Card className="w-[450px] bg-background-foreground">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit((data) => onSubmit(data))}>
             <CardHeader className="flex">
               <CardTitle className="flex flex-row justify-between items-center">
                 {t('login.form.server')}
