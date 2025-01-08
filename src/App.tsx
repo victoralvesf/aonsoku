@@ -9,7 +9,7 @@ import { router } from '@/routes/router'
 import { isTauri } from '@/utils/tauriTools'
 
 function App() {
-  if (!isDesktop) return <Mobile />
+  if (!isDesktop && window.innerHeight > window.innerWidth) return <Mobile /> // Support tablets but not phones
 
   return (
     <>
