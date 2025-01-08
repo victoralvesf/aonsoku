@@ -469,8 +469,8 @@
         }
     },
     "mobile": {
-        "unsupported_message": "This application is not supported on mobile devices.",
-        "access_recommendation": "Please access it from a desktop for the best experience."
+        "unsupported_message": "{{app_name}} isn't compatible with mobile phones.",
+        "access_recommendation": "Please access it from a computer or tablet."
     },
     "dayjs": {
         "relativeTime": {
