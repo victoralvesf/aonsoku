@@ -6,6 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './tooltip'
+import { isDesktop } from 'react-device-detect'
 
 interface TooltipContent {
   children: ReactNode
@@ -22,15 +23,21 @@ export function SimpleTooltip({
   align = 'center',
   delay = 700,
 }: TooltipContent) {
+
   return (
     <TooltipProvider delayDuration={delay}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipPortal>
-          <TooltipContent side={side} avoidCollisions={false} align={align}>
-            <p className="font-normal">{text}</p>
-          </TooltipContent>
-        </TooltipPortal>
+        {
+          isDesktop && ( // Only show tooltips on desktop
+            <TooltipPortal>
+              <TooltipContent side={side} avoidCollisions={false} align={align}>
+                <p className="font-normal">{text}</p>
+              </TooltipContent>
+            </TooltipPortal>
+          )
+        }
+
       </Tooltip>
     </TooltipProvider>
   )
