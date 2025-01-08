@@ -14,7 +14,7 @@ import {
 } from '@tanstack/react-table'
 import clsx from 'clsx'
 import { Disc2Icon, XIcon } from 'lucide-react'
-import { Fragment, MouseEvent, useCallback, useMemo, useState } from 'react'
+import { Fragment, MouseEvent, TouchEvent, useCallback, useMemo, useState } from 'react'
 import { isMacOs } from 'react-device-detect'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
@@ -288,6 +288,15 @@ export function DataTable<TData, TValue>({
     [handlePlaySong],
   )
 
+  const handleRowTap = useCallback(
+    (e: TouchEvent<HTMLDivElement>, row: Row<TData>) => {
+      if (!handlePlaySong) return
+      e.stopPropagation()
+      handlePlaySong(row)
+    },
+    [handlePlaySong],
+  )
+
   return (
     <>
       {showSearch && searchColumn && (
@@ -397,6 +406,7 @@ export function DataTable<TData, TValue>({
                         data-state={row.getIsSelected() && 'selected'}
                         onClick={(e) => handleClicks(e, row)}
                         onDoubleClick={(e) => handleRowDbClick(e, row)}
+                        onTouchEnd={(e) => handleRowTap(e, row)}
                         onContextMenu={(e) => handleClicks(e, row)}
                         className={clsx(
                           'group/tablerow w-full flex flex-row transition-colors',
