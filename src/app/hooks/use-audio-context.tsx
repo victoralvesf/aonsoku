@@ -4,30 +4,21 @@ import { logger } from '@/utils/logger'
 
 export function useAudioContext(audio: HTMLAudioElement | null) {
   const isPlaying = usePlayerIsPlaying()
-  const { replayGainEnabled } = useReplayGainState()
+  const { replayGainEnabled, replayGainError } = useReplayGainState()
 
   const audioContextRef = useRef<AudioContext | null>(null)
   const sourceNodeRef = useRef<MediaElementAudioSourceNode | null>(null)
   const gainNodeRef = useRef<GainNode | null>(null)
 
-  const setupAudioContext = useCallback(async () => {
+  const setupAudioContext = useCallback(() => {
     if (!audio) return
+    if (replayGainError) return
 
     if (!audioContextRef.current) {
       audioContextRef.current = new window.AudioContext()
     }
 
     const audioContext = audioContextRef.current
-
-    logger.info('AudioContext State', audioContext.state)
-    if (isPlaying && audioContext.state === 'suspended') {
-      try {
-        await audioContext.resume()
-        logger.info('Resuming AudioContext', audioContext.state)
-      } catch (_) {
-        logger.error('Unable to resume AudioContext')
-      }
-    }
 
     if (!sourceNodeRef.current) {
       sourceNodeRef.current = audioContext.createMediaElementSource(audio)
@@ -38,11 +29,25 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
       sourceNodeRef.current.connect(gainNodeRef.current)
       gainNodeRef.current.connect(audioContext.destination)
     }
-  }, [audio, isPlaying])
+  }, [audio, replayGainError])
 
   useEffect(() => {
-    if (!replayGainEnabled) return
+    const audioContext = audioContextRef.current
+    if (!audioContext) return
 
+    logger.info('AudioContext State', audioContext.state)
+
+    if (isPlaying && audioContext.state === 'suspended') {
+      try {
+        audioContext.resume()
+        logger.info('Resuming AudioContext', audioContext.state)
+      } catch (_) {
+        logger.error('Unable to resume AudioContext')
+      }
+    }
+  }, [isPlaying])
+
+  useEffect(() => {
     if (audio) setupAudioContext()
   }, [audio, setupAudioContext, replayGainEnabled])
 
