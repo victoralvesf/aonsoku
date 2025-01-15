@@ -415,6 +415,11 @@
     "buttons": {
       "refresh": "Atualizar status",
       "startScan": "Varredura rápida"
+    },
+    "incompatible": {
+      "title": "Servidor incompatível",
+      "description": "Este servidor usa uma versão mais antiga do protocolo Subsonic que não é totalmente compatível. Por favor, proceda com cautela, pois você pode enfrentar problemas.",
+      "skip": "Continuar mesmo assim"
     }
   },
   "downloads": {
