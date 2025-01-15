@@ -19,15 +19,14 @@ export function LyricsTab() {
   const { currentSong } = usePlayerSonglist()
   const { t } = useTranslation()
 
-  const { artist, title, album, duration } = currentSong
+  const { artist, title, duration } = currentSong
 
   const { data: lyrics, isLoading } = useQuery({
-    queryKey: ['get-lyrics', artist, title, album, duration],
+    queryKey: ['get-lyrics', artist, title, duration],
     queryFn: () =>
       subsonic.lyrics.getLyrics({
         artist,
         title,
-        album,
         duration,
       }),
   })
@@ -127,7 +126,11 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
 }
 
 function areLyricsSynced(lyrics: ILyric) {
-  // Most LRC files will contain the string "[00:"
-  // If there's a better method of detecting LRC files, implement it here
-  return lyrics!.value?.trim().includes('[00:')
+  // Most LRC files start with the string "[00:" or "[01:" indicating synced lyrics
+  const lyric = lyrics.value?.trim() ?? ''
+  return (
+    lyric.startsWith('[00:') ||
+    lyric.startsWith('[01:') ||
+    lyric.startsWith('[02:')
+  )
 }
