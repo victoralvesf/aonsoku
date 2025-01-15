@@ -13,6 +13,7 @@ import {
   getAuthType,
   hasValidConfig,
 } from '@/utils/salt'
+import { queryServerInfo } from '@/api/queryServerInfo'
 
 const { SERVER_URL, HIDE_SERVER, HIDE_RADIOS_SECTION } = window
 
@@ -28,6 +29,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             username: genUser(),
             password: genPassword(),
             authType: getAuthType(),
+            protocolVersion: "1.16.0",
+            serverType: "subsonic",
             logoutDialogState: false,
             hideServer: HIDE_SERVER ?? false,
             lockUser: hasValidConfig,
@@ -121,12 +124,16 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                   authType,
                 )
 
+                const serverInfo = await queryServerInfo(url)
+
                 if (canConnect) {
                   set((state) => {
                     state.data.url = url
                     state.data.username = username
                     state.data.password = token
                     state.data.authType = authType
+                    state.data.protocolVersion = serverInfo.protocolVersion
+                    state.data.serverType = serverInfo.serverType
                     state.data.isServerConfigured = true
                   })
                   return true
@@ -144,6 +151,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.url = ''
                 state.data.username = ''
                 state.data.password = ''
+                state.data.protocolVersion = undefined
+                state.data.serverType = undefined
                 state.data.authType = AuthType.TOKEN
                 state.data.songCount = null
               })
