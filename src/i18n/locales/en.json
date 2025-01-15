@@ -501,6 +501,14 @@
                     "album": "Album gain"
                 },
                 "preAmp": "PreAmp (dB)"
+            },
+            "lyrics": {
+                "group": "Lyrics",
+                "description": "Customize lyrics settings.",
+                "preferSynced": {
+                    "label": "Prefer synced lyrics",
+                    "info": "When enabled, synced lyrics will be prioritized over unsynced lyrics."
+                }
             }
         },
         "content": {

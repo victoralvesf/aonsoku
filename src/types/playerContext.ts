@@ -66,10 +66,16 @@ interface IFullscreen {
   setAutoFullscreenEnabled: (value: boolean) => void
 }
 
+interface ILyrics {
+  preferSyncedLyrics: boolean
+  setPreferSyncedLyrics: (value: boolean) => void
+}
+
 export interface IPlayerSettings {
   volume: IVolumeSettings
-  replayGain: IReplayGain
   fullscreen: IFullscreen
+  lyrics: ILyrics
+  replayGain: IReplayGain
 }
 
 export interface IPlayerActions {

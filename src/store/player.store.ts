@@ -55,6 +55,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 })
               },
             },
+            lyrics: {
+              preferSyncedLyrics: false,
+              setPreferSyncedLyrics: (value) => {
+                set((state) => {
+                  state.settings.lyrics.preferSyncedLyrics = value
+                })
+              },
+            },
             replayGain: {
               values: {
                 enabled: false,
@@ -608,6 +616,9 @@ export const useReplayGainActions = () =>
 
 export const useFullscreenPlayerSettings = () =>
   usePlayerStore((state) => state.settings.fullscreen)
+
+export const useLyricsSettings = () =>
+  usePlayerStore((state) => state.settings.lyrics)
 
 export const usePlayerSettings = () => usePlayerStore((state) => state.settings)
 

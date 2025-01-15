@@ -505,6 +505,14 @@
           "album": "Ganho do álbum"
         },
         "preAmp": "Pré-amplificador (dB)"
+      },
+      "lyrics": {
+        "group": "Letras",
+        "description": "Personalize as configurações de letras.",
+        "preferSynced": {
+          "label": "Preferir letras sincronizadas",
+          "info": "Quando ativado, letras sincronizadas serão priorizadas em relação às não sincronizadas."
+        }
       }
     },
     "content": {
