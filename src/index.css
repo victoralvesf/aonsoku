@@ -233,3 +233,7 @@ svg#bars .eq-bar--4 {
   /* firefox */
   scrollbar-width: none;
 }
+
+#sync-lyrics-box .react-lrc-line {
+  @apply w-fit m-auto;
+}

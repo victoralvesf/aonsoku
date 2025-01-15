@@ -80,7 +80,8 @@ function SyncedLyrics({ lyrics }: LyricProps) {
           <p
             onClick={() => skipToTime(line.startMillisecond)}
             className={clsx(
-              'drop-shadow-lg my-5 cursor-pointer duration-500 transition-[opacity,font-size] motion-reduce:transition-none',
+              'drop-shadow-lg my-5 cursor-pointer hover:opacity-100',
+              'duration-500 transition-[opacity,font-size] motion-reduce:transition-none',
               active ? 'opacity-100 text-3xl 2xl:text-4xl' : 'opacity-50',
             )}
           >
