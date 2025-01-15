@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Lrc } from 'react-lrc'
@@ -66,25 +67,27 @@ function SyncedLyrics({ lyrics }: LyricProps) {
   }
 
   return (
-    <>
-      <div className="h-full overflow-y-auto text-center font-semibold text-2xl 2xl:text-3xl px-2 scroll-smooth lrc-box">
-        <Lrc
-          lrc={lyrics.value!}
-          recoverAutoScrollInterval={1500}
-          currentMillisecond={progress}
-          className="max-h-full"
-          lineRenderer={({ active, line }) => (
-            <p
-              style={{ opacity: active ? 1 : 0.7 }}
-              onClick={() => skipToTime(line.startMillisecond)}
-              className="leading-20 drop-shadow-lg my-3 cursor-pointer duration-500 transition-opacity"
-            >
-              {line.content}
-            </p>
-          )}
-        />
-      </div>
-    </>
+    <div className="h-full text-center font-semibold text-2xl 2xl:text-3xl px-2 lrc-box maskImage-big-player-lyrics">
+      <Lrc
+        lrc={lyrics.value!}
+        recoverAutoScrollInterval={1500}
+        currentMillisecond={progress}
+        id="sync-lyrics-box"
+        className="h-full overflow-y-auto scroll-smooth"
+        verticalSpace={true}
+        lineRenderer={({ active, line }) => (
+          <p
+            onClick={() => skipToTime(line.startMillisecond)}
+            className={clsx(
+              'drop-shadow-lg my-5 cursor-pointer duration-500 transition-[opacity,font-size] motion-reduce:transition-none',
+              active ? 'opacity-100 text-3xl 2xl:text-4xl' : 'opacity-50',
+            )}
+          >
+            {line.content}
+          </p>
+        )}
+      />
+    </div>
   )
 }
 
@@ -109,7 +112,7 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
 
   return (
     <ScrollArea
-      className="h-full overflow-y-auto text-center font-semibold text-2xl 2xl:text-3xl px-2 scroll-smooth"
+      className="h-full overflow-y-auto text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth"
       ref={lyricsBoxRef}
     >
       {lines.map((line, index) => (
