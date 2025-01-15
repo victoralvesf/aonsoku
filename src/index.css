@@ -221,3 +221,15 @@ svg#bars .eq-bar--4 {
   0%, 100% { height: 8px }
   50% { height: 16px }
 }
+
+#sync-lyrics-box,
+.lrc-box {
+  /* webkit */
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* firefox */
+  scrollbar-width: none;
+}
