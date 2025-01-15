@@ -174,6 +174,11 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
         merge: (persistedState, currentState) => {
           const persisted = persistedState as Partial<IAppContext>
 
+          const hideRadiosSection =
+            HIDE_RADIOS_SECTION !== undefined
+              ? HIDE_RADIOS_SECTION
+              : (persisted.pages?.hideRadiosSection as boolean)
+
           if (hasValidConfig) {
             const newState = {
               ...persisted,
@@ -189,7 +194,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               },
               pages: {
                 ...persisted.pages,
-                hideRadiosSection: HIDE_RADIOS_SECTION ?? false,
+                hideRadiosSection,
               },
             }
 
@@ -204,7 +209,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             },
             pages: {
               ...persisted.pages,
-              hideRadiosSection: HIDE_RADIOS_SECTION ?? false,
+              hideRadiosSection,
             },
           }
 
