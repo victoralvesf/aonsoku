@@ -472,6 +472,37 @@
         "unsupported_message": "This application is not supported on mobile devices.",
         "access_recommendation": "Please access it from a desktop for the best experience."
     },
+    "settings": {
+        "label": "Settings",
+        "options": {
+            "appearance": "Appearance",
+            "language": "Language & region",
+            "audio": "Player & audio",
+            "content": "Content"
+        },
+        "audio": {
+            "replayGain": {
+                "group": "Replay Gain",
+                "description": "Automatically normalize audio playback levels for a consistent listening experience.",
+                "enabled": "Enabled",
+                "mode": {
+                    "label": "Mode",
+                    "track": "Track gain",
+                    "album": "Album gain"
+                },
+                "preAmp": "PreAmp (dB)"
+            }
+        },
+        "content": {
+            "sidebar": {
+                "group": "Sidebar",
+                "description": "Manage the visibility and organization of sections displayed in the sidebar.",
+                "radios": {
+                    "section": "Hide radios section"
+                }
+            }
+        }
+    },
     "dayjs": {
         "relativeTime": {
             "future": "in %s",

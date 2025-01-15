@@ -40,7 +40,7 @@ export interface IVolumeSettings {
   wheelStep: number
 }
 
-type ReplayGainType = 'track' | 'album'
+export type ReplayGainType = 'track' | 'album'
 
 interface IReplayGainData {
   enabled: boolean

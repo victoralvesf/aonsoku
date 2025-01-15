@@ -42,31 +42,31 @@ export function AudioPlayer({
   const isRadio = mediaType === 'radio'
   const isSong = mediaType === 'song'
 
-  if (isSong) {
-    logger.info('Replay Gain Is Active', replayGainEnabled)
-  }
-
   const { audioContextRef, gainNodeRef, sourceNodeRef } = useAudioContext(
     audioRef.current,
   )
 
   const setupGain = useCallback(() => {
     if (audioContextRef.current && gainNodeRef.current) {
-      logger.info('Track Replay Gain', {
-        gainValue,
-        ...replayGain,
-      })
+      const currentTime = audioContextRef.current.currentTime
 
-      gainNodeRef.current.gain.setValueAtTime(
-        gainValue,
-        audioContextRef.current.currentTime,
-      )
+      if (replayGainEnabled) {
+        logger.info('Track Replay Gain', { gainValue, ...replayGain })
+        gainNodeRef.current.gain.setValueAtTime(gainValue, currentTime)
+      } else {
+        logger.info('Replay Gain Disabled', { gainValue: 1 })
+        gainNodeRef.current.gain.setValueAtTime(1, currentTime)
+      }
     }
-  }, [audioContextRef, gainNodeRef, gainValue, replayGain])
+  }, [audioContextRef, gainNodeRef, gainValue, replayGain, replayGainEnabled])
 
   useEffect(() => {
-    if (replayGainEnabled && isSong) setupGain()
-  }, [isSong, replayGainEnabled, setupGain])
+    if (!isSong) return
+    if (replayGainError || !audioRef.current) return
+
+    audioRef.current.crossOrigin = 'anonymous'
+    setupGain()
+  }, [audioRef, isSong, replayGainEnabled, replayGainError, setupGain])
 
   useVolumeSynchronization({
     audio: audioRef.current,
@@ -120,18 +120,12 @@ export function AudioPlayer({
     if (!audio) return
 
     try {
-      audioRef.current.load()
+      audio.crossOrigin = null
+      audio.load()
     } catch (reloadError) {
       logger.error('Failed to reload audio', reloadError)
     }
   }, [replayGainError, audioRef, isRadio])
 
-  return (
-    <audio
-      ref={audioRef}
-      {...props}
-      crossOrigin={replayGainEnabled && isSong ? 'anonymous' : undefined}
-      onError={handleError}
-    />
-  )
+  return <audio ref={audioRef} {...props} onError={handleError} />
 }

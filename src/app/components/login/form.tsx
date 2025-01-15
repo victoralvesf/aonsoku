@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { toast } from 'react-toastify'
 import { z } from 'zod'
-import { LangToggle } from '@/app/components/header/lang-toggle'
-import { ThemeToggle } from '@/app/components/header/theme-toggle'
+import { queryServerInfo } from '@/api/queryServerInfo'
+import { LangToggle } from '@/app/components/login/lang-toggle'
 import { Button } from '@/app/components/ui/button'
 import {
   Card,
@@ -20,6 +20,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/app/components/ui/dialog'
 import {
   Form,
   FormControl,
@@ -35,8 +42,6 @@ import { ROUTES } from '@/routes/routesList'
 import { useAppActions, useAppData } from '@/store/app.store'
 import { removeSlashFromUrl } from '@/utils/removeSlashFromUrl'
 import { isTauri } from '@/utils/tauriTools'
-import { queryServerInfo } from '@/api/queryServerInfo'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog'
 
 const loginSchema = z.object({
   url: z
@@ -90,8 +95,7 @@ export function LoginForm() {
       setServerIsIncompatible(true)
       setLoading(false)
       return
-    }
-    else {
+    } else {
       setServerIsIncompatible(false)
     }
 
@@ -120,7 +124,6 @@ export function LoginForm() {
                 {t('login.form.server')}
                 <div className="flex gap-2 items-center">
                   <LangToggle />
-                  <ThemeToggle />
                 </div>
               </CardTitle>
               <CardDescription>{t('login.form.description')}</CardDescription>
@@ -219,9 +222,7 @@ export function LoginForm() {
       >
         <DialogContent className="max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>
-              {t('server.incompatible.title')}
-            </DialogTitle>
+            <DialogTitle>{t('server.incompatible.title')}</DialogTitle>
           </DialogHeader>
           <p>{t('server.incompatible.description')}</p>
           <DialogFooter>

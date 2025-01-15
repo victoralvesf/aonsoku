@@ -4,3 +4,4 @@ window.HIDE_SERVER="${HIDE_SERVER}" === "true";
 window.APP_USER="${APP_USER}" || undefined;
 window.APP_PASSWORD="${APP_PASSWORD}" || undefined;
 window.APP_AUTH_TYPE="${APP_AUTH_TYPE}" || "token";
+window.HIDE_RADIOS_SECTION="${HIDE_RADIOS_SECTION}" === "true";

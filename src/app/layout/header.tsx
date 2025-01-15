@@ -2,6 +2,7 @@ import { Windows } from '@/app/components/controls/windows'
 import { NavigationButtons } from '@/app/components/header/navigation-buttons'
 import { UserDropdown } from '@/app/components/header/user-dropdown'
 import { HeaderSongInfo } from '@/app/components/header-song'
+import { SettingsButton } from '@/app/components/settings/header-button'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { isMac, isWindows } from '@/utils/osType'
 import { tauriDragRegion } from '@/utils/tauriDragRegion'
@@ -17,6 +18,7 @@ export function Header() {
       </div>
       <HeaderSongInfo />
       <div {...tauriDragRegion} className="flex justify-end items-center gap-2">
+        <SettingsButton />
         <UserDropdown />
         {isWindows && <Windows />}
       </div>

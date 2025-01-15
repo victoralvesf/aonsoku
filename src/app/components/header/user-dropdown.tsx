@@ -19,8 +19,6 @@ import {
 import { LogoutObserver } from '@/app/observers/logout-observer'
 import { useAppData, useAppStore } from '@/store/app.store'
 import { isWindows } from '@/utils/osType'
-import { LangSelect } from './lang-select'
-import { ThemeSelect } from './theme-select'
 
 export function UserDropdown() {
   const { username, url, lockUser } = useAppData()
@@ -64,9 +62,6 @@ export function UserDropdown() {
               </p>
             </div>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <LangSelect />
-          <ThemeSelect />
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setShortcutsOpen(true)}>
             <Keyboard className="mr-2 h-4 w-4" />

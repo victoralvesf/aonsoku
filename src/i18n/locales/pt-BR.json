@@ -476,6 +476,37 @@
     "unsupported_message": "Este aplicativo não é suportado em dispositivos móveis.",
     "access_recommendation": "Por favor, acesse-o a partir de um computador para a melhor experiência."
   },
+  "settings": {
+    "label": "Configurações",
+    "options": {
+      "appearance": "Aparência",
+      "language": "Linguagem & região",
+      "audio": "Reprodutor & áudio",
+      "content": "Conteúdo"
+    },
+    "audio": {
+      "replayGain": {
+        "group": "Replay Gain",
+        "description": "Automaticamente normaliza o nível do áudio para uma melhor experiência sonora.",
+        "enabled": "Habilitado",
+        "mode": {
+          "label": "Modo",
+          "track": "Ganho da faixa",
+          "album": "Ganho do álbum"
+        },
+        "preAmp": "Pré-amplificador (dB)"
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Menu lateral",
+        "description": "Gerencie a visibilidade e a organização das seções exibidas no menu lateral.",
+        "radios": {
+          "section": "Esconder seção de rádios"
+        }
+      }
+    }
+  },
   "dayjs": {
     "relativeTime": {
       "future": "em %s",
