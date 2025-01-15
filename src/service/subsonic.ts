@@ -23,5 +23,5 @@ export const subsonic = {
   search,
   songs,
   star,
-  lyrics
+  lyrics,
 }

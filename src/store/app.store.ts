@@ -4,6 +4,7 @@ import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { pingServer } from '@/api/pingServer'
+import { queryServerInfo } from '@/api/queryServerInfo'
 import { AuthType, IAppContext, IServerConfig } from '@/types/serverConfig'
 import {
   genEncodedPassword,
@@ -13,7 +14,6 @@ import {
   getAuthType,
   hasValidConfig,
 } from '@/utils/salt'
-import { queryServerInfo } from '@/api/queryServerInfo'
 
 const { SERVER_URL, HIDE_SERVER, HIDE_RADIOS_SECTION } = window
 
@@ -29,8 +29,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             username: genUser(),
             password: genPassword(),
             authType: getAuthType(),
-            protocolVersion: "1.16.0",
-            serverType: "subsonic",
+            protocolVersion: '1.16.0',
+            serverType: 'subsonic',
             logoutDialogState: false,
             hideServer: HIDE_SERVER ?? false,
             lockUser: hasValidConfig,

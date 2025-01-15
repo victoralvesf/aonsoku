@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Lrc } from 'react-lrc'
 import {
   ScrollArea,
   scrollAreaViewportSelector,
 } from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerSonglist, usePlayerRef } from '@/store/player.store'
-import { Lrc } from 'react-lrc';
 import { ILyric } from '@/types/responses/song'
 
 interface LyricProps {
@@ -29,33 +29,30 @@ export function LyricsTab() {
       }),
   })
 
-
   const noLyricsFound = t('fullscreen.noLyrics')
   const loadingLyrics = t('fullscreen.loadingLyrics')
 
   if (isLoading) {
-    return <UnsyncedLyrics lyrics={{ value: loadingLyrics}}/>
+    return <UnsyncedLyrics lyrics={{ value: loadingLyrics }} />
+  } else if (lyrics && lyrics.value) {
+    return areLyricsSynced(lyrics) ? (
+      <SyncedLyrics lyrics={lyrics} />
+    ) : (
+      <UnsyncedLyrics lyrics={lyrics} />
+    )
+  } else {
+    return <UnsyncedLyrics lyrics={{ value: noLyricsFound }} />
   }
-  else if (lyrics && lyrics.value) {
-    return (areLyricsSynced(lyrics)) ? <SyncedLyrics lyrics={lyrics}/> : <UnsyncedLyrics lyrics={lyrics}/>
-  }
-  else {
-    return <UnsyncedLyrics lyrics={{ value: noLyricsFound }}/>
-  }
-
 }
 
-
-
 function SyncedLyrics({ lyrics }: LyricProps) {
-
   const playerRef = usePlayerRef()
   const [progress, setProgress] = useState(0)
 
   setTimeout(() => {
     let newProgress = (playerRef?.currentTime || 0) * 1000
 
-    if (newProgress == progress) {
+    if (newProgress === progress) {
       newProgress += 1 // Prevents the lyrics from getting stuck when the audio is still loading
     }
 
@@ -63,36 +60,39 @@ function SyncedLyrics({ lyrics }: LyricProps) {
   }, 50)
 
   const skipToTime = (timeMs: number) => {
-    if (!!playerRef) {
-      playerRef!.currentTime = (timeMs / 1000)
+    if (playerRef) {
+      playerRef!.currentTime = timeMs / 1000
     }
   }
 
   return (
     <>
-      <div
-        className="h-full overflow-y-auto text-center font-semibold text-2xl 2xl:text-3xl px-2 scroll-smooth lrc-box"
-      >
-          <Lrc
-            lrc={lyrics.value!}
-            recoverAutoScrollInterval={1500}
-            currentMillisecond={progress}
-            className="max-h-full"
-            lineRenderer={({ active, line }) => (
-              <p style={{ opacity: active ? 1 : 0.7 }} onClick={() => skipToTime(line.startMillisecond)} className="leading-20 drop-shadow-lg my-3 cursor-pointer duration-500 transition-opacity">{line.content}</p>
-            )}
-          />
+      <div className="h-full overflow-y-auto text-center font-semibold text-2xl 2xl:text-3xl px-2 scroll-smooth lrc-box">
+        <Lrc
+          lrc={lyrics.value!}
+          recoverAutoScrollInterval={1500}
+          currentMillisecond={progress}
+          className="max-h-full"
+          lineRenderer={({ active, line }) => (
+            <p
+              style={{ opacity: active ? 1 : 0.7 }}
+              onClick={() => skipToTime(line.startMillisecond)}
+              className="leading-20 drop-shadow-lg my-3 cursor-pointer duration-500 transition-opacity"
+            >
+              {line.content}
+            </p>
+          )}
+        />
       </div>
     </>
   )
 }
 
 function UnsyncedLyrics({ lyrics }: LyricProps) {
-
   const { currentSong } = usePlayerSonglist()
   const lyricsBoxRef = useRef<HTMLDivElement>(null)
 
-  let lines = lyrics.value!.split('\n')
+  const lines = lyrics.value!.split('\n')
 
   useEffect(() => {
     if (lyricsBoxRef.current) {
@@ -112,13 +112,11 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
       className="h-full overflow-y-auto text-center font-semibold text-2xl 2xl:text-3xl px-2 scroll-smooth"
       ref={lyricsBoxRef}
     >
-      {
-        lines.map((line, index) => (
-          <p key={index} className="leading-10 drop-shadow-lg">
-            {line}
-          </p>
-        ))
-      }
+      {lines.map((line, index) => (
+        <p key={index} className="leading-10 drop-shadow-lg">
+          {line}
+        </p>
+      ))}
     </ScrollArea>
   )
 }
@@ -126,5 +124,5 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
 function areLyricsSynced(lyrics: ILyric) {
   // Most LRC files will contain the string "[00:"
   // If there's a better method of detecting LRC files, implement it here
-  return lyrics!.value?.trim().includes("[00:")
+  return lyrics!.value?.trim().includes('[00:')
 }
