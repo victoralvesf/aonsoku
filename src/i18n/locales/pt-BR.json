@@ -258,7 +258,7 @@
     "queue": "Fila",
     "playing": "Tocando agora",
     "lyrics": "Letra",
-    "switchButton": "Mudar para tela cheia"
+    "switchButton": "Alternar para o Player Grande"
   },
   "logout": {
     "dialog": {
@@ -483,6 +483,16 @@
       "language": "Linguagem & região",
       "audio": "Reprodutor & áudio",
       "content": "Conteúdo"
+    },
+    "appearance": {
+      "general": {
+        "group": "Geral",
+        "description": "Personalize o visual e os comportamentos de exibição do app.",
+        "fullscreen": {
+          "label": "Habilitar tela cheia automática",
+          "info": "Se habilitado, ao acessar o player grande, o app ativará o modo tela cheia automaticamente."
+        }
+      }
     },
     "audio": {
       "replayGain": {

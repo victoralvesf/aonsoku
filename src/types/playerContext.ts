@@ -61,9 +61,15 @@ interface IReplayGain {
   actions: IReplayGainActions
 }
 
+interface IFullscreen {
+  autoFullscreenEnabled: boolean
+  setAutoFullscreenEnabled: (value: boolean) => void
+}
+
 export interface IPlayerSettings {
   volume: IVolumeSettings
   replayGain: IReplayGain
+  fullscreen: IFullscreen
 }
 
 export interface IPlayerActions {

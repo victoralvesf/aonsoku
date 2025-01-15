@@ -252,7 +252,7 @@
         "queue": "Queue",
         "playing": "Playing now",
         "lyrics": "Lyrics",
-        "switchButton": "Switch to fullscreen"
+        "switchButton": "Switch to Big Player"
     },
     "logout": {
         "dialog": {
@@ -479,6 +479,16 @@
             "language": "Language & region",
             "audio": "Player & audio",
             "content": "Content"
+        },
+        "appearance": {
+            "general": {
+                "group": "General",
+                "description": "Customize the app's look and display behaviors.",
+                "fullscreen": {
+                    "label": "Enable automatic fullscreen",
+                    "info": "If enabled, when accessing the big player, the app will automatically enter fullscreen mode."
+                }
+            }
         },
         "audio": {
             "replayGain": {

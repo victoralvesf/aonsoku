@@ -47,6 +47,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               step: 1,
               wheelStep: 5,
             },
+            fullscreen: {
+              autoFullscreenEnabled: false,
+              setAutoFullscreenEnabled: (value) => {
+                set((state) => {
+                  state.settings.fullscreen.autoFullscreenEnabled = value
+                })
+              },
+            },
             replayGain: {
               values: {
                 enabled: false,
@@ -597,6 +605,9 @@ export const useReplayGainState = () => {
 
 export const useReplayGainActions = () =>
   usePlayerStore((state) => state.settings.replayGain.actions)
+
+export const useFullscreenPlayerSettings = () =>
+  usePlayerStore((state) => state.settings.fullscreen)
 
 export const usePlayerSettings = () => usePlayerStore((state) => state.settings)
 

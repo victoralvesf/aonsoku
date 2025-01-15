@@ -1,5 +1,7 @@
+import { InfoIcon } from 'lucide-react'
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { Separator } from '@/app/components/ui/separator'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
 
 type SectionComponent = ComponentPropsWithoutRef<'div'>
@@ -53,10 +55,22 @@ export function ContentItem({
   )
 }
 
-export function ContentItemTitle({ children }: { children: ReactNode }) {
+interface ContentItemTitleProps {
+  info?: string
+  children: ReactNode
+}
+
+export function ContentItemTitle({ info, children }: ContentItemTitleProps) {
   return (
-    <div className="flex flex-1 items-center">
+    <div className="flex flex-1 items-center gap-1">
       <span className="text-sm leading-none text-foreground">{children}</span>
+      {info && (
+        <SimpleTooltip text={info} delay={0}>
+          <div className="hover:bg-muted-foreground/20 p-1 rounded cursor-pointer">
+            <InfoIcon className="w-3 h-3" />
+          </div>
+        </SimpleTooltip>
+      )}
     </div>
   )
 }

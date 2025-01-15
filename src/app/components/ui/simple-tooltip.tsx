@@ -13,6 +13,7 @@ interface TooltipContent {
   side?: 'top' | 'right' | 'bottom' | 'left'
   align?: 'center' | 'end' | 'start'
   delay?: number
+  avoidCollisions?: boolean
 }
 
 export function SimpleTooltip({
@@ -21,14 +22,19 @@ export function SimpleTooltip({
   side = 'top',
   align = 'center',
   delay = 700,
+  avoidCollisions = true,
 }: TooltipContent) {
   return (
     <TooltipProvider delayDuration={delay}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipPortal>
-          <TooltipContent side={side} avoidCollisions={false} align={align}>
-            <p className="font-normal">{text}</p>
+          <TooltipContent
+            side={side}
+            avoidCollisions={avoidCollisions}
+            align={align}
+          >
+            <p className="font-normal max-w-md text-center">{text}</p>
           </TooltipContent>
         </TooltipPortal>
       </Tooltip>
