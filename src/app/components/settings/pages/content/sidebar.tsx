@@ -13,9 +13,11 @@ import {
 import { Switch } from '@/app/components/ui/switch'
 import { useAppPages } from '@/store/app.store'
 
+const hideRadiosSectionConfig = window.HIDE_RADIOS_SECTION ?? false
+
 export function SidebarContent() {
   const { t } = useTranslation()
-  const { showRadiosSection, setShowRadiosSection } = useAppPages()
+  const { hideRadiosSection, setHideRadiosSection } = useAppPages()
 
   return (
     <Root>
@@ -32,8 +34,9 @@ export function SidebarContent() {
           </ContentItemTitle>
           <ContentItemForm>
             <Switch
-              checked={showRadiosSection}
-              onCheckedChange={setShowRadiosSection}
+              checked={hideRadiosSection}
+              onCheckedChange={setHideRadiosSection}
+              disabled={hideRadiosSectionConfig}
             />
           </ContentItemForm>
         </ContentItem>

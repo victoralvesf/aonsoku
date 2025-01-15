@@ -14,8 +14,8 @@ export interface IServerConfig {
 interface IAppPages {
   showInfoPanel: boolean
   toggleShowInfoPanel: () => void
-  showRadiosSection: boolean
-  setShowRadiosSection: (value: boolean) => void
+  hideRadiosSection: boolean
+  setHideRadiosSection: (value: boolean) => void
 }
 
 export interface IAppData extends IServerConfig {

@@ -493,7 +493,7 @@
                 "group": "Sidebar",
                 "description": "Manage the visibility and organization of sections displayed in the sidebar.",
                 "radios": {
-                    "section": "Show radios section"
+                    "section": "Hide radios section"
                 }
             }
         }

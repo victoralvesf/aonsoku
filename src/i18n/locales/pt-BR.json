@@ -502,7 +502,7 @@
         "group": "Menu lateral",
         "description": "Gerencie a visibilidade e a organização das seções exibidas no menu lateral.",
         "radios": {
-          "section": "Mostrar seção de rádios"
+          "section": "Esconder seção de rádios"
         }
       }
     }

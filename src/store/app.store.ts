@@ -14,7 +14,7 @@ import {
   hasValidConfig,
 } from '@/utils/salt'
 
-const { SERVER_URL, HIDE_SERVER } = window
+const { SERVER_URL, HIDE_SERVER, HIDE_RADIOS_SECTION } = window
 
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
@@ -42,10 +42,10 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.pages.showInfoPanel = !showInfoPanel
               })
             },
-            showRadiosSection: true,
-            setShowRadiosSection: (value) => {
+            hideRadiosSection: HIDE_RADIOS_SECTION ?? false,
+            setHideRadiosSection: (value) => {
               set((state) => {
-                state.pages.showRadiosSection = value
+                state.pages.hideRadiosSection = value
               })
             },
           },
@@ -178,6 +178,10 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 hideServer: HIDE_SERVER ?? false,
                 lockUser: true,
               },
+              pages: {
+                ...persisted.pages,
+                hideRadiosSection: HIDE_RADIOS_SECTION ?? false,
+              },
             }
 
             return merge(currentState, newState)
@@ -188,6 +192,10 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             data: {
               ...persisted.data,
               lockUser: false,
+            },
+            pages: {
+              ...persisted.pages,
+              hideRadiosSection: HIDE_RADIOS_SECTION ?? false,
             },
           }
 

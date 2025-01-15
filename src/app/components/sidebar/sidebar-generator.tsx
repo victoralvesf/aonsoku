@@ -20,7 +20,7 @@ export interface ISidebarItem {
 export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
   const location = useLocation()
   const { t } = useTranslation()
-  const { showRadiosSection } = useAppPages()
+  const { hideRadiosSection } = useAppPages()
 
   function isActive(route: string) {
     return location.pathname === route
@@ -30,7 +30,7 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
     <>
       {list.map((item) => {
         // Setting to show/hide Radios section
-        if (!showRadiosSection && item.id === 'radios') return null
+        if (hideRadiosSection && item.id === 'radios') return null
 
         return (
           <Link
