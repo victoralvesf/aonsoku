@@ -1,18 +1,24 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { usePlayerIsPlaying, useReplayGainState } from '@/store/player.store'
+import {
+  usePlayerIsPlaying,
+  usePlayerMediaType,
+  useReplayGainState,
+} from '@/store/player.store'
 import { logger } from '@/utils/logger'
 
 export function useAudioContext(audio: HTMLAudioElement | null) {
   const isPlaying = usePlayerIsPlaying()
+  const mediaType = usePlayerMediaType()
   const { replayGainEnabled, replayGainError } = useReplayGainState()
+
+  const isRadio = mediaType === 'radio'
 
   const audioContextRef = useRef<AudioContext | null>(null)
   const sourceNodeRef = useRef<MediaElementAudioSourceNode | null>(null)
   const gainNodeRef = useRef<GainNode | null>(null)
 
   const setupAudioContext = useCallback(() => {
-    if (!audio) return
-    if (replayGainError) return
+    if (!audio || isRadio || replayGainError) return
 
     if (!audioContextRef.current) {
       audioContextRef.current = new window.AudioContext()
@@ -29,7 +35,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
       sourceNodeRef.current.connect(gainNodeRef.current)
       gainNodeRef.current.connect(audioContext.destination)
     }
-  }, [audio, replayGainError])
+  }, [audio, isRadio, replayGainError])
 
   useEffect(() => {
     const audioContext = audioContextRef.current

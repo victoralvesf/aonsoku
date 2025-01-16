@@ -61,12 +61,11 @@ export function AudioPlayer({
   }, [audioContextRef, gainNodeRef, gainValue, replayGain, replayGainEnabled])
 
   useEffect(() => {
-    if (!isSong) return
-    if (replayGainError || !audioRef.current) return
+    if (isRadio || replayGainError || !audioRef.current) return
 
     audioRef.current.crossOrigin = 'anonymous'
     setupGain()
-  }, [audioRef, isSong, replayGainEnabled, replayGainError, setupGain])
+  }, [audioRef, isRadio, replayGainEnabled, replayGainError, setupGain])
 
   useVolumeSynchronization({
     audio: audioRef.current,
