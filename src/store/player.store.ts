@@ -347,6 +347,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.settings.replayGain.values.type = 'track'
                 state.settings.replayGain.values.preAmp = 0
                 state.settings.replayGain.values.error = false
+                state.playerState.audioPlayerRef = null
               })
             },
             resetProgress: () => {
