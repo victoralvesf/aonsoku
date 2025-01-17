@@ -9,7 +9,7 @@ import { logger } from '@/utils/logger'
 export function useAudioContext(audio: HTMLAudioElement | null) {
   const isPlaying = usePlayerIsPlaying()
   const mediaType = usePlayerMediaType()
-  const { replayGainEnabled, replayGainError } = useReplayGainState()
+  const { replayGainError } = useReplayGainState()
 
   const isRadio = mediaType === 'radio'
 
@@ -39,7 +39,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
 
   useEffect(() => {
     const audioContext = audioContextRef.current
-    if (!audioContext) return
+    if (!audioContext || isRadio) return
 
     logger.info('AudioContext State', audioContext.state)
 
@@ -51,11 +51,11 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
         logger.error('Unable to resume AudioContext')
       }
     }
-  }, [isPlaying])
+  }, [isPlaying, isRadio])
 
   useEffect(() => {
     if (audio) setupAudioContext()
-  }, [audio, setupAudioContext, replayGainEnabled])
+  }, [audio, setupAudioContext])
 
   return {
     audioContextRef,
