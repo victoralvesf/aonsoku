@@ -10,6 +10,7 @@ import {
 import { subsonic } from '@/service/subsonic'
 import { usePlayerSonglist, usePlayerRef } from '@/store/player.store'
 import { ILyric } from '@/types/responses/song'
+import { isSafari } from '@/utils/osType'
 
 interface LyricProps {
   lyrics: ILyric
@@ -74,15 +75,20 @@ function SyncedLyrics({ lyrics }: LyricProps) {
         recoverAutoScrollInterval={1500}
         currentMillisecond={progress}
         id="sync-lyrics-box"
-        className="h-full overflow-y-auto scroll-smooth"
+        className={clsx('h-full overflow-y-auto', !isSafari && 'scroll-smooth')}
         verticalSpace={true}
         lineRenderer={({ active, line }) => (
           <p
             onClick={() => skipToTime(line.startMillisecond)}
             className={clsx(
               'drop-shadow-lg my-5 cursor-pointer hover:opacity-100',
-              'duration-500 transition-[opacity,font-size] motion-reduce:transition-none',
-              active ? 'opacity-100 text-3xl 2xl:text-4xl' : 'opacity-50',
+              'duration-500 motion-reduce:transition-none',
+              isSafari
+                ? 'transition-[opacity,transform]'
+                : 'transition-[opacity,text-size,line-height]',
+              active ? 'opacity-100' : 'opacity-50',
+              isSafari && active && 'scale-125',
+              !isSafari && active && 'text-3xl 2xl:text-4xl',
             )}
           >
             {line.content}
