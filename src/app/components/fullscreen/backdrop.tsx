@@ -3,7 +3,7 @@ import { getCoverArtUrl } from '@/api/httpClient'
 import { usePlayerCurrentSong } from '@/store/player.store'
 import { isChromeOrFirefox } from '@/utils/browser'
 
-export default function FullscreenBackdrop() {
+export function FullscreenBackdrop() {
   const currentSong = usePlayerCurrentSong()
   const coverArtUrl = getCoverArtUrl(currentSong.coverArt, 'song', '600')
   const backgroundImage = `url(${coverArtUrl})`
