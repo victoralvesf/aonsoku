@@ -103,5 +103,25 @@
     "system": "Système",
     "black": "Noir et Blanc",
     "one-dark": "One Dark"
+  },
+  "album": {
+    "info": {
+      "about": "À propos de {{name}}",
+      "lastfm": "Ouvrir dans Last.fm",
+      "musicbrainz": "Ouvrir dans MusicBrainz"
+    },
+    "more": {
+      "listTitle": "Plus de cet artiste",
+      "discography": "Discographie de l'artiste",
+      "genreTitle": "Plus de {{genre}}"
+    },
+    "list": {
+      "header": {
+        "albumsByArtist": "Albums de {{artist}}"
+      },
+      "empty": {
+        "title": "Oups, aucun album ici !"
+      }
+    }
   }
 }
