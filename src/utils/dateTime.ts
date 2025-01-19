@@ -29,8 +29,10 @@ dayjs.extend(localizedFormat)
 
 languages.forEach((lang) => {
   const langCode = lang.langCode as keyof typeof resources
-  if ('dayjs' in resources[langCode].translation) {
-    dayjs.updateLocale(lang.dayjsLocale, resources[langCode].translation.dayjs)
+  const langTranslationKeys = resources[langCode].translation
+
+  if ('dayjs' in langTranslationKeys) {
+    dayjs.updateLocale(lang.dayjsLocale, langTranslationKeys.dayjs)
   }
 })
 
