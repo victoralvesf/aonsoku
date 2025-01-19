@@ -21,8 +21,13 @@ interface LRCLibResponse {
 async function getLyrics(getLyricsData: GetLyricsData) {
   const { preferSyncedLyrics } = usePlayerStore.getState().settings.lyrics
 
+  // If the user prefers synced lyrics, attempt to fetch them from the LrcLib first.
+  // If lyrics are found, return them immediately.
+  // If not, proceed with the default flow.
   if (preferSyncedLyrics) {
-    return getLyricsFromLRCLib(getLyricsData)
+    const lyrics = await getLyricsFromLRCLib(getLyricsData)
+
+    if (lyrics.value !== '') return lyrics
   }
 
   const response = await httpClient<LyricsResponse>('/getLyrics', {
@@ -33,7 +38,14 @@ async function getLyrics(getLyricsData: GetLyricsData) {
     },
   })
 
-  if (!response || !response?.data.lyrics || !response.data.lyrics.value) {
+  const lyricNotFound =
+    !response || !response?.data.lyrics || !response.data.lyrics.value
+
+  // If the Subsonic API did not return lyrics and the user does not prefer synced lyrics,
+  // fallback to fetching lyrics from the LrcLib.
+  // Note: If `preferSyncedLyrics` is true and we reached this point, it means the LrcLib
+  // does not contains lyrics for the track, so the fallback is unnecessary in that case.
+  if (lyricNotFound && !preferSyncedLyrics) {
     return getLyricsFromLRCLib(getLyricsData)
   }
 
