@@ -117,6 +117,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.originalList = songlist
                 state.songlist.originalSongIndex = index
                 state.playerState.mediaType = 'song'
+                state.songlist.radioList = []
               })
 
               if (shuffle) {
