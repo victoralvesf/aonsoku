@@ -8,6 +8,9 @@ import utc from 'dayjs/plugin/utc'
 import 'dayjs/locale/pt-br'
 import 'dayjs/locale/es'
 import 'dayjs/locale/zh-cn'
+import 'dayjs/locale/de'
+import 'dayjs/locale/ru'
+import 'dayjs/locale/fr'
 
 import i18n from '@/i18n'
 import { languages, resources } from '@/i18n/languages'
@@ -26,8 +29,10 @@ dayjs.extend(localizedFormat)
 
 languages.forEach((lang) => {
   const langCode = lang.langCode as keyof typeof resources
-  if ('dayjs' in resources[langCode].translation) {
-    dayjs.updateLocale(lang.dayjsLocale, resources[langCode].translation.dayjs)
+  const langTranslationKeys = resources[langCode].translation
+
+  if ('dayjs' in langTranslationKeys) {
+    dayjs.updateLocale(lang.dayjsLocale, langTranslationKeys.dayjs)
   }
 })
 

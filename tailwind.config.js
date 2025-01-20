@@ -116,6 +116,8 @@ module.exports = {
         'marquee-fade-finished':
           'linear-gradient(270deg, transparent 0%, rgb(0, 0, 0) 3%, rgb(0, 0, 0) 100%, transparent 100%)',
         'carousel-item': 'radial-gradient(circle, white 100%, transparent 0)',
+        'big-player-lyrics':
+          'linear-gradient(180deg, transparent 0%, rgb(0, 0, 0) 25%, rgb(0, 0, 0) 75%, transparent 100%)',
       },
     },
   },

@@ -6,5 +6,8 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "src/manual-chunks.ts",
+    "vite.config.ts"
+  ]
 }

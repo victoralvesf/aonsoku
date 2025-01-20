@@ -1,23 +1,26 @@
 import clsx from 'clsx'
 import { ListMusic } from 'lucide-react'
-import { Fragment } from 'react'
+import { ElementType, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import { PlaylistOptions } from '@/app/components/playlist/options'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { Button } from '@/app/components/ui/button'
 import { ROUTES } from '@/routes/routesList'
+import { useAppPages } from '@/store/app.store'
 import { Playlist } from '@/types/responses/playlist'
 
 export interface ISidebarItem {
+  id: string
   title: string
   route: string
-  icon: JSX.Element
+  icon: ElementType
 }
 
 export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
   const location = useLocation()
   const { t } = useTranslation()
+  const { hideRadiosSection } = useAppPages()
 
   function isActive(route: string) {
     return location.pathname === route
@@ -25,22 +28,27 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
 
   return (
     <>
-      {list.map((item, index) => (
-        <Link
-          to={item.route}
-          key={index}
-          className={clsx(isActive(item.route) && 'pointer-events-none')}
-        >
-          <Button
-            variant={isActive(item.route) ? 'secondary' : 'ghost'}
-            size="sm"
-            className="w-full justify-start"
+      {list.map((item) => {
+        // Setting to show/hide Radios section
+        if (hideRadiosSection && item.id === 'radios') return null
+
+        return (
+          <Link
+            to={item.route}
+            key={item.id}
+            className={clsx(isActive(item.route) && 'pointer-events-none')}
           >
-            {item.icon}
-            {t(item.title)}
-          </Button>
-        </Link>
-      ))}
+            <Button
+              variant={isActive(item.route) ? 'secondary' : 'ghost'}
+              size="sm"
+              className="w-full justify-start"
+            >
+              <item.icon className="w-4 h-4 mr-2" />
+              {t(item.title)}
+            </Button>
+          </Link>
+        )
+      })}
     </>
   )
 }

@@ -54,7 +54,8 @@
 
 - **Subsonic Integration:** Aonsoku integrates with your Navidrome or Subsonic server, providing you with easy access to your music collection. 
 - **Intuitive UI:** Modern, clean and user-friendly interface designed to enhance your music listening experience.
-- **Unsynchronized lyrics**: If your songs have embedded unsynchronized lyrics, Aonsoku is able to show them on full screen mode.
+- **Synchronized lyrics**: Aonsoku will automatically find a synced lyric from [LRCLIB](https://lrclib.net/) if none is provided by the server.
+- **Unsynchronized lyrics**: If your songs have embedded unsynchronized lyrics, Aonsoku is able to show them.
 - **Radio:** If your server supports it, listen to radio shows directly within Aonsoku.
 - **Scrobble:** Sync played songs with your server.
 
@@ -127,14 +128,15 @@ services:
 
 Below is a table describing the environment variables that can be used in this project. Adjust them as necessary in your `.env` file.
 
-| Variable        | Default   | Description                                                                                                       | Required for Automatic Login |
-|-----------------|-----------|-------------------------------------------------------------------------------------------------------------------|------------------------------|
-| `PORT`          | `8080`    | The port the application runs on.                                                                                 | No                           |
-| `SERVER_URL`    |           | If you want the app to access a predefined Subsonic server. </br> **Format:** `http://your-subsonic-server:port`. | Yes                          |
-| `HIDE_SERVER`   | `false`   | Set to `true` to hide the server URL field on login and only show username and password.                          | Yes                          |
-| `APP_USER`      |           | The username for automatic login.                                                                                 | Yes                          |
-| `APP_PASSWORD`  |           | The password for automatic login.                                                                                 | Yes                          |
-| `APP_AUTH_TYPE` | `token`   | Specifies the authentication method. </br> **Options:** `token` or `password`.                                    | No                           |
+| Variable              | Default   | Description                                                                                                       | Required for Automatic Login |
+|-----------------------|-----------|-------------------------------------------------------------------------------------------------------------------|------------------------------|
+| `PORT`                | `8080`    | The port the application runs on.                                                                                 |                              |
+| `SERVER_URL`          |           | If you want the app to access a predefined Subsonic server. </br> **Format:** `http://your-subsonic-server:port`. | ✅                           |
+| `HIDE_SERVER`         | `false`   | Set to `true` to hide the server URL field on login and only show username and password.                          | ✅                           |
+| `APP_USER`            |           | The username for automatic login.                                                                                 | ✅                           |
+| `APP_PASSWORD`        |           | The password for automatic login.                                                                                 | ✅                           |
+| `APP_AUTH_TYPE`       | `token`   | Specifies the authentication method. </br> **Options:** `token` or `password`.                                    |                              |
+| `HIDE_RADIOS_SECTION` | `false`   | Set to `true` to hide the radios page from the sidebar menu.                                                      |                              |
 
 **Notes:**
 - **Automatic Login:** To enable automatic login across devices. This should only be used in secure local environments to avoid password compromise.
@@ -159,7 +161,7 @@ Below is a table describing the environment variables that can be used in this p
   - [x] Song
 - [x] Queue page
 - [ ] Playlist editor
-- [ ] Synced lyrics
+- [x] Synced lyrics
 - [ ] Podcast support
 
 Feel free to request more cool features [here](https://github.com/victoralvesf/aonsoku/issues/new?labels=enhancement&template=feature-request---.md).

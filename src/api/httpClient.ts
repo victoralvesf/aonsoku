@@ -32,11 +32,12 @@ export function authQueryParams(
 }
 
 function queryParams() {
-  const { username, password, authType } = useAppStore.getState().data
+  const { username, password, authType, protocolVersion } =
+    useAppStore.getState().data
 
   return {
     ...authQueryParams(username, password, authType),
-    v: '1.16.0',
+    v: protocolVersion || '1.16.0',
     c: appName,
     f: 'json',
   }

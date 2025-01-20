@@ -51,6 +51,7 @@ interface DataTableProps<TData, TValue> {
   noRowsMessage?: string
   showHeader?: boolean
   allowRowSelection?: boolean
+  showContextMenu?: boolean
   dataType?: 'song' | 'artist' | 'playlist' | 'radio'
   fetchNextPage?: () => void
   hasNextPage?: boolean
@@ -66,6 +67,7 @@ export function DataTableList<TData, TValue>({
   noRowsMessage = 'No results.',
   showHeader = true,
   allowRowSelection = true,
+  showContextMenu = true,
   dataType = 'song',
   fetchNextPage,
   hasNextPage,
@@ -172,6 +174,8 @@ export function DataTableList<TData, TValue>({
 
   const getContextMenuOptions = useCallback(
     (row: Row<TData>) => {
+      if (!showContextMenu) return undefined
+
       if (dataType === 'song') {
         if (table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()) {
           return (
@@ -192,7 +196,7 @@ export function DataTableList<TData, TValue>({
 
       return undefined
     },
-    [dataType, table],
+    [dataType, showContextMenu, table],
   )
 
   const handleLeftClick = useCallback(

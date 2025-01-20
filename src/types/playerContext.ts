@@ -40,8 +40,42 @@ export interface IVolumeSettings {
   wheelStep: number
 }
 
+export type ReplayGainType = 'track' | 'album'
+
+interface IReplayGainData {
+  enabled: boolean
+  type: ReplayGainType
+  preAmp: number
+  error: boolean
+}
+
+interface IReplayGainActions {
+  setReplayGainEnabled: (value: boolean) => void
+  setReplayGainType: (value: ReplayGainType) => void
+  setReplayGainPreAmp: (value: number) => void
+  setReplayGainError: (value: boolean) => void
+}
+
+interface IReplayGain {
+  values: IReplayGainData
+  actions: IReplayGainActions
+}
+
+interface IFullscreen {
+  autoFullscreenEnabled: boolean
+  setAutoFullscreenEnabled: (value: boolean) => void
+}
+
+interface ILyrics {
+  preferSyncedLyrics: boolean
+  setPreferSyncedLyrics: (value: boolean) => void
+}
+
 export interface IPlayerSettings {
   volume: IVolumeSettings
+  fullscreen: IFullscreen
+  lyrics: ILyrics
+  replayGain: IReplayGain
 }
 
 export interface IPlayerActions {
@@ -75,6 +109,7 @@ export interface IPlayerActions {
   setQueueDrawerState: (state: boolean) => void
   playFirstSongInQueue: () => void
   handleSongEnded: () => void
+  getCurrentProgress: () => number
 }
 
 export interface IPlayerContext {

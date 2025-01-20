@@ -63,15 +63,6 @@ textarea {
   -ms-user-select: text;
 }
 
-#main-scroll-area #scroll-viewport > div {
-  display: flex !important;
-}
-
-#playlists #scroll-viewport > div {
-  display: flex !important;
-  flex-direction: column !important;
-}
-
 img {
   -webkit-user-drag: none;
   user-select: none;
@@ -229,4 +220,20 @@ svg#bars .eq-bar--4 {
 @keyframes eq-4 {
   0%, 100% { height: 8px }
   50% { height: 16px }
+}
+
+#sync-lyrics-box,
+.lrc-box {
+  /* webkit */
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* firefox */
+  scrollbar-width: none;
+}
+
+#sync-lyrics-box .react-lrc-line {
+  @apply w-fit m-auto max-w-[80%];
 }

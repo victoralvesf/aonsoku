@@ -1,4 +1,5 @@
 import { AudioLines, Maximize2 } from 'lucide-react'
+import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -15,8 +16,26 @@ import { ISong } from '@/types/responses/song'
 export function TrackInfo({ song }: { song: ISong | undefined }) {
   const { t } = useTranslation()
 
-  return song ? (
-    <>
+  if (!song) {
+    return (
+      <Fragment>
+        <div className="w-[70px] h-[70px] flex justify-center items-center bg-muted rounded">
+          <AudioLines data-testid="song-no-playing-icon" />
+        </div>
+        <div className="flex flex-col justify-center">
+          <span
+            className="text-sm font-medium"
+            data-testid="song-no-playing-label"
+          >
+            {t('player.noSongPlaying')}
+          </span>
+        </div>
+      </Fragment>
+    )
+  }
+
+  return (
+    <Fragment>
       <div className="group relative">
         <Image
           src={getCoverArtUrl(song.coverArt, 'song', '140')}
@@ -69,20 +88,6 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
           </span>
         </Link>
       </div>
-    </>
-  ) : (
-    <>
-      <div className="w-[70px] h-[70px] flex justify-center items-center bg-muted rounded">
-        <AudioLines data-testid="song-no-playing-icon" />
-      </div>
-      <div className="flex flex-col justify-center">
-        <span
-          className="text-sm font-medium"
-          data-testid="song-no-playing-label"
-        >
-          {t('player.noSongPlaying')}
-        </span>
-      </div>
-    </>
+    </Fragment>
   )
 }

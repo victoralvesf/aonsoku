@@ -35,7 +35,24 @@
     "light": "浅色",
     "dark": "深色",
     "system": "系统",
-    "black": "黑白"
+    "black": "黑白",
+    "bearded-solarized": "Bearded Solarized",
+    "material-theme": "Material Theme",
+    "one-dark": "One Dark",
+    "night-owl-light": "Night Owl Light",
+    "monokai-pro": "Monokai Pro",
+    "shades-of-purple": "Shades Of Purple",
+    "marmalade-beaver": "Marmalade Beaver",
+    "noctis-lilac": "Noctis Lilac",
+    "github-dark": "GitHub Dark",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "nuclear-dark": "Nuclear Dark",
+    "achiever": "Achiever",
+    "discord": "Discord",
+    "vue-dark": "Vue Dark",
+    "vim-dark-soft": "Vim Dark Soft",
+    "dracula": "Dracula",
+    "tinacious-design": "Tinacious Design"
   },
   "playlist": {
     "headline": "播放列表",
@@ -196,7 +213,8 @@
       "plays": "播放次数",
       "comment": "注解",
       "public": "公开",
-      "favorite": "收藏"
+      "favorite": "收藏",
+      "albumGain": "专辑增益"
     },
     "buttons": {
       "play": "播放 {{artist}} 的 {{title}}",
@@ -223,9 +241,9 @@
     "lastPlayed": "{{date}}前"
   },
   "fullscreen": {
-    "playing": "立即播放",
+    "playing": "正在播放",
     "lyrics": "歌词",
-    "switchButton": "切换到全屏模式",
+    "switchButton": "切换到大播放器",
     "noLyrics": "没有找到歌词",
     "loadingLyrics": "搜索歌词…",
     "queue": "队列"
@@ -355,7 +373,8 @@
     "empty": {
       "title": "你还没有任何电台！",
       "info": "点击添加你的第一个电台。"
-    }
+    },
+    "error": "无法播放电台，请检查电台流 URL！"
   },
   "time": {
     "seconds": "{{seconds}} 秒",
@@ -372,6 +391,11 @@
     "buttons": {
       "refresh": "刷新状态",
       "startScan": "快速刷新"
+    },
+    "incompatible": {
+      "title": "不兼容的服务器",
+      "description": "此服务器使用的是较旧的 Subsonic 协议版本，该版本不被完全支持。请在操作时谨慎行事，您可能会遇到问题。",
+      "skip": "仍然继续"
     }
   },
   "downloads": {
@@ -451,5 +475,58 @@
   },
   "warnings": {
     "reload": "有一首歌曲正在播放！\n你确定要重新加载页面吗？"
+  },
+  "mobile": {
+    "unsupported_message": "这个应用不支持移动设备。",
+    "access_recommendation": "请从桌面端访问以获得最佳体验。"
+  },
+  "settings": {
+    "options": {
+      "language": "语言和地区",
+      "audio": "播放器和音频",
+      "content": "内容",
+      "appearance": "外观"
+    },
+    "appearance": {
+      "general": {
+        "fullscreen": {
+          "label": "开启自动全屏",
+          "info": "如果启用，在访问大播放器时，app 将自动进入全屏模式。"
+        },
+        "group": "通用",
+        "description": "自定义 app 的外观和显示行为。"
+      }
+    },
+    "audio": {
+      "replayGain": {
+        "group": "回放增益",
+        "description": "自动调整音频播放音量，以获得一致的聆听体验。",
+        "enabled": "已开启",
+        "mode": {
+          "label": "模式",
+          "track": "音轨增益",
+          "album": "专辑增益"
+        },
+        "preAmp": "前置放大器（dB）"
+      },
+      "lyrics": {
+        "group": "歌词",
+        "description": "自定义歌词设置。",
+        "preferSynced": {
+          "label": "偏好同步的歌词",
+          "info": "启用后，同步的歌词将优先于未同步的歌词。"
+        }
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "侧边栏",
+        "description": "管理侧边栏中显示的区域的可见性和组织方式。",
+        "radios": {
+          "section": "隐藏电台区域"
+        }
+      }
+    },
+    "label": "设置"
   }
 }

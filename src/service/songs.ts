@@ -1,7 +1,6 @@
 import { httpClient } from '@/api/httpClient'
 import {
   GetSongResponse,
-  LyricsResponse,
   RandomSongsResponse,
   TopSongsResponse,
 } from '@/types/responses/song'
@@ -44,23 +43,6 @@ async function getTopSongs(artistName: string) {
   return response?.data.topSongs.song
 }
 
-interface GetLyricsData {
-  artist: string
-  title: string
-}
-
-async function getLyrics({ artist, title }: GetLyricsData) {
-  const response = await httpClient<LyricsResponse>('/getLyrics', {
-    method: 'GET',
-    query: {
-      artist,
-      title,
-    },
-  })
-
-  return response?.data.lyrics
-}
-
 async function getAllSongs(songCount: number) {
   const response = await search.get({
     query: '',
@@ -88,6 +70,5 @@ export const songs = {
   getAllSongs,
   getRandomSongs,
   getTopSongs,
-  getLyrics,
   getSong,
 }

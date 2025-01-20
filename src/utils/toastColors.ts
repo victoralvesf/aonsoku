@@ -1,5 +1,4 @@
 export const toastColors = {
-  error:
-    'border border-destructive/50 dark:border-destructive bg-destructive/15 text-red-600',
+  error: 'bg-destructive text-destructive-foreground',
   default: 'border border-border bg-background text-foreground',
 }

@@ -9,3 +9,5 @@ export function getAppInfo() {
     url: repository.url,
   }
 }
+
+export const lrclibClient = `${appName} v${version} (${repository.url})`

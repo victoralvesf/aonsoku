@@ -218,6 +218,7 @@
             "discNumber": "Disc number",
             "trackGain": "Track gain",
             "trackPeak": "Track peak",
+            "albumGain": "Album gain",
             "albumPeak": "Album peak"
         },
         "buttons": {
@@ -251,7 +252,7 @@
         "queue": "Queue",
         "playing": "Playing now",
         "lyrics": "Lyrics",
-        "switchButton": "Switch to fullscreen"
+        "switchButton": "Switch to Big Player"
     },
     "logout": {
         "dialog": {
@@ -353,6 +354,7 @@
             "title": "You have no radios!",
             "info": "Click to add your first radio station."
         },
+        "error": "Unable to play the Radio, check the Stream URL!",
         "form": {
             "create": {
                 "title": "Add Radio",
@@ -401,6 +403,11 @@
         "lastScan": "Last scan: {{date}}",
         "status": "Status",
         "management": "Server management",
+        "incompatible": {
+            "title": "Incompatible server",
+            "description": "This server uses an older version of the Subsonic protocol that is not fully supported. Please proceed with caution as you may have issues.",
+            "skip": "Continue anyway"
+        },
         "buttons": {
             "refresh": "Refresh status",
             "startScan": "Quick Scan"
@@ -464,6 +471,55 @@
     "mobile": {
         "unsupported_message": "This application is not supported on mobile devices.",
         "access_recommendation": "Please access it from a desktop for the best experience."
+    },
+    "settings": {
+        "label": "Settings",
+        "options": {
+            "appearance": "Appearance",
+            "language": "Language & region",
+            "audio": "Player & audio",
+            "content": "Content"
+        },
+        "appearance": {
+            "general": {
+                "group": "General",
+                "description": "Customize the app's look and display behaviors.",
+                "fullscreen": {
+                    "label": "Enable automatic fullscreen",
+                    "info": "If enabled, when accessing the big player, the app will automatically enter fullscreen mode."
+                }
+            }
+        },
+        "audio": {
+            "replayGain": {
+                "group": "Replay Gain",
+                "description": "Automatically normalize audio playback levels for a consistent listening experience.",
+                "enabled": "Enabled",
+                "mode": {
+                    "label": "Mode",
+                    "track": "Track gain",
+                    "album": "Album gain"
+                },
+                "preAmp": "PreAmp (dB)"
+            },
+            "lyrics": {
+                "group": "Lyrics",
+                "description": "Customize lyrics settings.",
+                "preferSynced": {
+                    "label": "Prefer synced lyrics",
+                    "info": "When enabled, synced lyrics will be prioritized over unsynced lyrics."
+                }
+            }
+        },
+        "content": {
+            "sidebar": {
+                "group": "Sidebar",
+                "description": "Manage the visibility and organization of sections displayed in the sidebar.",
+                "radios": {
+                    "section": "Hide radios section"
+                }
+            }
+        }
     },
     "dayjs": {
         "relativeTime": {

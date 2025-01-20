@@ -2,6 +2,10 @@
 
 @layer base {
   :root {
+    --radius: 0.5rem;
+  }
+
+  .light {
     --background: 0 0% 100%;
     --background-foreground: 210 20% 98%;
     --foreground: 224 10% 15%;
@@ -22,7 +26,6 @@
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 161 94% 30%;
-    --radius: 0.5rem;
   }
 
   .dark {

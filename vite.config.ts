@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import path from 'path'
+import { createManualChunks } from './src/manual-chunks'
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
@@ -29,14 +30,7 @@ export default defineConfig(async () => ({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          i18next: [
-            'i18next',
-            'i18next-browser-languagedetector',
-            'react-i18next',
-          ],
-        },
+        manualChunks: createManualChunks,
       },
     },
   },

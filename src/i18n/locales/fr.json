@@ -1,104 +1,127 @@
 {
-    "playlist": {
-        "duration": "environ {{duration}}",
-        "buttons": {
-            "play": "Lire {{name}}",
-            "options": "Plus d'options pour {{name}}",
-            "shuffle": "Lire {{name}} en mode aléatoire"
+  "playlist": {
+    "duration": "environ {{duration}}",
+    "buttons": {
+      "play": "Lire {{name}}",
+      "options": "Plus d'options pour {{name}}",
+      "shuffle": "Lire {{name}} en mode aléatoire"
+    },
+    "form": {
+      "labels": {
+        "comment": "Commentaire",
+        "name": "Nom",
+        "commentDescription": "Écrivez une courte description de cette liste de lecture",
+        "isPublicDescription": "Sélectionnez cette option pour rendre la liste de lecture publique. Ceci permettra aux autres utilisateurs de consulter et d'accéder à votre liste.",
+        "isPublic": "Publique"
+      },
+      "delete": {
+        "toast": {
+          "success": "Liste de lecture retirée avec succès !"
         },
-        "form": {
-            "labels": {
-                "comment": "Commentaire",
-                "name": "Nom",
-                "commentDescription": "Écrivez une courte description de cette liste de lecture",
-                "isPublicDescription": "Sélectionnez cette option pour rendre la liste de lecture publique. Ceci permettra aux autres utilisateurs de consulter et d'accéder à votre liste.",
-                "isPublic": "Publique"
-            },
-            "delete": {
-                "toast": {
-                    "success": "Liste de lecture retirée avec succès !"
-                },
-                "title": "Êtes-vous sûr·e de vouloir supprimer cette liste de lecture ?",
-                "description": "Cette action ne peut pas être annulée."
-            },
-            "edit": {
-                "toast": {
-                    "success": "Liste de lecture mise à jour avec succès !",
-                    "error": "Échec de la mise à jour de la liste !"
-                },
-                "title": "Modifier la liste de lecture",
-                "button": "Mettre à jour"
-            },
-            "create": {
-                "title": "Créer une liste de lecture",
-                "button": "Créer",
-                "toast": {
-                    "success": "Liste de lecture créée avec succès !",
-                    "error": "Échec de la création de la liste !"
-                }
-            }
+        "title": "Êtes-vous sûr·e de vouloir supprimer cette liste de lecture ?",
+        "description": "Cette action ne peut pas être annulée."
+      },
+      "edit": {
+        "toast": {
+          "success": "Liste de lecture mise à jour avec succès !",
+          "error": "Échec de la mise à jour de la liste !"
         },
-        "songCount_one": "{{count}} chanson",
-        "songCount_many": "{{count}} chansons",
-        "songCount_other": "{{count}} chansons",
-        "headline": "Liste de lecture",
-        "refresh": "Actualiser les listes de lecture",
-        "noSongList": "Cette liste de lecture n'a pas de chansons !"
+        "title": "Modifier la liste de lecture",
+        "button": "Mettre à jour"
+      },
+      "create": {
+        "title": "Créer une liste de lecture",
+        "button": "Créer",
+        "toast": {
+          "success": "Liste de lecture créée avec succès !",
+          "error": "Échec de la création de la liste !"
+        }
+      }
     },
-    "table": {
-        "columns": {
-            "bitrate": "Débit binaire",
-            "quality": "Qualité",
-            "public": "Publique",
-            "name": "Nom",
-            "genres": "Genres",
-            "albumCount": "Nombre d'albums",
-            "songCount": "Nombre de chansons",
-            "track": "Piste",
-            "favorite": "En favori",
-            "comment": "Commentaire",
-            "size": "Taille"
-        },
-        "buttons": {
-            "play": "Jouer {{title}} par {{artist}}",
-            "pause": "Mettre {{title}} par {{artist}} en pause"
-        },
-        "lastPlayed": "il y a {{date}}"
+    "songCount_one": "{{count}} chanson",
+    "songCount_many": "{{count}} chansons",
+    "songCount_other": "{{count}} chansons",
+    "headline": "Liste de lecture",
+    "refresh": "Actualiser les listes de lecture",
+    "noSongList": "Cette liste de lecture n'a pas de chansons !"
+  },
+  "table": {
+    "columns": {
+      "bitrate": "Débit binaire",
+      "quality": "Qualité",
+      "public": "Publique",
+      "name": "Nom",
+      "genres": "Genres",
+      "albumCount": "Nombre d'albums",
+      "songCount": "Nombre de chansons",
+      "track": "Piste",
+      "favorite": "En favori",
+      "comment": "Commentaire",
+      "size": "Taille"
     },
-    "sidebar": {
-        "playlists": "Listes de lecture",
-        "radios": "Radios",
-        "search": "Recherche…",
-        "home": "Accueil",
-        "songs": "Chansons",
-        "albums": "Albums",
-        "miniSearch": "Recherche",
-        "library": "Bibliothèque",
-        "artists": "Artistes",
-        "emptyPlaylist": "Aucune liste de lecture créée"
+    "buttons": {
+      "play": "Jouer {{title}} par {{artist}}",
+      "pause": "Mettre {{title}} par {{artist}} en pause"
     },
-    "menu": {
-        "serverLogout": "Se déconnecter",
-        "language": "Langue",
-        "server": "Serveur"
+    "lastPlayed": "il y a {{date}}"
+  },
+  "sidebar": {
+    "playlists": "Listes de lecture",
+    "radios": "Radios",
+    "search": "Recherche…",
+    "home": "Accueil",
+    "songs": "Chansons",
+    "albums": "Albums",
+    "miniSearch": "Recherche",
+    "library": "Bibliothèque",
+    "artists": "Artistes",
+    "emptyPlaylist": "Aucune liste de lecture créée"
+  },
+  "menu": {
+    "serverLogout": "Se déconnecter",
+    "language": "Langue",
+    "server": "Serveur",
+    "about": "A propos"
+  },
+  "generic": {
+    "seeMore": "Voir plus",
+    "viewAll": "Tout voir",
+    "showDetails": "Afficher les détails",
+    "hideDetails": "Masquer les détails",
+    "loading": "Chargement en cours…"
+  },
+  "home": {
+    "recentlyAdded": "Ajoutés récemment",
+    "mostPlayed": "Les plus joués",
+    "recentlyPlayed": "Joués récemment",
+    "explore": "Explorer"
+  },
+  "theme": {
+    "label": "Thème",
+    "dark": "Sombre",
+    "light": "Clair",
+    "system": "Système",
+    "black": "Noir et Blanc",
+    "one-dark": "One Dark"
+  },
+  "album": {
+    "info": {
+      "about": "À propos de {{name}}",
+      "lastfm": "Ouvrir dans Last.fm",
+      "musicbrainz": "Ouvrir dans MusicBrainz"
     },
-    "generic": {
-        "seeMore": "Voir plus",
-        "viewAll": "Tout voir",
-        "showDetails": "Afficher les détails",
-        "hideDetails": "Masquer les détails"
+    "more": {
+      "listTitle": "Plus de cet artiste",
+      "discography": "Discographie de l'artiste",
+      "genreTitle": "Plus de {{genre}}"
     },
-    "home": {
-        "recentlyAdded": "Ajoutés récemment",
-        "mostPlayed": "Les plus joués",
-        "recentlyPlayed": "Joués récemment",
-        "explore": "Explorer"
-    },
-    "theme": {
-        "label": "Thème",
-        "dark": "Sombre",
-        "light": "Clair",
-        "system": "Système",
-        "black": "Noir et Blanc"
+    "list": {
+      "header": {
+        "albumsByArtist": "Albums de {{artist}}"
+      },
+      "empty": {
+        "title": "Oups, aucun album ici !"
+      }
     }
+  }
 }

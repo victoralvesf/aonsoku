@@ -1,4 +1,5 @@
 import { httpClient } from '@/api/httpClient'
+import { useAppStore } from '@/store/app.store'
 import { ISearchResponse } from '@/types/responses/search'
 
 export interface SearchQueryOptions {
@@ -20,10 +21,14 @@ async function get({
   songCount = 20,
   songOffset = 0,
 }: SearchQueryOptions) {
+  // Navidrome expects double quotes "" but other servers expect an empty string
+  const serverType = useAppStore.getState().data.serverType
+  const searchAllQuery = serverType === 'navidrome' ? '""' : ''
+
   const response = await httpClient<ISearchResponse>('/search3', {
     method: 'GET',
     query: {
-      query,
+      query: query || searchAllQuery,
       artistCount: artistCount.toString(),
       artistOffset: artistOffset.toString(),
       albumCount: albumCount.toString(),
