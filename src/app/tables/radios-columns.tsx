@@ -86,7 +86,6 @@ export function radiosColumns(): ColumnDefType<Radio>[] {
         maxWidth: '25%',
         marginRight: '1rem',
       },
-      className: 'hidden 2xl:flex',
       header: i18n.t('radios.table.stream'),
       cell: ({ row }) => (
         <div className="truncate">
