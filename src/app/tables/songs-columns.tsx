@@ -190,7 +190,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         width: 140,
         maxWidth: 140,
       },
-      className: 'hidden 2xl:flex',
+      className: 'hidden lg:flex',
       enableSorting: true,
       sortingFn: 'basic',
       sortUndefined: -1,
