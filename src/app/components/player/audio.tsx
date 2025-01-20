@@ -34,10 +34,10 @@ export function AudioPlayer({
   const { setPlayingState } = usePlayerActions()
   const { setReplayGainEnabled, setReplayGainError } = useReplayGainActions()
   const gainValue = useMemo(() => {
-    if (!replayGain) return 1
+    if (!replayGain || !replayGainEnabled) return 1
 
     return calculateReplayGain(replayGain)
-  }, [replayGain])
+  }, [replayGain, replayGainEnabled])
 
   const isRadio = mediaType === 'radio'
   const isSong = mediaType === 'song'
@@ -50,13 +50,13 @@ export function AudioPlayer({
     if (audioContextRef.current && gainNodeRef.current) {
       const currentTime = audioContextRef.current.currentTime
 
-      if (replayGainEnabled) {
-        logger.info('Track Replay Gain', { gainValue, ...replayGain })
-        gainNodeRef.current.gain.setValueAtTime(gainValue, currentTime)
-      } else {
-        logger.info('Replay Gain Disabled', { gainValue: 1 })
-        gainNodeRef.current.gain.setValueAtTime(1, currentTime)
-      }
+      logger.info('Track Replay Status', {
+        enabled: replayGainEnabled,
+        gainValue,
+        ...replayGain,
+      })
+
+      gainNodeRef.current.gain.setValueAtTime(gainValue, currentTime)
     }
   }, [audioContextRef, gainNodeRef, gainValue, replayGain, replayGainEnabled])
 
@@ -71,7 +71,6 @@ export function AudioPlayer({
     audio: audioRef.current,
     gainNode: gainNodeRef.current,
     gainValue,
-    enabled: replayGainEnabled,
   })
 
   const handleError = useCallback(() => {
