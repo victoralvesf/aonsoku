@@ -12,7 +12,7 @@ import { isWindows } from '@/utils/osType'
 import { isTauri } from '@/utils/tauriTools'
 import { FullscreenBackdrop } from './backdrop'
 import { CloseFullscreenButton } from './buttons'
-import { DragRegion } from './dragRegion'
+import { DragRegion } from './drag-region'
 import { FullscreenPlayer } from './player'
 import { FullscreenTabs } from './tabs'
 
