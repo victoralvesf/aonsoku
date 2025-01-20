@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { usePlayerVolume } from '@/store/player.store'
 
 interface VolumeSyncParams {
   audio: HTMLAudioElement | null
@@ -11,21 +12,11 @@ export function useVolumeSynchronization({
   gainNode,
   gainValue,
 }: VolumeSyncParams) {
+  const { volume } = usePlayerVolume()
+
   useEffect(() => {
     if (!audio || !gainNode) return
-    const controller = new AbortController()
 
-    const handleVolumeChange = () => {
-      gainNode.gain.value = audio.volume * gainValue
-    }
-
-    handleVolumeChange()
-    audio.addEventListener('volumechange', handleVolumeChange, {
-      signal: controller.signal,
-    })
-
-    return () => {
-      controller.abort()
-    }
-  }, [audio, gainNode, gainValue])
+    gainNode.gain.value = (volume / 100) * gainValue
+  }, [audio, gainNode, gainValue, volume])
 }
