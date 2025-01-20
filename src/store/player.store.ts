@@ -339,6 +339,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.radioList = []
                 state.songlist.originalSongIndex = 0
                 state.songlist.currentSongIndex = 0
+                state.playerState.mediaType = 'song'
                 state.playerState.isPlaying = false
                 state.playerState.loopState = LoopState.Off
                 state.playerState.isShuffleActive = false
