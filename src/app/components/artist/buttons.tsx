@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Actions } from '@/app/components/actions'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { subsonic } from '@/service/subsonic'
-import { useAppActions, useAppDataPages } from '@/store/app.store'
+import { useAppPages } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { IArtist } from '@/types/responses/artist'
 import { queryKeys } from '@/utils/queryKeys'
@@ -17,8 +17,7 @@ interface ArtistButtonsProps {
 export function ArtistButtons({ artist, showInfoButton }: ArtistButtonsProps) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
-  const { showInfoPanel } = useAppDataPages()
-  const { toggleShowInfoPanel } = useAppActions()
+  const { showInfoPanel, toggleShowInfoPanel } = useAppPages()
   const { getArtistAllSongs } = useSongList()
 
   const isArtistStarred = artist.starred !== undefined

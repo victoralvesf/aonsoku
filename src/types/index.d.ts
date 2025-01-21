@@ -7,5 +7,6 @@ declare global {
     APP_USER: string | undefined
     APP_PASSWORD: string | undefined
     APP_AUTH_TYPE: string | undefined
+    HIDE_RADIOS_SECTION: boolean | undefined
   }
 }

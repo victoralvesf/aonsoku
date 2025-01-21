@@ -8,7 +8,7 @@ export function RadioInfo({ radio }: { radio: Radio | undefined }) {
 
   return (
     <Fragment>
-      <div className="w-[70px] h-[70px] flex justify-center items-center bg-muted rounded">
+      <div className="w-[70px] h-[70px] flex justify-center items-center bg-foreground/20 rounded">
         <RadioIcon
           className="w-12 h-12"
           strokeWidth={1}

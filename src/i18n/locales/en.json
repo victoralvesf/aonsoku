@@ -252,7 +252,7 @@
         "queue": "Queue",
         "playing": "Playing now",
         "lyrics": "Lyrics",
-        "switchButton": "Switch to fullscreen"
+        "switchButton": "Switch to Big Player"
     },
     "logout": {
         "dialog": {
@@ -471,6 +471,55 @@
     "mobile": {
         "unsupported_message": "{{app_name}} isn't compatible with mobile phones.",
         "access_recommendation": "Please access it from a computer or tablet."
+    },
+    "settings": {
+        "label": "Settings",
+        "options": {
+            "appearance": "Appearance",
+            "language": "Language & region",
+            "audio": "Player & audio",
+            "content": "Content"
+        },
+        "appearance": {
+            "general": {
+                "group": "General",
+                "description": "Customize the app's look and display behaviors.",
+                "fullscreen": {
+                    "label": "Enable automatic fullscreen",
+                    "info": "If enabled, when accessing the big player, the app will automatically enter fullscreen mode."
+                }
+            }
+        },
+        "audio": {
+            "replayGain": {
+                "group": "Replay Gain",
+                "description": "Automatically normalize audio playback levels for a consistent listening experience.",
+                "enabled": "Enabled",
+                "mode": {
+                    "label": "Mode",
+                    "track": "Track gain",
+                    "album": "Album gain"
+                },
+                "preAmp": "PreAmp (dB)"
+            },
+            "lyrics": {
+                "group": "Lyrics",
+                "description": "Customize lyrics settings.",
+                "preferSynced": {
+                    "label": "Prefer synced lyrics",
+                    "info": "When enabled, synced lyrics will be prioritized over unsynced lyrics."
+                }
+            }
+        },
+        "content": {
+            "sidebar": {
+                "group": "Sidebar",
+                "description": "Manage the visibility and organization of sections displayed in the sidebar.",
+                "radios": {
+                    "section": "Hide radios section"
+                }
+            }
+        }
     },
     "dayjs": {
         "relativeTime": {

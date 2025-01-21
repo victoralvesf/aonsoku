@@ -4,6 +4,7 @@ import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { pingServer } from '@/api/pingServer'
+import { queryServerInfo } from '@/api/queryServerInfo'
 import { AuthType, IAppContext, IServerConfig } from '@/types/serverConfig'
 import {
   genEncodedPassword,
@@ -13,9 +14,8 @@ import {
   getAuthType,
   hasValidConfig,
 } from '@/utils/salt'
-import { queryServerInfo } from '@/api/queryServerInfo'
 
-const { SERVER_URL, HIDE_SERVER } = window
+const { SERVER_URL, HIDE_SERVER, HIDE_RADIOS_SECTION } = window
 
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
@@ -29,14 +29,27 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             username: genUser(),
             password: genPassword(),
             authType: getAuthType(),
-            protocolVersion: "1.16.0",
-            serverType: "subsonic",
+            protocolVersion: '1.16.0',
+            serverType: 'subsonic',
             logoutDialogState: false,
             hideServer: HIDE_SERVER ?? false,
             lockUser: hasValidConfig,
             songCount: null,
-            pages: {
-              showInfoPanel: true,
+          },
+          pages: {
+            showInfoPanel: true,
+            toggleShowInfoPanel: () => {
+              const { showInfoPanel } = get().pages
+
+              set((state) => {
+                state.pages.showInfoPanel = !showInfoPanel
+              })
+            },
+            hideRadiosSection: HIDE_RADIOS_SECTION ?? false,
+            setHideRadiosSection: (value) => {
+              set((state) => {
+                state.pages.hideRadiosSection = value
+              })
             },
           },
           command: {
@@ -58,6 +71,20 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             setRemindOnNextBoot: (value) => {
               set((state) => {
                 state.update.remindOnNextBoot = value
+              })
+            },
+          },
+          settings: {
+            openDialog: false,
+            setOpenDialog: (value) => {
+              set((state) => {
+                state.settings.openDialog = value
+              })
+            },
+            currentPage: 'appearance',
+            setCurrentPage: (page) => {
+              set((state) => {
+                state.settings.currentPage = page
               })
             },
           },
@@ -135,13 +162,6 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.logoutDialogState = value
               })
             },
-            toggleShowInfoPanel: () => {
-              const { showInfoPanel } = get().data.pages
-
-              set((state) => {
-                state.data.pages.showInfoPanel = !showInfoPanel
-              })
-            },
           },
         })),
         {
@@ -153,6 +173,11 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
         version: 1,
         merge: (persistedState, currentState) => {
           const persisted = persistedState as Partial<IAppContext>
+
+          const hideRadiosSection =
+            HIDE_RADIOS_SECTION !== undefined
+              ? HIDE_RADIOS_SECTION
+              : (persisted.pages?.hideRadiosSection as boolean)
 
           if (hasValidConfig) {
             const newState = {
@@ -167,6 +192,10 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 hideServer: HIDE_SERVER ?? false,
                 lockUser: true,
               },
+              pages: {
+                ...persisted.pages,
+                hideRadiosSection,
+              },
             }
 
             return merge(currentState, newState)
@@ -177,6 +206,10 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             data: {
               ...persisted.data,
               lockUser: false,
+            },
+            pages: {
+              ...persisted.pages,
+              hideRadiosSection,
             },
           }
 
@@ -189,6 +222,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             'data.hideServer',
             'command.open',
             'update',
+            'settings',
           )
 
           return appStore
@@ -199,6 +233,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
 )
 
 export const useAppData = () => useAppStore((state) => state.data)
-export const useAppDataPages = () => useAppStore((state) => state.data.pages)
+export const useAppPages = () => useAppStore((state) => state.pages)
 export const useAppActions = () => useAppStore((state) => state.actions)
 export const useAppUpdate = () => useAppStore((state) => state.update)
+export const useAppSettings = () => useAppStore((state) => state.settings)

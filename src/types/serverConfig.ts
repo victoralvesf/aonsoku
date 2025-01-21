@@ -1,3 +1,5 @@
+import { SettingsOptions } from '@/app/components/settings/options'
+
 export enum AuthType {
   PASSWORD,
   TOKEN,
@@ -13,6 +15,9 @@ export interface IServerConfig {
 
 interface IAppPages {
   showInfoPanel: boolean
+  toggleShowInfoPanel: () => void
+  hideRadiosSection: boolean
+  setHideRadiosSection: (value: boolean) => void
 }
 
 export interface IAppData extends IServerConfig {
@@ -23,7 +28,6 @@ export interface IAppData extends IServerConfig {
   hideServer: boolean
   lockUser: boolean
   songCount: number | null
-  pages: IAppPages
 }
 
 export interface IAppActions {
@@ -34,7 +38,6 @@ export interface IAppActions {
   saveConfig: (data: IServerConfig) => Promise<boolean>
   removeConfig: () => void
   setLogoutDialogState: (value: boolean) => void
-  toggleShowInfoPanel: () => void
 }
 
 export interface IAppCommand {
@@ -49,9 +52,18 @@ export interface IAppUpdate {
   setRemindOnNextBoot: (value: boolean) => void
 }
 
+interface IAppSettings {
+  openDialog: boolean
+  setOpenDialog: (value: boolean) => void
+  currentPage: SettingsOptions
+  setCurrentPage: (page: SettingsOptions) => void
+}
+
 export interface IAppContext {
   data: IAppData
+  pages: IAppPages
   command: IAppCommand
   actions: IAppActions
   update: IAppUpdate
+  settings: IAppSettings
 }

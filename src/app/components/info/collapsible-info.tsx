@@ -3,9 +3,9 @@ import {
   Collapsible,
   CollapsibleContent,
 } from '@/app/components/ui/collapsible'
-import { useAppDataPages } from '@/store/app.store'
+import { useAppPages } from '@/store/app.store'
 
-interface CollpsibleInfoProps {
+interface CollapsibleInfoProps {
   title: string
   bio?: string
   lastFmUrl?: string
@@ -17,8 +17,8 @@ export function CollapsibleInfo({
   bio,
   lastFmUrl,
   musicBrainzId,
-}: CollpsibleInfoProps) {
-  const { showInfoPanel } = useAppDataPages()
+}: CollapsibleInfoProps) {
+  const { showInfoPanel } = useAppPages()
 
   return (
     <Collapsible open={showInfoPanel}>

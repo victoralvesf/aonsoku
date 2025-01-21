@@ -1,73 +1,103 @@
-import { httpClient } from "@/api/httpClient"
-import { LyricsResponse } from "@/types/responses/song"
-
-
+import { httpClient } from '@/api/httpClient'
+import { usePlayerStore } from '@/store/player.store'
+import { LyricsResponse } from '@/types/responses/song'
+import { lrclibClient } from '@/utils/appName'
 
 interface GetLyricsData {
-    artist: string
-    title: string
-} 
-
-interface LRCLibResponse {
-    id: number,
-    trackName: string,
-    artistName: string,
-    plainLyrics: string,
-    syncedLyrics: string
-} 
-
-async function getLyrics(getLyricsData: GetLyricsData) {
-    const response = await httpClient<LyricsResponse>('/getLyrics', {
-      method: 'GET',
-      query: {
-        artist: getLyricsData.artist,
-        title: getLyricsData.title,
-      },
-    })
-  
-    if (!response || !response?.data.lyrics || !response.data.lyrics.value) {
-        return getLyricsFromLRCLib(getLyricsData)
-    }
-
-    return response?.data.lyrics
+  artist: string
+  title: string
+  album?: string
+  duration?: number
 }
 
+interface LRCLibResponse {
+  id: number
+  trackName: string
+  artistName: string
+  plainLyrics: string
+  syncedLyrics: string
+}
 
-async function getLyricsFromLRCLib({ artist, title }: GetLyricsData) {
+async function getLyrics(getLyricsData: GetLyricsData) {
+  const { preferSyncedLyrics } = usePlayerStore.getState().settings.lyrics
 
-    try {
-        const params = new URLSearchParams({
-            artist_name: artist,
-            track_name: title,
-        })
-    
-        const request = await fetch('https://lrclib.net/api/get?' + params.toString())
-        const response: LRCLibResponse = await request.json()
+  // If the user prefers synced lyrics, attempt to fetch them from the LrcLib first.
+  // If lyrics are found, return them immediately.
+  // If not, proceed with the default flow.
+  if (preferSyncedLyrics) {
+    const lyrics = await getLyricsFromLRCLib(getLyricsData)
 
-    
-        if (!!response) {
-            return {
-                artist,
-                title,
-                value: formatLyrics(response?.syncedLyrics) || formatLyrics(response?.plainLyrics) || ""
-            }
-        }
-    }
-    catch {}
+    if (lyrics.value !== '') return lyrics
+  }
 
-    return {
+  const response = await httpClient<LyricsResponse>('/getLyrics', {
+    method: 'GET',
+    query: {
+      artist: getLyricsData.artist,
+      title: getLyricsData.title,
+    },
+  })
+
+  const lyricNotFound =
+    !response || !response?.data.lyrics || !response.data.lyrics.value
+
+  // If the Subsonic API did not return lyrics and the user does not prefer synced lyrics,
+  // fallback to fetching lyrics from the LrcLib.
+  // Note: If `preferSyncedLyrics` is true and we reached this point, it means the LrcLib
+  // does not contains lyrics for the track, so the fallback is unnecessary in that case.
+  if (lyricNotFound && !preferSyncedLyrics) {
+    return getLyricsFromLRCLib(getLyricsData)
+  }
+
+  return response?.data.lyrics
+}
+
+async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
+  const { artist, title, album, duration } = getLyricsData
+
+  try {
+    const params = new URLSearchParams({
+      artist_name: artist,
+      track_name: title,
+    })
+
+    if (duration) params.append('duration', duration.toString())
+    if (album) params.append('album_name', album)
+
+    const url = new URL('https://lrclib.net/api/get')
+    url.search = params.toString()
+
+    const request = await fetch(url.toString(), {
+      headers: {
+        'Lrclib-Client': lrclibClient,
+      },
+    })
+    const response: LRCLibResponse = await request.json()
+
+    if (response) {
+      return {
         artist,
         title,
-        value: ""
+        value:
+          formatLyrics(response?.syncedLyrics) ||
+          formatLyrics(response?.plainLyrics) ||
+          '',
+      }
     }
+  } catch {}
+
+  return {
+    artist,
+    title,
+    value: '',
+  }
 }
 
 function formatLyrics(lyrics: string) {
-    return lyrics.trim().replaceAll("\r\n", "\n")
+  return lyrics.trim().replaceAll('\r\n', '\n')
 }
 
 export const lyrics = {
-    getLyrics,
-    getLyricsFromLRCLib
+  getLyrics,
+  getLyricsFromLRCLib,
 }
-  

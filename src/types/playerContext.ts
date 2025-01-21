@@ -40,7 +40,7 @@ export interface IVolumeSettings {
   wheelStep: number
 }
 
-type ReplayGainType = 'track' | 'album'
+export type ReplayGainType = 'track' | 'album'
 
 interface IReplayGainData {
   enabled: boolean
@@ -61,8 +61,20 @@ interface IReplayGain {
   actions: IReplayGainActions
 }
 
+interface IFullscreen {
+  autoFullscreenEnabled: boolean
+  setAutoFullscreenEnabled: (value: boolean) => void
+}
+
+interface ILyrics {
+  preferSyncedLyrics: boolean
+  setPreferSyncedLyrics: (value: boolean) => void
+}
+
 export interface IPlayerSettings {
   volume: IVolumeSettings
+  fullscreen: IFullscreen
+  lyrics: ILyrics
   replayGain: IReplayGain
 }
 

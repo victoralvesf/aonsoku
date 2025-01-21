@@ -7,7 +7,7 @@ export async function pingServer(
   user: string,
   password: string,
   authType: AuthType,
-  protocolVersion?: string
+  protocolVersion?: string,
 ): Promise<boolean> {
   try {
     const query = {
@@ -25,9 +25,19 @@ export async function pingServer(
     const data = await response.json()
 
     // Check if there's a version error (code 30)
-    if (data['subsonic-response'].status === 'failed' && data['subsonic-response'].error.code === 30 && !protocolVersion) {
+    if (
+      data['subsonic-response'].status === 'failed' &&
+      data['subsonic-response'].error.code === 30 &&
+      !protocolVersion
+    ) {
       // Retry the request with the server's preferred version
-      return await pingServer(url, user, password, authType, data['subsonic-response'].version);
+      return await pingServer(
+        url,
+        user,
+        password,
+        authType,
+        data['subsonic-response'].version,
+      )
     }
 
     return data['subsonic-response'].status === 'ok'

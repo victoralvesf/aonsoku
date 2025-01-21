@@ -34,17 +34,13 @@ export function AudioPlayer({
   const { setPlayingState } = usePlayerActions()
   const { setReplayGainEnabled, setReplayGainError } = useReplayGainActions()
   const gainValue = useMemo(() => {
-    if (!replayGain) return 1
+    if (!replayGain || !replayGainEnabled) return 1
 
     return calculateReplayGain(replayGain)
-  }, [replayGain])
+  }, [replayGain, replayGainEnabled])
 
   const isRadio = mediaType === 'radio'
   const isSong = mediaType === 'song'
-
-  if (isSong) {
-    logger.info('Replay Gain Is Active', replayGainEnabled)
-  }
 
   const { audioContextRef, gainNodeRef, sourceNodeRef } = useAudioContext(
     audioRef.current,
@@ -52,27 +48,29 @@ export function AudioPlayer({
 
   const setupGain = useCallback(() => {
     if (audioContextRef.current && gainNodeRef.current) {
-      logger.info('Track Replay Gain', {
+      const currentTime = audioContextRef.current.currentTime
+
+      logger.info('Track Replay Status', {
+        enabled: replayGainEnabled,
         gainValue,
         ...replayGain,
       })
 
-      gainNodeRef.current.gain.setValueAtTime(
-        gainValue,
-        audioContextRef.current.currentTime,
-      )
+      gainNodeRef.current.gain.setValueAtTime(gainValue, currentTime)
     }
-  }, [audioContextRef, gainNodeRef, gainValue, replayGain])
+  }, [audioContextRef, gainNodeRef, gainValue, replayGain, replayGainEnabled])
 
   useEffect(() => {
-    if (replayGainEnabled && isSong) setupGain()
-  }, [isSong, replayGainEnabled, setupGain])
+    if (isRadio || replayGainError || !audioRef.current) return
+
+    audioRef.current.crossOrigin = 'anonymous'
+    setupGain()
+  }, [audioRef, isRadio, replayGainEnabled, replayGainError, setupGain])
 
   useVolumeSynchronization({
     audio: audioRef.current,
     gainNode: gainNodeRef.current,
     gainValue,
-    enabled: replayGainEnabled,
   })
 
   const handleError = useCallback(() => {
@@ -120,18 +118,12 @@ export function AudioPlayer({
     if (!audio) return
 
     try {
-      audioRef.current.load()
+      audio.crossOrigin = null
+      audio.load()
     } catch (reloadError) {
       logger.error('Failed to reload audio', reloadError)
     }
   }, [replayGainError, audioRef, isRadio])
 
-  return (
-    <audio
-      ref={audioRef}
-      {...props}
-      crossOrigin={replayGainEnabled && isSong ? 'anonymous' : undefined}
-      onError={handleError}
-    />
-  )
+  return <audio ref={audioRef} {...props} onError={handleError} />
 }

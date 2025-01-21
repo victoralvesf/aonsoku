@@ -32,7 +32,8 @@ export function authQueryParams(
 }
 
 function queryParams() {
-  const { username, password, authType, protocolVersion } = useAppStore.getState().data
+  const { username, password, authType, protocolVersion } =
+    useAppStore.getState().data
 
   return {
     ...authQueryParams(username, password, authType),

@@ -18,6 +18,7 @@ import {
 import { LoopState } from '@/types/playerContext'
 import { ReplayGainParams } from '@/utils/replayGain'
 import { AudioPlayer } from './audio'
+import { PlayerClearQueueButton } from './clear-queue-button'
 import { PlayerControls } from './controls'
 import { PlayerLikeButton } from './like-button'
 import { PlayerProgress } from './progress'
@@ -29,6 +30,7 @@ const MemoRadioInfo = memo(RadioInfo)
 const MemoPlayerControls = memo(PlayerControls)
 const MemoPlayerLikeButton = memo(PlayerLikeButton)
 const MemoPlayerSongListButton = memo(PlayerSongListButton)
+const MemoPlayerClearQueueButton = memo(PlayerClearQueueButton)
 const MemoPlayerVolume = memo(PlayerVolume)
 
 export function Player() {
@@ -55,6 +57,9 @@ export function Player() {
   const song = currentList[currentSongIndex]
   const radio = radioList[currentSongIndex]
 
+  const isSong = mediaType === 'song'
+  const isRadio = mediaType === 'radio'
+
   useEffect(() => {
     if (mediaType !== 'song' && !song) return
 
@@ -67,18 +72,18 @@ export function Player() {
   }, [song, radio, resetTitle])
 
   useEffect(() => {
-    if (radioList.length > 0 && mediaType === 'radio') {
+    if (radioList.length > 0 && isRadio) {
       const radio = radioList[currentSongIndex]
       radioSession(radio)
     }
-  }, [currentSongIndex, mediaType, radioList, radioSession])
+  }, [currentSongIndex, isRadio, radioList, radioSession])
 
   useEffect(() => {
-    if (currentList.length > 0 && mediaType === 'song') {
+    if (currentList.length > 0 && isSong) {
       const song = currentList[currentSongIndex]
       songSession(song)
     }
-  }, [currentList, currentSongIndex, mediaType, songSession])
+  }, [currentList, currentSongIndex, isSong, songSession])
 
   useEffect(() => {
     playbackState(isPlaying)
@@ -87,7 +92,7 @@ export function Player() {
   useEffect(() => {
     if (!audioRef.current) return
 
-    if (mediaType === 'radio') {
+    if (isRadio) {
       if (isPlaying) {
         audioRef.current.src = ''
         audioRef.current.src = radio.streamUrl
@@ -97,10 +102,10 @@ export function Player() {
       }
     }
 
-    if (mediaType === 'song') {
+    if (isSong) {
       isPlaying ? audioRef.current.play() : audioRef.current.pause()
     }
-  }, [isPlaying, mediaType, radio])
+  }, [isPlaying, isSong, isRadio, radio])
 
   const setupProgressListener = useCallback(() => {
     const audio = audioRef.current
@@ -142,31 +147,28 @@ export function Player() {
       <div className="w-full h-full grid grid-cols-player gap-2 px-4">
         {/* Track Info */}
         <div className="flex items-center gap-2 w-full">
-          {mediaType === 'song' && <MemoTrackInfo song={song} />}
-          {mediaType === 'radio' && <MemoRadioInfo radio={radio} />}
+          {isSong && <MemoTrackInfo song={song} />}
+          {isRadio && <MemoRadioInfo radio={radio} />}
         </div>
         {/* Main Controls */}
         <div className="col-span-2 flex flex-col justify-center items-center px-4 gap-1">
           <MemoPlayerControls song={song} radio={radio} />
 
-          {mediaType === 'song' && (
-            <PlayerProgress audioRef={audioRef} song={song} />
-          )}
+          {isSong && <PlayerProgress audioRef={audioRef} song={song} />}
         </div>
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
-            {mediaType === 'song' && <MemoPlayerLikeButton disabled={!song} />}
-            {mediaType === 'song' && (
-              <MemoPlayerSongListButton disabled={!song} />
-            )}
+            {isSong && <MemoPlayerLikeButton disabled={!song} />}
+            {isSong && <MemoPlayerSongListButton disabled={!song} />}
+            {isRadio && <MemoPlayerClearQueueButton disabled={!radio} />}
 
             <MemoPlayerVolume audioRef={audioRef} disabled={!song && !radio} />
           </div>
         </div>
       </div>
 
-      {mediaType === 'song' && song && (
+      {isSong && song && (
         <AudioPlayer
           replayGain={getTrackReplayGain()}
           src={getSongStreamUrl(song.id)}
@@ -184,7 +186,7 @@ export function Player() {
         />
       )}
 
-      {mediaType === 'radio' && radio && (
+      {isRadio && radio && (
         <AudioPlayer
           src={radio.streamUrl}
           autoPlay={isPlaying}

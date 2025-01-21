@@ -47,6 +47,22 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               step: 1,
               wheelStep: 5,
             },
+            fullscreen: {
+              autoFullscreenEnabled: false,
+              setAutoFullscreenEnabled: (value) => {
+                set((state) => {
+                  state.settings.fullscreen.autoFullscreenEnabled = value
+                })
+              },
+            },
+            lyrics: {
+              preferSyncedLyrics: false,
+              setPreferSyncedLyrics: (value) => {
+                set((state) => {
+                  state.settings.lyrics.preferSyncedLyrics = value
+                })
+              },
+            },
             replayGain: {
               values: {
                 enabled: false,
@@ -101,6 +117,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.originalList = songlist
                 state.songlist.originalSongIndex = index
                 state.playerState.mediaType = 'song'
+                state.songlist.radioList = []
               })
 
               if (shuffle) {
@@ -322,15 +339,13 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.radioList = []
                 state.songlist.originalSongIndex = 0
                 state.songlist.currentSongIndex = 0
+                state.playerState.mediaType = 'song'
                 state.playerState.isPlaying = false
                 state.playerState.loopState = LoopState.Off
                 state.playerState.isShuffleActive = false
                 state.playerState.queueDrawerState = false
                 state.playerState.currentDuration = 0
-                state.settings.replayGain.values.enabled = false
-                state.settings.replayGain.values.type = 'track'
-                state.settings.replayGain.values.preAmp = 0
-                state.settings.replayGain.values.error = false
+                state.playerState.audioPlayerRef = null
               })
             },
             resetProgress: () => {
@@ -597,6 +612,12 @@ export const useReplayGainState = () => {
 
 export const useReplayGainActions = () =>
   usePlayerStore((state) => state.settings.replayGain.actions)
+
+export const useFullscreenPlayerSettings = () =>
+  usePlayerStore((state) => state.settings.fullscreen)
+
+export const useLyricsSettings = () =>
+  usePlayerStore((state) => state.settings.lyrics)
 
 export const usePlayerSettings = () => usePlayerStore((state) => state.settings)
 

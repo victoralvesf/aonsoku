@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import { RadioIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { usePlayerMediaType, usePlayerSonglist } from '@/store/player.store'
 
 interface TableRadioTitleProps {
@@ -10,14 +9,14 @@ interface TableRadioTitleProps {
 export function TableRadioTitle({ name }: TableRadioTitleProps) {
   const mediaType = usePlayerMediaType()
   const { radioList, currentSongIndex } = usePlayerSonglist()
-  const [radioIsPlaying, setRadioIsPlaying] = useState(false)
 
-  useEffect(() => {
-    if (mediaType === 'song') return
+  function getRadioIsPlaying() {
+    if (mediaType === 'song' || !radioList) return false
 
-    const isPlaying = radioList[currentSongIndex].name === name
-    setRadioIsPlaying(isPlaying)
-  }, [currentSongIndex, mediaType, name, radioList])
+    return radioList[currentSongIndex].name === name
+  }
+
+  const radioIsPlaying = getRadioIsPlaying()
 
   return (
     <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
