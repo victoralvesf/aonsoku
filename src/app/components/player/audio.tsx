@@ -8,10 +8,10 @@ import {
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { useAudioContext } from '@/app/hooks/use-audio-context'
-import { useVolumeSynchronization } from '@/app/hooks/use-volume-sync'
 import {
   usePlayerActions,
   usePlayerMediaType,
+  usePlayerVolume,
   useReplayGainActions,
   useReplayGainState,
 } from '@/store/player.store'
@@ -33,14 +33,21 @@ export function AudioPlayer({
   const mediaType = usePlayerMediaType()
   const { setPlayingState } = usePlayerActions()
   const { setReplayGainEnabled, setReplayGainError } = useReplayGainActions()
-  const gainValue = useMemo(() => {
-    if (!replayGain || !replayGainEnabled) return 1
-
-    return calculateReplayGain(replayGain)
-  }, [replayGain, replayGainEnabled])
+  const { volume } = usePlayerVolume()
 
   const isRadio = mediaType === 'radio'
   const isSong = mediaType === 'song'
+
+  const gainValue = useMemo(() => {
+    const audioVolume = volume / 100
+
+    if (!replayGain || !replayGainEnabled) {
+      return audioVolume * 1
+    }
+    const gain = calculateReplayGain(replayGain)
+
+    return audioVolume * gain
+  }, [replayGain, replayGainEnabled, volume])
 
   const { audioContextRef, gainNodeRef, sourceNodeRef } = useAudioContext(
     audioRef.current,
@@ -50,7 +57,7 @@ export function AudioPlayer({
     if (audioContextRef.current && gainNodeRef.current) {
       const currentTime = audioContextRef.current.currentTime
 
-      logger.info('Track Replay Status', {
+      logger.info('Replay Gain Status', {
         enabled: replayGainEnabled,
         gainValue,
         ...replayGain,
@@ -63,15 +70,11 @@ export function AudioPlayer({
   useEffect(() => {
     if (isRadio || replayGainError || !audioRef.current) return
 
-    audioRef.current.crossOrigin = 'anonymous'
+    if (audioRef.current.crossOrigin !== 'anonymous') {
+      audioRef.current.crossOrigin = 'anonymous'
+    }
     setupGain()
   }, [audioRef, isRadio, replayGainEnabled, replayGainError, setupGain])
-
-  useVolumeSynchronization({
-    audio: audioRef.current,
-    gainNode: gainNodeRef.current,
-    gainValue,
-  })
 
   const handleError = useCallback(() => {
     const audio = audioRef.current

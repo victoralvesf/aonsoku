@@ -41,7 +41,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
     const audioContext = audioContextRef.current
     if (!audioContext || isRadio) return
 
-    logger.info('AudioContext State', audioContext.state)
+    logger.info('AudioContext State', { state: audioContext.state })
 
     if (isPlaying && audioContext.state === 'suspended') {
       try {
