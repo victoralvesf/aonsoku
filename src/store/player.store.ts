@@ -530,6 +530,18 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             getCurrentProgress: () => {
               return get().playerProgress.progress
             },
+            resetConfig: () => {
+              set((state) => {
+                state.settings.fullscreen.autoFullscreenEnabled = false
+                state.settings.lyrics.preferSyncedLyrics = false
+                state.settings.replayGain.values = {
+                  enabled: false,
+                  type: 'track',
+                  preAmp: 0,
+                  error: false,
+                }
+              })
+            },
           },
         })),
         { name: 'player_store' },

@@ -110,6 +110,7 @@ export interface IPlayerActions {
   playFirstSongInQueue: () => void
   handleSongEnded: () => void
   getCurrentProgress: () => number
+  resetConfig: () => void
 }
 
 export interface IPlayerContext {
