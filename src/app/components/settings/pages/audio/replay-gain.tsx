@@ -24,6 +24,7 @@ import {
 import { Switch } from '@/app/components/ui/switch'
 import { useReplayGainActions, useReplayGainState } from '@/store/player.store'
 import { ReplayGainType } from '@/types/playerContext'
+import { isLinux } from '@/utils/osType'
 
 const replayGainModes: ReplayGainType[] = ['track', 'album']
 
@@ -33,6 +34,10 @@ export function ReplayGainConfig() {
     useReplayGainState()
   const { setReplayGainEnabled, setReplayGainType, setReplayGainPreAmp } =
     useReplayGainActions()
+
+  // Disabling the Replay Gain feature in the Linux desktop app
+  // due to issues with WebKit2GTK
+  if (isLinux) return null
 
   return (
     <Root>

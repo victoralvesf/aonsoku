@@ -17,6 +17,7 @@ import {
   useReplayGainState,
 } from '@/store/player.store'
 import { logger } from '@/utils/logger'
+import { isLinux } from '@/utils/osType'
 import { calculateReplayGain, ReplayGainParams } from '@/utils/replayGain'
 
 type AudioPlayerProps = ComponentPropsWithoutRef<'audio'> & {
@@ -88,7 +89,7 @@ export function AudioPlayer({
   }, [isPlaying, isSong, isRadio, audioRef, resumeContext])
 
   useEffect(() => {
-    if (isRadio || replayGainError || !audioRef.current) return
+    if (isRadio || replayGainError || !audioRef.current || isLinux) return
 
     audioRef.current.crossOrigin = 'anonymous'
     setupGain(gainValue, replayGain)
