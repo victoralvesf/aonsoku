@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import { useAudioContext } from '@/app/hooks/use-audio-context'
 import {
   usePlayerActions,
+  usePlayerIsPlaying,
   usePlayerMediaType,
   usePlayerVolume,
   useReplayGainActions,
@@ -34,6 +35,7 @@ export function AudioPlayer({
   const { setPlayingState } = usePlayerActions()
   const { setReplayGainEnabled, setReplayGainError } = useReplayGainActions()
   const { volume } = usePlayerVolume()
+  const isPlaying = usePlayerIsPlaying()
 
   const isRadio = mediaType === 'radio'
   const isSong = mediaType === 'song'
@@ -49,32 +51,48 @@ export function AudioPlayer({
     return audioVolume * gain
   }, [replayGain, replayGainEnabled, volume])
 
-  const { audioContextRef, gainNodeRef, sourceNodeRef } = useAudioContext(
-    audioRef.current,
-  )
+  const {
+    audioContextRef,
+    gainNodeRef,
+    sourceNodeRef,
+    resumeContext,
+    setupGain,
+  } = useAudioContext(audioRef.current)
 
-  const setupGain = useCallback(() => {
-    if (audioContextRef.current && gainNodeRef.current) {
-      const currentTime = audioContextRef.current.currentTime
+  useEffect(() => {
+    async function run() {
+      const audioElement = audioRef.current
+      if (!audioElement) return
 
-      logger.info('Replay Gain Status', {
-        enabled: replayGainEnabled,
-        gainValue,
-        ...replayGain,
-      })
+      if (isRadio) {
+        if (isPlaying) {
+          const src = audioElement.src
+          audioElement.src = ''
+          audioElement.src = src
+          audioElement.play()
+        } else {
+          audioElement.pause()
+        }
+      }
 
-      gainNodeRef.current.gain.setValueAtTime(gainValue, currentTime)
+      if (isSong) {
+        if (isPlaying) {
+          await resumeContext()
+          audioElement.play()
+        } else {
+          audioElement.pause()
+        }
+      }
     }
-  }, [audioContextRef, gainNodeRef, gainValue, replayGain, replayGainEnabled])
+    run()
+  }, [isPlaying, isSong, isRadio, audioRef, resumeContext])
 
   useEffect(() => {
     if (isRadio || replayGainError || !audioRef.current) return
 
-    if (audioRef.current.crossOrigin !== 'anonymous') {
-      audioRef.current.crossOrigin = 'anonymous'
-    }
-    setupGain()
-  }, [audioRef, isRadio, replayGainEnabled, replayGainError, setupGain])
+    audioRef.current.crossOrigin = 'anonymous'
+    setupGain(gainValue, replayGain)
+  }, [audioRef, gainValue, isRadio, replayGain, replayGainError, setupGain])
 
   const handleError = useCallback(() => {
     const audio = audioRef.current

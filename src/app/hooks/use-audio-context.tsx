@@ -1,15 +1,11 @@
 import { useCallback, useEffect, useRef } from 'react'
-import {
-  usePlayerIsPlaying,
-  usePlayerMediaType,
-  useReplayGainState,
-} from '@/store/player.store'
+import { usePlayerMediaType, useReplayGainState } from '@/store/player.store'
 import { logger } from '@/utils/logger'
+import { ReplayGainParams } from '@/utils/replayGain'
 
 export function useAudioContext(audio: HTMLAudioElement | null) {
-  const isPlaying = usePlayerIsPlaying()
   const mediaType = usePlayerMediaType()
-  const { replayGainError } = useReplayGainState()
+  const { replayGainError, replayGainEnabled } = useReplayGainState()
 
   const isRadio = mediaType === 'radio'
 
@@ -26,19 +22,49 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
 
     const audioContext = audioContextRef.current
 
+    if (!sourceNodeRef.current) {
+      sourceNodeRef.current = audioContext.createMediaElementSource(audio)
+    }
+
     if (!gainNodeRef.current) {
       gainNodeRef.current = audioContext.createGain()
+      // First we need to connect the sourceNode to the gainNode
+      sourceNodeRef.current.connect(gainNodeRef.current)
+      // And then we can connect the gainNode to the destination
       gainNodeRef.current.connect(audioContext.destination)
     }
-
-    if (sourceNodeRef.current) {
-      sourceNodeRef.current.disconnect()
-      sourceNodeRef.current = null
-    }
-
-    sourceNodeRef.current = audioContext.createMediaElementSource(audio)
-    sourceNodeRef.current.connect(gainNodeRef.current)
   }, [audio, isRadio, replayGainError])
+
+  const resumeContext = useCallback(async () => {
+    const audioContext = audioContextRef.current
+    if (!audioContext || isRadio) return
+
+    logger.info('AudioContext State', { state: audioContext.state })
+
+    if (audioContext.state === 'suspended') {
+      await audioContext.resume()
+    }
+    if (audioContext.state === 'closed') {
+      setupAudioContext()
+    }
+  }, [isRadio, setupAudioContext])
+
+  const setupGain = useCallback(
+    (gainValue: number, replayGain?: ReplayGainParams) => {
+      if (audioContextRef.current && gainNodeRef.current) {
+        const currentTime = audioContextRef.current.currentTime
+
+        logger.info('Replay Gain Status', {
+          enabled: replayGainEnabled,
+          gainValue,
+          ...replayGain,
+        })
+
+        gainNodeRef.current.gain.setTargetAtTime(gainValue, currentTime, 0.01)
+      }
+    },
+    [replayGainEnabled],
+  )
 
   useEffect(() => {
     return () => {
@@ -58,22 +84,6 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
   }, [])
 
   useEffect(() => {
-    const audioContext = audioContextRef.current
-    if (!audioContext || isRadio) return
-
-    logger.info('AudioContext State', { state: audioContext.state })
-
-    if (isPlaying && audioContext.state === 'suspended') {
-      try {
-        audioContext.resume()
-        logger.info('Resuming AudioContext', audioContext.state)
-      } catch (_) {
-        logger.error('Unable to resume AudioContext')
-      }
-    }
-  }, [isPlaying, isRadio])
-
-  useEffect(() => {
     if (audio) setupAudioContext()
   }, [audio, setupAudioContext])
 
@@ -82,5 +92,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
     sourceNodeRef,
     gainNodeRef,
     setupAudioContext,
+    resumeContext,
+    setupGain,
   }
 }

@@ -89,24 +89,6 @@ export function Player() {
     playbackState(isPlaying)
   }, [isPlaying, playbackState])
 
-  useEffect(() => {
-    if (!audioRef.current) return
-
-    if (isRadio) {
-      if (isPlaying) {
-        audioRef.current.src = ''
-        audioRef.current.src = radio.streamUrl
-        audioRef.current.play()
-      } else {
-        audioRef.current.pause()
-      }
-    }
-
-    if (isSong) {
-      isPlaying ? audioRef.current.play() : audioRef.current.pause()
-    }
-  }, [isPlaying, isSong, isRadio, radio])
-
   const setupProgressListener = useCallback(() => {
     const audio = audioRef.current
     if (!audio) return
