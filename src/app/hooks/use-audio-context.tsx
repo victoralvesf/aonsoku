@@ -1,7 +1,15 @@
 import { useCallback, useEffect, useRef } from 'react'
+import {
+  AudioContext,
+  type IAudioContext,
+  type IMediaElementAudioSourceNode,
+  type IGainNode,
+} from 'standardized-audio-context'
 import { usePlayerMediaType, useReplayGainState } from '@/store/player.store'
 import { logger } from '@/utils/logger'
 import { ReplayGainParams } from '@/utils/replayGain'
+
+type IAudioSource = IMediaElementAudioSourceNode<IAudioContext>
 
 export function useAudioContext(audio: HTMLAudioElement | null) {
   const mediaType = usePlayerMediaType()
@@ -9,15 +17,15 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
 
   const isRadio = mediaType === 'radio'
 
-  const audioContextRef = useRef<AudioContext | null>(null)
-  const sourceNodeRef = useRef<MediaElementAudioSourceNode | null>(null)
-  const gainNodeRef = useRef<GainNode | null>(null)
+  const audioContextRef = useRef<IAudioContext | null>(null)
+  const sourceNodeRef = useRef<IAudioSource | null>(null)
+  const gainNodeRef = useRef<IGainNode<IAudioContext> | null>(null)
 
   const setupAudioContext = useCallback(() => {
     if (!audio || isRadio || replayGainError) return
 
     if (!audioContextRef.current) {
-      audioContextRef.current = new window.AudioContext()
+      audioContextRef.current = new AudioContext()
     }
 
     const audioContext = audioContextRef.current
@@ -60,7 +68,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
           ...replayGain,
         })
 
-        gainNodeRef.current.gain.setTargetAtTime(gainValue, currentTime, 0.01)
+        gainNodeRef.current.gain.setValueAtTime(gainValue, currentTime)
       }
     },
     [replayGainEnabled],
