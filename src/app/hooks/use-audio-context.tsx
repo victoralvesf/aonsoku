@@ -26,16 +26,36 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
 
     const audioContext = audioContextRef.current
 
-    if (!sourceNodeRef.current) {
-      sourceNodeRef.current = audioContext.createMediaElementSource(audio)
-    }
-
     if (!gainNodeRef.current) {
       gainNodeRef.current = audioContext.createGain()
-      sourceNodeRef.current.connect(gainNodeRef.current)
       gainNodeRef.current.connect(audioContext.destination)
     }
+
+    if (sourceNodeRef.current) {
+      sourceNodeRef.current.disconnect()
+      sourceNodeRef.current = null
+    }
+
+    sourceNodeRef.current = audioContext.createMediaElementSource(audio)
+    sourceNodeRef.current.connect(gainNodeRef.current)
   }, [audio, isRadio, replayGainError])
+
+  useEffect(() => {
+    return () => {
+      if (sourceNodeRef.current) {
+        sourceNodeRef.current.disconnect()
+        sourceNodeRef.current = null
+      }
+      if (gainNodeRef.current) {
+        gainNodeRef.current.disconnect()
+        gainNodeRef.current = null
+      }
+      if (audioContextRef.current) {
+        audioContextRef.current.close()
+        audioContextRef.current = null
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const audioContext = audioContextRef.current
