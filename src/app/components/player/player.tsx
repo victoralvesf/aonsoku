@@ -35,6 +35,7 @@ const MemoPlayerVolume = memo(PlayerVolume)
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
+  const radioRef = useRef<HTMLAudioElement>(null)
   const {
     setAudioPlayerRef,
     setCurrentDuration,
@@ -149,7 +150,10 @@ export function Player() {
             {isSong && <MemoPlayerSongListButton disabled={!song} />}
             {isRadio && <MemoPlayerClearQueueButton disabled={!radio} />}
 
-            <MemoPlayerVolume audioRef={audioRef} disabled={!song && !radio} />
+            <MemoPlayerVolume
+              audioRef={isRadio ? radioRef : audioRef}
+              disabled={!song && !radio}
+            />
           </div>
         </div>
       </div>
@@ -176,11 +180,11 @@ export function Player() {
         <AudioPlayer
           src={radio.streamUrl}
           autoPlay={isPlaying}
-          audioRef={audioRef}
+          audioRef={radioRef}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
           onLoadStart={() => {
-            if (audioRef.current) audioRef.current.volume = getVolume() / 100
+            if (radioRef.current) radioRef.current.volume = getVolume() / 100
           }}
           data-testid="player-radio-audio"
         />

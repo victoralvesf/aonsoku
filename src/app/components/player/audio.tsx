@@ -61,7 +61,7 @@ export function AudioPlayer({
     setupGain(gainValue, replayGain)
   }, [audioRef, gainValue, isRadio, replayGain, replayGainError, setupGain])
 
-  const handleError = useCallback(() => {
+  const handleSongError = useCallback(() => {
     const audio = audioRef.current
     if (!audio) return
 
@@ -72,60 +72,59 @@ export function AudioPlayer({
       error: audio.error,
     })
 
-    if (isRadio) {
-      toast.error(t('radios.error'))
-      setPlayingState(false)
-    }
+    setReplayGainEnabled(false)
+    setReplayGainError(true)
+    window.location.reload()
+  }, [audioRef, setReplayGainEnabled, setReplayGainError])
 
-    if (isSong) {
-      setReplayGainEnabled(false)
-      setReplayGainError(true)
-      window.location.reload()
-    }
-  }, [
-    audioRef,
-    isRadio,
-    isSong,
-    t,
-    setPlayingState,
-    setReplayGainEnabled,
-    setReplayGainError,
-  ])
+  const handleRadioError = useCallback(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    toast.error(t('radios.error'))
+    setPlayingState(false)
+  }, [audioRef, setPlayingState, t])
 
   useEffect(() => {
-    async function run() {
+    async function handleSong() {
+      const audio = audioRef.current
+      if (!audio) return
+
       try {
-        const audio = audioRef.current
-        if (!audio) return
-
-        if (isRadio) {
-          if (isPlaying) {
-            const src = audio.src
-            if (!src) throw new Error('Audio source is missing.')
-            audio.src = ''
-            audio.src = src
-            await audio.play()
-          } else {
-            audio.pause()
-          }
-        }
-
-        if (isSong) {
-          if (isPlaying) {
-            if (!audio.src) throw new Error('Audio source is missing.')
-            await resumeContext()
-            await audio.play()
-          } else {
-            audio.pause()
-          }
+        if (isPlaying) {
+          await resumeContext()
+          await audio.play()
+        } else {
+          audio.pause()
         }
       } catch (error) {
         logger.error('Audio playback failed', error)
-        handleError()
+        handleSongError()
       }
     }
-    run()
-  }, [isPlaying, isSong, isRadio, audioRef, resumeContext, handleError])
+    if (isSong) handleSong()
+  }, [audioRef, handleSongError, isPlaying, isSong, resumeContext])
+
+  useEffect(() => {
+    async function handleRadio() {
+      const audio = audioRef.current
+      if (!audio) return
+
+      if (isPlaying) {
+        audio.load()
+        await audio.play()
+      } else {
+        audio.pause()
+      }
+    }
+    if (isRadio) handleRadio()
+  }, [audioRef, isPlaying, isRadio])
+
+  const handleError = isSong
+    ? handleSongError
+    : isRadio
+      ? handleRadioError
+      : undefined
 
   return <audio ref={audioRef} {...props} onError={handleError} />
 }
