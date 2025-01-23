@@ -27,7 +27,7 @@ export function SimpleTooltip({
 }: TooltipContent) {
   // If is not desktop return only the children element
   if (!isDesktop) {
-    return children
+    return <>{children}</>
   }
 
   return (
