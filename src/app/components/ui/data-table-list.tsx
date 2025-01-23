@@ -17,6 +17,7 @@ import {
   useEffect,
   Fragment,
   MouseEvent,
+  TouchEvent,
   useCallback,
   useMemo,
   useRef,
@@ -268,6 +269,15 @@ export function DataTableList<TData, TValue>({
     [handlePlaySong],
   )
 
+  const handleRowTap = useCallback(
+    (e: TouchEvent<HTMLDivElement>, row: Row<TData>) => {
+      if (!handlePlaySong) return
+      e.stopPropagation()
+      handlePlaySong(row)
+    },
+    [handlePlaySong],
+  )
+
   const handleScroll = useCallback(() => {
     if (!virtualizer.scrollElement || !hasNextPage || !fetchNextPage) return
 
@@ -372,6 +382,7 @@ export function DataTableList<TData, TValue>({
                         index={index}
                         handleClicks={handleClicks}
                         handleRowDbClick={handleRowDbClick}
+                        handleRowTap={handleRowTap}
                         getContextMenuOptions={getContextMenuOptions}
                       />
                     </Fragment>
