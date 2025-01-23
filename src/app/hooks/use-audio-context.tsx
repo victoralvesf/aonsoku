@@ -75,21 +75,27 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
     [replayGainEnabled],
   )
 
-  useEffect(() => {
-    return () => {
-      if (sourceNodeRef.current) {
-        sourceNodeRef.current.disconnect()
-        sourceNodeRef.current = null
-      }
-      if (gainNodeRef.current) {
-        gainNodeRef.current.disconnect()
-        gainNodeRef.current = null
-      }
-      if (audioContextRef.current) {
-        audioContextRef.current.close()
-        audioContextRef.current = null
-      }
+  function resetRefs() {
+    if (sourceNodeRef.current) {
+      sourceNodeRef.current.disconnect()
+      sourceNodeRef.current = null
     }
+    if (gainNodeRef.current) {
+      gainNodeRef.current.disconnect()
+      gainNodeRef.current = null
+    }
+    if (audioContextRef.current) {
+      audioContextRef.current.close()
+      audioContextRef.current = null
+    }
+  }
+
+  useEffect(() => {
+    if (replayGainError) resetRefs()
+  }, [replayGainError])
+
+  useEffect(() => {
+    return () => resetRefs()
   }, [])
 
   useEffect(() => {
@@ -103,5 +109,6 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
     setupAudioContext,
     resumeContext,
     setupGain,
+    resetRefs,
   }
 }

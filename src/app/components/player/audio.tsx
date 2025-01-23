@@ -52,41 +52,7 @@ export function AudioPlayer({
     return audioVolume * gain
   }, [replayGain, replayGainEnabled, volume])
 
-  const {
-    audioContextRef,
-    gainNodeRef,
-    sourceNodeRef,
-    resumeContext,
-    setupGain,
-  } = useAudioContext(audioRef.current)
-
-  useEffect(() => {
-    async function run() {
-      const audioElement = audioRef.current
-      if (!audioElement) return
-
-      if (isRadio) {
-        if (isPlaying) {
-          const src = audioElement.src
-          audioElement.src = ''
-          audioElement.src = src
-          audioElement.play()
-        } else {
-          audioElement.pause()
-        }
-      }
-
-      if (isSong) {
-        if (isPlaying) {
-          await resumeContext()
-          audioElement.play()
-        } else {
-          audioElement.pause()
-        }
-      }
-    }
-    run()
-  }, [isPlaying, isSong, isRadio, audioRef, resumeContext])
+  const { resumeContext, setupGain } = useAudioContext(audioRef.current)
 
   useEffect(() => {
     if (isRadio || replayGainError || !audioRef.current || isLinux) return
@@ -112,12 +78,9 @@ export function AudioPlayer({
     }
 
     if (isSong) {
-      audioContextRef.current?.close()
-      gainNodeRef.current?.disconnect()
-      sourceNodeRef.current?.disconnect()
-
       setReplayGainEnabled(false)
       setReplayGainError(true)
+      window.location.reload()
     }
   }, [
     audioRef,
@@ -125,27 +88,44 @@ export function AudioPlayer({
     isSong,
     t,
     setPlayingState,
-    audioContextRef,
-    gainNodeRef,
-    sourceNodeRef,
     setReplayGainEnabled,
     setReplayGainError,
   ])
 
   useEffect(() => {
-    if (!replayGainError) return
-    if (isRadio) return
+    async function run() {
+      try {
+        const audio = audioRef.current
+        if (!audio) return
 
-    const audio = audioRef.current
-    if (!audio) return
+        if (isRadio) {
+          if (isPlaying) {
+            const src = audio.src
+            if (!src) throw new Error('Audio source is missing.')
+            audio.src = ''
+            audio.src = src
+            await audio.play()
+          } else {
+            audio.pause()
+          }
+        }
 
-    try {
-      audio.crossOrigin = null
-      audio.load()
-    } catch (reloadError) {
-      logger.error('Failed to reload audio', reloadError)
+        if (isSong) {
+          if (isPlaying) {
+            if (!audio.src) throw new Error('Audio source is missing.')
+            await resumeContext()
+            await audio.play()
+          } else {
+            audio.pause()
+          }
+        }
+      } catch (error) {
+        logger.error('Audio playback failed', error)
+        handleError()
+      }
     }
-  }, [replayGainError, audioRef, isRadio])
+    run()
+  }, [isPlaying, isSong, isRadio, audioRef, resumeContext, handleError])
 
   return <audio ref={audioRef} {...props} onError={handleError} />
 }

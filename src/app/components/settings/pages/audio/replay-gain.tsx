@@ -33,6 +33,7 @@ export function ReplayGainConfig() {
     replayGainType,
     replayGainPreAmp,
     replayGainDefaultGain,
+    replayGainError,
   } = useReplayGainState()
   const {
     setReplayGainEnabled,
@@ -63,6 +64,7 @@ export function ReplayGainConfig() {
             <Switch
               checked={replayGainEnabled}
               onCheckedChange={(checked) => setReplayGainEnabled(checked)}
+              disabled={replayGainError}
             />
           </ContentItemForm>
         </ContentItem>
