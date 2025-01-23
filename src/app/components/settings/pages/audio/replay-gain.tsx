@@ -132,7 +132,7 @@ export function ReplayGainConfig() {
                 value={replayGainDefaultGain}
                 onChange={setReplayGainDefaultGain}
                 min={-10}
-                max={1}
+                max={-1}
               />
             </ContentItemForm>
           </ContentItem>

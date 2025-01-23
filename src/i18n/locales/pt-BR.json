@@ -512,7 +512,7 @@
         "preAmp": "Pré-amplificador (dB)",
         "defaultGain": {
           "label": "Ganho Padrão (dB)",
-          "info": "Este nível de ganho é aplicado a músicas que não possuem metadata de Replay Gain, garantindo um volume de áudio consistente. A faixa recomendada para o ganho é entre -10 dB e 1 dB."
+          "info": "Este nível de ganho é aplicado a músicas que não possuem metadata de Replay Gain, garantindo um volume de áudio consistente. A faixa recomendada para o ganho é entre -10 dB e -1 dB."
         }
       },
       "lyrics": {
