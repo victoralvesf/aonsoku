@@ -500,7 +500,11 @@
                     "track": "Track gain",
                     "album": "Album gain"
                 },
-                "preAmp": "PreAmp (dB)"
+                "preAmp": "PreAmp (dB)",
+                "defaultGain": {
+                    "label": "Default Gain (dB)",
+                    "info": "This gain level is applied to songs that do not include Replay Gain metadata, ensuring consistent audio volume. The recommended range for gain is between -10 dB and 1 dB."
+                }
             },
             "lyrics": {
                 "group": "Lyrics",

@@ -1,4 +1,3 @@
-import { Minus, Plus } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import {
   Root,
@@ -11,8 +10,7 @@ import {
   ContentItemForm,
   ContentSeparator,
 } from '@/app/components/settings/section'
-import { Button } from '@/app/components/ui/button'
-import { Input } from '@/app/components/ui/input'
+import { NumericInput } from '@/app/components/ui/numeric-input'
 import {
   Select,
   SelectContent,
@@ -30,10 +28,18 @@ const replayGainModes: ReplayGainType[] = ['track', 'album']
 
 export function ReplayGainConfig() {
   const { t } = useTranslation()
-  const { replayGainEnabled, replayGainType, replayGainPreAmp } =
-    useReplayGainState()
-  const { setReplayGainEnabled, setReplayGainType, setReplayGainPreAmp } =
-    useReplayGainActions()
+  const {
+    replayGainEnabled,
+    replayGainType,
+    replayGainPreAmp,
+    replayGainDefaultGain,
+  } = useReplayGainState()
+  const {
+    setReplayGainEnabled,
+    setReplayGainType,
+    setReplayGainPreAmp,
+    setReplayGainDefaultGain,
+  } = useReplayGainActions()
 
   // Disabling the Replay Gain feature in the Linux desktop app
   // due to issues with WebKit2GTK
@@ -104,27 +110,30 @@ export function ReplayGainConfig() {
               {t('settings.audio.replayGain.preAmp')}
             </ContentItemTitle>
             <ContentItemForm>
-              <div className="relative inline-flex h-8 w-full items-center overflow-hidden whitespace-nowrap text-sm shadow-sm shadow-black/5 transition-shadow data-[focus-within]:border-ring data-[disabled]:opacity-50 data-[focus-within]:outline-none data-[focus-within]:ring-[3px] data-[focus-within]:ring-ring/20">
-                <Button
-                  variant="outline"
-                  className="rounded-none rounded-l-md flex aspect-square px-2 h-[inherit] items-center justify-center"
-                  onClick={() => setReplayGainPreAmp(replayGainPreAmp - 1)}
-                >
-                  <Minus size={16} strokeWidth={2} aria-hidden="true" />
-                </Button>
-                <Input
-                  value={replayGainPreAmp}
-                  readOnly
-                  className="w-full pointer-events-none grow bg-background px-2 h-[inherit] text-center tabular-nums border-x-0 rounded-none text-foreground focus:outline-none"
-                />
-                <Button
-                  variant="outline"
-                  className="rounded-none rounded-r-md flex aspect-square px-2 h-[inherit] items-center justify-center"
-                  onClick={() => setReplayGainPreAmp(replayGainPreAmp + 1)}
-                >
-                  <Plus size={16} strokeWidth={2} aria-hidden="true" />
-                </Button>
-              </div>
+              <NumericInput
+                value={replayGainPreAmp}
+                onChange={setReplayGainPreAmp}
+                min={-15}
+                max={15}
+              />
+            </ContentItemForm>
+          </ContentItem>
+        )}
+
+        {replayGainEnabled && (
+          <ContentItem>
+            <ContentItemTitle
+              info={t('settings.audio.replayGain.defaultGain.info')}
+            >
+              {t('settings.audio.replayGain.defaultGain.label')}
+            </ContentItemTitle>
+            <ContentItemForm>
+              <NumericInput
+                value={replayGainDefaultGain}
+                onChange={setReplayGainDefaultGain}
+                min={-10}
+                max={1}
+              />
             </ContentItemForm>
           </ContentItem>
         )}
