@@ -52,7 +52,8 @@ export function Player() {
   const progress = getCurrentProgress()
   const { resetTitle, radioSession, songSession, playbackState } =
     useMediaSession()
-  const { replayGainType, replayGainPreAmp } = useReplayGainState()
+  const { replayGainType, replayGainPreAmp, replayGainDefaultGain } =
+    useReplayGainState()
 
   const song = currentList[currentSongIndex]
   const radio = radioList[currentSongIndex]
@@ -111,16 +112,19 @@ export function Player() {
   }, [currentDuration, progress, setCurrentDuration, setProgress])
 
   function getTrackReplayGain(): ReplayGainParams {
-    if (!song || !song.replayGain) return { gain: 1, peak: 1, preAmp: 0 }
-
     const preAmp = replayGainPreAmp
+    const defaultGain = replayGainDefaultGain
+
+    if (!song || !song.replayGain) {
+      return { gain: defaultGain, peak: 1, preAmp }
+    }
 
     if (replayGainType === 'album') {
-      const { albumGain = 1, albumPeak = 1 } = song.replayGain
+      const { albumGain = defaultGain, albumPeak = 1 } = song.replayGain
       return { gain: albumGain, peak: albumPeak, preAmp }
     }
 
-    const { trackGain = 1, trackPeak = 1 } = song.replayGain
+    const { trackGain = defaultGain, trackPeak = 1 } = song.replayGain
     return { gain: trackGain, peak: trackPeak, preAmp }
   }
 
