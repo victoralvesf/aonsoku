@@ -30,6 +30,7 @@ import { usePlaylists } from '@/store/playlists.store'
 import { useTheme } from '@/store/theme.store'
 import { ISimilarArtist } from '@/types/responses/artist'
 import { ScanStatus } from '@/types/responses/library'
+import { byteLength } from '@/utils/byteLength'
 import { convertMinutesToMs } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 import { queryKeys } from '@/utils/queryKeys'
@@ -68,7 +69,9 @@ export default function CommandMenu() {
   const activePage = pages[pages.length - 1]
   const isHome = activePage === 'HOME'
 
-  const enableQuery = Boolean(query.length >= 3 && activePage !== 'PLAYLISTS')
+  const enableQuery = Boolean(
+    byteLength(query) >= 3 && activePage !== 'PLAYLISTS',
+  )
 
   const { data: searchResult } = useQuery({
     queryKey: [queryKeys.search, query],
