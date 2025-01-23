@@ -58,7 +58,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
           {isTauri() && <DragRegion className="z-10" />}
 
           {/* First Row */}
-          <div className="flex justify-end gap-2 items-center w-full h-[40px] px-16 z-20">
+          <div className="flex justify-start gap-2 items-center w-full h-[40px] px-16 z-20">
             <DrawerClose>
               <CloseFullscreenButton />
             </DrawerClose>
