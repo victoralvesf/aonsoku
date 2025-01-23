@@ -478,8 +478,8 @@
     }
   },
   "mobile": {
-    "unsupported_message": "Este aplicativo não é suportado em dispositivos móveis.",
-    "access_recommendation": "Por favor, acesse-o a partir de um computador para a melhor experiência."
+    "unsupported_message": "{{app_name}} não é compatível com dispositivos móveis.",
+    "access_recommendation": "Por favor, acesse-o a partir de um computador ou tablet."
   },
   "settings": {
     "label": "Configurações",

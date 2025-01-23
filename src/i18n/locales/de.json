@@ -477,5 +477,9 @@
     "toasts": {
       "copy": "Link in die Zwischenablage kopiert!"
     }
+  },
+  "mobile": {
+    "unsupported_message": "{{app_name}} ist nicht mit Mobiltelefonen kompatibel.",
+    "access_recommendation": "Bitte greifen Sie über einen Computer oder ein Tablet darauf zu."
   }
 }

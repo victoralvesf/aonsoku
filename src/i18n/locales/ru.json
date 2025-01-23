@@ -462,6 +462,10 @@
     },
     "type": "Тип:"
   },
+  "mobile": {
+    "unsupported_message": "{{app_name}} несовместимо с мобильными телефонами.",
+    "access_recommendation": "Пожалуйста, используйте компьютер или планшет для доступа."
+  },
   "dayjs": {
     "relativeTime": {
       "d": "1 день",
