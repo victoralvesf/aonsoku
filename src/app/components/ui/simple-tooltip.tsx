@@ -1,12 +1,12 @@
 import { TooltipPortal } from '@radix-ui/react-tooltip'
 import { ReactNode } from 'react'
+import { isDesktop } from 'react-device-detect'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from './tooltip'
-import { isDesktop } from 'react-device-detect'
 
 interface TooltipContent {
   children: ReactNode
@@ -25,24 +25,24 @@ export function SimpleTooltip({
   delay = 700,
   avoidCollisions = true,
 }: TooltipContent) {
+  // If is not desktop return only the children element
+  if (!isDesktop) {
+    return children
+  }
 
   return (
     <TooltipProvider delayDuration={delay}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        {
-          isDesktop && ( // Only show tooltips on desktop
-          <TooltipPortal>
-            <TooltipContent
-              side={side}
-              avoidCollisions={avoidCollisions}
-              align={align}
-            >
-              <p className="font-normal max-w-md text-center">{text}</p>
-            </TooltipContent>
-          </TooltipPortal>
-          )
-        }
+        <TooltipPortal>
+          <TooltipContent
+            side={side}
+            avoidCollisions={avoidCollisions}
+            align={align}
+          >
+            <p className="font-normal max-w-md text-center">{text}</p>
+          </TooltipContent>
+        </TooltipPortal>
       </Tooltip>
     </TooltipProvider>
   )
