@@ -1,5 +1,5 @@
-import { appName } from '@/utils/appName'
 import { useTranslation } from 'react-i18next'
+import { appName } from '@/utils/appName'
 
 export function Mobile() {
   const { t } = useTranslation()
