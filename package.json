@@ -1,7 +1,7 @@
 {
   "name": "aonsoku",
   "private": true,
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -73,6 +73,7 @@
     "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
     "remark-gfm": "^4.0.0",
+    "standardized-audio-context": "^25.3.77",
     "tailwind-extended-shadows": "^0.4.0",
     "tailwind-extended-shadows-merge": "^0.2.1",
     "tailwind-merge": "^2.3.0",

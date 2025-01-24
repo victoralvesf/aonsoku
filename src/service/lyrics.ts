@@ -75,13 +75,20 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
     const response: LRCLibResponse = await request.json()
 
     if (response) {
+      const { syncedLyrics, plainLyrics } = response
+
+      let finalLyric = ''
+
+      if (syncedLyrics) {
+        finalLyric = syncedLyrics
+      } else if (plainLyrics) {
+        finalLyric = plainLyrics
+      }
+
       return {
         artist,
         title,
-        value:
-          formatLyrics(response?.syncedLyrics) ||
-          formatLyrics(response?.plainLyrics) ||
-          '',
+        value: formatLyrics(finalLyric),
       }
     }
   } catch {}

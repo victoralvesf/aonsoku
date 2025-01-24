@@ -14,7 +14,14 @@ import {
 } from '@tanstack/react-table'
 import clsx from 'clsx'
 import { Disc2Icon, XIcon } from 'lucide-react'
-import { Fragment, MouseEvent, useCallback, useMemo, useState } from 'react'
+import {
+  Fragment,
+  MouseEvent,
+  TouchEvent,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react'
 import { isMacOs } from 'react-device-detect'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
@@ -62,6 +69,9 @@ interface DataTableProps<TData, TValue> {
   variant?: 'classic' | 'modern'
   dataType?: 'song' | 'artist' | 'playlist' | 'radio'
 }
+
+let isTap = false
+let tapTimeout: NodeJS.Timeout
 
 export function DataTable<TData, TValue>({
   columns,
@@ -281,12 +291,40 @@ export function DataTable<TData, TValue>({
 
   const handleRowDbClick = useCallback(
     (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => {
-      if (!handlePlaySong) return
-      e.stopPropagation()
-      handlePlaySong(row)
+      if (handlePlaySong) {
+        e.stopPropagation()
+        handlePlaySong(row)
+      }
     },
     [handlePlaySong],
   )
+
+  const handleRowTap = useCallback(
+    (e: TouchEvent<HTMLDivElement>, row: Row<TData>) => {
+      clearTimeout(tapTimeout)
+      if (isTap && handlePlaySong) {
+        e.stopPropagation()
+        handlePlaySong(row)
+      }
+    },
+    [handlePlaySong],
+  )
+
+  function handleTouchStart() {
+    isTap = true
+    tapTimeout = setTimeout(() => {
+      isTap = false
+    }, 500)
+  }
+
+  function handleTouchMove() {
+    isTap = false
+  }
+
+  function handleTouchCancel() {
+    clearTimeout(tapTimeout)
+    isTap = false
+  }
 
   return (
     <>
@@ -397,6 +435,10 @@ export function DataTable<TData, TValue>({
                         data-state={row.getIsSelected() && 'selected'}
                         onClick={(e) => handleClicks(e, row)}
                         onDoubleClick={(e) => handleRowDbClick(e, row)}
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={(e) => handleRowTap(e, row)}
+                        onTouchCancel={handleTouchCancel}
                         onContextMenu={(e) => handleClicks(e, row)}
                         className={clsx(
                           'group/tablerow w-full flex flex-row transition-colors',

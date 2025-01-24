@@ -478,8 +478,8 @@
     }
   },
   "mobile": {
-    "unsupported_message": "Este aplicativo não é suportado em dispositivos móveis.",
-    "access_recommendation": "Por favor, acesse-o a partir de um computador para a melhor experiência."
+    "unsupported_message": "{{app_name}} não é compatível com dispositivos móveis.",
+    "access_recommendation": "Por favor, acesse-o a partir de um computador ou tablet."
   },
   "settings": {
     "label": "Configurações",
@@ -509,7 +509,11 @@
           "track": "Ganho da faixa",
           "album": "Ganho do álbum"
         },
-        "preAmp": "Pré-amplificador (dB)"
+        "preAmp": "Pré-amplificador (dB)",
+        "defaultGain": {
+          "label": "Ganho Padrão (dB)",
+          "info": "Este nível de ganho é aplicado a músicas que não possuem metadata de Replay Gain, garantindo um volume de áudio consistente. A faixa recomendada para o ganho é entre -10 dB e -1 dB."
+        }
       },
       "lyrics": {
         "group": "Letras",

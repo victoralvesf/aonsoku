@@ -1,5 +1,6 @@
 import { TooltipPortal } from '@radix-ui/react-tooltip'
 import { ReactNode } from 'react'
+import { isDesktop } from 'react-device-detect'
 import {
   Tooltip,
   TooltipContent,
@@ -24,6 +25,11 @@ export function SimpleTooltip({
   delay = 700,
   avoidCollisions = true,
 }: TooltipContent) {
+  // If is not desktop return only the children element
+  if (!isDesktop) {
+    return <>{children}</>
+  }
+
   return (
     <TooltipProvider delayDuration={delay}>
       <Tooltip>

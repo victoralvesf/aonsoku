@@ -69,6 +69,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 type: 'track',
                 preAmp: 0,
                 error: false,
+                defaultGain: -6,
               },
               actions: {
                 setReplayGainEnabled: (value) => {
@@ -89,6 +90,11 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 setReplayGainError: (value) => {
                   set((state) => {
                     state.settings.replayGain.values.error = value
+                  })
+                },
+                setReplayGainDefaultGain: (value) => {
+                  set((state) => {
+                    state.settings.replayGain.values.defaultGain = value
                   })
                 },
               },
@@ -530,6 +536,19 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             getCurrentProgress: () => {
               return get().playerProgress.progress
             },
+            resetConfig: () => {
+              set((state) => {
+                state.settings.fullscreen.autoFullscreenEnabled = false
+                state.settings.lyrics.preferSyncedLyrics = false
+                state.settings.replayGain.values = {
+                  enabled: false,
+                  type: 'track',
+                  preAmp: 0,
+                  error: false,
+                  defaultGain: -6,
+                }
+              })
+            },
           },
         })),
         { name: 'player_store' },
@@ -598,7 +617,7 @@ export const useVolumeSettings = () =>
   usePlayerStore((state) => state.settings.volume)
 
 export const useReplayGainState = () => {
-  const { enabled, type, preAmp, error } = usePlayerStore(
+  const { enabled, type, preAmp, error, defaultGain } = usePlayerStore(
     (state) => state.settings.replayGain.values,
   )
 
@@ -607,6 +626,7 @@ export const useReplayGainState = () => {
     replayGainType: type,
     replayGainPreAmp: preAmp,
     replayGainError: error,
+    replayGainDefaultGain: defaultGain,
   }
 }
 

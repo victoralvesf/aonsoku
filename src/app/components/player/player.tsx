@@ -35,6 +35,7 @@ const MemoPlayerVolume = memo(PlayerVolume)
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
+  const radioRef = useRef<HTMLAudioElement>(null)
   const {
     setAudioPlayerRef,
     setCurrentDuration,
@@ -50,9 +51,10 @@ export function Player() {
   const currentDuration = usePlayerDuration()
   const audioPlayerRef = usePlayerRef()
   const progress = getCurrentProgress()
-  const { resetTitle, radioSession, songSession, playbackState } =
+  const { resetSession, radioSession, songSession, playbackState } =
     useMediaSession()
-  const { replayGainType, replayGainPreAmp } = useReplayGainState()
+  const { replayGainType, replayGainPreAmp, replayGainDefaultGain } =
+    useReplayGainState()
 
   const song = currentList[currentSongIndex]
   const radio = radioList[currentSongIndex]
@@ -68,8 +70,8 @@ export function Player() {
   }, [audioPlayerRef, audioRef, mediaType, setAudioPlayerRef, song])
 
   useEffect(() => {
-    if (!song && !radio) resetTitle()
-  }, [song, radio, resetTitle])
+    if (!song && !radio) resetSession()
+  }, [song, radio, resetSession])
 
   useEffect(() => {
     if (radioList.length > 0 && isRadio) {
@@ -88,24 +90,6 @@ export function Player() {
   useEffect(() => {
     playbackState(isPlaying)
   }, [isPlaying, playbackState])
-
-  useEffect(() => {
-    if (!audioRef.current) return
-
-    if (isRadio) {
-      if (isPlaying) {
-        audioRef.current.src = ''
-        audioRef.current.src = radio.streamUrl
-        audioRef.current.play()
-      } else {
-        audioRef.current.pause()
-      }
-    }
-
-    if (isSong) {
-      isPlaying ? audioRef.current.play() : audioRef.current.pause()
-    }
-  }, [isPlaying, isSong, isRadio, radio])
 
   const setupProgressListener = useCallback(() => {
     const audio = audioRef.current
@@ -129,16 +113,19 @@ export function Player() {
   }, [currentDuration, progress, setCurrentDuration, setProgress])
 
   function getTrackReplayGain(): ReplayGainParams {
-    if (!song || !song.replayGain) return { gain: 1, peak: 1, preAmp: 0 }
-
     const preAmp = replayGainPreAmp
+    const defaultGain = replayGainDefaultGain
+
+    if (!song || !song.replayGain) {
+      return { gain: defaultGain, peak: 1, preAmp }
+    }
 
     if (replayGainType === 'album') {
-      const { albumGain = 1, albumPeak = 1 } = song.replayGain
+      const { albumGain = defaultGain, albumPeak = 1 } = song.replayGain
       return { gain: albumGain, peak: albumPeak, preAmp }
     }
 
-    const { trackGain = 1, trackPeak = 1 } = song.replayGain
+    const { trackGain = defaultGain, trackPeak = 1 } = song.replayGain
     return { gain: trackGain, peak: trackPeak, preAmp }
   }
 
@@ -163,7 +150,10 @@ export function Player() {
             {isSong && <MemoPlayerSongListButton disabled={!song} />}
             {isRadio && <MemoPlayerClearQueueButton disabled={!radio} />}
 
-            <MemoPlayerVolume audioRef={audioRef} disabled={!song && !radio} />
+            <MemoPlayerVolume
+              audioRef={isRadio ? radioRef : audioRef}
+              disabled={!song && !radio}
+            />
           </div>
         </div>
       </div>
@@ -190,11 +180,11 @@ export function Player() {
         <AudioPlayer
           src={radio.streamUrl}
           autoPlay={isPlaying}
-          audioRef={audioRef}
+          audioRef={radioRef}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
           onLoadStart={() => {
-            if (audioRef.current) audioRef.current.volume = getVolume() / 100
+            if (radioRef.current) radioRef.current.volume = getVolume() / 100
           }}
           data-testid="player-radio-audio"
         />

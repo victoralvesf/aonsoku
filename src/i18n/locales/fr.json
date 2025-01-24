@@ -123,5 +123,9 @@
         "title": "Oups, aucun album ici !"
       }
     }
+  },
+  "mobile": {
+    "unsupported_message": "{{app_name}} n'est pas compatible avec les téléphones mobiles.",
+    "access_recommendation": "Veuillez y accéder depuis un ordinateur ou une tablette."
   }
 }

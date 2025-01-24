@@ -176,6 +176,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.0
         version: 4.0.0
+      standardized-audio-context:
+        specifier: ^25.3.77
+        version: 25.3.77
       tailwind-extended-shadows:
         specifier: ^0.4.0
         version: 0.4.0(tailwindcss@3.4.3)
@@ -1987,6 +1990,10 @@ packages:
   at-least-node@1.0.0:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
     engines: {node: '>= 4.0.0'}
+
+  automation-events@7.1.5:
+    resolution: {integrity: sha512-1t/XcUE/nhHtAyePNZHQMU3/Ka9E0CB1aA8FpzSwc1EBHMsZBtX6H5sBNngCL7pmlxoaDrpcwwHE7Kd6lkYoWA==}
+    engines: {node: '>=18.2.0'}
 
   autoprefixer@10.4.19:
     resolution: {integrity: sha512-BaENR2+zBZ8xXhM4pUaKUxlVdxZ0EZhjvbopwnXmxRUfqDmwSpC2lAi/QXvx7NRdPCo1WKEcEF6mV64si1z4Ew==}
@@ -3833,6 +3840,9 @@ packages:
     resolution: {integrity: sha512-2p2KJZTSqQ/I3+HX42EpYOa2l3f8Erv8MWKsy2I9uf4wA7yFIkXRffYdsx86y6z4vHtV8u7g+pPlr8/4ouAxsQ==}
     engines: {node: '>=0.10.0'}
     hasBin: true
+
+  standardized-audio-context@25.3.77:
+    resolution: {integrity: sha512-Ki9zNz6pKcC5Pi+QPjPyVsD9GwJIJWgryji0XL9cAJXMGyn+dPOf6Qik1AHei0+UNVcc4BOCa0hWLBzlwqsW/A==}
 
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -6006,6 +6016,11 @@ snapshots:
   asynckit@0.4.0: {}
 
   at-least-node@1.0.0: {}
+
+  automation-events@7.1.5:
+    dependencies:
+      '@babel/runtime': 7.26.0
+      tslib: 2.8.1
 
   autoprefixer@10.4.19(postcss@8.4.38):
     dependencies:
@@ -8316,6 +8331,12 @@ snapshots:
       jsbn: 0.1.1
       safer-buffer: 2.1.2
       tweetnacl: 0.14.5
+
+  standardized-audio-context@25.3.77:
+    dependencies:
+      '@babel/runtime': 7.26.0
+      automation-events: 7.1.5
+      tslib: 2.8.1
 
   string-width@4.2.3:
     dependencies:

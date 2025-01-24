@@ -3,6 +3,12 @@ import { ISong } from '@/types/responses/song'
 
 const artworkSizes = ['96', '128', '192', '256', '384', '512']
 
+function removeMediaSession() {
+  if (!navigator.mediaSession) return
+
+  navigator.mediaSession.metadata = null
+}
+
 function setMediaSession(song: ISong) {
   if (!navigator.mediaSession) return
 
@@ -69,6 +75,7 @@ function setHandlers({
 }
 
 export const manageMediaSession = {
+  removeMediaSession,
   setMediaSession,
   setRadioMediaSession,
   setPlaybackState,

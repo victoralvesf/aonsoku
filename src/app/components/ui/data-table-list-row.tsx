@@ -1,6 +1,6 @@
 import { flexRender, Row } from '@tanstack/react-table'
 import clsx from 'clsx'
-import { MouseEvent } from 'react'
+import { MouseEvent, TouchEvent } from 'react'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 
@@ -10,8 +10,12 @@ interface TableRowProps<TData> {
   index: number
   handleClicks: (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => void
   handleRowDbClick: (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => void
+  handleRowTap: (e: TouchEvent<HTMLDivElement>, row: Row<TData>) => void
   getContextMenuOptions: (row: Row<TData>) => JSX.Element | undefined
 }
+
+let isTap = false
+let tapTimeout: NodeJS.Timeout
 
 export function TableListRow<TData>({
   row,
@@ -19,8 +23,30 @@ export function TableListRow<TData>({
   index,
   handleClicks,
   handleRowDbClick,
+  handleRowTap,
   getContextMenuOptions,
 }: TableRowProps<TData>) {
+  function handleTouchStart() {
+    isTap = true
+    tapTimeout = setTimeout(() => {
+      isTap = false
+    }, 500)
+  }
+
+  function handleTouchMove() {
+    isTap = false
+  }
+
+  function handleTouchEnd(e: TouchEvent<HTMLDivElement>) {
+    clearTimeout(tapTimeout)
+    if (isTap) handleRowTap(e, row)
+  }
+
+  function handleTouchCancel() {
+    clearTimeout(tapTimeout)
+    isTap = false
+  }
+
   return (
     <ContextMenuProvider options={getContextMenuOptions(row)}>
       <div
@@ -29,6 +55,10 @@ export function TableListRow<TData>({
         data-state={row.getIsSelected() && 'selected'}
         onClick={(e) => handleClicks(e, row)}
         onDoubleClick={(e) => handleRowDbClick(e, row)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchCancel}
         onContextMenu={(e) => handleClicks(e, row)}
         className={clsx(
           'group/tablerow w-full flex flex-row transition-colors',

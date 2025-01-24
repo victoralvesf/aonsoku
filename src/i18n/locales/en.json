@@ -469,8 +469,8 @@
         }
     },
     "mobile": {
-        "unsupported_message": "This application is not supported on mobile devices.",
-        "access_recommendation": "Please access it from a desktop for the best experience."
+        "unsupported_message": "{{app_name}} isn't compatible with mobile phones.",
+        "access_recommendation": "Please access it from a computer or tablet."
     },
     "settings": {
         "label": "Settings",
@@ -500,7 +500,11 @@
                     "track": "Track gain",
                     "album": "Album gain"
                 },
-                "preAmp": "PreAmp (dB)"
+                "preAmp": "PreAmp (dB)",
+                "defaultGain": {
+                    "label": "Default Gain (dB)",
+                    "info": "This gain level is applied to songs that do not include Replay Gain metadata, ensuring consistent audio volume. The recommended range for gain is between -10 dB and -1 dB."
+                }
             },
             "lyrics": {
                 "group": "Lyrics",

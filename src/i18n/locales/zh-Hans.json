@@ -477,8 +477,8 @@
     "reload": "有一首歌曲正在播放！\n你确定要重新加载页面吗？"
   },
   "mobile": {
-    "unsupported_message": "这个应用不支持移动设备。",
-    "access_recommendation": "请从桌面端访问以获得最佳体验。"
+    "unsupported_message": "{{app_name}} 不支持手机。",
+    "access_recommendation": "请通过电脑或平板访问。"
   },
   "settings": {
     "options": {

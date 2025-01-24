@@ -154,7 +154,11 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.protocolVersion = undefined
                 state.data.serverType = undefined
                 state.data.authType = AuthType.TOKEN
+                state.data.protocolVersion = '1.16.0'
+                state.data.serverType = 'subsonic'
                 state.data.songCount = null
+                state.pages.showInfoPanel = true
+                state.pages.hideRadiosSection = HIDE_RADIOS_SECTION ?? false
               })
             },
             setLogoutDialogState: (value) => {

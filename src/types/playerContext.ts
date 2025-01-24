@@ -47,6 +47,7 @@ interface IReplayGainData {
   type: ReplayGainType
   preAmp: number
   error: boolean
+  defaultGain: number
 }
 
 interface IReplayGainActions {
@@ -54,6 +55,7 @@ interface IReplayGainActions {
   setReplayGainType: (value: ReplayGainType) => void
   setReplayGainPreAmp: (value: number) => void
   setReplayGainError: (value: boolean) => void
+  setReplayGainDefaultGain: (value: number) => void
 }
 
 interface IReplayGain {
@@ -110,6 +112,7 @@ export interface IPlayerActions {
   playFirstSongInQueue: () => void
   handleSongEnded: () => void
   getCurrentProgress: () => number
+  resetConfig: () => void
 }
 
 export interface IPlayerContext {
