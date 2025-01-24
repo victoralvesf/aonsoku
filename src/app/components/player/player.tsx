@@ -51,7 +51,7 @@ export function Player() {
   const currentDuration = usePlayerDuration()
   const audioPlayerRef = usePlayerRef()
   const progress = getCurrentProgress()
-  const { resetTitle, radioSession, songSession, playbackState } =
+  const { resetSession, radioSession, songSession, playbackState } =
     useMediaSession()
   const { replayGainType, replayGainPreAmp, replayGainDefaultGain } =
     useReplayGainState()
@@ -70,8 +70,8 @@ export function Player() {
   }, [audioPlayerRef, audioRef, mediaType, setAudioPlayerRef, song])
 
   useEffect(() => {
-    if (!song && !radio) resetTitle()
-  }, [song, radio, resetTitle])
+    if (!song && !radio) resetSession()
+  }, [song, radio, resetSession])
 
   useEffect(() => {
     if (radioList.length > 0 && isRadio) {

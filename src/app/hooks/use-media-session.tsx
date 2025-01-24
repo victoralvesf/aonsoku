@@ -8,8 +8,9 @@ export default function useMediaSession() {
   const { t } = useTranslation()
   const radioLabel = t('radios.label')
 
-  function resetTitle() {
+  function resetSession() {
     document.title = appName
+    manageMediaSession.removeMediaSession()
   }
 
   function radioSession(radio: Radio) {
@@ -27,7 +28,7 @@ export default function useMediaSession() {
   }
 
   return {
-    resetTitle,
+    resetSession,
     radioSession,
     songSession,
     playbackState,
