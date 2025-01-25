@@ -348,7 +348,7 @@
     "queue": "Warteschlange",
     "playing": "Jetzt läuft",
     "lyrics": "Songtexte",
-    "switchButton": "In den Vollbildmodus wechseln"
+    "switchButton": "Zum großen Player wechseln"
   },
   "toast": {
     "server": {
@@ -421,6 +421,11 @@
     "buttons": {
       "refresh": "Status aktualisieren",
       "startScan": "Schnellscan"
+    },
+    "incompatible": {
+      "title": "Inkompatibler Server",
+      "description": "Dieser Server verwendet eine ältere Version des Subsonic-Protokolls, die nicht vollständig unterstützt wird. Bitte seien Sie achtsam, es können Probleme auftreten.",
+      "skip": "Trotzdem fortfahren"
     }
   },
   "downloads": {
@@ -481,5 +486,34 @@
   "mobile": {
     "unsupported_message": "{{app_name}} ist nicht mit Mobiltelefonen kompatibel.",
     "access_recommendation": "Bitte greifen Sie über einen Computer oder ein Tablet darauf zu."
+  },
+  "settings": {
+    "appearance": {
+      "general": {
+        "fullscreen": {
+          "label": "Automatischen Vollbild-Modus aktivieren",
+          "info": "Wenn aktiviert, wird beim Öffnen des großen Players automatisch in den Vollbildmodus gewechselt."
+        },
+        "group": "Allgemein",
+        "description": "Aussehen und Anzeigeverhalten der Anwendung anpassen."
+      }
+    },
+    "label": "Einstellungen",
+    "options": {
+      "appearance": "Erscheinungsbild",
+      "language": "Sprache & Region",
+      "audio": "Player & Audio",
+      "content": "Inhalte"
+    },
+    "audio": {
+      "replayGain": {
+        "group": "Replay Gain",
+        "description": "Für ein konsistentes Hörerlebnis Wiedergabelautstärken automatisch angleichen.",
+        "enabled": "Aktiviert",
+        "mode": {
+          "label": "Modus"
+        }
+      }
+    }
   }
 }
