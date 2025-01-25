@@ -171,10 +171,10 @@
       "favorite": "Favorit",
       "size": "Größe",
       "discNumber": "Disc-Nummer",
-      "trackGain": "Trackverstärkung",
-      "trackPeak": "Trackspitzenwert",
-      "albumPeak": "Albumspitzenwert",
-      "albumGain": "Albumverstärkung"
+      "trackGain": "Track-Verstärkung",
+      "trackPeak": "Track-Spitzenwert",
+      "albumPeak": "Album-Spitzenwert",
+      "albumGain": "Album-Verstärkung"
     },
     "buttons": {
       "play": "{{title}} von {{artist}} abspielen",
@@ -509,12 +509,36 @@
     },
     "audio": {
       "replayGain": {
-        "group": "Replay Gain",
+        "group": "ReplayGain",
         "description": "Für ein konsistentes Hörerlebnis Wiedergabelautstärken automatisch angleichen.",
         "enabled": "Aktiviert",
         "mode": {
-          "label": "Modus"
-        }
+          "label": "Modus",
+          "track": "Track-Verstärkung",
+          "album": "Album-Verstärkung"
+        },
+        "defaultGain": {
+          "info": "Dieser Verstärkungspegel wird auf Songs angewendet, die keine ReplayGain-Metadaten enthalten, um eine gleichbleibende Lautstärke zu gewährleisten. Der empfohlene Bereich für die Verstärkung liegt zwischen -10 dB und -1 dB.",
+          "label": "Standardverstärkung (dB)"
+        },
+        "preAmp": "Vorverstärkung (dB)"
+      },
+      "lyrics": {
+        "preferSynced": {
+          "info": "Wenn aktiviert, werden synchronisierte Liedtexte gegenüber unsynchronisierten bevorzugt.",
+          "label": "Synchronisierte Liedtexte bevorzugen"
+        },
+        "group": "Liedtexte",
+        "description": "Liedtext-Einstellungen anpassen."
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Seitenleiste",
+        "radios": {
+          "section": "Radio-Abschnitt ausblenden"
+        },
+        "description": "Sichtbarkeit und Anordnung der Abschnitte in der Seitenleiste verwalten."
       }
     }
   }
