@@ -1,4 +1,4 @@
-use std::{any::Any, ptr, time::{Duration, SystemTime}};
+use std::{ptr, time::{Duration, SystemTime}};
 
 pub use discord_sdk as discord;
 
@@ -6,8 +6,6 @@ use crate::playerstatus::PlayerStatus;
 
 pub struct Client {
     pub discord: discord::Discord,
-    pub user: discord::user::User,
-    pub wheel: discord::wheel::Wheel,
 }
 
 
@@ -37,22 +35,10 @@ pub async fn make_client() {
         }
     };
 
-
-    user.0.changed().await.unwrap();
-
-    let user = match &*user.0.borrow() {
-        discord::wheel::UserState::Connected(user) => user.clone(),
-        discord::wheel::UserState::Disconnected(_err) => {
-            return; // Something went wrong, ignore it (most likely the user has their activities set to private)
-        },
-    };
-
     unsafe {
         CURRENT_CLIENT = Some(
             Client {
                 discord,
-                user,
-                wheel,
             }
         );
     }
