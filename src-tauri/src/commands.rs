@@ -63,6 +63,7 @@ pub async fn update_player_status(
     unsafe {
         CURRENT_STATUS.track_name = track_name;
         CURRENT_STATUS.artist = artist;
+        CURRENT_STATUS.album_name = album_name;
         CURRENT_STATUS.start_time = SystemTime::from(SystemTime::UNIX_EPOCH + Duration::from_millis(start_time));
         CURRENT_STATUS.end_time = SystemTime::from(SystemTime::UNIX_EPOCH + Duration::from_millis(end_time));
     }

@@ -68,9 +68,13 @@ pub async fn make_client() {
 pub async fn update_activity_status() {
 
     unsafe {
+
+        let artist = CURRENT_STATUS.artist.to_owned();
+        let album_name = CURRENT_STATUS.album_name.to_owned();
+
         let current_activity = discord::activity::ActivityBuilder::default()
             .details(CURRENT_STATUS.track_name.to_owned())
-            .state(CURRENT_STATUS.artist.to_owned())
+            .state(format!("{artist} • {album_name}"))
             .kind(discord_sdk::activity::ActivityKind::Listening)
             .start_timestamp(CURRENT_STATUS.start_time)
             .end_timestamp(CURRENT_STATUS.end_time);
