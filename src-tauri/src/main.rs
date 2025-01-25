@@ -1,6 +1,9 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+
+use std::{ptr::null, thread};
+
 #[cfg(not(target_os = "linux"))]
 use tauri::Manager;
 
@@ -15,15 +18,23 @@ extern crate objc;
 #[cfg(target_os = "macos")]
 mod mac;
 
+mod discord;
+mod playerstatus;
+
 mod commands;
 mod progress;
 mod utils;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let builder = tauri::Builder::default();
 
     #[cfg(target_os = "macos")]
     let builder = builder.plugin(mac::window::init());
+
+    // Spawn the discord RPC handler on another thread
+    use discord::rpc::make_client;
+    tokio::task::spawn(make_client());
 
     builder
         .setup(|_app| {
@@ -54,6 +65,7 @@ fn main() {
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_os::init())
         .invoke_handler(tauri::generate_handler![commands::download_file])
+        .invoke_handler(tauri::generate_handler![commands::update_player_status])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -2,9 +2,9 @@ use futures_util::StreamExt;
 use reqwest::{header::ACCEPT, Client, Url};
 
 use dirs::download_dir;
-use std::{fs::File, io::Write, path::PathBuf};
+use std::{fs::File, io::Write, path::PathBuf, time::{Duration, SystemTime}};
 
-use crate::{progress::Progress, utils::get_filename};
+use crate::{discord::rpc::{self, discord}, progress::Progress, utils::get_filename};
 
 #[tauri::command]
 pub async fn download_file(
@@ -45,5 +45,27 @@ pub async fn download_file(
     }
 
     progress.emit_finished(&app_handle);
+    Ok(())
+}
+
+
+#[tauri::command]
+pub async fn update_player_status(
+    track_name: String,
+    album_name: String,
+    artist: String,
+    start_time: u64,
+    end_time: u64
+) -> Result<(), String> {
+
+    use rpc::CURRENT_STATUS;
+
+    unsafe {
+        CURRENT_STATUS.track_name = track_name;
+        CURRENT_STATUS.artist = artist;
+        CURRENT_STATUS.start_time = SystemTime::from(SystemTime::UNIX_EPOCH + Duration::from_millis(start_time));
+        CURRENT_STATUS.end_time = SystemTime::from(SystemTime::UNIX_EPOCH + Duration::from_millis(end_time));
+    }
+
     Ok(())
 }

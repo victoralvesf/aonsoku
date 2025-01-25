@@ -11,6 +11,7 @@ import { IPlayerContext, LoopState } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { areSongListsEqual } from '@/utils/compareSongLists'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
+import { rpc } from '@/service/rpc'
 
 export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
   subscribeWithSelector(
@@ -585,6 +586,8 @@ usePlayerStore.subscribe(
 
     const { currentList } = playerStore.songlist
     const { progress } = playerStore.playerProgress
+
+    rpc.send(playerStore.songlist.currentSong, playerStore.playerState.audioPlayerRef);
 
     if (currentList.length === 0 && progress > 0) {
       playerStore.actions.resetProgress()
