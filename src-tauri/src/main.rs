@@ -34,6 +34,8 @@ async fn main() {
 
     // Spawn the discord RPC handler on another thread
     use discord::rpc::make_client;
+
+    #[cfg(target_os = "windows")]
     tokio::task::spawn(make_client());
 
     builder
