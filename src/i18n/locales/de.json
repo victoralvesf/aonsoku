@@ -103,7 +103,7 @@
     },
     "headline": "Album",
     "buttons": {
-      "like": "{{name}} mögen",
+      "like": "{{name}} gefällt mir",
       "dislike": "Gefällt mir von {{name}} entfernen"
     },
     "info": {
@@ -134,7 +134,7 @@
         "mostPlayed": "Am häufigsten gespielt",
         "random": "Zufällig",
         "recentlyAdded": "Kürzlich hinzugefügt",
-        "recentlyPlayed": "Zuletzt gespielt",
+        "recentlyPlayed": "Kürzlich gespielt",
         "releaseYear": "Erscheinungsjahr",
         "discography": "Diskografie",
         "search": "Suchen"
@@ -171,9 +171,10 @@
       "favorite": "Favorit",
       "size": "Größe",
       "discNumber": "Disc-Nummer",
-      "trackGain": "Track-Gain",
-      "trackPeak": "Track-Peak",
-      "albumPeak": "Album-Peak"
+      "trackGain": "Trackverstärkung",
+      "trackPeak": "Trackspitzenwert",
+      "albumPeak": "Albumspitzenwert",
+      "albumGain": "Albumverstärkung"
     },
     "buttons": {
       "play": "{{title}} von {{artist}} abspielen",
@@ -278,7 +279,8 @@
     "empty": {
       "title": "Sie haben keine Radios!",
       "info": "Klicken Sie, um Ihre erste Radiostation hinzuzufügen."
-    }
+    },
+    "error": "Abspielen des Radios fehlgeschlagen, überprüfen Sie die Stream-URL!"
   },
   "dayjs": {
     "relativeTime": {
@@ -383,14 +385,14 @@
         "enableOne": "Einmal wiederholen aktivieren",
         "disable": "Wiederholen deaktivieren"
       },
-      "like": "{{song}} von {{artist}} mögen",
+      "like": "{{song}} von {{artist}} gefällt mir",
       "dislike": "Gefällt mir von {{song}} von {{artist}} entfernen"
     }
   },
   "options": {
     "play": "Abspielen",
     "playNext": "Als nächstes abspielen",
-    "addLast": "Zuletzt hinzufügen",
+    "addLast": "Als letztes spielen",
     "download": "Herunterladen",
     "playlist": {
       "add": "Zur Playlist hinzufügen",
