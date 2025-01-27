@@ -61,6 +61,10 @@ pub async fn update_activity_status() {
         let current_activity = discord::activity::ActivityBuilder::default()
             .details(CURRENT_STATUS.track_name.to_owned())
             .state(format!("{artist} • {album_name}"))
+            .assets(
+                discord::activity::Assets::default()
+                    .large("https://github.com/victoralvesf/aonsoku/blob/main/public/icon_shadow.png?raw=true".to_owned(), Some("Aonsoku".to_owned()))
+            )
             .kind(discord_sdk::activity::ActivityKind::Listening)
             .start_timestamp(CURRENT_STATUS.start_time)
             .end_timestamp(CURRENT_STATUS.end_time);
