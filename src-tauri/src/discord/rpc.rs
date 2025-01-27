@@ -17,7 +17,8 @@ pub static mut CURRENT_STATUS: PlayerStatus = PlayerStatus {
     album_name: String::new(),
     artist: String::new(),
     start_time: SystemTime::UNIX_EPOCH,
-    end_time: SystemTime::UNIX_EPOCH
+    end_time: SystemTime::UNIX_EPOCH,
+    is_paused: true
 };
 
 pub async fn make_client() {

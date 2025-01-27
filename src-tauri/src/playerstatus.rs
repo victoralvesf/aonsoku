@@ -7,5 +7,6 @@ pub struct PlayerStatus {
     pub album_name: String,
     pub artist: String,
     pub end_time: SystemTime,
-    pub start_time: SystemTime
+    pub start_time: SystemTime,
+    pub is_paused: bool
 }

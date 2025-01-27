@@ -55,7 +55,8 @@ pub async fn update_player_status(
     album_name: String,
     artist: String,
     start_time: u64,
-    end_time: u64
+    end_time: u64,
+    is_paused: bool
 ) -> Result<(), String> {
 
     use rpc::CURRENT_STATUS;

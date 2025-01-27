@@ -17,6 +17,7 @@ async function send(song: ISong, audio: HTMLAudioElement | null) {
         (audio!.currentTime || 0) * 1000 +
         (audio!.duration || 0) * 1000,
     ),
+    isPaused: audio.paused
   }
 
   await invoke('update_player_status', statusData)
