@@ -72,6 +72,11 @@ pub async fn update_activity_status() {
             None => return,
         };
     
+        if (CURRENT_STATUS.is_paused) {
+            let _ = client.discord.clear_activity().await;
+            return;
+        }
+
         let _ = client.discord.update_activity(current_activity).await; // Discard the result to _
     }
 

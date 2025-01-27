@@ -67,6 +67,7 @@ pub async fn update_player_status(
         CURRENT_STATUS.album_name = album_name;
         CURRENT_STATUS.start_time = SystemTime::from(SystemTime::UNIX_EPOCH + Duration::from_millis(start_time));
         CURRENT_STATUS.end_time = SystemTime::from(SystemTime::UNIX_EPOCH + Duration::from_millis(end_time));
+        CURRENT_STATUS.is_paused = is_paused;
     }
 
     Ok(())
