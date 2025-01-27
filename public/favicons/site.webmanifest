@@ -7,7 +7,6 @@
     "background_color": "#20b358",
     "start_url": "/",
     "display": "standalone",
-    "display_override": ["window-controls-overlay"],
     "icons": [
         {
             "src": "/favicons/android-chrome-192x192.png",
