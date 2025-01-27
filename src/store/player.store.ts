@@ -599,10 +599,7 @@ usePlayerStore.subscribe(
   () => {
     const playerStore = usePlayerStore.getState()
 
-    rpc.send(
-      playerStore,
-      playerStore.playerState.audioPlayerRef,
-    )
+    rpc.send(playerStore, playerStore.playerState.audioPlayerRef)
   },
 )
 
