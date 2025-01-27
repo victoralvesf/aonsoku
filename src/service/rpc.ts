@@ -1,11 +1,13 @@
 import { invoke } from '@tauri-apps/api/core'
-import { ISong } from '@/types/responses/song'
 import { isTauri } from '@/utils/tauriTools'
+import { IPlayerContext } from '@/types/playerContext'
 
-async function send(song: ISong, audio: HTMLAudioElement | null) {
+async function send(playerStore: IPlayerContext, audio: HTMLAudioElement | null) {
   if (!isTauri() || !audio) {
     return
   }
+
+  let song = playerStore.songlist.currentSong;
 
   const statusData = {
     trackName: song.title,
@@ -17,7 +19,7 @@ async function send(song: ISong, audio: HTMLAudioElement | null) {
         (audio!.currentTime || 0) * 1000 +
         (audio!.duration || 0) * 1000,
     ),
-    isPaused: audio.paused
+    isPaused: !playerStore.playerState.isPlaying
   }
 
   await invoke('update_player_status', statusData)

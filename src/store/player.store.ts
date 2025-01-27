@@ -587,14 +587,22 @@ usePlayerStore.subscribe(
     const { currentList } = playerStore.songlist
     const { progress } = playerStore.playerProgress
 
-    rpc.send(
-      playerStore.songlist.currentSong,
-      playerStore.playerState.audioPlayerRef,
-    )
-
     if (currentList.length === 0 && progress > 0) {
       playerStore.actions.resetProgress()
     }
+  },
+)
+
+// For RPC
+usePlayerStore.subscribe(
+  (state) => [state.playerProgress.progress, state.playerState.isPlaying],
+  () => {
+    const playerStore = usePlayerStore.getState()
+
+    rpc.send(
+      playerStore,
+      playerStore.playerState.audioPlayerRef,
+    )
   },
 )
 
