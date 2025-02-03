@@ -72,6 +72,8 @@ export function AudioPlayer({
       error: audio.error,
     })
 
+    toast.error(t('warnings.songError'))
+
     if (replayGainEnabled || !replayGainError) {
       setReplayGainEnabled(false)
       setReplayGainError(true)
@@ -83,6 +85,7 @@ export function AudioPlayer({
     replayGainError,
     setReplayGainEnabled,
     setReplayGainError,
+    t,
   ])
 
   const handleRadioError = useCallback(() => {
