@@ -103,7 +103,7 @@
     },
     "headline": "Album",
     "buttons": {
-      "like": "{{name}} mögen",
+      "like": "{{name}} gefällt mir",
       "dislike": "Gefällt mir von {{name}} entfernen"
     },
     "info": {
@@ -171,9 +171,10 @@
       "favorite": "Favorit",
       "size": "Größe",
       "discNumber": "Disc-Nummer",
-      "trackGain": "Track-Gain",
-      "trackPeak": "Track-Peak",
-      "albumPeak": "Album-Peak"
+      "trackGain": "Track-Verstärkung",
+      "trackPeak": "Track-Spitzenwert",
+      "albumPeak": "Album-Spitzenwert",
+      "albumGain": "Album-Verstärkung"
     },
     "buttons": {
       "play": "{{title}} von {{artist}} abspielen",
@@ -278,7 +279,8 @@
     "empty": {
       "title": "Sie haben keine Radios!",
       "info": "Klicken Sie, um Ihre erste Radiostation hinzuzufügen."
-    }
+    },
+    "error": "Abspielen des Radios fehlgeschlagen, überprüfen Sie die Stream-URL!"
   },
   "dayjs": {
     "relativeTime": {
@@ -348,7 +350,7 @@
     "queue": "Warteschlange",
     "playing": "Jetzt läuft",
     "lyrics": "Songtexte",
-    "switchButton": "In den Vollbildmodus wechseln"
+    "switchButton": "Zum großen Player wechseln"
   },
   "toast": {
     "server": {
@@ -383,14 +385,14 @@
         "enableOne": "Einmal wiederholen aktivieren",
         "disable": "Wiederholen deaktivieren"
       },
-      "like": "{{song}} von {{artist}} mögen",
+      "like": "{{song}} von {{artist}} gefällt mir",
       "dislike": "Gefällt mir von {{song}} von {{artist}} entfernen"
     }
   },
   "options": {
     "play": "Abspielen",
     "playNext": "Als nächstes abspielen",
-    "addLast": "Zuletzt hinzufügen",
+    "addLast": "Als letztes spielen",
     "download": "Herunterladen",
     "playlist": {
       "add": "Zur Playlist hinzufügen",
@@ -421,6 +423,11 @@
     "buttons": {
       "refresh": "Status aktualisieren",
       "startScan": "Schnellscan"
+    },
+    "incompatible": {
+      "title": "Inkompatibler Server",
+      "description": "Dieser Server verwendet eine ältere Version des Subsonic-Protokolls, die nicht vollständig unterstützt wird. Bitte seien Sie achtsam, es können Probleme auftreten.",
+      "skip": "Trotzdem fortfahren"
     }
   },
   "downloads": {
@@ -481,5 +488,58 @@
   "mobile": {
     "unsupported_message": "{{app_name}} ist nicht mit Mobiltelefonen kompatibel.",
     "access_recommendation": "Bitte greifen Sie über einen Computer oder ein Tablet darauf zu."
+  },
+  "settings": {
+    "appearance": {
+      "general": {
+        "fullscreen": {
+          "label": "Automatischen Vollbild-Modus aktivieren",
+          "info": "Wenn aktiviert, wird beim Öffnen des großen Players automatisch in den Vollbildmodus gewechselt."
+        },
+        "group": "Allgemein",
+        "description": "Aussehen und Anzeigeverhalten der Anwendung anpassen."
+      }
+    },
+    "label": "Einstellungen",
+    "options": {
+      "appearance": "Erscheinungsbild",
+      "language": "Sprache & Region",
+      "audio": "Player & Audio",
+      "content": "Inhalte"
+    },
+    "audio": {
+      "replayGain": {
+        "group": "ReplayGain",
+        "description": "Für ein konsistentes Hörerlebnis Wiedergabelautstärken automatisch angleichen.",
+        "enabled": "Aktiviert",
+        "mode": {
+          "label": "Modus",
+          "track": "Track-Verstärkung",
+          "album": "Album-Verstärkung"
+        },
+        "defaultGain": {
+          "info": "Dieser Verstärkungspegel wird auf Songs angewendet, die keine ReplayGain-Metadaten enthalten, um eine gleichbleibende Lautstärke zu gewährleisten. Der empfohlene Bereich für die Verstärkung liegt zwischen -10 dB und -1 dB.",
+          "label": "Standardverstärkung (dB)"
+        },
+        "preAmp": "Vorverstärkung (dB)"
+      },
+      "lyrics": {
+        "preferSynced": {
+          "info": "Wenn aktiviert, werden synchronisierte Liedtexte gegenüber unsynchronisierten bevorzugt.",
+          "label": "Synchronisierte Liedtexte bevorzugen"
+        },
+        "group": "Liedtexte",
+        "description": "Liedtext-Einstellungen anpassen."
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Seitenleiste",
+        "radios": {
+          "section": "Radio-Abschnitt ausblenden"
+        },
+        "description": "Sichtbarkeit und Anordnung der Abschnitte in der Seitenleiste verwalten."
+      }
+    }
   }
 }
