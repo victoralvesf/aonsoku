@@ -444,7 +444,7 @@
     "error": "Unable to retrieve song information. Please try again later."
   },
   "warnings": {
-    "reload": "There is a song playing!\nAre you sure you want to reload the page?"
+    "reload": "There is a song playing!\nAre you sure you want to reload the page?",
     "songError": "Unable to play the song, check the Server!"
   },
   "update": {
