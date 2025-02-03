@@ -453,7 +453,8 @@
     "error": "Não foi possível obter as informações da música. Por favor, tente novamente mais tarde."
   },
   "warnings": {
-    "reload": "Há uma música tocando!\nVocê tem certeza que deseja recarregar a página?"
+    "reload": "Há uma música tocando!\nVocê tem certeza que deseja recarregar a página?",
+    "songError": "Não foi possível reproduzir a música, verifique o Servidor!"
   },
   "update": {
     "dialog": {
@@ -501,7 +502,7 @@
     },
     "audio": {
       "replayGain": {
-        "group": "Replay Gain",
+        "group": "ReplayGain",
         "description": "Automaticamente normaliza o nível do áudio para uma melhor experiência sonora.",
         "enabled": "Habilitado",
         "mode": {
@@ -512,7 +513,7 @@
         "preAmp": "Pré-amplificador (dB)",
         "defaultGain": {
           "label": "Ganho Padrão (dB)",
-          "info": "Este nível de ganho é aplicado a músicas que não possuem metadata de Replay Gain, garantindo um volume de áudio consistente. A faixa recomendada para o ganho é entre -10 dB e -1 dB."
+          "info": "Este nível de ganho é aplicado a músicas que não possuem metadata de ReplayGain, garantindo um volume de áudio consistente. A faixa recomendada para o ganho é entre -10 dB e -1 dB."
         }
       },
       "lyrics": {

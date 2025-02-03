@@ -72,10 +72,21 @@ export function AudioPlayer({
       error: audio.error,
     })
 
-    setReplayGainEnabled(false)
-    setReplayGainError(true)
-    window.location.reload()
-  }, [audioRef, setReplayGainEnabled, setReplayGainError])
+    toast.error(t('warnings.songError'))
+
+    if (replayGainEnabled || !replayGainError) {
+      setReplayGainEnabled(false)
+      setReplayGainError(true)
+      window.location.reload()
+    }
+  }, [
+    audioRef,
+    replayGainEnabled,
+    replayGainError,
+    setReplayGainEnabled,
+    setReplayGainError,
+    t,
+  ])
 
   const handleRadioError = useCallback(() => {
     const audio = audioRef.current
@@ -120,11 +131,12 @@ export function AudioPlayer({
     if (isRadio) handleRadio()
   }, [audioRef, isPlaying, isRadio])
 
-  const handleError = isSong
-    ? handleSongError
-    : isRadio
-      ? handleRadioError
-      : undefined
+  const handleError = useMemo(() => {
+    if (isSong) return handleSongError
+    if (isRadio) return handleRadioError
+
+    return undefined
+  }, [handleRadioError, handleSongError, isRadio, isSong])
 
   return <audio ref={audioRef} {...props} onError={handleError} />
 }

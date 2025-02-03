@@ -15,7 +15,11 @@ export function QueueActions({ row }: { row: Row<ISong> }) {
     <Button
       variant="ghost"
       className="w-8 h-8 p-1 rounded-full hover:bg-background hover:border hover:border-border hover:shadow-sm"
-      onClick={handleRemoveSongFromQueue}
+      onClick={(e) => {
+        e.stopPropagation()
+        handleRemoveSongFromQueue()
+      }}
+      onDoubleClick={(e) => e.stopPropagation()}
     >
       <XIcon className="w-5 h-5" />
     </Button>
