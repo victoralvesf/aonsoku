@@ -5,8 +5,10 @@ import { AuthType } from '@/types/serverConfig'
 import { appName } from '@/utils/appName'
 import { saltWord } from '@/utils/salt'
 
-interface FetchOptions extends RequestInit {
-  query?: Record<string, string | undefined>
+export type QueryType = Record<string, string | number | undefined>
+
+export interface FetchOptions extends RequestInit {
+  query?: QueryType
 }
 
 type AuthParams = { u: string; t: string; s: string } | { u: string; p: string }
@@ -43,7 +45,7 @@ function queryParams() {
   }
 }
 
-function getUrl(path: string, options?: Record<string, string | undefined>) {
+function getUrl(path: string, options?: QueryType) {
   const serverUrl = useAppStore.getState().data.url
   const params = new URLSearchParams(queryParams())
 
@@ -52,7 +54,7 @@ function getUrl(path: string, options?: Record<string, string | undefined>) {
       const query = options[key]
 
       if (query !== undefined) {
-        params.append(key, query)
+        params.append(key, query.toString())
       }
     })
   }
