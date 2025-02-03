@@ -1,4 +1,12 @@
-import { ListMusic, Mic2, Music2, Radio, Home, Library } from 'lucide-react'
+import {
+  ListMusic,
+  Mic2,
+  Music2,
+  Radio,
+  Home,
+  Library,
+  Podcast,
+} from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import CommandMenu from '@/app/components/command/command-menu'
@@ -83,6 +91,12 @@ export const libraryItems = [
     title: 'sidebar.playlists',
     route: ROUTES.LIBRARY.PLAYLISTS,
     icon: ListMusic,
+  },
+  {
+    id: 'podcasts',
+    title: 'Podcasts',
+    route: '/podcasts',
+    icon: Podcast,
   },
   {
     id: 'radios',

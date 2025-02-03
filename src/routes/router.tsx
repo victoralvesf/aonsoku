@@ -27,6 +27,9 @@ const Playlist = lazy(() => import('@/app/pages/playlists/playlist'))
 const Radios = lazy(() => import('@/app/pages/radios/radios-list'))
 const SongList = lazy(() => import('@/app/pages/songs/songlist'))
 const Home = lazy(() => import('@/app/pages/home'))
+const PodcastsList = lazy(() => import('@/app/pages/podcasts/list'))
+const Podcast = lazy(() => import('@/app/pages/podcasts/podcast'))
+const Episode = lazy(() => import('@/app/pages/podcasts/episode'))
 
 export const router = createBrowserRouter([
   {
@@ -121,6 +124,36 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<PlaylistFallback />}>
             <Playlist />
+          </Suspense>
+        ),
+      },
+      {
+        id: 'podcasts',
+        path: '/podcasts',
+        errorElement: <ErrorPage />,
+        element: (
+          <Suspense fallback={<AlbumsFallback />}>
+            <PodcastsList />
+          </Suspense>
+        ),
+      },
+      {
+        id: 'podcast',
+        path: '/podcasts/:podcastId',
+        errorElement: <ErrorPage />,
+        element: (
+          <Suspense fallback={<AlbumsFallback />}>
+            <Podcast />
+          </Suspense>
+        ),
+      },
+      {
+        id: 'episode',
+        path: '/episodes/:episodeId',
+        errorElement: <ErrorPage />,
+        element: (
+          <Suspense fallback={<AlbumsFallback />}>
+            <Episode />
           </Suspense>
         ),
       },
