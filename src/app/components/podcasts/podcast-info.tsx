@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { CustomLightBox } from '@/app/components/lightbox'
 import { Separator } from '@/app/components/ui/separator'
 import { Podcast } from '@/types/responses/podcasts'
+import { parseDescription } from '@/utils/parseTexts'
 
 interface PodcastInfoProps {
   podcast: Podcast
@@ -43,10 +44,9 @@ export function PodcastInfo({ podcast }: PodcastInfoProps) {
           {podcast.author}
         </h3>
         <Separator />
-        <p
-          dangerouslySetInnerHTML={{ __html: podcast.description }}
-          className="text-sm text-muted-foreground line-clamp-2"
-        />
+        <p className="text-sm text-muted-foreground line-clamp-2">
+          {parseDescription(podcast.description)}
+        </p>
         <div className="flex gap-1 text-muted-foreground text-sm">
           <span>{podcast.episode_count} Episodes</span>
           <span className="mx-1 opacity-80">•</span>

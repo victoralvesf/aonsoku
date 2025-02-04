@@ -1,7 +1,7 @@
 import { QueryType } from '@/api/httpClient'
 import { podcastClient } from '@/api/podcastClient'
 import {
-  Episode,
+  EpisodeWithPodcast,
   Podcasts,
   PodcastWithEpisodes,
 } from '@/types/responses/podcasts'
@@ -93,7 +93,7 @@ async function unfollow(id: string) {
 }
 
 async function getEpisode(id: string) {
-  const response = await podcastClient<Episode>(`/episodes/${id}`, {
+  const response = await podcastClient<EpisodeWithPodcast>(`/episodes/${id}`, {
     method: 'GET',
   })
 

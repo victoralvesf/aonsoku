@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { convert } from 'html-to-text'
 import { EllipsisVertical, PlayIcon } from 'lucide-react'
 import { ComponentPropsWithoutRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,6 +9,7 @@ import { Separator } from '@/app/components/ui/separator'
 import { Episode } from '@/types/responses/podcasts'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
+import { parseDescription } from '@/utils/parseTexts'
 
 type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
   episode: Episode
@@ -37,13 +37,6 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
     },
     [t],
   )
-
-  const formatEpisodeDescription = useCallback((text: string) => {
-    return convert(text, {
-      wordwrap: false,
-      selectors: [{ selector: 'a', format: 'inline' }],
-    })
-  }, [])
 
   const formatEpisodeDuration = useCallback((duration: number) => {
     return convertSecondsToHumanRead(duration)
@@ -89,7 +82,7 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
             {episode.title}
           </h4>
           <p className="text-xs text-muted-foreground line-clamp-2">
-            {formatEpisodeDescription(episode.description)}
+            {parseDescription(episode.description)}
           </p>
         </div>
         <div className="min-w-[14%] flex items-center justify-center">

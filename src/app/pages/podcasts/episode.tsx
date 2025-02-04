@@ -1,11 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { convert } from 'html-to-text'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { Actions } from '@/app/components/actions'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
+import { Separator } from '@/app/components/ui/separator'
 import { podcasts } from '@/service/podcasts'
+import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
+import dateTime from '@/utils/dateTime'
+import { linkifyText, sanitizeLinks } from '@/utils/parseTexts'
 
 export default function Episode() {
   const { episodeId } = useParams() as { episodeId: string }
@@ -18,32 +22,31 @@ export default function Episode() {
   if (isLoading) return <AlbumFallback />
   if (!episode) return <AlbumFallback />
 
-  function formatEpisodeDescription(description: string) {
-    const plainText = convert(description, {
-      wordwrap: false,
-      preserveNewlines: true,
-    })
+  function formatDescription(text: string) {
+    // Add target blank and rel attributes
+    let parsed = sanitizeLinks(text)
+    // Convert any left plain text to link
+    parsed = linkifyText(parsed)
 
-    return { __html: plainText }
+    return { __html: parsed }
   }
 
   return (
     <div className="h-full">
-      <div className="w-full px-8 py-6 flex gap-4">
+      <div className="w-full px-8 pt-6 flex gap-4">
         <div
           className={clsx(
             'w-[200px] h-[200px] min-w-[200px] min-h-[200px]',
             '2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px]',
             'bg-skeleton aspect-square bg-cover bg-center rounded',
             'shadow-[0_0_5px_rgba(255,255,255,0.05)] border border-border overflow-hidden',
-            'hover:scale-[1.02] ease-linear duration-100',
           )}
         >
           <LazyLoadImage
             src={episode.image_url}
             alt={episode.title}
             effect="opacity"
-            className="aspect-square object-cover w-full h-full cursor-pointer"
+            className="aspect-square object-cover w-full h-full"
             width="100%"
             height="100%"
           />
@@ -53,18 +56,35 @@ export default function Episode() {
           <h1 className="tracking-tight font-bold text-4xl leading-snug -mb-1 antialiased drop-shadow-md line-clamp-2">
             {episode.title}
           </h1>
-          {/* <h3 className="text-lg font-medium text-muted-foreground">
-            {podcast.author}
-          </h3> */}
+          <Link
+            to={`/podcasts/${episode.podcast_id}`}
+            className="text-lg font-medium text-muted-foreground hover:underline"
+          >
+            {episode.podcast.title}
+          </Link>
+          <Separator />
+          <div className="flex gap-1 text-muted-foreground text-sm">
+            <span>{dateTime(episode.published_at).format('LL')}</span>
+            <span className="mx-1 opacity-80">•</span>
+            <span>{convertSecondsToHumanRead(episode.duration)}</span>
+          </div>
         </div>
       </div>
 
       <ListWrapper>
+        <Actions.Container>
+          <Actions.Button
+            tooltip={`Play ${episode.title}`}
+            buttonStyle="primary"
+            onClick={() => {}}
+          >
+            <Actions.PlayIcon />
+          </Actions.Button>
+        </Actions.Container>
+
         <p
-          dangerouslySetInnerHTML={formatEpisodeDescription(
-            episode.description,
-          )}
-          className="text-base font-normal leading-relaxed max-w-full text-wrap"
+          dangerouslySetInnerHTML={formatDescription(episode.description)}
+          className="html leading-relaxed max-w-full text-wrap"
         />
       </ListWrapper>
     </div>

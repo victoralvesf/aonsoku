@@ -4,7 +4,10 @@ import LinkifyIt from 'linkify-it'
 export function parseDescription(text: string) {
   return convert(text, {
     wordwrap: false,
-    selectors: [{ selector: 'a', format: 'inline' }],
+    selectors: [
+      { selector: 'a', format: 'inline' },
+      { selector: 'img', format: 'skip' },
+    ],
   })
 }
 
@@ -60,8 +63,15 @@ export function sanitizeLinks(text: string) {
   const doc = parser.parseFromString(text, 'text/html')
 
   doc.querySelectorAll('a').forEach((link) => {
-    link.setAttribute('target', '_blank')
-    link.setAttribute('rel', 'noreferrer nofollow')
+    const href = link.getAttribute('href') ?? ''
+
+    if (href.includes('javascript')) {
+      const textNode = document.createTextNode(link.textContent || '')
+      link.replaceWith(textNode)
+    } else {
+      link.setAttribute('target', '_blank')
+      link.setAttribute('rel', 'noreferrer nofollow')
+    }
   })
 
   return doc.body.innerHTML

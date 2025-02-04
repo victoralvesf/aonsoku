@@ -92,6 +92,10 @@ img {
   @apply my-2 max-w-full rounded;
 }
 
+.html code {
+  @apply bg-background text-muted-foreground px-1.5 py-0.5 rounded border text-sm font-mono;
+}
+
 .player-button-active {
   @apply after:content-['•'] after:block after:absolute after:-bottom-1 after:text-primary;
 }
