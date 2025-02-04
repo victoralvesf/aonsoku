@@ -17,13 +17,24 @@ mod mac;
 
 mod commands;
 mod progress;
+mod system_tray;
 mod utils;
 
 fn main() {
-    let builder = tauri::Builder::default();
+    let mut builder = tauri::Builder::default();
 
     #[cfg(target_os = "macos")]
     let builder = builder.plugin(mac::window::init());
+
+    #[cfg(desktop)]
+    {
+        builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            if let Some(window) = app.get_webview_window("main") {
+                let _ = window.show();
+                let _ = window.set_focus();
+            }
+        }));
+    }
 
     builder
         .setup(|_app| {
@@ -46,6 +57,9 @@ fn main() {
                 let main_window = _app.get_webview_window("main").unwrap();
                 let _ = main_window.set_decorations(false);
             }
+
+            #[cfg(desktop)]
+            system_tray::setup_system_tray(_app);
 
             Ok(())
         })

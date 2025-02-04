@@ -68,6 +68,11 @@ interface IFullscreen {
   setAutoFullscreenEnabled: (value: boolean) => void
 }
 
+interface IMinimizeToSystemTray {
+  minimizeToSystemTrayEnabled: boolean
+  setMinimizeToSystemTrayEnabled: (value: boolean) => void
+}
+
 interface ILyrics {
   preferSyncedLyrics: boolean
   setPreferSyncedLyrics: (value: boolean) => void
@@ -76,6 +81,7 @@ interface ILyrics {
 export interface IPlayerSettings {
   volume: IVolumeSettings
   fullscreen: IFullscreen
+  minimizeToSystemTray: IMinimizeToSystemTray
   lyrics: ILyrics
   replayGain: IReplayGain
 }
