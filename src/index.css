@@ -71,9 +71,25 @@ img {
   -ms-user-select: none;
 }
 
-#artist-biography > p > a,
+.html a,
 .link {
-  @apply text-primary hover:underline;
+  @apply text-primary underline;
+}
+
+.html strong {
+  @apply font-semibold;
+}
+
+.html strong:not(a strong) {
+  @apply text-foreground;
+}
+
+.html p {
+  @apply text-foreground/80;
+}
+
+.html img {
+  @apply my-2 max-w-full rounded;
 }
 
 .player-button-active {
