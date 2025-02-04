@@ -23,9 +23,12 @@ pub fn setup_system_tray(app: &mut App) {
         None => return,
     };
 
+    let app_title = app.package_info().name.clone();
+
     let _ = TrayIconBuilder::<tauri::Wry>::new()
         .icon(icon)
         .menu(&menu)
+        .tooltip(app_title)
         .menu_on_left_click(false)
         .on_menu_event(|app, event| {
             if event.id == QUIT_ID {
