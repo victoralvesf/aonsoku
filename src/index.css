@@ -89,7 +89,7 @@ img {
 }
 
 .html p,
-.html li {
+.html li:not(li a) {
   @apply text-foreground/80;
 }
 

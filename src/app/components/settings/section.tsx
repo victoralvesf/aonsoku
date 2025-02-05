@@ -82,7 +82,7 @@ export function ContentItemForm({
 }: SectionComponent) {
   return (
     <div
-      className={cn('w-1/3 flex items-center justify-end', className)}
+      className={cn('w-2/5 flex items-center justify-end', className)}
       {...props}
     >
       {children}

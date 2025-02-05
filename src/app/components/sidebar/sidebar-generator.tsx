@@ -7,7 +7,7 @@ import { PlaylistOptions } from '@/app/components/playlist/options'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { Button } from '@/app/components/ui/button'
 import { ROUTES } from '@/routes/routesList'
-import { useAppPages } from '@/store/app.store'
+import { useAppPages, useAppPodcasts } from '@/store/app.store'
 import { Playlist } from '@/types/responses/playlist'
 
 export interface ISidebarItem {
@@ -21,6 +21,7 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
   const location = useLocation()
   const { t } = useTranslation()
   const { hideRadiosSection } = useAppPages()
+  const { active: isPodcastsActive } = useAppPodcasts()
 
   function isActive(route: string) {
     return location.pathname === route
@@ -29,8 +30,9 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
   return (
     <>
       {list.map((item) => {
-        // Setting to show/hide Radios section
+        // Setting to show/hide Radios/Podcasts section
         if (hideRadiosSection && item.id === 'radios') return null
+        if (!isPodcastsActive && item.id === 'podcasts') return null
 
         return (
           <Link
