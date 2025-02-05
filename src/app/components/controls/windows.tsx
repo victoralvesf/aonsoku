@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import { type HTMLProps } from 'react'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { cn } from '@/lib/utils'
-import { useMinimizeToSystemTraySettings } from '@/store/player.store'
 import { ControlButton } from './button'
 import { Icons } from './icons'
 
@@ -12,27 +11,12 @@ const regularButton = clsx(
 )
 
 export function Windows({ className, ...props }: HTMLProps<HTMLDivElement>) {
-  const {
-    minimizeWindow,
-    maximizeWindow,
-    closeWindow,
-    isWindowMaximized,
-    hideWindow,
-  } = useAppWindow()
-
-  const { minimizeToSystemTrayEnabled } = useMinimizeToSystemTraySettings()
-
-  function handleMinimizeWindow() {
-    if (minimizeToSystemTrayEnabled) {
-      hideWindow()
-    } else {
-      minimizeWindow()
-    }
-  }
+  const { minimizeWindow, maximizeWindow, closeWindow, isWindowMaximized } =
+    useAppWindow()
 
   return (
     <div className={cn('h-8', className)} {...props}>
-      <ControlButton onClick={handleMinimizeWindow} className={regularButton}>
+      <ControlButton onClick={minimizeWindow} className={regularButton}>
         <Icons.minimizeWin />
       </ControlButton>
       <ControlButton onClick={maximizeWindow} className={regularButton}>
