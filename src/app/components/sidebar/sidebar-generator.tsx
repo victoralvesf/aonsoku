@@ -1,14 +1,16 @@
 import clsx from 'clsx'
-import { ListMusic } from 'lucide-react'
-import { ElementType, Fragment } from 'react'
+import { ListMusicIcon } from 'lucide-react'
+import { ElementType, Fragment, memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import { PlaylistOptions } from '@/app/components/playlist/options'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { Button } from '@/app/components/ui/button'
 import { ROUTES } from '@/routes/routesList'
-import { useAppPages, useAppPodcasts } from '@/store/app.store'
+import { useAppStore } from '@/store/app.store'
 import { Playlist } from '@/types/responses/playlist'
+
+const ListMusic = memo(ListMusicIcon)
 
 export interface ISidebarItem {
   id: string
@@ -20,12 +22,15 @@ export interface ISidebarItem {
 export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
   const location = useLocation()
   const { t } = useTranslation()
-  const { hideRadiosSection } = useAppPages()
-  const { active: isPodcastsActive } = useAppPodcasts()
+  const hideRadiosSection = useAppStore().pages.hideRadiosSection
+  const isPodcastsActive = useAppStore().podcasts.active
 
-  function isActive(route: string) {
-    return location.pathname === route
-  }
+  const isActive = useCallback(
+    (route: string) => {
+      return location.pathname === route
+    },
+    [location.pathname],
+  )
 
   return (
     <>
@@ -62,9 +67,12 @@ export function SidebarPlaylistGenerator({
 }) {
   const location = useLocation()
 
-  function isActive(id: string) {
-    return location.pathname === ROUTES.PLAYLIST.PAGE(id)
-  }
+  const isActive = useCallback(
+    (id: string) => {
+      return location.pathname === ROUTES.PLAYLIST.PAGE(id)
+    },
+    [location.pathname],
+  )
 
   return (
     <Fragment>

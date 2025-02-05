@@ -1,12 +1,13 @@
 import {
-  ListMusic,
-  Mic2,
-  Music2,
-  Radio,
-  Home,
-  Library,
-  Podcast,
+  ListMusicIcon,
+  Mic2Icon,
+  Music2Icon,
+  RadioIcon,
+  HomeIcon,
+  LibraryIcon,
+  PodcastIcon,
 } from 'lucide-react'
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import CommandMenu from '@/app/components/command/command-menu'
@@ -21,6 +22,16 @@ import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+const ListMusic = memo(ListMusicIcon)
+const Mic2 = memo(Mic2Icon)
+const Music2 = memo(Music2Icon)
+const Radio = memo(RadioIcon)
+const Home = memo(HomeIcon)
+const Library = memo(LibraryIcon)
+const Podcast = memo(PodcastIcon)
+
+const SidebarGeneratorMemo = memo(SidebarGenerator)
 
 export function Sidebar({ className }: SidebarProps) {
   const { t } = useTranslation()
@@ -39,13 +50,13 @@ export function Sidebar({ className }: SidebarProps) {
         <div className="space-y-4 py-4 pt-0">
           <SidebarSection>
             <div className="space-y-1">
-              <SidebarGenerator list={mainMenuItems} />
+              <SidebarGeneratorMemo list={mainMenuItems} />
             </div>
           </SidebarSection>
           <SidebarSection>
             <SectionTitle>{t('sidebar.library')}</SectionTitle>
             <div className="space-y-1">
-              <SidebarGenerator list={libraryItems} />
+              <SidebarGeneratorMemo list={libraryItems} />
             </div>
           </SidebarSection>
         </div>
