@@ -13,7 +13,6 @@ interface AppWindowType {
   enterFullscreenWindow: () => Promise<void>
   exitFullscreenWindow: () => Promise<void>
   closeWindow: () => Promise<void>
-  hideWindow: () => Promise<void>
 }
 
 export function useAppWindow(): AppWindowType {
@@ -121,12 +120,6 @@ export function useAppWindow(): AppWindowType {
     }
   }
 
-  const hideWindow = async () => {
-    if (appWindow) {
-      await appWindow.hide()
-    }
-  }
-
   return {
     appWindow,
     isWindowMaximized,
@@ -137,6 +130,5 @@ export function useAppWindow(): AppWindowType {
     toggleFullscreen,
     enterFullscreenWindow,
     exitFullscreenWindow,
-    hideWindow,
   }
 }

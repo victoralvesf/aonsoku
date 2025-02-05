@@ -46,6 +46,7 @@ pub fn setup_system_tray(app: &mut App) {
             ) {
                 if let Some(window) = tray.app_handle().get_webview_window("main") {
                     let _ = window.show();
+                    let _ = window.unminimize();
                     let _ = window.set_focus();
                 }
             }
