@@ -73,7 +73,11 @@ img {
 
 .html a,
 .link {
-  @apply text-primary underline;
+  @apply text-primary underline break-words;
+}
+
+.html li {
+  @apply list-disc ml-8;
 }
 
 .html strong {
