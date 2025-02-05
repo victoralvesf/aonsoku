@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link, useParams } from 'react-router-dom'
 import { Actions } from '@/app/components/actions'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { Separator } from '@/app/components/ui/separator'
+import { ROUTES } from '@/routes/routesList'
 import { podcasts } from '@/service/podcasts'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
@@ -13,6 +15,7 @@ import { linkifyText, sanitizeLinks } from '@/utils/parseTexts'
 
 export default function Episode() {
   const { episodeId } = useParams() as { episodeId: string }
+  const { t } = useTranslation()
 
   const { data: episode, isLoading } = useQuery({
     queryKey: ['get-episode', episodeId],
@@ -23,12 +26,10 @@ export default function Episode() {
   if (!episode) return <AlbumFallback />
 
   function formatDescription(text: string) {
-    // Add target blank and rel attributes
-    let parsed = sanitizeLinks(text)
-    // Convert any left plain text to link
-    parsed = linkifyText(parsed)
+    const parsed = sanitizeLinks(text)
+    const final = linkifyText(parsed)
 
-    return { __html: parsed }
+    return { __html: final }
   }
 
   return (
@@ -57,7 +58,7 @@ export default function Episode() {
             {episode.title}
           </h1>
           <Link
-            to={`/podcasts/${episode.podcast_id}`}
+            to={ROUTES.PODCASTS.PAGE(episode.podcast_id)}
             className="text-lg font-medium text-muted-foreground hover:underline"
           >
             {episode.podcast.title}
@@ -74,7 +75,7 @@ export default function Episode() {
       <ListWrapper>
         <Actions.Container>
           <Actions.Button
-            tooltip={`Play ${episode.title}`}
+            tooltip={t('playlist.buttons.play', { name: episode.title })}
             buttonStyle="primary"
             onClick={() => {}}
           >
@@ -82,9 +83,9 @@ export default function Episode() {
           </Actions.Button>
         </Actions.Container>
 
-        <p
+        <div
           dangerouslySetInnerHTML={formatDescription(episode.description)}
-          className="html leading-relaxed max-w-full text-wrap"
+          className="html leading-relaxed max-w-full"
         />
       </ListWrapper>
     </div>

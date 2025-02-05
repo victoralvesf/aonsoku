@@ -6,6 +6,8 @@ const LIBRARY = {
   SONGS: '/library/songs',
   ALBUMS: '/library/albums',
   PLAYLISTS: '/library/playlists',
+  PODCASTS: '/library/podcasts',
+  EPISODES: '/library/episodes',
   RADIOS: '/library/radios',
 }
 
@@ -44,6 +46,16 @@ const PLAYLIST = {
   PATH: `${LIBRARY.PLAYLISTS}/:playlistId`,
 }
 
+const PODCASTS = {
+  PAGE: (podcastId: string) => `${LIBRARY.PODCASTS}/${podcastId}`,
+  PATH: `${LIBRARY.PODCASTS}/:podcastId`,
+}
+
+const EPISODES = {
+  PAGE: (episodeId: string) => `${LIBRARY.EPISODES}/${episodeId}`,
+  PATH: `${LIBRARY.EPISODES}/:episodeId`,
+}
+
 const SERVER_CONFIG = '/server-config'
 
 export const ROUTES = {
@@ -53,5 +65,7 @@ export const ROUTES = {
   ALBUMS,
   SONGS,
   PLAYLIST,
+  PODCASTS,
+  EPISODES,
   SERVER_CONFIG,
 }

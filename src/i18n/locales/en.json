@@ -15,6 +15,7 @@
     "albums": "Albums",
     "playlists": "Playlists",
     "radios": "Radios",
+    "podcasts": "Podcasts",
     "emptyPlaylist": "No playlists created yet"
   },
   "menu": {
@@ -191,6 +192,34 @@
     "topSongs": "Popular",
     "recentAlbums": "Recent albums",
     "relatedArtists": "Related artists"
+  },
+  "podcasts": {
+    "form": {
+      "addButton": "Add Podcast"
+    },
+    "emptyPage": {
+      "message": "No podcasts added",
+      "description": "It looks like you have not added any podcasts yet. Add one below!"
+    },
+    "filters": {
+      "episodes": {
+        "orderBy": {
+          "publishDate": "Publish Date",
+          "title": "Title",
+          "duration": "Duration"
+        }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} episode",
+      "episodeCount_many": "{{count}} episodes",
+      "episodeCount_other": "{{count}} episodes",
+      "feed": "Feed",
+      "website": "Official Website"
+    },
+    "list": {
+      "episodes": "Episodes"
+    }
   },
   "table": {
     "columns": {

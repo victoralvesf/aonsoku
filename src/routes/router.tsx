@@ -129,7 +129,7 @@ export const router = createBrowserRouter([
       },
       {
         id: 'podcasts',
-        path: '/podcasts',
+        path: ROUTES.LIBRARY.PODCASTS,
         errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<AlbumsFallback />}>
@@ -139,7 +139,7 @@ export const router = createBrowserRouter([
       },
       {
         id: 'podcast',
-        path: '/podcasts/:podcastId',
+        path: ROUTES.PODCASTS.PATH,
         errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<AlbumsFallback />}>
@@ -149,7 +149,7 @@ export const router = createBrowserRouter([
       },
       {
         id: 'episode',
-        path: '/episodes/:episodeId',
+        path: ROUTES.EPISODES.PATH,
         errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<AlbumsFallback />}>

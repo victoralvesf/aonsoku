@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { GlobeIcon, RssIcon } from 'lucide-react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { CustomLightBox } from '@/app/components/lightbox'
 import { Separator } from '@/app/components/ui/separator'
@@ -12,6 +13,7 @@ interface PodcastInfoProps {
 }
 
 export function PodcastInfo({ podcast }: PodcastInfoProps) {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
 
   return (
@@ -48,12 +50,16 @@ export function PodcastInfo({ podcast }: PodcastInfoProps) {
           {parseDescription(podcast.description)}
         </p>
         <div className="flex gap-1 text-muted-foreground text-sm">
-          <span>{podcast.episode_count} Episodes</span>
+          <span>
+            {t('podcasts.header.episodeCount', {
+              count: podcast.episode_count,
+            })}
+          </span>
           <span className="mx-1 opacity-80">•</span>
           <a href={podcast.feed_url} target="_blank" rel="noreferrer">
             <span className="flex gap-1 items-center hover:text-primary">
               <RssIcon className="w-4 h-4" />
-              Feed
+              {t('podcasts.header.feed')}
             </span>
           </a>
           {podcast.link && (
@@ -62,7 +68,7 @@ export function PodcastInfo({ podcast }: PodcastInfoProps) {
               <a href={podcast.link} target="_blank" rel="noreferrer">
                 <span className="flex gap-1 items-center hover:text-primary">
                   <GlobeIcon className="w-4 h-4" />
-                  Official Website
+                  {t('podcasts.header.website')}
                 </span>
               </a>
             </>

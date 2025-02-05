@@ -7,6 +7,7 @@ import { EmptyPodcastsPage } from '@/app/components/podcasts/empty-page'
 import { PodcastsHeader } from '@/app/components/podcasts/header'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { getPodcastList } from '@/queries/podcasts'
+import { ROUTES } from '@/routes/routesList'
 
 export default function PodcastsList() {
   const defaultPerPage = 32
@@ -73,17 +74,17 @@ export default function PodcastsList() {
         >
           {items.map((podcast) => (
             <PreviewCard.Root key={`podcast-${podcast.id}`}>
-              <PreviewCard.ImageWrapper link={`/podcasts/${podcast.id}`}>
+              <PreviewCard.ImageWrapper link={ROUTES.PODCASTS.PAGE(podcast.id)}>
                 <PreviewCard.Image
                   src={podcast.image_url}
                   alt={podcast.title}
                 />
               </PreviewCard.ImageWrapper>
               <PreviewCard.InfoWrapper>
-                <PreviewCard.Title link={`/podcasts/${podcast.id}`}>
+                <PreviewCard.Title link={ROUTES.PODCASTS.PAGE(podcast.id)}>
                   {podcast.title}
                 </PreviewCard.Title>
-                <PreviewCard.Subtitle enableLink={false} link="#">
+                <PreviewCard.Subtitle enableLink={false} link="">
                   {podcast.author}
                 </PreviewCard.Subtitle>
               </PreviewCard.InfoWrapper>

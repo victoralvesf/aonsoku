@@ -6,6 +6,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { Button } from '@/app/components/ui/button'
 import { Separator } from '@/app/components/ui/separator'
+import { ROUTES } from '@/routes/routesList'
 import { Episode } from '@/types/responses/podcasts'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
@@ -45,7 +46,7 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
   return (
     <div className="group/row" {...rest}>
       <Link
-        to={`/episodes/${episode.id}`}
+        to={ROUTES.EPISODES.PAGE(episode.id)}
         className="flex gap-2 items-center px-4 py-3 rounded-lg max-w-full group-hover/row:bg-foreground/20"
       >
         <div

@@ -1,10 +1,13 @@
 import { Podcast } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { EmptyWrapper } from '@/app/components/albums/empty-wrapper'
 import ListWrapper from '@/app/components/list-wrapper'
 import { Button } from '@/app/components/ui/button'
 import { PodcastsHeader } from './header'
 
 export function EmptyPodcastsPage() {
+  const { t } = useTranslation()
+
   return (
     <div className="w-full h-content">
       <PodcastsHeader />
@@ -16,10 +19,10 @@ export function EmptyPodcastsPage() {
               <Podcast className="w-8 h-8" />
             </div>
             <h3 className="text-2xl font-semibold tracking-tight">
-              No podcasts added
+              {t('podcasts.emptyPage.message')}
             </h3>
             <p className="text-sm text-muted-foreground">
-              It looks like you have not added any podcasts yet. Add one below!
+              {t('podcasts.emptyPage.description')}
             </p>
 
             <Button
@@ -28,7 +31,7 @@ export function EmptyPodcastsPage() {
               className="mt-4"
               onClick={() => {}}
             >
-              <span>Add Podcast</span>
+              <span>{t('podcasts.form.addButton')}</span>
             </Button>
           </div>
         </EmptyWrapper>

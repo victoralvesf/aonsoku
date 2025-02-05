@@ -12,9 +12,11 @@ import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 import { SimpleTooltip } from '../ui/simple-tooltip'
 
 export function EpisodesFilters() {
+  const { t } = useTranslation()
+
   return (
     <div className="px-8 h-16 flex items-center justify-between">
-      <h2 className="text-xl font-semibold">Episodes</h2>
+      <h2 className="text-xl font-semibold">{t('podcasts.list.episodes')}</h2>
 
       <div className="flex gap-2">
         <EpisodesSort />
@@ -25,6 +27,8 @@ export function EpisodesFilters() {
 }
 
 function FilterDropdown() {
+  const { t } = useTranslation()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,13 +38,13 @@ function FilterDropdown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
         <DropdownMenuCheckboxItem className="capitalize" checked={true}>
-          Publish Date
+          {t('podcasts.filters.episodes.orderBy.publishDate')}
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem className="capitalize">
-          Title
+          {t('podcasts.filters.episodes.orderBy.title')}
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem className="capitalize">
-          Duration
+          {t('podcasts.filters.episodes.orderBy.duration')}
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>

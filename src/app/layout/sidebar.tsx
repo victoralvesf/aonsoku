@@ -94,8 +94,8 @@ export const libraryItems = [
   },
   {
     id: 'podcasts',
-    title: 'Podcasts',
-    route: '/podcasts',
+    title: 'sidebar.podcasts',
+    route: ROUTES.LIBRARY.PODCASTS,
     icon: Podcast,
   },
   {
