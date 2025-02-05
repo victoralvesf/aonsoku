@@ -12,7 +12,7 @@ import {
   SongListFallback,
 } from '@/app/components/fallbacks/song-fallbacks'
 import { loginLoader } from '@/routes/loginLoader'
-import { protectedLoader } from '@/routes/protectedLoader'
+import { podcastsLoader, protectedLoader } from '@/routes/protectedLoader'
 import { ROUTES } from '@/routes/routesList'
 
 const BaseLayout = lazy(() => import('@/app/layout/base'))
@@ -131,6 +131,7 @@ export const router = createBrowserRouter([
         id: 'podcasts',
         path: ROUTES.LIBRARY.PODCASTS,
         errorElement: <ErrorPage />,
+        loader: podcastsLoader,
         element: (
           <Suspense fallback={<AlbumsFallback />}>
             <PodcastsList />
@@ -141,6 +142,7 @@ export const router = createBrowserRouter([
         id: 'podcast',
         path: ROUTES.PODCASTS.PATH,
         errorElement: <ErrorPage />,
+        loader: podcastsLoader,
         element: (
           <Suspense fallback={<AlbumsFallback />}>
             <Podcast />
@@ -151,6 +153,7 @@ export const router = createBrowserRouter([
         id: 'episode',
         path: ROUTES.EPISODES.PATH,
         errorElement: <ErrorPage />,
+        loader: podcastsLoader,
         element: (
           <Suspense fallback={<AlbumsFallback />}>
             <Episode />
