@@ -80,11 +80,13 @@ img {
   @apply list-disc ml-8;
 }
 
-.html strong {
+.html strong,
+.html b {
   @apply font-semibold;
 }
 
-.html strong:not(a strong) {
+.html strong:not(a strong),
+.html b:not(a b) {
   @apply text-foreground;
 }
 
