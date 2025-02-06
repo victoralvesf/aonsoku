@@ -18,7 +18,7 @@ export function EpisodeInfo({ episode }: EpisodeInfoProps) {
   }, [episode.published_at])
 
   const episodeDuration = useMemo(() => {
-    return convertSecondsToHumanRead(episode.duration)
+    return convertSecondsToHumanRead(episode.duration, true)
   }, [episode.duration])
 
   return (
