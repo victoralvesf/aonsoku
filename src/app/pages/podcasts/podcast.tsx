@@ -3,7 +3,7 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import debounce from 'lodash/debounce'
 import { memo, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
+import { PodcastFallback } from '@/app/components/fallbacks/podcast-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EpisodeCard } from '@/app/components/podcasts/episode-card'
 import { EpisodesFilters } from '@/app/components/podcasts/episodes-filters'
@@ -85,12 +85,12 @@ export default function Podcast() {
     }
   }, [fetchNextPage, hasNextPage, isFetchingNextPage])
 
-  if (episodesIsLoading || podcastIsLoading) return <AlbumFallback />
+  if (episodesIsLoading || podcastIsLoading) return <PodcastFallback />
   if (isFetched && !podcast) {
     return <ErrorPage status={404} statusText="Not Found" />
   }
-  if (!podcast) return <AlbumFallback />
-  if (!data) return <AlbumFallback />
+  if (!podcast) return <PodcastFallback />
+  if (!data) return <PodcastFallback />
 
   const items = virtualizer.getVirtualItems()
 
