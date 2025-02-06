@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { Actions } from '@/app/components/actions'
-import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
+import { EpisodeFallback } from '@/app/components/fallbacks/podcast-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EpisodeInfo } from '@/app/components/podcasts/episode-info'
 import { podcasts } from '@/service/podcasts'
@@ -17,8 +17,8 @@ export default function Episode() {
     queryFn: () => podcasts.getEpisode(episodeId),
   })
 
-  if (isLoading) return <AlbumFallback />
-  if (!episode) return <AlbumFallback />
+  if (isLoading) return <EpisodeFallback />
+  if (!episode) return <EpisodeFallback />
 
   function formatDescription(text: string) {
     const parsed = sanitizeLinks(text)
