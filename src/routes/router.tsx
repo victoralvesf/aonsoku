@@ -8,6 +8,10 @@ import {
 import { HomeFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import {
+  EpisodeFallback,
+  PodcastFallback,
+} from '@/app/components/fallbacks/podcast-fallbacks'
+import {
   InfinitySongListFallback,
   SongListFallback,
 } from '@/app/components/fallbacks/song-fallbacks'
@@ -144,7 +148,7 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         loader: podcastsLoader,
         element: (
-          <Suspense fallback={<AlbumsFallback />}>
+          <Suspense fallback={<PodcastFallback />}>
             <Podcast />
           </Suspense>
         ),
@@ -155,7 +159,7 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         loader: podcastsLoader,
         element: (
-          <Suspense fallback={<AlbumsFallback />}>
+          <Suspense fallback={<EpisodeFallback />}>
             <Episode />
           </Suspense>
         ),
