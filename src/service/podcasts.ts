@@ -1,6 +1,7 @@
 import { QueryType } from '@/api/httpClient'
 import { podcastClient } from '@/api/podcastClient'
 import {
+  Episode,
   EpisodeWithPodcast,
   Podcasts,
   PodcastWithEpisodes,
@@ -100,6 +101,14 @@ async function getEpisode(id: string) {
   return response
 }
 
+async function getLatest() {
+  const response = await podcastClient<Episode[]>('/episodes/latest', {
+    method: 'GET',
+  })
+
+  return response
+}
+
 export const podcasts = {
   getAll,
   getOne,
@@ -107,4 +116,5 @@ export const podcasts = {
   unfollow,
   search,
   getEpisode,
+  getLatest,
 }

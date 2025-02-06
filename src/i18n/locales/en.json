@@ -195,6 +195,7 @@
   },
   "podcasts": {
     "form": {
+      "latestEpisodes": "Latest Episodes",
       "addButton": "Add Podcast"
     },
     "emptyPage": {

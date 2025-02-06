@@ -18,6 +18,18 @@ export function PodcastFallback() {
   )
 }
 
+export function LatestEpisodesFallback() {
+  return (
+    <div className="w-full">
+      <ListWrapper className="px-4 pt-6">
+        {Array.from({ length: 12 }).map((_, index) => (
+          <EpisodeCardFallback key={'episode-fb-' + index} />
+        ))}
+      </ListWrapper>
+    </div>
+  )
+}
+
 export function EpisodeFallback() {
   return (
     <div className="w-full">

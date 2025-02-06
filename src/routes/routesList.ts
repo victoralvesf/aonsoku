@@ -54,6 +54,7 @@ const PODCASTS = {
 const EPISODES = {
   PAGE: (episodeId: string) => `${LIBRARY.EPISODES}/${episodeId}`,
   PATH: `${LIBRARY.EPISODES}/:episodeId`,
+  LATEST: `${LIBRARY.EPISODES}/latest`,
 }
 
 const SERVER_CONFIG = '/server-config'

@@ -9,6 +9,7 @@ import { HomeFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import {
   EpisodeFallback,
+  LatestEpisodesFallback,
   PodcastFallback,
 } from '@/app/components/fallbacks/podcast-fallbacks'
 import {
@@ -34,6 +35,9 @@ const Home = lazy(() => import('@/app/pages/home'))
 const PodcastsList = lazy(() => import('@/app/pages/podcasts/list'))
 const Podcast = lazy(() => import('@/app/pages/podcasts/podcast'))
 const Episode = lazy(() => import('@/app/pages/podcasts/episode'))
+const LatestEpisodes = lazy(
+  () => import('@/app/pages/podcasts/latest-episodes'),
+)
 
 export const router = createBrowserRouter([
   {
@@ -161,6 +165,17 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<EpisodeFallback />}>
             <Episode />
+          </Suspense>
+        ),
+      },
+      {
+        id: 'latest-episodes',
+        path: ROUTES.EPISODES.LATEST,
+        errorElement: <ErrorPage />,
+        loader: podcastsLoader,
+        element: (
+          <Suspense fallback={<LatestEpisodesFallback />}>
+            <LatestEpisodes />
           </Suspense>
         ),
       },

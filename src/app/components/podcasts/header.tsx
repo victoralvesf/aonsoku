@@ -1,8 +1,10 @@
-import { PlusIcon } from 'lucide-react'
+import { HistoryIcon, PlusIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { HeaderTitle } from '@/app/components/header-title'
 import { Button } from '@/app/components/ui/button'
+import { ROUTES } from '@/routes/routesList'
 
 export function PodcastsHeader() {
   const { t } = useTranslation()
@@ -12,7 +14,14 @@ export function PodcastsHeader() {
       <div className="w-full flex justify-between">
         <HeaderTitle title={t('sidebar.podcasts')} />
 
-        <div>
+        <div className="flex gap-2 items-center">
+          <Button variant="outline" asChild>
+            <Link to={ROUTES.EPISODES.LATEST}>
+              <HistoryIcon className="w-4 h-4" />
+              <span className="ml-2">{t('podcasts.form.latestEpisodes')}</span>
+            </Link>
+          </Button>
+
           <Button
             size="sm"
             variant="default"

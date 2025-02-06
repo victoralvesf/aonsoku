@@ -50,6 +50,7 @@ const podcast = {
 const episode = {
   all: 'get-podcast-episodes',
   one: 'get-episode',
+  latest: 'get-latest-episodes',
 }
 
 export const queryKeys = {
