@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { EllipsisVertical, Heart, Info, Play, Shuffle } from 'lucide-react'
-import { ButtonHTMLAttributes } from 'react'
+import { ButtonHTMLAttributes, ComponentPropsWithoutRef } from 'react'
 import { Button as ComponentButton } from '@/app/components/ui/button'
 import {
   DropdownMenu,
@@ -10,12 +10,17 @@ import {
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
 
-interface ActionsContainerProps {
-  children: React.ReactNode
-}
+type ActionsContainerProps = ComponentPropsWithoutRef<'div'>
 
-function Container({ children }: ActionsContainerProps) {
-  return <div className="w-full my-6 flex items-center gap-1">{children}</div>
+function Container({ children, className, ...rest }: ActionsContainerProps) {
+  return (
+    <div
+      {...rest}
+      className={cn('w-full my-6 flex items-center gap-1', className)}
+    >
+      {children}
+    </div>
+  )
 }
 
 interface ActionsMainButtonProps
