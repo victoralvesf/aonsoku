@@ -7,13 +7,14 @@ import ListWrapper from '@/app/components/list-wrapper'
 import { EpisodeInfo } from '@/app/components/podcasts/episode-info'
 import { podcasts } from '@/service/podcasts'
 import { linkifyText, sanitizeLinks } from '@/utils/parseTexts'
+import { queryKeys } from '@/utils/queryKeys'
 
 export default function Episode() {
   const { episodeId } = useParams() as { episodeId: string }
   const { t } = useTranslation()
 
   const { data: episode, isLoading } = useQuery({
-    queryKey: ['get-episode', episodeId],
+    queryKey: [queryKeys.episode.one, episodeId],
     queryFn: () => podcasts.getEpisode(episodeId),
   })
 

@@ -8,6 +8,7 @@ import { PodcastsHeader } from '@/app/components/podcasts/header'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { getPodcastList } from '@/queries/podcasts'
 import { ROUTES } from '@/routes/routesList'
+import { queryKeys } from '@/utils/queryKeys'
 
 export default function PodcastsList() {
   const defaultPerPage = 32
@@ -29,7 +30,7 @@ export default function PodcastsList() {
   }
 
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
-    queryKey: ['get-all-podcasts'],
+    queryKey: [queryKeys.podcast.all],
     queryFn: fetchPodcasts,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
