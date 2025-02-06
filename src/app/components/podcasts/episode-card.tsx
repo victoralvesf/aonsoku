@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { EllipsisVertical, PlayIcon } from 'lucide-react'
-import { ComponentPropsWithoutRef, useCallback } from 'react'
+import { ComponentPropsWithoutRef, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
@@ -19,29 +19,26 @@ type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
 export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
   const { t } = useTranslation()
 
-  const formatEpisodeDate = useCallback(
-    (date: string) => {
-      const today = dateTime()
-      const targetDate = dateTime(date)
-      const diffInDays = today.diff(targetDate, 'days')
+  const episodeReleaseDate = useMemo(() => {
+    const today = dateTime()
+    const targetDate = dateTime(episode.published_at)
+    const diffInDays = today.diff(targetDate, 'days')
 
-      if (today.year() !== targetDate.year()) {
-        return targetDate.format('L')
-      }
+    if (today.year() !== targetDate.year()) {
+      return targetDate.format('L')
+    }
 
-      if (diffInDays > 15) {
-        return targetDate.format('DD MMM')
-      }
+    if (diffInDays > 15) {
+      return targetDate.format('DD MMM')
+    }
 
-      const parsed = dateTime().from(targetDate, true)
-      return t('table.lastPlayed', { date: parsed })
-    },
-    [t],
-  )
+    const parsed = dateTime().from(targetDate, true)
+    return t('table.lastPlayed', { date: parsed })
+  }, [episode.published_at, t])
 
-  const formatEpisodeDuration = useCallback((duration: number) => {
-    return convertSecondsToHumanRead(duration)
-  }, [])
+  const episodeDuration = useMemo(() => {
+    return convertSecondsToHumanRead(episode.duration)
+  }, [episode.duration])
 
   return (
     <div className="group/row" {...rest}>
@@ -56,6 +53,10 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
             'rounded-md overflow-hidden border border-border',
             'shadow-[0_0_3px_rgba(255,255,255,0.03)] relative',
           )}
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+          }}
         >
           <LazyLoadImage
             effect="opacity"
@@ -70,6 +71,10 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
               variant="ghost"
               size="icon"
               className="rounded-full bg-background/20 backdrop-blur-md opacity-0 group-hover/row:opacity-100 transition-opacity group-hover/play:bg-background"
+              onClick={(e) => {
+                e.stopPropagation()
+                e.preventDefault()
+              }}
             >
               <PlayIcon className="w-4 h-4 fill-foreground" />
             </Button>
@@ -77,7 +82,7 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
         </div>
         <div className="flex flex-col flex-1 space-y-1 min-w-64">
           <span className="text-xs text-muted-foreground font-medium uppercase w-fit">
-            {formatEpisodeDate(episode.published_at)}
+            {episodeReleaseDate}
           </span>
           <h4 className="text-sm font-medium w-fit max-w-full truncate">
             {episode.title}
@@ -88,7 +93,7 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
         </div>
         <div className="min-w-[14%] flex items-center justify-center">
           <span className="text-xs text-muted-foreground">
-            {formatEpisodeDuration(episode.duration)}
+            {episodeDuration}
           </span>
         </div>
         <div className="min-w-16 flex items-center justify-end">
@@ -96,6 +101,10 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
             variant="ghost"
             size="icon"
             className="hover:bg-background rounded-full"
+            onClick={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+            }}
           >
             <EllipsisVertical className="w-4 h-4" />
           </Button>
