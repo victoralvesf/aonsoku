@@ -8,6 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
+import { EpisodesOrderByOptions, SortOptions } from '@/utils/albumsFilter'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 import { SimpleTooltip } from '../ui/simple-tooltip'
 
@@ -28,6 +29,28 @@ export function EpisodesFilters() {
 
 function FilterDropdown() {
   const { t } = useTranslation()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { getSearchParam } = new SearchParamsHandler(searchParams)
+  const { PublishedAt, Title, Duration } = EpisodesOrderByOptions
+
+  const orderByFilter = getSearchParam<EpisodesOrderByOptions>(
+    'orderBy',
+    PublishedAt,
+  )
+
+  function handleChangeFilter(value: EpisodesOrderByOptions) {
+    setSearchParams((state) => {
+      state.set('orderBy', value)
+
+      return state
+    })
+  }
+
+  const filters = [
+    { label: 'publishDate', option: PublishedAt },
+    { label: 'title', option: Title },
+    { label: 'duration', option: Duration },
+  ]
 
   return (
     <DropdownMenu>
@@ -36,16 +59,16 @@ function FilterDropdown() {
           <ListFilterIcon className="w-4 h-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuCheckboxItem className="capitalize" checked={true}>
-          {t('podcasts.filters.episodes.orderBy.publishDate')}
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem className="capitalize">
-          {t('podcasts.filters.episodes.orderBy.title')}
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem className="capitalize">
-          {t('podcasts.filters.episodes.orderBy.duration')}
-        </DropdownMenuCheckboxItem>
+      <DropdownMenuContent align="end" className="w-[200px]">
+        {filters.map(({ label, option }) => (
+          <DropdownMenuCheckboxItem
+            key={option}
+            checked={orderByFilter === option}
+            onCheckedChange={() => handleChangeFilter(option)}
+          >
+            {t(`podcasts.filters.episodes.orderBy.${label}`)}
+          </DropdownMenuCheckboxItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   )
@@ -55,11 +78,13 @@ function EpisodesSort() {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const { getSearchParam } = new SearchParamsHandler(searchParams)
+  const { Asc, Desc } = SortOptions
 
-  const sortFilter = getSearchParam<string>('sort', 'desc')
+  const sortFilter = getSearchParam<SortOptions>('sort', Desc)
+  const isDesc = sortFilter === Desc
 
   function yearFilterTooltip() {
-    if (sortFilter === 'desc') {
+    if (isDesc) {
       return t('table.sort.asc')
     } else {
       return t('table.sort.desc')
@@ -68,9 +93,7 @@ function EpisodesSort() {
 
   function handleChangeSort() {
     setSearchParams((state) => {
-      const filter = sortFilter === 'desc' ? 'asc' : 'desc'
-
-      state.set('sort', filter)
+      state.set('sort', isDesc ? Asc : Desc)
 
       return state
     })
@@ -79,7 +102,7 @@ function EpisodesSort() {
   return (
     <SimpleTooltip text={yearFilterTooltip()}>
       <Button variant="outline" size="sm" onClick={handleChangeSort}>
-        {sortFilter === 'desc' ? (
+        {isDesc ? (
           <ArrowUp className="w-4 h-4" />
         ) : (
           <ArrowDown className="w-4 h-4" />
