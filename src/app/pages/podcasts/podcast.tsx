@@ -2,7 +2,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import debounce from 'lodash/debounce'
 import { memo, useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { PodcastFallback } from '@/app/components/fallbacks/podcast-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EpisodeCard } from '@/app/components/podcasts/episode-card'
@@ -10,13 +10,26 @@ import { EpisodesFilters } from '@/app/components/podcasts/episodes-filters'
 import { PodcastInfo } from '@/app/components/podcasts/podcast-info'
 import ErrorPage from '@/app/pages/error-page'
 import { getPodcast, getPodcastEpisodes } from '@/queries/podcasts'
+import { EpisodesOrderByOptions, SortOptions } from '@/utils/albumsFilter'
+import { queryKeys } from '@/utils/queryKeys'
+import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 const MemoPodcastInfo = memo(PodcastInfo)
 
 export default function Podcast() {
-  const defaultPerPage = 20
+  const [searchParams] = useSearchParams()
+  const { getSearchParam } = new SearchParamsHandler(searchParams)
+  const defaultPerPage = 40
   const { podcastId } = useParams() as { podcastId: string }
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
+  const { PublishedAt } = EpisodesOrderByOptions
+  const { Desc } = SortOptions
+
+  const orderByFilter = getSearchParam<EpisodesOrderByOptions>(
+    'orderBy',
+    PublishedAt,
+  )
+  const sortFilter = getSearchParam<SortOptions>('sort', Desc)
 
   useEffect(() => {
     scrollDivRef.current = document.querySelector(
@@ -29,14 +42,14 @@ export default function Podcast() {
     isFetched,
     isLoading: podcastIsLoading,
   } = useQuery({
-    queryKey: ['get-podcast', podcastId],
+    queryKey: [queryKeys.podcast.one, podcastId],
     queryFn: () => getPodcast(podcastId),
   })
 
   const fetchEpisodes = async ({ pageParam = 1 }) => {
     return getPodcastEpisodes(podcastId, {
-      order_by: 'published_at',
-      sort: 'desc',
+      order_by: orderByFilter,
+      sort: sortFilter,
       page: pageParam,
       per_page: defaultPerPage,
     })
@@ -49,7 +62,7 @@ export default function Podcast() {
     isLoading: episodesIsLoading,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['get-podcast-episodes', podcastId],
+    queryKey: [queryKeys.episode.all, podcastId, orderByFilter, sortFilter],
     queryFn: fetchEpisodes,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
