@@ -9,11 +9,7 @@ export function PodcastFallback() {
       <PodcastHeaderFallback />
       <PodcastFiltersFallback />
 
-      <ListWrapper className="px-4">
-        {Array.from({ length: 8 }).map((_, index) => (
-          <EpisodeCardFallback key={'episode-fb-' + index} />
-        ))}
-      </ListWrapper>
+      <EpisodeListFallback />
     </div>
   )
 }
@@ -27,6 +23,16 @@ export function LatestEpisodesFallback() {
         ))}
       </ListWrapper>
     </div>
+  )
+}
+
+export function EpisodeListFallback() {
+  return (
+    <ListWrapper className="px-4">
+      {Array.from({ length: 8 }).map((_, index) => (
+        <EpisodeCardFallback key={'episode-fb-' + index} />
+      ))}
+    </ListWrapper>
   )
 }
 
