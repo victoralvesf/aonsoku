@@ -16,7 +16,7 @@
       },
       "delete": {
         "toast": {
-          "success": "Liste de lecture retirée avec succès !"
+          "success": "Liste de lecture supprimée avec succès !"
         },
         "title": "Êtes-vous sûr·e de vouloir supprimer cette liste de lecture ?",
         "description": "Cette action ne peut pas être annulée."
@@ -36,11 +36,25 @@
           "success": "Liste de lecture créée avec succès !",
           "error": "Échec de la création de la liste !"
         }
+      },
+      "removeSong": {
+        "description": "Cette action ne peut pas être annulée.",
+        "toast": {
+          "error_one": "Echec de la suppression du titre !",
+          "error_many": "Echec de la suppression des titres !",
+          "error_other": "Echec de la suppression des titres !",
+          "success_one": "Titre supprimé avec succès !",
+          "success_many": "Titres supprimés avec succès !",
+          "success_other": "Titres supprimés avec succès !"
+        },
+        "title_one": "Êtes-vous sûr·e de vouloir supprimer le titre sélectionné ?",
+        "title_many": "Êtes-vous sûr·e de vouloir supprimer les titres sélectionnés ?",
+        "title_other": "Êtes-vous sûr·e de vouloir supprimer les titres sélectionnés ?"
       }
     },
-    "songCount_one": "{{count}} chanson",
-    "songCount_many": "{{count}} chansons",
-    "songCount_other": "{{count}} chansons",
+    "songCount_one": "{{count}} titre",
+    "songCount_many": "{{count}} titres",
+    "songCount_other": "{{count}} titres",
     "headline": "Liste de lecture",
     "refresh": "Actualiser les listes de lecture",
     "noSongList": "Cette liste de lecture n'a pas de chansons !"
@@ -57,7 +71,14 @@
       "track": "Piste",
       "favorite": "En favori",
       "comment": "Commentaire",
-      "size": "Taille"
+      "size": "Taille",
+      "codec": "Codec",
+      "year": "Année",
+      "duration": "Durée",
+      "bpm": "BPM",
+      "title": "Titre",
+      "artist": "Artiste",
+      "album": "Album"
     },
     "buttons": {
       "play": "Jouer {{title}} par {{artist}}",
@@ -70,7 +91,7 @@
     "radios": "Radios",
     "search": "Recherche…",
     "home": "Accueil",
-    "songs": "Chansons",
+    "songs": "Titres",
     "albums": "Albums",
     "miniSearch": "Recherche",
     "library": "Bibliothèque",
@@ -81,7 +102,7 @@
     "serverLogout": "Se déconnecter",
     "language": "Langue",
     "server": "Serveur",
-    "about": "A propos"
+    "about": "À propos"
   },
   "generic": {
     "seeMore": "Voir plus",
@@ -111,7 +132,7 @@
       "musicbrainz": "Ouvrir dans MusicBrainz"
     },
     "more": {
-      "listTitle": "Plus de cet artiste",
+      "listTitle": "Plus de cet·te artiste",
       "discography": "Discographie de l'artiste",
       "genreTitle": "Plus de {{genre}}"
     },
@@ -120,12 +141,114 @@
         "albumsByArtist": "Albums de {{artist}}"
       },
       "empty": {
-        "title": "Oups, aucun album ici !"
+        "title": "Oups, aucun album ici !",
+        "info": "Il semble qu'il n'y ait pas d'albums avec le filtre actuel.",
+        "action": "Essayez peut-être de modifier les filtres ?"
+      },
+      "genre": {
+        "label": "Sélectionnez un genre …",
+        "notFound": "Aucun genre trouvé.",
+        "search": "Recherchez un genre …"
+      },
+      "filter": {
+        "mostPlayed": "Les plus écoutés",
+        "name": "Nom",
+        "recentlyAdded": "Ajoutés récemment",
+        "random": "Aléatoire",
+        "discography": "Discographie",
+        "recentlyPlayed": "Ecoutés récemment",
+        "releaseYear": "Date de sortie",
+        "artist": "Artiste",
+        "genre": "Genre"
       }
-    }
+    },
+    "headline": "Album"
   },
   "mobile": {
     "unsupported_message": "{{app_name}} n'est pas compatible avec les téléphones mobiles.",
     "access_recommendation": "Veuillez y accéder depuis un ordinateur ou une tablette."
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Rechercher des titres …"
+      },
+      "filter": {
+        "clear": "Supprimer le filtre"
+      },
+      "byArtist": "Titres de {{artist}}"
+    }
+  },
+  "artist": {
+    "recentAlbums": "Albums récents",
+    "relatedArtists": "Artistes similaires",
+    "topSongs": "Populaire",
+    "buttons": {
+      "play": "Ecouter la radio de {{artist}}",
+      "shuffle": "Ecouter la radio de {{artist}} en aléatoire",
+      "options": "Plus d'options pour {{artist}}"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} album",
+      "albumsCount_many": "{{count}} albums",
+      "albumsCount_other": "{{count}} albums"
+    },
+    "headline": "Artiste"
+  },
+  "login": {
+    "form": {
+      "username": "Nom d'utilisateur",
+      "usernamePlaceholder": "Votre nom d'utilisateur",
+      "urlDescription": "Ceci est l'URL du serveur",
+      "server": "Serveur",
+      "url": "URL"
+    }
+  },
+  "fullscreen": {
+    "noLyrics": "Aucunes paroles trouvées"
+  },
+  "logout": {
+    "dialog": {
+      "confirm": "Continuer",
+      "cancel": "Annuler",
+      "description": "Confirmez la déconnexion."
+    }
+  },
+  "command": {
+    "commands": {
+      "theme": "Changer le thème"
+    }
+  },
+  "toast": {
+    "server": {
+      "error": "La communication avec le serveur a échoué !"
+    }
+  },
+  "player": {
+    "tooltips": {
+      "pause": "Pause",
+      "next": "Suivant",
+      "previous": "Précédent"
+    }
+  },
+  "options": {
+    "playlist": {
+      "add": "Ajouter à la liste de lecture",
+      "delete": "Supprimer la liste de lecture"
+    }
+  },
+  "settings": {
+    "audio": {
+      "replayGain": {
+        "defaultGain": {
+          "info": "Ce niveau de gain est appliqué aux titres qui n'incluent pas de métadonnées ReplayGain, ce qui garantit un volume audio cohérent. La plage recommandée pour le gain est comprise entre -10 dB et -1 dB."
+        }
+      }
+    }
+  },
+  "server": {
+    "songCount_one": "{{count}} titre",
+    "songCount_many": "{{count}} titres",
+    "songCount_other": "{{count}} titres"
   }
 }
