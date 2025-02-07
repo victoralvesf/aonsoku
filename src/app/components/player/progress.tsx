@@ -89,6 +89,7 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
   }, [progress, currentDuration, mediaType, sendScrobble, currentSong.id])
 
   const currentTime = convertSecondsToTime(isSeeking ? localProgress : progress)
+  const progressMoreThanOneHour = localProgress >= 3600 || progress >= 3600
 
   return (
     <div
@@ -98,7 +99,10 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
       )}
     >
       <small
-        className="text-xs text-muted-foreground min-w-10 text-left"
+        className={clsx(
+          'text-xs text-muted-foreground text-left',
+          progressMoreThanOneHour ? 'min-w-14' : 'min-w-10',
+        )}
         data-testid="player-current-time"
       >
         {currentTime}
@@ -130,7 +134,7 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
         />
       )}
       <small
-        className="text-xs text-muted-foreground min-w-10 text-right"
+        className="text-xs text-muted-foreground text-right pl-2.5"
         data-testid="player-duration-time"
       >
         {songDuration}
