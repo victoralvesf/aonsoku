@@ -49,7 +49,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 9
+          version: 9.15.2
           run_install: false
 
       - name: Get pnpm store directory
