@@ -1,12 +1,12 @@
 import { AudioLines, Maximize2 } from 'lucide-react'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 
 import { getCoverArtUrl } from '@/api/httpClient'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import FullscreenMode from '@/app/components/fullscreen/page'
-import Image from '@/app/components/image'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
@@ -37,13 +37,16 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
   return (
     <Fragment>
       <div className="group relative">
-        <Image
-          src={getCoverArtUrl(song.coverArt, 'song', '140')}
-          width={70}
-          className="rounded shadow-md"
-          data-testid="track-image"
-          alt={`${song.artist} - ${song.title}`}
-        />
+        <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md">
+          <LazyLoadImage
+            src={getCoverArtUrl(song.coverArt, 'song', '140')}
+            width="100%"
+            height="100%"
+            className="aspect-square object-cover w-full h-full cursor-pointer text-transparent"
+            data-testid="track-image"
+            alt={`${song.artist} - ${song.title}`}
+          />
+        </div>
         <FullscreenMode>
           <Button
             variant="secondary"

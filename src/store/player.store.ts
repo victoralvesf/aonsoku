@@ -482,15 +482,31 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               )
             },
             removeSongFromQueue: (id) => {
-              const { currentList, originalList, shuffledList } = get().songlist
+              const {
+                currentList,
+                originalList,
+                shuffledList,
+                currentSongIndex,
+                originalSongIndex,
+              } = get().songlist
 
+              // Get the removed song index to adjust the current one.
+              const removedSongIndex = currentList.findIndex(
+                (song) => song.id === id,
+              )
               const newCurrentList = currentList.filter(
                 (song) => song.id !== id,
               )
 
+              // Clear player state if list is empty
               if (newCurrentList.length === 0) {
                 get().actions.clearPlayerState()
                 return
+              }
+
+              // In case of removing current song, resets the progress
+              if (removedSongIndex === currentSongIndex) {
+                get().actions.resetProgress()
               }
 
               const newOriginalList = originalList.filter(
@@ -500,10 +516,29 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 (song) => song.id !== id,
               )
 
+              // Update index to fit new current list
+              const updatedCurrentIndex = Math.min(
+                currentSongIndex -
+                  (removedSongIndex < currentSongIndex ? 1 : 0),
+                newCurrentList.length - 1,
+              )
+
+              // Update original index
+              const removedOriginalIndex = originalList.findIndex(
+                (song) => song.id === id,
+              )
+              const updatedOriginalIndex = Math.min(
+                originalSongIndex -
+                  (removedOriginalIndex < originalSongIndex ? 1 : 0),
+                newOriginalList.length - 1,
+              )
+
               set((state) => {
                 state.songlist.currentList = newCurrentList
                 state.songlist.originalList = newOriginalList
                 state.songlist.shuffledList = newShuffledList
+                state.songlist.currentSongIndex = updatedCurrentIndex
+                state.songlist.originalSongIndex = updatedOriginalIndex
               })
             },
             setQueueDrawerState: (status) => {

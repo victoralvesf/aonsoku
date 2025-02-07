@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { DataTableList } from '@/app/components/ui/data-table-list'
+import { DialogTitle } from '@/app/components/ui/dialog'
 import { Separator } from '@/app/components/ui/separator'
 import { queueColumns } from '@/app/tables/queue-columns'
 import {
@@ -30,6 +31,7 @@ export function QueueSongList() {
 
   return (
     <div className="flex flex-1 flex-col h-full min-w-[300px]">
+      <DialogTitle className="sr-only">{t('queue.title')}</DialogTitle>
       <div className="flex items-center justify-between h-8 mb-2">
         <div className="flex gap-2 h-6 items-center text-muted-foreground">
           <p className="text-foreground">{t('queue.title')}</p>
