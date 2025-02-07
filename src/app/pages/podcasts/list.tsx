@@ -11,7 +11,7 @@ import { ROUTES } from '@/routes/routesList'
 import { queryKeys } from '@/utils/queryKeys'
 
 export default function PodcastsList() {
-  const defaultPerPage = 32
+  const defaultPerPage = 40
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
