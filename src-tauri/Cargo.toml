@@ -1,6 +1,6 @@
 [package]
 name = "aonsoku"
-version = "0.8.1"
+version = "0.8.2"
 description = "A modern desktop client for Navidrome/Subsonic servers."
 authors = ["Victor Alves"]
 edition = "2021"
