@@ -36,7 +36,7 @@ function getAuthHeaders() {
 export async function podcastClient<T>(
   path: string,
   options: FetchOptions,
-): Promise<T | undefined> {
+): Promise<T | null> {
   try {
     const url = getUrl(path)
 
@@ -72,12 +72,12 @@ export async function podcastClient<T>(
     }
 
     if (response.status === 204) {
-      return undefined
+      return null
     }
 
     return (await response.json()) as T
   } catch (error) {
     console.error('Error in podcastClient:', error)
-    return undefined
+    return null
   }
 }
