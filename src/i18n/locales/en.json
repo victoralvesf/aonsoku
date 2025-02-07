@@ -553,6 +553,22 @@
         "radios": {
           "section": "Hide radios section"
         }
+      },
+      "podcast": {
+        "group": "Podcasts",
+        "description": "Enable integration with the Aonsoku Podcasts service.",
+        "enabled": {
+          "label": "Enable Integration"
+        },
+        "service": {
+          "url": "Podcast Service URL"
+        },
+        "credentials": {
+          "label": "Use Logged-In User and Server URL",
+          "error": "Username and Server URL are required.",
+          "user": "Username",
+          "url": "Server URL"
+        }
       }
     }
   },

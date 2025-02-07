@@ -562,6 +562,22 @@
         "radios": {
           "section": "Esconder seção de rádios"
         }
+      },
+      "podcast": {
+        "group": "Podcasts",
+        "description": "Habilitar integração com o serviço Aonsoku Podcasts.",
+        "enabled": {
+          "label": "Habilitar Integração"
+        },
+        "service": {
+          "url": "URL do Serviço de Podcast"
+        },
+        "credentials": {
+          "label": "Usar Usuário Logado e URL do Servidor",
+          "error": "Nome de usuário e URL do servidor são obrigatórios.",
+          "user": "Nome de Usuário",
+          "url": "URL do Servidor"
+        }
       }
     }
   },

@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { ComponentPropsWithoutRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
@@ -16,6 +17,7 @@ import {
 } from '@/app/components/settings/section'
 import { Input } from '@/app/components/ui/input'
 import { Switch } from '@/app/components/ui/switch'
+import { cn } from '@/lib/utils'
 import { useAppPodcasts } from '@/store/app.store'
 
 const podcastSchema = z
@@ -37,7 +39,7 @@ const podcastSchema = z
       return data.useDefaultUser === true || (customUser > 0 && customUrl > 0)
     },
     {
-      message: 'User and Server Url are required when Use Logged User is false',
+      message: 'settings.content.podcast.credentials.error',
       path: ['useDefaultUser'],
     },
   )
@@ -86,14 +88,16 @@ export function PodcastContent() {
   return (
     <Root>
       <Header>
-        <HeaderTitle>Podcast Integration</HeaderTitle>
+        <HeaderTitle>{t('settings.content.podcast.group')}</HeaderTitle>
         <HeaderDescription>
-          Enable integration to Aonsoku Podcasts service
+          {t('settings.content.podcast.description')}
         </HeaderDescription>
       </Header>
       <Content>
         <ContentItem>
-          <ContentItemTitle>Enabled</ContentItemTitle>
+          <ContentItemTitle>
+            {t('settings.content.podcast.enabled.label')}
+          </ContentItemTitle>
           <ContentItemForm>
             <Switch
               {...register('active')}
@@ -109,11 +113,9 @@ export function PodcastContent() {
         {watch('active') && (
           <ContentItem>
             <ContentItemTitle>
-              Service URL
+              {t('settings.content.podcast.service.url')}
               {errors.serviceUrl?.message && (
-                <p className="text-destructive text-xs mt-1">
-                  {t(errors.serviceUrl.message)}
-                </p>
+                <ErrorMessage>{t(errors.serviceUrl.message)}</ErrorMessage>
               )}
             </ContentItemTitle>
             <ContentItemForm>
@@ -136,11 +138,9 @@ export function PodcastContent() {
         {watch('active') && (
           <ContentItem>
             <ContentItemTitle>
-              Use logged User and Server URL
+              {t('settings.content.podcast.credentials.label')}
               {errors.useDefaultUser?.message && (
-                <p className="text-destructive text-xs mt-1">
-                  {t(errors.useDefaultUser.message)}
-                </p>
+                <ErrorMessage>{t(errors.useDefaultUser.message)}</ErrorMessage>
               )}
             </ContentItemTitle>
             <ContentItemForm>
@@ -160,11 +160,9 @@ export function PodcastContent() {
           <>
             <ContentItem>
               <ContentItemTitle>
-                User
+                {t('settings.content.podcast.credentials.user')}
                 {errors.customUser?.message && (
-                  <p className="text-destructive text-xs mt-1">
-                    {t(errors.customUser.message)}
-                  </p>
+                  <ErrorMessage>{t(errors.customUser.message)}</ErrorMessage>
                 )}
               </ContentItemTitle>
               <ContentItemForm>
@@ -172,7 +170,7 @@ export function PodcastContent() {
                   {...register('customUser')}
                   className={clsx(
                     'h-8',
-                    errors.serviceUrl && 'border-destructive',
+                    errors.customUser && 'border-destructive',
                   )}
                   onChange={(e) => {
                     setValue('customUser', e.target.value, {
@@ -185,11 +183,9 @@ export function PodcastContent() {
             </ContentItem>
             <ContentItem>
               <ContentItemTitle>
-                Server URL
+                {t('settings.content.podcast.credentials.url')}
                 {errors.customUrl?.message && (
-                  <p className="text-destructive text-xs mt-1">
-                    {t(errors.customUrl.message)}
-                  </p>
+                  <ErrorMessage>{t(errors.customUrl.message)}</ErrorMessage>
                 )}
               </ContentItemTitle>
               <ContentItemForm>
@@ -213,5 +209,17 @@ export function PodcastContent() {
       </Content>
       <ContentSeparator />
     </Root>
+  )
+}
+
+function ErrorMessage({
+  className,
+  children,
+  ...rest
+}: ComponentPropsWithoutRef<'p'>) {
+  return (
+    <p {...rest} className={cn('text-destructive text-xs mt-1', className)}>
+      {children}
+    </p>
   )
 }
