@@ -43,7 +43,7 @@ export default function LatestEpisodes() {
 
   return (
     <div className="w-full">
-      <ListWrapper className="px-4 pt-6">
+      <ListWrapper className="px-4 pt-4">
         <div
           style={{
             height: virtualizer.getTotalSize(),
