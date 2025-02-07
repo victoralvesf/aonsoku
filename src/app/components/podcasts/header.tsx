@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { HeaderTitle } from '@/app/components/header-title'
 import { Button } from '@/app/components/ui/button'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { ROUTES } from '@/routes/routesList'
 
 export function PodcastsHeader() {
@@ -15,12 +16,13 @@ export function PodcastsHeader() {
         <HeaderTitle title={t('sidebar.podcasts')} />
 
         <div className="flex gap-2 items-center">
-          <Button variant="outline" asChild>
-            <Link to={ROUTES.EPISODES.LATEST}>
-              <HistoryIcon className="w-4 h-4" />
-              <span className="ml-2">{t('podcasts.form.latestEpisodes')}</span>
-            </Link>
-          </Button>
+          <SimpleTooltip text={t('podcasts.form.latestEpisodes')}>
+            <Button variant="outline" className="w-9 h-9 p-0" asChild>
+              <Link to={ROUTES.EPISODES.LATEST}>
+                <HistoryIcon className="w-4 h-4" />
+              </Link>
+            </Button>
+          </SimpleTooltip>
 
           <Button
             size="sm"
