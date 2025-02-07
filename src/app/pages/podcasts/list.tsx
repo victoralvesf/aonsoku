@@ -9,15 +9,14 @@ import { PreviewCard } from '@/app/components/preview-card/card'
 import { getPodcastList } from '@/queries/podcasts'
 import { ROUTES } from '@/routes/routesList'
 import { queryKeys } from '@/utils/queryKeys'
+import { getMainScrollElement } from '@/utils/scrollPageToTop'
 
 export default function PodcastsList() {
   const defaultPerPage = 40
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    scrollDivRef.current = document.querySelector(
-      '#main-scroll-area #scroll-viewport',
-    ) as HTMLDivElement
+    scrollDivRef.current = getMainScrollElement()
   }, [])
 
   const fetchPodcasts = async ({ pageParam = 1 }) => {

@@ -7,14 +7,13 @@ import { EpisodeCard } from '@/app/components/podcasts/episode-card'
 import ErrorPage from '@/app/pages/error-page'
 import { podcasts } from '@/service/podcasts'
 import { queryKeys } from '@/utils/queryKeys'
+import { getMainScrollElement } from '@/utils/scrollPageToTop'
 
 export default function LatestEpisodes() {
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    scrollDivRef.current = document.querySelector(
-      '#main-scroll-area #scroll-viewport',
-    ) as HTMLDivElement
+    scrollDivRef.current = getMainScrollElement()
   }, [])
 
   const {
