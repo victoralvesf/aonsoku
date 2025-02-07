@@ -3,6 +3,7 @@ import { podcastClient } from '@/api/podcastClient'
 import {
   Episode,
   EpisodeWithPodcast,
+  Podcast,
   Podcasts,
   PodcastWithEpisodes,
 } from '@/types/responses/podcasts'
@@ -61,12 +62,15 @@ async function getOne(id: string, params?: ShowParams) {
   return response
 }
 
-type CreateParams =
-  | { feed_url: string; feed_urls?: never }
-  | { feed_urls: string[]; feed_url?: never }
+type CreateParams = { feed_url: string } | { feed_urls: string[] }
+type CreateOneResponse = Promise<Podcast | null>
+type CreateManyResponse = Promise<Podcast[] | null>
+type CreateResponse = Promise<Podcast | Podcast[] | null>
 
-async function create(body: CreateParams) {
-  const response = await podcastClient<PodcastWithEpisodes>('/podcasts', {
+async function create(body: { feed_url: string }): CreateOneResponse
+async function create(body: { feed_urls: string[] }): CreateManyResponse
+async function create(body: CreateParams): CreateResponse {
+  const response = await podcastClient<Podcast | Podcast[]>('/podcasts', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
