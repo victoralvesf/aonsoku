@@ -11,7 +11,11 @@ import {
   Root,
 } from '@/app/components/settings/section'
 import { Switch } from '@/app/components/ui/switch'
-import { useFullscreenPlayerSettings } from '@/store/player.store'
+import {
+  useFullscreenPlayerSettings,
+  useMinimizeToSystemTraySettings,
+} from '@/store/player.store'
+import { isTauri } from '@/utils/tauriTools'
 
 export function FullscreenSettings() {
   const { t } = useTranslation()
@@ -40,8 +44,33 @@ export function FullscreenSettings() {
             />
           </ContentItemForm>
         </ContentItem>
+        <MinimizeToSystemTraySettings />
       </Content>
       <ContentSeparator />
     </Root>
+  )
+}
+
+function MinimizeToSystemTraySettings() {
+  const { t } = useTranslation()
+  const { minimizeToSystemTrayEnabled, setMinimizeToSystemTrayEnabled } =
+    useMinimizeToSystemTraySettings()
+
+  if (!isTauri()) return null
+
+  return (
+    <ContentItem>
+      <ContentItemTitle
+        info={t('settings.appearance.general.minimizeToSystemTray.info')}
+      >
+        {t('settings.appearance.general.minimizeToSystemTray.label')}
+      </ContentItemTitle>
+      <ContentItemForm>
+        <Switch
+          checked={minimizeToSystemTrayEnabled}
+          onCheckedChange={setMinimizeToSystemTrayEnabled}
+        />
+      </ContentItemForm>
+    </ContentItem>
   )
 }
