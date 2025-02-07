@@ -56,7 +56,7 @@ export function QueueItem({
         <div className="w-10 h-10 bg-accent rounded mr-2">
           <LazyLoadImage
             src={coverArtUrl}
-            className="w-10 h-10 rounded"
+            className="w-10 h-10 rounded text-transparent"
             alt={`${song.title} - ${song.artist}`}
           />
         </div>
