@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { HeaderTitle } from '@/app/components/header-title'
+import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { ROUTES } from '@/routes/routesList'
@@ -23,6 +24,8 @@ export function PodcastsHeader() {
               </Link>
             </Button>
           </SimpleTooltip>
+
+          <ExpandableSearchInput placeholder={t('podcasts.form.search')} />
 
           <Button
             size="sm"

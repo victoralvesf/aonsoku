@@ -201,11 +201,17 @@
   "podcasts": {
     "form": {
       "latestEpisodes": "Últimos Episódios",
-      "addButton": "Adicionar Podcast"
+      "addButton": "Adicionar Podcast",
+      "search": "Buscar podcasts…"
     },
     "emptyPage": {
       "message": "Nenhum podcast adicionado",
       "description": "Parece que você ainda não adicionou nenhum podcast. Adicione um abaixo!"
+    },
+    "emptyResults": {
+      "title": "Nenhum resultado encontrado.",
+      "info": "Não encontramos podcasts para o termo pesquisado.",
+      "action": "Por favor, verifique a ortografia ou tente palavras-chave diferentes."
     },
     "filters": {
       "episodes": {

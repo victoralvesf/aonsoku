@@ -2,16 +2,17 @@ import {
   GetAllParams,
   podcasts,
   SearchEpisodesParams,
+  SearchParams,
   ShowParams,
 } from '@/service/podcasts'
 
-const emptyResponse = { podcasts: [], nextOffset: null }
+const emptyPodcastResponse = { podcasts: [], nextOffset: null }
 
 export async function getPodcastList(params: Required<GetAllParams>) {
   const response = await podcasts.getAll(params)
 
-  if (!response) return emptyResponse
-  if (!response.data) return emptyResponse
+  if (!response) return emptyPodcastResponse
+  if (!response.data) return emptyPodcastResponse
 
   let nextOffset = null
   if (response.next_page_url !== null) {
@@ -71,6 +72,23 @@ export async function searchEpisodes(
 
   return {
     episodes: response.data,
+    nextOffset,
+  }
+}
+
+export async function searchPodcasts(params: Required<SearchParams>) {
+  const response = await podcasts.search(params)
+
+  if (!response) return emptyPodcastResponse
+  if (!response.data) return emptyPodcastResponse
+
+  let nextOffset = null
+  if (response.next_page_url !== null) {
+    nextOffset = params.page + 1
+  }
+
+  return {
+    podcasts: response.data,
     nextOffset,
   }
 }

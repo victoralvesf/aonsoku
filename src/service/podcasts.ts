@@ -19,7 +19,7 @@ interface Paginated {
   page?: number
 }
 
-interface SearchParams extends Paginated {
+export interface SearchParams extends Paginated {
   query: string
   filter_by?: FilterBy
 }

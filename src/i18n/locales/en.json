@@ -196,11 +196,17 @@
   "podcasts": {
     "form": {
       "latestEpisodes": "Latest Episodes",
-      "addButton": "Add Podcast"
+      "addButton": "Add Podcast",
+      "search": "Search podcasts…"
     },
     "emptyPage": {
       "message": "No podcasts added",
       "description": "It looks like you have not added any podcasts yet. Add one below!"
+    },
+    "emptyResults": {
+      "title": "No results found.",
+      "info": "We couldn't find any podcasts matching your search term.",
+      "action": "Please check your spelling or try different keywords."
     },
     "filters": {
       "episodes": {

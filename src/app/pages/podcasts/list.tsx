@@ -1,25 +1,47 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import debounce from 'lodash/debounce'
 import { useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { AlbumsFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EmptyPodcastsPage } from '@/app/components/podcasts/empty-page'
+import { EmptyPodcastsResults } from '@/app/components/podcasts/empty-results'
 import { PodcastsHeader } from '@/app/components/podcasts/header'
 import { PreviewCard } from '@/app/components/preview-card/card'
-import { getPodcastList } from '@/queries/podcasts'
+import { getPodcastList, searchPodcasts } from '@/queries/podcasts'
 import { ROUTES } from '@/routes/routesList'
+import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { getMainScrollElement } from '@/utils/scrollPageToTop'
+import { SearchParamsHandler } from '@/utils/searchParamsHandler'
+
+const { Query, MainFilter } = AlbumsSearchParams
 
 export default function PodcastsList() {
   const defaultPerPage = 40
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
+
+  const [searchParams] = useSearchParams()
+  const { getSearchParam } = new SearchParamsHandler(searchParams)
+
+  const currentFilter = getSearchParam<string>(MainFilter, '')
+  const query = getSearchParam<string>(Query, '')
+  const isSearchState = currentFilter === AlbumsFilters.Search
 
   useEffect(() => {
     scrollDivRef.current = getMainScrollElement()
   }, [])
 
   const fetchPodcasts = async ({ pageParam = 1 }) => {
+    if (isSearchState && query !== '') {
+      return searchPodcasts({
+        query,
+        filter_by: 'title',
+        page: pageParam,
+        per_page: defaultPerPage,
+      })
+    }
+
     return getPodcastList({
       order_by: 'title',
       sort: 'asc',
@@ -29,7 +51,7 @@ export default function PodcastsList() {
   }
 
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
-    queryKey: [queryKeys.podcast.all],
+    queryKey: [queryKeys.podcast.all, currentFilter, query],
     queryFn: fetchPodcasts,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
@@ -61,7 +83,11 @@ export default function PodcastsList() {
 
   const items = data.pages.flatMap((page) => page.podcasts) || []
 
-  if (items.length === 0) return <EmptyPodcastsPage />
+  if (items.length === 0) {
+    if (isSearchState) return <EmptyPodcastsResults />
+
+    return <EmptyPodcastsPage />
+  }
 
   return (
     <div className="w-full h-full">
