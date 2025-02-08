@@ -209,6 +209,7 @@
     },
     "filters": {
       "episodes": {
+        "search": "Buscar episódios…",
         "orderBy": {
           "publishDate": "Data de Publicação",
           "title": "Título",

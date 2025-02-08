@@ -1,15 +1,13 @@
-import { podcasts } from '@/service/podcasts'
+import {
+  GetAllParams,
+  podcasts,
+  SearchEpisodesParams,
+  ShowParams,
+} from '@/service/podcasts'
 
 const emptyResponse = { podcasts: [], nextOffset: null }
 
-interface GetAllParams {
-  order_by: 'title' | 'episode_count'
-  sort: 'asc' | 'desc'
-  per_page: number
-  page: number
-}
-
-export async function getPodcastList(params: GetAllParams) {
+export async function getPodcastList(params: Required<GetAllParams>) {
   const response = await podcasts.getAll(params)
 
   if (!response) return emptyResponse
@@ -35,16 +33,12 @@ export async function getPodcast(id: string) {
   return response.podcast
 }
 
-interface GetOneParams {
-  order_by: 'published_at' | 'title' | 'duration'
-  sort: 'asc' | 'desc'
-  per_page: number
-  page: number
-}
-
 const emptyEpisodeResponse = { episodes: [], nextOffset: null }
 
-export async function getPodcastEpisodes(id: string, params: GetOneParams) {
+export async function getPodcastEpisodes(
+  id: string,
+  params: Required<ShowParams>,
+) {
   const response = await podcasts.getOne(id, params)
 
   if (!response) return emptyEpisodeResponse
@@ -57,6 +51,26 @@ export async function getPodcastEpisodes(id: string, params: GetOneParams) {
 
   return {
     episodes: response.episodes.data,
+    nextOffset,
+  }
+}
+
+export async function searchEpisodes(
+  podcastId: string,
+  params: Required<SearchEpisodesParams>,
+) {
+  const response = await podcasts.searchEpisodes(podcastId, params)
+
+  if (!response) return emptyEpisodeResponse
+  if (!response.data) return emptyEpisodeResponse
+
+  let nextOffset = null
+  if (response.next_page_url !== null) {
+    nextOffset = params.page + 1
+  }
+
+  return {
+    episodes: response.data,
     nextOffset,
   }
 }

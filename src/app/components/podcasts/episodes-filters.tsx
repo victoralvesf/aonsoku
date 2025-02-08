@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowUp, ListFilterIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
+import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
 import { Button } from '@/app/components/ui/button'
 import {
   DropdownMenu,
@@ -8,9 +9,9 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { EpisodesOrderByOptions, SortOptions } from '@/utils/albumsFilter'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
-import { SimpleTooltip } from '../ui/simple-tooltip'
 
 export function EpisodesFilters() {
   const { t } = useTranslation()
@@ -20,6 +21,9 @@ export function EpisodesFilters() {
       <h2 className="text-xl font-semibold">{t('podcasts.list.episodes')}</h2>
 
       <div className="flex gap-2">
+        <ExpandableSearchInput
+          placeholder={t('podcasts.filters.episodes.search')}
+        />
         <EpisodesSort />
         <FilterDropdown />
       </div>
@@ -55,7 +59,7 @@ function FilterDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" className="w-9 h-9 p-0" size="sm">
           <ListFilterIcon className="w-4 h-4" />
         </Button>
       </DropdownMenuTrigger>
@@ -101,7 +105,12 @@ function EpisodesSort() {
 
   return (
     <SimpleTooltip text={yearFilterTooltip()}>
-      <Button variant="outline" size="sm" onClick={handleChangeSort}>
+      <Button
+        variant="outline"
+        className="w-9 h-9 p-0"
+        size="sm"
+        onClick={handleChangeSort}
+      >
         {isDesc ? (
           <ArrowUp className="w-4 h-4" />
         ) : (

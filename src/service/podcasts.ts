@@ -2,17 +2,43 @@ import { QueryType } from '@/api/httpClient'
 import { podcastClient } from '@/api/podcastClient'
 import {
   Episode,
+  Episodes,
   EpisodeWithPodcast,
   Podcast,
   Podcasts,
   PodcastWithEpisodes,
 } from '@/types/responses/podcasts'
 
-interface SearchParams {
-  query: string
+type PodcastOrderBy = 'title' | 'episode_count'
+type EpisodeOrderBy = 'published_at' | 'title' | 'duration'
+type FilterBy = 'title' | 'description' | 'both'
+type Sort = 'asc' | 'desc'
+
+interface Paginated {
   per_page?: number
   page?: number
-  filter_by?: 'title' | 'description' | 'both'
+}
+
+interface SearchParams extends Paginated {
+  query: string
+  filter_by?: FilterBy
+}
+
+export interface GetAllParams extends Paginated {
+  order_by?: PodcastOrderBy
+  sort?: Sort
+}
+
+export interface ShowParams extends Paginated {
+  order_by?: EpisodeOrderBy
+  sort?: Sort
+}
+
+export interface SearchEpisodesParams extends Paginated {
+  query: string
+  order_by?: EpisodeOrderBy
+  filter_by?: FilterBy
+  sort?: Sort
 }
 
 async function search(params: SearchParams) {
@@ -26,13 +52,6 @@ async function search(params: SearchParams) {
   return response
 }
 
-interface GetAllParams {
-  order_by?: 'title' | 'episode_count'
-  sort?: 'asc' | 'desc'
-  per_page?: number
-  page?: number
-}
-
 async function getAll(params?: GetAllParams) {
   const query: QueryType = { ...params }
 
@@ -42,13 +61,6 @@ async function getAll(params?: GetAllParams) {
   })
 
   return response
-}
-
-interface ShowParams {
-  order_by?: 'published_at' | 'title' | 'duration'
-  sort?: 'asc' | 'desc'
-  per_page?: number
-  page?: number
 }
 
 async function getOne(id: string, params?: ShowParams) {
@@ -113,6 +125,18 @@ async function getLatest() {
   return response
 }
 
+async function searchEpisodes(podcastId: string, params: SearchEpisodesParams) {
+  const query: QueryType = params ? { ...params } : {}
+
+  const route = `/episodes/podcast/${podcastId}/search`
+  const response = await podcastClient<Episodes>(route, {
+    method: 'GET',
+    query,
+  })
+
+  return response
+}
+
 export const podcasts = {
   getAll,
   getOne,
@@ -121,4 +145,5 @@ export const podcasts = {
   search,
   getEpisode,
   getLatest,
+  searchEpisodes,
 }

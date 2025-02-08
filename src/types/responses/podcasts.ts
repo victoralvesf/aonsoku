@@ -40,6 +40,8 @@ export interface Episode {
   playback: []
 }
 
+export type Episodes = PaginateResponse<Episode>
+
 export interface EpisodeWithPodcast extends Episode {
   podcast: Podcast
 }

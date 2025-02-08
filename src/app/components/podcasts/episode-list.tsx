@@ -6,11 +6,18 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { EpisodeListFallback } from '@/app/components/fallbacks/podcast-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EpisodeCard } from '@/app/components/podcasts/episode-card'
-import { getPodcastEpisodes } from '@/queries/podcasts'
-import { EpisodesOrderByOptions, SortOptions } from '@/utils/albumsFilter'
+import { getPodcastEpisodes, searchEpisodes } from '@/queries/podcasts'
+import {
+  AlbumsFilters,
+  AlbumsSearchParams,
+  EpisodesOrderByOptions,
+  SortOptions,
+} from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { getMainScrollElement } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
+
+const { Query, MainFilter } = AlbumsSearchParams
 
 export function EpisodeList() {
   const defaultPerPage = 40
@@ -24,17 +31,30 @@ export function EpisodeList() {
   const { PublishedAt } = EpisodesOrderByOptions
   const { Desc } = SortOptions
 
+  const currentFilter = getSearchParam<string>(MainFilter, '')
   const orderByFilter = getSearchParam<EpisodesOrderByOptions>(
     'orderBy',
     PublishedAt,
   )
   const sortFilter = getSearchParam<SortOptions>('sort', Desc)
+  const query = getSearchParam<string>(Query, '')
 
   useEffect(() => {
     scrollDivRef.current = getMainScrollElement()
   }, [])
 
   const fetchEpisodes = async ({ pageParam = 1 }) => {
+    if (currentFilter === AlbumsFilters.Search && query !== '') {
+      return searchEpisodes(podcastId, {
+        query,
+        order_by: orderByFilter,
+        sort: sortFilter,
+        page: pageParam,
+        per_page: defaultPerPage,
+        filter_by: 'title',
+      })
+    }
+
     return getPodcastEpisodes(podcastId, {
       order_by: orderByFilter,
       sort: sortFilter,
@@ -50,7 +70,14 @@ export function EpisodeList() {
     isLoading: episodesIsLoading,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: [queryKeys.episode.all, podcastId, orderByFilter, sortFilter],
+    queryKey: [
+      queryKeys.episode.all,
+      podcastId,
+      orderByFilter,
+      sortFilter,
+      currentFilter,
+      query,
+    ],
     queryFn: fetchEpisodes,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
