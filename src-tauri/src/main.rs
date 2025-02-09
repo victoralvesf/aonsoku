@@ -1,7 +1,6 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-#[cfg(not(target_os = "linux"))]
 use tauri::Manager;
 
 #[cfg(target_os = "macos")]
@@ -29,9 +28,8 @@ fn main() {
     #[cfg(desktop)]
     {
         builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
-            if let Some(window) = app.get_webview_window("main") {
-                let _ = window.show();
-                let _ = window.set_focus();
+            if let Some(_) = app.get_webview_window("main") {
+                system_tray::toggle_window(app);
             }
         }));
     }
