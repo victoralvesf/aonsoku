@@ -221,6 +221,12 @@
           "title": "Título",
           "duration": "Duração"
         }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Título",
+          "episodeCount": "Número de Episódios"
+        }
       }
     },
     "header": {

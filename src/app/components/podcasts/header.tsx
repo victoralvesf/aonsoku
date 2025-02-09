@@ -1,12 +1,9 @@
-import { HistoryIcon, PlusIcon } from 'lucide-react'
+import { PlusIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { HeaderTitle } from '@/app/components/header-title'
-import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
 import { Button } from '@/app/components/ui/button'
-import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
-import { ROUTES } from '@/routes/routesList'
+import { PodcastsFilters } from './podcasts-filters'
 
 export function PodcastsHeader() {
   const { t } = useTranslation()
@@ -17,15 +14,7 @@ export function PodcastsHeader() {
         <HeaderTitle title={t('sidebar.podcasts')} />
 
         <div className="flex gap-2 items-center">
-          <SimpleTooltip text={t('podcasts.form.latestEpisodes')}>
-            <Button variant="outline" className="w-9 h-9 p-0" asChild>
-              <Link to={ROUTES.EPISODES.LATEST}>
-                <HistoryIcon className="w-4 h-4" />
-              </Link>
-            </Button>
-          </SimpleTooltip>
-
-          <ExpandableSearchInput placeholder={t('podcasts.form.search')} />
+          <PodcastsFilters />
 
           <Button
             size="sm"

@@ -11,7 +11,12 @@ import { PodcastsHeader } from '@/app/components/podcasts/header'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { getPodcastList, searchPodcasts } from '@/queries/podcasts'
 import { ROUTES } from '@/routes/routesList'
-import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
+import {
+  AlbumsFilters,
+  AlbumsSearchParams,
+  PodcastsOrderByOptions,
+  SortOptions,
+} from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { getMainScrollElement } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
@@ -24,8 +29,12 @@ export default function PodcastsList() {
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const { getSearchParam } = new SearchParamsHandler(searchParams)
+  const { Title } = PodcastsOrderByOptions
+  const { Asc } = SortOptions
 
   const currentFilter = getSearchParam<string>(MainFilter, '')
+  const orderByFilter = getSearchParam<PodcastsOrderByOptions>('orderBy', Title)
+  const sortFilter = getSearchParam<SortOptions>('sort', Asc)
   const query = getSearchParam<string>(Query, '')
   const isSearchState = currentFilter === AlbumsFilters.Search
 
@@ -44,15 +53,21 @@ export default function PodcastsList() {
     }
 
     return getPodcastList({
-      order_by: 'title',
-      sort: 'asc',
+      order_by: orderByFilter,
+      sort: sortFilter,
       page: pageParam,
       per_page: defaultPerPage,
     })
   }
 
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
-    queryKey: [queryKeys.podcast.all, currentFilter, query],
+    queryKey: [
+      queryKeys.podcast.all,
+      currentFilter,
+      query,
+      orderByFilter,
+      sortFilter,
+    ],
     queryFn: fetchPodcasts,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextOffset,

@@ -24,7 +24,7 @@ export function EpisodesFilters() {
         <ExpandableSearchInput
           placeholder={t('podcasts.filters.episodes.search')}
         />
-        <EpisodesSort />
+        <DefaultSortFilter />
         <FilterDropdown />
       </div>
     </div>
@@ -78,7 +78,7 @@ function FilterDropdown() {
   )
 }
 
-function EpisodesSort() {
+export function DefaultSortFilter() {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const { getSearchParam } = new SearchParamsHandler(searchParams)
