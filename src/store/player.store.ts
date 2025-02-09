@@ -55,6 +55,15 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 })
               },
             },
+            minimizeToSystemTray: {
+              minimizeToSystemTrayEnabled: false,
+              setMinimizeToSystemTrayEnabled: (value) => {
+                set((state) => {
+                  state.settings.minimizeToSystemTray.minimizeToSystemTrayEnabled =
+                    value
+                })
+              },
+            },
             lyrics: {
               preferSyncedLyrics: false,
               setPreferSyncedLyrics: (value) => {
@@ -670,6 +679,9 @@ export const useReplayGainActions = () =>
 
 export const useFullscreenPlayerSettings = () =>
   usePlayerStore((state) => state.settings.fullscreen)
+
+export const useMinimizeToSystemTraySettings = () =>
+  usePlayerStore((state) => state.settings.minimizeToSystemTray)
 
 export const useLyricsSettings = () =>
   usePlayerStore((state) => state.settings.lyrics)

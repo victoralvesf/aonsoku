@@ -1,7 +1,6 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-#[cfg(not(target_os = "linux"))]
 use tauri::Manager;
 
 #[cfg(target_os = "macos")]
@@ -17,13 +16,23 @@ mod mac;
 
 mod commands;
 mod progress;
+mod system_tray;
 mod utils;
 
 fn main() {
-    let builder = tauri::Builder::default();
+    let mut builder = tauri::Builder::default();
 
     #[cfg(target_os = "macos")]
     let builder = builder.plugin(mac::window::init());
+
+    #[cfg(desktop)]
+    {
+        builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            if let Some(_) = app.get_webview_window("main") {
+                system_tray::toggle_window(app);
+            }
+        }));
+    }
 
     builder
         .setup(|_app| {
@@ -46,6 +55,9 @@ fn main() {
                 let main_window = _app.get_webview_window("main").unwrap();
                 let _ = main_window.set_decorations(false);
             }
+
+            #[cfg(desktop)]
+            system_tray::setup_system_tray(_app);
 
             Ok(())
         })

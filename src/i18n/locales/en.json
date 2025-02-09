@@ -488,6 +488,10 @@
         "fullscreen": {
           "label": "Enable automatic fullscreen",
           "info": "If enabled, when accessing the big player, the app will automatically enter fullscreen mode."
+        },
+        "minimizeToSystemTray": {
+          "label": "Minimize to system tray",
+          "info": "When enabled, the app will minimize to the system tray when clicked on the minimize button."
         }
       }
     },
