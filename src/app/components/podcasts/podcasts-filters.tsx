@@ -11,7 +11,7 @@ import {
 } from '@/app/components/ui/dropdown-menu'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { ROUTES } from '@/routes/routesList'
-import { PodcastsOrderByOptions } from '@/utils/albumsFilter'
+import { PodcastsOrderByOptions, SortOptions } from '@/utils/albumsFilter'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 import { DefaultSortFilter } from './episodes-filters'
 
@@ -22,7 +22,7 @@ export function PodcastsFilters() {
     <>
       <ExpandableSearchInput placeholder={t('podcasts.form.search')} />
 
-      <DefaultSortFilter />
+      <DefaultSortFilter defaultSort={SortOptions.Asc} />
       <OrderByFilter />
 
       <SimpleTooltip text={t('podcasts.form.latestEpisodes')}>

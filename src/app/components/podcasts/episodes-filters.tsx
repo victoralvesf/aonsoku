@@ -78,13 +78,19 @@ function FilterDropdown() {
   )
 }
 
-export function DefaultSortFilter() {
+interface SortFilterProps {
+  defaultSort?: SortOptions
+}
+
+export function DefaultSortFilter({
+  defaultSort = SortOptions.Desc,
+}: SortFilterProps) {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const { getSearchParam } = new SearchParamsHandler(searchParams)
   const { Asc, Desc } = SortOptions
 
-  const sortFilter = getSearchParam<SortOptions>('sort', Desc)
+  const sortFilter = getSearchParam<SortOptions>('sort', defaultSort)
   const isDesc = sortFilter === Desc
 
   function yearFilterTooltip() {
