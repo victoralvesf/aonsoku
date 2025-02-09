@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import debounce from 'lodash/debounce'
 import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { AlbumsFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
@@ -20,7 +21,7 @@ const { Query, MainFilter } = AlbumsSearchParams
 export default function PodcastsList() {
   const defaultPerPage = 40
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
-
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const { getSearchParam } = new SearchParamsHandler(searchParams)
 
@@ -110,8 +111,11 @@ export default function PodcastsList() {
                 <PreviewCard.Title link={ROUTES.PODCASTS.PAGE(podcast.id)}>
                   {podcast.title}
                 </PreviewCard.Title>
-                <PreviewCard.Subtitle enableLink={false} link="">
-                  {podcast.author}
+                <PreviewCard.Subtitle>{podcast.author}</PreviewCard.Subtitle>
+                <PreviewCard.Subtitle className="mt-[1px]">
+                  {t('podcasts.header.episodeCount', {
+                    count: podcast.episode_count,
+                  })}
                 </PreviewCard.Subtitle>
               </PreviewCard.InfoWrapper>
             </PreviewCard.Root>
