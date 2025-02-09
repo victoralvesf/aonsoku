@@ -6,6 +6,7 @@ import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
+import { rpc } from '@/service/rpc'
 import { subsonic } from '@/service/subsonic'
 import { IPlayerContext, LoopState } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
@@ -624,6 +625,16 @@ usePlayerStore.subscribe(
     if (currentList.length === 0 && progress > 0) {
       playerStore.actions.resetProgress()
     }
+  },
+)
+
+// For RPC
+usePlayerStore.subscribe(
+  (state) => [state.playerProgress.progress, state.playerState.isPlaying],
+  () => {
+    const playerStore = usePlayerStore.getState()
+
+    rpc.send(playerStore, playerStore.playerState.audioPlayerRef)
   },
 )
 
