@@ -27,6 +27,7 @@ export interface IPlayerState {
   volume: number
   currentDuration: number
   mediaType: 'song' | 'radio' | 'podcast'
+  currentPlaybackRate: number
   audioPlayerRef: HTMLAudioElement | null
   queueDrawerState: boolean
 }
@@ -116,6 +117,7 @@ export interface IPlayerActions {
   getCurrentProgress: () => number
   resetConfig: () => void
   setPlayPodcast: (list: EpisodeWithPodcast[], index: number) => void
+  setPlaybackRate: (value: number) => void
 }
 
 export interface IPlayerContext {

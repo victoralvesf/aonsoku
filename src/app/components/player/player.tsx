@@ -14,6 +14,7 @@ import {
   usePlayerSonglist,
   getVolume,
   useReplayGainState,
+  usePlayerStore,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
 import { ReplayGainParams } from '@/utils/replayGain'
@@ -56,6 +57,7 @@ export function Player() {
   const loopState = usePlayerLoop()
   const currentDuration = usePlayerDuration()
   const audioPlayerRef = usePlayerRef()
+  const currentPlaybackRate = usePlayerStore().playerState.currentPlaybackRate
   const progress = getCurrentProgress()
   const { resetSession, radioSession, songSession, playbackState } =
     useMediaSession()
@@ -101,6 +103,13 @@ export function Player() {
   useEffect(() => {
     playbackState(isPlaying)
   }, [isPlaying, playbackState])
+
+  useEffect(() => {
+    const audio = podcastRef.current
+    if (!audio) return
+
+    audio.playbackRate = currentPlaybackRate
+  }, [currentPlaybackRate])
 
   const setupDuration = useCallback(() => {
     const audio = getAudioRef().current

@@ -37,6 +37,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             mediaType: 'song',
             audioPlayerRef: null,
             queueDrawerState: false,
+            currentPlaybackRate: 1,
           },
           playerProgress: {
             progress: 0,
@@ -500,6 +501,11 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
 
               set((state) => {
                 state.songlist.currentList = songList
+              })
+            },
+            setPlaybackRate: (value) => {
+              set((state) => {
+                state.playerState.currentPlaybackRate = value
               })
             },
             setAudioPlayerRef: (audioPlayer) => {
