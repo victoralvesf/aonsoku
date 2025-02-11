@@ -1,12 +1,19 @@
 import clsx from 'clsx'
 import { EllipsisVertical, PlayIcon } from 'lucide-react'
-import { ComponentPropsWithoutRef, useMemo } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  MouseEvent,
+  useCallback,
+  useMemo,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { Button } from '@/app/components/ui/button'
 import { Separator } from '@/app/components/ui/separator'
 import { ROUTES } from '@/routes/routesList'
+import { podcasts } from '@/service/podcasts'
+import { usePlayerActions } from '@/store/player.store'
 import { Episode } from '@/types/responses/podcasts'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
@@ -18,6 +25,7 @@ type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
 
 export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
   const { t } = useTranslation()
+  const { setPlayPodcast } = usePlayerActions()
 
   const episodeReleaseDate = useMemo(() => {
     const today = dateTime()
@@ -39,6 +47,17 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
   const episodeDuration = useMemo(() => {
     return convertSecondsToHumanRead(episode.duration)
   }, [episode.duration])
+
+  const handlePlayEpisode = useCallback(
+    async (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation()
+      e.preventDefault()
+
+      const episodeWithPodcast = await podcasts.getEpisode(episode.id)
+      if (episodeWithPodcast) setPlayPodcast([episodeWithPodcast], 0)
+    },
+    [episode.id, setPlayPodcast],
+  )
 
   return (
     <div className="group/row" {...rest}>
@@ -71,10 +90,7 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
               variant="ghost"
               size="icon"
               className="rounded-full bg-background/20 backdrop-blur-md opacity-0 group-hover/row:opacity-100 transition-opacity group-hover/play:bg-background"
-              onClick={(e) => {
-                e.stopPropagation()
-                e.preventDefault()
-              }}
+              onClick={handlePlayEpisode}
             >
               <PlayIcon className="w-4 h-4 fill-foreground" />
             </Button>

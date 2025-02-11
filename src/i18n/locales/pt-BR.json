@@ -356,9 +356,11 @@
         "enable": "Ativar aleatório",
         "disable": "Desativar aleatório"
       },
+      "rewind": "Retroceder {{amount}} segundos",
       "previous": "Voltar",
       "play": "Play",
       "pause": "Pausar",
+      "forward": "Avançar {{amount}} segundos",
       "next": "Avançar",
       "repeat": {
         "enable": "Repetir",

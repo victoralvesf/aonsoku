@@ -13,17 +13,15 @@ import { ReplayGainParams } from '@/utils/replayGain'
 type IAudioSource = IMediaElementAudioSourceNode<IAudioContext>
 
 export function useAudioContext(audio: HTMLAudioElement | null) {
-  const mediaType = usePlayerMediaType()
+  const { isSong } = usePlayerMediaType()
   const { replayGainError, replayGainEnabled } = useReplayGainState()
-
-  const isRadio = mediaType === 'radio'
 
   const audioContextRef = useRef<IAudioContext | null>(null)
   const sourceNodeRef = useRef<IAudioSource | null>(null)
   const gainNodeRef = useRef<IGainNode<IAudioContext> | null>(null)
 
   const setupAudioContext = useCallback(() => {
-    if (!audio || isRadio || replayGainError || isLinux) return
+    if (!audio || !isSong || replayGainError || isLinux) return
 
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext()
@@ -42,11 +40,11 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
       // And then we can connect the gainNode to the destination
       gainNodeRef.current.connect(audioContext.destination)
     }
-  }, [audio, isRadio, replayGainError])
+  }, [audio, isSong, replayGainError])
 
   const resumeContext = useCallback(async () => {
     const audioContext = audioContextRef.current
-    if (!audioContext || isRadio || isLinux) return
+    if (!audioContext || !isSong || isLinux) return
 
     logger.info('AudioContext State', { state: audioContext.state })
 
@@ -56,7 +54,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
     if (audioContext.state === 'closed') {
       setupAudioContext()
     }
-  }, [isRadio, setupAudioContext])
+  }, [isSong, setupAudioContext])
 
   const setupGain = useCallback(
     (gainValue: number, replayGain?: ReplayGainParams) => {

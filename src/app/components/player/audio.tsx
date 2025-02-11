@@ -32,14 +32,11 @@ export function AudioPlayer({
 }: AudioPlayerProps) {
   const { t } = useTranslation()
   const { replayGainEnabled, replayGainError } = useReplayGainState()
-  const mediaType = usePlayerMediaType()
+  const { isSong, isRadio, isPodcast } = usePlayerMediaType()
   const { setPlayingState } = usePlayerActions()
   const { setReplayGainEnabled, setReplayGainError } = useReplayGainActions()
   const { volume } = usePlayerVolume()
   const isPlaying = usePlayerIsPlaying()
-
-  const isRadio = mediaType === 'radio'
-  const isSong = mediaType === 'song'
 
   const gainValue = useMemo(() => {
     const audioVolume = volume / 100
@@ -55,11 +52,11 @@ export function AudioPlayer({
   const { resumeContext, setupGain } = useAudioContext(audioRef.current)
 
   useEffect(() => {
-    if (isRadio || replayGainError || !audioRef.current || isLinux) return
+    if (!isSong || replayGainError || !audioRef.current || isLinux) return
 
     audioRef.current.crossOrigin = 'anonymous'
     setupGain(gainValue, replayGain)
-  }, [audioRef, gainValue, isRadio, replayGain, replayGainError, setupGain])
+  }, [audioRef, gainValue, isSong, replayGain, replayGainError, setupGain])
 
   const handleSongError = useCallback(() => {
     const audio = audioRef.current
@@ -103,7 +100,7 @@ export function AudioPlayer({
 
       try {
         if (isPlaying) {
-          await resumeContext()
+          if (isSong) await resumeContext()
           await audio.play()
         } else {
           audio.pause()
@@ -113,8 +110,8 @@ export function AudioPlayer({
         handleSongError()
       }
     }
-    if (isSong) handleSong()
-  }, [audioRef, handleSongError, isPlaying, isSong, resumeContext])
+    if (isSong || isPodcast) handleSong()
+  }, [audioRef, handleSongError, isPlaying, isSong, isPodcast, resumeContext])
 
   useEffect(() => {
     async function handleRadio() {

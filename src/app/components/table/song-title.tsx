@@ -5,10 +5,10 @@ import { ISong } from '@/types/responses/song'
 
 export function TableSongTitle({ song }: { song: ISong }) {
   const { currentSong } = usePlayerSonglist()
-  const mediaType = usePlayerMediaType()
+  const { isRadio } = usePlayerMediaType()
 
   function getSongIsPlaying() {
-    if (mediaType === 'radio' || !currentSong) return false
+    if (isRadio || !currentSong) return false
 
     return currentSong.id === song.id
   }

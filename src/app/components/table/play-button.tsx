@@ -35,16 +35,16 @@ export default function PlaySongButton({
   artist = '',
 }: PlaySongButtonProps) {
   const { checkActiveSong, togglePlayPause } = usePlayerActions()
-  const mediaType = usePlayerMediaType()
+  const { isSong, isRadio } = usePlayerMediaType()
   const isPlaying = usePlayerIsPlaying()
   const { radioList, currentSongIndex } = usePlayerSonglist()
   const { t } = useTranslation()
 
   const isCurrentSongPlaying = () => {
-    if (mediaType === 'song') {
+    if (isSong) {
       return checkActiveSong(trackId)
     }
-    if (mediaType === 'radio') {
+    if (isRadio) {
       return radioList[currentSongIndex].id === trackId
     }
 

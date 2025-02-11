@@ -1,3 +1,4 @@
+import { EpisodeWithPodcast } from './responses/podcasts'
 import { Radio } from './responses/radios'
 import { ISong } from './responses/song'
 
@@ -15,6 +16,7 @@ export interface ISongList {
   originalList: ISong[]
   originalSongIndex: number
   radioList: Radio[]
+  podcastList: EpisodeWithPodcast[]
 }
 
 export interface IPlayerState {
@@ -24,7 +26,7 @@ export interface IPlayerState {
   isSongStarred: boolean
   volume: number
   currentDuration: number
-  mediaType: 'song' | 'radio'
+  mediaType: 'song' | 'radio' | 'podcast'
   audioPlayerRef: HTMLAudioElement | null
   queueDrawerState: boolean
 }
@@ -113,6 +115,7 @@ export interface IPlayerActions {
   handleSongEnded: () => void
   getCurrentProgress: () => number
   resetConfig: () => void
+  setPlayPodcast: (list: EpisodeWithPodcast[], index: number) => void
 }
 
 export interface IPlayerContext {

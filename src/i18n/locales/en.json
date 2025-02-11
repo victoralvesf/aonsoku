@@ -350,9 +350,11 @@
         "enable": "Enable shuffle",
         "disable": "Disable shuffle"
       },
+      "rewind": "Rewind {{amount}} seconds",
       "previous": "Previous",
       "play": "Play",
       "pause": "Pause",
+      "forward": "Forward {{amount}} seconds",
       "next": "Next",
       "repeat": {
         "enable": "Enable repeat",

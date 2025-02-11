@@ -16,24 +16,24 @@ import {
   usePlayerProgress,
   usePlayerSonglist,
 } from '@/store/player.store'
-import { ISong } from '@/types/responses/song'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 interface PlayerProgressProps {
   audioRef: RefObject<HTMLAudioElement>
-  song: ISong
 }
 
 let isSeeking = false
 
-export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
+export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   const progress = usePlayerProgress()
   const [localProgress, setLocalProgress] = useState(progress)
   const currentDuration = usePlayerDuration()
-  const { currentSong } = usePlayerSonglist()
-  const mediaType = usePlayerMediaType()
+  const { currentSong, currentList } = usePlayerSonglist()
+  const { isSong, isPodcast } = usePlayerMediaType()
   const { setProgress } = usePlayerActions()
   const isScrobbleSentRef = useRef(false)
+
+  const isEmpty = isSong && currentList.length === 0
 
   const updateAudioCurrentTime = useCallback(
     (value: number) => {
@@ -76,7 +76,7 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
   }, [])
 
   useEffect(() => {
-    if (mediaType === 'song') {
+    if (isSong) {
       const progressPercentage = (progress / currentDuration) * 100
 
       if (progressPercentage === 0) isScrobbleSentRef.current = false
@@ -86,7 +86,7 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
         isScrobbleSentRef.current = true
       }
     }
-  }, [progress, currentDuration, mediaType, sendScrobble, currentSong.id])
+  }, [progress, currentDuration, isSong, sendScrobble, currentSong.id])
 
   const currentTime = convertSecondsToTime(isSeeking ? localProgress : progress)
   const progressMoreThanOneHour = localProgress >= 3600 || progress >= 3600
@@ -95,7 +95,7 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
     <div
       className={clsx(
         'flex w-full justify-center items-center',
-        !song && 'opacity-50',
+        isEmpty && 'opacity-50',
       )}
     >
       <small
@@ -107,7 +107,7 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
       >
         {currentTime}
       </small>
-      {song ? (
+      {!isEmpty || isPodcast ? (
         <Slider
           defaultValue={[0]}
           value={isSeeking ? [localProgress] : [progress]}

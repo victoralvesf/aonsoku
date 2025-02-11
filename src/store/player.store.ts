@@ -25,6 +25,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             currentList: [],
             currentSongIndex: 0,
             radioList: [],
+            podcastList: [],
           },
           playerState: {
             isPlaying: false,
@@ -124,6 +125,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.originalSongIndex = index
                 state.playerState.mediaType = 'song'
                 state.songlist.radioList = []
+                state.songlist.podcastList = []
               })
 
               if (shuffle) {
@@ -171,6 +173,8 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                   state.songlist.currentSongIndex = 0
                   state.playerState.isShuffleActive = false
                   state.playerState.isPlaying = true
+                  state.songlist.radioList = []
+                  state.songlist.podcastList = []
                 })
               }
             },
@@ -254,6 +258,29 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               set((state) => {
                 state.playerState.mediaType = 'radio'
                 state.songlist.radioList = list
+                state.songlist.currentSongIndex = index
+                state.playerState.isPlaying = true
+              })
+            },
+            setPlayPodcast: (list, index) => {
+              const { mediaType } = get().playerState
+              const { podcastList, currentSongIndex } = get().songlist
+
+              if (
+                mediaType === 'podcast' &&
+                podcastList.length > 0 &&
+                list[index].id === podcastList[currentSongIndex].id
+              ) {
+                set((state) => {
+                  state.playerState.isPlaying = true
+                })
+                return
+              }
+
+              get().actions.clearPlayerState()
+              set((state) => {
+                state.playerState.mediaType = 'podcast'
+                state.songlist.podcastList = list
                 state.songlist.currentSongIndex = index
                 state.playerState.isPlaying = true
               })
@@ -343,6 +370,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.currentList = []
                 state.songlist.currentSong = {} as ISong
                 state.songlist.radioList = []
+                state.songlist.podcastList = []
                 state.songlist.originalSongIndex = 0
                 state.songlist.currentSongIndex = 0
                 state.playerState.mediaType = 'song'
@@ -614,6 +642,8 @@ usePlayerStore.subscribe(
   (state) => [state.songlist.currentList, state.songlist.currentSongIndex],
   () => {
     const playerStore = usePlayerStore.getState()
+    const { mediaType } = playerStore.playerState
+    if (mediaType === 'radio' || mediaType === 'podcast') return
 
     playerStore.actions.checkIsSongStarred()
     playerStore.actions.setCurrentSong()
@@ -624,6 +654,9 @@ usePlayerStore.subscribe(
     if (currentList.length === 0 && progress > 0) {
       playerStore.actions.resetProgress()
     }
+  },
+  {
+    equalityFn: shallow,
   },
 )
 
@@ -676,8 +709,18 @@ export const useLyricsSettings = () =>
 
 export const usePlayerSettings = () => usePlayerStore((state) => state.settings)
 
-export const usePlayerMediaType = () =>
-  usePlayerStore((state) => state.playerState.mediaType)
+export const usePlayerMediaType = () => {
+  const mediaType = usePlayerStore((state) => state.playerState.mediaType)
+  const isSong = mediaType === 'song'
+  const isRadio = mediaType === 'radio'
+  const isPodcast = mediaType === 'podcast'
+
+  return {
+    isSong,
+    isRadio,
+    isPodcast,
+  }
+}
 
 export const usePlayerIsPlaying = () =>
   usePlayerStore((state) => state.playerState.isPlaying)
