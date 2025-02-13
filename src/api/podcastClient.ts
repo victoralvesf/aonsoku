@@ -1,5 +1,6 @@
 import omit from 'lodash/omit'
 import { useAppStore } from '@/store/app.store'
+import { isTauri } from '@/utils/tauriTools'
 import { FetchOptions } from './httpClient'
 
 function getBaseUrl() {
@@ -80,4 +81,15 @@ export async function podcastClient<T>(
     console.error('Error in podcastClient:', error)
     return null
   }
+}
+
+export function getProxyURL(url: string) {
+  if (isTauri()) {
+    const proxied = new URL('/proxy', 'http://127.0.0.1:12720')
+    proxied.searchParams.append('url', url)
+
+    return proxied.toString()
+  }
+
+  return url
 }

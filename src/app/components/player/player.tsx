@@ -1,12 +1,12 @@
 import { useEffect, useRef, useCallback, memo } from 'react'
 
 import { getSongStreamUrl } from '@/api/httpClient'
+import { getProxyURL } from '@/api/podcastClient'
 import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
 import useMediaSession from '@/app/hooks/use-media-session'
 import {
   usePlayerActions,
-  usePlayerDuration,
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerMediaType,
@@ -55,7 +55,6 @@ export function Player() {
   const isPlaying = usePlayerIsPlaying()
   const { isSong, isRadio, isPodcast } = usePlayerMediaType()
   const loopState = usePlayerLoop()
-  const currentDuration = usePlayerDuration()
   const audioPlayerRef = usePlayerRef()
   const currentPlaybackRate = usePlayerStore().playerState.currentPlaybackRate
   const progress = getCurrentProgress()
@@ -118,10 +117,16 @@ export function Player() {
     audio.currentTime = progress
     const audioDuration = Math.floor(audio.duration)
 
-    if (currentDuration !== audioDuration) {
+    const infinityDuration = audioDuration === Infinity
+
+    if (!infinityDuration) {
       setCurrentDuration(audioDuration)
     }
-  }, [currentDuration, getAudioRef, progress, setCurrentDuration])
+
+    if (isPodcast && infinityDuration && podcast) {
+      setCurrentDuration(podcast.duration)
+    }
+  }, [getAudioRef, isPodcast, podcast, progress, setCurrentDuration])
 
   const setupProgress = useCallback(() => {
     const audio = getAudioRef().current
@@ -221,7 +226,7 @@ export function Player() {
 
       {isPodcast && podcast && (
         <AudioPlayer
-          src={podcast.audio_url}
+          src={getProxyURL(podcast.audio_url)}
           autoPlay={isPlaying}
           audioRef={podcastRef}
           preload="auto"
