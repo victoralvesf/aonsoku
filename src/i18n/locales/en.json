@@ -232,7 +232,11 @@
       "website": "Official Website"
     },
     "list": {
-      "episodes": "Episodes"
+      "episodes": "Episodes",
+      "progress": {
+        "remainingTime": "{{time}} remaining",
+        "completed": "Completed"
+      }
     }
   },
   "table": {

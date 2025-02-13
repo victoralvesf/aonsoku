@@ -237,7 +237,11 @@
       "website": "Site Oficial"
     },
     "list": {
-      "episodes": "Episódios"
+      "episodes": "Episódios",
+      "progress": {
+        "remainingTime": "{{time}} restante(s)",
+        "completed": "Reproduzido"
+      }
     }
   },
   "table": {

@@ -44,10 +44,6 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
     return t('table.lastPlayed', { date: parsed })
   }, [episode.published_at, t])
 
-  const episodeDuration = useMemo(() => {
-    return convertSecondsToHumanRead(episode.duration)
-  }, [episode.duration])
-
   const handlePlayEpisode = useCallback(
     async (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation()
@@ -107,10 +103,8 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
             {parseDescription(episode.description)}
           </p>
         </div>
-        <div className="min-w-[14%] flex items-center justify-center">
-          <span className="text-xs text-muted-foreground">
-            {episodeDuration}
-          </span>
+        <div className="min-w-[14%] flex flex-col gap-1 items-center justify-center text-xs text-muted-foreground">
+          <EpisodeProgress episode={episode} />
         </div>
         <div className="min-w-16 flex items-center justify-end">
           <Button
@@ -130,5 +124,43 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
         <Separator />
       </div>
     </div>
+  )
+}
+
+function EpisodeProgress({ episode }: EpisodeCardProps) {
+  const { t } = useTranslation()
+  const { duration, playback } = episode
+
+  const episodeDuration = convertSecondsToHumanRead(duration)
+
+  const hasPlaybackData = episode.playback.length === 1
+  const isEpisodeCompleted = hasPlaybackData ? playback[0].completed : false
+
+  const remainingTime = hasPlaybackData ? duration - playback[0].progress : 0
+  const remainingTimeText = convertSecondsToHumanRead(remainingTime)
+
+  const listeningProgress = hasPlaybackData ? playback[0].progress : 0
+  const listeningProgressPercentage = (listeningProgress / duration) * 100
+
+  if (!hasPlaybackData) {
+    return <span>{episodeDuration}</span>
+  }
+
+  if (isEpisodeCompleted) {
+    return <span>{t('podcasts.list.progress.completed')}</span>
+  }
+
+  return (
+    <>
+      <span>
+        {t('podcasts.list.progress.remainingTime', { time: remainingTimeText })}
+      </span>
+      <div className="w-3/6 h-1 rounded-full relative bg-secondary overflow-hidden">
+        <div
+          className="absolute z-10 bg-primary h-full"
+          style={{ width: `${listeningProgressPercentage}%` }}
+        />
+      </div>
+    </>
   )
 }
