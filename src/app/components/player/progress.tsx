@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react'
 import { Slider } from '@/app/components/ui/slider'
+import { podcasts } from '@/service/podcasts'
 import { subsonic } from '@/service/subsonic'
 import {
   usePlayerActions,
@@ -17,6 +18,7 @@ import {
   usePlayerSonglist,
 } from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
+import { logger } from '@/utils/logger'
 
 interface PlayerProgressProps {
   audioRef: RefObject<HTMLAudioElement>
@@ -28,7 +30,7 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   const progress = usePlayerProgress()
   const [localProgress, setLocalProgress] = useState(progress)
   const currentDuration = usePlayerDuration()
-  const { currentSong, currentList } = usePlayerSonglist()
+  const { currentSong, currentList, podcastList } = usePlayerSonglist()
   const { isSong, isPodcast } = usePlayerMediaType()
   const { setProgress } = usePlayerActions()
   const isScrobbleSentRef = useRef(false)
@@ -74,6 +76,26 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   const sendScrobble = useCallback(async (songId: string) => {
     await subsonic.scrobble.send(songId)
   }, [])
+
+  // Used to save listening progress to backend every 30 seconds
+  useEffect(() => {
+    if (!isPodcast || !podcastList) return
+
+    const send = (progress / 30) % 1 === 0
+
+    if (send) {
+      const [podcast] = podcastList
+
+      podcasts
+        .saveEpisodeProgress(podcast.id, progress)
+        .then(() => {
+          logger.info('Progress sent:', progress)
+        })
+        .catch((error) => {
+          logger.error('Error sending progress', error)
+        })
+    }
+  }, [isPodcast, podcastList, progress])
 
   useEffect(() => {
     if (isSong) {

@@ -50,3 +50,8 @@ export interface PodcastWithEpisodes {
   podcast: Podcast
   episodes: PaginateResponse<Episode>
 }
+
+export interface ProgressResponse {
+  progress: number
+  completed: boolean
+}

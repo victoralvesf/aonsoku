@@ -7,6 +7,7 @@ import {
   Podcast,
   Podcasts,
   PodcastWithEpisodes,
+  ProgressResponse,
 } from '@/types/responses/podcasts'
 
 type PodcastOrderBy = 'title' | 'episode_count'
@@ -137,6 +138,19 @@ async function searchEpisodes(podcastId: string, params: SearchEpisodesParams) {
   return response
 }
 
+async function saveEpisodeProgress(episodeId: string, progress: number) {
+  const route = `/episodes/${episodeId}/progress`
+  const response = await podcastClient<ProgressResponse>(route, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ progress }),
+  })
+
+  return response
+}
+
 export const podcasts = {
   getAll,
   getOne,
@@ -146,4 +160,5 @@ export const podcasts = {
   getEpisode,
   getLatest,
   searchEpisodes,
+  saveEpisodeProgress,
 }

@@ -5,6 +5,7 @@ import { getProxyURL } from '@/api/podcastClient'
 import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
 import useMediaSession from '@/app/hooks/use-media-session'
+import { podcasts } from '@/service/podcasts'
 import {
   usePlayerActions,
   usePlayerIsPlaying,
@@ -17,6 +18,7 @@ import {
   usePlayerStore,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
+import { logger } from '@/utils/logger'
 import { ReplayGainParams } from '@/utils/replayGain'
 import { AudioPlayer } from './audio'
 import { PlayerClearQueueButton } from './clear-queue-button'
@@ -143,6 +145,19 @@ export function Player() {
     audio.volume = getVolume() / 100
   }, [getAudioRef])
 
+  const sendFinishProgress = useCallback(() => {
+    if (!isPodcast || !podcast) return
+
+    podcasts
+      .saveEpisodeProgress(podcast.id, podcast.duration)
+      .then(() => {
+        logger.info('Complete progress sent:', podcast.duration)
+      })
+      .catch((error) => {
+        logger.error('Error sending complete progress', error)
+      })
+  }, [isPodcast, podcast])
+
   function getTrackReplayGain(): ReplayGainParams {
     const preAmp = replayGainPreAmp
     const defaultGain = replayGainDefaultGain
@@ -234,7 +249,10 @@ export function Player() {
           onPause={() => setPlayingState(false)}
           onLoadedMetadata={setupDuration}
           onTimeUpdate={setupProgress}
-          onEnded={handleSongEnded}
+          onEnded={() => {
+            sendFinishProgress()
+            handleSongEnded()
+          }}
           onLoadStart={setupInitialVolume}
           data-testid="player-podcast-audio"
         />
