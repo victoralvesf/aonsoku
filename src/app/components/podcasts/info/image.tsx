@@ -5,8 +5,16 @@ import { CustomLightBox } from '@/app/components/lightbox'
 
 type PodcastInfoImageProps = ComponentPropsWithoutRef<'img'>
 
+const placeholderSrc = '/default_podcast_art.png'
+
 export function PodcastInfoImage({ src, alt }: PodcastInfoImageProps) {
   const [open, setOpen] = useState(false)
+  const [imageSrc, setImageSrc] = useState(src)
+  const isPlaceholder = imageSrc === placeholderSrc
+
+  const handleError = () => {
+    setImageSrc(placeholderSrc)
+  }
 
   return (
     <div
@@ -15,24 +23,26 @@ export function PodcastInfoImage({ src, alt }: PodcastInfoImageProps) {
         '2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px]',
         'bg-skeleton aspect-square bg-cover bg-center rounded',
         'shadow-[0_0_5px_rgba(255,255,255,0.05)] border border-border overflow-hidden',
-        'hover:scale-[1.02] ease-linear duration-100',
+        'ease-linear duration-100',
+        !isPlaceholder && 'cursor-pointer hover:scale-[1.02]',
       )}
     >
       <LazyLoadImage
-        src={src}
+        src={imageSrc}
         alt={alt}
         effect="opacity"
-        className="aspect-square object-cover w-full h-full cursor-pointer"
+        className="aspect-square object-cover w-full h-full"
         width="100%"
         height="100%"
+        onError={handleError}
         onClick={() => setOpen(true)}
       />
 
-      {src && alt && (
+      {imageSrc && alt && !isPlaceholder && (
         <CustomLightBox
           open={open}
           close={setOpen}
-          src={src}
+          src={imageSrc}
           alt={alt}
           size={600}
         />

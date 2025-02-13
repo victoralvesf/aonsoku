@@ -8,6 +8,7 @@ import ListWrapper from '@/app/components/list-wrapper'
 import { EmptyPodcastsPage } from '@/app/components/podcasts/empty-page'
 import { EmptyPodcastsResults } from '@/app/components/podcasts/empty-results'
 import { PodcastsHeader } from '@/app/components/podcasts/header'
+import { PodcastListImage } from '@/app/components/podcasts/list-image'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { getPodcastList, searchPodcasts } from '@/queries/podcasts'
 import { ROUTES } from '@/routes/routesList'
@@ -117,10 +118,7 @@ export default function PodcastsList() {
           {items.map((podcast) => (
             <PreviewCard.Root key={`podcast-${podcast.id}`}>
               <PreviewCard.ImageWrapper link={ROUTES.PODCASTS.PAGE(podcast.id)}>
-                <PreviewCard.Image
-                  src={podcast.image_url}
-                  alt={podcast.title}
-                />
+                <PodcastListImage podcast={podcast} />
               </PreviewCard.ImageWrapper>
               <PreviewCard.InfoWrapper>
                 <PreviewCard.Title link={ROUTES.PODCASTS.PAGE(podcast.id)}>
