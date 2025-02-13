@@ -19,7 +19,6 @@ const rates = [
   { label: '1.5x', value: 1.5 },
   { label: '1.75x', value: 1.75 },
   { label: '2.0x', value: 2.0 },
-  { label: '3.0x', value: 3.0 },
 ]
 
 export function PodcastPlaybackRate() {
