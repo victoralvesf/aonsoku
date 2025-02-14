@@ -197,7 +197,16 @@
     "form": {
       "latestEpisodes": "Latest Episodes",
       "addButton": "Add Podcast",
-      "search": "Search podcasts…"
+      "search": "Search podcasts…",
+      "dialog": {
+        "title": "Create Podcast",
+        "feedUrl": "Feed URL",
+        "saveButton": "Save"
+      },
+      "toasts": {
+        "success": "Podcast created successfully! It will be available to listen to in just a few minutes!",
+        "error": "Failed to create podcast!"
+      }
     },
     "emptyPage": {
       "message": "No podcasts added",

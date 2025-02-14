@@ -202,7 +202,16 @@
     "form": {
       "latestEpisodes": "Últimos Episódios",
       "addButton": "Adicionar Podcast",
-      "search": "Buscar podcasts…"
+      "search": "Buscar podcasts…",
+      "dialog": {
+        "title": "Criar Podcast",
+        "feedUrl": "URL do Feed",
+        "saveButton": "Salvar"
+      },
+      "toasts": {
+        "success": "Playlist criada com sucesso! Ele estará disponível para ouvir em alguns minutos!",
+        "error": "Falha ao criar o podcast!"
+      }
     },
     "emptyPage": {
       "message": "Nenhum podcast adicionado",
