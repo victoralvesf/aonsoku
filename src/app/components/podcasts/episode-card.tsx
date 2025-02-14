@@ -160,7 +160,17 @@ function EpisodeImage({ episode }: EpisodeCardProps) {
       }
 
       const episodeWithPodcast = await podcasts.getEpisode(episode.id)
-      if (episodeWithPodcast) setPlayPodcast([episodeWithPodcast], 0)
+      if (episodeWithPodcast) {
+        const { playback } = episodeWithPodcast
+        const hasPlaybackData = playback.length > 0
+        let currentProgress = hasPlaybackData ? playback[0].progress : 0
+
+        if (hasPlaybackData && playback[0].completed) {
+          currentProgress = 0
+        }
+
+        setPlayPodcast([episodeWithPodcast], 0, currentProgress)
+      }
     },
     [episode.id, isEpisodePlaying, isPlaying, setPlayPodcast, setPlayingState],
   )

@@ -263,7 +263,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.isPlaying = true
               })
             },
-            setPlayPodcast: (list, index) => {
+            setPlayPodcast: (list, index, progress) => {
               const { mediaType } = get().playerState
               const { podcastList, currentSongIndex } = get().songlist
 
@@ -280,6 +280,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
 
               get().actions.clearPlayerState()
               set((state) => {
+                state.playerProgress.progress = progress
                 state.playerState.mediaType = 'podcast'
                 state.songlist.podcastList = list
                 state.songlist.currentSongIndex = index
