@@ -1,5 +1,12 @@
 import clsx from 'clsx'
-import { EllipsisVertical, Heart, Info, Play, Shuffle } from 'lucide-react'
+import {
+  EllipsisVertical,
+  Heart,
+  Info,
+  Pause,
+  Play,
+  Shuffle,
+} from 'lucide-react'
 import { ButtonHTMLAttributes, ComponentPropsWithoutRef } from 'react'
 import { Button as ComponentButton } from '@/app/components/ui/button'
 import {
@@ -25,7 +32,7 @@ function Container({ children, className, ...rest }: ActionsContainerProps) {
 
 interface ActionsMainButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
-  tooltip: string
+  tooltip?: string
   buttonStyle?: 'primary' | 'secondary'
 }
 
@@ -36,24 +43,26 @@ function Button({
   className,
   ...props
 }: ActionsMainButtonProps) {
-  return (
-    <SimpleTooltip text={tooltip}>
-      <ComponentButton
-        className={cn(
-          'rounded-full w-14 h-14 ease-linear duration-100 transition',
-          'border-[1px] border-transparent',
-          buttonStyle === 'primary'
-            ? 'hover:scale-105 mr-2'
-            : 'hover:bg-foreground/20',
-          className,
-        )}
-        variant={buttonStyle === 'primary' ? 'default' : 'ghost'}
-        {...props}
-      >
-        {children}
-      </ComponentButton>
-    </SimpleTooltip>
+  const button = (
+    <ComponentButton
+      className={cn(
+        'rounded-full w-14 h-14 ease-linear duration-100 transition',
+        'border-[1px] border-transparent',
+        buttonStyle === 'primary'
+          ? 'hover:scale-105 mr-2'
+          : 'hover:bg-foreground/20',
+        className,
+      )}
+      variant={buttonStyle === 'primary' ? 'default' : 'ghost'}
+      {...props}
+    >
+      {children}
+    </ComponentButton>
   )
+
+  if (!tooltip) return button
+
+  return <SimpleTooltip text={tooltip}>{button}</SimpleTooltip>
 }
 
 interface DropdownProps {
@@ -97,6 +106,10 @@ function PlayIcon() {
   return <Play className="w-5 h-5 fill-primary-foreground" strokeWidth={6} />
 }
 
+function PauseIcon() {
+  return <Pause className="w-5 h-5 fill-primary-foreground" />
+}
+
 function ShuffleIcon() {
   return <Shuffle className="w-5 h-5 drop-shadow-md" strokeWidth={2} />
 }
@@ -129,6 +142,7 @@ export const Actions = {
   Container,
   Button,
   PlayIcon,
+  PauseIcon,
   ShuffleIcon,
   LikeIcon,
   InfoIcon,

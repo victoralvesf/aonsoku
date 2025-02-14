@@ -1,17 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
-import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import { Actions } from '@/app/components/actions'
 import { EpisodeFallback } from '@/app/components/fallbacks/podcast-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EpisodeInfo } from '@/app/components/podcasts/episode-info'
+import {
+  useIsEpisodePlaying,
+  usePlayEpisode,
+} from '@/app/hooks/use-podcast-playing'
 import { podcasts } from '@/service/podcasts'
 import { linkifyText, sanitizeLinks } from '@/utils/parseTexts'
 import { queryKeys } from '@/utils/queryKeys'
 
 export default function Episode() {
   const { episodeId } = useParams() as { episodeId: string }
-  const { t } = useTranslation()
+
+  const { isPlaying, isEpisodePlaying } = useIsEpisodePlaying({ id: episodeId })
+  const { handlePlayEpisode } = usePlayEpisode({ id: episodeId })
 
   const { data: episode, isLoading } = useQuery({
     queryKey: [queryKeys.episode.one, episodeId],
@@ -28,18 +33,18 @@ export default function Episode() {
     return { __html: final }
   }
 
+  const isCurrentlyPlaying = isEpisodePlaying && isPlaying
+  const isNotPlaying = (isEpisodePlaying && !isPlaying) || !isEpisodePlaying
+
   return (
     <div className="h-full">
       <EpisodeInfo episode={episode} />
 
       <ListWrapper>
         <Actions.Container className="mt-0">
-          <Actions.Button
-            tooltip={t('playlist.buttons.play', { name: episode.title })}
-            buttonStyle="primary"
-            onClick={() => {}}
-          >
-            <Actions.PlayIcon />
+          <Actions.Button buttonStyle="primary" onClick={handlePlayEpisode}>
+            {isCurrentlyPlaying && <Actions.PauseIcon />}
+            {isNotPlaying && <Actions.PlayIcon />}
           </Actions.Button>
         </Actions.Container>
 
