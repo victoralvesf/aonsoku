@@ -1,7 +1,7 @@
 import { convert } from 'html-to-text'
 import LinkifyIt from 'linkify-it'
 
-export function parseDescription(text: string) {
+export function parseHtmlToText(text: string) {
   return convert(text, {
     wordwrap: false,
     selectors: [

@@ -4,6 +4,7 @@ import { ComponentPropsWithoutRef, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
+import { EqualizerBars } from '@/app/components/icons/equalizer-bars'
 import { Button } from '@/app/components/ui/button'
 import { Separator } from '@/app/components/ui/separator'
 import { useEpisodeProgress } from '@/app/hooks/use-episode-progress'
@@ -14,8 +15,7 @@ import {
 import { ROUTES } from '@/routes/routesList'
 import { Episode } from '@/types/responses/podcasts'
 import dateTime from '@/utils/dateTime'
-import { parseDescription } from '@/utils/parseTexts'
-import { EqualizerBars } from '../icons/equalizer-bars'
+import { parseHtmlToText } from '@/utils/parseTexts'
 
 type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
   episode: Episode
@@ -70,10 +70,10 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
               isEpisodePlaying && 'text-primary',
             )}
           >
-            {episode.title}
+            {parseHtmlToText(episode.title)}
           </h4>
           <p className="text-xs text-muted-foreground line-clamp-2">
-            {parseDescription(episode.description)}
+            {parseHtmlToText(episode.description)}
           </p>
         </div>
         <div className="min-w-[14%] flex flex-col gap-1 items-center justify-center text-xs text-muted-foreground">
