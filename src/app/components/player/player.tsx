@@ -110,7 +110,7 @@ export function Player() {
     if (!audio) return
 
     audio.playbackRate = currentPlaybackRate
-  }, [currentPlaybackRate])
+  }, [currentPlaybackRate, isPodcast])
 
   const setupDuration = useCallback(() => {
     const audio = getAudioRef().current
