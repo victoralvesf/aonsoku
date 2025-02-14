@@ -1,21 +1,26 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
+import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import { ROUTES } from '@/routes/routesList'
 import { EpisodeWithPodcast } from '@/types/responses/podcasts'
-import { MarqueeTitle } from '../fullscreen/marquee-title'
+
+const placeholderImageSrc = '/default_podcast_art.png'
 
 export function PodcastInfo({ podcast }: { podcast: EpisodeWithPodcast }) {
+  const [imageError, setImageError] = useState(false)
+
   return (
     <Fragment>
       <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md">
         <LazyLoadImage
-          src={podcast.image_url}
+          src={imageError ? placeholderImageSrc : podcast.image_url}
           width="100%"
           height="100%"
           className="aspect-square object-cover w-full h-full text-transparent"
           data-testid="podcast-image"
           alt={podcast.title}
+          onError={() => setImageError(true)}
         />
       </div>
       <div className="flex flex-col justify-center">
