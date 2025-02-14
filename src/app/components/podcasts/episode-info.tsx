@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Separator } from '@/app/components/ui/separator'
+import { useEpisodeProgress } from '@/app/hooks/use-episode-progress'
 import { ROUTES } from '@/routes/routesList'
 import { EpisodeWithPodcast } from '@/types/responses/podcasts'
-import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 import { PodcastInfoContainer } from './info/container'
 import { PodcastInfoImage } from './info/image'
@@ -13,13 +13,7 @@ interface EpisodeInfoProps {
 }
 
 export function EpisodeInfo({ episode }: EpisodeInfoProps) {
-  const publishDate = useMemo(() => {
-    return dateTime(episode.published_at).format('LL')
-  }, [episode.published_at])
-
-  const episodeDuration = useMemo(() => {
-    return convertSecondsToHumanRead(episode.duration, true)
-  }, [episode.duration])
+  const publishDate = dateTime(episode.published_at).format('LL')
 
   return (
     <PodcastInfoContainer>
@@ -34,9 +28,35 @@ export function EpisodeInfo({ episode }: EpisodeInfoProps) {
         <Details.Root>
           <Details.Text>{publishDate}</Details.Text>
           <Details.Dot />
-          <Details.Text>{episodeDuration}</Details.Text>
+          <EpisodeProgress episode={episode} />
         </Details.Root>
       </Root>
     </PodcastInfoContainer>
+  )
+}
+
+function EpisodeProgress({ episode }: EpisodeInfoProps) {
+  const { t } = useTranslation()
+  const { duration, playback } = episode
+
+  const {
+    episodeDuration,
+    hasPlaybackData,
+    isEpisodeCompleted,
+    remainingTimeText,
+  } = useEpisodeProgress({ duration, playback, showFullTime: true })
+
+  if (!hasPlaybackData) {
+    return <Details.Text>{episodeDuration}</Details.Text>
+  }
+
+  if (isEpisodeCompleted) {
+    return <Details.Text>{t('podcasts.list.progress.completed')}</Details.Text>
+  }
+
+  return (
+    <Details.Text>
+      {t('podcasts.list.progress.remainingTime', { time: remainingTimeText })}
+    </Details.Text>
   )
 }

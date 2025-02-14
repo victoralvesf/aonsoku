@@ -11,11 +11,11 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { Button } from '@/app/components/ui/button'
 import { Separator } from '@/app/components/ui/separator'
+import { useEpisodeProgress } from '@/app/hooks/use-episode-progress'
 import { ROUTES } from '@/routes/routesList'
 import { podcasts } from '@/service/podcasts'
 import { usePlayerActions } from '@/store/player.store'
 import { Episode } from '@/types/responses/podcasts'
-import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 import { parseDescription } from '@/utils/parseTexts'
 
@@ -131,16 +131,13 @@ function EpisodeProgress({ episode }: EpisodeCardProps) {
   const { t } = useTranslation()
   const { duration, playback } = episode
 
-  const episodeDuration = convertSecondsToHumanRead(duration)
-
-  const hasPlaybackData = episode.playback.length === 1
-  const isEpisodeCompleted = hasPlaybackData ? playback[0].completed : false
-
-  const remainingTime = hasPlaybackData ? duration - playback[0].progress : 0
-  const remainingTimeText = convertSecondsToHumanRead(remainingTime)
-
-  const listeningProgress = hasPlaybackData ? playback[0].progress : 0
-  const listeningProgressPercentage = (listeningProgress / duration) * 100
+  const {
+    episodeDuration,
+    hasPlaybackData,
+    isEpisodeCompleted,
+    remainingTimeText,
+    listeningProgressPercentage,
+  } = useEpisodeProgress({ duration, playback })
 
   if (!hasPlaybackData) {
     return <span>{episodeDuration}</span>

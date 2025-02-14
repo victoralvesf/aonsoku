@@ -26,7 +26,7 @@ export interface Podcast {
 
 export type Podcasts = PaginateResponse<Podcast>
 
-export interface ProgressResponse {
+export interface Playback {
   progress: number
   completed: boolean
 }
@@ -42,7 +42,7 @@ export interface Episode {
   published_at: string
   created_at: string
   updated_at: string
-  playback: ProgressResponse[]
+  playback: Playback[]
 }
 
 export type Episodes = PaginateResponse<Episode>
