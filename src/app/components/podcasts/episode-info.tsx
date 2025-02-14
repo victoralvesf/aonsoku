@@ -4,6 +4,7 @@ import { useEpisodeProgress } from '@/app/hooks/use-episode-progress'
 import { ROUTES } from '@/routes/routesList'
 import { EpisodeWithPodcast } from '@/types/responses/podcasts'
 import dateTime from '@/utils/dateTime'
+import { parseHtmlToText } from '@/utils/parseTexts'
 import { PodcastInfoContainer } from './info/container'
 import { PodcastInfoImage } from './info/image'
 import { Root, Title, SubtitleLink, Details } from './info/texts'
@@ -20,9 +21,9 @@ export function EpisodeInfo({ episode }: EpisodeInfoProps) {
       <PodcastInfoImage src={episode.image_url} alt={episode.title} />
 
       <Root>
-        <Title>{episode.title}</Title>
+        <Title>{parseHtmlToText(episode.title)}</Title>
         <SubtitleLink to={ROUTES.PODCASTS.PAGE(episode.podcast_id)}>
-          {episode.podcast.title}
+          {parseHtmlToText(episode.podcast.title)}
         </SubtitleLink>
         <Separator />
         <Details.Root>
