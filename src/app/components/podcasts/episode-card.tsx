@@ -1,21 +1,17 @@
 import clsx from 'clsx'
 import { EllipsisVertical, PauseIcon, PlayIcon } from 'lucide-react'
-import {
-  ComponentPropsWithoutRef,
-  MouseEvent,
-  useCallback,
-  useMemo,
-} from 'react'
+import { ComponentPropsWithoutRef, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { Button } from '@/app/components/ui/button'
 import { Separator } from '@/app/components/ui/separator'
 import { useEpisodeProgress } from '@/app/hooks/use-episode-progress'
-import { useIsEpisodePlaying } from '@/app/hooks/use-podcast-playing'
+import {
+  useIsEpisodePlaying,
+  usePlayEpisode,
+} from '@/app/hooks/use-podcast-playing'
 import { ROUTES } from '@/routes/routesList'
-import { podcasts } from '@/service/podcasts'
-import { usePlayerActions } from '@/store/player.store'
 import { Episode } from '@/types/responses/podcasts'
 import dateTime from '@/utils/dateTime'
 import { parseDescription } from '@/utils/parseTexts'
@@ -140,40 +136,9 @@ function EpisodeProgress({ episode }: EpisodeCardProps) {
 }
 
 function EpisodeImage({ episode }: EpisodeCardProps) {
-  const { setPlayPodcast, setPlayingState } = usePlayerActions()
-  const { isPlaying, isEpisodePlaying } = useIsEpisodePlaying({
-    id: episode.id,
-  })
-
-  const handlePlayEpisode = useCallback(
-    async (e: MouseEvent<HTMLButtonElement>) => {
-      e.stopPropagation()
-      e.preventDefault()
-
-      if (isPlaying && isEpisodePlaying) {
-        setPlayingState(false)
-        return
-      }
-      if (!isPlaying && isEpisodePlaying) {
-        setPlayingState(true)
-        return
-      }
-
-      const episodeWithPodcast = await podcasts.getEpisode(episode.id)
-      if (episodeWithPodcast) {
-        const { playback } = episodeWithPodcast
-        const hasPlaybackData = playback.length > 0
-        let currentProgress = hasPlaybackData ? playback[0].progress : 0
-
-        if (hasPlaybackData && playback[0].completed) {
-          currentProgress = 0
-        }
-
-        setPlayPodcast([episodeWithPodcast], 0, currentProgress)
-      }
-    },
-    [episode.id, isEpisodePlaying, isPlaying, setPlayPodcast, setPlayingState],
-  )
+  const { id } = episode
+  const { isPlaying, isEpisodePlaying } = useIsEpisodePlaying({ id })
+  const { handlePlayEpisode } = usePlayEpisode({ id })
 
   const isNotPlaying = useMemo(() => {
     return (isEpisodePlaying && !isPlaying) || !isEpisodePlaying
