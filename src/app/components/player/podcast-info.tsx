@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import { ROUTES } from '@/routes/routesList'
 import { EpisodeWithPodcast } from '@/types/responses/podcasts'
+import { parseHtmlToText } from '@/utils/parseTexts'
 
 const placeholderImageSrc = '/default_podcast_art.png'
 
@@ -30,7 +31,7 @@ export function PodcastInfo({ podcast }: { podcast: EpisodeWithPodcast }) {
               className="text-sm font-medium hover:underline cursor-pointer"
               data-testid="podcast-episode-title"
             >
-              {podcast.title}
+              {parseHtmlToText(podcast.title)}
             </span>
           </Link>
         </MarqueeTitle>
@@ -40,7 +41,7 @@ export function PodcastInfo({ podcast }: { podcast: EpisodeWithPodcast }) {
           data-testid="track-artist-url"
         >
           <span className="text-xs font-regular text-muted-foreground hover:underline">
-            {podcast.podcast.title}
+            {parseHtmlToText(podcast.podcast.title)}
           </span>
         </Link>
       </div>
