@@ -37,7 +37,7 @@ export function PodcastInfo({ podcast }: PodcastInfoProps) {
           {podcast.link && (
             <>
               <Details.Dot />
-              <Details.Link href={podcast.feed_url}>
+              <Details.Link href={podcast.link}>
                 <GlobeIcon className="w-4 h-4" />
                 {t('podcasts.header.website')}
               </Details.Link>
