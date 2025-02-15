@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -60,6 +61,8 @@ export function PodcastFormDialog({ open, setOpen }: PodcastFormDialogProps) {
         queryKey: [queryKeys.podcast.all],
       })
       toast.success(t('podcasts.form.toasts.success'))
+      setOpen(false)
+      form.reset({ feedUrl: '' })
     },
     onError: () => {
       toast.error(t('podcasts.form.toasts.error'))
@@ -70,9 +73,6 @@ export function PodcastFormDialog({ open, setOpen }: PodcastFormDialogProps) {
     await createMutation.mutate({
       feed_urls: [feedUrl],
     })
-
-    setOpen(false)
-    form.reset({ feedUrl: '' })
   }
 
   return (
@@ -114,8 +114,11 @@ export function PodcastFormDialog({ open, setOpen }: PodcastFormDialogProps) {
               />
             </div>
             <DialogFooter>
-              <Button type="submit">
-                {t('podcasts.form.dialog.saveButton')}
+              <Button type="submit" disabled={createMutation.isPending}>
+                {createMutation.isPending && (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                )}
+                <span>{t('podcasts.form.dialog.saveButton')}</span>
               </Button>
             </DialogFooter>
           </form>
