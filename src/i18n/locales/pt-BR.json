@@ -209,7 +209,7 @@
         "saveButton": "Salvar"
       },
       "toasts": {
-        "success": "Playlist criada com sucesso! Ele estará disponível para ouvir em alguns minutos!",
+        "success": "Podcast criado com sucesso! Ele estará disponível para ouvir em alguns minutos!",
         "error": "Falha ao criar o podcast!"
       }
     },
@@ -243,7 +243,17 @@
       "episodeCount_many": "{{count}} episódios",
       "episodeCount_other": "{{count}} episódios",
       "feed": "Feed",
-      "website": "Site Oficial"
+      "website": "Site Oficial",
+      "unfollow": {
+        "dialog": {
+          "title": "Você tem certeza de que deseja excluir este podcast?",
+          "description": "Para escutar este podcast novamente no futuro, você terá que recriá-lo."
+        },
+        "toasts": {
+          "success": "Você deixou de seguir o podcast com sucesso!",
+          "error": "Ocorreu um erro ao deixar de seguir o podcast. Por favor, tente novamente."
+        }
+      }
     },
     "list": {
       "episodes": "Episódios",

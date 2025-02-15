@@ -238,7 +238,17 @@
       "episodeCount_many": "{{count}} episodes",
       "episodeCount_other": "{{count}} episodes",
       "feed": "Feed",
-      "website": "Official Website"
+      "website": "Official Website",
+      "unfollow": {
+        "dialog": {
+          "title": "Are you sure you want to unfollow this podcast?",
+          "description": "To listen to this podcast again in the future, you'll need to recreate it."
+        },
+        "toasts": {
+          "success": "You have successfully unfollowed the podcast!",
+          "error": "An error occurred while trying to unfollow the podcast. Please try again."
+        }
+      }
     },
     "list": {
       "episodes": "Episodes",

@@ -6,6 +6,7 @@ import { parseHtmlToText } from '@/utils/parseTexts'
 import { PodcastInfoContainer } from './info/container'
 import { PodcastInfoImage } from './info/image'
 import { Root, Title, Subtitle, Description, Details } from './info/texts'
+import { UnfollowButton } from './unfollow-button'
 
 interface PodcastInfoProps {
   podcast: Podcast
@@ -14,12 +15,17 @@ interface PodcastInfoProps {
 export function PodcastInfo({ podcast }: PodcastInfoProps) {
   const { t } = useTranslation()
 
+  const title = parseHtmlToText(podcast.title)
+
   return (
     <PodcastInfoContainer>
       <PodcastInfoImage src={podcast.image_url} alt={podcast.title} />
 
       <Root>
-        <Title>{parseHtmlToText(podcast.title)}</Title>
+        <div className="flex gap-3 items-center">
+          <Title>{title}</Title>
+          <UnfollowButton title={title} podcastId={podcast.id} />
+        </div>
         <Subtitle>{podcast.author}</Subtitle>
         <Separator />
         <Description>{parseHtmlToText(podcast.description)}</Description>
