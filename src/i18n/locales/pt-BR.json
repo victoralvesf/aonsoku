@@ -245,6 +245,7 @@
       "feed": "Feed",
       "website": "Site Oficial",
       "unfollow": {
+        "tooltip": "Deixar de seguir {{title}}",
         "dialog": {
           "title": "Você tem certeza de que deseja excluir este podcast?",
           "description": "Para escutar este podcast novamente no futuro, você terá que recriá-lo."

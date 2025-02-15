@@ -240,6 +240,7 @@
       "feed": "Feed",
       "website": "Official Website",
       "unfollow": {
+        "tooltip": "Unfollow {{title}}",
         "dialog": {
           "title": "Are you sure you want to unfollow this podcast?",
           "description": "To listen to this podcast again in the future, you'll need to recreate it."
