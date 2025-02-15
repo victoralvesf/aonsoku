@@ -2,7 +2,6 @@ import { Podcast } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { EmptyWrapper } from '@/app/components/albums/empty-wrapper'
 import ListWrapper from '@/app/components/list-wrapper'
-import { Button } from '@/app/components/ui/button'
 import { PodcastsHeader } from './header'
 
 export function EmptyPodcastsPage() {
@@ -24,15 +23,6 @@ export function EmptyPodcastsPage() {
             <p className="text-sm text-muted-foreground">
               {t('podcasts.emptyPage.description')}
             </p>
-
-            <Button
-              size="sm"
-              variant="default"
-              className="mt-4"
-              onClick={() => {}}
-            >
-              <span>{t('podcasts.form.addButton')}</span>
-            </Button>
           </div>
         </EmptyWrapper>
       </ListWrapper>
