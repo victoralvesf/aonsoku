@@ -70,7 +70,7 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
               isEpisodePlaying && 'text-primary',
             )}
           >
-            {parseHtmlToText(episode.title)}
+            {episode.title}
           </h4>
           <p className="text-xs text-muted-foreground line-clamp-2">
             {parseHtmlToText(episode.description)}

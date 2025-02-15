@@ -2,7 +2,6 @@ import { GlobeIcon, RssIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Separator } from '@/app/components/ui/separator'
 import { Podcast } from '@/types/responses/podcasts'
-import { parseHtmlToText } from '@/utils/parseTexts'
 import { PodcastInfoContainer } from './info/container'
 import { PodcastInfoImage } from './info/image'
 import { Root, Title, Subtitle, Description, Details } from './info/texts'
@@ -15,20 +14,18 @@ interface PodcastInfoProps {
 export function PodcastInfo({ podcast }: PodcastInfoProps) {
   const { t } = useTranslation()
 
-  const title = parseHtmlToText(podcast.title)
-
   return (
     <PodcastInfoContainer>
       <PodcastInfoImage src={podcast.image_url} alt={podcast.title} />
 
       <Root>
         <div className="flex gap-3 items-center">
-          <Title>{title}</Title>
-          <UnfollowButton title={title} podcastId={podcast.id} />
+          <Title>{podcast.title}</Title>
+          <UnfollowButton title={podcast.title} podcastId={podcast.id} />
         </div>
         <Subtitle>{podcast.author}</Subtitle>
         <Separator />
-        <Description>{parseHtmlToText(podcast.description)}</Description>
+        <Description>{podcast.description}</Description>
         <Details.Root>
           <Details.Text>
             {t('podcasts.header.episodeCount', {

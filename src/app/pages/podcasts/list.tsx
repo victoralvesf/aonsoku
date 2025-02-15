@@ -18,7 +18,6 @@ import {
   PodcastsOrderByOptions,
   SortOptions,
 } from '@/utils/albumsFilter'
-import { parseHtmlToText } from '@/utils/parseTexts'
 import { queryKeys } from '@/utils/queryKeys'
 import { getMainScrollElement } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
@@ -123,7 +122,7 @@ export default function PodcastsList() {
               </PreviewCard.ImageWrapper>
               <PreviewCard.InfoWrapper>
                 <PreviewCard.Title link={ROUTES.PODCASTS.PAGE(podcast.id)}>
-                  {parseHtmlToText(podcast.title)}
+                  {podcast.title}
                 </PreviewCard.Title>
                 <PreviewCard.Subtitle>{podcast.author}</PreviewCard.Subtitle>
                 <PreviewCard.Subtitle className="mt-[1px]">
