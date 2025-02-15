@@ -247,8 +247,8 @@
       "unfollow": {
         "tooltip": "Deixar de seguir {{title}}",
         "dialog": {
-          "title": "Você tem certeza de que deseja excluir este podcast?",
-          "description": "Para escutar este podcast novamente no futuro, você terá que recriá-lo."
+          "title": "Você tem certeza de que deseja deixar de seguir este podcast?",
+          "description": "Para escutar este podcast novamente no futuro, você terá que cadastrá-lo novamente."
         },
         "toasts": {
           "success": "Você deixou de seguir o podcast com sucesso!",
