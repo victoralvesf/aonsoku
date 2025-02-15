@@ -215,7 +215,7 @@
     },
     "emptyPage": {
       "message": "Nenhum podcast adicionado",
-      "description": "Parece que você ainda não adicionou nenhum podcast. Adicione um abaixo!"
+      "description": "Parece que você ainda não adicionou nenhum podcast. Adicione um acima!"
     },
     "emptyResults": {
       "title": "Nenhum resultado encontrado.",

@@ -210,7 +210,7 @@
     },
     "emptyPage": {
       "message": "No podcasts added",
-      "description": "It looks like you have not added any podcasts yet. Add one below!"
+      "description": "It looks like you have not added any podcasts yet. Add one above!"
     },
     "emptyResults": {
       "title": "No results found.",
