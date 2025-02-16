@@ -37,11 +37,14 @@ async fn main() {
 
     builder
         .setup(|_app| {
+            let window = _app.get_window("main").unwrap();
+
+            let _ = window.hide();
+
             #[cfg(target_os = "macos")]
             {
                 use mac::window::setup_traffic_light_positioner;
 
-                let window = _app.get_window("main").unwrap();
                 let window_ = window.clone();
 
                 window.on_window_event(move |event| {
@@ -56,6 +59,12 @@ async fn main() {
                 let main_window = _app.get_webview_window("main").unwrap();
                 let _ = main_window.set_decorations(false);
             }
+
+            // Only show window after 1 sec, to avoid flashy colors
+            tokio::spawn(async move {
+                tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+                let _ = window.show();
+            });
 
             Ok(())
         })
