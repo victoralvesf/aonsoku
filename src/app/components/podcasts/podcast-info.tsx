@@ -2,6 +2,7 @@ import { GlobeIcon, RssIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Separator } from '@/app/components/ui/separator'
 import { Podcast } from '@/types/responses/podcasts'
+import { parseHtmlToText } from '@/utils/parseTexts'
 import { PodcastInfoContainer } from './info/container'
 import { PodcastInfoImage } from './info/image'
 import { Root, Title, Subtitle, Description, Details } from './info/texts'
@@ -25,7 +26,7 @@ export function PodcastInfo({ podcast }: PodcastInfoProps) {
         </div>
         <Subtitle>{podcast.author}</Subtitle>
         <Separator />
-        <Description>{podcast.description}</Description>
+        <Description>{parseHtmlToText(podcast.description)}</Description>
         <Details.Root>
           <Details.Text>
             {t('podcasts.header.episodeCount', {
