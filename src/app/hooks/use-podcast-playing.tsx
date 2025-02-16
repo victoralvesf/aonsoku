@@ -12,17 +12,18 @@ interface IEpisodeProps {
 }
 
 export function useIsEpisodePlaying({ id }: IEpisodeProps) {
-  const { podcastList } = usePlayerSonglist()
+  const { podcastList, currentSongIndex } = usePlayerSonglist()
   const isPlaying = usePlayerIsPlaying()
   const { isPodcast } = usePlayerMediaType()
 
   const isEpisodePlaying = useMemo(() => {
     if (!isPodcast) return false
 
-    const playingEpisode = podcastList[0]
+    const playingEpisode = podcastList[currentSongIndex] ?? null
+    if (!playingEpisode) return false
 
     return playingEpisode.id === id
-  }, [id, isPodcast, podcastList])
+  }, [currentSongIndex, id, isPodcast, podcastList])
 
   return {
     isPlaying,
