@@ -4,6 +4,7 @@ import {
   useMemo,
   useCallback,
   useEffect,
+  useState,
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -31,6 +32,7 @@ export function AudioPlayer({
   ...props
 }: AudioPlayerProps) {
   const { t } = useTranslation()
+  const [prevSrc, setPrevSrc] = useState('')
   const { replayGainEnabled, replayGainError } = useReplayGainState()
   const { isSong, isRadio, isPodcast } = usePlayerMediaType()
   const { setPlayingState } = usePlayerActions()
@@ -51,12 +53,19 @@ export function AudioPlayer({
 
   const { resumeContext, setupGain } = useAudioContext(audioRef.current)
 
-  useEffect(() => {
-    if (!isSong || replayGainError || !audioRef.current || isLinux) return
+  const ignoreGain = !isSong || replayGainError || isLinux
 
-    audioRef.current.crossOrigin = 'anonymous'
+  useEffect(() => {
+    const audio = audioRef.current
+    if (ignoreGain || !audio) return
+
+    const currentSrc = audio.src
+    if (currentSrc === prevSrc) return
+
+    audio.crossOrigin = 'anonymous'
     setupGain(gainValue, replayGain)
-  }, [audioRef, gainValue, isSong, replayGain, replayGainError, setupGain])
+    setPrevSrc(currentSrc)
+  }, [audioRef, ignoreGain, gainValue, prevSrc, replayGain, setupGain])
 
   const handleSongError = useCallback(() => {
     const audio = audioRef.current
