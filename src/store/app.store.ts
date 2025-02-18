@@ -191,6 +191,11 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.songCount = null
                 state.pages.showInfoPanel = true
                 state.pages.hideRadiosSection = HIDE_RADIOS_SECTION ?? false
+                state.podcasts.active = false
+                state.podcasts.serviceUrl = ''
+                state.podcasts.useDefaultUser = true
+                state.podcasts.customUser = ''
+                state.podcasts.customUrl = ''
               })
             },
             setLogoutDialogState: (value) => {
