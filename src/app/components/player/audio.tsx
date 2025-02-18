@@ -32,7 +32,7 @@ export function AudioPlayer({
   ...props
 }: AudioPlayerProps) {
   const { t } = useTranslation()
-  const [prevSrc, setPrevSrc] = useState('')
+  const [previousGain, setPreviousGain] = useState(1)
   const { replayGainEnabled, replayGainError } = useReplayGainState()
   const { isSong, isRadio, isPodcast } = usePlayerMediaType()
   const { setPlayingState } = usePlayerActions()
@@ -59,13 +59,12 @@ export function AudioPlayer({
     const audio = audioRef.current
     if (ignoreGain || !audio) return
 
-    const currentSrc = audio.src
-    if (currentSrc === prevSrc) return
+    if (gainValue === previousGain) return
 
     audio.crossOrigin = 'anonymous'
     setupGain(gainValue, replayGain)
-    setPrevSrc(currentSrc)
-  }, [audioRef, ignoreGain, gainValue, prevSrc, replayGain, setupGain])
+    setPreviousGain(gainValue)
+  }, [audioRef, ignoreGain, gainValue, previousGain, replayGain, setupGain])
 
   const handleSongError = useCallback(() => {
     const audio = audioRef.current
