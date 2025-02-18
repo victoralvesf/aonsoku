@@ -1,1 +1,223 @@
-{}
+{
+  "sidebar": {
+    "radios": "Radio",
+    "artists": "Artister",
+    "home": "Hem",
+    "search": "Sök…",
+    "miniSearch": "Sök",
+    "albums": "Album",
+    "playlists": "Spellista",
+    "songs": "Sånger",
+    "emptyPlaylist": "Inga spellistor skapat ännu",
+    "library": "Bibliotek"
+  },
+  "home": {
+    "recentlyAdded": "Nyligen tillagd",
+    "explore": "Utforska",
+    "mostPlayed": "Mest spelad",
+    "recentlyPlayed": "Nyligen spelad"
+  },
+  "menu": {
+    "server": "Server",
+    "about": "Om",
+    "serverLogout": "Logga ut",
+    "language": "Språk"
+  },
+  "generic": {
+    "seeMore": "Se mer",
+    "showDetails": "Visa detaljer",
+    "hideDetails": "Göm detaljer",
+    "viewAll": "Visa allt",
+    "loading": "Laddar…"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Ljusläge",
+    "system": "Systemläge",
+    "black": "Svartvitsläge",
+    "one-dark": "One Mörk",
+    "material-theme": "Material Tema",
+    "monokai-pro": "Monokai Pro",
+    "shades-of-purple": "Nyanser av lila",
+    "bearded-solarized": "Bearded Solarized",
+    "nuclear-dark": "Nucleär Mörk",
+    "achiever": "Prestationsmänniska",
+    "dracula": "Dracula",
+    "night-owl-light": "Nattuggla Ljus",
+    "github-dark": "Github mörkläge",
+    "discord": "Discord",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "noctis-lilac": "Noctis Lila",
+    "dark": "Mörkläge",
+    "vue-dark": "Utsikt Mörk",
+    "tinacious-design": "Tinacious Design",
+    "marmalade-beaver": "Marmalade Beaver",
+    "vim-dark-soft": "Vim Mörk Mjuk"
+  },
+  "playlist": {
+    "form": {
+      "labels": {
+        "comment": "Kommentar",
+        "commentDescription": "Skriv en kort beskrivning av spellistan",
+        "isPublicDescription": "Välj det här alternativet för att göra spellistan publik. Detta gör att andra användare kan se och komma åt din spellista.",
+        "name": "Namn",
+        "isPublic": "Publik"
+      },
+      "create": {
+        "title": "Skapa spellista",
+        "button": "Skapa",
+        "toast": {
+          "error": "Misslyckades med att skapa spellistan!",
+          "success": "Spellista skapad framgångsrikt!"
+        }
+      },
+      "edit": {
+        "title": "Redigera spellista",
+        "button": "Uppdatera",
+        "toast": {
+          "success": "Spellista skapad framgångsrikt!",
+          "error": "Misslyckades med att uppdatera spellistan!"
+        }
+      },
+      "removeSong": {
+        "description": "Denna åtgärd kan inte ångras.",
+        "toast": {
+          "success_one": "Sång borttagen framgångsrikt!",
+          "success_other": "Sånger borttagna framgångsrikt!",
+          "error_one": "Misslyckades med att ta bort låten!",
+          "error_other": "Misslyckades med att ta bort låtarna!"
+        },
+        "title_one": "Är du säker på att du vill ta bort den valda låten?",
+        "title_other": "Är du säker på att du vill ta bort den valda låtarna?"
+      },
+      "delete": {
+        "title": "Är du säker på att du vill ta bort den här spellistan?",
+        "description": "Denna åtgärd kan inte ångras.",
+        "toast": {
+          "error": "Misslyckades med att ta bort spellistan!",
+          "success": "Spellista borttagen framgångsrikt!"
+        }
+      },
+      "validations": {
+        "nameLength": "Spellistans namn måste innehålla minst 2 tecken."
+      }
+    },
+    "headline": "Spellistor",
+    "buttons": {
+      "shuffle": "Spela {{name}} i shuffle-läge",
+      "play": "Spela {{name}}",
+      "options": "Mer inställningar för {{name}}"
+    },
+    "duration": "Ungefär {{duration}}",
+    "noSongList": "Denna spellista har inga låtar!",
+    "songCount_one": "{{count}} sång",
+    "songCount_other": "{{count}} sång",
+    "refresh": "Uppdatera spellistor"
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Sök låtar…"
+      },
+      "byArtist": "Sånger från {{artist}}",
+      "filter": {
+        "clear": "Rensa filter"
+      }
+    }
+  },
+  "album": {
+    "buttons": {
+      "like": "Gilla {{name}}",
+      "dislike": "Ta bort like från {{name}}"
+    },
+    "info": {
+      "lastfm": "Öppna i Last.fm",
+      "musicbrainz": "Öppna i MusicBrainz",
+      "about": "Om {{name}}"
+    },
+    "more": {
+      "listTitle": "Mer från denna artist",
+      "genreTitle": "Mer från {{genre}}",
+      "discography": "Artistdiskografi"
+    },
+    "list": {
+      "header": {
+        "albumsByArtist": "Album av {{artist}}"
+      },
+      "empty": {
+        "title": "Oj, inga album här!",
+        "action": "Försök kanske att justera filtren?",
+        "info": "Det ser ut som om det inte finns några album med det nuvarande filtret."
+      },
+      "genre": {
+        "label": "Välj en genre…",
+        "notFound": "Ingen genre hittades.",
+        "loading": "Laddar genrer…",
+        "search": "Hitta en genre…"
+      },
+      "filter": {
+        "name": "Namn",
+        "random": "Slumpmässig",
+        "recentlyAdded": "Nyligen tillagt",
+        "releaseYear": "Utgivningsår",
+        "genre": "Genre",
+        "favorites": "Favoriter",
+        "discography": "Diskografi",
+        "recentlyPlayed": "Spelades nyligen",
+        "artist": "Artist",
+        "search": "Sök",
+        "mostPlayed": "Mest spelade"
+      },
+      "search": {
+        "placeholder": "Sök album…"
+      }
+    },
+    "table": {
+      "discNumber": "Skiva {{number}}"
+    },
+    "headline": "Album"
+  },
+  "artist": {
+    "buttons": {
+      "play": "Spela {{artist}} radio",
+      "options": "Mer inställningar för {{artist}}",
+      "shuffle": "Spela {{artist}} radio i shuffle-läge"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} album",
+      "albumsCount_other": "{{count}} album"
+    },
+    "topSongs": "Populär",
+    "recentAlbums": "Senaste albumen",
+    "relatedArtists": "Relaterade artister",
+    "headline": "Artist"
+  },
+  "table": {
+    "columns": {
+      "title": "Titel",
+      "album": "Album",
+      "year": "År",
+      "duration": "Längd",
+      "plays": "Spelar",
+      "lastPlayed": "Senast spelade",
+      "bitrate": "Bithastighet",
+      "quality": "Kvalitet",
+      "albumCount": "Antal album",
+      "songCount": "Antal låtar",
+      "comment": "Kommentar",
+      "track": "Track",
+      "size": "Storlek",
+      "codec": "Codec",
+      "path": "Spår",
+      "discNumber": "Skivnummer",
+      "trackGain": "Spårförstärkning",
+      "trackPeak": "Spårtopp",
+      "artist": "Artist",
+      "bpm": "BPM",
+      "favorite": "Favorit",
+      "genres": "Genrer",
+      "name": "Namn",
+      "public": "Publik"
+    }
+  }
+}
