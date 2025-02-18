@@ -33,11 +33,8 @@ export function songsColumns(): ColumnDefType<ISong>[] {
 
         return (
           <PlaySongButton
-            type="song"
             trackNumber={trackNumber}
             trackId={song.id}
-            title={song.title}
-            artist={song.artist}
             handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
           />
         )
@@ -59,11 +56,8 @@ export function songsColumns(): ColumnDefType<ISong>[] {
 
         return (
           <PlaySongButton
-            type="song"
             trackNumber={trackNumber}
             trackId={song.id}
-            title={song.title}
-            artist={song.artist}
             handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
           />
         )

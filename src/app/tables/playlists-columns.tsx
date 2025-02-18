@@ -31,10 +31,8 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
 
         return (
           <PlaySongButton
-            type="playlist"
             trackNumber={index}
             trackId={playlist.id}
-            title={playlist.name}
             handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
           />
         )
