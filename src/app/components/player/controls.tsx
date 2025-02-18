@@ -44,6 +44,7 @@ export function PlayerControls({ song, radio, audioRef }: PlayerControlsProps) {
     isPlayingOneSong,
     toggleShuffle,
     toggleLoop,
+    setPlayingState,
     togglePlayPause,
     playPrevSong,
     playNextSong,
@@ -65,13 +66,38 @@ export function PlayerControls({ song, radio, audioRef }: PlayerControlsProps) {
     })
   }
 
+  const handleSeekAction = useCallback(
+    (value: number) => {
+      const audio = audioRef.current
+      if (!audio) return
+
+      audio.currentTime += value
+    },
+    [audioRef],
+  )
+
   useEffect(() => {
-    manageMediaSession.setHandlers({
-      togglePlayPause,
-      playPrev: playPrevSong,
-      playNext: playNextSong,
-    })
-  }, [playNextSong, playPrevSong, togglePlayPause])
+    if (isPodcast) {
+      manageMediaSession.setPodcastHandlers({
+        setIsPlaying: setPlayingState,
+        seekBackward: handleSeekAction,
+        seekForward: handleSeekAction,
+      })
+    } else {
+      manageMediaSession.setHandlers({
+        setIsPlaying: setPlayingState,
+        playPrev: playPrevSong,
+        playNext: playNextSong,
+      })
+    }
+  }, [
+    handleSeekAction,
+    isPodcast,
+    playNextSong,
+    playPrevSong,
+    setPlayingState,
+    togglePlayPause,
+  ])
 
   const shuffleTooltip = isShuffleActive
     ? t('player.tooltips.shuffle.disable')
@@ -88,16 +114,6 @@ export function PlayerControls({ song, radio, audioRef }: PlayerControlsProps) {
   const repeatTooltip = repeatTooltips[loopState]
 
   const cannotGotoNextSong = !hasNextSong() && loopState !== LoopState.All
-
-  const handleSeekAction = useCallback(
-    (value: number) => {
-      const audio = audioRef.current
-      if (!audio) return
-
-      audio.currentTime += value
-    },
-    [audioRef],
-  )
 
   return (
     <div className="flex w-full gap-1 justify-center items-center mb-1">

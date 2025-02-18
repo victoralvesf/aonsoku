@@ -4,7 +4,6 @@ import { getSongStreamUrl } from '@/api/httpClient'
 import { getProxyURL } from '@/api/podcastClient'
 import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
-import useMediaSession from '@/app/hooks/use-media-session'
 import { podcasts } from '@/service/podcasts'
 import {
   usePlayerActions,
@@ -60,8 +59,6 @@ export function Player() {
   const audioPlayerRef = usePlayerRef()
   const currentPlaybackRate = usePlayerStore().playerState.currentPlaybackRate
   const progress = getCurrentProgress()
-  const { resetSession, radioSession, songSession, playbackState } =
-    useMediaSession()
   const { replayGainType, replayGainPreAmp, replayGainDefaultGain } =
     useReplayGainState()
 
@@ -82,28 +79,6 @@ export function Player() {
     if (audioPlayerRef === null && audioRef.current)
       setAudioPlayerRef(audioRef.current)
   }, [audioPlayerRef, audioRef, isSong, setAudioPlayerRef, song])
-
-  useEffect(() => {
-    if (!song && !radio) resetSession()
-  }, [song, radio, resetSession])
-
-  useEffect(() => {
-    if (radioList.length > 0 && isRadio) {
-      const radio = radioList[currentSongIndex]
-      radioSession(radio)
-    }
-  }, [currentSongIndex, isRadio, radioList, radioSession])
-
-  useEffect(() => {
-    if (currentList.length > 0 && isSong) {
-      const song = currentList[currentSongIndex]
-      songSession(song)
-    }
-  }, [currentList, currentSongIndex, isSong, songSession])
-
-  useEffect(() => {
-    playbackState(isPlaying)
-  }, [isPlaying, playbackState])
 
   useEffect(() => {
     const audio = podcastRef.current
