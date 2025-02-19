@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { LatestEpisodesFallback } from '@/app/components/fallbacks/podcast-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EpisodeCard } from '@/app/components/podcasts/episode-card'
@@ -16,27 +16,24 @@ export default function LatestEpisodes() {
     scrollDivRef.current = getMainScrollElement()
   }, [])
 
-  const {
-    data: episodes,
-    isFetched,
-    isLoading,
-  } = useQuery({
+  const { data, isFetched, isFetching, isLoading } = useQuery({
     queryKey: [queryKeys.episode.latest],
     queryFn: podcasts.getLatest,
   })
 
+  const episodes = useMemo(() => data || [], [data])
+
   const virtualizer = useVirtualizer({
-    count: episodes?.length ?? 0,
+    count: episodes.length,
     getScrollElement: () => scrollDivRef.current,
     estimateSize: () => 124,
     overscan: 5,
   })
 
-  if (isLoading) return <LatestEpisodesFallback />
-  if (isFetched && !episodes) {
+  if (isLoading || isFetching) return <LatestEpisodesFallback />
+  if (isFetched && !data) {
     return <ErrorPage />
   }
-  if (!episodes) return <LatestEpisodesFallback />
 
   const items = virtualizer.getVirtualItems()
 
