@@ -49,17 +49,22 @@ export function usePlayEpisode({ id }: IEpisodeProps) {
         return
       }
 
-      const episodeWithPodcast = await podcasts.getEpisode(id)
-      if (episodeWithPodcast) {
-        const { playback } = episodeWithPodcast
+      const episode = await podcasts.getEpisode(id)
+      if (episode) {
+        const { playback } = episode
         const hasPlaybackData = playback.length > 0
         let currentProgress = hasPlaybackData ? playback[0].progress : 0
+        const isCompleted = hasPlaybackData ? playback[0].completed : false
 
-        if (hasPlaybackData && playback[0].completed) {
+        if (hasPlaybackData && isCompleted) {
           currentProgress = 0
         }
 
-        setPlayPodcast([episodeWithPodcast], 0, currentProgress)
+        // Remove descriptions to avoid storing large texts
+        episode.description = ''
+        episode.podcast.description = ''
+
+        setPlayPodcast([episode], 0, currentProgress)
       }
     },
     [id, isEpisodePlaying, isPlaying, setPlayPodcast, setPlayingState],
