@@ -34,7 +34,7 @@ export async function getPodcast(id: string) {
   return response.podcast
 }
 
-const emptyEpisodeResponse = { episodes: [], nextOffset: null }
+const emptyEpisodeResponse = { episodes: [], count: null, nextOffset: null }
 
 export async function getPodcastEpisodes(
   id: string,
@@ -52,6 +52,7 @@ export async function getPodcastEpisodes(
 
   return {
     episodes: response.episodes.data,
+    count: response.podcast.episode_count,
     nextOffset,
   }
 }
@@ -72,6 +73,7 @@ export async function searchEpisodes(
 
   return {
     episodes: response.data,
+    count: null,
     nextOffset,
   }
 }

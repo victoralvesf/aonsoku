@@ -9,6 +9,7 @@ import { getPodcast } from '@/queries/podcasts'
 import { queryKeys } from '@/utils/queryKeys'
 
 const MemoPodcastInfo = memo(PodcastInfo)
+const MemoEpisodeList = memo(EpisodeList)
 
 export default function Podcast() {
   const { podcastId } = useParams() as { podcastId: string }
@@ -31,7 +32,7 @@ export default function Podcast() {
   return (
     <div className="h-full">
       <MemoPodcastInfo podcast={podcast} />
-      <EpisodeList />
+      <MemoEpisodeList />
     </div>
   )
 }

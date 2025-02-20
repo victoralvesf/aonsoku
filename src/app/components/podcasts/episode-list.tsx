@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { CSSProperties, useEffect, useRef } from 'react'
+import { CSSProperties, useEffect, useMemo, useRef } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import {
   EpisodeCardFallback,
@@ -79,7 +79,8 @@ export function EpisodeList() {
     data,
     fetchNextPage,
     hasNextPage,
-    isLoading: episodesIsLoading,
+    isLoading,
+    isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: [
@@ -97,8 +98,17 @@ export function EpisodeList() {
 
   const episodes = data ? data.pages.flatMap((page) => page.episodes) : []
 
+  const episodeCount = useMemo(() => {
+    if (data && data.pages.length > 0) {
+      const count = data.pages[0].count
+      if (count) return count
+    }
+
+    return hasNextPage ? episodes.length + 1 : episodes.length
+  }, [data, episodes.length, hasNextPage])
+
   const virtualizer = useVirtualizer({
-    count: hasNextPage ? episodes.length + 1 : episodes.length,
+    count: episodeCount,
     getScrollElement: () => scrollDivRef.current,
     estimateSize: () => 124,
     overscan: 5,
@@ -108,15 +118,22 @@ export function EpisodeList() {
 
   useEffect(() => {
     const [lastItem] = [...items].reverse()
-    if (!lastItem) return
+    if (!lastItem || isFetching) return
 
     const lastItemIsLoader = lastItem.index >= episodes.length - 1
     if (lastItemIsLoader && hasNextPage && !isFetchingNextPage) {
       fetchNextPage()
     }
-  }, [episodes.length, fetchNextPage, hasNextPage, isFetchingNextPage, items])
+  }, [
+    episodes.length,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    items,
+  ])
 
-  if (episodesIsLoading) return <EpisodeListFallback />
+  if (isLoading) return <EpisodeListFallback />
   if (!data || episodes.length === 0) return <NoEpisodesFound />
 
   return (
