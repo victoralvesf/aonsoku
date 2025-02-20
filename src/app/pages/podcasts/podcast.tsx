@@ -3,7 +3,6 @@ import { memo } from 'react'
 import { useParams } from 'react-router-dom'
 import { PodcastFallback } from '@/app/components/fallbacks/podcast-fallbacks'
 import { EpisodeList } from '@/app/components/podcasts/episode-list'
-import { EpisodesFilters } from '@/app/components/podcasts/episodes-filters'
 import { PodcastInfo } from '@/app/components/podcasts/podcast-info'
 import ErrorPage from '@/app/pages/error-page'
 import { getPodcast } from '@/queries/podcasts'
@@ -32,7 +31,6 @@ export default function Podcast() {
   return (
     <div className="h-full">
       <MemoPodcastInfo podcast={podcast} />
-      <EpisodesFilters />
       <EpisodeList />
     </div>
   )

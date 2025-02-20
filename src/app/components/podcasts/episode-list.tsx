@@ -1,9 +1,11 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import debounce from 'lodash/debounce'
-import { useEffect, useRef } from 'react'
+import { CSSProperties, useEffect, useRef } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { EpisodeListFallback } from '@/app/components/fallbacks/podcast-fallbacks'
+import {
+  EpisodeCardFallback,
+  EpisodeListFallback,
+} from '@/app/components/fallbacks/podcast-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EpisodeCard } from '@/app/components/podcasts/episode-card'
 import { getPodcastEpisodes, searchEpisodes } from '@/queries/podcasts'
@@ -16,8 +18,18 @@ import {
 import { queryKeys } from '@/utils/queryKeys'
 import { getMainScrollElement } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
+import { EpisodesFilters } from './episodes-filters'
+import { NoEpisodesFound } from './no-episodes-found'
 
 const { Query, MainFilter } = AlbumsSearchParams
+
+const itemStyle = (top: number): CSSProperties => {
+  return {
+    position: 'absolute',
+    width: '100%',
+    top,
+  }
+}
 
 export function EpisodeList() {
   const defaultPerPage = 40
@@ -83,65 +95,64 @@ export function EpisodeList() {
     getNextPageParam: (lastPage) => lastPage.nextOffset,
   })
 
-  const episodes = data?.pages.flatMap((page) => page.episodes) || []
+  const episodes = data ? data.pages.flatMap((page) => page.episodes) : []
 
   const virtualizer = useVirtualizer({
-    count: episodes.length,
+    count: hasNextPage ? episodes.length + 1 : episodes.length,
     getScrollElement: () => scrollDivRef.current,
     estimateSize: () => 124,
     overscan: 5,
   })
 
-  useEffect(() => {
-    const handleScroll = debounce(() => {
-      if (!scrollDivRef.current) return
-
-      const { scrollTop, clientHeight, scrollHeight } = scrollDivRef.current
-
-      const isNearBottom =
-        scrollTop + clientHeight >= scrollHeight - scrollHeight / 4
-
-      if (isNearBottom && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage()
-      }
-    }, 200)
-
-    const scrollElement = scrollDivRef.current
-    scrollElement?.addEventListener('scroll', handleScroll)
-    return () => {
-      scrollElement?.removeEventListener('scroll', handleScroll)
-    }
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
-
-  if (episodesIsLoading) return <EpisodeListFallback />
-  if (!data) return <EpisodeListFallback />
-
   const items = virtualizer.getVirtualItems()
 
-  return (
-    <ListWrapper className="px-4">
-      <div
-        style={{
-          height: virtualizer.getTotalSize(),
-          position: 'relative',
-        }}
-      >
-        {items.map((virtualRow) => {
-          const episode = episodes[virtualRow.index]
+  useEffect(() => {
+    const [lastItem] = [...items].reverse()
+    if (!lastItem) return
 
-          return (
-            <EpisodeCard
-              episode={episode}
-              key={virtualRow.index}
-              style={{
-                position: 'absolute',
-                top: virtualRow.start,
-                width: '100%',
-              }}
-            />
-          )
-        })}
-      </div>
-    </ListWrapper>
+    const lastItemIsLoader = lastItem.index >= episodes.length - 1
+    if (lastItemIsLoader && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }, [episodes.length, fetchNextPage, hasNextPage, isFetchingNextPage, items])
+
+  if (episodesIsLoading) return <EpisodeListFallback />
+  if (!data || episodes.length === 0) return <NoEpisodesFound />
+
+  return (
+    <div>
+      <EpisodesFilters />
+
+      <ListWrapper className="px-4">
+        <div
+          style={{
+            height: virtualizer.getTotalSize(),
+            position: 'relative',
+          }}
+        >
+          {items.map((virtualRow) => {
+            const isLoaderRow = virtualRow.index > episodes.length - 1
+
+            if (isLoaderRow) {
+              return (
+                <div key={virtualRow.index} style={itemStyle(virtualRow.start)}>
+                  <EpisodeCardFallback />
+                </div>
+              )
+            }
+
+            const episode = episodes[virtualRow.index]
+
+            return (
+              <EpisodeCard
+                episode={episode}
+                key={virtualRow.index}
+                style={itemStyle(virtualRow.start)}
+              />
+            )
+          })}
+        </div>
+      </ListWrapper>
+    </div>
   )
 }

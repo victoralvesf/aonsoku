@@ -258,6 +258,7 @@
     },
     "list": {
       "episodes": "Episódios",
+      "notFoundMessage": "Este podcast ainda não tem episódios!",
       "progress": {
         "remainingTime": "{{time}} restante(s)",
         "completed": "Reproduzido"
