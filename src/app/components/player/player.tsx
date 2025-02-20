@@ -174,8 +174,10 @@ export function Player() {
           <div className="flex items-center gap-1">
             {isSong && <MemoPlayerLikeButton disabled={!song} />}
             {isSong && <MemoPlayerSongListButton disabled={!song} />}
-            {isRadio && <MemoPlayerClearQueueButton disabled={!radio} />}
             {isPodcast && <MemoPodcastPlaybackRate />}
+            {(isRadio || isPodcast) && (
+              <MemoPlayerClearQueueButton disabled={!radio && !podcast} />
+            )}
 
             <MemoPlayerVolume
               audioRef={getAudioRef()}
