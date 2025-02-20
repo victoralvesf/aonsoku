@@ -1,6 +1,7 @@
 import { engineName, isMacOs } from 'react-device-detect'
 import i18n from '@/i18n'
 import { usePlayerStore } from '@/store/player.store'
+import { isDev } from './env'
 import { isTauri } from './tauriTools'
 
 export enum MouseButton {
@@ -114,7 +115,7 @@ function setFontSmoothing() {
 export function blockFeatures() {
   setFontSmoothing()
 
-  if (process.env.NODE_ENV === 'development') return
+  if (isDev) return
 
   preventContextMenu()
   preventNewTabAndScroll()
