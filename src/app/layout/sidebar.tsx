@@ -49,13 +49,13 @@ export function Sidebar({ className }: SidebarProps) {
         </div>
         <div className="space-y-4 py-4 pt-0">
           <SidebarSection>
-            <div className="space-y-1">
+            <div>
               <SidebarGeneratorMemo list={mainMenuItems} />
             </div>
           </SidebarSection>
           <SidebarSection>
             <SectionTitle>{t('sidebar.library')}</SectionTitle>
-            <div className="space-y-1">
+            <div>
               <SidebarGeneratorMemo list={libraryItems} />
             </div>
           </SidebarSection>

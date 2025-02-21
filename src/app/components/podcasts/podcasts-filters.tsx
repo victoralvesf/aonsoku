@@ -1,6 +1,6 @@
-import { HistoryIcon, ListFilterIcon } from 'lucide-react'
+import { ListFilterIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
 import { Button } from '@/app/components/ui/button'
 import {
@@ -9,8 +9,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
-import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
-import { ROUTES } from '@/routes/routesList'
 import { PodcastsOrderByOptions, SortOptions } from '@/utils/albumsFilter'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 import { DefaultSortFilter } from './episodes-filters'
@@ -24,14 +22,6 @@ export function PodcastsFilters() {
 
       <DefaultSortFilter defaultSort={SortOptions.Asc} />
       <OrderByFilter />
-
-      <SimpleTooltip text={t('podcasts.form.latestEpisodes')}>
-        <Button variant="outline" className="w-9 h-9 p-0" asChild>
-          <Link to={ROUTES.EPISODES.LATEST}>
-            <HistoryIcon className="w-4 h-4" />
-          </Link>
-        </Button>
-      </SimpleTooltip>
     </>
   )
 }

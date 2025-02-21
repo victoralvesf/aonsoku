@@ -4,6 +4,7 @@ import { ElementType, Fragment, memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import { PlaylistOptions } from '@/app/components/playlist/options'
+import { PodcastSidebarItem } from '@/app/components/podcasts/sidebar-item'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { Button } from '@/app/components/ui/button'
 import { ROUTES } from '@/routes/routesList'
@@ -38,6 +39,10 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
         // Setting to show/hide Radios/Podcasts section
         if (hideRadiosSection && item.id === 'radios') return null
         if (!isPodcastsActive && item.id === 'podcasts') return null
+
+        if (isPodcastsActive && item.id === 'podcasts') {
+          return <PodcastSidebarItem key={item.id} item={item} />
+        }
 
         return (
           <Link
