@@ -49,10 +49,14 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
             e.preventDefault()
             e.stopPropagation()
 
+            if (isLatestEpisodesActive) return
+
             setOpen((prev) => !prev)
           }}
-          className="absolute right-2 top-2 p-0 w-5 h-5"
-          disabled={isLatestEpisodesActive}
+          className={clsx(
+            'absolute right-2 top-2 p-0 w-5 h-5 z-20',
+            isLatestEpisodesActive && 'opacity-50',
+          )}
         >
           <ChevronRight
             data-visible={open}
@@ -74,7 +78,7 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
           'data-[visible=false]:pointer-events-none',
         )}
       >
-        <div className="mx-5 pl-2.5 border-l">
+        <div className="ml-5 mr-2 pl-2 border-l">
           <Link
             to={ROUTES.EPISODES.LATEST}
             className={clsx(isLatestEpisodesActive && 'pointer-events-none')}
@@ -82,7 +86,7 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
             <Button
               variant={isLatestEpisodesActive ? 'secondary' : 'ghost'}
               size="sm"
-              className="w-full justify-start text-sm font-normal px-3 py-1 h-7"
+              className="w-full justify-start text-sm font-normal px-2 h-7"
             >
               {t('podcasts.form.latestEpisodes')}
             </Button>
