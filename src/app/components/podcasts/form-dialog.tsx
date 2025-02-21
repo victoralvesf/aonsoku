@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -21,18 +21,38 @@ import {
   FormLabel,
   FormMessage,
 } from '@/app/components/ui/form'
-import { Input } from '@/app/components/ui/input'
+import { Textarea } from '@/app/components/ui/textarea'
 import { podcasts } from '@/service/podcasts'
-import { queryKeys } from '@/utils/queryKeys'
+import { logger } from '@/utils/logger'
+
+const urlSchema = z
+  .string()
+  .url({ message: 'podcasts.form.dialog.validations.url' })
+  .min(10, { message: 'podcasts.form.dialog.validations.urlLength' })
+  .refine((value) => /^https?:\/\//.test(value), {
+    message: 'podcasts.form.dialog.validations.protocol',
+  })
+
+const textareaSchema = z
+  .string({
+    message: 'podcasts.form.dialog.validations.atLeastOneUrl',
+  })
+  .transform((value) =>
+    value
+      .replace(' ', '\n')
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line !== ''),
+  )
+  .refine((urls) => urls.length > 0, {
+    message: 'podcasts.form.dialog.validations.atLeastOneUrl',
+  })
+  .refine((urls) => urls.every((url) => urlSchema.safeParse(url).success), {
+    message: 'podcasts.form.dialog.validations.url',
+  })
 
 const podcastSchema = z.object({
-  feedUrl: z
-    .string()
-    .url({ message: 'radios.form.validations.url' })
-    .min(10, { message: 'radios.form.validations.streamUrlLength' })
-    .refine((value) => /^https?:\/\//.test(value), {
-      message: 'login.form.validations.protocol',
-    }),
+  feedUrl: textareaSchema,
 })
 
 type PodcastSchema = z.infer<typeof podcastSchema>
@@ -42,36 +62,35 @@ interface PodcastFormDialogProps {
   setOpen: (value: boolean) => void
 }
 
+const defaultValues = {
+  feedUrl: [''],
+}
+
 export function PodcastFormDialog({ open, setOpen }: PodcastFormDialogProps) {
   const { t } = useTranslation()
 
   const form = useForm<PodcastSchema>({
     resolver: zodResolver(podcastSchema),
-    defaultValues: {
-      feedUrl: '',
-    },
+    defaultValues,
   })
-
-  const queryClient = useQueryClient()
 
   const createMutation = useMutation({
     mutationFn: podcasts.create,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [queryKeys.podcast.all],
-      })
       toast.success(t('podcasts.form.toasts.success'))
       setOpen(false)
-      form.reset({ feedUrl: '' })
     },
-    onError: () => {
+    onError: (error) => {
+      logger.error('[PodcastForm] - Error creating podcast', { error })
       toast.error(t('podcasts.form.toasts.error'))
     },
   })
 
-  async function onSubmit({ feedUrl }: PodcastSchema) {
-    await createMutation.mutate({
-      feed_urls: [feedUrl],
+  function onSubmit({ feedUrl }: PodcastSchema) {
+    logger.info('[PodcastForm] - Sent body:', { body: feedUrl })
+
+    createMutation.mutate({
+      feed_urls: feedUrl,
     })
   }
 
@@ -81,7 +100,7 @@ export function PodcastFormDialog({ open, setOpen }: PodcastFormDialogProps) {
       open={open}
       onOpenChange={(value) => {
         setOpen(value)
-        form.reset({ feedUrl: '' })
+        form.reset(defaultValues)
       }}
     >
       <DialogContent className="max-w-[500px]">
@@ -100,14 +119,19 @@ export function PodcastFormDialog({ open, setOpen }: PodcastFormDialogProps) {
                       {t('podcasts.form.dialog.feedUrl')}
                     </FormLabel>
                     <FormControl>
-                      <Input
+                      <Textarea
                         {...field}
                         id="feed-url"
-                        autoCorrect="false"
-                        autoCapitalize="false"
-                        spellCheck="false"
+                        autoCorrect="off"
+                        autoCapitalize="off"
+                        spellCheck={false}
+                        autoComplete="off"
+                        className="max-h-[160px]"
                       />
                     </FormControl>
+                    <p className="text-sm text-muted-foreground">
+                      {t('podcasts.form.dialog.message')}
+                    </p>
                     <FormMessage />
                   </FormItem>
                 )}

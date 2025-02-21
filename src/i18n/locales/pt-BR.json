@@ -206,7 +206,14 @@
       "dialog": {
         "title": "Criar Podcast",
         "feedUrl": "URL do Feed",
-        "saveButton": "Salvar"
+        "message": "Você pode adicionar múltiplas URLs, uma por linha.",
+        "saveButton": "Salvar",
+        "validations": {
+          "url": "Por favor, forneça URLs válidas.",
+          "urlLength": "As URLs devem conter pelo menos 10 caracteres",
+          "protocol": "As URLs devem começar com http:// ou https://",
+          "atLeastOneUrl": "Por favor, forneça pelo menos uma URL."
+        }
       },
       "toasts": {
         "success": "Podcast criado com sucesso! Ele estará disponível para ouvir em alguns minutos!",
