@@ -22,7 +22,7 @@ export function PodcastInfoImage({ src, alt }: PodcastInfoImageProps) {
         'w-[200px] h-[200px] min-w-[200px] min-h-[200px]',
         '2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px]',
         'bg-skeleton aspect-square bg-cover bg-center rounded',
-        'shadow-[0_0_5px_rgba(255,255,255,0.05)] border border-border overflow-hidden',
+        'shadow-custom-5 border border-border overflow-hidden',
         'ease-linear duration-100',
         !isPlaceholder && 'cursor-pointer hover:scale-[1.02]',
       )}

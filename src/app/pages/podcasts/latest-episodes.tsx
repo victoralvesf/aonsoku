@@ -1,15 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { useEffect, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { LatestEpisodesFallback } from '@/app/components/fallbacks/podcast-fallbacks'
+import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EpisodeCard } from '@/app/components/podcasts/episode-card'
+import { FeaturedEpisodeCard } from '@/app/components/podcasts/featured-episode-card'
 import ErrorPage from '@/app/pages/error-page'
 import { podcasts } from '@/service/podcasts'
 import { queryKeys } from '@/utils/queryKeys'
 import { getMainScrollElement } from '@/utils/scrollPageToTop'
 
+const episodesToFeature = 5
+
 export default function LatestEpisodes() {
+  const { t } = useTranslation()
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -21,7 +28,13 @@ export default function LatestEpisodes() {
     queryFn: podcasts.getLatest,
   })
 
-  const episodes = useMemo(() => data || [], [data])
+  const episodes = useMemo(() => {
+    return data ? data.slice(episodesToFeature) : []
+  }, [data])
+
+  const featuredEpisodes = useMemo(() => {
+    return data ? data.slice(0, episodesToFeature) : []
+  }, [data])
 
   const virtualizer = useVirtualizer({
     count: episodes.length,
@@ -39,7 +52,17 @@ export default function LatestEpisodes() {
 
   return (
     <div className="w-full">
-      <ListWrapper className="px-4 pt-4">
+      <ShadowHeader>
+        <HeaderTitle title={t('podcasts.form.latestEpisodes')} />
+      </ShadowHeader>
+
+      <ListWrapper className="px-4 pt-[--shadow-header-distance]">
+        <div className="grid grid-cols-5 gap-4 px-4 mb-6">
+          {featuredEpisodes.map((episode) => (
+            <FeaturedEpisodeCard key={episode.id} episode={episode} />
+          ))}
+        </div>
+
         <div
           style={{
             height: virtualizer.getTotalSize(),

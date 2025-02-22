@@ -97,7 +97,7 @@ export default function ImageHeader({
             'w-[200px] h-[200px] min-w-[200px] min-h-[200px]',
             '2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px]',
             'bg-skeleton aspect-square bg-cover bg-center rounded',
-            'shadow-[0_4px_35px_rgba(0,0,0,0.6)] overflow-hidden',
+            'shadow-header-image overflow-hidden',
             'hover:scale-[1.02] ease-linear duration-100',
           )}
         >

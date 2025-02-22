@@ -1,20 +1,27 @@
 import clsx from 'clsx'
-import { EllipsisVertical, PauseIcon, PlayIcon } from 'lucide-react'
-import { ComponentPropsWithoutRef, useMemo } from 'react'
+import {
+  CircleCheckIcon,
+  EllipsisVertical,
+  PauseIcon,
+  PlayIcon,
+} from 'lucide-react'
+import { ComponentPropsWithoutRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { EqualizerBars } from '@/app/components/icons/equalizer-bars'
 import { Button } from '@/app/components/ui/button'
 import { Separator } from '@/app/components/ui/separator'
-import { useEpisodeProgress } from '@/app/hooks/use-episode-progress'
+import {
+  useEpisodeProgress,
+  useEpisodeReleaseDate,
+} from '@/app/hooks/use-episode-progress'
 import {
   useIsEpisodePlaying,
   usePlayEpisode,
 } from '@/app/hooks/use-podcast-playing'
 import { ROUTES } from '@/routes/routesList'
 import { Episode } from '@/types/responses/podcasts'
-import dateTime from '@/utils/dateTime'
 import { parseHtmlToText } from '@/utils/parseTexts'
 
 type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
@@ -22,27 +29,11 @@ type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
 }
 
 export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
-  const { t } = useTranslation()
   const { isPlaying, isEpisodePlaying } = useIsEpisodePlaying({
     id: episode.id,
   })
 
-  const episodeReleaseDate = useMemo(() => {
-    const today = dateTime()
-    const targetDate = dateTime(episode.published_at)
-    const diffInDays = today.diff(targetDate, 'days')
-
-    if (today.year() !== targetDate.year()) {
-      return targetDate.format('L')
-    }
-
-    if (diffInDays > 15) {
-      return targetDate.format('DD MMM')
-    }
-
-    const parsed = dateTime().from(targetDate, true)
-    return t('table.lastPlayed', { date: parsed })
-  }, [episode.published_at, t])
+  const { episodeReleaseDate } = useEpisodeReleaseDate(episode.published_at)
 
   return (
     <div className="group/row" {...rest}>
@@ -83,13 +74,13 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="hover:bg-background rounded-full"
+            className="hover:bg-background rounded-full w-8 h-8"
             onClick={(e) => {
               e.stopPropagation()
               e.preventDefault()
             }}
           >
-            <EllipsisVertical className="w-4 h-4" />
+            <EllipsisVertical className="w-3 h-3" />
           </Button>
         </div>
       </Link>
@@ -117,7 +108,12 @@ function EpisodeProgress({ episode }: EpisodeCardProps) {
   }
 
   if (isEpisodeCompleted) {
-    return <span>{t('podcasts.list.progress.completed')}</span>
+    return (
+      <div className="flex gap-1 items-center">
+        <CircleCheckIcon className="w-4 h-4" />
+        <span>{t('podcasts.list.progress.completed')}</span>
+      </div>
+    )
   }
 
   return (
@@ -136,13 +132,10 @@ function EpisodeProgress({ episode }: EpisodeCardProps) {
 }
 
 function EpisodeImage({ episode }: EpisodeCardProps) {
-  const { id } = episode
-  const { isPlaying, isEpisodePlaying } = useIsEpisodePlaying({ id })
-  const { handlePlayEpisode } = usePlayEpisode({ id })
-
-  const isNotPlaying = useMemo(() => {
-    return (isEpisodePlaying && !isPlaying) || !isEpisodePlaying
-  }, [isEpisodePlaying, isPlaying])
+  const { isPlaying, isEpisodePlaying, isNotPlaying } = useIsEpisodePlaying({
+    id: episode.id,
+  })
+  const { handlePlayEpisode } = usePlayEpisode({ id: episode.id })
 
   return (
     <div
@@ -150,7 +143,7 @@ function EpisodeImage({ episode }: EpisodeCardProps) {
         'w-[100px] h-[100px] min-w-[100px] min-h-[100px]',
         'bg-skeleton aspect-square bg-cover bg-center',
         'rounded-md overflow-hidden border border-border',
-        'shadow-[0_0_3px_rgba(255,255,255,0.03)] relative',
+        'shadow-custom-3 relative',
       )}
       onClick={(e) => {
         e.stopPropagation()

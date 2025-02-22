@@ -1,5 +1,8 @@
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Playback } from '@/types/responses/podcasts'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
+import dateTime from '@/utils/dateTime'
 
 interface UseEpisodeProgressProps {
   duration: number
@@ -34,5 +37,32 @@ export function useEpisodeProgress({
     remainingTimeText,
     listeningProgress,
     listeningProgressPercentage,
+  }
+}
+
+export function useEpisodeReleaseDate(publishedAt: string) {
+  const { t } = useTranslation()
+
+  const formatReleaseDate = useCallback(() => {
+    const today = dateTime()
+    const targetDate = dateTime(publishedAt)
+    const diffInDays = today.diff(targetDate, 'days')
+
+    if (today.year() !== targetDate.year()) {
+      return targetDate.format('L')
+    }
+
+    if (diffInDays > 15) {
+      return targetDate.format('DD MMM')
+    }
+
+    const parsed = dateTime().from(targetDate, true)
+    return t('table.lastPlayed', { date: parsed })
+  }, [publishedAt, t])
+
+  const episodeReleaseDate = formatReleaseDate()
+
+  return {
+    episodeReleaseDate,
   }
 }

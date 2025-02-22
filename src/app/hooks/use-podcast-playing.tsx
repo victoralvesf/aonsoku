@@ -25,9 +25,14 @@ export function useIsEpisodePlaying({ id }: IEpisodeProps) {
     return playingEpisode.id === id
   }, [currentSongIndex, id, isPodcast, podcastList])
 
+  const isNotPlaying = useMemo(() => {
+    return (isEpisodePlaying && !isPlaying) || !isEpisodePlaying
+  }, [isEpisodePlaying, isPlaying])
+
   return {
     isPlaying,
     isEpisodePlaying,
+    isNotPlaying,
   }
 }
 
