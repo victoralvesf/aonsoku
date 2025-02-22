@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import ListWrapper from '@/app/components/list-wrapper'
 import { Separator } from '@/app/components/ui/separator'
 import { Skeleton } from '@/app/components/ui/skeleton'
+import { ShadowHeaderFallback } from './ui-fallbacks'
 
 export function PodcastFallback() {
   return (
@@ -12,10 +13,35 @@ export function PodcastFallback() {
   )
 }
 
+export function FeaturedEpisodeCardFallback() {
+  return (
+    <div className="bg-background border rounded-lg flex flex-col p-4">
+      <Skeleton className="w-full aspect-square rounded-md" />
+      <div className="mt-2">
+        <Skeleton className="h-3 w-16" />
+        <Skeleton className="h-5 w-full mt-2" />
+        <Skeleton className="h-4 w-[90%] mt-2 rounded-b-none" />
+        <Skeleton className="h-4 w-[95%] rounded-tl-none" />
+        <div className="mt-4 flex justify-between">
+          <Skeleton className="h-8 w-24" />
+          <Skeleton className="w-8 h-8 rounded-full" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function LatestEpisodesFallback() {
   return (
     <div className="w-full">
-      <ListWrapper className="px-4 pt-4">
+      <ShadowHeaderFallback />
+      <ListWrapper className="px-4 pt-6">
+        <div className="grid grid-cols-5 gap-4 px-4 mb-6">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <FeaturedEpisodeCardFallback key={index} />
+          ))}
+        </div>
+
         {Array.from({ length: 12 }).map((_, index) => (
           <EpisodeCardFallback key={'episode-fb-' + index} />
         ))}
