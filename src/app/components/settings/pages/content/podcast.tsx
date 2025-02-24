@@ -69,7 +69,7 @@ export function PodcastContent() {
     resolver: zodResolver(podcastSchema),
     defaultValues: {
       active,
-      serviceUrl,
+      serviceUrl: serviceUrl || 'http://',
       useDefaultUser,
       customUser,
       customUrl,
