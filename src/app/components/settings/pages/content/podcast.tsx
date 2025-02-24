@@ -130,6 +130,10 @@ export function PodcastContent() {
                     shouldValidate: true,
                   })
                 }}
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck={false}
+                autoComplete="off"
               />
             </ContentItemForm>
           </ContentItem>
@@ -201,6 +205,10 @@ export function PodcastContent() {
                     })
                     trigger('useDefaultUser')
                   }}
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                  autoComplete="off"
                 />
               </ContentItemForm>
             </ContentItem>
