@@ -122,6 +122,8 @@ export interface IPlayerActions {
     progress: number,
   ) => void
   setPlaybackRate: (value: number) => void
+  setNextPodcast: (episode: EpisodeWithPodcast) => void
+  setLastPodcast: (episode: EpisodeWithPodcast) => void
 }
 
 export interface IPlayerContext {

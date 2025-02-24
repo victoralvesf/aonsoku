@@ -287,6 +287,54 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.isPlaying = true
               })
             },
+            setNextPodcast: (episode) => {
+              const { podcastList, currentSongIndex } = get().songlist
+
+              const currentListIds = new Set(
+                podcastList.map((episode) => episode.id),
+              )
+              if (currentListIds.has(episode.id)) {
+                return
+              }
+
+              const newPodcastList = addNextSongList(
+                currentSongIndex,
+                podcastList,
+                [episode],
+              )
+
+              set((state) => {
+                state.songlist.podcastList = newPodcastList
+              })
+
+              const { isPlaying } = get().playerState
+
+              if (!isPlaying) {
+                get().actions.setPlayingState(true)
+              }
+            },
+            setLastPodcast: (episode) => {
+              const { podcastList } = get().songlist
+
+              const currentListIds = new Set(
+                podcastList.map((episode) => episode.id),
+              )
+              if (currentListIds.has(episode.id)) {
+                return
+              }
+
+              const newPodcastList = [...podcastList, episode]
+
+              set((state) => {
+                state.songlist.podcastList = newPodcastList
+              })
+
+              const { isPlaying } = get().playerState
+
+              if (!isPlaying) {
+                get().actions.setPlayingState(true)
+              }
+            },
             setPlayingState: (status) => {
               set((state) => {
                 state.playerState.isPlaying = status
