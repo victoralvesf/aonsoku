@@ -38,6 +38,8 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             audioPlayerRef: null,
             queueDrawerState: false,
             currentPlaybackRate: 1,
+            hasPrev: false,
+            hasNext: false,
           },
           playerProgress: {
             progress: 0,
@@ -466,16 +468,22 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
             hasNextSong: () => {
               const { mediaType } = get().playerState
-              const { currentList, currentSongIndex, radioList } =
+              const { currentList, currentSongIndex, radioList, podcastList } =
                 get().songlist
 
               const nextIndex = currentSongIndex + 1
 
               if (mediaType === 'song') {
                 return nextIndex < currentList.length
-              } else {
+              }
+              if (mediaType === 'radio') {
                 return nextIndex < radioList.length
               }
+              if (mediaType === 'podcast') {
+                return nextIndex < podcastList.length
+              }
+
+              return false
             },
             hasPrevSong: () => {
               const { currentSongIndex } = get().songlist
@@ -654,6 +662,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             getCurrentProgress: () => {
               return get().playerProgress.progress
             },
+            updateQueueChecks: () => {
+              const { hasPrevSong, hasNextSong } = get().actions
+
+              set((state) => {
+                state.playerState.hasPrev = hasPrevSong()
+                state.playerState.hasNext = hasNextSong()
+              })
+            },
             resetConfig: () => {
               set((state) => {
                 state.settings.fullscreen.autoFullscreenEnabled = false
@@ -709,6 +725,21 @@ usePlayerStore.subscribe(
     if (currentList.length === 0 && progress > 0) {
       playerStore.actions.resetProgress()
     }
+  },
+  {
+    equalityFn: shallow,
+  },
+)
+
+usePlayerStore.subscribe(
+  ({ songlist }) => [
+    songlist.currentList,
+    songlist.radioList,
+    songlist.podcastList,
+    songlist.currentSongIndex,
+  ],
+  () => {
+    usePlayerStore.getState().actions.updateQueueChecks()
   },
   {
     equalityFn: shallow,

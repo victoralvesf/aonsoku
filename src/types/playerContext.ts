@@ -30,6 +30,8 @@ export interface IPlayerState {
   currentPlaybackRate: number
   audioPlayerRef: HTMLAudioElement | null
   queueDrawerState: boolean
+  hasPrev: boolean
+  hasNext: boolean
 }
 
 export interface IPlayerProgress {
@@ -124,6 +126,7 @@ export interface IPlayerActions {
   setPlaybackRate: (value: number) => void
   setNextPodcast: (episode: EpisodeWithPodcast) => void
   setLastPodcast: (episode: EpisodeWithPodcast) => void
+  updateQueueChecks: () => void
 }
 
 export interface IPlayerContext {

@@ -164,6 +164,7 @@ export function Player() {
           <MemoPlayerControls
             song={song}
             radio={radio}
+            podcast={podcast}
             audioRef={getAudioRef()}
           />
 

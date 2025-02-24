@@ -22,8 +22,10 @@ import {
   usePlayerLoop,
   usePlayerMediaType,
   usePlayerShuffle,
+  usePlayerState,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
+import { EpisodeWithPodcast } from '@/types/responses/podcasts'
 import { Radio } from '@/types/responses/radios'
 import { ISong } from '@/types/responses/song'
 import { manageMediaSession } from '@/utils/setMediaSession'
@@ -31,13 +33,20 @@ import { manageMediaSession } from '@/utils/setMediaSession'
 interface PlayerControlsProps {
   song: ISong
   radio: Radio
+  podcast: EpisodeWithPodcast
   audioRef: RefObject<HTMLAudioElement>
 }
 
-export function PlayerControls({ song, radio, audioRef }: PlayerControlsProps) {
+export function PlayerControls({
+  song,
+  radio,
+  podcast,
+  audioRef,
+}: PlayerControlsProps) {
   const { t } = useTranslation()
   const { isSong, isPodcast } = usePlayerMediaType()
   const isShuffleActive = usePlayerShuffle()
+  const { hasPrev, hasNext } = usePlayerState()
   const loopState = usePlayerLoop()
   const isPlaying = usePlayerIsPlaying()
   const {
@@ -48,8 +57,6 @@ export function PlayerControls({ song, radio, audioRef }: PlayerControlsProps) {
     togglePlayPause,
     playPrevSong,
     playNextSong,
-    hasNextSong,
-    hasPrevSong,
   } = usePlayerActions()
   const currentList = usePlayerCurrentList()
 
@@ -113,7 +120,8 @@ export function PlayerControls({ song, radio, audioRef }: PlayerControlsProps) {
   }
   const repeatTooltip = repeatTooltips[loopState]
 
-  const cannotGotoNextSong = !hasNextSong() && loopState !== LoopState.All
+  const cannotGotoNextSong = !hasNext && loopState !== LoopState.All
+  const disableButtons = !song && !radio && !podcast
 
   return (
     <div className="flex w-full gap-1 justify-center items-center mb-1">
@@ -125,7 +133,7 @@ export function PlayerControls({ song, radio, audioRef }: PlayerControlsProps) {
               'relative rounded-full w-10 h-10 p-3',
               isShuffleActive && 'player-button-active',
             )}
-            disabled={!song || isPlayingOneSong() || !hasNextSong()}
+            disabled={!song || isPlayingOneSong() || !hasNext}
             onClick={toggleShuffle}
             data-testid="player-button-shuffle"
           >
@@ -139,19 +147,17 @@ export function PlayerControls({ song, radio, audioRef }: PlayerControlsProps) {
         </SimpleTooltip>
       )}
 
-      {!isPodcast && (
-        <SimpleTooltip text={t('player.tooltips.previous')}>
-          <Button
-            variant="ghost"
-            className="rounded-full w-10 h-10 p-3"
-            disabled={(!song && !radio) || !hasPrevSong()}
-            onClick={playPrevSong}
-            data-testid="player-button-prev"
-          >
-            <SkipBack className="w-10 h-10 text-secondary-foreground fill-secondary-foreground" />
-          </Button>
-        </SimpleTooltip>
-      )}
+      <SimpleTooltip text={t('player.tooltips.previous')}>
+        <Button
+          variant="ghost"
+          className="rounded-full w-10 h-10 p-3"
+          disabled={disableButtons || !hasPrev}
+          onClick={playPrevSong}
+          data-testid="player-button-prev"
+        >
+          <SkipBack className="w-10 h-10 text-secondary-foreground fill-secondary-foreground" />
+        </Button>
+      </SimpleTooltip>
 
       {isPodcast && (
         <SimpleTooltip text={t('player.tooltips.rewind', { amount: 15 })}>
@@ -200,19 +206,17 @@ export function PlayerControls({ song, radio, audioRef }: PlayerControlsProps) {
         </SimpleTooltip>
       )}
 
-      {!isPodcast && (
-        <SimpleTooltip text={t('player.tooltips.next')}>
-          <Button
-            variant="ghost"
-            className="rounded-full w-10 h-10 p-3"
-            disabled={(!song && !radio) || cannotGotoNextSong}
-            onClick={playNextSong}
-            data-testid="player-button-next"
-          >
-            <SkipForward className="w-10 h-10 text-secondary-foreground fill-secondary-foreground" />
-          </Button>
-        </SimpleTooltip>
-      )}
+      <SimpleTooltip text={t('player.tooltips.next')}>
+        <Button
+          variant="ghost"
+          className="rounded-full w-10 h-10 p-3"
+          disabled={disableButtons || cannotGotoNextSong}
+          onClick={playNextSong}
+          data-testid="player-button-next"
+        >
+          <SkipForward className="w-10 h-10 text-secondary-foreground fill-secondary-foreground" />
+        </Button>
+      </SimpleTooltip>
 
       {isSong && (
         <SimpleTooltip text={repeatTooltip}>
