@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { EllipsisVertical } from 'lucide-react'
 import { OptionsButtons } from '@/app/components/options/buttons'
 import { Button } from '@/app/components/ui/button'
@@ -13,9 +14,13 @@ import { Episode } from '@/types/responses/podcasts'
 
 interface PodcastActionButtonProps {
   episode: Episode
+  featured?: boolean
 }
 
-export function PodcastActionButton({ episode }: PodcastActionButtonProps) {
+export function PodcastActionButton({
+  episode,
+  featured = false,
+}: PodcastActionButtonProps) {
   const { handlePlayNext, handlePlayLast } = useEpisodeQueue({ id: episode.id })
 
   return (
@@ -27,7 +32,10 @@ export function PodcastActionButton({ episode }: PodcastActionButtonProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="w-8 h-8 p-1 rounded-full hover:bg-background data-[state=open]:bg-accent"
+          className={clsx(
+            'w-8 h-8 p-1 rounded-full data-[state=open]:bg-accent',
+            !featured && 'hover:bg-background',
+          )}
           onClick={(e) => e.stopPropagation()}
         >
           <EllipsisVertical className="w-3 h-3" />

@@ -1,14 +1,10 @@
 import clsx from 'clsx'
-import {
-  CircleCheckIcon,
-  EllipsisVerticalIcon,
-  PauseIcon,
-  PlayIcon,
-} from 'lucide-react'
+import { CircleCheckIcon, PauseIcon, PlayIcon } from 'lucide-react'
 import { ComponentPropsWithoutRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
+import { EqualizerBars } from '@/app/components/icons/equalizer-bars'
 import { Button } from '@/app/components/ui/button'
 import {
   useEpisodeProgress,
@@ -21,7 +17,7 @@ import {
 import { ROUTES } from '@/routes/routesList'
 import { Episode } from '@/types/responses/podcasts'
 import { parseHtmlToText } from '@/utils/parseTexts'
-import { EqualizerBars } from '../icons/equalizer-bars'
+import { PodcastActionButton } from './action-button'
 
 interface FeaturedEpisodeCardProps {
   episode: Episode
@@ -71,17 +67,7 @@ export function FeaturedEpisodeCard({ episode }: FeaturedEpisodeCardProps) {
         <div className="flex justify-between mt-4">
           <FeaturedEpisodeCardAction episode={episode} />
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="w-8 h-8 rounded-full"
-            onClick={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-            }}
-          >
-            <EllipsisVerticalIcon className="w-3 h-3" />
-          </Button>
+          <PodcastActionButton episode={episode} featured={true} />
         </div>
       </div>
     </Link>
