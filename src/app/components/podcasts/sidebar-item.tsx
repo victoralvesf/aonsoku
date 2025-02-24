@@ -1,10 +1,11 @@
 import clsx from 'clsx'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, HistoryIcon } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import { ISidebarItem } from '@/app/components/sidebar/sidebar-generator'
 import { Button } from '@/app/components/ui/button'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { ROUTES } from '@/routes/routesList'
 
 export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
@@ -49,14 +50,9 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
             e.preventDefault()
             e.stopPropagation()
 
-            if (isLatestEpisodesActive) return
-
             setOpen((prev) => !prev)
           }}
-          className={clsx(
-            'absolute right-2 top-2 p-0 w-5 h-5 z-20',
-            isLatestEpisodesActive && 'opacity-50',
-          )}
+          className="absolute right-2 top-2 p-0 w-5 h-5 z-20"
         >
           <ChevronRight
             data-visible={open}
@@ -94,5 +90,29 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
         </div>
       </div>
     </div>
+  )
+}
+
+export function PodcastMiniSidebarItem({ isActive }: { isActive: boolean }) {
+  const { t } = useTranslation()
+
+  return (
+    <Link
+      to={ROUTES.EPISODES.LATEST}
+      className={clsx('w-full', isActive && 'pointer-events-none')}
+    >
+      <SimpleTooltip
+        text={t('podcasts.form.latestEpisodes')}
+        side="right"
+        delay={50}
+      >
+        <Button
+          variant={isActive ? 'secondary' : 'ghost'}
+          className="w-full h-fit flex flex-col justify-center items-center gap-1"
+        >
+          <HistoryIcon className="w-4 h-4" />
+        </Button>
+      </SimpleTooltip>
+    </Link>
   )
 }
