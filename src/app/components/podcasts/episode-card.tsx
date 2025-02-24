@@ -1,10 +1,5 @@
 import clsx from 'clsx'
-import {
-  CircleCheckIcon,
-  EllipsisVertical,
-  PauseIcon,
-  PlayIcon,
-} from 'lucide-react'
+import { CircleCheckIcon, PauseIcon, PlayIcon } from 'lucide-react'
 import { ComponentPropsWithoutRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -23,6 +18,7 @@ import {
 import { ROUTES } from '@/routes/routesList'
 import { Episode } from '@/types/responses/podcasts'
 import { parseHtmlToText } from '@/utils/parseTexts'
+import { PodcastActionButton } from './action-button'
 
 type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
   episode: Episode
@@ -71,17 +67,7 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
           <EpisodeProgress episode={episode} />
         </div>
         <div className="min-w-16 flex items-center justify-end">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="hover:bg-background rounded-full w-8 h-8"
-            onClick={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-            }}
-          >
-            <EllipsisVertical className="w-3 h-3" />
-          </Button>
+          <PodcastActionButton episode={episode} />
         </div>
       </Link>
       <div className="px-4">
