@@ -412,7 +412,11 @@
       "removeSong": "Remove from playlist"
     },
     "info": "Get info",
-    "markAsPlayed": "Mark as played"
+    "markAsPlayed": "Mark as played",
+    "goto": {
+      "episode": "Go to episode",
+      "podcast": "Go to podcast"
+    }
   },
   "radios": {
     "label": "Radio",

@@ -67,7 +67,11 @@ export function FeaturedEpisodeCard({ episode }: FeaturedEpisodeCardProps) {
         <div className="flex justify-between mt-4">
           <FeaturedEpisodeCardAction episode={episode} />
 
-          <PodcastActionButton episode={episode} featured={true} />
+          <PodcastActionButton
+            episode={episode}
+            featured={true}
+            latest={true}
+          />
         </div>
       </div>
     </Link>

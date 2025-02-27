@@ -5,7 +5,6 @@ import { Button } from '@/app/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
@@ -16,14 +15,18 @@ import { Episode } from '@/types/responses/podcasts'
 interface PodcastActionButtonProps {
   episode: Episode
   featured?: boolean
+  latest?: boolean
 }
 
 export function PodcastActionButton({
   episode,
   featured = false,
+  latest = false,
 }: PodcastActionButtonProps) {
   const { handlePlayNext, handlePlayLast } = useEpisodeQueue({ id: episode.id })
-  const { markAsPlayedMutation } = usePodcastOptions({ episode })
+  const { markAsPlayedMutation, gotoEpisode, gotoPodcast } = usePodcastOptions({
+    episode,
+  })
 
   function handleMarkAsPlayed() {
     markAsPlayedMutation.mutate()
@@ -69,9 +72,27 @@ export function PodcastActionButton({
             handleMarkAsPlayed()
           }}
         />
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Ir para o episódio</DropdownMenuItem>
-        <DropdownMenuItem>Ir para o podcast</DropdownMenuItem>
+        {latest && (
+          <>
+            <DropdownMenuSeparator />
+            <OptionsButtons.GotoPodcast
+              variant="dropdown"
+              type="episode"
+              onClick={(e) => {
+                e.stopPropagation()
+                gotoEpisode()
+              }}
+            />
+            <OptionsButtons.GotoPodcast
+              variant="dropdown"
+              type="podcast"
+              onClick={(e) => {
+                e.stopPropagation()
+                gotoPodcast()
+              }}
+            />
+          </>
+        )}
         <DropdownMenuSeparator />
         <OptionsButtons.Download />
       </DropdownMenuContent>

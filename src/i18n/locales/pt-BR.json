@@ -418,7 +418,11 @@
       "removeSong": "Remover da playlist"
     },
     "info": "Mais informações",
-    "markAsPlayed": "Marcar como reproduzido"
+    "markAsPlayed": "Marcar como reproduzido",
+    "goto": {
+      "episode": "Ir para o episódio",
+      "podcast": "Ir para o podcast"
+    }
   },
   "radios": {
     "label": "Rádio",

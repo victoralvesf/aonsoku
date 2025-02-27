@@ -76,6 +76,7 @@ export default function LatestEpisodes() {
               <EpisodeCard
                 episode={episode}
                 key={virtualRow.index}
+                latest={true}
                 style={{
                   position: 'absolute',
                   top: virtualRow.start,

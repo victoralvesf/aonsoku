@@ -22,9 +22,14 @@ import { PodcastActionButton } from './action-button'
 
 type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
   episode: Episode
+  latest?: boolean
 }
 
-export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
+export function EpisodeCard({
+  episode,
+  latest = false,
+  ...rest
+}: EpisodeCardProps) {
   const { isPlaying, isEpisodePlaying } = useIsEpisodePlaying({
     id: episode.id,
   })
@@ -67,7 +72,7 @@ export function EpisodeCard({ episode, ...rest }: EpisodeCardProps) {
           <EpisodeProgress episode={episode} />
         </div>
         <div className="min-w-16 flex items-center justify-end">
-          <PodcastActionButton episode={episode} />
+          <PodcastActionButton episode={episode} latest={latest} />
         </div>
       </Link>
       <div className="px-4">
