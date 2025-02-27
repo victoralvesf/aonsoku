@@ -1,5 +1,6 @@
 import omit from 'lodash/omit'
 import {
+  CheckIcon,
   DownloadIcon,
   Info,
   Pencil,
@@ -154,6 +155,22 @@ function SongInfo({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   )
 }
 
+function MarkAsPlayed({
+  variant = 'dropdown',
+  ...props
+}: DropdownMenuItemProps) {
+  const { t } = useTranslation()
+
+  return (
+    <MenuItemFactory
+      variant={variant}
+      icon={<CheckIcon className="mr-2 h-4 w-4" />}
+      label={t('options.markAsPlayed')}
+      {...props}
+    />
+  )
+}
+
 export const OptionsButtons = {
   Play,
   PlayNext,
@@ -164,4 +181,5 @@ export const OptionsButtons = {
   RemovePlaylist,
   RemoveFromPlaylist,
   SongInfo,
+  MarkAsPlayed,
 }

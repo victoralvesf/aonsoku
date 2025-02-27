@@ -417,7 +417,8 @@
       "notFound": "Nenhuma playlist encontrada",
       "removeSong": "Remover da playlist"
     },
-    "info": "Mais informações"
+    "info": "Mais informações",
+    "markAsPlayed": "Marcar como reproduzido"
   },
   "radios": {
     "label": "Rádio",

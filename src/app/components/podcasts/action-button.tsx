@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
+import { usePodcastOptions } from '@/app/hooks/use-podcast-options'
 import { useEpisodeQueue } from '@/app/hooks/use-podcast-playing'
 import { Episode } from '@/types/responses/podcasts'
 
@@ -22,6 +23,11 @@ export function PodcastActionButton({
   featured = false,
 }: PodcastActionButtonProps) {
   const { handlePlayNext, handlePlayLast } = useEpisodeQueue({ id: episode.id })
+  const { markAsPlayedMutation } = usePodcastOptions({ episode })
+
+  function handleMarkAsPlayed() {
+    markAsPlayedMutation.mutate()
+  }
 
   return (
     <DropdownMenu>
@@ -56,7 +62,13 @@ export function PodcastActionButton({
             handlePlayLast()
           }}
         />
-        <DropdownMenuItem>Marcar como reproduzido</DropdownMenuItem>
+        <OptionsButtons.MarkAsPlayed
+          variant="dropdown"
+          onClick={(e) => {
+            e.stopPropagation()
+            handleMarkAsPlayed()
+          }}
+        />
         <DropdownMenuSeparator />
         <DropdownMenuItem>Ir para o episódio</DropdownMenuItem>
         <DropdownMenuItem>Ir para o podcast</DropdownMenuItem>
