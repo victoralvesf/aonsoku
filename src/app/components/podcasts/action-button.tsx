@@ -8,9 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
+import { useDownload } from '@/app/hooks/use-download'
 import { usePodcastOptions } from '@/app/hooks/use-podcast-options'
 import { useEpisodeQueue } from '@/app/hooks/use-podcast-playing'
 import { Episode } from '@/types/responses/podcasts'
+import { isTauri } from '@/utils/tauriTools'
 
 interface PodcastActionButtonProps {
   episode: Episode
@@ -27,9 +29,18 @@ export function PodcastActionButton({
   const { markAsPlayedMutation, gotoEpisode, gotoPodcast } = usePodcastOptions({
     episode,
   })
+  const { downloadBrowser, downloadTauri } = useDownload()
 
   function handleMarkAsPlayed() {
     markAsPlayedMutation.mutate()
+  }
+
+  function handleDownload() {
+    if (isTauri()) {
+      downloadTauri(episode.audio_url, episode.id)
+    } else {
+      downloadBrowser(episode.audio_url, episode.id)
+    }
   }
 
   return (
@@ -94,7 +105,13 @@ export function PodcastActionButton({
           </>
         )}
         <DropdownMenuSeparator />
-        <OptionsButtons.Download />
+        <OptionsButtons.Download
+          variant="dropdown"
+          onClick={(e) => {
+            e.stopPropagation()
+            handleDownload()
+          }}
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   )
