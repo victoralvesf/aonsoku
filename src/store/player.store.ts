@@ -307,6 +307,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
 
               set((state) => {
                 state.songlist.podcastList = newPodcastList
+                state.playerState.mediaType = 'podcast'
               })
 
               const { isPlaying } = get().playerState
@@ -329,6 +330,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
 
               set((state) => {
                 state.songlist.podcastList = newPodcastList
+                state.playerState.mediaType = 'podcast'
               })
 
               const { isPlaying } = get().playerState
