@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { CircleCheckIcon, PauseIcon, PlayIcon } from 'lucide-react'
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
@@ -19,6 +19,8 @@ import { ROUTES } from '@/routes/routesList'
 import { Episode } from '@/types/responses/podcasts'
 import { parseHtmlToText } from '@/utils/parseTexts'
 import { PodcastActionButton } from './action-button'
+
+const MemoEpisodeImage = memo(EpisodeImage)
 
 type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
   episode: Episode
@@ -42,7 +44,7 @@ export function EpisodeCard({
         to={ROUTES.EPISODES.PAGE(episode.id)}
         className="flex gap-2 items-center px-4 py-3 rounded-lg max-w-full group-hover/row:bg-foreground/20"
       >
-        <EpisodeImage episode={episode} />
+        <MemoEpisodeImage episode={episode} />
         <div className="flex flex-col flex-1 space-y-1 min-w-64">
           <div className="flex gap-1 items-center">
             {isEpisodePlaying && isPlaying && (
@@ -122,6 +124,8 @@ function EpisodeProgress({ episode }: EpisodeCardProps) {
   )
 }
 
+const MemoLazyLoadImage = memo(LazyLoadImage)
+
 function EpisodeImage({ episode }: EpisodeCardProps) {
   const { isPlaying, isEpisodePlaying, isNotPlaying } = useIsEpisodePlaying({
     id: episode.id,
@@ -141,7 +145,7 @@ function EpisodeImage({ episode }: EpisodeCardProps) {
         e.preventDefault()
       }}
     >
-      <LazyLoadImage
+      <MemoLazyLoadImage
         effect="opacity"
         src={episode.image_url}
         alt={episode.title}

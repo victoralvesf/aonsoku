@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { CircleCheckIcon, PauseIcon, PlayIcon } from 'lucide-react'
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
@@ -19,6 +19,8 @@ import { Episode } from '@/types/responses/podcasts'
 import { parseHtmlToText } from '@/utils/parseTexts'
 import { PodcastActionButton } from './action-button'
 
+const MemoLazyLoadImage = memo(LazyLoadImage)
+
 interface FeaturedEpisodeCardProps {
   episode: Episode
 }
@@ -33,7 +35,7 @@ export function FeaturedEpisodeCard({ episode }: FeaturedEpisodeCardProps) {
     <Link to={ROUTES.EPISODES.PAGE(episode.id)}>
       <div className="flex flex-col p-4 bg-background border rounded-lg relative">
         <div className="w-full bg-skeleton aspect-square rounded-md overflow-hidden shadow-custom-3">
-          <LazyLoadImage
+          <MemoLazyLoadImage
             src={episode.image_url}
             alt={episode.title}
             className="bg-contain aspect-square"
