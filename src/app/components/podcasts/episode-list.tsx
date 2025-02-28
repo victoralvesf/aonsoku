@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { CSSProperties, useEffect, useMemo, useRef } from 'react'
+import { CSSProperties, memo, useEffect, useMemo, useRef } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import {
   EpisodeCardFallback,
@@ -20,6 +20,8 @@ import { getMainScrollElement } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 import { EpisodesFilters } from './episodes-filters'
 import { NoEpisodesFound } from './no-episodes-found'
+
+const MemoEpisodesFilters = memo(EpisodesFilters)
 
 const { Query, MainFilter } = AlbumsSearchParams
 
@@ -138,7 +140,7 @@ export function EpisodeList() {
 
   return (
     <div>
-      <EpisodesFilters />
+      <MemoEpisodesFilters />
 
       <ListWrapper className="px-4">
         <div
