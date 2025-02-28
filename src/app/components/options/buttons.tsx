@@ -29,7 +29,7 @@ function Play({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   return (
     <MenuItemFactory
       variant={variant}
-      icon={<PlayIcon className="mr-2 h-4 w-4" />}
+      icon={<PlayIcon className="mr-2 h-4 w-4 fill-foreground" />}
       label={t('options.play')}
       {...props}
     />

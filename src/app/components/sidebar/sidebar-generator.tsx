@@ -13,6 +13,8 @@ import { Playlist } from '@/types/responses/playlist'
 
 const ListMusic = memo(ListMusicIcon)
 const MemoPodcastSidebarItem = memo(PodcastSidebarItem)
+const MemoContextMenuProvider = memo(ContextMenuProvider)
+const MemoPlaylistOptions = memo(PlaylistOptions)
 
 export interface ISidebarItem {
   id: string
@@ -89,15 +91,16 @@ export function SidebarPlaylistGenerator({
         <Fragment key={playlist.id}>
           <Link
             to={ROUTES.PLAYLIST.PAGE(playlist.id)}
+            className="block"
             onClick={(e) => {
               if (isActive(playlist.id)) {
                 e.preventDefault()
               }
             }}
           >
-            <ContextMenuProvider
+            <MemoContextMenuProvider
               options={
-                <PlaylistOptions
+                <MemoPlaylistOptions
                   variant="context"
                   playlist={playlist}
                   showPlay={true}
@@ -117,7 +120,7 @@ export function SidebarPlaylistGenerator({
                   {playlist.name}
                 </span>
               </Button>
-            </ContextMenuProvider>
+            </MemoContextMenuProvider>
           </Link>
         </Fragment>
       ))}
