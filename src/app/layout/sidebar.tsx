@@ -31,7 +31,8 @@ const Home = memo(HomeIcon)
 const Library = memo(LibraryIcon)
 const Podcast = memo(PodcastIcon)
 
-const SidebarGeneratorMemo = memo(SidebarGenerator)
+const MemoSidebarGenerator = memo(SidebarGenerator)
+const MemoCommandMenu = memo(CommandMenu)
 
 export function Sidebar({ className }: SidebarProps) {
   const { t } = useTranslation()
@@ -45,18 +46,18 @@ export function Sidebar({ className }: SidebarProps) {
         )}
       >
         <div className="p-4">
-          <CommandMenu />
+          <MemoCommandMenu />
         </div>
         <div className="space-y-4 py-4 pt-0">
           <SidebarSection>
             <div>
-              <SidebarGeneratorMemo list={mainMenuItems} />
+              <MemoSidebarGenerator list={mainMenuItems} />
             </div>
           </SidebarSection>
           <SidebarSection>
             <SectionTitle>{t('sidebar.library')}</SectionTitle>
             <div>
-              <SidebarGeneratorMemo list={libraryItems} />
+              <MemoSidebarGenerator list={libraryItems} />
             </div>
           </SidebarSection>
         </div>

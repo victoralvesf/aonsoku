@@ -12,6 +12,7 @@ import { useAppStore } from '@/store/app.store'
 import { Playlist } from '@/types/responses/playlist'
 
 const ListMusic = memo(ListMusicIcon)
+const MemoPodcastSidebarItem = memo(PodcastSidebarItem)
 
 export interface ISidebarItem {
   id: string
@@ -41,14 +42,17 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
         if (!isPodcastsActive && item.id === 'podcasts') return null
 
         if (isPodcastsActive && item.id === 'podcasts') {
-          return <PodcastSidebarItem key={item.id} item={item} />
+          return <MemoPodcastSidebarItem key={item.id} item={item} />
         }
 
         return (
           <Link
             to={item.route}
             key={item.id}
-            className={clsx(isActive(item.route) && 'pointer-events-none')}
+            className={clsx(
+              'block',
+              isActive(item.route) && 'pointer-events-none',
+            )}
           >
             <Button
               variant={isActive(item.route) ? 'secondary' : 'ghost'}
