@@ -26,57 +26,79 @@ interface FeaturedEpisodeCardProps {
 }
 
 export function FeaturedEpisodeCard({ episode }: FeaturedEpisodeCardProps) {
+  return (
+    <div className="flex flex-col p-4 bg-background border rounded-lg relative">
+      <EpisodeImage episode={episode} />
+      <ReleaseDate episode={episode} />
+      <EpisodeContent episode={episode} />
+      <div className="flex justify-between mt-4">
+        <FeaturedEpisodeCardAction episode={episode} />
+
+        <PodcastActionButton episode={episode} featured={true} latest={true} />
+      </div>
+    </div>
+  )
+}
+
+function EpisodeImage({ episode }: FeaturedEpisodeCardProps) {
+  return (
+    <Link to={ROUTES.EPISODES.PAGE(episode.id)}>
+      <div className="w-full bg-skeleton aspect-square rounded-md overflow-hidden shadow-custom-3">
+        <MemoLazyLoadImage
+          src={episode.image_url}
+          alt={episode.title}
+          className="bg-contain aspect-square"
+          width="100%"
+          height="100%"
+        />
+      </div>
+    </Link>
+  )
+}
+
+function ReleaseDate({ episode }: FeaturedEpisodeCardProps) {
   const { episodeReleaseDate } = useEpisodeReleaseDate(episode.published_at)
   const { isPlaying, isEpisodePlaying } = useIsEpisodePlaying({
     id: episode.id,
   })
 
   return (
-    <Link to={ROUTES.EPISODES.PAGE(episode.id)}>
-      <div className="flex flex-col p-4 bg-background border rounded-lg relative">
-        <div className="w-full bg-skeleton aspect-square rounded-md overflow-hidden shadow-custom-3">
-          <MemoLazyLoadImage
-            src={episode.image_url}
-            alt={episode.title}
-            className="bg-contain aspect-square"
-            width="100%"
-            height="100%"
-          />
-        </div>
-        <div className="flex gap-1 items-center mt-3">
-          {isEpisodePlaying && isPlaying && (
-            <EqualizerBars
-              width={14}
-              height={14}
-              className="text-muted-foreground mb-[2px]"
-            />
-          )}
-          <span className="text-xs text-muted-foreground font-medium uppercase w-fit">
-            {episodeReleaseDate}
-          </span>
-        </div>
+    <div className="flex gap-1 items-center mt-3">
+      {isEpisodePlaying && isPlaying && (
+        <EqualizerBars
+          width={14}
+          height={14}
+          className="text-muted-foreground mb-[2px]"
+        />
+      )}
+      <span className="text-xs text-muted-foreground font-medium uppercase w-fit">
+        {episodeReleaseDate}
+      </span>
+    </div>
+  )
+}
+
+export function EpisodeContent({ episode }: FeaturedEpisodeCardProps) {
+  const { isEpisodePlaying } = useIsEpisodePlaying({
+    id: episode.id,
+  })
+
+  return (
+    <div className="flex flex-col">
+      <Link to={ROUTES.EPISODES.PAGE(episode.id)}>
         <h3
           className={clsx(
-            'text-sm font-medium truncate mt-1',
+            'text-sm font-medium truncate mt-1 hover:underline',
             isEpisodePlaying && 'text-primary',
           )}
         >
           {episode.title}
         </h3>
-        <p className="line-clamp-2 text-muted-foreground text-xs mt-1">
-          {parseHtmlToText(episode.description)}
-        </p>
-        <div className="flex justify-between mt-4">
-          <FeaturedEpisodeCardAction episode={episode} />
-
-          <PodcastActionButton
-            episode={episode}
-            featured={true}
-            latest={true}
-          />
-        </div>
-      </div>
-    </Link>
+      </Link>
+      <p className="line-clamp-2 text-muted-foreground text-xs mt-1">
+        {parseHtmlToText(episode.description)}
+      </p>
+    </div>
   )
 }
 
