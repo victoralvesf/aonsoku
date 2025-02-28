@@ -21,6 +21,8 @@ import { parseHtmlToText } from '@/utils/parseTexts'
 import { PodcastActionButton } from './action-button'
 
 const MemoEpisodeImage = memo(EpisodeImage)
+const MemoActionButton = memo(PodcastActionButton)
+const MemoEpisodeProgress = memo(EpisodeProgress)
 
 type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
   episode: Episode
@@ -71,10 +73,10 @@ export function EpisodeCard({
           </p>
         </div>
         <div className="min-w-[14%] flex flex-col gap-1 items-center justify-center text-xs text-muted-foreground">
-          <EpisodeProgress episode={episode} />
+          <MemoEpisodeProgress episode={episode} />
         </div>
         <div className="min-w-16 flex items-center justify-end">
-          <PodcastActionButton episode={episode} latest={latest} />
+          <MemoActionButton episode={episode} latest={latest} />
         </div>
       </Link>
       <div className="px-4">
