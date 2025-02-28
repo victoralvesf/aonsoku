@@ -35,7 +35,7 @@ export default function LatestEpisodes() {
 
   if (isLoading || isFetching) return <LatestEpisodesFallback />
   if (isFetched && !data) {
-    return <ErrorPage />
+    return <ErrorPage status={404} statusText="No episodes found!" />
   }
 
   return (
