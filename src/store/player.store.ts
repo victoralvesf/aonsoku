@@ -265,7 +265,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.isPlaying = true
               })
             },
-            setPlayPodcast: (list, index, progress) => {
+            setPlayPodcast: (list, index) => {
               const { mediaType } = get().playerState
               const { podcastList, currentSongIndex } = get().songlist
 
@@ -282,11 +282,29 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
 
               get().actions.clearPlayerState()
               set((state) => {
-                state.playerProgress.progress = progress
                 state.playerState.mediaType = 'podcast'
                 state.songlist.podcastList = list
                 state.songlist.currentSongIndex = index
                 state.playerState.isPlaying = true
+              })
+            },
+            setUpdatePodcastProgress: (value) => {
+              const { mediaType } = get().playerState
+              if (mediaType !== 'podcast') return
+
+              const { podcastList, currentSongIndex } = get().songlist
+
+              const episode = podcastList[currentSongIndex] ?? null
+              if (!episode) return
+
+              const updatedEpisode = { ...episode, progress: value }
+
+              const updatedPodcastList = podcastList.map((podcast, index) =>
+                index === currentSongIndex ? updatedEpisode : podcast,
+              )
+
+              set((state) => {
+                state.songlist.podcastList = updatedPodcastList
               })
             },
             setNextPodcast: (episode) => {

@@ -91,9 +91,7 @@ export function Player() {
     const audio = getAudioRef().current
     if (!audio) return
 
-    audio.currentTime = progress
     const audioDuration = Math.floor(audio.duration)
-
     const infinityDuration = audioDuration === Infinity
 
     if (!infinityDuration) {
@@ -103,7 +101,24 @@ export function Player() {
     if (isPodcast && infinityDuration && podcast) {
       setCurrentDuration(podcast.duration)
     }
-  }, [getAudioRef, isPodcast, podcast, progress, setCurrentDuration])
+
+    if (isPodcast) {
+      logger.info('[Player] - Setting episode current progress', {
+        progress: podcast.progress,
+      })
+      setProgress(podcast.progress)
+      audio.currentTime = podcast.progress
+    } else {
+      audio.currentTime = progress
+    }
+  }, [
+    getAudioRef,
+    isPodcast,
+    podcast,
+    progress,
+    setCurrentDuration,
+    setProgress,
+  ])
 
   const setupProgress = useCallback(() => {
     const audio = getAudioRef().current

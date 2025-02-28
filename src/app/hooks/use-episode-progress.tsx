@@ -4,9 +4,12 @@ import { Playback } from '@/types/responses/podcasts'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 
-interface UseEpisodeProgressProps {
-  duration: number
+interface PlaybackBase {
   playback: Playback[]
+}
+
+interface UseEpisodeProgressProps extends PlaybackBase {
+  duration: number
   showFullTime?: boolean
 }
 
@@ -37,6 +40,20 @@ export function useEpisodeProgress({
     remainingTimeText,
     listeningProgress,
     listeningProgressPercentage,
+  }
+}
+
+export function getEpisodePlayProgress({ playback }: PlaybackBase) {
+  const hasPlaybackData = playback.length > 0
+  let currentProgress = hasPlaybackData ? playback[0].progress : 0
+  const isCompleted = hasPlaybackData ? playback[0].completed : false
+
+  if (hasPlaybackData && isCompleted) {
+    currentProgress = 0
+  }
+
+  return {
+    currentProgress,
   }
 }
 

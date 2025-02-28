@@ -6,6 +6,7 @@ import {
   usePlayerMediaType,
   usePlayerSonglist,
 } from '@/store/player.store'
+import { getEpisodePlayProgress } from './use-episode-progress'
 
 interface IEpisodeProps {
   id: string
@@ -36,26 +37,19 @@ export function useIsEpisodePlaying({ id }: IEpisodeProps) {
   }
 }
 
-async function getAndFormatEpisode(id: string) {
+export async function getAndFormatEpisode(id: string) {
   const episode = await podcasts.getEpisode(id)
   if (episode) {
     const { playback } = episode
-    const hasPlaybackData = playback.length > 0
-    let currentProgress = hasPlaybackData ? playback[0].progress : 0
-    const isCompleted = hasPlaybackData ? playback[0].completed : false
-
-    if (hasPlaybackData && isCompleted) {
-      currentProgress = 0
-    }
+    const { currentProgress } = getEpisodePlayProgress({ playback })
 
     // Remove descriptions to avoid storing large texts
     episode.description = ''
     episode.podcast.description = ''
+    // Set saved progress
+    episode.progress = currentProgress
 
-    return {
-      episode,
-      currentProgress,
-    }
+    return episode
   }
 
   return null
@@ -79,10 +73,9 @@ export function usePlayEpisode({ id }: IEpisodeProps) {
         return
       }
 
-      const data = await getAndFormatEpisode(id)
-      if (data) {
-        const { episode, currentProgress } = data
-        setPlayPodcast([episode], 0, currentProgress)
+      const episode = await getAndFormatEpisode(id)
+      if (episode) {
+        setPlayPodcast([episode], 0)
       }
     },
     [id, isEpisodePlaying, isPlaying, setPlayPodcast, setPlayingState],
@@ -97,17 +90,15 @@ export function useEpisodeQueue({ id }: IEpisodeProps) {
   const { setNextPodcast, setLastPodcast } = usePlayerActions()
 
   const handlePlayNext = useCallback(async () => {
-    const data = await getAndFormatEpisode(id)
-    if (data) {
-      const { episode } = data
+    const episode = await getAndFormatEpisode(id)
+    if (episode) {
       setNextPodcast(episode)
     }
   }, [id, setNextPodcast])
 
   const handlePlayLast = useCallback(async () => {
-    const data = await getAndFormatEpisode(id)
-    if (data) {
-      const { episode } = data
+    const episode = await getAndFormatEpisode(id)
+    if (episode) {
       setLastPodcast(episode)
     }
   }, [id, setLastPodcast])

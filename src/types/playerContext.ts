@@ -118,11 +118,8 @@ export interface IPlayerActions {
   handleSongEnded: () => void
   getCurrentProgress: () => number
   resetConfig: () => void
-  setPlayPodcast: (
-    list: EpisodeWithPodcast[],
-    index: number,
-    progress: number,
-  ) => void
+  setPlayPodcast: (list: EpisodeWithPodcast[], index: number) => void
+  setUpdatePodcastProgress: (value: number) => void
   setPlaybackRate: (value: number) => void
   setNextPodcast: (episode: EpisodeWithPodcast) => void
   setLastPodcast: (episode: EpisodeWithPodcast) => void

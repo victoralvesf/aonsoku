@@ -43,6 +43,7 @@ export interface Episode {
   created_at: string
   updated_at: string
   playback: Playback[]
+  progress: number
 }
 
 export type Episodes = PaginateResponse<Episode>

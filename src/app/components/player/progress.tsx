@@ -33,7 +33,7 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   const { currentSong, currentList, podcastList, currentSongIndex } =
     usePlayerSonglist()
   const { isSong, isPodcast } = usePlayerMediaType()
-  const { setProgress } = usePlayerActions()
+  const { setProgress, setUpdatePodcastProgress } = usePlayerActions()
   const isScrobbleSentRef = useRef(false)
 
   const isEmpty = isSong && currentList.length === 0
@@ -81,23 +81,31 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   // Used to save listening progress to backend every 30 seconds
   useEffect(() => {
     if (!isPodcast || !podcastList) return
+    if (progress === 0) return
 
     const send = (progress / 30) % 1 === 0
+    if (!send) return
 
-    if (send) {
-      const podcast = podcastList[currentSongIndex] ?? null
-      if (!podcast) return
+    const podcast = podcastList[currentSongIndex] ?? null
+    if (!podcast) return
+    if (progress === podcast.progress) return
 
-      podcasts
-        .saveEpisodeProgress(podcast.id, progress)
-        .then(() => {
-          logger.info('Progress sent:', progress)
-        })
-        .catch((error) => {
-          logger.error('Error sending progress', error)
-        })
-    }
-  }, [currentSongIndex, isPodcast, podcastList, progress])
+    podcasts
+      .saveEpisodeProgress(podcast.id, progress)
+      .then(() => {
+        setUpdatePodcastProgress(progress)
+        logger.info('Progress sent:', progress)
+      })
+      .catch((error) => {
+        logger.error('Error sending progress', error)
+      })
+  }, [
+    currentSongIndex,
+    isPodcast,
+    podcastList,
+    progress,
+    setUpdatePodcastProgress,
+  ])
 
   useEffect(() => {
     if (isSong) {
