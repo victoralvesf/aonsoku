@@ -21,7 +21,7 @@ interface TextProp {
 
 export function Title({ children }: TextProp) {
   return (
-    <h1 className="tracking-tight font-bold text-4xl leading-snug -mb-1 antialiased line-clamp-2">
+    <h1 className="tracking-tight font-bold text-3xl 2xl:text-4xl !leading-snug -mb-1 antialiased line-clamp-2">
       {children}
     </h1>
   )
