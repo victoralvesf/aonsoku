@@ -55,7 +55,7 @@ export function UnfollowButton({ title, podcastId }: UnfollowButtonProps) {
     <AlertDialog>
       <SimpleTooltip text={t('podcasts.header.unfollow.tooltip', { title })}>
         <AlertDialogTrigger asChild>
-          <Button variant="default" size="icon" className="rounded-full p-0">
+          <Button size="icon" className="rounded-full p-0 aspect-square">
             <BookmarkIcon className="w-4 h-4 fill-primary-foreground" />
           </Button>
         </AlertDialogTrigger>
