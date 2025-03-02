@@ -32,13 +32,19 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
         'data-[open=false]:max-h-9 data-[open=true]:max-h-[72px]',
       )}
     >
-      <Link to={item.route} className="z-10 relative">
+      <Link
+        to={item.route}
+        className={clsx(
+          'z-10 relative',
+          isPodcastActive && 'pointer-events-none',
+        )}
+      >
         <Button
           variant={isPodcastActive ? 'secondary' : 'ghost'}
           size="sm"
           className={clsx(
             'w-full justify-start',
-            isPodcastActive ? 'bg-accent pointer-events-none' : 'bg-background',
+            !isPodcastActive && 'bg-background',
           )}
         >
           <item.icon className="w-4 h-4 mr-2" />
@@ -52,7 +58,7 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
 
             setOpen((prev) => !prev)
           }}
-          className="absolute right-2 top-2 p-0 w-5 h-5 z-20"
+          className="absolute right-2 top-2 p-0 w-5 h-5 z-20 pointer-events-auto"
         >
           <ChevronRight
             data-visible={open}
