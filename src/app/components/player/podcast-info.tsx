@@ -23,7 +23,7 @@ export function PodcastInfo({ podcast }: { podcast: EpisodeWithPodcast }) {
           onError={() => setImageError(true)}
         />
       </div>
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center w-full overflow-hidden">
         <MarqueeTitle gap="mr-2">
           <Link to={ROUTES.EPISODES.PAGE(podcast.id)}>
             <span
@@ -36,10 +36,10 @@ export function PodcastInfo({ podcast }: { podcast: EpisodeWithPodcast }) {
         </MarqueeTitle>
         <Link
           to={ROUTES.PODCASTS.PAGE(podcast.podcast_id)}
-          className="w-fit inline-flex"
-          data-testid="track-artist-url"
+          className="w-fit inline-flex max-w-full"
+          data-testid="podcast-title"
         >
-          <span className="text-xs font-regular text-muted-foreground hover:underline">
+          <span className="text-xs font-regular text-muted-foreground hover:underline max-w-full truncate">
             {podcast.podcast.title}
           </span>
         </Link>
