@@ -103,8 +103,8 @@ export function Player() {
     }
 
     if (isPodcast) {
-      logger.info('[Player] - Setting episode current progress', {
-        progress: podcast.progress,
+      logger.info('[Player] - Resuming episode from:', {
+        seconds: podcast.progress,
       })
       setProgress(podcast.progress)
       audio.currentTime = podcast.progress
