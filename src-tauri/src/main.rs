@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use proxy::proxy::spawn_proxy_server;
+#[cfg(not(target_os = "windows"))]
 use tauri::Manager;
 
 #[cfg(target_os = "macos")]
@@ -35,6 +36,7 @@ async fn main() {
 
     builder
         .setup(|_app| {
+            #[cfg(not(target_os = "windows"))]
             let window = _app.get_window("main").unwrap();
 
             #[cfg(target_os = "macos")]
@@ -50,17 +52,14 @@ async fn main() {
                 });
             }
 
-            #[cfg(target_os = "windows")]
-            {
-                let main_window = _app.get_webview_window("main").unwrap();
-                let _ = main_window.set_decorations(false);
-            }
-
             // Only show window after 1 sec, to avoid flashy colors
-            tokio::spawn(async move {
-                tokio::time::sleep(std::time::Duration::from_secs(2)).await;
-                let _ = window.show();
-            });
+            #[cfg(not(target_os = "windows"))]
+            {
+                tokio::spawn(async move {
+                    tokio::time::sleep(std::time::Duration::from_secs(2)).await;
+                    let _ = window.show();
+                });
+            }
 
             Ok(())
         })

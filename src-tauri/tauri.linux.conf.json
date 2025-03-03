@@ -1,0 +1,18 @@
+{
+  "identifier": "com.victoralvesf.aonsoku",
+  "app": {
+    "windows": [
+      {
+        "title": "Aonsoku",
+        "label": "main",
+        "minWidth": 1280,
+        "minHeight": 720,
+        "maximized": true,
+        "useHttpsScheme": false,
+        "backgroundColor": "#18181b",
+        "theme": "Dark",
+        "visible": false
+      }
+    ]
+  }
+}
