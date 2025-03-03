@@ -5,8 +5,8 @@ use hyper::server::conn::http1;
 use hyper::service::service_fn;
 use hyper::{Request, Response};
 use hyper_tls::HttpsConnector;
-use hyper_util::rt::TokioIo;
-use hyper_util::{client::legacy::Client, rt::TokioExecutor};
+use hyper_util::client::legacy::{connect::HttpConnector, Client};
+use hyper_util::rt::{TokioExecutor, TokioIo};
 use std::net::SocketAddr;
 use tokio::net::TcpListener;
 use url::Url;
@@ -14,17 +14,15 @@ use url::Url;
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
 
 // Create type alias for the client
-type HttpClient =
-    Client<HttpsConnector<hyper_util::client::legacy::connect::HttpConnector>, Full<Bytes>>;
+type HttpClient = Client<HttpsConnector<HttpConnector>, Full<Bytes>>;
 
 // Function to handle the proxy request
-async fn proxy_request(client: &HttpClient, url_str: &str) -> Result<Response<Incoming>> {
-    let mut current_url = url_str.to_string();
+async fn proxy_request(client: &HttpClient, url: &str) -> Result<Response<Incoming>> {
+    let mut current_url = url.to_string();
     let mut redirect_count = 0;
     const MAX_REDIRECTS: u8 = 10;
 
     loop {
-        // let url = Url::parse(&current_url)?;
         let mut request = Request::builder().uri(current_url.clone()).method("GET");
 
         // Add common headers
