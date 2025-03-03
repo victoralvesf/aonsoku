@@ -6,6 +6,11 @@
     "devUrl": "http://localhost:1420"
   },
   "bundle": {
+    "linux": {
+      "appimage": {
+        "bundleMediaFramework": true
+      }
+    },
     "active": true,
     "category": "Music",
     "createUpdaterArtifacts": true,
