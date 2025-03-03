@@ -81,7 +81,7 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   }, [])
 
   const progressTicks = useRef(0)
-  
+
   useEffect(() => {
     if (isSeeking || !isPlaying) {
       return
