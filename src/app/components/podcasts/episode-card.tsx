@@ -19,9 +19,11 @@ import { ROUTES } from '@/routes/routesList'
 import { Episode } from '@/types/responses/podcasts'
 import { parseHtmlToText } from '@/utils/parseTexts'
 import { PodcastActionButton } from './action-button'
+import { PodcastActionOptions } from './action-options'
 
 const MemoEpisodeImage = memo(EpisodeImage)
-const MemoActionButton = memo(PodcastActionButton)
+const MemoPodcastActionButton = memo(PodcastActionButton)
+const MemoPodcastActionOptions = memo(PodcastActionOptions)
 const MemoEpisodeProgress = memo(EpisodeProgress)
 
 type EpisodeCardProps = ComponentPropsWithoutRef<'div'> & {
@@ -76,7 +78,9 @@ export function EpisodeCard({
           <MemoEpisodeProgress episode={episode} />
         </div>
         <div className="min-w-16 flex items-center justify-end">
-          <MemoActionButton episode={episode} latest={latest} />
+          <MemoPodcastActionButton>
+            <MemoPodcastActionOptions episode={episode} latest={latest} />
+          </MemoPodcastActionButton>
         </div>
       </Link>
       <div className="px-4">

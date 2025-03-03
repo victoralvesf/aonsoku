@@ -18,8 +18,11 @@ import { ROUTES } from '@/routes/routesList'
 import { Episode } from '@/types/responses/podcasts'
 import { parseHtmlToText } from '@/utils/parseTexts'
 import { PodcastActionButton } from './action-button'
+import { PodcastActionOptions } from './action-options'
 
 const MemoLazyLoadImage = memo(LazyLoadImage)
+const MemoPodcastActionButton = memo(PodcastActionButton)
+const MemoPodcastActionOptions = memo(PodcastActionOptions)
 
 interface FeaturedEpisodeCardProps {
   episode: Episode
@@ -34,7 +37,9 @@ export function FeaturedEpisodeCard({ episode }: FeaturedEpisodeCardProps) {
       <div className="flex justify-between mt-4">
         <FeaturedEpisodeCardAction episode={episode} />
 
-        <PodcastActionButton episode={episode} featured={true} latest={true} />
+        <MemoPodcastActionButton featured={true}>
+          <MemoPodcastActionOptions episode={episode} latest={true} />
+        </MemoPodcastActionButton>
       </div>
     </div>
   )

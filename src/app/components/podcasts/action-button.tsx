@@ -1,48 +1,22 @@
 import clsx from 'clsx'
 import { EllipsisVertical } from 'lucide-react'
-import { OptionsButtons } from '@/app/components/options/buttons'
+import { ReactNode } from 'react'
 import { Button } from '@/app/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
-import { useDownload } from '@/app/hooks/use-download'
-import { usePodcastOptions } from '@/app/hooks/use-podcast-options'
-import { useEpisodeQueue } from '@/app/hooks/use-podcast-playing'
-import { Episode } from '@/types/responses/podcasts'
-import { isTauri } from '@/utils/tauriTools'
 
 interface PodcastActionButtonProps {
-  episode: Episode
   featured?: boolean
-  latest?: boolean
+  children?: ReactNode
 }
 
 export function PodcastActionButton({
-  episode,
   featured = false,
-  latest = false,
+  children,
 }: PodcastActionButtonProps) {
-  const { handlePlayNext, handlePlayLast } = useEpisodeQueue({ id: episode.id })
-  const { markAsPlayedMutation, gotoEpisode, gotoPodcast } = usePodcastOptions({
-    episode,
-  })
-  const { downloadBrowser, downloadTauri } = useDownload()
-
-  function handleMarkAsPlayed() {
-    markAsPlayedMutation.mutate()
-  }
-
-  function handleDownload() {
-    if (isTauri()) {
-      downloadTauri(episode.audio_url, episode.id)
-    } else {
-      downloadBrowser(episode.audio_url, episode.id)
-    }
-  }
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -61,58 +35,11 @@ export function PodcastActionButton({
           <EllipsisVertical className="w-3 h-3" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-        <OptionsButtons.PlayNext
-          variant="dropdown"
-          onClick={(e) => {
-            e.stopPropagation()
-            handlePlayNext()
-          }}
-        />
-        <OptionsButtons.PlayLast
-          variant="dropdown"
-          onClick={(e) => {
-            e.stopPropagation()
-            handlePlayLast()
-          }}
-        />
-        <OptionsButtons.MarkAsPlayed
-          variant="dropdown"
-          onClick={(e) => {
-            e.stopPropagation()
-            handleMarkAsPlayed()
-          }}
-        />
-        {latest && (
-          <>
-            <DropdownMenuSeparator />
-            <OptionsButtons.GotoPodcast
-              variant="dropdown"
-              type="episode"
-              onClick={(e) => {
-                e.stopPropagation()
-                gotoEpisode()
-              }}
-            />
-            <OptionsButtons.GotoPodcast
-              variant="dropdown"
-              type="podcast"
-              onClick={(e) => {
-                e.stopPropagation()
-                gotoPodcast()
-              }}
-            />
-          </>
-        )}
-        <DropdownMenuSeparator />
-        <OptionsButtons.Download
-          variant="dropdown"
-          onClick={(e) => {
-            e.stopPropagation()
-            handleDownload()
-          }}
-        />
-      </DropdownMenuContent>
+      {children && (
+        <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+          {children}
+        </DropdownMenuContent>
+      )}
     </DropdownMenu>
   )
 }
