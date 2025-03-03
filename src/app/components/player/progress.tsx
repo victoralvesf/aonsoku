@@ -16,6 +16,7 @@ import {
   usePlayerMediaType,
   usePlayerProgress,
   usePlayerSonglist,
+  usePlayerIsPlaying,
 } from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { logger } from '@/utils/logger'
@@ -30,6 +31,7 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   const progress = usePlayerProgress()
   const [localProgress, setLocalProgress] = useState(progress)
   const currentDuration = usePlayerDuration()
+  const isPlaying = usePlayerIsPlaying()
   const { currentSong, currentList, podcastList, currentSongIndex } =
     usePlayerSonglist()
   const { isSong, isPodcast } = usePlayerMediaType()
@@ -78,6 +80,40 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
     await subsonic.scrobble.send(songId)
   }, [])
 
+  const progressTicks = useRef(0)
+  
+  useEffect(() => {
+    if (isSeeking || !isPlaying) {
+      return
+    }
+    if (isSong) {
+      const progressPercentage = (progress / currentDuration) * 100
+
+      if (progressPercentage === 0) {
+        isScrobbleSentRef.current = false
+        progressTicks.current = 0
+      } else {
+        progressTicks.current += 1
+
+        if (
+          (progressTicks.current >= currentDuration / 2 ||
+            progressTicks.current >= 60 * 4) &&
+          !isScrobbleSentRef.current
+        ) {
+          sendScrobble(currentSong.id)
+          isScrobbleSentRef.current = true
+        }
+      }
+    }
+  }, [
+    progress,
+    currentDuration,
+    isSong,
+    sendScrobble,
+    currentSong.id,
+    isPlaying,
+  ])
+
   // Used to save listening progress to backend every 30 seconds
   useEffect(() => {
     if (!isPodcast || !podcastList) return
@@ -106,19 +142,6 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
     progress,
     setUpdatePodcastProgress,
   ])
-
-  useEffect(() => {
-    if (isSong) {
-      const progressPercentage = (progress / currentDuration) * 100
-
-      if (progressPercentage === 0) isScrobbleSentRef.current = false
-
-      if (progressPercentage >= 50 && !isScrobbleSentRef.current) {
-        sendScrobble(currentSong.id)
-        isScrobbleSentRef.current = true
-      }
-    }
-  }, [progress, currentDuration, isSong, sendScrobble, currentSong.id])
 
   const currentTime = convertSecondsToTime(isSeeking ? localProgress : progress)
   const isProgressLarge = useMemo(() => {
