@@ -1,0 +1,546 @@
+{
+  "sidebar": {
+    "radios": "Radio",
+    "artists": "Artister",
+    "home": "Hem",
+    "search": "Sök…",
+    "miniSearch": "Sök",
+    "albums": "Album",
+    "playlists": "Spellista",
+    "songs": "Sånger",
+    "emptyPlaylist": "Inga spellistor skapat ännu",
+    "library": "Bibliotek"
+  },
+  "home": {
+    "recentlyAdded": "Nyligen tillagd",
+    "explore": "Utforska",
+    "mostPlayed": "Mest spelad",
+    "recentlyPlayed": "Nyligen spelad"
+  },
+  "menu": {
+    "server": "Server",
+    "about": "Om",
+    "serverLogout": "Logga ut",
+    "language": "Språk"
+  },
+  "generic": {
+    "seeMore": "Se mer",
+    "showDetails": "Visa detaljer",
+    "hideDetails": "Göm detaljer",
+    "viewAll": "Visa allt",
+    "loading": "Laddar…"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Ljusläge",
+    "system": "Systemläge",
+    "black": "Svartvitsläge",
+    "one-dark": "One Mörk",
+    "material-theme": "Material Tema",
+    "monokai-pro": "Monokai Pro",
+    "shades-of-purple": "Nyanser av lila",
+    "bearded-solarized": "Bearded Solarized",
+    "nuclear-dark": "Nucleär Mörk",
+    "achiever": "Prestationsmänniska",
+    "dracula": "Dracula",
+    "night-owl-light": "Nattuggla Ljus",
+    "github-dark": "Github mörkläge",
+    "discord": "Discord",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "noctis-lilac": "Noctis Lila",
+    "dark": "Mörkläge",
+    "vue-dark": "Utsikt Mörk",
+    "tinacious-design": "Tinacious Design",
+    "marmalade-beaver": "Marmalade Beaver",
+    "vim-dark-soft": "Vim Mörk Mjuk"
+  },
+  "playlist": {
+    "form": {
+      "labels": {
+        "comment": "Kommentar",
+        "commentDescription": "Skriv en kort beskrivning av spellistan",
+        "isPublicDescription": "Välj det här alternativet för att göra spellistan publik. Detta gör att andra användare kan se och komma åt din spellista.",
+        "name": "Namn",
+        "isPublic": "Publik"
+      },
+      "create": {
+        "title": "Skapa spellista",
+        "button": "Skapa",
+        "toast": {
+          "error": "Misslyckades med att skapa spellistan!",
+          "success": "Spellista skapad framgångsrikt!"
+        }
+      },
+      "edit": {
+        "title": "Redigera spellista",
+        "button": "Uppdatera",
+        "toast": {
+          "success": "Spellista skapad framgångsrikt!",
+          "error": "Misslyckades med att uppdatera spellistan!"
+        }
+      },
+      "removeSong": {
+        "description": "Denna åtgärd kan inte ångras.",
+        "toast": {
+          "success_one": "Sång borttagen framgångsrikt!",
+          "success_other": "Sånger borttagna framgångsrikt!",
+          "error_one": "Misslyckades med att ta bort låten!",
+          "error_other": "Misslyckades med att ta bort låtarna!"
+        },
+        "title_one": "Är du säker på att du vill ta bort den valda låten?",
+        "title_other": "Är du säker på att du vill ta bort den valda låtarna?"
+      },
+      "delete": {
+        "title": "Är du säker på att du vill ta bort den här spellistan?",
+        "description": "Denna åtgärd kan inte ångras.",
+        "toast": {
+          "error": "Misslyckades med att ta bort spellistan!",
+          "success": "Spellista borttagen framgångsrikt!"
+        }
+      },
+      "validations": {
+        "nameLength": "Spellistans namn måste innehålla minst 2 tecken."
+      }
+    },
+    "headline": "Spellistor",
+    "buttons": {
+      "shuffle": "Spela {{name}} i shuffle-läge",
+      "play": "Spela {{name}}",
+      "options": "Mer inställningar för {{name}}"
+    },
+    "duration": "Ungefär {{duration}}",
+    "noSongList": "Denna spellista har inga låtar!",
+    "songCount_one": "{{count}} sång",
+    "songCount_other": "{{count}} sång",
+    "refresh": "Uppdatera spellistor"
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Sök låtar…"
+      },
+      "byArtist": "Sånger från {{artist}}",
+      "filter": {
+        "clear": "Rensa filter"
+      }
+    }
+  },
+  "album": {
+    "buttons": {
+      "like": "Gilla {{name}}",
+      "dislike": "Ta bort like från {{name}}"
+    },
+    "info": {
+      "lastfm": "Öppna i Last.fm",
+      "musicbrainz": "Öppna i MusicBrainz",
+      "about": "Om {{name}}"
+    },
+    "more": {
+      "listTitle": "Mer från denna artist",
+      "genreTitle": "Mer från {{genre}}",
+      "discography": "Artistdiskografi"
+    },
+    "list": {
+      "header": {
+        "albumsByArtist": "Album av {{artist}}"
+      },
+      "empty": {
+        "title": "Oj, inga album här!",
+        "action": "Försök kanske att justera filtren?",
+        "info": "Det ser ut som om det inte finns några album med det nuvarande filtret."
+      },
+      "genre": {
+        "label": "Välj en genre…",
+        "notFound": "Ingen genre hittades.",
+        "loading": "Laddar genrer…",
+        "search": "Hitta en genre…"
+      },
+      "filter": {
+        "name": "Namn",
+        "random": "Slumpmässig",
+        "recentlyAdded": "Nyligen tillagt",
+        "releaseYear": "Utgivningsår",
+        "genre": "Genre",
+        "favorites": "Favoriter",
+        "discography": "Diskografi",
+        "recentlyPlayed": "Spelades nyligen",
+        "artist": "Artist",
+        "search": "Sök",
+        "mostPlayed": "Mest spelade"
+      },
+      "search": {
+        "placeholder": "Sök album…"
+      }
+    },
+    "table": {
+      "discNumber": "Skiva {{number}}"
+    },
+    "headline": "Album"
+  },
+  "artist": {
+    "buttons": {
+      "play": "Spela {{artist}} radio",
+      "options": "Mer inställningar för {{artist}}",
+      "shuffle": "Spela {{artist}} radio i shuffle-läge"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} album",
+      "albumsCount_other": "{{count}} album"
+    },
+    "topSongs": "Populär",
+    "recentAlbums": "Senaste albumen",
+    "relatedArtists": "Relaterade artister",
+    "headline": "Artist"
+  },
+  "table": {
+    "columns": {
+      "title": "Titel",
+      "album": "Album",
+      "year": "År",
+      "duration": "Längd",
+      "plays": "Spelar",
+      "lastPlayed": "Senast spelade",
+      "bitrate": "Bithastighet",
+      "quality": "Kvalitet",
+      "albumCount": "Antal album",
+      "songCount": "Antal låtar",
+      "comment": "Kommentar",
+      "track": "Track",
+      "size": "Storlek",
+      "codec": "Codec",
+      "path": "Spår",
+      "discNumber": "Skivnummer",
+      "trackGain": "Spårförstärkning",
+      "trackPeak": "Spårtopp",
+      "artist": "Artist",
+      "bpm": "BPM",
+      "favorite": "Favorit",
+      "genres": "Genrer",
+      "name": "Namn",
+      "public": "Publik",
+      "albumGain": "Albumförstärkning",
+      "albumPeak": "Albumtopp"
+    },
+    "buttons": {
+      "play": "Spela {{title}} av {{artist}}",
+      "pause": "Pausa {{title}} av {{artist}}"
+    },
+    "lastPlayed": "{{date}} sedan",
+    "pagination": {
+      "rowsPerPage": "Rader per sida",
+      "currentPage": "Sida {{currentPage}} av {{totalPages}}",
+      "screenReader": {
+        "firstPage": "Gå till första sidan",
+        "previousPage": "Gå till föregående sida",
+        "nextPage": "Gå till nästa sida",
+        "lastPage": "Gå till sista sidan"
+      }
+    },
+    "sort": {
+      "asc": "Stigande",
+      "desc": "Nedåtgående",
+      "reset": "Återställ"
+    },
+    "menu": {
+      "selectedCount_one": "{{count}} vald",
+      "selectedCount_other": "{{count}} valda"
+    }
+  },
+  "fullscreen": {
+    "noLyrics": "Ingen låttext hittades",
+    "loadingLyrics": "Letar efter texter…",
+    "queue": "Kö",
+    "playing": "Spelar nu",
+    "lyrics": "Text",
+    "switchButton": "Byt till storspelare"
+  },
+  "logout": {
+    "dialog": {
+      "title": "Är du redo att säga hej då för den här gången?",
+      "description": "Bekräfta för att logga ut.",
+      "cancel": "Avbryt",
+      "confirm": "Fortsätt"
+    }
+  },
+  "login": {
+    "form": {
+      "server": "Server",
+      "description": "Anslut till din Subsonic-server.",
+      "url": "URL",
+      "urlDescription": "Detta är din server-URL",
+      "username": "Användarnamn",
+      "usernamePlaceholder": "Din användarnamn",
+      "password": "Lösenord",
+      "connect": "Anslut",
+      "connecting": "Ansluter…",
+      "validations": {
+        "url": "Vänligen ange en giltig URL.",
+        "protocol": "URL måste börja med http:// eller https://",
+        "username": "Vänligen ange en användarnamn",
+        "usernameLength": "Användarnamn måste innehålla minst 2 tecken.",
+        "password": "Vänligen ange en lösenord",
+        "passwordLength": "Lösenorden måste innehålla minst 2 tecken."
+      }
+    }
+  },
+  "toast": {
+    "server": {
+      "success": "Servern har sparats framgångsrikt!",
+      "error": "Serverkommunikationen misslyckades!"
+    }
+  },
+  "command": {
+    "inputPlaceholder": "Sök efter ett album, en artist eller en låt",
+    "noResults": "Ingen resultat hittades.",
+    "commands": {
+      "heading": "Kommandon",
+      "pages": "Gå till sida",
+      "theme": "Ändra tema"
+    },
+    "pages": "Sidor"
+  },
+  "player": {
+    "noSongPlaying": "Ingen låt spelas",
+    "noRadioPlaying": "Ingen radio spelar",
+    "tooltips": {
+      "shuffle": {
+        "enable": "Aktivera shuffle-läge",
+        "disable": "Inaktivera shuffle-läge"
+      },
+      "previous": "Föregående",
+      "play": "Spela",
+      "pause": "Pausa",
+      "next": "Nästa",
+      "repeat": {
+        "enable": "Aktivera repetition",
+        "enableOne": "Aktivera repetition ett",
+        "disable": "Inaktivera repetition"
+      },
+      "like": "Gilla {{song}} från {{artist}}",
+      "dislike": "Ta bort like från {{song}} av {{artist}}"
+    }
+  },
+  "options": {
+    "play": "Spela",
+    "addLast": "Sätt in sist",
+    "playNext": "Spela nästa",
+    "download": "Ladda ner",
+    "playlist": {
+      "add": "Lägg in i spellista",
+      "edit": "Ändra spellista",
+      "delete": "Ta bort spellista",
+      "search": "Sök efter en spellista",
+      "create": "Ny spellista",
+      "notFound": "Ingen spellista hittades",
+      "removeSong": "Ta bort från spellista"
+    },
+    "info": "Få info"
+  },
+  "radios": {
+    "label": "Radio",
+    "addRadio": "Lägg in radio",
+    "table": {
+      "name": "Namn",
+      "homepage": "URL till hemsida",
+      "stream": "URL för stream",
+      "actions": {
+        "edit": "Ändra radio",
+        "delete": "Ta bort radio"
+      },
+      "playTooltip": "Spela {{name}} radio",
+      "pauseTooltip": "Pausa {{name}} radio"
+    },
+    "empty": {
+      "title": "Du har inga radion!",
+      "info": "Klicka för att lägga in din första radiostation."
+    },
+    "error": "Kan du inte spela upp radion, kontrollera Stream URL!",
+    "form": {
+      "create": {
+        "title": "Sätt in radio",
+        "button": "Spara",
+        "toast": {
+          "success": "Radio skapad framgångsrikt!",
+          "error": "Misslyckades med att skapa radio!"
+        }
+      },
+      "edit": {
+        "title": "Redigera radio",
+        "button": "Uppdatera",
+        "toast": {
+          "success": "Radio uppdaterad framgångsrikt!",
+          "error": "Misslyckades med att uppdaters radio!"
+        }
+      },
+      "delete": {
+        "title": "Är du säker på att du vill ta bort den här radiostationen?",
+        "description": "Denna åtgärd kan inte ångras.",
+        "toast": {
+          "success": "Radio borttagen framgångsrikt!",
+          "error": "Misslyckades med att ta bort radio!"
+        }
+      },
+      "validations": {
+        "name": "Radio namn måsta innehålla minst 3 tecken.",
+        "homepageUrlLength": "Hemsidans URL måste innehålla minst 10 tecken",
+        "streamUrlLength": "Stream URL måste innehålla minst 10 tecken",
+        "url": "Vänligen ge en giltig URL."
+      }
+    }
+  },
+  "time": {
+    "days_one": "{{days}} dag",
+    "days_other": "{{days}} dagar",
+    "hour": "{{hour}} timmar",
+    "minutes": "{{minutes}} min",
+    "seconds": "{{seconds}} sek."
+  },
+  "server": {
+    "songCount_one": "{{count}} låt",
+    "songCount_other": "{{count}} låtar",
+    "folderCount_one": "{{count}} mapp",
+    "folderCount_other": "{{count}} mappar",
+    "lastScan": "Senaste scanningen: {{date}}",
+    "status": "Status",
+    "management": "Serverhantering",
+    "incompatible": {
+      "title": "Inkompatibel server",
+      "skip": "Fortsätt ändå",
+      "description": "Den här servern använder en äldre version av Subsonic-protokollet som inte stöds fullt ut. Fortsätt med försiktighet eftersom det kan uppstå problem."
+    },
+    "buttons": {
+      "refresh": "Uppdatera status",
+      "startScan": "Snabbskanning"
+    }
+  },
+  "downloads": {
+    "started": "Nedladdning startad.",
+    "failed": "Det uppstod ett fel vid nedladdningen av din fil.",
+    "completed": "Din fil har laddats ner."
+  },
+  "queue": {
+    "title": "Kö",
+    "clear": "Rensa kö"
+  },
+  "shortcuts": {
+    "modal": {
+      "title": "Kortkommandon för tangentbord",
+      "description": {
+        "first": "Tryck på",
+        "last": "för att växla denna modal."
+      }
+    },
+    "playback": {
+      "label": "Uppspelning",
+      "play": "Spela / Pausa",
+      "shuffle": "Shuffle-läge",
+      "repeat": "Upprepa",
+      "previous": "Hoppa till föregående",
+      "next": "Hoppa till nästa"
+    }
+  },
+  "songInfo": {
+    "title": "Låtdetaljer",
+    "error": "Det går inte att hämta information om låten. Vänligen försök igen senare."
+  },
+  "warnings": {
+    "reload": "Det är en låt som spelas!\nÄr du säker på att du vill ladda om sidan?",
+    "songError": "Det går inte att spela låten, kontrollera servern!"
+  },
+  "update": {
+    "dialog": {
+      "title": "Ny version tillgänglig!",
+      "remindLater": "Påminn mig senare",
+      "install": "Installera och starta om"
+    },
+    "toasts": {
+      "success": "Uppdateringen har installerats! Appen kommer nu att starta om.",
+      "started": "Uppdateringsprocessen har påbörjats.",
+      "error": "Misslyckades med att installera uppdateringen. Försök att ladda ner den direkt från GitHub."
+    }
+  },
+  "about": {
+    "client": "Klient",
+    "server": "Server",
+    "version": "Version:",
+    "type": "Typ:",
+    "apiVersion": "API version:",
+    "toasts": {
+      "copy": "Länken kopierad till urklipp!"
+    }
+  },
+  "mobile": {
+    "unsupported_message": "{{app_name}} är inte kompatibel med mobiltelefoner.",
+    "access_recommendation": "Vänligen öppna den från en dator eller surfplatta."
+  },
+  "settings": {
+    "label": "Inställningar",
+    "options": {
+      "appearance": "Utseende",
+      "language": "Språk och region",
+      "audio": "Spelare & ljud",
+      "content": "Innehåll"
+    },
+    "appearance": {
+      "general": {
+        "group": "Allmänt",
+        "description": "Anpassa appens utseende och visningsbeteenden.",
+        "fullscreen": {
+          "label": "Aktivera automatisk helskärm",
+          "info": "Om den är aktiverad kommer appen automatiskt att gå in i helskärmsläge när du öppnar den stora spelaren."
+        }
+      }
+    },
+    "audio": {
+      "replayGain": {
+        "group": "ReplayGain",
+        "description": "Normaliserar automatiskt uppspelningsnivåerna för ljud för en konsekvent lyssningsupplevelse.",
+        "enabled": "Aktiverad",
+        "mode": {
+          "label": "Läge",
+          "track": "Spårförstärkning",
+          "album": "Albumförstärkning"
+        },
+        "preAmp": "PreAmp (dB)",
+        "defaultGain": {
+          "label": "Standard Förstärkning (dB)",
+          "info": "Denna förstärkningsnivå tillämpas på låtar som inte innehåller ReplayGain-metadata, vilket säkerställer en konsekvent ljudvolym. Det rekommenderade intervallet för förstärkning är mellan -10 dB och -1 dB."
+        }
+      },
+      "lyrics": {
+        "group": "Låttexter",
+        "description": "Anpassa inställningarna för låttexter.",
+        "preferSynced": {
+          "label": "Föredra synkroniserade texter",
+          "info": "När den är aktiverad prioriteras synkroniserade texter framför osynkroniserade texter."
+        }
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Sidofält",
+        "description": "Hantera synligheten och organisationen av de sektioner som visas i sidofältet.",
+        "radios": {
+          "section": "Dölj radiosektionen"
+        }
+      }
+    }
+  },
+  "dayjs": {
+    "relativeTime": {
+      "future": "i %er",
+      "past": "%er sedan",
+      "s": "några sekunder",
+      "m": "1 minut",
+      "mm": "%d minuter",
+      "h": "1 timme",
+      "hh": "%d timmar",
+      "d": "1 dag",
+      "dd": "%d dagar",
+      "M": "1 månad",
+      "MM": "%d månader",
+      "y": "1 år",
+      "yy": "%d år"
+    }
+  }
+}

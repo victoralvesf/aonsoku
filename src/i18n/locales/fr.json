@@ -16,7 +16,8 @@
       },
       "delete": {
         "toast": {
-          "success": "Liste de lecture supprimée avec succès !"
+          "success": "Liste de lecture supprimée avec succès !",
+          "error": "Impossible de supprimer la liste de lecture !"
         },
         "title": "Êtes-vous sûr·e de vouloir supprimer cette liste de lecture ?",
         "description": "Cette action ne peut pas être annulée."
@@ -50,6 +51,9 @@
         "title_one": "Êtes-vous sûr·e de vouloir supprimer le titre sélectionné ?",
         "title_many": "Êtes-vous sûr·e de vouloir supprimer les titres sélectionnés ?",
         "title_other": "Êtes-vous sûr·e de vouloir supprimer les titres sélectionnés ?"
+      },
+      "validations": {
+        "nameLength": "Le nom de la liste de lecture doit comporter au moins 2 caractères."
       }
     },
     "songCount_one": "{{count}} titre",
@@ -78,13 +82,37 @@
       "bpm": "BPM",
       "title": "Titre",
       "artist": "Artiste",
-      "album": "Album"
+      "album": "Album",
+      "discNumber": "N° de disque",
+      "path": "Chemin",
+      "plays": "Lectures",
+      "lastPlayed": "Écouté récemment"
     },
     "buttons": {
       "play": "Jouer {{title}} par {{artist}}",
       "pause": "Mettre {{title}} par {{artist}} en pause"
     },
-    "lastPlayed": "il y a {{date}}"
+    "lastPlayed": "il y a {{date}}",
+    "pagination": {
+      "screenReader": {
+        "previousPage": "Page précédente",
+        "firstPage": "Aller à la première page",
+        "nextPage": "Page suivante",
+        "lastPage": "Dernière page"
+      },
+      "rowsPerPage": "Lignes par page",
+      "currentPage": "Page {{currentPage}} sur {{totalPages}}"
+    },
+    "sort": {
+      "desc": "Décroissant",
+      "asc": "Croissant",
+      "reset": "Réinitialiser"
+    },
+    "menu": {
+      "selectedCount_one": "{{count}} selectionné",
+      "selectedCount_many": "{{count}} selectionnés",
+      "selectedCount_other": "{{count}} selectionnés"
+    }
   },
   "sidebar": {
     "playlists": "Listes de lecture",
@@ -123,7 +151,23 @@
     "light": "Clair",
     "system": "Système",
     "black": "Noir et Blanc",
-    "one-dark": "One Dark"
+    "one-dark": "One Dark",
+    "material-theme": "Material Theme",
+    "monokai-pro": "Monokai Pro",
+    "night-owl-light": "Night Owl Light",
+    "marmalade-beaver": "Marmalade Beaver",
+    "noctis-lilac": "Noctis Lilac",
+    "github-dark": "Github Dark",
+    "shades-of-purple": "Shades Of Purple",
+    "bearded-solarized": "Bearded Solarized",
+    "catppuccin-mocha": "Catpuccin Mocha",
+    "nuclear-dark": "Nuclear Dark",
+    "achiever": "Achiever",
+    "discord": "Discord",
+    "vue-dark": "Vue Dark",
+    "vim-dark-soft": "Vim Dark Soft",
+    "dracula": "Dracula",
+    "tinacious-design": "Tinacious Design"
   },
   "album": {
     "info": {
@@ -148,7 +192,8 @@
       "genre": {
         "label": "Sélectionnez un genre …",
         "notFound": "Aucun genre trouvé.",
-        "search": "Recherchez un genre …"
+        "search": "Recherchez un genre …",
+        "loading": "Chargement des genres…"
       },
       "filter": {
         "mostPlayed": "Les plus écoutés",
@@ -159,10 +204,22 @@
         "recentlyPlayed": "Ecoutés récemment",
         "releaseYear": "Date de sortie",
         "artist": "Artiste",
-        "genre": "Genre"
+        "genre": "Genre",
+        "search": "Recherche",
+        "favorites": "Favoris"
+      },
+      "search": {
+        "placeholder": "Rechercher des albums…"
       }
     },
-    "headline": "Album"
+    "headline": "Album",
+    "buttons": {
+      "like": "Ajouter {{name}} aux favoris",
+      "dislike": "Enlever {{name}} des favoris"
+    },
+    "table": {
+      "discNumber": "Disque {{number}}"
+    }
   },
   "mobile": {
     "unsupported_message": "{{app_name}} n'est pas compatible avec les téléphones mobiles.",
@@ -199,43 +256,91 @@
     "form": {
       "username": "Nom d'utilisateur",
       "usernamePlaceholder": "Votre nom d'utilisateur",
-      "urlDescription": "Ceci est l'URL du serveur",
+      "urlDescription": "Ceci est l'URL de votre serveur",
       "server": "Serveur",
-      "url": "URL"
+      "url": "URL",
+      "connect": "Connexion",
+      "password": "Mot de passe",
+      "connecting": "Connexion en cours…",
+      "validations": {
+        "protocol": "L'URL doit débuter par http:// ou https://",
+        "username": "Renseignez un nom d'utilisateur",
+        "usernameLength": "Le nom d'utilisateur doit comporter au moins 2 caractères.",
+        "url": "Entrez une URL valide.",
+        "password": "Renseignez un mot de passe",
+        "passwordLength": "Le mot de passe doit comporter au moins 2 caractères."
+      },
+      "description": "Connexion à votre serveur Subsonic."
     }
   },
   "fullscreen": {
-    "noLyrics": "Aucunes paroles trouvées"
+    "noLyrics": "Aucunes paroles trouvées",
+    "loadingLyrics": "Recherche de paroles…",
+    "queue": "File",
+    "playing": "En cours de lecture",
+    "lyrics": "Paroles",
+    "switchButton": "Passer au Big Player"
   },
   "logout": {
     "dialog": {
       "confirm": "Continuer",
       "cancel": "Annuler",
-      "description": "Confirmez la déconnexion."
+      "description": "Confirmez la déconnexion.",
+      "title": "Vous partez déjà ?"
     }
   },
   "command": {
     "commands": {
-      "theme": "Changer le thème"
-    }
+      "theme": "Changer le thème",
+      "heading": "Commandes",
+      "pages": "Aller à la page"
+    },
+    "noResults": "Aucun résultat.",
+    "inputPlaceholder": "Rechercher un album, un artiste ou un titre",
+    "pages": "Pages"
   },
   "toast": {
     "server": {
-      "error": "La communication avec le serveur a échoué !"
+      "error": "La communication avec le serveur a échoué !",
+      "success": "Serveur sauvegardé avec succès !"
     }
   },
   "player": {
     "tooltips": {
       "pause": "Pause",
       "next": "Suivant",
-      "previous": "Précédent"
-    }
+      "previous": "Précédent",
+      "shuffle": {
+        "enable": "Activer la lecture aléatoire",
+        "disable": "Désactiver la lecture aléatoire"
+      },
+      "repeat": {
+        "enableOne": "Réécouter ce titre",
+        "disable": "Désactiver la fonction Répéter",
+        "enable": "Réécouter tous les titres"
+      },
+      "play": "Lecture",
+      "like": "Ajouter {{song}} de {{artist}} aux favoris",
+      "dislike": "Enlever {{song}} de {{artist}} des favoris"
+    },
+    "noSongPlaying": "Pas de lecture en cours",
+    "noRadioPlaying": "Aucune radio en cours"
   },
   "options": {
     "playlist": {
       "add": "Ajouter à la liste de lecture",
-      "delete": "Supprimer la liste de lecture"
-    }
+      "delete": "Supprimer la liste de lecture",
+      "edit": "Modifier la liste de lecture",
+      "search": "Rechercher une liste de lecture",
+      "create": "Nouvelle liste de lecture",
+      "notFound": "Aucune liste de lecture trouvée",
+      "removeSong": "Supprimer de la liste de lecture"
+    },
+    "addLast": "Ajouter à la file",
+    "download": "Télécharger",
+    "play": "Lecture",
+    "playNext": "Lecture suivante",
+    "info": "Plus d'informations"
   },
   "settings": {
     "audio": {
@@ -249,6 +354,104 @@
   "server": {
     "songCount_one": "{{count}} titre",
     "songCount_many": "{{count}} titres",
-    "songCount_other": "{{count}} titres"
+    "songCount_other": "{{count}} titres",
+    "incompatible": {
+      "title": "Serveur incompatible",
+      "skip": "Continuer quand même",
+      "description": "Ce serveur utilise une ancienne version du protocole Subsonic qui n'est pas entièrement prise en charge. Procédez avec prudence, car vous pourriez rencontrer des problèmes."
+    },
+    "folderCount_one": "{{count}} dossier",
+    "folderCount_many": "{{count}} dossiers",
+    "folderCount_other": "{{count}} dossiers",
+    "lastScan": "Dernier scan : {{date}}",
+    "status": "État",
+    "management": "Gestion du serveur",
+    "buttons": {
+      "refresh": "Actualiser l'état",
+      "startScan": "Scan rapide"
+    }
+  },
+  "radios": {
+    "table": {
+      "actions": {
+        "delete": "Supprimer la radio",
+        "edit": "Modifier la radio"
+      },
+      "stream": "URL du flux",
+      "name": "Nom",
+      "homepage": "URL de la page d'accueil",
+      "playTooltip": "Écouter la radio {{name}}",
+      "pauseTooltip": "Mettre la radio {{name}} en pause"
+    },
+    "form": {
+      "create": {
+        "button": "Sauvegarder",
+        "title": "Ajouter une radio",
+        "toast": {
+          "success": "Radio ajoutée avec succès !",
+          "error": "Impossible d'ajouter la radio !"
+        }
+      },
+      "edit": {
+        "toast": {
+          "success": "Radio modifiée avec succès !",
+          "error": "Impossible de mettre à jour la radio !"
+        },
+        "title": "Modifier la radio",
+        "button": "Mettre à jour"
+      },
+      "delete": {
+        "description": "Cette action est irréversible.",
+        "toast": {
+          "success": "Radio supprimée avec succès !",
+          "error": "Impossible de supprimer la radio !"
+        },
+        "title": "Êtes-vous sûr⋅e de vouloir supprimer cette station de radio ?"
+      },
+      "validations": {
+        "url": "Veuillez fournir une URL valide.",
+        "homepageUrlLength": "L'URL de la page d'accueil doit comporter au moins 10 caractères",
+        "streamUrlLength": "L'URL du flux doit comporter au moins 10 caractères",
+        "name": "Le nom de la radio doit comporter au moins 3 caractères."
+      }
+    },
+    "label": "Radio",
+    "empty": {
+      "title": "Vous n'avez aucune radio !",
+      "info": "Cliquez pour ajouter votre première station de radio."
+    },
+    "error": "Impossible d'écouter cette Radio, vérifier l'URL de diffusion !",
+    "addRadio": "Ajouter une radio"
+  },
+  "time": {
+    "seconds": "{{seconds}} s",
+    "hour": "{{hour}} h",
+    "minutes": "{{minutes}} min",
+    "days_one": "{{days}} jour",
+    "days_many": "{{days}} jours",
+    "days_other": "{{days}} jours"
+  },
+  "shortcuts": {
+    "modal": {
+      "description": {
+        "last": "pour afficher cette fenêtre.",
+        "first": "Appuyer sur"
+      },
+      "title": "Raccourcis clavier"
+    },
+    "playback": {
+      "shuffle": "Mélanger",
+      "repeat": "Répéter",
+      "play": "Lecture / Pause"
+    }
+  },
+  "queue": {
+    "clear": "Vider la file d'attente",
+    "title": "File d'attente"
+  },
+  "downloads": {
+    "failed": "Une erreur est survenue lors du téléchargement.",
+    "started": "Téléchargement démarré.",
+    "completed": "Votre fichier a été téléchargé."
   }
 }
