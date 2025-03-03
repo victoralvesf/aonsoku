@@ -52,7 +52,8 @@
         "hiddenTitle": true,
         "titleBarStyle": "Overlay",
         "backgroundColor": "#0f1729",
-        "theme": "Dark"
+        "theme": "Dark",
+        "visible": false
       }
     ]
   }

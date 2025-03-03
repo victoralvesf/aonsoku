@@ -2,8 +2,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use proxy::proxy::spawn_proxy_server;
-
-#[cfg(not(target_os = "linux"))]
 use tauri::Manager;
 
 #[cfg(target_os = "macos")]
@@ -39,8 +37,6 @@ async fn main() {
         .setup(|_app| {
             let window = _app.get_window("main").unwrap();
 
-            let _ = window.hide();
-
             #[cfg(target_os = "macos")]
             {
                 use mac::window::setup_traffic_light_positioner;
@@ -62,7 +58,7 @@ async fn main() {
 
             // Only show window after 1 sec, to avoid flashy colors
             tokio::spawn(async move {
-                tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+                tokio::time::sleep(std::time::Duration::from_secs(2)).await;
                 let _ = window.show();
             });
 
