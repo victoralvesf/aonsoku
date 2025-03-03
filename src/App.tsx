@@ -2,6 +2,7 @@ import { isDesktop } from 'react-device-detect'
 import { RouterProvider } from 'react-router-dom'
 import { SettingsDialog } from '@/app/components/settings/dialog'
 import { LangObserver } from '@/app/observers/lang-observer'
+import { MediaSessionObserver } from '@/app/observers/media-session-observer'
 import { ThemeObserver } from '@/app/observers/theme-observer'
 import { ToastContainer } from '@/app/observers/toast-container'
 import { UpdateObserver } from '@/app/observers/update-observer'
@@ -15,6 +16,7 @@ function App() {
   return (
     <>
       {isTauri() && <UpdateObserver />}
+      <MediaSessionObserver />
       <LangObserver />
       <ThemeObserver />
       <SettingsDialog />

@@ -36,6 +36,38 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             lockUser: hasValidConfig,
             songCount: null,
           },
+          podcasts: {
+            active: false,
+            setActive: (value) => {
+              set((state) => {
+                state.podcasts.active = value
+              })
+            },
+            serviceUrl: '',
+            setServiceUrl: (value) => {
+              set((state) => {
+                state.podcasts.serviceUrl = value
+              })
+            },
+            useDefaultUser: true,
+            setUseDefaultUser: (value) => {
+              set((state) => {
+                state.podcasts.useDefaultUser = value
+              })
+            },
+            customUser: '',
+            setCustomUser: (value) => {
+              set((state) => {
+                state.podcasts.customUser = value
+              })
+            },
+            customUrl: '',
+            setCustomUrl: (value) => {
+              set((state) => {
+                state.podcasts.customUrl = value
+              })
+            },
+          },
           pages: {
             showInfoPanel: true,
             toggleShowInfoPanel: () => {
@@ -159,6 +191,11 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.songCount = null
                 state.pages.showInfoPanel = true
                 state.pages.hideRadiosSection = HIDE_RADIOS_SECTION ?? false
+                state.podcasts.active = false
+                state.podcasts.serviceUrl = ''
+                state.podcasts.useDefaultUser = true
+                state.podcasts.customUser = ''
+                state.podcasts.customUrl = ''
               })
             },
             setLogoutDialogState: (value) => {
@@ -237,6 +274,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
 )
 
 export const useAppData = () => useAppStore((state) => state.data)
+export const useAppPodcasts = () => useAppStore((state) => state.podcasts)
 export const useAppPages = () => useAppStore((state) => state.pages)
 export const useAppActions = () => useAppStore((state) => state.actions)
 export const useAppUpdate = () => useAppStore((state) => state.update)

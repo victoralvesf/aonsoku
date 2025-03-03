@@ -96,8 +96,8 @@ function Title({ link, children }: TitleProps) {
 }
 
 interface SubtitleProps {
-  link: string
-  children: string
+  link?: string
+  children: React.ReactNode
   enableLink?: boolean
   className?: string
 }
@@ -108,7 +108,7 @@ function Subtitle({
   enableLink = true,
   className,
 }: SubtitleProps) {
-  if (!enableLink) {
+  if (!enableLink || !link) {
     return (
       <div className="w-full">
         <p

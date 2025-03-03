@@ -24,6 +24,7 @@ import {
   YearSortOptions,
 } from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
+import { getMainScrollElement } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
 export default function AlbumsList() {
@@ -49,9 +50,7 @@ export default function AlbumsList() {
   const query = getSearchParam<string>(AlbumsSearchParams.Query, '')
 
   useEffect(() => {
-    scrollDivRef.current = document.querySelector(
-      '#main-scroll-area #scroll-viewport',
-    ) as HTMLDivElement
+    scrollDivRef.current = getMainScrollElement()
   }, [])
 
   function getYearRange() {

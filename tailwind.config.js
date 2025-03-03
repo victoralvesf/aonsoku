@@ -119,6 +119,11 @@ module.exports = {
         'big-player-lyrics':
           'linear-gradient(180deg, transparent 0%, rgb(0, 0, 0) 25%, rgb(0, 0, 0) 75%, transparent 100%)',
       },
+      boxShadow: {
+        'custom-3': '0 0 3px rgba(255, 255, 255, 0.03)',
+        'custom-5': '0 0 5px rgba(255, 255, 255, 0.05)',
+        'header-image': '0 4px 35px rgba(0, 0, 0, 0.6)',
+      },
     },
   },
   plugins: [

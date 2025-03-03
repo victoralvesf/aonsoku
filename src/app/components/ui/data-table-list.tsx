@@ -1,7 +1,6 @@
 import {
   ColumnFiltersState,
   SortingState,
-  flexRender,
   getCoreRowModel,
   useReactTable,
   Row,
@@ -15,13 +14,13 @@ import clsx from 'clsx'
 import debounce from 'lodash/debounce'
 import {
   useEffect,
-  Fragment,
   MouseEvent,
   TouchEvent,
   useCallback,
   useMemo,
   useRef,
   useState,
+  memo,
 } from 'react'
 import { isMacOs } from 'react-device-detect'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -32,8 +31,14 @@ import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISong } from '@/types/responses/song'
 import { MouseButton } from '@/utils/browser'
 import { computeMultiSelectedRows } from '@/utils/dataTable'
+import { DataTableListHeader } from './data-table-list-header'
 import { TableListRow } from './data-table-list-row'
 import { ScrollArea, scrollAreaViewportSelector } from './scroll-area'
+
+const MemoTableListRow = memo(TableListRow) as typeof TableListRow
+const MemoDataTableListHeader = memo(
+  DataTableListHeader,
+) as typeof DataTableListHeader
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
@@ -316,92 +321,66 @@ export function DataTableList<TData, TValue>({
   }, [currentSongIndex, scrollToIndex, virtualizer])
 
   return (
-    <>
-      <div className="h-full">
-        <div
-          className="relative w-full h-full overflow-hidden cursor-default caption-bottom text-sm bg-transparent"
-          data-testid="data-table"
-          role="table"
-        >
-          <div className={clsx(!showHeader && 'hidden')}>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <div
-                key={headerGroup.id}
-                className="w-full flex flex-row border-b pr-[10px] bg-muted"
-                role="row"
-              >
-                {headerGroup.headers.map((header) => {
-                  const columnDef = header.column
-                    .columnDef as ColumnDefType<TData>
-
-                  return (
-                    <div
-                      key={header.id}
-                      className={clsx(
-                        'p-2 h-10 flex items-center justify-start align-middle font-medium',
-                        'text-muted-foreground',
-                        '[&:has([role=checkbox])]:pr-4',
-                        columnDef.className,
-                      )}
-                      style={columnDef.style}
-                      role="columnheader"
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </div>
-                  )
-                })}
-              </div>
-            ))}
-          </div>
-          <ScrollArea
-            ref={parentRef}
-            type="always"
-            className={clsx(
-              '[&_div:last-child]:border-0 overflow-auto',
-              showHeader ? 'h-[calc(100%-41px)]' : 'h-full',
-            )}
-          >
+    <div className="h-full">
+      <div
+        className="relative w-full h-full overflow-hidden cursor-default caption-bottom text-sm bg-transparent"
+        data-testid="data-table"
+        role="table"
+      >
+        <div className={clsx(!showHeader && 'hidden')}>
+          {table.getHeaderGroups().map((headerGroup) => (
             <div
-              className="w-full pr-[10px]"
-              style={{ height: `${virtualizer.getTotalSize()}px` }}
+              key={headerGroup.id}
+              className="w-full flex flex-row border-b pr-[10px] bg-muted"
+              role="row"
             >
-              {virtualizer.getVirtualItems().length ? (
-                virtualizer.getVirtualItems().map((virtualRow, index) => {
-                  const row = rows[virtualRow.index]
-
-                  return (
-                    <Fragment key={row.id}>
-                      <TableListRow
-                        row={row}
-                        virtualRow={virtualRow}
-                        index={index}
-                        handleClicks={handleClicks}
-                        handleRowDbClick={handleRowDbClick}
-                        handleRowTap={handleRowTap}
-                        getContextMenuOptions={getContextMenuOptions}
-                      />
-                    </Fragment>
-                  )
-                })
-              ) : (
-                <div role="row">
-                  <div
-                    className="flex h-24 items-center justify-center p-2"
-                    role="cell"
-                  >
-                    {noRowsMessage}
-                  </div>
-                </div>
-              )}
+              {headerGroup.headers.map((header) => (
+                <MemoDataTableListHeader key={header.id} header={header} />
+              ))}
             </div>
-          </ScrollArea>
+          ))}
         </div>
+        <ScrollArea
+          ref={parentRef}
+          type="always"
+          className={clsx(
+            '[&_div:last-child]:border-0 overflow-auto',
+            showHeader ? 'h-[calc(100%-41px)]' : 'h-full',
+          )}
+        >
+          <div
+            className="w-full relative"
+            style={{ height: `${virtualizer.getTotalSize()}px` }}
+          >
+            {virtualizer.getVirtualItems().length ? (
+              virtualizer.getVirtualItems().map((virtualRow) => {
+                const row = rows[virtualRow.index]
+
+                return (
+                  <MemoTableListRow
+                    key={row.id}
+                    row={row}
+                    virtualRow={virtualRow}
+                    handleClicks={handleClicks}
+                    handleRowDbClick={handleRowDbClick}
+                    handleRowTap={handleRowTap}
+                    getContextMenuOptions={getContextMenuOptions}
+                  />
+                )
+              })
+            ) : (
+              <div role="row">
+                <div
+                  className="flex h-24 items-center justify-center p-2"
+                  role="cell"
+                >
+                  {noRowsMessage}
+                </div>
+              </div>
+            )}
+          </div>
+        </ScrollArea>
       </div>
-    </>
+    </div>
   )
 }

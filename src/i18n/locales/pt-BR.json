@@ -15,6 +15,7 @@
     "albums": "Álbuns",
     "playlists": "Playlists",
     "radios": "Rádios",
+    "podcasts": "Podcasts",
     "emptyPlaylist": "Nenhuma playlist criada ainda"
   },
   "menu": {
@@ -197,6 +198,80 @@
     "recentAlbums": "Álbuns recentes",
     "relatedArtists": "Artistas relacionados"
   },
+  "podcasts": {
+    "form": {
+      "latestEpisodes": "Últimos Episódios",
+      "addButton": "Adicionar Podcast",
+      "search": "Buscar podcasts…",
+      "dialog": {
+        "title": "Criar Podcast",
+        "feedUrl": "URL do Feed",
+        "message": "Você pode adicionar múltiplas URLs, uma por linha.",
+        "saveButton": "Salvar",
+        "validations": {
+          "url": "Por favor, forneça URLs válidas.",
+          "urlLength": "As URLs devem conter pelo menos 10 caracteres",
+          "protocol": "As URLs devem começar com http:// ou https://",
+          "atLeastOneUrl": "Por favor, forneça pelo menos uma URL."
+        }
+      },
+      "toasts": {
+        "success": "Podcast criado com sucesso! Ele estará disponível para ouvir em alguns minutos!",
+        "error": "Falha ao criar o podcast!"
+      }
+    },
+    "emptyPage": {
+      "message": "Nenhum podcast adicionado",
+      "description": "Parece que você ainda não adicionou nenhum podcast. Adicione um acima!"
+    },
+    "emptyResults": {
+      "title": "Nenhum resultado encontrado.",
+      "info": "Não encontramos podcasts para o termo pesquisado.",
+      "action": "Por favor, verifique a ortografia ou tente palavras-chave diferentes."
+    },
+    "filters": {
+      "episodes": {
+        "search": "Buscar episódios…",
+        "orderBy": {
+          "publishDate": "Data de Publicação",
+          "title": "Título",
+          "duration": "Duração"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Título",
+          "episodeCount": "Número de Episódios"
+        }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} episódio",
+      "episodeCount_many": "{{count}} episódios",
+      "episodeCount_other": "{{count}} episódios",
+      "feed": "Feed",
+      "website": "Site Oficial",
+      "unfollow": {
+        "tooltip": "Deixar de seguir {{title}}",
+        "dialog": {
+          "title": "Você tem certeza de que deseja deixar de seguir este podcast?",
+          "description": "Para escutar este podcast novamente no futuro, você terá que cadastrá-lo novamente."
+        },
+        "toasts": {
+          "success": "Você deixou de seguir o podcast com sucesso!",
+          "error": "Ocorreu um erro ao deixar de seguir o podcast. Por favor, tente novamente."
+        }
+      }
+    },
+    "list": {
+      "episodes": "Episódios",
+      "notFoundMessage": "Este podcast ainda não tem episódios!",
+      "progress": {
+        "remainingTime": "{{time}} restante(s)",
+        "completed": "Reproduzido"
+      }
+    }
+  },
   "table": {
     "columns": {
       "title": "Título",
@@ -313,9 +388,11 @@
         "enable": "Ativar aleatório",
         "disable": "Desativar aleatório"
       },
+      "rewind": "Retroceder {{amount}} segundos",
       "previous": "Voltar",
       "play": "Play",
       "pause": "Pausar",
+      "forward": "Avançar {{amount}} segundos",
       "next": "Avançar",
       "repeat": {
         "enable": "Repetir",
@@ -340,7 +417,12 @@
       "notFound": "Nenhuma playlist encontrada",
       "removeSong": "Remover da playlist"
     },
-    "info": "Mais informações"
+    "info": "Mais informações",
+    "markAsPlayed": "Marcar como reproduzido",
+    "goto": {
+      "episode": "Ir para o episódio",
+      "podcast": "Ir para o podcast"
+    }
   },
   "radios": {
     "label": "Rádio",
@@ -531,6 +613,22 @@
         "description": "Gerencie a visibilidade e a organização das seções exibidas no menu lateral.",
         "radios": {
           "section": "Esconder seção de rádios"
+        }
+      },
+      "podcast": {
+        "group": "Podcasts",
+        "description": "Habilitar integração com o serviço Aonsoku Podcasts.",
+        "enabled": {
+          "label": "Habilitar Integração"
+        },
+        "service": {
+          "url": "URL do Serviço de Podcast"
+        },
+        "credentials": {
+          "label": "Usar Usuário Logado e URL do Servidor",
+          "error": "Nome de usuário e URL do servidor são obrigatórios.",
+          "user": "Nome de Usuário",
+          "url": "URL do Servidor"
         }
       }
     }

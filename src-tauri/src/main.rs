@@ -1,7 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-#[cfg(not(target_os = "linux"))]
+use proxy::proxy::spawn_proxy_server;
+#[cfg(not(target_os = "windows"))]
 use tauri::Manager;
 
 #[cfg(target_os = "macos")]
@@ -17,21 +18,31 @@ mod mac;
 
 mod commands;
 mod progress;
+mod proxy;
 mod utils;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let builder = tauri::Builder::default();
 
     #[cfg(target_os = "macos")]
     let builder = builder.plugin(mac::window::init());
 
+    tokio::task::spawn(async move {
+        if let Err(e) = spawn_proxy_server().await {
+            eprintln!("Proxy server error: {}", e);
+        }
+    });
+
     builder
         .setup(|_app| {
+            #[cfg(not(target_os = "windows"))]
+            let window = _app.get_window("main").unwrap();
+
             #[cfg(target_os = "macos")]
             {
                 use mac::window::setup_traffic_light_positioner;
 
-                let window = _app.get_window("main").unwrap();
                 let window_ = window.clone();
 
                 window.on_window_event(move |event| {
@@ -41,10 +52,13 @@ fn main() {
                 });
             }
 
-            #[cfg(target_os = "windows")]
+            // Only show window after a few seconds, to avoid flashy colors
+            #[cfg(not(target_os = "windows"))]
             {
-                let main_window = _app.get_webview_window("main").unwrap();
-                let _ = main_window.set_decorations(false);
+                tokio::spawn(async move {
+                    tokio::time::sleep(std::time::Duration::from_secs(2)).await;
+                    let _ = window.show();
+                });
             }
 
             Ok(())

@@ -1,13 +1,15 @@
-import { flexRender, Row } from '@tanstack/react-table'
+import { Cell, flexRender, Row } from '@tanstack/react-table'
 import clsx from 'clsx'
-import { MouseEvent, TouchEvent } from 'react'
+import { memo, MouseEvent, TouchEvent } from 'react'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { ColumnDefType } from '@/types/react-table/columnDef'
+
+const MemoContextMenuProvider = memo(ContextMenuProvider)
+const MemoTableCell = memo(TableCell) as typeof TableCell
 
 interface TableRowProps<TData> {
   row: Row<TData>
   virtualRow: { index: number; size: number; start: number }
-  index: number
   handleClicks: (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => void
   handleRowDbClick: (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => void
   handleRowTap: (e: TouchEvent<HTMLDivElement>, row: Row<TData>) => void
@@ -20,7 +22,6 @@ let tapTimeout: NodeJS.Timeout
 export function TableListRow<TData>({
   row,
   virtualRow,
-  index,
   handleClicks,
   handleRowDbClick,
   handleRowTap,
@@ -48,7 +49,7 @@ export function TableListRow<TData>({
   }
 
   return (
-    <ContextMenuProvider options={getContextMenuOptions(row)}>
+    <MemoContextMenuProvider options={getContextMenuOptions(row)}>
       <div
         role="row"
         data-row-index={virtualRow.index}
@@ -61,32 +62,41 @@ export function TableListRow<TData>({
         onTouchCancel={handleTouchCancel}
         onContextMenu={(e) => handleClicks(e, row)}
         className={clsx(
-          'group/tablerow w-full flex flex-row transition-colors',
+          'group/tablerow w-[calc(100%-10px)] flex flex-row transition-colors',
           'hover:bg-foreground/20 data-[state=selected]:bg-foreground/30',
         )}
         style={{
           height: `${virtualRow.size}px`,
-          transform: `translateY(${virtualRow.start - index * virtualRow.size}px)`,
+          position: 'absolute',
+          top: virtualRow.start,
         }}
       >
-        {row.getVisibleCells().map((cell) => {
-          const columnDef = cell.column.columnDef as ColumnDefType<TData>
-
-          return (
-            <div
-              key={cell.id}
-              className={clsx(
-                'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
-                columnDef.className,
-              )}
-              style={columnDef.style}
-              role="cell"
-            >
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </div>
-          )
-        })}
+        {row.getVisibleCells().map((cell) => (
+          <MemoTableCell key={cell.id} cell={cell} />
+        ))}
       </div>
-    </ContextMenuProvider>
+    </MemoContextMenuProvider>
+  )
+}
+
+interface TableCellProps<TData, TValue> {
+  cell: Cell<TData, TValue>
+}
+
+function TableCell<TData, TValue>({ cell }: TableCellProps<TData, TValue>) {
+  const columnDef = cell.column.columnDef as ColumnDefType<TData>
+
+  return (
+    <div
+      key={cell.id}
+      className={clsx(
+        'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
+        columnDef.className,
+      )}
+      style={columnDef.style}
+      role="cell"
+    >
+      {flexRender(columnDef.cell, cell.getContext())}
+    </div>
   )
 }
