@@ -71,9 +71,36 @@ img {
   -ms-user-select: none;
 }
 
-#artist-biography > p > a,
+.html a,
 .link {
-  @apply text-primary hover:underline;
+  @apply text-primary underline break-words;
+}
+
+.html li {
+  @apply list-disc ml-8;
+}
+
+.html strong,
+.html b {
+  @apply font-semibold;
+}
+
+.html strong:not(a strong),
+.html b:not(a b) {
+  @apply text-foreground;
+}
+
+.html p,
+.html li:not(li a) {
+  @apply text-foreground/80;
+}
+
+.html img {
+  @apply my-2 max-w-full rounded;
+}
+
+.html code {
+  @apply bg-background text-muted-foreground px-1.5 py-0.5 rounded border text-sm font-mono;
 }
 
 .player-button-active {

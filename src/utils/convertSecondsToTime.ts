@@ -12,7 +12,7 @@ export function convertSecondsToTime(seconds: number): string {
   }
 }
 
-export function convertSecondsToHumanRead(time: number) {
+export function convertSecondsToHumanRead(time: number, showExact = false) {
   const { t } = i18n
   const dur = dateTime.duration(time, 'seconds')
 
@@ -30,8 +30,14 @@ export function convertSecondsToHumanRead(time: number) {
 
   if (numberOfDays > 0) finalText.push(days)
   if (numberOfHours > 0) finalText.push(hours)
-  if (!(numberOfHours > 0 && numberOfMinutes === 0)) finalText.push(minutes)
-  if (numberOfHours === 0 && numberOfSeconds !== 0) finalText.push(seconds)
+
+  if (showExact) {
+    finalText.push(minutes)
+    finalText.push(seconds)
+  } else {
+    if (!(numberOfHours > 0 && numberOfMinutes === 0)) finalText.push(minutes)
+    if (numberOfHours === 0 && numberOfSeconds !== 0) finalText.push(seconds)
+  }
 
   return finalText.join(' ')
 }

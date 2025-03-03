@@ -47,8 +47,18 @@ export function useDownload() {
     setupListeners()
   }, [completed])
 
-  function downloadBrowser(url: string) {
-    window.location.href = url
+  function downloadBrowser(url: string, id = '') {
+    // TODO: Maybe change in the future?
+    const element = document.createElement('a')
+    element.setAttribute('href', url)
+    element.setAttribute('target', '_blank')
+    element.setAttribute('download', id)
+
+    element.style.display = 'none'
+    document.body.appendChild(element)
+    element.click()
+    document.body.removeChild(element)
+
     toast.success(t('downloads.started'))
   }
 

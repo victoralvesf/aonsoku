@@ -38,22 +38,6 @@
     "withGlobalTauri": true,
     "security": {
       "csp": null
-    },
-    "windows": [
-      {
-        "title": "Aonsoku",
-        "label": "main",
-        "width": 1280,
-        "minWidth": 1280,
-        "height": 720,
-        "minHeight": 720,
-        "maximized": true,
-        "useHttpsScheme": false,
-        "hiddenTitle": true,
-        "titleBarStyle": "Overlay",
-        "backgroundColor": "#0f1729",
-        "theme": "Dark"
-      }
-    ]
+    }
   }
 }

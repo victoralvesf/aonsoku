@@ -1,4 +1,5 @@
 import { getCoverArtUrl } from '@/api/httpClient'
+import { EpisodeWithPodcast } from '@/types/responses/podcasts'
 import { ISong } from '@/types/responses/song'
 
 const artworkSizes = ['96', '128', '192', '256', '384', '512']
@@ -23,6 +24,23 @@ function setMediaSession(song: ISong) {
         type: 'image/jpeg',
       }
     }),
+  })
+}
+
+function setPodcastMediaSession(episode: EpisodeWithPodcast) {
+  if (!navigator.mediaSession) return
+
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: episode.title,
+    album: episode.podcast.title,
+    artist: episode.podcast.author,
+    artwork: [
+      {
+        src: episode.image_url,
+        sizes: '',
+        type: 'image/jpeg',
+      },
+    ],
   })
 }
 
@@ -56,28 +74,53 @@ function setPlaybackState(state: boolean | null) {
 }
 
 interface SetHandlerParams {
-  togglePlayPause: () => void
+  setIsPlaying: (value: boolean) => void
   playPrev: () => void
   playNext: () => void
 }
 
-function setHandlers({
-  playPrev,
-  playNext,
-  togglePlayPause,
-}: SetHandlerParams) {
-  if (!navigator.mediaSession) return
+function setHandlers({ setIsPlaying, playPrev, playNext }: SetHandlerParams) {
+  const { mediaSession } = navigator
+  if (!mediaSession) return
 
-  navigator.mediaSession.setActionHandler('play', () => togglePlayPause())
-  navigator.mediaSession.setActionHandler('pause', () => togglePlayPause())
-  navigator.mediaSession.setActionHandler('previoustrack', () => playPrev())
-  navigator.mediaSession.setActionHandler('nexttrack', () => playNext())
+  mediaSession.setActionHandler('seekbackward', null)
+  mediaSession.setActionHandler('seekforward', null)
+
+  mediaSession.setActionHandler('play', () => setIsPlaying(true))
+  mediaSession.setActionHandler('pause', () => setIsPlaying(false))
+  mediaSession.setActionHandler('previoustrack', () => playPrev())
+  mediaSession.setActionHandler('nexttrack', () => playNext())
+}
+
+interface SetPodcastHandlerParams {
+  setIsPlaying: (value: boolean) => void
+  seekBackward: (value: number) => void
+  seekForward: (value: number) => void
+}
+
+function setPodcastHandlers({
+  setIsPlaying,
+  seekBackward,
+  seekForward,
+}: SetPodcastHandlerParams) {
+  const { mediaSession } = navigator
+  if (!mediaSession) return
+
+  mediaSession.setActionHandler('previoustrack', null)
+  mediaSession.setActionHandler('nexttrack', null)
+
+  mediaSession.setActionHandler('play', () => setIsPlaying(true))
+  mediaSession.setActionHandler('pause', () => setIsPlaying(false))
+  mediaSession.setActionHandler('seekbackward', () => seekBackward(-15))
+  mediaSession.setActionHandler('seekforward', () => seekForward(30))
 }
 
 export const manageMediaSession = {
   removeMediaSession,
   setMediaSession,
   setRadioMediaSession,
+  setPodcastMediaSession,
   setPlaybackState,
   setHandlers,
+  setPodcastHandlers,
 }

@@ -74,3 +74,19 @@ export const albumsFilterValues = [
     label: 'album.list.filter.search',
   },
 ]
+
+export enum SortOptions {
+  Asc = 'asc',
+  Desc = 'desc',
+}
+
+export enum EpisodesOrderByOptions {
+  PublishedAt = 'published_at',
+  Title = 'title',
+  Duration = 'duration',
+}
+
+export enum PodcastsOrderByOptions {
+  Title = 'title',
+  EpisodeCount = 'episode_count',
+}

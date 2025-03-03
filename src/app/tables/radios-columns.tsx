@@ -24,10 +24,8 @@ export function radiosColumns(): ColumnDefType<Radio>[] {
 
         return (
           <PlaySongButton
-            type="radio"
             trackNumber={trackNumber}
             trackId={radio.id}
-            title={radio.name}
             handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
           />
         )

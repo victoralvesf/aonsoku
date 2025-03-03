@@ -27,10 +27,8 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
 
         return (
           <PlaySongButton
-            type="artist"
             trackNumber={index}
             trackId={artist.id}
-            title={artist.name}
             handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
           />
         )

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useCallback, memo } from 'react'
 
 import { getSongStreamUrl } from '@/api/httpClient'
+import { getProxyURL } from '@/api/podcastClient'
 import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
-import useMediaSession from '@/app/hooks/use-media-session'
+import { podcasts } from '@/service/podcasts'
 import {
   usePlayerActions,
-  usePlayerDuration,
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerMediaType,
@@ -14,28 +14,35 @@ import {
   usePlayerSonglist,
   getVolume,
   useReplayGainState,
+  usePlayerStore,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
+import { logger } from '@/utils/logger'
 import { ReplayGainParams } from '@/utils/replayGain'
 import { AudioPlayer } from './audio'
 import { PlayerClearQueueButton } from './clear-queue-button'
 import { PlayerControls } from './controls'
 import { PlayerLikeButton } from './like-button'
+import { PodcastInfo } from './podcast-info'
+import { PodcastPlaybackRate } from './podcast-playback-rate'
 import { PlayerProgress } from './progress'
 import { PlayerSongListButton } from './song-list-button'
 import { PlayerVolume } from './volume'
 
 const MemoTrackInfo = memo(TrackInfo)
 const MemoRadioInfo = memo(RadioInfo)
+const MemoPodcastInfo = memo(PodcastInfo)
 const MemoPlayerControls = memo(PlayerControls)
 const MemoPlayerLikeButton = memo(PlayerLikeButton)
 const MemoPlayerSongListButton = memo(PlayerSongListButton)
 const MemoPlayerClearQueueButton = memo(PlayerClearQueueButton)
 const MemoPlayerVolume = memo(PlayerVolume)
+const MemoPodcastPlaybackRate = memo(PodcastPlaybackRate)
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const radioRef = useRef<HTMLAudioElement>(null)
+  const podcastRef = useRef<HTMLAudioElement>(null)
   const {
     setAudioPlayerRef,
     setCurrentDuration,
@@ -44,73 +51,102 @@ export function Player() {
     handleSongEnded,
     getCurrentProgress,
   } = usePlayerActions()
-  const { currentList, currentSongIndex, radioList } = usePlayerSonglist()
+  const { currentList, currentSongIndex, radioList, podcastList } =
+    usePlayerSonglist()
   const isPlaying = usePlayerIsPlaying()
-  const mediaType = usePlayerMediaType()
+  const { isSong, isRadio, isPodcast } = usePlayerMediaType()
   const loopState = usePlayerLoop()
-  const currentDuration = usePlayerDuration()
   const audioPlayerRef = usePlayerRef()
+  const currentPlaybackRate = usePlayerStore().playerState.currentPlaybackRate
   const progress = getCurrentProgress()
-  const { resetSession, radioSession, songSession, playbackState } =
-    useMediaSession()
   const { replayGainType, replayGainPreAmp, replayGainDefaultGain } =
     useReplayGainState()
 
   const song = currentList[currentSongIndex]
   const radio = radioList[currentSongIndex]
+  const podcast = podcastList[currentSongIndex]
 
-  const isSong = mediaType === 'song'
-  const isRadio = mediaType === 'radio'
+  const getAudioRef = useCallback(() => {
+    if (isRadio) return radioRef
+    if (isPodcast) return podcastRef
+
+    return audioRef
+  }, [isPodcast, isRadio])
 
   useEffect(() => {
-    if (mediaType !== 'song' && !song) return
+    if (!isSong && !song) return
 
     if (audioPlayerRef === null && audioRef.current)
       setAudioPlayerRef(audioRef.current)
-  }, [audioPlayerRef, audioRef, mediaType, setAudioPlayerRef, song])
+  }, [audioPlayerRef, audioRef, isSong, setAudioPlayerRef, song])
 
   useEffect(() => {
-    if (!song && !radio) resetSession()
-  }, [song, radio, resetSession])
-
-  useEffect(() => {
-    if (radioList.length > 0 && isRadio) {
-      const radio = radioList[currentSongIndex]
-      radioSession(radio)
-    }
-  }, [currentSongIndex, isRadio, radioList, radioSession])
-
-  useEffect(() => {
-    if (currentList.length > 0 && isSong) {
-      const song = currentList[currentSongIndex]
-      songSession(song)
-    }
-  }, [currentList, currentSongIndex, isSong, songSession])
-
-  useEffect(() => {
-    playbackState(isPlaying)
-  }, [isPlaying, playbackState])
-
-  const setupProgressListener = useCallback(() => {
-    const audio = audioRef.current
+    const audio = podcastRef.current
     if (!audio) return
 
-    audio.currentTime = progress
-    const audioDuration = Math.floor(audio.duration)
+    audio.playbackRate = currentPlaybackRate
+  }, [currentPlaybackRate, isPodcast])
 
-    if (currentDuration !== audioDuration) {
+  const setupDuration = useCallback(() => {
+    const audio = getAudioRef().current
+    if (!audio) return
+
+    const audioDuration = Math.floor(audio.duration)
+    const infinityDuration = audioDuration === Infinity
+
+    if (!infinityDuration) {
       setCurrentDuration(audioDuration)
     }
 
-    const handleTimeUpdate = () => {
-      setProgress(Math.floor(audio.currentTime))
+    if (isPodcast && infinityDuration && podcast) {
+      setCurrentDuration(podcast.duration)
     }
 
-    audio.addEventListener('timeupdate', handleTimeUpdate)
-    return () => {
-      audio.removeEventListener('timeupdate', handleTimeUpdate)
+    if (isPodcast) {
+      logger.info('[Player] - Resuming episode from:', {
+        seconds: podcast.progress,
+      })
+      setProgress(podcast.progress)
+      audio.currentTime = podcast.progress
+    } else {
+      audio.currentTime = progress
     }
-  }, [currentDuration, progress, setCurrentDuration, setProgress])
+  }, [
+    getAudioRef,
+    isPodcast,
+    podcast,
+    progress,
+    setCurrentDuration,
+    setProgress,
+  ])
+
+  const setupProgress = useCallback(() => {
+    const audio = getAudioRef().current
+    if (!audio) return
+
+    const currentProgress = Math.floor(audio.currentTime)
+    setProgress(currentProgress)
+  }, [getAudioRef, setProgress])
+
+  const setupInitialVolume = useCallback(() => {
+    const audio = getAudioRef().current
+    if (!audio) return
+
+    audio.volume = getVolume() / 100
+  }, [getAudioRef])
+
+  const sendFinishProgress = useCallback(() => {
+    if (!isPodcast || !podcast) return
+
+    podcasts
+      .saveEpisodeProgress(podcast.id, podcast.duration)
+      .then(() => {
+        logger.info('Complete progress sent:', podcast.duration)
+      })
+      .catch((error) => {
+        logger.error('Error sending complete progress', error)
+      })
+  }, [isPodcast, podcast])
 
   function getTrackReplayGain(): ReplayGainParams {
     const preAmp = replayGainPreAmp
@@ -136,23 +172,32 @@ export function Player() {
         <div className="flex items-center gap-2 w-full">
           {isSong && <MemoTrackInfo song={song} />}
           {isRadio && <MemoRadioInfo radio={radio} />}
+          {isPodcast && <MemoPodcastInfo podcast={podcast} />}
         </div>
         {/* Main Controls */}
         <div className="col-span-2 flex flex-col justify-center items-center px-4 gap-1">
-          <MemoPlayerControls song={song} radio={radio} />
+          <MemoPlayerControls
+            song={song}
+            radio={radio}
+            podcast={podcast}
+            audioRef={getAudioRef()}
+          />
 
-          {isSong && <PlayerProgress audioRef={audioRef} song={song} />}
+          {(isSong || isPodcast) && <PlayerProgress audioRef={getAudioRef()} />}
         </div>
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
             {isSong && <MemoPlayerLikeButton disabled={!song} />}
             {isSong && <MemoPlayerSongListButton disabled={!song} />}
-            {isRadio && <MemoPlayerClearQueueButton disabled={!radio} />}
+            {isPodcast && <MemoPodcastPlaybackRate />}
+            {(isRadio || isPodcast) && (
+              <MemoPlayerClearQueueButton disabled={!radio && !podcast} />
+            )}
 
             <MemoPlayerVolume
-              audioRef={isRadio ? radioRef : audioRef}
-              disabled={!song && !radio}
+              audioRef={getAudioRef()}
+              disabled={!song && !radio && !podcast}
             />
           </div>
         </div>
@@ -167,11 +212,10 @@ export function Player() {
           loop={loopState === LoopState.One}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
-          onLoadedMetadata={setupProgressListener}
+          onLoadedMetadata={setupDuration}
+          onTimeUpdate={setupProgress}
           onEnded={handleSongEnded}
-          onLoadStart={() => {
-            if (audioRef.current) audioRef.current.volume = getVolume() / 100
-          }}
+          onLoadStart={setupInitialVolume}
           data-testid="player-song-audio"
         />
       )}
@@ -183,10 +227,27 @@ export function Player() {
           audioRef={radioRef}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
-          onLoadStart={() => {
-            if (radioRef.current) radioRef.current.volume = getVolume() / 100
-          }}
+          onLoadStart={setupInitialVolume}
           data-testid="player-radio-audio"
+        />
+      )}
+
+      {isPodcast && podcast && (
+        <AudioPlayer
+          src={getProxyURL(podcast.audio_url)}
+          autoPlay={isPlaying}
+          audioRef={podcastRef}
+          preload="auto"
+          onPlay={() => setPlayingState(true)}
+          onPause={() => setPlayingState(false)}
+          onLoadedMetadata={setupDuration}
+          onTimeUpdate={setupProgress}
+          onEnded={() => {
+            sendFinishProgress()
+            handleSongEnded()
+          }}
+          onLoadStart={setupInitialVolume}
+          data-testid="player-podcast-audio"
         />
       )}
     </footer>

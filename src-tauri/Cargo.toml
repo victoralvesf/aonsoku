@@ -1,6 +1,6 @@
 [package]
 name = "aonsoku"
-version = "0.8.3"
+version = "0.9.0"
 description = "A modern desktop client for Navidrome/Subsonic servers."
 authors = ["Victor Alves"]
 edition = "2021"
@@ -23,6 +23,12 @@ dirs = "5.0.1"
 tauri-plugin-updater = "2"
 tauri-plugin-process = "2.0.1"
 tauri-plugin-shell = "2"
+hyper = { version = "1", features = ["full"] }
+http-body-util = "0.1"
+hyper-util = { version = "0.1", features = ["full"] }
+hyper-tls = "0.6"
+bytes = "1.0"
+url = "2.2"
 
 [target."cfg(target_os = \"macos\")".dependencies]
 cocoa = "0.25.0"

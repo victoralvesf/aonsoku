@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import LastFmIcon from '@/app/components/icons/last-fm'
 import MusicbrainzIcon from '@/app/components/icons/musicbrainz'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { Skeleton } from '@/app/components/ui/skeleton'
+import { sanitizeLinks } from '@/utils/parseTexts'
 
 interface InfoPanelProps {
   title: string
@@ -23,17 +23,6 @@ export default function InfoPanel({
 }: InfoPanelProps) {
   const { t } = useTranslation()
 
-  // In case the API returns a link without target blank and nofollow
-  useEffect(() => {
-    const links = document.querySelectorAll('#info-panel a')
-    if (!links) return
-
-    links.forEach((link) => {
-      link.setAttribute('target', '_blank')
-      link.setAttribute('rel', 'nofollow')
-    })
-  }, [])
-
   if (!bio) return null
 
   return (
@@ -42,9 +31,8 @@ export default function InfoPanel({
         {t('album.info.about', { name: title })}
       </h3>
       <p
-        id="info-panel"
-        className="leading-6 text-muted-foreground"
-        dangerouslySetInnerHTML={{ __html: bio }}
+        className="html leading-6 text-muted-foreground"
+        dangerouslySetInnerHTML={{ __html: sanitizeLinks(bio) }}
       />
 
       <div className="flex w-full mt-2 gap-2">

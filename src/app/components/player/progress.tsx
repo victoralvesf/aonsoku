@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react'
 import { Slider } from '@/app/components/ui/slider'
+import { podcasts } from '@/service/podcasts'
 import { subsonic } from '@/service/subsonic'
 import {
   usePlayerActions,
@@ -16,24 +17,26 @@ import {
   usePlayerProgress,
   usePlayerSonglist,
 } from '@/store/player.store'
-import { ISong } from '@/types/responses/song'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
+import { logger } from '@/utils/logger'
 
 interface PlayerProgressProps {
   audioRef: RefObject<HTMLAudioElement>
-  song: ISong
 }
 
 let isSeeking = false
 
-export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
+export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   const progress = usePlayerProgress()
   const [localProgress, setLocalProgress] = useState(progress)
   const currentDuration = usePlayerDuration()
-  const { currentSong } = usePlayerSonglist()
-  const mediaType = usePlayerMediaType()
-  const { setProgress } = usePlayerActions()
+  const { currentSong, currentList, podcastList, currentSongIndex } =
+    usePlayerSonglist()
+  const { isSong, isPodcast } = usePlayerMediaType()
+  const { setProgress, setUpdatePodcastProgress } = usePlayerActions()
   const isScrobbleSentRef = useRef(false)
+
+  const isEmpty = isSong && currentList.length === 0
 
   const updateAudioCurrentTime = useCallback(
     (value: number) => {
@@ -75,8 +78,37 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
     await subsonic.scrobble.send(songId)
   }, [])
 
+  // Used to save listening progress to backend every 30 seconds
   useEffect(() => {
-    if (mediaType === 'song') {
+    if (!isPodcast || !podcastList) return
+    if (progress === 0) return
+
+    const send = (progress / 30) % 1 === 0
+    if (!send) return
+
+    const podcast = podcastList[currentSongIndex] ?? null
+    if (!podcast) return
+    if (progress === podcast.progress) return
+
+    podcasts
+      .saveEpisodeProgress(podcast.id, progress)
+      .then(() => {
+        setUpdatePodcastProgress(progress)
+        logger.info('Progress sent:', progress)
+      })
+      .catch((error) => {
+        logger.error('Error sending progress', error)
+      })
+  }, [
+    currentSongIndex,
+    isPodcast,
+    podcastList,
+    progress,
+    setUpdatePodcastProgress,
+  ])
+
+  useEffect(() => {
+    if (isSong) {
       const progressPercentage = (progress / currentDuration) * 100
 
       if (progressPercentage === 0) isScrobbleSentRef.current = false
@@ -86,24 +118,30 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
         isScrobbleSentRef.current = true
       }
     }
-  }, [progress, currentDuration, mediaType, sendScrobble, currentSong.id])
+  }, [progress, currentDuration, isSong, sendScrobble, currentSong.id])
 
   const currentTime = convertSecondsToTime(isSeeking ? localProgress : progress)
+  const isProgressLarge = useMemo(() => {
+    return localProgress >= 3600 || progress >= 3600
+  }, [localProgress, progress])
 
   return (
     <div
       className={clsx(
         'flex w-full justify-center items-center',
-        !song && 'opacity-50',
+        isEmpty && 'opacity-50',
       )}
     >
       <small
-        className="text-xs text-muted-foreground min-w-10 text-left"
+        className={clsx(
+          'text-xs text-muted-foreground text-left',
+          isProgressLarge ? 'min-w-14' : 'min-w-10',
+        )}
         data-testid="player-current-time"
       >
         {currentTime}
       </small>
-      {song ? (
+      {!isEmpty || isPodcast ? (
         <Slider
           defaultValue={[0]}
           value={isSeeking ? [localProgress] : [progress]}
@@ -130,7 +168,7 @@ export function PlayerProgress({ audioRef, song }: PlayerProgressProps) {
         />
       )}
       <small
-        className="text-xs text-muted-foreground min-w-10 text-right"
+        className="text-xs text-muted-foreground text-right pl-2.5"
         data-testid="player-duration-time"
       >
         {songDuration}
