@@ -52,7 +52,7 @@ async fn main() {
                 });
             }
 
-            // Only show window after 1 sec, to avoid flashy colors
+            // Only show window after a few seconds, to avoid flashy colors
             #[cfg(not(target_os = "windows"))]
             {
                 tokio::spawn(async move {
