@@ -14,7 +14,7 @@ export function QueueActions({ row }: { row: Row<ISong> }) {
   return (
     <Button
       variant="ghost"
-      className="w-8 h-8 p-1 rounded-full hover:bg-background hover:border hover:border-border hover:shadow-sm"
+      className="w-8 h-8 p-1 rounded-full hover:bg-background hover:shadow-sm"
       onClick={(e) => {
         e.stopPropagation()
         handleRemoveSongFromQueue()
