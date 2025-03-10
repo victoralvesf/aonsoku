@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { AspectRatio } from '@/app/components/ui/aspect-ratio'
 import { ROUTES } from '@/routes/routesList'
-import { usePlayerActions, usePlayerSonglist } from '@/store/player.store'
+import { useMainDrawerState, usePlayerSonglist } from '@/store/player.store'
 
 export function CurrentSongInfo() {
   const { currentSong } = usePlayerSonglist()
-  const { setQueueDrawerState } = usePlayerActions()
+  const { closeDrawer } = useMainDrawerState()
 
   const currentSongIsDefined = Object.keys(currentSong).length > 0
 
@@ -35,12 +35,12 @@ export function CurrentSongInfo() {
       </AspectRatio>
 
       <div className="flex flex-col items-center justify-center mt-6 px-4">
-        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-center">
+        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-center text-balance">
           {currentSong.albumId ? (
             <Link
               to={ROUTES.ALBUM.PAGE(currentSong.albumId)}
               className="hover:underline"
-              onClick={() => setQueueDrawerState(false)}
+              onClick={closeDrawer}
             >
               {currentSong.title}
             </Link>
@@ -54,7 +54,7 @@ export function CurrentSongInfo() {
             <Link
               to={ROUTES.ARTIST.PAGE(currentSong.artistId)}
               className="hover:underline"
-              onClick={() => setQueueDrawerState(false)}
+              onClick={closeDrawer}
             >
               {currentSong.artist}
             </Link>

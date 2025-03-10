@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { MainDrawerPage } from '@/app/components/drawer/page'
 import { Player } from '@/app/components/player/player'
 import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
 import { SongInfoModal } from '@/app/components/song/info-modal'
@@ -23,6 +24,7 @@ export default function BaseLayout() {
       <MainRoutes />
       <SongInfoModal />
       <RemovePlaylistDialog />
+      <MainDrawerPage />
     </div>
   )
 }
