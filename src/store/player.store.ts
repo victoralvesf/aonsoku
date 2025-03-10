@@ -42,6 +42,8 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             currentPlaybackRate: 1,
             hasPrev: false,
             hasNext: false,
+            currentSongColor: null,
+            useSongColorOnQueue: false,
           },
           playerProgress: {
             progress: 0,
@@ -732,6 +734,16 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 }
               })
             },
+            setCurrentSongColor: (value) => {
+              set((state) => {
+                state.playerState.currentSongColor = value
+              })
+            },
+            setUseSongColorOnQueue: (value) => {
+              set((state) => {
+                state.playerState.useSongColorOnQueue = value
+              })
+            },
           },
         })),
         { name: 'player_store' },
@@ -747,7 +759,9 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             'actions',
             'playerState.isPlaying',
             'playerState.audioPlayerRef',
-            'playerState.queueDrawerState',
+            'playerState.mainDrawerState',
+            'playerState.queueState',
+            'playerState.lyricsState',
           ])
 
           return appStore
@@ -895,6 +909,14 @@ export const useLyricsState = () =>
   usePlayerStore((state) => ({
     lyricsState: state.playerState.lyricsState,
     setLyricsState: state.actions.setLyricsState,
+  }))
+
+export const useSongColor = () =>
+  usePlayerStore((state) => ({
+    currentSongColor: state.playerState.currentSongColor,
+    setCurrentSongColor: state.actions.setCurrentSongColor,
+    useSongColorOnQueue: state.playerState.useSongColorOnQueue,
+    setUseSongColorOnQueue: state.actions.setUseSongColorOnQueue,
   }))
 
 export const usePlayerCurrentList = () =>

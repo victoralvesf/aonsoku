@@ -37,12 +37,12 @@ export function PlayerSongListButton({ disabled }: PlayerSongListButtonProps) {
         variant="ghost"
         className={clsx(
           'rounded-full w-10 h-10 p-2 text-secondary-foreground relative',
-          isActive && 'player-button-active text-primary',
+          isActive && 'player-button-active',
         )}
         disabled={disabled}
         onClick={handleClick}
       >
-        <ListVideo className="w-4 h-4" />
+        <ListVideo className={clsx('w-4 h-4', isActive && 'text-primary')} />
       </Button>
     </SimpleTooltip>
   )

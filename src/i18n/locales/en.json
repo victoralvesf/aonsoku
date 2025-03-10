@@ -571,6 +571,14 @@
           "label": "Enable automatic fullscreen",
           "info": "If enabled, when accessing the big player, the app will automatically enter fullscreen mode."
         }
+      },
+      "queue": {
+        "group": "Queue and Lyrics",
+        "description": "Customize the queue and lyrics page.",
+        "colors": {
+          "label": "Enable dynamic background color",
+          "info": "If enabled, the app will use the dominant color from the currently playing album art as the background color."
+        }
       }
     },
     "audio": {

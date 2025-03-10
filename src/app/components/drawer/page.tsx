@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { ChevronDownIcon } from 'lucide-react'
 import { ComponentPropsWithoutRef } from 'react'
 import { LyricsTab } from '@/app/components/fullscreen/lyrics'
@@ -10,9 +11,11 @@ import {
   useLyricsState,
   useMainDrawerState,
   useQueueState,
+  useSongColor,
 } from '@/store/player.store'
 
 export function MainDrawerPage() {
+  const { currentSongColor } = useSongColor()
   const { mainDrawerState, closeDrawer } = useMainDrawerState()
   const { queueState } = useQueueState()
   const { lyricsState } = useLyricsState()
@@ -28,13 +31,21 @@ export function MainDrawerPage() {
       modal={false}
     >
       <DrawerContent
-        className="main-drawer rounded-t-none border-none select-none cursor-default outline-none"
+        className={clsx(
+          'main-drawer rounded-t-none border-none select-none cursor-default',
+          'outline-none transition-[background-image,background-color] duration-1000',
+          currentSongColor &&
+            'bg-gradient-to-b from-background/40 to-background/60',
+        )}
         showHandle={false}
+        style={{
+          backgroundColor: currentSongColor ?? undefined,
+        }}
       >
         <div className="flex w-full h-14 min-h-14 px-[6%] items-center justify-end">
           <Button
             variant="ghost"
-            className="w-10 h-10 rounded-full p-0"
+            className="w-10 h-10 rounded-full p-0 hover:bg-background"
             onClick={closeDrawer}
           >
             <ChevronDownIcon />
@@ -70,7 +81,7 @@ function ActiveContent({
   return (
     <div
       className={cn(
-        'w-full h-full absolute inset-0 opacity-0 pointer-events-none transition-opacity duration-300',
+        'w-full h-full absolute inset-0 opacity-0 pointer-events-none transition-opacity duration-300 bg-black/0',
         active && 'opacity-100 pointer-events-auto',
         className,
       )}

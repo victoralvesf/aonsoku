@@ -34,6 +34,8 @@ export interface IPlayerState {
   lyricsState: boolean
   hasPrev: boolean
   hasNext: boolean
+  currentSongColor: string | null
+  useSongColorOnQueue: boolean
 }
 
 export interface IPlayerProgress {
@@ -130,6 +132,8 @@ export interface IPlayerActions {
   setNextPodcast: (episode: EpisodeWithPodcast) => void
   setLastPodcast: (episode: EpisodeWithPodcast) => void
   updateQueueChecks: () => void
+  setCurrentSongColor: (value: string | null) => void
+  setUseSongColorOnQueue: (value: boolean) => void
 }
 
 export interface IPlayerContext {
