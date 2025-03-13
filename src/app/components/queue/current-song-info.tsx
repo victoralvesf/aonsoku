@@ -77,7 +77,7 @@ export function CurrentSongInfo() {
       </AspectRatio>
 
       <div className="flex flex-col items-center justify-center mt-6 px-4">
-        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-center text-balance">
+        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-center text-balance drop-shadow-md">
           {currentSong.albumId ? (
             <Link
               to={ROUTES.ALBUM.PAGE(currentSong.albumId)}
@@ -91,7 +91,7 @@ export function CurrentSongInfo() {
           )}
         </h4>
 
-        <p className="leading-7 text-foreground/70">
+        <p className="leading-7 text-foreground/70 drop-shadow-md">
           {currentSong.artistId ? (
             <Link
               to={ROUTES.ARTIST.PAGE(currentSong.artistId)}

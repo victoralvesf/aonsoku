@@ -56,7 +56,7 @@ export function QueueSongList() {
           </Button>
         </div>
       </div>
-      <Separator className="bg-muted-foreground/10" />
+      <Separator className="bg-muted-foreground/20" />
 
       <div className="w-full h-full overflow-auto">
         <DataTableList
