@@ -17,7 +17,7 @@ export function CurrentSongInfo() {
   const { currentSong } = usePlayerSonglist()
   const { closeDrawer } = useMainDrawerState()
 
-  const imageUrl = getCoverArtUrl(currentSong.coverArt, 'song', '400')
+  const imageUrl = getCoverArtUrl(currentSong.coverArt, 'song', '900')
 
   function getImageElement() {
     return document.getElementById('song-info-image') as HTMLImageElement
