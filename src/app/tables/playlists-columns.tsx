@@ -131,7 +131,7 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
       cell: ({ row }) => (
         <div>
           {row.original.public ? (
-            <CheckIcon className="w-5 h-5 text-primary" />
+            <CheckIcon className="w-5 h-5 text-green-500" />
           ) : (
             <XIcon className="w-5 h-5 text-red-500" />
           )}
