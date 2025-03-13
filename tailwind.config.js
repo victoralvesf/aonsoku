@@ -118,6 +118,8 @@ module.exports = {
         'carousel-item': 'radial-gradient(circle, white 100%, transparent 0)',
         'big-player-lyrics':
           'linear-gradient(180deg, transparent 0%, rgb(0, 0, 0) 25%, rgb(0, 0, 0) 75%, transparent 100%)',
+        lyrics:
+          'linear-gradient(180deg, transparent 0%, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 90%, transparent 100%)',
       },
       boxShadow: {
         'custom-3': '0 0 3px rgba(255, 255, 255, 0.03)',

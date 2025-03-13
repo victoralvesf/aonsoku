@@ -36,10 +36,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             currentDuration: 0,
             mediaType: 'song',
             audioPlayerRef: null,
-            queueDrawerState: false,
+            mainDrawerState: false,
+            queueState: false,
+            lyricsState: false,
             currentPlaybackRate: 1,
             hasPrev: false,
             hasNext: false,
+            currentSongColor: null,
+            useSongColorOnQueue: false,
           },
           playerProgress: {
             progress: 0,
@@ -449,9 +453,13 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.isPlaying = false
                 state.playerState.loopState = LoopState.Off
                 state.playerState.isShuffleActive = false
-                state.playerState.queueDrawerState = false
+                state.playerState.mainDrawerState = false
+                state.playerState.queueState = false
+                state.playerState.lyricsState = false
                 state.playerState.currentDuration = 0
                 state.playerState.audioPlayerRef = null
+                state.playerState.currentSongColor = null
+                state.playerState.useSongColorOnQueue = false
               })
             },
             resetProgress: () => {
@@ -652,9 +660,34 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.originalSongIndex = updatedOriginalIndex
               })
             },
-            setQueueDrawerState: (status) => {
+            setMainDrawerState: (status) => {
               set((state) => {
-                state.playerState.queueDrawerState = status
+                state.playerState.mainDrawerState = status
+              })
+            },
+            setQueueState: (status) => {
+              set((state) => {
+                state.playerState.queueState = status
+              })
+            },
+            setLyricsState: (status) => {
+              set((state) => {
+                state.playerState.lyricsState = status
+              })
+            },
+            toggleQueueAndLyrics: () => {
+              const { queueState, lyricsState } = get().playerState
+
+              set((state) => {
+                state.playerState.queueState = !queueState
+                state.playerState.lyricsState = !lyricsState
+              })
+            },
+            closeDrawer: () => {
+              set((state) => {
+                state.playerState.mainDrawerState = false
+                state.playerState.queueState = false
+                state.playerState.lyricsState = false
               })
             },
             playFirstSongInQueue: () => {
@@ -703,6 +736,16 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 }
               })
             },
+            setCurrentSongColor: (value) => {
+              set((state) => {
+                state.playerState.currentSongColor = value
+              })
+            },
+            setUseSongColorOnQueue: (value) => {
+              set((state) => {
+                state.playerState.useSongColorOnQueue = value
+              })
+            },
           },
         })),
         { name: 'player_store' },
@@ -718,7 +761,9 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             'actions',
             'playerState.isPlaying',
             'playerState.audioPlayerRef',
-            'playerState.queueDrawerState',
+            'playerState.mainDrawerState',
+            'playerState.queueState',
+            'playerState.lyricsState',
           ])
 
           return appStore
@@ -848,8 +893,33 @@ export const usePlayerRef = () =>
 
 export const getVolume = () => usePlayerStore.getState().playerState.volume
 
-export const useQueueDrawerState = () =>
-  usePlayerStore((state) => state.playerState.queueDrawerState)
+export const useMainDrawerState = () =>
+  usePlayerStore((state) => ({
+    mainDrawerState: state.playerState.mainDrawerState,
+    setMainDrawerState: state.actions.setMainDrawerState,
+    toggleQueueAndLyrics: state.actions.toggleQueueAndLyrics,
+    closeDrawer: state.actions.closeDrawer,
+  }))
+
+export const useQueueState = () =>
+  usePlayerStore((state) => ({
+    queueState: state.playerState.queueState,
+    setQueueState: state.actions.setQueueState,
+  }))
+
+export const useLyricsState = () =>
+  usePlayerStore((state) => ({
+    lyricsState: state.playerState.lyricsState,
+    setLyricsState: state.actions.setLyricsState,
+  }))
+
+export const useSongColor = () =>
+  usePlayerStore((state) => ({
+    currentSongColor: state.playerState.currentSongColor,
+    setCurrentSongColor: state.actions.setCurrentSongColor,
+    useSongColorOnQueue: state.playerState.useSongColorOnQueue,
+    setUseSongColorOnQueue: state.actions.setUseSongColorOnQueue,
+  }))
 
 export const usePlayerCurrentList = () =>
   usePlayerStore((state) => state.songlist.currentList)

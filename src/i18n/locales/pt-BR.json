@@ -580,6 +580,14 @@
           "label": "Habilitar tela cheia automática",
           "info": "Se habilitado, ao acessar o player grande, o app ativará o modo tela cheia automaticamente."
         }
+      },
+      "queue": {
+        "group": "Fila de reprodução e Letra",
+        "description": "Personalize a página da fila de reprodução e letra.",
+        "colors": {
+          "label": "Habilitar cor de fundo dinâmica",
+          "info": "Se habilitado, o app usará a cor dominante da arte do álbum em reprodução como cor de fundo."
+        }
       }
     },
     "audio": {

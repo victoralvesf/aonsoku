@@ -51,13 +51,13 @@ export function queueColumns(): ColumnDefType<ISong>[] {
       header: '',
       cell: ({ row }) => {
         if (!row.original.artistId) return row.original.artist
-        const { setQueueDrawerState } = usePlayerStore.getState().actions
+        const { closeDrawer } = usePlayerStore.getState().actions
 
         return (
           <Link
             to={ROUTES.ARTIST.PAGE(row.original.artistId)}
             className="hover:underline truncate"
-            onClick={() => setQueueDrawerState(false)}
+            onClick={closeDrawer}
             onContextMenu={(e) => {
               e.stopPropagation()
               e.preventDefault()

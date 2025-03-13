@@ -29,9 +29,13 @@ export interface IPlayerState {
   mediaType: 'song' | 'radio' | 'podcast'
   currentPlaybackRate: number
   audioPlayerRef: HTMLAudioElement | null
-  queueDrawerState: boolean
+  mainDrawerState: boolean
+  queueState: boolean
+  lyricsState: boolean
   hasPrev: boolean
   hasNext: boolean
+  currentSongColor: string | null
+  useSongColorOnQueue: boolean
 }
 
 export interface IPlayerProgress {
@@ -113,7 +117,11 @@ export interface IPlayerActions {
   setNextOnQueue: (songlist: ISong[]) => void
   setLastOnQueue: (songlist: ISong[]) => void
   removeSongFromQueue: (id: string) => void
-  setQueueDrawerState: (state: boolean) => void
+  setMainDrawerState: (state: boolean) => void
+  setQueueState: (state: boolean) => void
+  setLyricsState: (state: boolean) => void
+  toggleQueueAndLyrics: () => void
+  closeDrawer: () => void
   playFirstSongInQueue: () => void
   handleSongEnded: () => void
   getCurrentProgress: () => number
@@ -124,6 +132,8 @@ export interface IPlayerActions {
   setNextPodcast: (episode: EpisodeWithPodcast) => void
   setLastPodcast: (episode: EpisodeWithPodcast) => void
   updateQueueChecks: () => void
+  setCurrentSongColor: (value: string | null) => void
+  setUseSongColorOnQueue: (value: boolean) => void
 }
 
 export interface IPlayerContext {

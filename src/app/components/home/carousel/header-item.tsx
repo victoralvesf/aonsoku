@@ -36,7 +36,7 @@ export function HeaderItem({ song }: { song: ISong }) {
     >
       <div
         data-testid="header-bg"
-        className="absolute -inset-10 bg-cover bg-center z-0"
+        className="absolute -inset-10 bg-cover bg-center z-0 bg-skeleton"
         style={{
           backgroundImage: `url(${coverArtUrl})`,
           filter: isFirefox ? 'blur(24px)' : undefined,

@@ -115,10 +115,10 @@ img {
   @apply after:content-['*'] after:text-destructive after:ml-1;
 }
 
-.queue-list-drawer {
+.main-drawer {
   @apply w-screen;
   @apply h-content;
-  @apply mb-[--player-height] pb-[--player-height];
+  @apply mb-[--player-height];
   @apply z-30;
   @apply bg-background-foreground;
 }
@@ -262,5 +262,5 @@ svg#bars .eq-bar--4 {
 }
 
 #sync-lyrics-box .react-lrc-line {
-  @apply w-fit m-auto max-w-[80%];
+  @apply w-fit m-auto max-w-[80%] text-balance;
 }

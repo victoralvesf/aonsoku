@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ListVideo } from 'lucide-react'
+import { MicVocalIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
@@ -9,40 +9,41 @@ import {
   useQueueState,
 } from '@/store/player.store'
 
-interface PlayerSongListButtonProps {
-  disabled: boolean
+interface PlayerLyricsButtonProps {
+  disabled?: boolean
 }
 
-export function PlayerSongListButton({ disabled }: PlayerSongListButtonProps) {
+export function PlayerLyricsButton({ disabled }: PlayerLyricsButtonProps) {
   const { t } = useTranslation()
   const { mainDrawerState, setMainDrawerState, toggleQueueAndLyrics } =
     useMainDrawerState()
-  const { queueState, setQueueState } = useQueueState()
-  const { lyricsState } = useLyricsState()
+  const { lyricsState, setLyricsState } = useLyricsState()
+  const { queueState } = useQueueState()
 
-  const isActive = mainDrawerState && queueState
+  const isActive = mainDrawerState && lyricsState
 
   function handleClick() {
-    if (mainDrawerState && lyricsState) {
+    if (mainDrawerState && queueState) {
       toggleQueueAndLyrics()
     } else {
-      setQueueState(!queueState)
+      setLyricsState(!lyricsState)
       setMainDrawerState(!mainDrawerState)
     }
   }
 
   return (
-    <SimpleTooltip text={t('queue.title')}>
+    <SimpleTooltip text={t('fullscreen.lyrics')}>
       <Button
         variant="ghost"
+        size="icon"
         className={clsx(
           'rounded-full w-10 h-10 p-2 text-secondary-foreground relative',
           isActive && 'player-button-active',
         )}
-        disabled={disabled}
         onClick={handleClick}
+        disabled={disabled}
       >
-        <ListVideo className={clsx('w-4 h-4', isActive && 'text-primary')} />
+        <MicVocalIcon className={clsx('w-4 h-4', isActive && 'text-primary')} />
       </Button>
     </SimpleTooltip>
   )

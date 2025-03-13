@@ -33,7 +33,7 @@ export function QueueSongList() {
     <div className="flex flex-1 flex-col h-full min-w-[300px]">
       <DialogTitle className="sr-only">{t('queue.title')}</DialogTitle>
       <div className="flex items-center justify-between h-8 mb-2">
-        <div className="flex gap-2 h-6 items-center text-muted-foreground">
+        <div className="flex gap-2 h-6 items-center text-foreground/70">
           <p className="text-foreground">{t('queue.title')}</p>
           <p>{'•'}</p>
           <p className="text-sm">
@@ -48,7 +48,7 @@ export function QueueSongList() {
         <div>
           <Button
             variant="ghost"
-            className="px-4 h-8 rounded-full py-0 flex items-center justify-center"
+            className="px-4 h-8 rounded-full py-0 flex items-center justify-center hover:bg-background"
             onClick={clearPlayerState}
           >
             <ListXIcon className="mr-1 w-5 h-5" />
@@ -56,7 +56,7 @@ export function QueueSongList() {
           </Button>
         </div>
       </div>
-      <Separator />
+      <Separator className="bg-muted-foreground/20" />
 
       <div className="w-full h-full overflow-auto">
         <DataTableList

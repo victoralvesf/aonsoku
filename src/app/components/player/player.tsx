@@ -23,6 +23,7 @@ import { AudioPlayer } from './audio'
 import { PlayerClearQueueButton } from './clear-queue-button'
 import { PlayerControls } from './controls'
 import { PlayerLikeButton } from './like-button'
+import { PlayerLyricsButton } from './lyrics-button'
 import { PodcastInfo } from './podcast-info'
 import { PodcastPlaybackRate } from './podcast-playback-rate'
 import { PlayerProgress } from './progress'
@@ -38,6 +39,7 @@ const MemoPlayerSongListButton = memo(PlayerSongListButton)
 const MemoPlayerClearQueueButton = memo(PlayerClearQueueButton)
 const MemoPlayerVolume = memo(PlayerVolume)
 const MemoPodcastPlaybackRate = memo(PodcastPlaybackRate)
+const MemoLyricsButton = memo(PlayerLyricsButton)
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -188,8 +190,13 @@ export function Player() {
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
-            {isSong && <MemoPlayerLikeButton disabled={!song} />}
-            {isSong && <MemoPlayerSongListButton disabled={!song} />}
+            {isSong && (
+              <>
+                <MemoPlayerLikeButton disabled={!song} />
+                <MemoLyricsButton disabled={!song} />
+                <MemoPlayerSongListButton disabled={!song} />
+              </>
+            )}
             {isPodcast && <MemoPodcastPlaybackRate />}
             {(isRadio || isPodcast) && (
               <MemoPlayerClearQueueButton disabled={!radio && !podcast} />
