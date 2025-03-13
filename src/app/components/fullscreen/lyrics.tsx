@@ -115,7 +115,7 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
 
   return (
     <ScrollArea
-      className="w-full h-full overflow-y-auto text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth maskImage-big-player-lyrics"
+      className="w-full h-full overflow-y-auto text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth maskImage-lyrics"
       ref={lyricsBoxRef}
     >
       {lines.map((line, index) => (
@@ -123,8 +123,8 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
           key={index}
           className={clsx(
             'leading-10 drop-shadow-lg text-balance',
-            index === 0 && 'mt-20',
-            index === lines.length - 1 && 'mb-20',
+            index === 0 && 'mt-6',
+            index === lines.length - 1 && 'mb-10',
           )}
         >
           {line}
