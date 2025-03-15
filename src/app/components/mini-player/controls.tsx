@@ -23,7 +23,7 @@ export function MiniPlayerControls() {
   const isPlaying = usePlayerIsPlaying()
   const isShuffleActive = usePlayerShuffle()
   const loopState = usePlayerLoop()
-  const { hasPrev, hasNext, isSongStarred } = usePlayerState()
+  const { hasPrev, hasNext } = usePlayerState()
   const {
     isPlayingOneSong,
     toggleShuffle,
@@ -31,43 +31,29 @@ export function MiniPlayerControls() {
     playPrevSong,
     togglePlayPause,
     toggleLoop,
-    starCurrentSong,
   } = usePlayerActions()
 
   return (
-    <div className="w-full">
-      <Button
-        size="icon"
-        variant="ghost"
-        className={buttonsStyle.secondary}
-        onClick={starCurrentSong}
-        style={{ ...buttonsStyle.style }}
-      >
-        <Heart
-          className={clsx(
-            'w-[18px] h-[18px] drop-shadow-lg',
-            isSongStarred && 'text-red-500 fill-red-500',
-          )}
-        />
-      </Button>
+    <div>
       <Button
         size="icon"
         variant="ghost"
         data-state={isShuffleActive && 'active'}
         className={clsx(
           buttonsStyle.secondary,
+          buttonsStyle.removeRing,
           isShuffleActive && buttonsStyle.activeDot,
         )}
         style={{ ...buttonsStyle.style }}
         onClick={() => toggleShuffle()}
         disabled={isPlayingOneSong() || !hasNext}
       >
-        <Shuffle className="w-[18px] h-[18px] drop-shadow-lg" />
+        <Shuffle className={buttonsStyle.secondaryIcon} />
       </Button>
       <Button
         size="icon"
         variant="ghost"
-        className={buttonsStyle.secondary}
+        className={clsx(buttonsStyle.secondary, buttonsStyle.removeRing)}
         style={{ ...buttonsStyle.style }}
         onClick={() => playPrevSong()}
         disabled={!hasPrev}
@@ -77,7 +63,7 @@ export function MiniPlayerControls() {
       <Button
         size="icon"
         variant="link"
-        className={buttonsStyle.main}
+        className={clsx(buttonsStyle.main, buttonsStyle.removeRing)}
         style={{ ...buttonsStyle.style }}
         onClick={() => togglePlayPause()}
       >
@@ -90,7 +76,7 @@ export function MiniPlayerControls() {
       <Button
         size="icon"
         variant="ghost"
-        className={buttonsStyle.secondary}
+        className={clsx(buttonsStyle.secondary, buttonsStyle.removeRing)}
         style={{ ...buttonsStyle.style }}
         onClick={() => playNextSong()}
         disabled={!hasNext && loopState !== LoopState.All}
@@ -103,6 +89,7 @@ export function MiniPlayerControls() {
         data-state={loopState !== LoopState.Off && 'active'}
         className={clsx(
           buttonsStyle.secondary,
+          buttonsStyle.removeRing,
           loopState !== LoopState.Off && buttonsStyle.activeDot,
         )}
         onClick={() => toggleLoop()}
@@ -122,6 +109,28 @@ export function MiniPlayerControls() {
   )
 }
 
+export function MiniPlayerLikeButton() {
+  const { isSongStarred } = usePlayerState()
+  const { starCurrentSong } = usePlayerActions()
+
+  return (
+    <Button
+      size="icon"
+      variant="ghost"
+      className={clsx(buttonsStyle.secondary, buttonsStyle.removeRing)}
+      onClick={starCurrentSong}
+      style={{ ...buttonsStyle.style }}
+    >
+      <Heart
+        className={clsx(
+          'w-[18px] h-[18px] drop-shadow-lg',
+          isSongStarred && 'text-red-500 fill-red-500',
+        )}
+      />
+    </Button>
+  )
+}
+
 const buttonsStyle = {
   main: 'w-10 h-10 rounded-full shadow-lg bg-secondary-foreground hover:scale-105 transition-transform will-change-transform',
   mainIcon: 'w-5 h-5 text-secondary fill-secondary',
@@ -134,4 +143,6 @@ const buttonsStyle = {
   style: {
     backfaceVisibility: 'hidden' as const,
   },
+  removeRing:
+    'focus-visible:ring-0 focus-visible:ring-transparent ring-0 ring-offset-transparent',
 }

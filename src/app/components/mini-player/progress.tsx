@@ -52,7 +52,7 @@ export function MiniPlayerProgress() {
 
   return (
     <div className="flex items-center flex-col">
-      <div className="w-full flex justify-between text-muted-foreground">
+      <div className="w-full flex justify-between text-foreground/70">
         <div className="min-w-[40px] text-left text-xs drop-shadow-md">
           {currentTime}
         </div>
