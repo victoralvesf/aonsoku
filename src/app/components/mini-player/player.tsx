@@ -17,7 +17,7 @@ export function MiniPlayer() {
 
   return (
     <div className="w-full h-full max-h-full flex flex-col gap-2 p-2">
-      <div className="w-full h-full flex flex-grow flex-col mid-player:flex-row mid-player:items-center gap-2">
+      <div className="w-full h-full mid-player:max-h-fit flex flex-grow flex-col mid-player:flex-row mid-player:items-center gap-2">
         <div
           className={clsx(
             'w-full mid-player:w-[20%] mid-player:max-w-14 h-full mid-player:h-fit mid-player:min-h-12',
@@ -50,12 +50,12 @@ export function MiniPlayer() {
             </div>
           </div>
         </div>
-        <div className="min-w-12 h-12 pb-2 flex mid-player:flex-1 items-center justify-between">
+        <div className="min-w-12 h-12 pb-2 mid-player:pb-0 flex mid-player:flex-1 items-center justify-between">
           <MemoMiniPlayerSongTitle />
           <MemoMiniPlayerLikeButton />
         </div>
       </div>
-      <div className="hidden mid-player:flex justify-center items-center pb-2 min-h-12">
+      <div className="hidden mid-player:flex justify-center items-center min-h-12">
         <MemoMiniPlayerControls />
       </div>
     </div>
