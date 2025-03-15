@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback, memo } from 'react'
 
+import { isChrome } from 'react-device-detect'
 import { getSongStreamUrl } from '@/api/httpClient'
 import { getProxyURL } from '@/api/podcastClient'
 import { RadioInfo } from '@/app/components/player/radio-info'
@@ -29,6 +30,7 @@ import { PodcastPlaybackRate } from './podcast-playback-rate'
 import { PlayerProgress } from './progress'
 import { PlayerSongListButton } from './song-list-button'
 import { PlayerVolume } from './volume'
+import { MiniPlayerButton } from '../mini-player/button'
 
 const MemoTrackInfo = memo(TrackInfo)
 const MemoRadioInfo = memo(RadioInfo)
@@ -206,6 +208,8 @@ export function Player() {
               audioRef={getAudioRef()}
               disabled={!song && !radio && !podcast}
             />
+
+            {isSong && isChrome && <MiniPlayerButton />}
           </div>
         </div>
       </div>

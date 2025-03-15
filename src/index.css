@@ -264,3 +264,9 @@ svg#bars .eq-bar--4 {
 #sync-lyrics-box .react-lrc-line {
   @apply w-fit m-auto max-w-[80%] text-balance;
 }
+
+@media all and (display-mode: picture-in-picture) {
+  body, html {
+    @apply w-full h-full overflow-hidden p-0 m-0;
+  }
+}
