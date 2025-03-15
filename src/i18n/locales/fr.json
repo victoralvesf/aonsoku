@@ -453,5 +453,8 @@
     "failed": "Une erreur est survenue lors du téléchargement.",
     "started": "Téléchargement démarré.",
     "completed": "Votre fichier a été téléchargé."
+  },
+  "warnings": {
+    "reload": "Une chanson est en cours de lecture!\nÊtes-vous certain de vouloir recharger la page?"
   }
 }
