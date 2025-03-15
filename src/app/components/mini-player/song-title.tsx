@@ -31,8 +31,8 @@ export function MiniPlayerSongTitle() {
       </MarqueeTitle>
       <span
         className={cn(
-          'w-fit max-w-full truncate text-xs font-regular text-foreground/70 cursor-pointer',
-          song.artistId && 'hover:underline',
+          'w-fit max-w-full truncate text-xs font-regular text-foreground/70',
+          song.artistId && 'hover:underline cursor-pointer',
         )}
         onClick={handleArtistClick}
       >
