@@ -6,13 +6,13 @@ export function MiniPlayerSongImage() {
   const song = usePlayerCurrentSong()
 
   return (
-    <div className="min-w-[30%] h-full max-w-full aspect-square flex items-center justify-center rounded shadow-header-image">
+    <div className="min-w-[30%] h-full max-w-full aspect-square flex items-center justify-center rounded">
       <LazyLoadImage
-        src={getCoverArtUrl(song.coverArt, 'song', '300')}
+        src={getCoverArtUrl(song.coverArt, 'song', '500')}
         width="100%"
         height="100%"
         loading="eager"
-        className="aspect-square object-cover object-center w-full max-w-full bg-skeleton text-transparent rounded"
+        className="aspect-square object-cover object-center w-full max-w-full bg-skeleton text-transparent rounded shadow-header-image"
         data-testid="track-image"
         alt={`${song.artist} - ${song.title}`}
       />

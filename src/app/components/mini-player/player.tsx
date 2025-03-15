@@ -50,7 +50,7 @@ export function MiniPlayer() {
             </div>
           </div>
         </div>
-        <div className="h-12 pb-2 flex mid-player:flex-1 items-center justify-between">
+        <div className="min-w-12 h-12 pb-2 flex mid-player:flex-1 items-center justify-between">
           <MemoMiniPlayerSongTitle />
           <MemoMiniPlayerLikeButton />
         </div>
