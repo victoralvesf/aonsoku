@@ -6,7 +6,7 @@ export function MiniPlayerSongImage() {
   const song = usePlayerCurrentSong()
 
   return (
-    <div className="min-w-[50%] h-full max-w-full aspect-square flex items-center justify-center rounded shadow-header-image">
+    <div className="min-w-[30%] h-full max-w-full aspect-square flex items-center justify-center rounded shadow-header-image">
       <LazyLoadImage
         src={getCoverArtUrl(song.coverArt, 'song', '300')}
         width="100%"

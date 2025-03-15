@@ -126,6 +126,10 @@ module.exports = {
         'custom-5': '0 0 5px rgba(255, 255, 255, 0.05)',
         'header-image': '0 4px 35px rgba(0, 0, 0, 0.6)',
       },
+      screens: {
+        'mid-player': { raw: '(min-height: 133px) and (max-height: 170px)' },
+        'mini-player': { raw: '(max-height: 132px)' },
+      },
     },
   },
   plugins: [
