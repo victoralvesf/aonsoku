@@ -41,6 +41,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             progress: 0,
           },
           settings: {
+            privacy: {
+              lrcLibEnabled: true,
+              setLrcLibEnabled(value) {
+                set((state) => {
+                  state.settings.privacy.lrcLibEnabled = value
+                })
+              },
+            },
             volume: {
               min: 0,
               max: 100,
@@ -462,7 +470,10 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
 
               const { id, starred } = get().songlist.currentSong
               const isSongStarred = typeof starred === 'string'
-              await subsonic.star.handleStarItem({ id, starred: isSongStarred })
+              await subsonic.star.handleStarItem({
+                id,
+                starred: isSongStarred,
+              })
 
               const songList = [...currentList]
               songList[currentSongIndex] = {
@@ -670,6 +681,9 @@ export const useReplayGainActions = () =>
 
 export const useFullscreenPlayerSettings = () =>
   usePlayerStore((state) => state.settings.fullscreen)
+
+export const usePrivacySettings = () =>
+  usePlayerStore((state) => state.settings.privacy)
 
 export const useLyricsSettings = () =>
   usePlayerStore((state) => state.settings.lyrics)

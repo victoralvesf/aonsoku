@@ -73,11 +73,17 @@ interface ILyrics {
   setPreferSyncedLyrics: (value: boolean) => void
 }
 
+export interface IPrivacySettings {
+  lrcLibEnabled: boolean
+  setLrcLibEnabled: (value: boolean) => void
+}
+
 export interface IPlayerSettings {
   volume: IVolumeSettings
   fullscreen: IFullscreen
   lyrics: ILyrics
   replayGain: IReplayGain
+  privacy: IPrivacySettings
 }
 
 export interface IPlayerActions {
