@@ -106,10 +106,11 @@ module.exports = {
           'minmax(40px, 50px) minmax(0px, 3fr) minmax(0px, 2fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(60px, 70px) minmax(100px, 120px)',
         header:
           'minmax(180px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(180px, 1fr)',
-        'mid-player-info': 'minmax(48px, 98px) minmax(168px, 1fr)',
+        'mid-player-info': 'minmax(40px, 70px) minmax(168px, 1fr)',
+        'mini-player': 'minmax(30px, 40px) minmax(80px, 1fr) 64px',
       },
       gridTemplateRows: {
-        'mini-player': 'minmax(0, 1fr) 40px',
+        'floating-player': 'minmax(0, 1fr) 40px',
       },
       flexBasis: {
         '1/8': '12.5%',

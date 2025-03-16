@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import RepeatOne from '@/app/components/icons/repeat-one'
 import { Button } from '@/app/components/ui/button'
+import { cn } from '@/lib/utils'
 import {
   usePlayerActions,
   usePlayerIsPlaying,
@@ -43,6 +44,7 @@ export function MiniPlayerControls() {
           buttonsStyle.secondary,
           buttonsStyle.removeRing,
           isShuffleActive && buttonsStyle.activeDot,
+          'mini-player:hidden',
         )}
         style={{ ...buttonsStyle.style }}
         onClick={() => toggleShuffle()}
@@ -53,7 +55,11 @@ export function MiniPlayerControls() {
       <Button
         size="icon"
         variant="ghost"
-        className={clsx(buttonsStyle.secondary, buttonsStyle.removeRing)}
+        className={clsx(
+          buttonsStyle.secondary,
+          buttonsStyle.removeRing,
+          'mini-player:hidden',
+        )}
         style={{ ...buttonsStyle.style }}
         onClick={() => playPrevSong()}
         disabled={!hasPrev}
@@ -63,7 +69,11 @@ export function MiniPlayerControls() {
       <Button
         size="icon"
         variant="link"
-        className={clsx(buttonsStyle.main, buttonsStyle.removeRing)}
+        className={cn(
+          buttonsStyle.main,
+          buttonsStyle.removeRing,
+          'mini-player:w-8 mini-player:h-8',
+        )}
         style={{ ...buttonsStyle.style }}
         onClick={() => togglePlayPause()}
       >
@@ -76,7 +86,11 @@ export function MiniPlayerControls() {
       <Button
         size="icon"
         variant="ghost"
-        className={clsx(buttonsStyle.secondary, buttonsStyle.removeRing)}
+        className={clsx(
+          buttonsStyle.secondary,
+          buttonsStyle.removeRing,
+          'mini-player:w-8 mini-player:h-8',
+        )}
         style={{ ...buttonsStyle.style }}
         onClick={() => playNextSong()}
         disabled={!hasNext && loopState !== LoopState.All}
@@ -91,6 +105,7 @@ export function MiniPlayerControls() {
           buttonsStyle.secondary,
           buttonsStyle.removeRing,
           loopState !== LoopState.Off && buttonsStyle.activeDot,
+          'mini-player:hidden',
         )}
         onClick={() => toggleLoop()}
         style={{ ...buttonsStyle.style }}
@@ -117,7 +132,11 @@ export function MiniPlayerLikeButton() {
     <Button
       size="icon"
       variant="ghost"
-      className={clsx(buttonsStyle.secondary, buttonsStyle.removeRing)}
+      className={clsx(
+        buttonsStyle.secondary,
+        buttonsStyle.removeRing,
+        'mini-player:hidden',
+      )}
       onClick={starCurrentSong}
       style={{ ...buttonsStyle.style }}
     >

@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom'
+import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { usePlayerCurrentSong } from '@/store/player.store'
-import { MarqueeTitle } from '../fullscreen/marquee-title'
 
 export function MiniPlayerSongTitle() {
   const navigate = useNavigate()
@@ -22,7 +22,10 @@ export function MiniPlayerSongTitle() {
     <div className="flex flex-col flex-1 justify-center max-w-full overflow-hidden">
       <MarqueeTitle gap="mr-2">
         <span
-          className="text-sm font-medium hover:underline cursor-pointer"
+          className={cn(
+            'text-sm font-medium hover:underline cursor-pointer',
+            'mini-player:text-xs mini-player:font-normal',
+          )}
           data-testid="track-title"
           onClick={handleTitleClick}
         >
@@ -31,7 +34,8 @@ export function MiniPlayerSongTitle() {
       </MarqueeTitle>
       <span
         className={cn(
-          'w-fit max-w-full truncate text-xs font-regular text-foreground/70',
+          'w-fit max-w-full truncate text-xs font-normal text-foreground/70',
+          'mini-player:text-[11px] mini-player:font-light',
           song.artistId && 'hover:underline cursor-pointer',
         )}
         onClick={handleArtistClick}
