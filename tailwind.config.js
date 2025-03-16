@@ -106,6 +106,10 @@ module.exports = {
           'minmax(40px, 50px) minmax(0px, 3fr) minmax(0px, 2fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(60px, 70px) minmax(100px, 120px)',
         header:
           'minmax(180px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(180px, 1fr)',
+        'mid-player-info': 'minmax(48px, 98px) minmax(168px, 1fr)',
+      },
+      gridTemplateRows: {
+        'mini-player': 'minmax(0, 1fr) 40px',
       },
       flexBasis: {
         '1/8': '12.5%',

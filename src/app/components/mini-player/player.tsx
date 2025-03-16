@@ -16,21 +16,21 @@ export function MiniPlayer() {
   const { currentSongColor } = useSongColor()
 
   return (
-    <div className="w-full h-full max-h-full flex flex-col gap-2 p-2">
-      <div className="w-full h-full mid-player:max-h-fit flex flex-grow flex-col mid-player:flex-row mid-player:items-center gap-2">
+    <div className="w-screen h-screen max-h-screen grid grid-rows-1 mid-player:grid-rows-mini-player gap-2 p-2 pb-4">
+      <div className="w-full h-full grid grid-rows-mini-player mid-player:grid-rows-1 mid-player:grid-cols-mid-player-info mid-player:items-center gap-2">
         <div
           className={clsx(
-            'w-full mid-player:w-[20%] mid-player:max-w-14 h-full mid-player:h-fit mid-player:min-h-12',
+            'w-full h-full mid-player:aspect-square',
             'flex flex-col items-center justify-center gap-2',
             'bg-gradient-to-b from-background/20 to-background/50 rounded-md overflow-hidden',
-            'transition-[background-color] duration-500',
+            'transition-[background-color] duration-500 mid-player:!bg-background',
           )}
           style={{ backgroundColor: currentSongColor ?? undefined }}
         >
           <div
             className={clsx(
-              'flex w-full h-full relative p-4 mid-player:p-0 justify-center items-center group',
-              'mid-player:min-w-fit mid-player:min-h-fit mid-player:aspect-square mid-player:max-w-14 mid-player:max-h-14',
+              'flex w-full h-full mid-player:min-h-fit mid-player:max-h-full relative p-4 mid-player:p-0 justify-center items-center group',
+              'mid-player:aspect-square',
             )}
           >
             <MemoMiniPlayerSongImage />
@@ -55,7 +55,7 @@ export function MiniPlayer() {
           <MemoMiniPlayerLikeButton />
         </div>
       </div>
-      <div className="hidden mid-player:flex justify-center items-center min-h-12">
+      <div className="hidden mid-player:flex justify-center items-center h-10 max-h-10">
         <MemoMiniPlayerControls />
       </div>
     </div>
