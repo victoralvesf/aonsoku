@@ -1,8 +1,7 @@
 import { useEffect, useRef, useCallback, memo } from 'react'
-
-import { isChrome } from 'react-device-detect'
 import { getSongStreamUrl } from '@/api/httpClient'
 import { getProxyURL } from '@/api/podcastClient'
+import { MiniPlayerButton } from '@/app/components/mini-player/button'
 import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
 import { podcasts } from '@/service/podcasts'
@@ -18,6 +17,7 @@ import {
   usePlayerStore,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
+import { hasPiPSupport } from '@/utils/browser'
 import { logger } from '@/utils/logger'
 import { ReplayGainParams } from '@/utils/replayGain'
 import { AudioPlayer } from './audio'
@@ -30,7 +30,6 @@ import { PodcastPlaybackRate } from './podcast-playback-rate'
 import { PlayerProgress } from './progress'
 import { PlayerSongListButton } from './song-list-button'
 import { PlayerVolume } from './volume'
-import { MiniPlayerButton } from '../mini-player/button'
 
 const MemoTrackInfo = memo(TrackInfo)
 const MemoRadioInfo = memo(RadioInfo)
@@ -42,6 +41,7 @@ const MemoPlayerClearQueueButton = memo(PlayerClearQueueButton)
 const MemoPlayerVolume = memo(PlayerVolume)
 const MemoPodcastPlaybackRate = memo(PodcastPlaybackRate)
 const MemoLyricsButton = memo(PlayerLyricsButton)
+const MemoMiniPlayerButton = memo(MiniPlayerButton)
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -209,7 +209,7 @@ export function Player() {
               disabled={!song && !radio && !podcast}
             />
 
-            {isSong && isChrome && <MiniPlayerButton />}
+            {isSong && hasPiPSupport && <MemoMiniPlayerButton />}
           </div>
         </div>
       </div>
