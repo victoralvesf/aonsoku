@@ -83,7 +83,7 @@
       "title": "Titre",
       "artist": "Artiste",
       "album": "Album",
-      "discNumber": "N° de disque",
+      "discNumber": "Numéro de disque",
       "path": "Chemin",
       "plays": "Lectures",
       "lastPlayed": "Écouté récemment"
@@ -358,7 +358,25 @@
         "description": "Personnaliser les paramètres des paroles.",
         "preferSynced": {
           "label": "Préférer les paroles synchronisées",
-          "info": "Lorsque activé, les paroles synchronisées auront la priorité sur les paroles non synchronisées"
+          "info": "Si activé, les paroles synchronisées auront la priorité sur les paroles non synchronisées."
+        }
+      }
+    },
+    "content": {
+      "podcast": {
+        "group": "Podcasts",
+        "description": "Activer l'intégration avec le service Aonsoku Podcasts.",
+        "credentials": {
+          "label": "Utiliser l'URL de l'utilisateur connecté et du serveur",
+          "url": "URL du serveur",
+          "user": "Nom d'utilisateur",
+          "error": "Le nom d'utilisateur et l'URL du serveur sont nécessaires."
+        },
+        "service": {
+          "url": "URL du service de podcasts"
+        },
+        "enabled": {
+          "label": "Activer l'intégration"
         }
       }
     }
@@ -467,7 +485,7 @@
     "completed": "Votre fichier a été téléchargé."
   },
   "warnings": {
-    "reload": "Une chanson est en cours de lecture!\nÊtes-vous certain de vouloir recharger la page?"
+    "reload": "Une chanson est en cours de lecture !\nÊtes-vous sûr·e de vouloir recharger la page ?"
   },
   "podcasts": {
     "form": {
@@ -483,6 +501,56 @@
         }
       },
       "latestEpisodes": "Derniers épisodes"
+    },
+    "filters": {
+      "episodes": {
+        "orderBy": {
+          "title": "Titre",
+          "duration": "Durée",
+          "publishDate": "Date de publication"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Titre",
+          "episodeCount": "Nombre d'épisodes"
+        }
+      }
+    },
+    "header": {
+      "feed": "Flux",
+      "website": "Site Web officiel",
+      "unfollow": {
+        "tooltip": "Se désabonner de {{title}}",
+        "dialog": {
+          "title": "Êtes-vous sûr·e de vouloir vous désabonner de ce podcast ?",
+          "description": "Pour écouter ce podcast à l'avenir, vous devrez le recréer."
+        },
+        "toasts": {
+          "success": "Vous vous êtes bien désabonné·e du podcast !",
+          "error": "Une erreur s'est produite en essayant de vous désabonner du podcast. Veuillez réessayer."
+        }
+      },
+      "episodeCount_one": "{{count}} épisode",
+      "episodeCount_many": "{{count}} épisodes",
+      "episodeCount_other": "{{count}} épisodes"
+    },
+    "list": {
+      "episodes": "Épisodes",
+      "notFoundMessage": "Ce podcast n'a pas encore d'épisodes !",
+      "progress": {
+        "remainingTime": "il reste {{time}}",
+        "completed": "Terminé"
+      }
+    }
+  },
+  "dayjs": {
+    "relativeTime": {
+      "future": "dans %s",
+      "s": "quelques secondes",
+      "m": "1 minute",
+      "mm": "%d minutes",
+      "past": "il y a %s"
     }
   }
 }
