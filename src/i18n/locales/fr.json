@@ -202,8 +202,8 @@
         "recentlyAdded": "Ajoutés récemment",
         "random": "Aléatoire",
         "discography": "Discographie",
-        "recentlyPlayed": "Ecoutés récemment",
-        "releaseYear": "Date de sortie",
+        "recentlyPlayed": "Écoutés récemment",
+        "releaseYear": "Année de sortie",
         "artist": "Artiste",
         "genre": "Genre",
         "search": "Recherche",
@@ -242,8 +242,8 @@
     "relatedArtists": "Artistes similaires",
     "topSongs": "Populaire",
     "buttons": {
-      "play": "Ecouter la radio de {{artist}}",
-      "shuffle": "Ecouter la radio de {{artist}} en aléatoire",
+      "play": "Écouter la radio de {{artist}}",
+      "shuffle": "Écouter la radio de {{artist}} en aléatoire",
       "options": "Plus d'options pour {{artist}}"
     },
     "info": {
@@ -351,7 +351,8 @@
         },
         "mode": {
           "label": "Mode"
-        }
+        },
+        "enabled": "Activé"
       },
       "lyrics": {
         "group": "Paroles",
@@ -402,6 +403,14 @@
           "label": "Activer le plein écran automatique",
           "info": "Si activé, l'application passera automatiquement en mode plein écran lors de l'accès au grand lecteur."
         }
+      },
+      "queue": {
+        "group": "File d'attente et paroles",
+        "colors": {
+          "label": "Activer la couleur de fond dynamique",
+          "info": "Si activé, l'application utilisera la couleur dominante de la pochette de l'album actuel comme couleur de fond."
+        },
+        "description": "Personnaliser la page de la file d'attente et des paroles."
       }
     }
   },
@@ -521,7 +530,10 @@
         "saveButton": "Enregistrer",
         "message": "Vous pouvez ajouter plusieurs URL, une par ligne.",
         "validations": {
-          "url": "Veuillez fournir des URL valides."
+          "url": "Veuillez fournir des URL valides.",
+          "urlLength": "Les URL doivent avoir au moins 10 caractères",
+          "protocol": "Les URL doivent commencer par http:// ou https://",
+          "atLeastOneUrl": "Veuillez fournir au moins une URL."
         }
       },
       "latestEpisodes": "Derniers épisodes"
