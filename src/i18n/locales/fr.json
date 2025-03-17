@@ -124,7 +124,8 @@
     "miniSearch": "Recherche",
     "library": "Bibliothèque",
     "artists": "Artistes",
-    "emptyPlaylist": "Aucune liste de lecture créée"
+    "emptyPlaylist": "Aucune liste de lecture créée",
+    "podcasts": "Podcasts"
   },
   "menu": {
     "serverLogout": "Se déconnecter",
@@ -150,11 +151,11 @@
     "dark": "Sombre",
     "light": "Clair",
     "system": "Système",
-    "black": "Noir et Blanc",
+    "black": "Noir et blanc",
     "one-dark": "One Dark",
     "material-theme": "Material Theme",
     "monokai-pro": "Monokai Pro",
-    "night-owl-light": "Night Owl Light",
+    "night-owl-light": "Lumière pour oiseau de nuit",
     "marmalade-beaver": "Marmalade Beaver",
     "noctis-lilac": "Noctis Lilac",
     "github-dark": "Github Dark",
@@ -347,7 +348,13 @@
       "replayGain": {
         "defaultGain": {
           "info": "Ce niveau de gain est appliqué aux titres qui n'incluent pas de métadonnées ReplayGain, ce qui garantit un volume audio cohérent. La plage recommandée pour le gain est comprise entre -10 dB et -1 dB."
+        },
+        "mode": {
+          "label": "Mode"
         }
+      },
+      "lyrics": {
+        "group": "Paroles"
       }
     }
   },
@@ -456,5 +463,21 @@
   },
   "warnings": {
     "reload": "Une chanson est en cours de lecture!\nÊtes-vous certain de vouloir recharger la page?"
+  },
+  "podcasts": {
+    "form": {
+      "addButton": "Ajouter un podcast",
+      "search": "Rechercher des podcasts…",
+      "dialog": {
+        "title": "Créer un podcast",
+        "feedUrl": "URL du flux",
+        "saveButton": "Enregistrer",
+        "message": "Vous pouvez ajouter plusieurs URL, une par ligne.",
+        "validations": {
+          "url": "Veuillez fournir des URL valides."
+        }
+      },
+      "latestEpisodes": "Derniers épisodes"
+    }
   }
 }
