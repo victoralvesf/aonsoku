@@ -570,7 +570,7 @@
   },
   "about": {
     "server": "Serveur",
-    "version": "Version:",
+    "version": "Version :",
     "client": "Client"
   }
 }
