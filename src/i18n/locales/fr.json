@@ -390,7 +390,14 @@
     "label": "Paramètres",
     "options": {
       "appearance": "Apparence",
-      "language": "Langue & région"
+      "language": "Langue & région",
+      "content": "Contenu"
+    },
+    "appearance": {
+      "general": {
+        "description": "Personnaliser l'apparence et le comportement de l'application.",
+        "group": "Général"
+      }
     }
   },
   "server": {
