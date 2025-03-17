@@ -580,7 +580,7 @@
     "type": "Type :",
     "apiVersion": "Version API :",
     "toasts": {
-      "copy": "Lien copié dans le presse-papier!"
+      "copy": "Lien copié dans le presse-papier !"
     }
   }
 }
