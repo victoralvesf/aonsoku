@@ -390,8 +390,9 @@
     "label": "Paramètres",
     "options": {
       "appearance": "Apparence",
-      "language": "Langue & région",
-      "content": "Contenu"
+      "language": "Langue et région",
+      "content": "Contenu",
+      "audio": "Lecteur et audio"
     },
     "appearance": {
       "general": {
