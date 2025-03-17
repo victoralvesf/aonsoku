@@ -397,7 +397,11 @@
     "appearance": {
       "general": {
         "description": "Personnaliser l'apparence et le comportement de l'application.",
-        "group": "Général"
+        "group": "Général",
+        "fullscreen": {
+          "label": "Activer le plein écran automatique",
+          "info": "Si activé, l'application passera automatiquement en mode plein écran lors de l'accès au grand lecteur."
+        }
       }
     }
   },
