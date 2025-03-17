@@ -386,6 +386,11 @@
         "group": "Barre latérale",
         "description": "Gérer la visibilité et l'organisation des sections affichées dans la barre latérale."
       }
+    },
+    "label": "Paramètres",
+    "options": {
+      "appearance": "Apparence",
+      "language": "Langue & région"
     }
   },
   "server": {
