@@ -572,6 +572,7 @@
     "server": "Serveur",
     "version": "Version :",
     "client": "Client",
-    "type": "Type :"
+    "type": "Type :",
+    "apiVersion": "Version API:"
   }
 }
