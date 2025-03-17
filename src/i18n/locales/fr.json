@@ -354,7 +354,12 @@
         }
       },
       "lyrics": {
-        "group": "Paroles"
+        "group": "Paroles",
+        "description": "Personnaliser les paramètres des paroles.",
+        "preferSynced": {
+          "label": "Préférer les paroles synchronisées",
+          "info": "Lorsque activé, les paroles synchronisées auront la priorité sur les paroles non synchronisées"
+        }
       }
     }
   },
