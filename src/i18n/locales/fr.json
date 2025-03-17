@@ -378,6 +378,13 @@
         "enabled": {
           "label": "Activer l'intégration"
         }
+      },
+      "sidebar": {
+        "radios": {
+          "section": "Masquer la section des radios"
+        },
+        "group": "Barre latérale",
+        "description": "Gérer la visibilité et l'organisation des sections affichées dans la barre latérale."
       }
     }
   },
@@ -550,7 +557,20 @@
       "s": "quelques secondes",
       "m": "1 minute",
       "mm": "%d minutes",
-      "past": "il y a %s"
+      "past": "il y a %s",
+      "y": "1 an",
+      "yy": "%d ans",
+      "d": "1 jour",
+      "dd": "%d jours",
+      "M": "1 mois",
+      "h": "1 heure",
+      "MM": "%s mois",
+      "hh": "%d heures"
     }
+  },
+  "about": {
+    "server": "Serveur",
+    "version": "Version:",
+    "client": "Client"
   }
 }
