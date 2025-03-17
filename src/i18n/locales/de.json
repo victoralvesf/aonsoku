@@ -503,8 +503,8 @@
     "label": "Einstellungen",
     "options": {
       "appearance": "Erscheinungsbild",
-      "language": "Sprache & Region",
-      "audio": "Player & Audio",
+      "language": "Sprache und Region",
+      "audio": "Player und Audio",
       "content": "Inhalte"
     },
     "audio": {
