@@ -573,6 +573,9 @@
     "version": "Version :",
     "client": "Client",
     "type": "Type :",
-    "apiVersion": "Version API :"
+    "apiVersion": "Version API :",
+    "toasts": {
+      "copy": "Lien copié dans le presse-papier!"
+    }
   }
 }
