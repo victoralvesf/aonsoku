@@ -571,6 +571,7 @@
   "about": {
     "server": "Serveur",
     "version": "Version :",
-    "client": "Client"
+    "client": "Client",
+    "type": "Type:"
   }
 }
