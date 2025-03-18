@@ -53,15 +53,19 @@ const Slider = React.forwardRef<
         className={clsx(
           'relative h-1 w-full grow overflow-hidden rounded-full select-none',
           variant === 'default' && 'bg-secondary',
-          variant === 'secondary' && 'bg-muted-foreground',
+          variant === 'secondary' && 'bg-muted-foreground/70',
         )}
+        onContextMenu={handleContextMenu}
+        onMouseDown={handleMouseDown}
       >
         <SliderPrimitive.Range
           className={clsx(
-            'absolute h-full select-none',
+            'absolute h-full select-none rounded',
             variant === 'default' && 'bg-primary',
             variant === 'secondary' && 'bg-secondary-foreground',
           )}
+          onContextMenu={handleContextMenu}
+          onMouseDown={handleMouseDown}
         />
       </SliderPrimitive.Track>
 
@@ -74,12 +78,13 @@ const Slider = React.forwardRef<
           onPointerDown={props.thumbMouseDown}
           onPointerUp={props.thumbMouseUp}
           className={clsx(
-            'block h-3 w-3 cursor-pointer select-none rounded-full',
-            'border-2 ring-offset-background transition-colors',
+            'block opacity-0 h-3 w-3 cursor-pointer select-none rounded-full',
+            'border-2 ring-offset-background transition-[background-color,opacity]',
             'focus-visible:outline-none focus-visible:ring-2',
             'focus-visible:ring-ring focus-visible:ring-offset-2',
             'disabled:pointer-events-none disabled:opacity-50 transform-gpu',
-            variant === 'default' && 'bg-primary border-primary',
+            showTooltip && 'opacity-100',
+            variant === 'default' && 'bg-foreground border-foreground',
             variant === 'secondary' &&
               'bg-secondary-foreground border-secondary-foreground',
           )}

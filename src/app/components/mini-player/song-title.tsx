@@ -23,8 +23,8 @@ export function MiniPlayerSongTitle() {
       <MarqueeTitle gap="mr-2">
         <span
           className={cn(
-            'text-sm font-medium hover:underline cursor-pointer',
-            'mini-player:text-xs mini-player:font-normal',
+            'text-base font-medium hover:underline cursor-pointer',
+            'mid-player:text-sm mini-player:text-xs mini-player:font-normal',
           )}
           data-testid="track-title"
           onClick={handleTitleClick}

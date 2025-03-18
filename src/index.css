@@ -107,6 +107,10 @@ img {
   @apply after:content-['•'] after:block after:absolute after:-bottom-1 after:text-primary;
 }
 
+.mini-player-button-active {
+  @apply after:content-['•'] after:block after:absolute after:-bottom-1.5 after:text-secondary-foreground !text-secondary-foreground;
+}
+
 .bg-skeleton {
   @apply bg-accent;
 }

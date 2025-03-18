@@ -35,7 +35,7 @@ export function MiniPlayerControls() {
   } = usePlayerActions()
 
   return (
-    <div>
+    <div className="flex items-center">
       <Button
         size="icon"
         variant="ghost"
@@ -50,7 +50,7 @@ export function MiniPlayerControls() {
         onClick={() => toggleShuffle()}
         disabled={isPlayingOneSong() || !hasNext}
       >
-        <Shuffle className={buttonsStyle.secondaryIcon} />
+        <Shuffle size={18} />
       </Button>
       <Button
         size="icon"
@@ -64,7 +64,7 @@ export function MiniPlayerControls() {
         onClick={() => playPrevSong()}
         disabled={!hasPrev}
       >
-        <SkipBack className={buttonsStyle.secondaryIconFilled} />
+        <SkipBack className={buttonsStyle.secondaryIconFilled} width={20} />
       </Button>
       <Button
         size="icon"
@@ -78,9 +78,15 @@ export function MiniPlayerControls() {
         onClick={() => togglePlayPause()}
       >
         {isPlaying ? (
-          <Pause className={buttonsStyle.mainIcon} />
+          <Pause
+            className={buttonsStyle.mainIcon}
+            size={20}
+            strokeWidth={0.75}
+            strokeLinecap="square"
+            strokeLinejoin="round"
+          />
         ) : (
-          <Play className={buttonsStyle.mainIcon} />
+          <Play className={buttonsStyle.mainIcon} size={18} strokeWidth={1} />
         )}
       </Button>
       <Button
@@ -95,7 +101,7 @@ export function MiniPlayerControls() {
         onClick={() => playNextSong()}
         disabled={!hasNext && loopState !== LoopState.All}
       >
-        <SkipForward className={buttonsStyle.secondaryIconFilled} />
+        <SkipForward className={buttonsStyle.secondaryIconFilled} size={20} />
       </Button>
       <Button
         size="icon"
@@ -110,15 +116,9 @@ export function MiniPlayerControls() {
         onClick={() => toggleLoop()}
         style={{ ...buttonsStyle.style }}
       >
-        {loopState === LoopState.Off && (
-          <Repeat className={buttonsStyle.secondaryIcon} />
-        )}
-        {loopState === LoopState.All && (
-          <Repeat className={buttonsStyle.secondaryIcon} />
-        )}
-        {loopState === LoopState.One && (
-          <RepeatOne className={buttonsStyle.secondaryIcon} />
-        )}
+        {loopState === LoopState.Off && <Repeat size={18} />}
+        {loopState === LoopState.All && <Repeat size={18} />}
+        {loopState === LoopState.One && <RepeatOne size={18} />}
       </Button>
     </div>
   )
@@ -141,24 +141,20 @@ export function MiniPlayerLikeButton() {
       style={{ ...buttonsStyle.style }}
     >
       <Heart
-        className={clsx(
-          'w-[18px] h-[18px] drop-shadow-lg',
-          isSongStarred && 'text-red-500 fill-red-500',
-        )}
+        className={clsx(isSongStarred && 'text-red-500 fill-red-500')}
+        size={18}
       />
     </Button>
   )
 }
 
 const buttonsStyle = {
-  main: 'w-10 h-10 rounded-full shadow-lg bg-secondary-foreground hover:scale-105 transition-transform will-change-transform',
-  mainIcon: 'w-5 h-5 text-secondary fill-secondary',
+  main: 'w-9 h-9 p-0 rounded-full bg-secondary-foreground hover:scale-105 transition-transform will-change-transform',
+  mainIcon: 'text-secondary fill-secondary',
   secondary:
-    'relative w-10 h-10 rounded-full text-secondary-foreground hover:text-secondary-foreground data-[state=active]:text-primary hover:bg-transparent hover:scale-110 transition-transform will-change-transform',
-  secondaryIcon: 'w-5 h-5 drop-shadow-lg',
-  secondaryIconFilled:
-    'w-5 h-5 text-secondary-foreground fill-secondary-foreground drop-shadow-lg',
-  activeDot: 'player-button-active',
+    'relative w-9 h-9 p-0 rounded-full text-secondary-foreground hover:text-secondary-foreground data-[state=active]:text-primary hover:bg-transparent hover:scale-110 transition-transform will-change-transform',
+  secondaryIconFilled: 'text-secondary-foreground fill-secondary-foreground',
+  activeDot: 'mini-player-button-active',
   style: {
     backfaceVisibility: 'hidden' as const,
   },
