@@ -1,6 +1,9 @@
+import clsx from 'clsx'
 import { PictureInPicture2Icon } from 'lucide-react'
 import { memo, useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { usePlayerCurrentList } from '@/store/player.store'
 import { MiniPlayer } from './player'
 import { MiniPlayerPortal } from './portal'
@@ -9,6 +12,7 @@ const MemoMiniPlayerPortal = memo(MiniPlayerPortal)
 const MemoMiniPlayer = memo(MiniPlayer)
 
 export function MiniPlayerButton() {
+  const { t } = useTranslation()
   const currentList = usePlayerCurrentList()
   const [pipWindow, setPipWindow] = useState<Window | null>(
     window.documentPictureInPicture.window,
@@ -40,17 +44,26 @@ export function MiniPlayerButton() {
 
   const disabled = currentList.length === 0
 
+  const buttonTooltip = pipWindow
+    ? t('player.tooltips.miniPlayer.close')
+    : t('player.tooltips.miniPlayer.open')
+
   return (
     <>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={handleClick}
-        className="rounded-full ml-2"
-        disabled={disabled}
-      >
-        <PictureInPicture2Icon className="w-4 h-4" />
-      </Button>
+      <SimpleTooltip text={buttonTooltip}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleClick}
+          className={clsx(
+            'relative rounded-full ml-2',
+            pipWindow && 'text-primary player-button-active',
+          )}
+          disabled={disabled}
+        >
+          <PictureInPicture2Icon className="w-4 h-4" />
+        </Button>
+      </SimpleTooltip>
       <MemoMiniPlayerPortal pipWindow={pipWindow}>
         <MemoMiniPlayer />
       </MemoMiniPlayerPortal>

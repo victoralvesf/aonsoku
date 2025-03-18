@@ -400,7 +400,11 @@
         "disable": "Não repetir"
       },
       "like": "Curtir {{song}} por {{artist}}",
-      "dislike": "Remover curtida de {{song}} por {{artist}}"
+      "dislike": "Remover curtida de {{song}} por {{artist}}",
+      "miniPlayer": {
+        "open": "Abrir Miniplayer",
+        "close": "Fechar Miniplayer"
+      }
     }
   },
   "options": {
