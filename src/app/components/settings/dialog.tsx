@@ -17,11 +17,11 @@ export function SettingsDialog() {
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <DialogTitle className="sr-only">{t('settings.label')}</DialogTitle>
       <DialogContent
         className="overflow-hidden p-0 md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]"
         aria-describedby={undefined}
       >
+        <DialogTitle className="sr-only">{t('settings.label')}</DialogTitle>
         <SidebarProvider className="min-h-full">
           <Sidebar collapsible="none" className="hidden md:flex">
             <SidebarContent>
