@@ -459,7 +459,6 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.currentDuration = 0
                 state.playerState.audioPlayerRef = null
                 state.playerState.currentSongColor = null
-                state.playerState.useSongColorOnQueue = false
               })
             },
             resetProgress: () => {
