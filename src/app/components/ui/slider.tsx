@@ -27,12 +27,6 @@ const Slider = React.forwardRef<
     event.preventDefault()
   }
 
-  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.button === 2) {
-      event.preventDefault()
-    }
-  }
-
   const [showTooltip, setShowTooltip] = React.useState(false)
 
   return (
@@ -42,8 +36,6 @@ const Slider = React.forwardRef<
         'relative h-3 flex w-full touch-none select-none items-center cursor-pointer',
         className,
       )}
-      onContextMenu={handleContextMenu}
-      onMouseDown={handleMouseDown}
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
       {...props}
@@ -55,7 +47,6 @@ const Slider = React.forwardRef<
           variant === 'secondary' && 'bg-muted-foreground/70',
         )}
         onContextMenu={handleContextMenu}
-        onMouseDown={handleMouseDown}
       >
         <SliderPrimitive.Range
           className={clsx(
@@ -64,7 +55,6 @@ const Slider = React.forwardRef<
             variant === 'secondary' && 'bg-secondary-foreground',
           )}
           onContextMenu={handleContextMenu}
-          onMouseDown={handleMouseDown}
         />
       </SliderPrimitive.Track>
 
@@ -78,8 +68,7 @@ const Slider = React.forwardRef<
           className={clsx(
             'block opacity-0 h-3 w-3 cursor-pointer select-none rounded-full',
             'border-2 ring-offset-background transition-[background-color,opacity]',
-            'focus-visible:outline-none focus-visible:ring-2',
-            'focus-visible:ring-ring focus-visible:ring-offset-2',
+            'focus-visible:outline-none focus-visible:ring-transparent',
             'disabled:pointer-events-none disabled:opacity-50 transform-gpu',
             showTooltip && 'opacity-100',
             variant === 'default' && 'bg-foreground border-foreground',
@@ -289,12 +278,6 @@ export function ProgressSlider(props: ProgressSliderProps) {
     event.preventDefault()
   }
 
-  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.button === 2) {
-      event.preventDefault()
-    }
-  }
-
   return (
     <SliderPrimitive.Root
       ref={sliderRef}
@@ -302,8 +285,6 @@ export function ProgressSlider(props: ProgressSliderProps) {
         'relative h-3 flex w-full touch-none select-none items-center cursor-pointer',
         className,
       )}
-      onContextMenu={handleContextMenu}
-      onMouseDown={handleMouseDown}
       onMouseOver={handleMouseOver}
       onMouseOut={() => setShowTooltip(false)}
       onMouseMove={handleMouseMove}
@@ -325,7 +306,6 @@ export function ProgressSlider(props: ProgressSliderProps) {
             variant === 'secondary' && 'bg-muted-foreground/70',
           )}
           onContextMenu={handleContextMenu}
-          onMouseDown={handleMouseDown}
         >
           <SliderPrimitive.Range
             className={clsx(
@@ -335,7 +315,6 @@ export function ProgressSlider(props: ProgressSliderProps) {
               !showTooltip && 'rounded',
             )}
             onContextMenu={handleContextMenu}
-            onMouseDown={handleMouseDown}
           />
         </SliderPrimitive.Track>
       </SliderTooltip>
@@ -343,9 +322,8 @@ export function ProgressSlider(props: ProgressSliderProps) {
       <SliderPrimitive.Thumb
         className={clsx(
           'block opacity-0 h-3 w-3 cursor-pointer select-none rounded-full',
-          'border-2 ring-offset-background transition-[background-color,opacity]',
-          'focus-visible:outline-none focus-visible:ring-2',
-          'focus-visible:ring-ring focus-visible:ring-offset-2',
+          'border-2 transition-[background-color,opacity]',
+          'focus-visible:outline-none focus-visible:ring-transparent',
           'disabled:pointer-events-none disabled:opacity-50 transform-gpu',
           showTooltip && 'opacity-100',
           variant === 'default' && 'bg-foreground border-foreground',
