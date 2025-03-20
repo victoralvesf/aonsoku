@@ -1,4 +1,5 @@
-import { Dialog, DialogContent } from '@/app/components/ui/dialog'
+import { useTranslation } from 'react-i18next'
+import { Dialog, DialogContent, DialogTitle } from '@/app/components/ui/dialog'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import {
   Sidebar,
@@ -11,11 +12,16 @@ import { SettingsOptions } from './options'
 import { Pages } from './pages'
 
 export function SettingsDialog() {
+  const { t } = useTranslation()
   const { openDialog, setOpenDialog } = useAppSettings()
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <DialogContent className="overflow-hidden p-0 md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]">
+      <DialogTitle className="sr-only">{t('settings.label')}</DialogTitle>
+      <DialogContent
+        className="overflow-hidden p-0 md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]"
+        aria-describedby={undefined}
+      >
         <SidebarProvider className="min-h-full">
           <Sidebar collapsible="none" className="hidden md:flex">
             <SidebarContent>

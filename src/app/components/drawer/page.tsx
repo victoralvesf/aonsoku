@@ -47,6 +47,7 @@ export function MainDrawerPage() {
         style={{
           backgroundColor,
         }}
+        aria-describedby={undefined}
       >
         <div className="flex w-full h-14 min-h-14 px-[6%] items-center justify-end">
           <Button
