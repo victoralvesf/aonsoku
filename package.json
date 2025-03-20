@@ -110,5 +110,11 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.0.2",
     "vite": "^5.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "cypress",
+      "esbuild"
+    ]
   }
 }

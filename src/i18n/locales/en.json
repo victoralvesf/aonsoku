@@ -561,7 +561,8 @@
       "appearance": "Appearance",
       "language": "Language & region",
       "audio": "Player & audio",
-      "content": "Content"
+      "content": "Content",
+      "privacy": "Privacy & Security"
     },
     "appearance": {
       "general": {
@@ -603,6 +604,16 @@
         "preferSynced": {
           "label": "Prefer synced lyrics",
           "info": "When enabled, synced lyrics will be prioritized over unsynced lyrics."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "External Services",
+        "description": "Control which external services Aonsoku can reach out to.",
+        "lrclib": {
+          "info": "LRCLib is used for lyrics",
+          "label": "LRCLib"
         }
       }
     },

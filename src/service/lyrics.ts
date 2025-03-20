@@ -53,7 +53,17 @@ async function getLyrics(getLyricsData: GetLyricsData) {
 }
 
 async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
+  const { lrcLibEnabled } = usePlayerStore.getState().settings.privacy
+
   const { artist, title, album, duration } = getLyricsData
+
+  if (!lrcLibEnabled) {
+    return {
+      artist,
+      title,
+      value: '',
+    }
+  }
 
   try {
     const params = new URLSearchParams({
