@@ -309,10 +309,10 @@ export function ProgressSlider(props: ProgressSliderProps) {
         >
           <SliderPrimitive.Range
             className={clsx(
-              'absolute h-full select-none',
+              'absolute h-full select-none transition-[border-radius]',
               variant === 'default' && 'bg-primary',
               variant === 'secondary' && 'bg-secondary-foreground',
-              !showTooltip && 'rounded',
+              showTooltip ? 'rounded-none' : 'rounded',
             )}
             onContextMenu={handleContextMenu}
           />
