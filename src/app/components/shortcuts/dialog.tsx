@@ -19,7 +19,7 @@ export function ShortcutsDialog({ open, onOpenChange }: ShortcutsDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="p-0 gap-0">
+      <DialogContent className="p-0 gap-0" aria-describedby={undefined}>
         <DialogHeader className="p-6 border-b-[1px] border-b-border mb-0">
           <DialogTitle>{t('shortcuts.modal.title')}</DialogTitle>
           <div className="flex gap-1 text-sm text-muted-foreground">

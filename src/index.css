@@ -107,6 +107,10 @@ img {
   @apply after:content-['•'] after:block after:absolute after:-bottom-1 after:text-primary;
 }
 
+.mini-player-button-active {
+  @apply after:content-['•'] after:block after:absolute after:-bottom-1.5 after:text-secondary-foreground !text-secondary-foreground;
+}
+
 .bg-skeleton {
   @apply bg-accent;
 }
@@ -263,4 +267,10 @@ svg#bars .eq-bar--4 {
 
 #sync-lyrics-box .react-lrc-line {
   @apply w-fit m-auto max-w-[80%] text-balance;
+}
+
+@media all and (display-mode: picture-in-picture) {
+  body, html {
+    @apply w-full h-full overflow-hidden p-0 m-0;
+  }
 }

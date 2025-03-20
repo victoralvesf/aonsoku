@@ -1,63 +1,15 @@
-import { useCallback, useEffect } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { AspectRatio } from '@/app/components/ui/aspect-ratio'
 import { ROUTES } from '@/routes/routesList'
-import {
-  useMainDrawerState,
-  usePlayerSonglist,
-  useSongColor,
-} from '@/store/player.store'
-import { getAverageColor } from '@/utils/getAverageColor'
-import { logger } from '@/utils/logger'
+import { useMainDrawerState, usePlayerSonglist } from '@/store/player.store'
 
 export function CurrentSongInfo() {
-  const { setCurrentSongColor, useSongColorOnQueue } = useSongColor()
   const { currentSong } = usePlayerSonglist()
   const { closeDrawer } = useMainDrawerState()
 
   const imageUrl = getCoverArtUrl(currentSong.coverArt, 'song', '900')
-
-  function getImageElement() {
-    return document.getElementById('song-info-image') as HTMLImageElement
-  }
-
-  const getImageColor = useCallback(async () => {
-    const img = getImageElement()
-    if (!img) return
-
-    let color = null
-
-    if (!useSongColorOnQueue) {
-      setCurrentSongColor(null)
-      return
-    }
-
-    try {
-      color = (await getAverageColor(img)).hex
-      logger.info('[DrawerCurrentSongInfo] - Getting Image Average Color', {
-        color,
-      })
-    } catch (_) {
-      logger.error(
-        '[DrawerCurrentSongInfo] - Unable to get image average color.',
-      )
-    }
-
-    setCurrentSongColor(color)
-  }, [setCurrentSongColor, useSongColorOnQueue])
-
-  function handleError() {
-    const img = getImageElement()
-    if (!img) return
-
-    img.crossOrigin = null
-  }
-
-  useEffect(() => {
-    getImageColor()
-  }, [currentSong.coverArt, getImageColor])
 
   return (
     <div className="mr-12 hidden lg:block w-[260px] lg:w-[320px] 2xl:w-[380px]">
@@ -66,13 +18,10 @@ export function CurrentSongInfo() {
           id="song-info-image"
           src={imageUrl}
           effect="opacity"
-          crossOrigin="anonymous"
           alt={`${currentSong.artist} - ${currentSong.title}`}
           className="rounded-md aspect-square object-cover bg-background text-transparent"
           width="100%"
           height="100%"
-          onLoad={getImageColor}
-          onError={handleError}
         />
       </AspectRatio>
 

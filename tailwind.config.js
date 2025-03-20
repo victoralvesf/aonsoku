@@ -106,6 +106,11 @@ module.exports = {
           'minmax(40px, 50px) minmax(0px, 3fr) minmax(0px, 2fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(60px, 70px) minmax(100px, 120px)',
         header:
           'minmax(180px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(180px, 1fr)',
+        'mid-player-info': 'minmax(40px, 70px) minmax(168px, 1fr)',
+        'mini-player': 'minmax(30px, 40px) minmax(80px, 1fr) 64px',
+      },
+      gridTemplateRows: {
+        'floating-player': 'minmax(0, 1fr) 40px',
       },
       flexBasis: {
         '1/8': '12.5%',
@@ -125,6 +130,10 @@ module.exports = {
         'custom-3': '0 0 3px rgba(255, 255, 255, 0.03)',
         'custom-5': '0 0 5px rgba(255, 255, 255, 0.05)',
         'header-image': '0 4px 35px rgba(0, 0, 0, 0.6)',
+      },
+      screens: {
+        'mid-player': { raw: '(min-height: 133px) and (max-height: 170px)' },
+        'mini-player': { raw: '(max-height: 132px)' },
       },
     },
   },

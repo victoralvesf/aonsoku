@@ -467,7 +467,6 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.currentDuration = 0
                 state.playerState.audioPlayerRef = null
                 state.playerState.currentSongColor = null
-                state.playerState.useSongColorOnQueue = false
               })
             },
             resetProgress: () => {
@@ -681,10 +680,42 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.queueState = status
               })
             },
+            toggleQueueAction: () => {
+              const { mainDrawerState, lyricsState, queueState } =
+                get().playerState
+              const {
+                toggleQueueAndLyrics,
+                setQueueState,
+                setMainDrawerState,
+              } = get().actions
+
+              if (mainDrawerState && lyricsState) {
+                toggleQueueAndLyrics()
+              } else {
+                setQueueState(!queueState)
+                setMainDrawerState(!mainDrawerState)
+              }
+            },
             setLyricsState: (status) => {
               set((state) => {
                 state.playerState.lyricsState = status
               })
+            },
+            toggleLyricsAction: () => {
+              const { mainDrawerState, lyricsState, queueState } =
+                get().playerState
+              const {
+                toggleQueueAndLyrics,
+                setLyricsState,
+                setMainDrawerState,
+              } = get().actions
+
+              if (mainDrawerState && queueState) {
+                toggleQueueAndLyrics()
+              } else {
+                setLyricsState(!lyricsState)
+                setMainDrawerState(!mainDrawerState)
+              }
             },
             toggleQueueAndLyrics: () => {
               const { queueState, lyricsState } = get().playerState
@@ -919,12 +950,14 @@ export const useQueueState = () =>
   usePlayerStore((state) => ({
     queueState: state.playerState.queueState,
     setQueueState: state.actions.setQueueState,
+    toggleQueueAction: state.actions.toggleQueueAction,
   }))
 
 export const useLyricsState = () =>
   usePlayerStore((state) => ({
     lyricsState: state.playerState.lyricsState,
     setLyricsState: state.actions.setLyricsState,
+    toggleLyricsAction: state.actions.toggleLyricsAction,
   }))
 
 export const useSongColor = () =>

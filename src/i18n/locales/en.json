@@ -394,7 +394,11 @@
         "disable": "Disable repeat"
       },
       "like": "Like {{song}} by {{artist}}",
-      "dislike": "Remove like from {{song}} by {{artist}}"
+      "dislike": "Remove like from {{song}} by {{artist}}",
+      "miniPlayer": {
+        "open": "Open Miniplayer",
+        "close": "Close Miniplayer"
+      }
     }
   },
   "options": {
@@ -502,7 +506,9 @@
   },
   "queue": {
     "title": "Queue",
-    "clear": "Clear queue"
+    "clear": "Clear queue",
+    "close": "Close queue",
+    "open": "Open queue"
   },
   "shortcuts": {
     "modal": {

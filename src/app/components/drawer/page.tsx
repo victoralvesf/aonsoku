@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { ChevronDownIcon } from 'lucide-react'
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useMemo } from 'react'
 import { LyricsTab } from '@/app/components/fullscreen/lyrics'
 import { CurrentSongInfo } from '@/app/components/queue/current-song-info'
 import { QueueSongList } from '@/app/components/queue/song-list'
@@ -15,10 +15,16 @@ import {
 } from '@/store/player.store'
 
 export function MainDrawerPage() {
-  const { currentSongColor } = useSongColor()
+  const { currentSongColor, useSongColorOnQueue } = useSongColor()
   const { mainDrawerState, closeDrawer } = useMainDrawerState()
   const { queueState } = useQueueState()
   const { lyricsState } = useLyricsState()
+
+  const backgroundColor = useMemo(() => {
+    if (!useSongColorOnQueue) return undefined
+
+    return currentSongColor ?? undefined
+  }, [currentSongColor, useSongColorOnQueue])
 
   return (
     <Drawer
@@ -39,8 +45,9 @@ export function MainDrawerPage() {
         )}
         showHandle={false}
         style={{
-          backgroundColor: currentSongColor ?? undefined,
+          backgroundColor,
         }}
+        aria-describedby={undefined}
       >
         <div className="flex w-full h-14 min-h-14 px-[6%] items-center justify-end">
           <Button

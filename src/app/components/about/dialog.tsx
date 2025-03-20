@@ -1,6 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Dialog, DialogContent, DialogHeader } from '@/app/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/app/components/ui/dialog'
 import { subsonic } from '@/service/subsonic'
 import { getAppInfo } from '@/utils/appName'
 import { queryKeys } from '@/utils/queryKeys'
@@ -21,15 +26,19 @@ export function AboutDialog({ open, onOpenChange }: AboutDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="p-0 overflow-hidden gap-0 cursor-default">
+      <DialogContent
+        className="p-0 overflow-hidden gap-0 cursor-default"
+        aria-describedby={undefined}
+      >
+        <DialogTitle className="sr-only">{t('menu.about')}</DialogTitle>
         <DialogHeader>
-          <div className="flex items-center justify-center w-full py-2 bg-gradient-to-b from-primary/20 to-primary/50">
+          <div className="flex gap-2 items-center justify-center w-full py-4 bg-gradient-to-b from-accent to-background">
             <img
-              src="/icon_shadow.png"
+              src="/icon.svg"
               alt="Aonsoku"
-              className="w-20 h-20 drop-shadow"
+              className="w-12 h-12 drop-shadow grayscale"
             />
-            <h1 className="font-semibold text-3xl drop-shadow">{name}</h1>
+            <h1 className="font-semibold text-2xl drop-shadow">{name}</h1>
           </div>
         </DialogHeader>
 

@@ -3,7 +3,7 @@ import { Command as CommandPrimitive } from 'cmdk'
 import { Search } from 'lucide-react'
 import * as React from 'react'
 
-import { Dialog, DialogContent } from '@/app/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitle } from '@/app/components/ui/dialog'
 import { cn } from '@/lib/utils'
 
 const Command = React.forwardRef<
@@ -24,7 +24,11 @@ Command.displayName = CommandPrimitive.displayName
 const CommandDialog = ({ children, ...props }: DialogProps) => {
   return (
     <Dialog {...props}>
-      <DialogContent className="overflow-hidden p-0 shadow-lg bg-transparent">
+      <DialogTitle className="sr-only">Search Dialog</DialogTitle>
+      <DialogContent
+        className="overflow-hidden p-0 shadow-lg bg-transparent"
+        aria-describedby={undefined}
+      >
         {children}
       </DialogContent>
     </Dialog>

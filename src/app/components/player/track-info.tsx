@@ -1,4 +1,5 @@
 import { AudioLines, Maximize2 } from 'lucide-react'
+import { useCallback, useEffect } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -11,10 +12,51 @@ import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
+import { useSongColor } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
+import { getAverageColor } from '@/utils/getAverageColor'
+import { logger } from '@/utils/logger'
 
 export function TrackInfo({ song }: { song: ISong | undefined }) {
   const { t } = useTranslation()
+  const { setCurrentSongColor, currentSongColor } = useSongColor()
+
+  function getImageElement() {
+    return document.getElementById('track-song-image') as HTMLImageElement
+  }
+
+  const getImageColor = useCallback(async () => {
+    const img = getImageElement()
+    if (!img) return
+
+    let color = null
+
+    try {
+      color = (await getAverageColor(img)).hex
+      logger.info('[TrackInfo] - Getting Image Average Color', {
+        color,
+      })
+    } catch (_) {
+      logger.error('[TrackInfo] - Unable to get image average color.')
+    }
+
+    if (color !== currentSongColor) {
+      setCurrentSongColor(color)
+    }
+  }, [currentSongColor, setCurrentSongColor])
+
+  function handleError() {
+    const img = getImageElement()
+    if (!img) return
+
+    img.crossOrigin = null
+  }
+
+  useEffect(() => {
+    if (song) {
+      getImageColor()
+    }
+  }, [song, getImageColor])
 
   if (!song) {
     return (
@@ -39,12 +81,16 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
       <div className="group relative">
         <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md">
           <LazyLoadImage
-            src={getCoverArtUrl(song.coverArt, 'song', '140')}
+            id="track-song-image"
+            src={getCoverArtUrl(song.coverArt, 'song', '240')}
             width="100%"
             height="100%"
-            className="aspect-square object-cover w-full h-full cursor-pointer text-transparent"
+            crossOrigin="anonymous"
+            className="aspect-square object-cover w-full h-full cursor-pointer bg-skeleton text-transparent"
             data-testid="track-image"
             alt={`${song.artist} - ${song.title}`}
+            onLoad={getImageColor}
+            onError={handleError}
           />
         </div>
         <FullscreenMode>

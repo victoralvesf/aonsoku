@@ -400,7 +400,11 @@
         "disable": "Não repetir"
       },
       "like": "Curtir {{song}} por {{artist}}",
-      "dislike": "Remover curtida de {{song}} por {{artist}}"
+      "dislike": "Remover curtida de {{song}} por {{artist}}",
+      "miniPlayer": {
+        "open": "Abrir Miniplayer",
+        "close": "Fechar Miniplayer"
+      }
     }
   },
   "options": {
@@ -511,7 +515,9 @@
   },
   "queue": {
     "title": "Fila de reprodução",
-    "clear": "Limpar fila"
+    "clear": "Limpar fila",
+    "close": "Fechar fila",
+    "open": "Abrir fila"
   },
   "shortcuts": {
     "modal": {

@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { Slider } from '@/app/components/ui/slider'
+import { ProgressSlider } from '@/app/components/ui/slider'
 import { podcasts } from '@/service/podcasts'
 import { subsonic } from '@/service/subsonic'
 import {
@@ -144,20 +144,25 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   ])
 
   const currentTime = convertSecondsToTime(isSeeking ? localProgress : progress)
+
   const isProgressLarge = useMemo(() => {
     return localProgress >= 3600 || progress >= 3600
   }, [localProgress, progress])
 
+  const isDurationLarge = useMemo(() => {
+    return currentDuration >= 3600
+  }, [currentDuration])
+
   return (
     <div
       className={clsx(
-        'flex w-full justify-center items-center',
+        'flex w-full justify-center items-center gap-2',
         isEmpty && 'opacity-50',
       )}
     >
       <small
         className={clsx(
-          'text-xs text-muted-foreground text-left',
+          'text-xs text-muted-foreground text-right',
           isProgressLarge ? 'min-w-14' : 'min-w-10',
         )}
         data-testid="player-current-time"
@@ -165,10 +170,10 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
         {currentTime}
       </small>
       {!isEmpty || isPodcast ? (
-        <Slider
+        <ProgressSlider
           defaultValue={[0]}
           value={isSeeking ? [localProgress] : [progress]}
-          tooltipValue={currentTime}
+          tooltipTransformer={convertSecondsToTime}
           max={currentDuration}
           step={1}
           className="cursor-pointer w-[32rem]"
@@ -182,7 +187,7 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
           data-testid="player-progress-slider"
         />
       ) : (
-        <Slider
+        <ProgressSlider
           defaultValue={[0]}
           max={100}
           step={1}
@@ -191,7 +196,10 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
         />
       )}
       <small
-        className="text-xs text-muted-foreground text-right pl-2.5"
+        className={clsx(
+          'text-xs text-muted-foreground text-left',
+          isDurationLarge ? 'min-w-14' : 'min-w-10',
+        )}
         data-testid="player-duration-time"
       >
         {songDuration}
