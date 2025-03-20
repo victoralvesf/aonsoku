@@ -515,7 +515,9 @@
   },
   "queue": {
     "title": "Fila de reprodução",
-    "clear": "Limpar fila"
+    "clear": "Limpar fila",
+    "close": "Fechar fila",
+    "open": "Abrir fila"
   },
   "shortcuts": {
     "modal": {

@@ -506,7 +506,9 @@
   },
   "queue": {
     "title": "Queue",
-    "clear": "Clear queue"
+    "clear": "Clear queue",
+    "close": "Close queue",
+    "open": "Open queue"
   },
   "shortcuts": {
     "modal": {

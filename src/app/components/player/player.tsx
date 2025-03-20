@@ -28,7 +28,7 @@ import { PlayerLyricsButton } from './lyrics-button'
 import { PodcastInfo } from './podcast-info'
 import { PodcastPlaybackRate } from './podcast-playback-rate'
 import { PlayerProgress } from './progress'
-import { PlayerSongListButton } from './song-list-button'
+import { PlayerQueueButton } from './queue-button'
 import { PlayerVolume } from './volume'
 
 const MemoTrackInfo = memo(TrackInfo)
@@ -36,7 +36,7 @@ const MemoRadioInfo = memo(RadioInfo)
 const MemoPodcastInfo = memo(PodcastInfo)
 const MemoPlayerControls = memo(PlayerControls)
 const MemoPlayerLikeButton = memo(PlayerLikeButton)
-const MemoPlayerSongListButton = memo(PlayerSongListButton)
+const MemoPlayerQueueButton = memo(PlayerQueueButton)
 const MemoPlayerClearQueueButton = memo(PlayerClearQueueButton)
 const MemoPlayerVolume = memo(PlayerVolume)
 const MemoPodcastPlaybackRate = memo(PodcastPlaybackRate)
@@ -196,7 +196,7 @@ export function Player() {
               <>
                 <MemoPlayerLikeButton disabled={!song} />
                 <MemoLyricsButton disabled={!song} />
-                <MemoPlayerSongListButton disabled={!song} />
+                <MemoPlayerQueueButton disabled={!song} />
               </>
             )}
             {isPodcast && <MemoPodcastPlaybackRate />}
