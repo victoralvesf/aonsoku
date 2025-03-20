@@ -135,7 +135,7 @@ export function CreatePlaylistDialog() {
         setPlaylistDialogState(state)
       }}
     >
-      <DialogContent className="max-w-[500px]">
+      <DialogContent className="max-w-[500px]" aria-describedby={undefined}>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>

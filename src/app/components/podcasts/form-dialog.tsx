@@ -103,7 +103,7 @@ export function PodcastFormDialog({ open, setOpen }: PodcastFormDialogProps) {
         form.reset(defaultValues)
       }}
     >
-      <DialogContent className="max-w-[500px]">
+      <DialogContent className="max-w-[500px]" aria-describedby={undefined}>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
