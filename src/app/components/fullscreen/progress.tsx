@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Slider } from '@/app/components/ui/slider'
+import { ProgressSlider } from '@/app/components/ui/slider'
 import {
   usePlayerActions,
   usePlayerDuration,
@@ -54,11 +54,11 @@ export function FullscreenProgress() {
     <div className="flex items-center">
       <div className="min-w-[55px] text-left drop-shadow-lg">{currentTime}</div>
 
-      <Slider
+      <ProgressSlider
         variant="secondary"
         defaultValue={[0]}
         value={isSeeking ? [localProgress] : [progress]}
-        tooltipValue={currentTime}
+        tooltipTransformer={convertSecondsToTime}
         max={currentDuration}
         step={1}
         className="w-full h-4"

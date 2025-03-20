@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { Slider } from '@/app/components/ui/slider'
+import { ProgressSlider } from '@/app/components/ui/slider'
 import { podcasts } from '@/service/podcasts'
 import { subsonic } from '@/service/subsonic'
 import {
@@ -165,10 +165,10 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
         {currentTime}
       </small>
       {!isEmpty || isPodcast ? (
-        <Slider
+        <ProgressSlider
           defaultValue={[0]}
           value={isSeeking ? [localProgress] : [progress]}
-          tooltipValue={currentTime}
+          tooltipTransformer={convertSecondsToTime}
           max={currentDuration}
           step={1}
           className="cursor-pointer w-[32rem]"
@@ -182,7 +182,7 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
           data-testid="player-progress-slider"
         />
       ) : (
-        <Slider
+        <ProgressSlider
           defaultValue={[0]}
           max={100}
           step={1}
