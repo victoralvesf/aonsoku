@@ -3,10 +3,10 @@ import { ComponentPropsWithoutRef } from 'react'
 type EqualizerBarsProps = ComponentPropsWithoutRef<'svg'>
 
 const rects = [
-  { x: 1, height: 8 },
-  { x: 7, height: 16 },
-  { x: 13, height: 12 },
-  { x: 19, height: 4 },
+  { x: 1, height: 12 },
+  { x: 7, height: 18 },
+  { x: 13, height: 16 },
+  { x: 19, height: 10 },
 ]
 
 export function EqualizerBars(props: EqualizerBarsProps) {
@@ -18,6 +18,7 @@ export function EqualizerBars(props: EqualizerBarsProps) {
       viewBox="0 0 24 24"
       className="text-foreground"
       id="bars"
+      style={{ marginBottom: 4 }}
       {...props}
     >
       {rects.map((rect, index) => (
@@ -28,7 +29,7 @@ export function EqualizerBars(props: EqualizerBarsProps) {
           y={2}
           width={4}
           height={rect.height}
-          rx={1}
+          rx={0}
           fill="currentColor"
           shapeRendering="geometricPrecision"
         />
