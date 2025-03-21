@@ -1,1 +1,11 @@
-{}
+{
+  "home": {
+    "mostPlayed": "Nejčastěji přehrávané",
+    "recentlyAdded": "Nedávno přidané",
+    "recentlyPlayed": "Nedávno přehrané",
+    "explore": "Objevujte"
+  },
+  "sidebar": {
+    "home": "Domů"
+  }
+}
