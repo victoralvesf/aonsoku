@@ -44,6 +44,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             hasNext: false,
             currentSongColor: null,
             useSongColorOnQueue: false,
+            useSongColorOnBigPlayer: false,
           },
           playerProgress: {
             progress: 0,
@@ -767,6 +768,8 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
             resetConfig: () => {
               set((state) => {
+                state.playerState.useSongColorOnQueue = false
+                state.playerState.useSongColorOnBigPlayer = false
                 state.settings.fullscreen.autoFullscreenEnabled = false
                 state.settings.lyrics.preferSyncedLyrics = false
                 state.settings.replayGain.values = {
@@ -786,6 +789,11 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             setUseSongColorOnQueue: (value) => {
               set((state) => {
                 state.playerState.useSongColorOnQueue = value
+              })
+            },
+            setUseSongColorOnBigPlayer: (value) => {
+              set((state) => {
+                state.playerState.useSongColorOnBigPlayer = value
               })
             },
           },
@@ -965,7 +973,9 @@ export const useSongColor = () =>
     currentSongColor: state.playerState.currentSongColor,
     setCurrentSongColor: state.actions.setCurrentSongColor,
     useSongColorOnQueue: state.playerState.useSongColorOnQueue,
+    useSongColorOnBigPlayer: state.playerState.useSongColorOnBigPlayer,
     setUseSongColorOnQueue: state.actions.setUseSongColorOnQueue,
+    setUseSongColorOnBigPlayer: state.actions.setUseSongColorOnBigPlayer,
   }))
 
 export const usePlayerCurrentList = () =>

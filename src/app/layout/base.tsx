@@ -12,6 +12,7 @@ const HeaderMemo = memo(Header)
 const MiniSidebarMemo = memo(MiniSidebar)
 const SidebarMemo = memo(Sidebar)
 const PlayerMemo = memo(Player)
+const MemoMainDrawerPage = memo(MainDrawerPage)
 
 export default function BaseLayout() {
   return (
@@ -24,7 +25,7 @@ export default function BaseLayout() {
       <MainRoutes />
       <SongInfoModal />
       <RemovePlaylistDialog />
-      <MainDrawerPage />
+      <MemoMainDrawerPage />
     </div>
   )
 }

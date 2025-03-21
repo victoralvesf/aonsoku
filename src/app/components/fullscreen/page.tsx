@@ -8,11 +8,11 @@ import {
   DrawerTrigger,
 } from '@/app/components/ui/drawer'
 import { useAppWindow } from '@/app/hooks/use-app-window'
-import { useFullscreenPlayerSettings } from '@/store/player.store'
+import { useFullscreenPlayerSettings, useSongColor } from '@/store/player.store'
 import { enterFullscreen, exitFullscreen } from '@/utils/browser'
 import { isWindows } from '@/utils/osType'
 import { isTauri } from '@/utils/tauriTools'
-import { FullscreenBackdrop } from './backdrop'
+import { DynamicColorBackdrop, FullscreenBackdrop } from './backdrop'
 import { CloseFullscreenButton } from './buttons'
 import { DragRegion } from './drag-region'
 import { FullscreenPlayer } from './player'
@@ -23,10 +23,12 @@ interface FullscreenModeProps {
 }
 
 const MemoFullscreenBackdrop = memo(FullscreenBackdrop)
+const MemoDynamicColorBackdrop = memo(DynamicColorBackdrop)
 
 export default function FullscreenMode({ children }: FullscreenModeProps) {
   const { enterFullscreenWindow, exitFullscreenWindow } = useAppWindow()
   const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
+  const { useSongColorOnBigPlayer } = useSongColor()
 
   function handleFullscreen(open: boolean) {
     if (!autoFullscreenEnabled) return
@@ -57,7 +59,11 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
         showHandle={false}
         aria-describedby={undefined}
       >
-        <MemoFullscreenBackdrop />
+        {useSongColorOnBigPlayer ? (
+          <MemoDynamicColorBackdrop />
+        ) : (
+          <MemoFullscreenBackdrop />
+        )}
         <div className="absolute inset-0 flex flex-col p-8 w-full h-full gap-4 bg-black/0 z-10">
           {isTauri() && <DragRegion className="z-10" />}
 
