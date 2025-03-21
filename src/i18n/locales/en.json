@@ -565,8 +565,8 @@
     "label": "Settings",
     "options": {
       "appearance": "Appearance",
-      "language": "Language & region",
-      "audio": "Player & audio",
+      "language": "Language & Region",
+      "audio": "Player & Audio",
       "content": "Content",
       "privacy": "Privacy & Security"
     },
@@ -624,10 +624,10 @@
     "privacy": {
       "services": {
         "group": "External Services",
-        "description": "Control which external services Aonsoku can reach out to.",
+        "description": "Manage the external services that Aonsoku can access.",
         "lrclib": {
-          "info": "LRCLib is used for lyrics",
-          "label": "LRCLib"
+          "info": "LRCLIB is used to find song lyrics.",
+          "label": "LRCLIB"
         }
       }
     },

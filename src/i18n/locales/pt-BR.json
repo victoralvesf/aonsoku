@@ -574,9 +574,10 @@
     "label": "Configurações",
     "options": {
       "appearance": "Aparência",
-      "language": "Linguagem & região",
-      "audio": "Reprodutor & áudio",
-      "content": "Conteúdo"
+      "language": "Linguagem & Região",
+      "audio": "Reprodutor & Áudio",
+      "content": "Conteúdo",
+      "privacy": "Privacidade & Segurança"
     },
     "appearance": {
       "general": {
@@ -626,6 +627,16 @@
         "preferSynced": {
           "label": "Preferir letras sincronizadas",
           "info": "Quando ativado, letras sincronizadas serão priorizadas em relação às não sincronizadas."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Serviços Externos",
+        "description": "Gerencie os serviços externos que o Aonsoku pode acessar.",
+        "lrclib": {
+          "info": "O LRCLIB é usado para encontrar letras de músicas.",
+          "label": "LRCLib"
         }
       }
     },
