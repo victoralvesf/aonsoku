@@ -538,8 +538,8 @@
         "group": "Externe Dienste",
         "description": "Legt fest welche Dienste Aonsoku verwenden kann",
         "lrclib": {
-          "info": "LRCLib wird für Liedtexte verwendet.",
-          "label": "LRCLib"
+          "info": "LRCLIB wird für Liedtexte verwendet.",
+          "label": "LRCLIB"
         }
       }
     },

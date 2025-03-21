@@ -574,9 +574,10 @@
     "label": "Configurações",
     "options": {
       "appearance": "Aparência",
-      "language": "Linguagem & região",
-      "audio": "Reprodutor & áudio",
-      "content": "Conteúdo"
+      "language": "Linguagem & Região",
+      "audio": "Reprodutor & Áudio",
+      "content": "Conteúdo",
+      "privacy": "Privacidade & Segurança"
     },
     "appearance": {
       "general": {
@@ -587,12 +588,20 @@
           "info": "Se habilitado, ao acessar o player grande, o app ativará o modo tela cheia automaticamente."
         }
       },
+      "bigPlayer": {
+        "group": "Player Grande",
+        "description": "Personalize a página do player grande.",
+        "colors": {
+          "label": "Habilitar cor de fundo dinâmica",
+          "info": "Se habilitado, o aplicativo usará a cor dominante da arte do álbum em reprodução como fundo, substituindo a imagem da arte do álbum."
+        }
+      },
       "queue": {
         "group": "Fila de reprodução e Letra",
         "description": "Personalize a página da fila de reprodução e letra.",
         "colors": {
           "label": "Habilitar cor de fundo dinâmica",
-          "info": "Se habilitado, o app usará a cor dominante da arte do álbum em reprodução como cor de fundo."
+          "info": "Se habilitado, o aplicativo usará a cor dominante da arte do álbum em reprodução como fundo."
         }
       }
     },
@@ -618,6 +627,16 @@
         "preferSynced": {
           "label": "Preferir letras sincronizadas",
           "info": "Quando ativado, letras sincronizadas serão priorizadas em relação às não sincronizadas."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Serviços Externos",
+        "description": "Gerencie os serviços externos que o Aonsoku pode acessar.",
+        "lrclib": {
+          "info": "O LRCLIB é usado para encontrar letras de músicas.",
+          "label": "LRCLib"
         }
       }
     },

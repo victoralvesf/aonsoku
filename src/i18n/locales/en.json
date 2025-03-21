@@ -565,8 +565,8 @@
     "label": "Settings",
     "options": {
       "appearance": "Appearance",
-      "language": "Language & region",
-      "audio": "Player & audio",
+      "language": "Language & Region",
+      "audio": "Player & Audio",
       "content": "Content",
       "privacy": "Privacy & Security"
     },
@@ -579,12 +579,20 @@
           "info": "If enabled, when accessing the big player, the app will automatically enter fullscreen mode."
         }
       },
+      "bigPlayer": {
+        "group": "Big Player",
+        "description": "Customize the big player page.",
+        "colors": {
+          "label": "Enable dynamic background color",
+          "info": "If enabled, the app will use the dominant color from the currently playing album art as the background, replacing the album art image."
+        }
+      },
       "queue": {
         "group": "Queue and Lyrics",
         "description": "Customize the queue and lyrics page.",
         "colors": {
           "label": "Enable dynamic background color",
-          "info": "If enabled, the app will use the dominant color from the currently playing album art as the background color."
+          "info": "If enabled, the app will use the dominant color from the currently playing album art as the background."
         }
       }
     },
@@ -616,10 +624,10 @@
     "privacy": {
       "services": {
         "group": "External Services",
-        "description": "Control which external services Aonsoku can reach out to.",
+        "description": "Manage the external services that Aonsoku can access.",
         "lrclib": {
-          "info": "LRCLib is used for lyrics",
-          "label": "LRCLib"
+          "info": "LRCLIB is used to find song lyrics.",
+          "label": "LRCLIB"
         }
       }
     },

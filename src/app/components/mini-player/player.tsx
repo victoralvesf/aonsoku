@@ -31,8 +31,8 @@ export function MiniPlayer() {
           className={clsx(
             'w-full h-full mid-player:aspect-square mini-player:aspect-square',
             'flex flex-col items-center justify-center gap-2',
-            'bg-gradient-to-b from-background/20 to-background/50 rounded-md mini-player:rounded',
-            'transition-[background-image,background-color] duration-500 overflow-hidden',
+            'default-gradient rounded-md mini-player:rounded',
+            'transition-[background-image,background-color] duration-1000 overflow-hidden',
             'mid-player:!bg-transparent mid-player:from-transparent mid-player:to-transparent',
             'mini-player:!bg-transparent mini-player:from-transparent mini-player:to-transparent',
           )}

@@ -37,37 +37,38 @@ export function MainDrawerPage() {
       modal={false}
     >
       <DrawerContent
-        className={clsx(
-          'main-drawer rounded-t-none border-none select-none cursor-default',
-          'outline-none transition-[background-image,background-color] duration-1000',
-          currentSongColor &&
-            'bg-gradient-to-b from-background/40 to-background/60',
-        )}
+        className="main-drawer rounded-t-none border-none select-none cursor-default outline-none"
         showHandle={false}
-        style={{
-          backgroundColor,
-        }}
         aria-describedby={undefined}
       >
-        <div className="flex w-full h-14 min-h-14 px-[6%] items-center justify-end">
-          <Button
-            variant="ghost"
-            className="w-10 h-10 rounded-full p-0 hover:bg-background"
-            onClick={closeDrawer}
-          >
-            <ChevronDownIcon />
-          </Button>
-        </div>
-        <div className="flex w-full h-full mt-8 px-[6%] mb-0">
-          <CurrentSongInfo />
+        <div
+          className={clsx(
+            'flex flex-col w-full h-[--content-height]',
+            'transition-[background-image,background-color] duration-1000',
+            currentSongColor && 'default-gradient',
+          )}
+          style={{ backgroundColor }}
+        >
+          <div className="flex w-full h-14 min-h-14 px-[6%] items-center justify-end">
+            <Button
+              variant="ghost"
+              className="w-10 h-10 rounded-full p-0 hover:bg-background"
+              onClick={closeDrawer}
+            >
+              <ChevronDownIcon />
+            </Button>
+          </div>
+          <div className="flex w-full h-full mt-8 px-[6%] mb-0">
+            <CurrentSongInfo />
 
-          <div className="flex flex-1 justify-center relative">
-            <ActiveContent active={queueState}>
-              <QueueSongList />
-            </ActiveContent>
-            <ActiveContent active={lyricsState}>
-              <LyricsTab />
-            </ActiveContent>
+            <div className="flex flex-1 justify-center relative">
+              <ActiveContent active={queueState}>
+                <QueueSongList />
+              </ActiveContent>
+              <ActiveContent active={lyricsState}>
+                <LyricsTab />
+              </ActiveContent>
+            </div>
           </div>
         </div>
       </DrawerContent>
