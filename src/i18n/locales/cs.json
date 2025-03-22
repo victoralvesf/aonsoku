@@ -6,6 +6,29 @@
     "explore": "Objevujte"
   },
   "sidebar": {
-    "home": "Domů"
+    "home": "Domů",
+    "search": "Hledat…",
+    "library": "Knihovna",
+    "songs": "Skladby",
+    "albums": "Alba",
+    "playlists": "Playlisty",
+    "emptyPlaylist": "Zatím nebyly vytvořeny žádné playlisty",
+    "podcasts": "Podcasty",
+    "miniSearch": "Hledat",
+    "radios": "Rádiové stanice",
+    "artists": "Umělci"
+  },
+  "menu": {
+    "language": "Jazyk",
+    "about": "O aplikaci",
+    "server": "Server",
+    "serverLogout": "Odhlásit se"
+  },
+  "generic": {
+    "seeMore": "Ukázat více",
+    "showDetails": "Ukázat detaily",
+    "hideDetails": "Skrýt detaily",
+    "viewAll": "Zobrazit vše",
+    "loading": "Načítání…"
   }
 }
