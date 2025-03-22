@@ -30,5 +30,11 @@
     "hideDetails": "Skrýt detaily",
     "viewAll": "Zobrazit vše",
     "loading": "Načítání…"
+  },
+  "theme": {
+    "label": "Motiv",
+    "dark": "Tmavý",
+    "system": "Systémový",
+    "light": "Světlý"
   }
 }
