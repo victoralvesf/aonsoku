@@ -404,6 +404,10 @@
       "miniPlayer": {
         "open": "Abrir Miniplayer",
         "close": "Fechar Miniplayer"
+      },
+      "volume": {
+        "mute": "Mudo",
+        "unmute": "Com som"
       }
     }
   },
