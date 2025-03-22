@@ -474,7 +474,8 @@
     "clear": "清空队列"
   },
   "warnings": {
-    "reload": "有一首歌曲正在播放！\n你确定要重新加载页面吗？"
+    "reload": "有一首歌曲正在播放！\n你确定要重新加载页面吗？",
+    "songError": "无法播放歌曲，请检查服务器！"
   },
   "mobile": {
     "unsupported_message": "{{app_name}} 不支持手机。",
@@ -507,7 +508,11 @@
           "track": "音轨增益",
           "album": "专辑增益"
         },
-        "preAmp": "前置放大器（dB）"
+        "preAmp": "前置放大器（dB）",
+        "defaultGain": {
+          "info": "该增益设置会应用于未包含回放增益元数据的歌曲，以确保音频响度统一。增益推荐范围介于-10 dB至-1 dB之间。",
+          "label": "默认增益（dB）"
+        }
       },
       "lyrics": {
         "group": "歌词",
