@@ -398,6 +398,10 @@
       "miniPlayer": {
         "open": "Open Miniplayer",
         "close": "Close Miniplayer"
+      },
+      "volume": {
+        "mute": "Mute",
+        "unmute": "Unmute"
       }
     }
   },

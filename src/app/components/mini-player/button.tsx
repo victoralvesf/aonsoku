@@ -56,9 +56,10 @@ export function MiniPlayerButton() {
           size="icon"
           onClick={handleClick}
           className={clsx(
-            'relative rounded-full ml-2',
+            'relative rounded-full',
             pipWindow && 'text-primary hover:text-primary player-button-active',
           )}
+          onFocus={(e) => e.preventDefault()}
           disabled={disabled}
         >
           <PictureInPicture2Icon className="w-4 h-4" />
