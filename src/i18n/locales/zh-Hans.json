@@ -15,7 +15,8 @@
     "emptyPlaylist": "还没有创建播放列表",
     "albums": "专辑",
     "search": "搜索…",
-    "miniSearch": "搜索"
+    "miniSearch": "搜索",
+    "podcasts": "播客"
   },
   "menu": {
     "about": "关于",
@@ -533,5 +534,28 @@
       }
     },
     "label": "设置"
+  },
+  "podcasts": {
+    "form": {
+      "latestEpisodes": "最新单集",
+      "addButton": "添加播客",
+      "dialog": {
+        "message": "可以添加多个URL，每行一个。",
+        "saveButton": "保存",
+        "validations": {
+          "url": "请输入有效的URL。",
+          "protocol": "URL必须以 http:// 或 https:// 开头",
+          "urlLength": "URL长度须不少于10个字符",
+          "atLeastOneUrl": "请至少输入一个URL。"
+        },
+        "feedUrl": "订阅源URL",
+        "title": "创建播客"
+      },
+      "toasts": {
+        "success": "播客创建成功！几分钟后即可收听！",
+        "error": "创建播客失败！"
+      },
+      "search": "搜索播客…"
+    }
   }
 }
