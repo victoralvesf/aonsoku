@@ -503,9 +503,10 @@
     "label": "Einstellungen",
     "options": {
       "appearance": "Erscheinungsbild",
-      "language": "Sprache und Region",
-      "audio": "Player und Audio",
-      "content": "Inhalte"
+      "language": "Sprache & Region",
+      "audio": "Player & Audio",
+      "content": "Inhalte",
+      "privacy": "Privatsphäre und Sicherheit"
     },
     "audio": {
       "replayGain": {
@@ -530,6 +531,16 @@
         },
         "group": "Liedtexte",
         "description": "Liedtext-Einstellungen anpassen."
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Externe Dienste",
+        "description": "Legt fest welche Dienste Aonsoku verwenden kann",
+        "lrclib": {
+          "info": "LRCLIB wird für Liedtexte verwendet.",
+          "label": "LRCLIB"
+        }
       }
     },
     "content": {

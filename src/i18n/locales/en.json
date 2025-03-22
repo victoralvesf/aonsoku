@@ -394,7 +394,11 @@
         "disable": "Disable repeat"
       },
       "like": "Like {{song}} by {{artist}}",
-      "dislike": "Remove like from {{song}} by {{artist}}"
+      "dislike": "Remove like from {{song}} by {{artist}}",
+      "miniPlayer": {
+        "open": "Open Miniplayer",
+        "close": "Close Miniplayer"
+      }
     }
   },
   "options": {
@@ -502,7 +506,9 @@
   },
   "queue": {
     "title": "Queue",
-    "clear": "Clear queue"
+    "clear": "Clear queue",
+    "close": "Close queue",
+    "open": "Open queue"
   },
   "shortcuts": {
     "modal": {
@@ -559,9 +565,10 @@
     "label": "Settings",
     "options": {
       "appearance": "Appearance",
-      "language": "Language & region",
-      "audio": "Player & audio",
-      "content": "Content"
+      "language": "Language & Region",
+      "audio": "Player & Audio",
+      "content": "Content",
+      "privacy": "Privacy & Security"
     },
     "appearance": {
       "general": {
@@ -572,12 +579,20 @@
           "info": "If enabled, when accessing the big player, the app will automatically enter fullscreen mode."
         }
       },
+      "bigPlayer": {
+        "group": "Big Player",
+        "description": "Customize the big player page.",
+        "colors": {
+          "label": "Enable dynamic background color",
+          "info": "If enabled, the app will use the dominant color from the currently playing album art as the background, replacing the album art image."
+        }
+      },
       "queue": {
         "group": "Queue and Lyrics",
         "description": "Customize the queue and lyrics page.",
         "colors": {
           "label": "Enable dynamic background color",
-          "info": "If enabled, the app will use the dominant color from the currently playing album art as the background color."
+          "info": "If enabled, the app will use the dominant color from the currently playing album art as the background."
         }
       }
     },
@@ -603,6 +618,16 @@
         "preferSynced": {
           "label": "Prefer synced lyrics",
           "info": "When enabled, synced lyrics will be prioritized over unsynced lyrics."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "External Services",
+        "description": "Manage the external services that Aonsoku can access.",
+        "lrclib": {
+          "info": "LRCLIB is used to find song lyrics.",
+          "label": "LRCLIB"
         }
       }
     },

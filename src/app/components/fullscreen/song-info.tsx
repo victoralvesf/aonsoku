@@ -17,7 +17,7 @@ export function SongInfo() {
             src={imageUrl}
             effect="opacity"
             alt={`${currentSong.artist} - ${currentSong.title}`}
-            className="rounded-lg 2xl:rounded-2xl aspect-square object-cover"
+            className="rounded-lg 2xl:rounded-2xl aspect-square object-cover shadow-custom-5"
             width="100%"
             height="100%"
           />

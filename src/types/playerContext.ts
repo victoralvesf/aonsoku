@@ -36,6 +36,7 @@ export interface IPlayerState {
   hasNext: boolean
   currentSongColor: string | null
   useSongColorOnQueue: boolean
+  useSongColorOnBigPlayer: boolean
 }
 
 export interface IPlayerProgress {
@@ -82,11 +83,17 @@ interface ILyrics {
   setPreferSyncedLyrics: (value: boolean) => void
 }
 
+export interface IPrivacySettings {
+  lrcLibEnabled: boolean
+  setLrcLibEnabled: (value: boolean) => void
+}
+
 export interface IPlayerSettings {
   volume: IVolumeSettings
   fullscreen: IFullscreen
   lyrics: ILyrics
   replayGain: IReplayGain
+  privacy: IPrivacySettings
 }
 
 export interface IPlayerActions {
@@ -119,7 +126,9 @@ export interface IPlayerActions {
   removeSongFromQueue: (id: string) => void
   setMainDrawerState: (state: boolean) => void
   setQueueState: (state: boolean) => void
+  toggleQueueAction: () => void
   setLyricsState: (state: boolean) => void
+  toggleLyricsAction: () => void
   toggleQueueAndLyrics: () => void
   closeDrawer: () => void
   playFirstSongInQueue: () => void
@@ -134,6 +143,7 @@ export interface IPlayerActions {
   updateQueueChecks: () => void
   setCurrentSongColor: (value: string | null) => void
   setUseSongColorOnQueue: (value: boolean) => void
+  setUseSongColorOnBigPlayer: (value: boolean) => void
 }
 
 export interface IPlayerContext {

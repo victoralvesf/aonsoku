@@ -44,11 +44,20 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             hasNext: false,
             currentSongColor: null,
             useSongColorOnQueue: false,
+            useSongColorOnBigPlayer: false,
           },
           playerProgress: {
             progress: 0,
           },
           settings: {
+            privacy: {
+              lrcLibEnabled: true,
+              setLrcLibEnabled(value) {
+                set((state) => {
+                  state.settings.privacy.lrcLibEnabled = value
+                })
+              },
+            },
             volume: {
               min: 0,
               max: 100,
@@ -459,7 +468,6 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.currentDuration = 0
                 state.playerState.audioPlayerRef = null
                 state.playerState.currentSongColor = null
-                state.playerState.useSongColorOnQueue = false
               })
             },
             resetProgress: () => {
@@ -576,7 +584,10 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
 
               const { id, starred } = get().songlist.currentSong
               const isSongStarred = typeof starred === 'string'
-              await subsonic.star.handleStarItem({ id, starred: isSongStarred })
+              await subsonic.star.handleStarItem({
+                id,
+                starred: isSongStarred,
+              })
 
               const songList = [...currentList]
               songList[currentSongIndex] = {
@@ -670,10 +681,42 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.queueState = status
               })
             },
+            toggleQueueAction: () => {
+              const { mainDrawerState, lyricsState, queueState } =
+                get().playerState
+              const {
+                toggleQueueAndLyrics,
+                setQueueState,
+                setMainDrawerState,
+              } = get().actions
+
+              if (mainDrawerState && lyricsState) {
+                toggleQueueAndLyrics()
+              } else {
+                setQueueState(!queueState)
+                setMainDrawerState(!mainDrawerState)
+              }
+            },
             setLyricsState: (status) => {
               set((state) => {
                 state.playerState.lyricsState = status
               })
+            },
+            toggleLyricsAction: () => {
+              const { mainDrawerState, lyricsState, queueState } =
+                get().playerState
+              const {
+                toggleQueueAndLyrics,
+                setLyricsState,
+                setMainDrawerState,
+              } = get().actions
+
+              if (mainDrawerState && queueState) {
+                toggleQueueAndLyrics()
+              } else {
+                setLyricsState(!lyricsState)
+                setMainDrawerState(!mainDrawerState)
+              }
             },
             toggleQueueAndLyrics: () => {
               const { queueState, lyricsState } = get().playerState
@@ -725,6 +768,8 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
             resetConfig: () => {
               set((state) => {
+                state.playerState.useSongColorOnQueue = false
+                state.playerState.useSongColorOnBigPlayer = false
                 state.settings.fullscreen.autoFullscreenEnabled = false
                 state.settings.lyrics.preferSyncedLyrics = false
                 state.settings.replayGain.values = {
@@ -744,6 +789,11 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             setUseSongColorOnQueue: (value) => {
               set((state) => {
                 state.playerState.useSongColorOnQueue = value
+              })
+            },
+            setUseSongColorOnBigPlayer: (value) => {
+              set((state) => {
+                state.playerState.useSongColorOnBigPlayer = value
               })
             },
           },
@@ -855,6 +905,9 @@ export const useReplayGainActions = () =>
 export const useFullscreenPlayerSettings = () =>
   usePlayerStore((state) => state.settings.fullscreen)
 
+export const usePrivacySettings = () =>
+  usePlayerStore((state) => state.settings.privacy)
+
 export const useLyricsSettings = () =>
   usePlayerStore((state) => state.settings.lyrics)
 
@@ -905,12 +958,14 @@ export const useQueueState = () =>
   usePlayerStore((state) => ({
     queueState: state.playerState.queueState,
     setQueueState: state.actions.setQueueState,
+    toggleQueueAction: state.actions.toggleQueueAction,
   }))
 
 export const useLyricsState = () =>
   usePlayerStore((state) => ({
     lyricsState: state.playerState.lyricsState,
     setLyricsState: state.actions.setLyricsState,
+    toggleLyricsAction: state.actions.toggleLyricsAction,
   }))
 
 export const useSongColor = () =>
@@ -918,7 +973,9 @@ export const useSongColor = () =>
     currentSongColor: state.playerState.currentSongColor,
     setCurrentSongColor: state.actions.setCurrentSongColor,
     useSongColorOnQueue: state.playerState.useSongColorOnQueue,
+    useSongColorOnBigPlayer: state.playerState.useSongColorOnBigPlayer,
     setUseSongColorOnQueue: state.actions.setUseSongColorOnQueue,
+    setUseSongColorOnBigPlayer: state.actions.setUseSongColorOnBigPlayer,
   }))
 
 export const usePlayerCurrentList = () =>
