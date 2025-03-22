@@ -35,6 +35,30 @@
     "label": "Motiv",
     "dark": "Tmavý",
     "system": "Systémový",
-    "light": "Světlý"
+    "light": "Světlý",
+    "black": "Černo-bílý",
+    "one-dark": "One Dark",
+    "night-owl-light": "Night Owl Světlý",
+    "marmalade-beaver": "Marmalade Beaver",
+    "material-theme": "Material Theme",
+    "monokai-pro": "Monokai Pro",
+    "github-dark": "Github Dark",
+    "shades-of-purple": "Odstíny Fialové",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "dracula": "Dracula",
+    "discord": "Discord",
+    "tinacious-design": "Tinacious Design",
+    "vim-dark-soft": "Vim Dark Soft",
+    "nuclear-dark": "Nuclear Dark",
+    "bearded-solarized": "Bearded Solarized",
+    "vue-dark": "Vue Dark",
+    "noctis-lilac": "Noctis Lilac",
+    "achiever": "Achiever"
+  },
+  "playlist": {
+    "headline": "Playlist",
+    "songCount_one": "{{count}} skladba",
+    "songCount_few": "{{count}} skladby",
+    "songCount_other": "{{count}} skladeb"
   }
 }
