@@ -31,7 +31,7 @@ export async function songsSearch(params: SongSearchParams) {
 export async function getArtistAllSongs(artistId: string) {
   const artist = await subsonic.artists.getOne(artistId)
 
-  if (!artist) return emptyResponse
+  if (!artist || !artist.album) return emptyResponse
 
   const results = await Promise.all(
     artist.album.map((a) => subsonic.albums.getOne(a.id)),

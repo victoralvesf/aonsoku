@@ -1,6 +1,11 @@
 import { Albums } from './album'
 import { SubsonicResponse } from './subsonicResponse'
 
+export interface IFeaturedArtist {
+  id: string
+  name: string
+}
+
 export interface IArtist {
   id: string
   name: string
