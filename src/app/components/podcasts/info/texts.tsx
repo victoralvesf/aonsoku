@@ -74,10 +74,6 @@ function Text({ children }: TextProp) {
   return <span>{children}</span>
 }
 
-function Dot() {
-  return <span className="mx-1 opacity-80">•</span>
-}
-
 type LinkProps = ComponentPropsWithoutRef<'a'>
 
 function DetailLink({ className, children, ...rest }: LinkProps) {
@@ -95,6 +91,5 @@ function DetailLink({ className, children, ...rest }: LinkProps) {
 export const Details = {
   Root: DetailsRoot,
   Text,
-  Dot,
   Link: DetailLink,
 }

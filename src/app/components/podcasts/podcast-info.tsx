@@ -1,5 +1,6 @@
 import { GlobeIcon, RssIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Dot } from '@/app/components/dot'
 import { Separator } from '@/app/components/ui/separator'
 import { Podcast } from '@/types/responses/podcasts'
 import { parseHtmlToText } from '@/utils/parseTexts'
@@ -33,14 +34,14 @@ export function PodcastInfo({ podcast }: PodcastInfoProps) {
               count: podcast.episode_count,
             })}
           </Details.Text>
-          <Details.Dot />
+          <Dot />
           <Details.Link href={podcast.feed_url}>
             <RssIcon className="w-4 h-4" />
             {t('podcasts.header.feed')}
           </Details.Link>
           {podcast.link && (
             <>
-              <Details.Dot />
+              <Dot />
               <Details.Link href={podcast.link}>
                 <GlobeIcon className="w-4 h-4" />
                 {t('podcasts.header.website')}

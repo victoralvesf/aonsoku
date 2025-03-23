@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Dot } from '@/app/components/dot'
 import { Separator } from '@/app/components/ui/separator'
 import { useEpisodeProgress } from '@/app/hooks/use-episode-progress'
 import { ROUTES } from '@/routes/routesList'
@@ -27,7 +28,7 @@ export function EpisodeInfo({ episode }: EpisodeInfoProps) {
         <Separator />
         <Details.Root>
           <Details.Text>{publishDate}</Details.Text>
-          <Details.Dot />
+          <Dot />
           <EpisodeProgress episode={episode} />
         </Details.Root>
       </Root>
