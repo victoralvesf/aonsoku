@@ -137,7 +137,7 @@ function TrackInfoArtistsLinks({ song }: TrackInfoArtistsLinksProps) {
     const reducedArtists = artists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
 
     return (
-      <div className="flex items-center gap-1 text-muted-foreground w-full maskImage-marquee-fade-finished">
+      <div className="flex items-center gap-1 text-xs text-muted-foreground w-full maskImage-marquee-fade-finished">
         {reducedArtists.map(({ id, name }, index) => (
           <div key={id} className="flex items-center">
             <ArtistLink id={id} name={name} />
@@ -165,7 +165,7 @@ function ArtistLink({ id, name }: ArtistLinkProps) {
     >
       <span
         className={cn(
-          'text-xs font-regular text-muted-foreground text-nowrap',
+          'text-xs text-muted-foreground text-nowrap',
           id && 'hover:underline hover:text-foreground',
         )}
       >
