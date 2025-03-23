@@ -1,7 +1,6 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
-import { Dot } from '@/app/components/dot'
 import { LinkWithoutTo } from '@/app/components/song/artist-link'
 import { AspectRatio } from '@/app/components/ui/aspect-ratio'
 import { cn } from '@/lib/utils'
@@ -45,7 +44,7 @@ export function CurrentSongInfo() {
           )}
         </h4>
 
-        <p className="leading-5 mt-1 text-foreground/70 drop-shadow-md flex items-center justify-center flex-wrap">
+        <p className="leading-5 mt-1 text-foreground/70 drop-shadow-md flex items-center justify-center flex-wrap gap-1">
           <QueueArtistsLinks song={currentSong} />
         </p>
       </div>
@@ -55,17 +54,17 @@ export function CurrentSongInfo() {
 
 function QueueArtistsLinks({ song }: { song: ISong }) {
   const { closeDrawer } = useMainDrawerState()
-  const { artist, artistId, albumArtists } = song
+  const { artist, artistId, artists } = song
 
-  if (albumArtists && albumArtists.length > 1) {
-    const artists = albumArtists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
+  if (artists && artists.length > 1) {
+    const data = artists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
 
     return (
       <>
-        {artists.map(({ id, name }, index) => (
+        {data.map(({ id, name }, index) => (
           <div key={id}>
             <ArtistLink id={id} name={name} onClick={closeDrawer} />
-            {index < artists.length - 1 && <Dot />}
+            {index < data.length - 1 && ','}
           </div>
         ))}
       </>
@@ -83,7 +82,10 @@ type ArtistLinkProps = LinkWithoutTo & {
 function ArtistLink({ id, name, className, ...props }: ArtistLinkProps) {
   return (
     <Link
-      className={cn(className, id ? 'hover:underline' : 'pointer-events-none')}
+      className={cn(
+        className,
+        id ? 'hover:underline hover:text-foreground' : 'pointer-events-none',
+      )}
       to={ROUTES.ARTIST.PAGE(id ?? '')}
       {...props}
     >

@@ -131,10 +131,10 @@ type TrackInfoArtistsLinksProps = {
 }
 
 function TrackInfoArtistsLinks({ song }: TrackInfoArtistsLinksProps) {
-  const { albumArtists, artistId, artist } = song
+  const { artists, artistId, artist } = song
 
-  if (albumArtists && albumArtists.length > 1) {
-    const reducedArtists = albumArtists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
+  if (artists && artists.length > 1) {
+    const reducedArtists = artists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
 
     return (
       <div className="flex items-center gap-1 text-muted-foreground w-full maskImage-marquee-fade-finished">

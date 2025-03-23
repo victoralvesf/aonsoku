@@ -1,9 +1,12 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { getCoverArtUrl } from '@/api/httpClient'
+import { Dot } from '@/app/components/dot'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import { AspectRatio } from '@/app/components/ui/aspect-ratio'
 import { Badge } from '@/app/components/ui/badge'
 import { usePlayerStore } from '@/store/player.store'
+import { ISong } from '@/types/responses/song'
+import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
 
 export function SongInfo() {
   const currentSong = usePlayerStore((state) => state.songlist.currentSong)
@@ -30,9 +33,13 @@ export function SongInfo() {
             {currentSong.title}
           </h2>
         </MarqueeTitle>
-        <p className="leading-7 text-lg 2xl:text-xl text-foreground/70 truncate drop-shadow-lg">
-          {currentSong.artist} {'•'} {currentSong.album}
-        </p>
+        <div className="leading-7 text-base 2xl:text-lg flex gap-1 text-foreground/70 truncate maskImage-marquee-fade-finished">
+          <p className="truncate drop-shadow-lg text-foreground">
+            {currentSong.album}
+          </p>
+          <Dot className="text-foreground/70" />
+          <ArtistNames song={currentSong} />
+        </div>
         <div className="flex gap-2 mt-2 2xl:mt-3">
           {currentSong.genre && (
             <Badge variant="neutral">{currentSong.genre}</Badge>
@@ -44,4 +51,25 @@ export function SongInfo() {
       </div>
     </div>
   )
+}
+
+function ArtistNames({ song }: { song: ISong }) {
+  const { artist, artists } = song
+
+  if (artists && artists.length > 1) {
+    const data = artists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
+
+    return (
+      <div className="flex items-center gap-1">
+        {data.map(({ id, name }, index) => (
+          <div key={id} className="flex">
+            <p className="truncate drop-shadow-lg">{name}</p>
+            {index < data.length - 1 && ','}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  return <p className="truncate drop-shadow-lg">{artist}</p>
 }
