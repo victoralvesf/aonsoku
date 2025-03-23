@@ -7,7 +7,8 @@ import { ROUTES } from '@/routes/routesList'
 import { IFeaturedArtist } from '@/types/responses/artist'
 import { TABLE_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
 
-type LinkWithoutTo = Omit<LinkProps, 'to'> & RefAttributes<HTMLAnchorElement>
+export type LinkWithoutTo = Omit<LinkProps, 'to'> &
+  RefAttributes<HTMLAnchorElement>
 
 type ArtistLinkProps = LinkWithoutTo & {
   artistId?: string
