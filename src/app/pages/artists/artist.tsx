@@ -40,8 +40,10 @@ export default function Artist() {
   if (!artist) return <AlbumFallback />
 
   function getSongCount() {
-    if (artist?.albumCount === undefined) return null
-    if (artist?.albumCount === 0) return null
+    if (!artist) return null
+    if (artist.albumCount === undefined) return null
+    if (artist.albumCount === 0) return null
+    if (!artist.album) return null
     let artistSongCount = 0
 
     artist.album.forEach((album) => {
@@ -52,7 +54,9 @@ export default function Artist() {
   }
 
   function formatAlbumCount() {
-    if (artist?.albumCount === undefined) return null
+    if (!artist) return null
+    if (artist.albumCount === undefined) return null
+    if (artist.albumCount === 0) return null
 
     return t('artist.info.albumsCount', { count: artist.albumCount })
   }
@@ -73,13 +77,15 @@ export default function Artist() {
     },
   ]
 
-  const recentAlbums = artist.album.sort((a, b) => {
-    // if the album does not have a year, send to the end of list
-    const yearA = a.year ?? -Infinity
-    const yearB = b.year ?? -Infinity
+  const recentAlbums = artist.album
+    ? artist.album.sort((a, b) => {
+        // if the album does not have a year, send to the end of list
+        const yearA = a.year ?? -Infinity
+        const yearB = b.year ?? -Infinity
 
-    return yearB - yearA
-  })
+        return yearB - yearA
+      })
+    : []
 
   return (
     <div className="w-full">
@@ -101,12 +107,14 @@ export default function Artist() {
           <ArtistTopSongs topSongs={topSongs} artist={artist} />
         )}
 
-        <PreviewList
-          title={t('artist.recentAlbums')}
-          list={recentAlbums}
-          moreTitle={t('album.more.discography')}
-          moreRoute={ROUTES.ALBUMS.ARTIST(artist.id, artist.name)}
-        />
+        {recentAlbums.length > 0 && (
+          <PreviewList
+            title={t('artist.recentAlbums')}
+            list={recentAlbums}
+            moreTitle={t('album.more.discography')}
+            moreRoute={ROUTES.ALBUMS.ARTIST(artist.id, artist.name)}
+          />
+        )}
 
         {artistInfoIsLoading && <PreviewListFallback />}
         {artistInfo?.similarArtist && !artistInfoIsLoading && (

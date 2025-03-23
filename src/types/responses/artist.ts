@@ -8,7 +8,10 @@ export interface IArtist {
   albumCount: number
   starred?: string
   artistImageUrl: string
-  album: Albums[]
+  musicBrainzId?: string
+  sortName?: string
+  roles?: string[]
+  album?: Albums[]
 }
 
 export interface ISimilarArtist {

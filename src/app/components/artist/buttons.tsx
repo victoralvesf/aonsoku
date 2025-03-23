@@ -63,6 +63,10 @@ export function ArtistButtons({ artist, showInfoButton }: ArtistButtonsProps) {
     },
   }
 
+  if (artist.albumCount === undefined || artist.albumCount === 0) {
+    return <div className="h-8 w-full" />
+  }
+
   return (
     <Actions.Container>
       <Actions.Button
