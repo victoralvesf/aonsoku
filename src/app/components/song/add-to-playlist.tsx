@@ -3,6 +3,7 @@ import { CommandItem } from 'cmdk'
 import { PlusIcon } from 'lucide-react'
 import { KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { NoPlaylistsMessage } from '@/app/components/playlist/empty-message'
 import {
   Command,
   CommandEmpty,
@@ -72,7 +73,9 @@ export function AddToPlaylistSubMenu({
         </div>
         <ScrollArea className="h-[300px]" type="always">
           <CommandList className="max-h-fit max-w-[298px]">
-            <CommandEmpty>{t('options.playlist.notFound')}</CommandEmpty>
+            <CommandEmpty className="p-1">
+              <NoPlaylistsMessage />
+            </CommandEmpty>
             <CommandGroup>
               {playlists &&
                 playlists.map((playlist) => (
