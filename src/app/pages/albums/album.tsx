@@ -31,10 +31,13 @@ export default function Album() {
     isLoading: albumIsLoading,
     isFetched,
   } = useGetAlbum(albumId)
-  const { data: moreAlbums, isLoading: moreAlbumsIsLoading } =
-    useGetArtistAlbums(album?.artist || '')
+  const { data: artist, isLoading: moreAlbumsIsLoading } = useGetArtistAlbums(
+    album?.artistId || '',
+  )
   const { data: randomAlbums, isLoading: randomAlbumsIsLoading } =
     useGetGenreAlbums(album?.genre || '')
+
+  const moreAlbums = artist?.album
 
   if (albumIsLoading) return <AlbumFallback />
   if (isFetched && !album) {
@@ -76,7 +79,7 @@ export default function Album() {
     'duration',
     'playCount',
     'played',
-    'bitRate',
+    // 'bitRate',
     'contentType',
     'select',
   ]
@@ -92,8 +95,8 @@ export default function Album() {
     return list
   }
 
-  const artistAlbums = moreAlbums?.album
-    ? removeCurrentAlbumFromList(moreAlbums.album)
+  const artistAlbums = moreAlbums
+    ? removeCurrentAlbumFromList(moreAlbums)
     : null
 
   const randomGenreAlbums =
@@ -133,7 +136,7 @@ export default function Album() {
 
         <div className="mt-4">
           {moreAlbumsIsLoading && <PreviewListFallback />}
-          {artistAlbums && !moreAlbumsIsLoading && (
+          {artistAlbums && !moreAlbumsIsLoading && album.artistId && (
             <PreviewList
               list={artistAlbums}
               showMore={true}
