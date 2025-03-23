@@ -107,11 +107,13 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       cell: ({ row }) => {
         const { artist, artistId, artists } = row.original
 
-        if (!artists) {
-          return <ArtistLink artistId={artistId}>{artist}</ArtistLink>
+        if (!artistId) return artist
+
+        if (artists && artists.length > 1) {
+          return <ArtistsLinks artists={artists} />
         }
 
-        return <ArtistsLinks artists={artists} />
+        return <ArtistLink artistId={artistId}>{artist}</ArtistLink>
       },
     },
     {

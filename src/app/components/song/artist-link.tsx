@@ -5,6 +5,7 @@ import { Dot } from '@/app/components/dot'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { IFeaturedArtist } from '@/types/responses/artist'
+import { TABLE_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
 
 type LinkWithoutTo = Omit<LinkProps, 'to'> & RefAttributes<HTMLAnchorElement>
 
@@ -35,8 +36,8 @@ type ArtistsLinksProps = {
 }
 
 export function ArtistsLinks({ artists }: ArtistsLinksProps) {
-  const data = artists.slice(0, 3)
-  const showThreeDots = artists.length > 3
+  const data = artists.slice(0, TABLE_ARTISTS_MAX_NUMBER)
+  const showThreeDots = artists.length > TABLE_ARTISTS_MAX_NUMBER
 
   function showDot(index: number) {
     return index < artists.length - 1
