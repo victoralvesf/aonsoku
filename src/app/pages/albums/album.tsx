@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import { AlbumInfo } from '@/app/components/album/info'
+import { RecordLabelsInfo } from '@/app/components/album/record-labels'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { BadgesData } from '@/app/components/header-info'
@@ -115,6 +116,7 @@ export default function Album() {
         title={album.name}
         subtitle={album.artist}
         artistId={album.artistId}
+        artists={album.artists}
         coverArtId={album.coverArt}
         coverArtType="album"
         coverArtSize="700"
@@ -133,6 +135,8 @@ export default function Album() {
           showDiscNumber={albumHasMoreThanOneDisc}
           variant="modern"
         />
+
+        <RecordLabelsInfo album={album} />
 
         <div className="mt-4">
           {moreAlbumsIsLoading && <PreviewListFallback />}
