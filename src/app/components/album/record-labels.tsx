@@ -11,11 +11,9 @@ export function RecordLabelsInfo({ album }: RecordLabelsInfoProps) {
   const labels = album.recordLabels.slice(0, 3)
 
   return (
-    <div className="w-full mt-8 text-muted-foreground text-sm">
+    <div className="w-full mt-8 text-muted-foreground text-[0.6875rem] font-normal">
       {labels.map((label) => (
-        <small key={label.name}>
-          {'©'} {album.year} {label.name}
-        </small>
+        <p key={label.name}>{`℗ ${album.year} ${label.name}`}</p>
       ))}
     </div>
   )
