@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import { AlbumComment } from '@/app/components/album/comment'
 import ImageHeader from '@/app/components/album/image-header'
 import { AlbumInfo } from '@/app/components/album/info'
 import { RecordLabelsInfo } from '@/app/components/album/record-labels'
@@ -109,6 +110,8 @@ export default function Album() {
     ? album.discTitles.length > 1
     : false
 
+  const albumComment = album.song.length > 0 ? album.song[0].comment : null
+
   return (
     <div className="w-full">
       <ImageHeader
@@ -135,6 +138,8 @@ export default function Album() {
           showDiscNumber={albumHasMoreThanOneDisc}
           variant="modern"
         />
+
+        {albumComment && <AlbumComment comment={albumComment} />}
 
         <RecordLabelsInfo album={album} />
 
