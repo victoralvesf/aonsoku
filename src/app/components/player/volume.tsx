@@ -11,6 +11,7 @@ import { VolumeIcon } from '@/app/components/icons/volume-icon'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { Slider } from '@/app/components/ui/slider'
+import { usePlayerHotkeys } from '@/app/hooks/use-audio-hotkeys'
 import { cn } from '@/lib/utils'
 import { usePlayerVolume, useVolumeSettings } from '@/store/player.store'
 import { PopoverVolume } from './popover-volume'
@@ -22,7 +23,11 @@ interface PlayerVolumeProps {
 
 export function PlayerVolume({ disabled, audioRef }: PlayerVolumeProps) {
   const { t } = useTranslation()
-  const { volume } = usePlayerVolume()
+  const { volume, handleVolumeWheel } = usePlayerVolume()
+  const { useAudioHotkeys } = usePlayerHotkeys()
+
+  useAudioHotkeys('mod+up', () => handleVolumeWheel(false))
+  useAudioHotkeys('mod+down', () => handleVolumeWheel(true))
 
   useEffect(() => {
     if (!audioRef.current) return

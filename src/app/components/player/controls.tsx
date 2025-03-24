@@ -10,14 +10,13 @@ import {
   SkipForward,
 } from 'lucide-react'
 import { RefObject, useCallback, useEffect } from 'react'
-import { type HotkeyCallback, type Keys, useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
 import RepeatOne from '@/app/components/icons/repeat-one'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import { usePlayerHotkeys } from '@/app/hooks/use-audio-hotkeys'
 import {
   usePlayerActions,
-  usePlayerCurrentList,
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerMediaType,
@@ -58,20 +57,13 @@ export function PlayerControls({
     playPrevSong,
     playNextSong,
   } = usePlayerActions()
-  const currentList = usePlayerCurrentList()
+  const { useAudioHotkeys } = usePlayerHotkeys()
 
   useAudioHotkeys('space', togglePlayPause)
-  useAudioHotkeys('left', playPrevSong)
-  useAudioHotkeys('right', playNextSong)
-  useAudioHotkeys('s', toggleShuffle)
-  useAudioHotkeys('r', toggleLoop)
-
-  function useAudioHotkeys(keys: Keys, callback: HotkeyCallback) {
-    useHotkeys(keys, callback, {
-      preventDefault: true,
-      enabled: currentList.length > 0,
-    })
-  }
+  useAudioHotkeys('mod+left', playPrevSong)
+  useAudioHotkeys('mod+right', playNextSong)
+  useAudioHotkeys('mod+s', toggleShuffle)
+  useAudioHotkeys('mod+r', toggleLoop)
 
   const handleSeekAction = useCallback(
     (value: number) => {

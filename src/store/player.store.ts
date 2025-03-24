@@ -489,6 +489,9 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               const { min, max, wheelStep } = get().settings.volume
               const { volume } = get().playerState
 
+              if (isScrollingDown && volume === min) return
+              if (!isScrollingDown && volume === max) return
+
               const volumeAdjustment = isScrollingDown ? -wheelStep : wheelStep
               const adjustedVolume = volume + volumeAdjustment
               const finalVolume = clamp(adjustedVolume, min, max)

@@ -534,7 +534,12 @@
       "shuffle": "Shuffle",
       "repeat": "Repeat",
       "previous": "Skip to previous",
-      "next": "Skip to next"
+      "next": "Skip to next",
+      "raiseVolume": "Raise volume",
+      "lowerVolume": "Lower volume"
+    },
+    "navigation": {
+      "label": "Navigation"
     }
   },
   "songInfo": {

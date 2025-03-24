@@ -1,4 +1,5 @@
 import { Settings } from 'lucide-react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
@@ -6,7 +7,11 @@ import { useAppSettings } from '@/store/app.store'
 
 export function SettingsButton() {
   const { t } = useTranslation()
-  const { setOpenDialog } = useAppSettings()
+  const { openDialog, setOpenDialog } = useAppSettings()
+
+  useHotkeys('mod+comma', () => {
+    setOpenDialog(!openDialog)
+  })
 
   return (
     <SimpleTooltip text={t('settings.label')} side="bottom">

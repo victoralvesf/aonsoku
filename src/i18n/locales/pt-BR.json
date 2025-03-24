@@ -548,7 +548,12 @@
       "shuffle": "Ordem aleatória",
       "repeat": "Repetir",
       "previous": "Voltar à faixa anterior",
-      "next": "Pular para a próxima faixa"
+      "next": "Pular para a próxima faixa",
+      "raiseVolume": "Aumentar volume",
+      "lowerVolume": "Diminuir volume"
+    },
+    "navigation": {
+      "label": "Navegação"
     }
   },
   "songInfo": {

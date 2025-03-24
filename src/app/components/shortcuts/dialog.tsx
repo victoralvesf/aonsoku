@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/app/components/ui/dialog'
-import { playbackShortcuts } from '@/shortcuts/playback'
+import { shortcutDialogKeys, allShortcuts } from '@/shortcuts'
 import { ShortcutsGroup } from './group'
 
 interface ShortcutsDialogProps {
@@ -24,16 +24,24 @@ export function ShortcutsDialog({ open, onOpenChange }: ShortcutsDialogProps) {
           <DialogTitle>{t('shortcuts.modal.title')}</DialogTitle>
           <div className="flex gap-1 text-sm text-muted-foreground">
             <p>{t('shortcuts.modal.description.first')}</p>
-            <Keyboard text="⌘" className="relative top-0 right-0" />
-            <Keyboard text="/" className="relative top-0 right-0" />
+            {shortcutDialogKeys.map((key) => (
+              <Keyboard
+                key={key}
+                text={key}
+                className="relative top-0 right-0"
+              />
+            ))}
             <p>{t('shortcuts.modal.description.last')}</p>
           </div>
         </DialogHeader>
         <div className="px-6 pt-4 pb-6 max-h-[400px] overflow-y-auto space-y-4">
-          <ShortcutsGroup
-            title={t('shortcuts.playback.label')}
-            shortcuts={playbackShortcuts}
-          />
+          {allShortcuts.map((item) => (
+            <ShortcutsGroup
+              key={item.id}
+              title={t(item.label)}
+              shortcuts={item.shortcuts}
+            />
+          ))}
         </div>
       </DialogContent>
     </Dialog>
