@@ -59,7 +59,7 @@ export default function PlaySongButton({
         <div className="relative w-full h-full flex items-center justify-center">
           <div className="absolute opacity-100 group-hover/tablerow:opacity-0 w-8 h-8 flex items-center">
             <div className="w-8 h-8 flex items-center justify-center">
-              <EqualizerBars width={18} height={18} className="text-primary" />
+              <EqualizerBars width={18} height={18} />
             </div>
           </div>
           <div className="absolute opacity-0 group-hover/tablerow:opacity-100 flex justify-center">

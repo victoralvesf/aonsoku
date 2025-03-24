@@ -68,6 +68,7 @@ export function QueueSongList() {
           currentSongIndex={currentSongIndex}
           allowRowSelection={false}
           showContextMenu={false}
+          pageType="queue"
         />
       </div>
     </div>

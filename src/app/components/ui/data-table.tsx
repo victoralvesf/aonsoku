@@ -16,6 +16,7 @@ import clsx from 'clsx'
 import { Disc2Icon, XIcon } from 'lucide-react'
 import {
   Fragment,
+  memo,
   MouseEvent,
   TouchEvent,
   useCallback,
@@ -29,7 +30,6 @@ import { useTranslation } from 'react-i18next'
 import { PlaylistOptions } from '@/app/components/playlist/options'
 import { SongMenuOptions } from '@/app/components/song/menu-options'
 import { SelectedSongsMenuOptions } from '@/app/components/song/selected-options'
-import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { Button } from '@/app/components/ui/button'
 import { DataTablePagination } from '@/app/components/ui/data-table-pagination'
 import { Input } from '@/app/components/ui/input'
@@ -39,6 +39,9 @@ import { Playlist } from '@/types/responses/playlist'
 import { ISong } from '@/types/responses/song'
 import { MouseButton } from '@/utils/browser'
 import { computeMultiSelectedRows } from '@/utils/dataTable'
+import { TableRow } from './data-table-row'
+
+const MemoTableRow = memo(TableRow) as typeof TableRow
 
 declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData> {
@@ -429,55 +432,22 @@ export function DataTable<TData, TValue>({
                         </span>
                       </div>
                     )}
-                    <ContextMenuProvider options={getContextMenuOptions(row)}>
-                      <div
-                        role="row"
-                        data-state={row.getIsSelected() && 'selected'}
-                        onClick={(e) => handleClicks(e, row)}
-                        onDoubleClick={(e) => handleRowDbClick(e, row)}
-                        onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
-                        onTouchEnd={(e) => handleRowTap(e, row)}
-                        onTouchCancel={handleTouchCancel}
-                        onContextMenu={(e) => handleClicks(e, row)}
-                        className={clsx(
-                          'group/tablerow w-full flex flex-row transition-colors',
-                          isModern &&
-                            row.getIsSelected() &&
-                            !isPrevRowSelected(index) &&
-                            'rounded-t-md',
-                          isModern &&
-                            row.getIsSelected() &&
-                            !isNextRowSelected(index) &&
-                            'rounded-b-md',
-                          isModern && !row.getIsSelected() && 'rounded-md',
-                          'hover:bg-foreground/20 data-[state=selected]:bg-foreground/30',
-                          isClassic && 'border-b',
-                        )}
-                      >
-                        {row.getVisibleCells().map((cell) => {
-                          const columnDef = cell.column
-                            .columnDef as ColumnDefType<TData>
-
-                          return (
-                            <div
-                              key={cell.id}
-                              className={clsx(
-                                'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
-                                columnDef.className,
-                              )}
-                              style={columnDef.style}
-                              role="cell"
-                            >
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext(),
-                              )}
-                            </div>
-                          )
-                        })}
-                      </div>
-                    </ContextMenuProvider>
+                    <MemoTableRow
+                      index={index}
+                      row={row}
+                      contextMenuOptions={getContextMenuOptions(row)}
+                      isPrevRowSelected={isPrevRowSelected}
+                      isNextRowSelected={isNextRowSelected}
+                      variant={variant}
+                      dataType={dataType}
+                      onClick={(e) => handleClicks(e, row)}
+                      onDoubleClick={(e) => handleRowDbClick(e, row)}
+                      onTouchStart={handleTouchStart}
+                      onTouchMove={handleTouchMove}
+                      onTouchEnd={(e) => handleRowTap(e, row)}
+                      onTouchCancel={handleTouchCancel}
+                      onContextMenu={(e) => handleClicks(e, row)}
+                    />
                   </Fragment>
                 ))
               ) : (

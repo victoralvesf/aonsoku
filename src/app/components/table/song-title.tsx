@@ -1,20 +1,7 @@
-import clsx from 'clsx'
 import { CoverImage } from '@/app/components/table/cover-image'
-import { usePlayerMediaType, usePlayerSonglist } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 
 export function TableSongTitle({ song }: { song: ISong }) {
-  const { currentSong } = usePlayerSonglist()
-  const { isRadio } = usePlayerMediaType()
-
-  function getSongIsPlaying() {
-    if (isRadio || !currentSong) return false
-
-    return currentSong.id === song.id
-  }
-
-  const songIsPlaying = getSongIsPlaying()
-
   return (
     <div className="flex w-full gap-2 items-center">
       <CoverImage
@@ -23,14 +10,7 @@ export function TableSongTitle({ song }: { song: ISong }) {
         altText={song.title}
       />
       <div className="flex flex-col w-full justify-center truncate">
-        <span
-          className={clsx(
-            'font-medium truncate',
-            songIsPlaying && 'text-primary',
-          )}
-        >
-          {song.title}
-        </span>
+        <span className="font-medium truncate">{song.title}</span>
       </div>
     </div>
   )

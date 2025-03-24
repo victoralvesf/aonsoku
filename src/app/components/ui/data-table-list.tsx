@@ -59,6 +59,7 @@ interface DataTableProps<TData, TValue> {
   allowRowSelection?: boolean
   showContextMenu?: boolean
   dataType?: 'song' | 'artist' | 'playlist' | 'radio'
+  pageType?: 'general' | 'queue'
   fetchNextPage?: () => void
   hasNextPage?: boolean
   scrollToIndex?: boolean
@@ -75,6 +76,7 @@ export function DataTableList<TData, TValue>({
   allowRowSelection = true,
   showContextMenu = true,
   dataType = 'song',
+  pageType = 'general',
   fetchNextPage,
   hasNextPage,
   scrollToIndex = false,
@@ -365,6 +367,8 @@ export function DataTableList<TData, TValue>({
                     handleRowDbClick={handleRowDbClick}
                     handleRowTap={handleRowTap}
                     getContextMenuOptions={getContextMenuOptions}
+                    dataType={dataType}
+                    pageType={pageType}
                   />
                 )
               })

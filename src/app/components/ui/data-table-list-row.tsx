@@ -1,7 +1,8 @@
 import { Cell, flexRender, Row } from '@tanstack/react-table'
 import clsx from 'clsx'
-import { memo, MouseEvent, TouchEvent } from 'react'
+import { memo, MouseEvent, TouchEvent, useMemo } from 'react'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
+import { usePlayerCurrentSong, useSongColor } from '@/store/player.store'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 
 const MemoContextMenuProvider = memo(ContextMenuProvider)
@@ -14,6 +15,8 @@ interface TableRowProps<TData> {
   handleRowDbClick: (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => void
   handleRowTap: (e: TouchEvent<HTMLDivElement>, row: Row<TData>) => void
   getContextMenuOptions: (row: Row<TData>) => JSX.Element | undefined
+  dataType?: 'song' | 'artist' | 'playlist' | 'radio'
+  pageType?: 'general' | 'queue'
 }
 
 let isTap = false
@@ -26,7 +29,12 @@ export function TableListRow<TData>({
   handleRowDbClick,
   handleRowTap,
   getContextMenuOptions,
+  dataType = 'song',
+  pageType = 'general',
 }: TableRowProps<TData>) {
+  const currentSong = usePlayerCurrentSong()
+  const { useSongColorOnQueue } = useSongColor()
+
   function handleTouchStart() {
     isTap = true
     tapTimeout = setTimeout(() => {
@@ -48,6 +56,17 @@ export function TableListRow<TData>({
     isTap = false
   }
 
+  const isRowSongActive = useMemo(() => {
+    if (dataType !== 'song') return false
+
+    // @ts-expect-error row type
+    return row.original.id === currentSong.id
+  }, [currentSong.id, dataType, row.original])
+
+  const isQueue = pageType === 'queue'
+  const queueWithDynamicColor = isQueue && useSongColorOnQueue
+  const queueWithoutDynamicColor = isQueue && !useSongColorOnQueue
+
   return (
     <MemoContextMenuProvider options={getContextMenuOptions(row)}>
       <div
@@ -63,7 +82,14 @@ export function TableListRow<TData>({
         onContextMenu={(e) => handleClicks(e, row)}
         className={clsx(
           'group/tablerow w-[calc(100%-10px)] flex flex-row transition-colors',
-          'hover:bg-foreground/20 data-[state=selected]:bg-foreground/30',
+          'data-[state=selected]:bg-foreground/30',
+          isQueue ? 'rounded-md' : 'hover:bg-foreground/20',
+          queueWithDynamicColor && 'hover:bg-background-foreground/80',
+          queueWithoutDynamicColor && 'hover:bg-foreground/20',
+          isRowSongActive && {
+            'bg-foreground/20': !isQueue || queueWithoutDynamicColor,
+            'bg-background-foreground': queueWithDynamicColor,
+          },
         )}
         style={{
           height: `${virtualRow.size}px`,
