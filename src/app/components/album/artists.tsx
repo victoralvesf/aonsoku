@@ -50,7 +50,7 @@ export function AlbumMultipleArtistsInfo({
 
 function ArtistImage({ id, name }: AlbumArtistProps) {
   return (
-    <div className="size-6 2xl:size-7 min-w-6 min-h-6 rounded-full bg-accent drop-shadow-lg">
+    <div className="size-6 min-w-6 min-h-6 rounded-full bg-accent drop-shadow-lg ring-1 ring-foreground/10">
       <LazyLoadImage
         effect="opacity"
         src={getCoverArtUrl(id, 'artist', '100')}
