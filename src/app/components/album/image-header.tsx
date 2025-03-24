@@ -121,11 +121,11 @@ export default function ImageHeader({
           />
         </div>
 
-        <div className="flex w-full flex-col justify-end z-10">
+        <div className="flex w-full max-w-[calc(100%-216px)] 2xl:max-w-[calc(100%-266px)] flex-col justify-end z-10">
           <p className="text-xs 2xl:text-sm font-medium drop-shadow">{type}</p>
           <h1
             className={clsx(
-              'scroll-m-20 font-bold tracking-tight antialiased drop-shadow-md line-clamp-2',
+              'max-w-full scroll-m-20 font-bold tracking-tight antialiased drop-shadow-md break-words line-clamp-2',
               getTextSizeClass(title),
             )}
           >
