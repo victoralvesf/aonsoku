@@ -99,7 +99,7 @@ export default function CommandMenu() {
     queryFn: subsonic.playlists.getAll,
   })
 
-  useHotkeys(['/', 'mod+f'], () => setOpen(!open), {
+  useHotkeys(['/', 'mod+f', 'mod+k'], () => setOpen(!open), {
     preventDefault: true,
   })
 
