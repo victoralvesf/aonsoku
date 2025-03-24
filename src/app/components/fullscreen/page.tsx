@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { memo, ReactNode } from 'react'
 import {
   Drawer,
@@ -68,12 +67,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
           {isTauri() && <DragRegion className="z-10" />}
 
           {/* First Row */}
-          <div
-            className={clsx(
-              'flex gap-2 items-center w-full h-[40px] px-16 z-20',
-              isWindows ? 'justify-start' : 'justify-end',
-            )}
-          >
+          <div className="flex gap-2 items-center w-full h-[40px] px-16 z-20 justify-end">
             <DrawerClose>
               <CloseFullscreenButton />
             </DrawerClose>
