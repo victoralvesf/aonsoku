@@ -5,7 +5,7 @@ export function useSongList() {
     const response = await subsonic.artists.getOne(id)
     let count = 0
 
-    if (!response) return count
+    if (!response || !response.album) return count
 
     response.album.forEach((item) => {
       count += item.songCount

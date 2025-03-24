@@ -2,17 +2,17 @@ import randomCSSHexColor from '@chriscodesthings/random-css-hex-color'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { Link } from 'react-router-dom'
 
 import { getCoverArtUrl } from '@/api/httpClient'
 import { AlbumHeaderFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { BadgesData, HeaderInfoGenerator } from '@/app/components/header-info'
 import { CustomLightBox } from '@/app/components/lightbox'
 import { cn } from '@/lib/utils'
-import { ROUTES } from '@/routes/routesList'
 import { CoverArt } from '@/types/coverArtType'
+import { IFeaturedArtist } from '@/types/responses/artist'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
+import { AlbumArtistInfo, AlbumMultipleArtistsInfo } from './artists'
 import { ImageHeaderEffect } from './header-effect'
 
 interface ImageHeaderProps {
@@ -20,6 +20,7 @@ interface ImageHeaderProps {
   title: string
   subtitle?: string
   artistId?: string
+  artists?: IFeaturedArtist[]
   coverArtId?: string
   coverArtType: CoverArt
   coverArtSize: string
@@ -33,6 +34,7 @@ export default function ImageHeader({
   title,
   subtitle,
   artistId,
+  artists,
   coverArtId,
   coverArtType,
   coverArtSize,
@@ -74,6 +76,8 @@ export default function ImageHeader({
 
     setLoaded(true)
   }
+
+  const hasMultipleArtists = artists ? artists.length > 1 : false
 
   return (
     <div
@@ -128,24 +132,18 @@ export default function ImageHeader({
             {title}
           </h1>
 
-          {!isPlaylist && subtitle && (
+          {!isPlaylist && artists && hasMultipleArtists && (
+            <div className="flex items-center mt-2">
+              <AlbumMultipleArtistsInfo artists={artists} />
+              <HeaderInfoGenerator badges={badges} />
+            </div>
+          )}
+
+          {!isPlaylist && subtitle && !hasMultipleArtists && (
             <>
               {artistId ? (
                 <div className="flex items-center mt-2">
-                  <div className="w-6 h-6 rounded-full bg-accent/50 drop-shadow">
-                    <LazyLoadImage
-                      effect="opacity"
-                      src={getCoverArtUrl(artistId, 'artist', '100')}
-                      alt={subtitle}
-                      className="w-full h-full rounded-full aspect-square object-cover"
-                    />
-                  </div>
-                  <Link
-                    className="flex items-center ml-2 hover:underline text-sm font-medium drop-shadow"
-                    to={ROUTES.ARTIST.PAGE(artistId)}
-                  >
-                    {subtitle}
-                  </Link>
+                  <AlbumArtistInfo id={artistId} name={subtitle} />
                   <HeaderInfoGenerator badges={badges} />
                 </div>
               ) : (

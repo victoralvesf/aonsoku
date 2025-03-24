@@ -12,9 +12,14 @@ import { ArtistOptions } from './options'
 interface ArtistButtonsProps {
   artist: IArtist
   showInfoButton: boolean
+  isArtistEmpty: boolean
 }
 
-export function ArtistButtons({ artist, showInfoButton }: ArtistButtonsProps) {
+export function ArtistButtons({
+  artist,
+  showInfoButton,
+  isArtistEmpty,
+}: ArtistButtonsProps) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
   const { showInfoPanel, toggleShowInfoPanel } = useAppPages()
@@ -61,6 +66,10 @@ export function ArtistButtons({ artist, showInfoButton }: ArtistButtonsProps) {
     info: () => {
       return showInfoPanel ? t('generic.hideDetails') : t('generic.showDetails')
     },
+  }
+
+  if (isArtistEmpty) {
+    return <div className="h-8 w-full" />
   }
 
   return (

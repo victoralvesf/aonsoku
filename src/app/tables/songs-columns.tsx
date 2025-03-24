@@ -1,8 +1,8 @@
-import clsx from 'clsx'
 import { ClockIcon, HeartIcon } from 'lucide-react'
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 
+import { ArtistLink, ArtistsLinks } from '@/app/components/song/artist-link'
 import PlaySongButton from '@/app/components/table/play-button'
 import { SongTableActions } from '@/app/components/table/song-actions'
 import { TableSongTitle } from '@/app/components/table/song-title'
@@ -94,8 +94,8 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       id: 'artist',
       accessorKey: 'artist',
       style: {
-        width: '15%',
-        maxWidth: '15%',
+        width: '20%',
+        maxWidth: '20%',
       },
       enableSorting: true,
       sortingFn: 'customSortFn',
@@ -105,23 +105,15 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         </MemoDataTableColumnHeader>
       ),
       cell: ({ row }) => {
-        const { artist, artistId } = row.original
+        const { artist, artistId, artists } = row.original
 
-        return (
-          <MemoLink
-            to={ROUTES.ARTIST.PAGE(artistId ?? '')}
-            className={clsx(
-              'truncate',
-              artistId ? 'hover:underline' : 'pointer-events-none',
-            )}
-            onContextMenu={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-            }}
-          >
-            {artist}
-          </MemoLink>
-        )
+        if (!artistId) return artist
+
+        if (artists && artists.length > 1) {
+          return <ArtistsLinks artists={artists} />
+        }
+
+        return <ArtistLink artistId={artistId}>{artist}</ArtistLink>
       },
     },
     {

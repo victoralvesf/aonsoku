@@ -6,7 +6,7 @@ const emptyResponse = { albums: [], nextOffset: null, albumsCount: 0 }
 export async function getArtistDiscography(artistId: string) {
   const response = await subsonic.artists.getOne(artistId)
 
-  if (!response) return emptyResponse
+  if (!response || !response.album) return emptyResponse
 
   return {
     albums: response.album,

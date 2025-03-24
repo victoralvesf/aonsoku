@@ -1,5 +1,6 @@
 import { Fragment } from 'react/jsx-runtime'
 import { Link } from 'react-router-dom'
+import { Dot } from './dot'
 
 type TextBadge = {
   content: string | null
@@ -30,9 +31,7 @@ export function HeaderInfoGenerator({
           .filter((item) => item.content)
           .map((item, index, array) => (
             <Fragment key={index}>
-              {showFirstDot && index === 0 && (
-                <span className="mx-1 opacity-80">•</span>
-              )}
+              {showFirstDot && index === 0 && <Dot />}
               {item.type === 'link' ? (
                 <Link
                   to={item.link}
@@ -43,9 +42,7 @@ export function HeaderInfoGenerator({
               ) : (
                 <p className="opacity-80 drop-shadow">{item.content}</p>
               )}
-              {index < array.length - 1 && (
-                <span className="mx-1 opacity-80">•</span>
-              )}
+              {index < array.length - 1 && <Dot />}
             </Fragment>
           ))}
       </Fragment>

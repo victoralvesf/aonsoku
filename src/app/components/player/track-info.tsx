@@ -16,6 +16,7 @@ import { useSongColor } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { logger } from '@/utils/logger'
+import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
 
 export function TrackInfo({ song }: { song: ISong | undefined }) {
   const { t } = useTranslation()
@@ -119,24 +120,57 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
             </span>
           </Link>
         </MarqueeTitle>
-        <Link
-          to={ROUTES.ARTIST.PAGE(song.artistId!)}
-          className={cn(
-            'w-fit inline-flex',
-            !song.artistId && 'pointer-events-none',
-          )}
-          data-testid="track-artist-url"
-        >
-          <span
-            className={cn(
-              'text-xs font-regular text-muted-foreground',
-              song.artistId && 'hover:underline',
-            )}
-          >
-            {song.artist}
-          </span>
-        </Link>
+        <TrackInfoArtistsLinks song={song} />
       </div>
     </Fragment>
+  )
+}
+
+type TrackInfoArtistsLinksProps = {
+  song: ISong
+}
+
+function TrackInfoArtistsLinks({ song }: TrackInfoArtistsLinksProps) {
+  const { artists, artistId, artist } = song
+
+  if (artists && artists.length > 1) {
+    const reducedArtists = artists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
+
+    return (
+      <div className="flex items-center gap-1 text-xs text-muted-foreground w-full maskImage-marquee-fade-finished">
+        {reducedArtists.map(({ id, name }, index) => (
+          <div key={id} className="flex items-center">
+            <ArtistLink id={id} name={name} />
+            {index < reducedArtists.length - 1 && ','}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  return <ArtistLink id={artistId} name={artist} />
+}
+
+type ArtistLinkProps = {
+  id?: string
+  name: string
+}
+
+function ArtistLink({ id, name }: ArtistLinkProps) {
+  return (
+    <Link
+      to={ROUTES.ARTIST.PAGE(id ?? '')}
+      className={cn('w-fit inline-flex', !id && 'pointer-events-none')}
+      data-testid="track-artist-url"
+    >
+      <span
+        className={cn(
+          'text-xs text-muted-foreground text-nowrap',
+          id && 'hover:underline hover:text-foreground',
+        )}
+      >
+        {name}
+      </span>
+    </Link>
   )
 }

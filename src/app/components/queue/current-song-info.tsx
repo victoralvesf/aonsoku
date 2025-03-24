@@ -1,9 +1,13 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
+import { LinkWithoutTo } from '@/app/components/song/artist-link'
 import { AspectRatio } from '@/app/components/ui/aspect-ratio'
+import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { useMainDrawerState, usePlayerSonglist } from '@/store/player.store'
+import { ISong } from '@/types/responses/song'
+import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
 
 export function CurrentSongInfo() {
   const { currentSong } = usePlayerSonglist()
@@ -25,7 +29,7 @@ export function CurrentSongInfo() {
         />
       </AspectRatio>
 
-      <div className="flex flex-col items-center justify-center mt-6 px-4">
+      <div className="flex flex-col items-center justify-center mt-6 px-1">
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-center text-balance drop-shadow-md">
           {currentSong.albumId ? (
             <Link
@@ -40,20 +44,52 @@ export function CurrentSongInfo() {
           )}
         </h4>
 
-        <p className="leading-7 text-foreground/70 drop-shadow-md">
-          {currentSong.artistId ? (
-            <Link
-              to={ROUTES.ARTIST.PAGE(currentSong.artistId)}
-              className="hover:underline"
-              onClick={closeDrawer}
-            >
-              {currentSong.artist}
-            </Link>
-          ) : (
-            <>{currentSong.artist}</>
-          )}
+        <p className="leading-5 mt-1 text-foreground/70 drop-shadow-md flex items-center justify-center flex-wrap gap-1">
+          <QueueArtistsLinks song={currentSong} />
         </p>
       </div>
     </div>
+  )
+}
+
+function QueueArtistsLinks({ song }: { song: ISong }) {
+  const { closeDrawer } = useMainDrawerState()
+  const { artist, artistId, artists } = song
+
+  if (artists && artists.length > 1) {
+    const data = artists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
+
+    return (
+      <>
+        {data.map(({ id, name }, index) => (
+          <div key={id}>
+            <ArtistLink id={id} name={name} onClick={closeDrawer} />
+            {index < data.length - 1 && ','}
+          </div>
+        ))}
+      </>
+    )
+  }
+
+  return <ArtistLink id={artistId} name={artist} onClick={closeDrawer} />
+}
+
+type ArtistLinkProps = LinkWithoutTo & {
+  id?: string
+  name: string
+}
+
+function ArtistLink({ id, name, className, ...props }: ArtistLinkProps) {
+  return (
+    <Link
+      className={cn(
+        className,
+        id ? 'hover:underline hover:text-foreground' : 'pointer-events-none',
+      )}
+      to={ROUTES.ARTIST.PAGE(id ?? '')}
+      {...props}
+    >
+      {name}
+    </Link>
   )
 }

@@ -1,6 +1,11 @@
 import { Albums } from './album'
 import { SubsonicResponse } from './subsonicResponse'
 
+export interface IFeaturedArtist {
+  id: string
+  name: string
+}
+
 export interface IArtist {
   id: string
   name: string
@@ -8,7 +13,10 @@ export interface IArtist {
   albumCount: number
   starred?: string
   artistImageUrl: string
-  album: Albums[]
+  musicBrainzId?: string
+  sortName?: string
+  roles?: string[]
+  album?: Albums[]
 }
 
 export interface ISimilarArtist {

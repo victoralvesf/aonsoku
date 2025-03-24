@@ -7,6 +7,7 @@ import { SidebarPlaylistGenerator } from '@/app/components/sidebar/sidebar-gener
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
 import { queryKeys } from '@/utils/queryKeys'
+import { EmptyPlaylistsMessage } from './empty-message'
 
 export function SidebarPlaylists() {
   const { t } = useTranslation()
@@ -31,9 +32,7 @@ export function SidebarPlaylists() {
           {playlists !== undefined && playlists.length > 0 ? (
             <SidebarPlaylistGenerator playlists={playlists} />
           ) : (
-            <span className="w-full truncate text-left px-3 pt-2 text-sm">
-              {t('sidebar.emptyPlaylist')}
-            </span>
+            <EmptyPlaylistsMessage />
           )}
         </ScrollArea>
       </div>

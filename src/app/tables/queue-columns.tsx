@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom'
+import { ArtistLink, ArtistsLinks } from '@/app/components/song/artist-link'
 import PlaySongButton from '@/app/components/table/play-button'
 import { QueueActions } from '@/app/components/table/queue-actions'
 import { TableSongTitle } from '@/app/components/table/song-title'
-import { ROUTES } from '@/routes/routesList'
 import { usePlayerStore } from '@/store/player.store'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISong } from '@/types/responses/song'
@@ -45,26 +44,24 @@ export function queueColumns(): ColumnDefType<ISong>[] {
       id: 'artist',
       accessorKey: 'artist',
       style: {
-        width: '25%',
-        maxWidth: '25%',
+        width: '30%',
+        maxWidth: '30%',
       },
       header: '',
       cell: ({ row }) => {
-        if (!row.original.artistId) return row.original.artist
+        const { artist, artistId, artists } = row.original
         const { closeDrawer } = usePlayerStore.getState().actions
 
+        if (!artistId) return row.original.artist
+
+        if (artists && artists.length > 1) {
+          return <ArtistsLinks artists={artists} />
+        }
+
         return (
-          <Link
-            to={ROUTES.ARTIST.PAGE(row.original.artistId)}
-            className="hover:underline truncate"
-            onClick={closeDrawer}
-            onContextMenu={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-            }}
-          >
-            {row.original.artist}
-          </Link>
+          <ArtistLink artistId={artistId} onClick={closeDrawer}>
+            {artist}
+          </ArtistLink>
         )
       },
     },

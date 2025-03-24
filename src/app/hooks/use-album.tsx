@@ -17,17 +17,11 @@ export const useGetAlbumInfo = (albumId: string) => {
   })
 }
 
-export const useGetArtistAlbums = (artist: string) => {
+export const useGetArtistAlbums = (artistId: string) => {
   return useQuery({
-    queryKey: [queryKeys.album.moreAlbums, artist],
-    queryFn: () =>
-      subsonic.search.get({
-        query: artist,
-        albumCount: 16,
-        songCount: 0,
-        artistCount: 0,
-      }),
-    enabled: !!artist,
+    queryKey: [queryKeys.album.moreAlbums, artistId],
+    queryFn: () => subsonic.artists.getOne(artistId),
+    enabled: !!artistId,
   })
 }
 

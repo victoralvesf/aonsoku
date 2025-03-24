@@ -5,6 +5,7 @@ import { getCoverArtUrl } from '@/api/httpClient'
 import { EqualizerBars } from '@/app/components/icons/equalizer-bars'
 import { ISong } from '@/types/responses/song'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
+import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
 
 type QueueItemProps = ComponentPropsWithRef<'div'> & {
   song: ISong
@@ -62,7 +63,7 @@ export function QueueItem({
         </div>
         <div className="flex flex-col">
           <span className="font-semibold">{song.title}</span>
-          <p className="font-normal text-sm opacity-70">{song.artist}</p>
+          <QueueArtists song={song} />
         </div>
       </div>
       <div className="w-[100px] text-center">
@@ -70,4 +71,25 @@ export function QueueItem({
       </div>
     </div>
   )
+}
+
+function QueueArtists({ song }: { song: ISong }) {
+  const { artist, artists } = song
+
+  if (artists && artists.length > 1) {
+    const data = artists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
+
+    return (
+      <div className="flex items-center gap-1 font-normal opacity-70">
+        {data.map(({ id, name }, index) => (
+          <div key={id} className="flex items-center text-sm">
+            <p>{name}</p>
+            {index < data.length - 1 && ','}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  return <p className="font-normal text-sm opacity-70">{artist}</p>
 }

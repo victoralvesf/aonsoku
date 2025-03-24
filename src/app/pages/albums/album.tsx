@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import { AlbumInfo } from '@/app/components/album/info'
+import { RecordLabelsInfo } from '@/app/components/album/record-labels'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { BadgesData } from '@/app/components/header-info'
@@ -31,10 +32,13 @@ export default function Album() {
     isLoading: albumIsLoading,
     isFetched,
   } = useGetAlbum(albumId)
-  const { data: moreAlbums, isLoading: moreAlbumsIsLoading } =
-    useGetArtistAlbums(album?.artist || '')
+  const { data: artist, isLoading: moreAlbumsIsLoading } = useGetArtistAlbums(
+    album?.artistId || '',
+  )
   const { data: randomAlbums, isLoading: randomAlbumsIsLoading } =
     useGetGenreAlbums(album?.genre || '')
+
+  const moreAlbums = artist?.album
 
   if (albumIsLoading) return <AlbumFallback />
   if (isFetched && !album) {
@@ -76,7 +80,7 @@ export default function Album() {
     'duration',
     'playCount',
     'played',
-    'bitRate',
+    // 'bitRate',
     'contentType',
     'select',
   ]
@@ -92,8 +96,8 @@ export default function Album() {
     return list
   }
 
-  const artistAlbums = moreAlbums?.album
-    ? removeCurrentAlbumFromList(moreAlbums.album)
+  const artistAlbums = moreAlbums
+    ? removeCurrentAlbumFromList(moreAlbums)
     : null
 
   const randomGenreAlbums =
@@ -112,6 +116,7 @@ export default function Album() {
         title={album.name}
         subtitle={album.artist}
         artistId={album.artistId}
+        artists={album.artists}
         coverArtId={album.coverArt}
         coverArtType="album"
         coverArtSize="700"
@@ -131,9 +136,11 @@ export default function Album() {
           variant="modern"
         />
 
+        <RecordLabelsInfo album={album} />
+
         <div className="mt-4">
           {moreAlbumsIsLoading && <PreviewListFallback />}
-          {artistAlbums && !moreAlbumsIsLoading && (
+          {artistAlbums && !moreAlbumsIsLoading && album.artistId && (
             <PreviewList
               list={artistAlbums}
               showMore={true}

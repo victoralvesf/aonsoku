@@ -275,7 +275,9 @@
   "table": {
     "columns": {
       "title": "Título",
+      "albumArtist": "Artista do álbum",
       "artist": "Artista",
+      "contributors": "Contribuidores",
       "album": "Álbum",
       "year": "Ano",
       "duration": "Duração",
@@ -295,11 +297,15 @@
       "codec": "Codec",
       "path": "Caminho",
       "favorite": "Curtida",
+      "recordLabel": "Gravadora",
       "discNumber": "Número do disco",
       "trackGain": "Ganho da faixa",
       "trackPeak": "Pico da faixa",
       "albumGain": "Ganho do álbum",
-      "albumPeak": "Pico do álbum"
+      "albumPeak": "Pico do álbum",
+      "channelCount": "Número de canais",
+      "samplingRate": "Taxa de amostragem",
+      "bitDepth": "Profundidade de bits"
     },
     "buttons": {
       "play": "Tocar {{title}} por {{artist}}",

@@ -270,7 +270,9 @@
   "table": {
     "columns": {
       "title": "Title",
+      "albumArtist": "Album artist",
       "artist": "Artist",
+      "contributors": "Contributors",
       "album": "Album",
       "year": "Year",
       "duration": "Duration",
@@ -290,11 +292,15 @@
       "codec": "Codec",
       "path": "Path",
       "favorite": "Favorite",
+      "recordLabel": "Record label",
       "discNumber": "Disc number",
       "trackGain": "Track gain",
       "trackPeak": "Track peak",
       "albumGain": "Album gain",
-      "albumPeak": "Album peak"
+      "albumPeak": "Album peak",
+      "channelCount": "Channel count",
+      "samplingRate": "Sampling rate",
+      "bitDepth": "Bit depth"
     },
     "buttons": {
       "play": "Play {{title}} by {{artist}}",
