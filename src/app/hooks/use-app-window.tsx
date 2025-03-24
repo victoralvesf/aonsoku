@@ -1,6 +1,6 @@
 import { getCurrentWindow, Window } from '@tauri-apps/api/window'
 import { useCallback, useEffect, useState } from 'react'
-import { getOsType } from '@/utils/osType'
+import { getOsType, isWindows } from '@/utils/osType'
 import { isTauri } from '@/utils/tauriTools'
 
 interface AppWindowType {
@@ -19,6 +19,7 @@ export function useAppWindow(): AppWindowType {
   const [appWindow, setAppWindow] = useState<Window | null>(null)
   const [isWindowMaximized, setIsWindowMaximized] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [stateBeforeFullscreen, setStateBeforeFullscreen] = useState(false)
 
   useEffect(() => {
     const fetchFullscreenStatus = async () => {
@@ -98,6 +99,12 @@ export function useAppWindow(): AppWindowType {
     if (appWindow) {
       const fullscreen = await appWindow.isFullscreen()
       if (!fullscreen) {
+        // Hack to make the app go fullscreen on Windows
+        setStateBeforeFullscreen(isWindowMaximized)
+        if (isWindows && isWindowMaximized) {
+          await maximizeWindow()
+        }
+
         await appWindow.setFullscreen(true)
         updateIsFullscreen()
       }
@@ -110,6 +117,10 @@ export function useAppWindow(): AppWindowType {
       if (fullscreen) {
         await appWindow.setFullscreen(false)
         updateIsFullscreen()
+
+        if (isWindows && stateBeforeFullscreen) {
+          await maximizeWindow()
+        }
       }
     }
   }

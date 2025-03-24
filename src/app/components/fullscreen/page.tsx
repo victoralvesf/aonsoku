@@ -9,7 +9,6 @@ import {
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { useFullscreenPlayerSettings, useSongColor } from '@/store/player.store'
 import { enterFullscreen, exitFullscreen } from '@/utils/browser'
-import { isWindows } from '@/utils/osType'
 import { isTauri } from '@/utils/tauriTools'
 import { DynamicColorBackdrop, FullscreenBackdrop } from './backdrop'
 import { CloseFullscreenButton } from './buttons'
@@ -29,17 +28,15 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
   const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
   const { useSongColorOnBigPlayer } = useSongColor()
 
-  function handleFullscreen(open: boolean) {
+  async function handleFullscreen(open: boolean) {
     if (!autoFullscreenEnabled) return
 
     if (isTauri()) {
-      // flag to prevent enter fullscreen on windows
-      // because it's not fully supported by tauri
-      if (isWindows) return
-      open ? enterFullscreenWindow() : exitFullscreenWindow()
-    } else {
-      open ? enterFullscreen() : exitFullscreen()
+      open ? await enterFullscreenWindow() : await exitFullscreenWindow()
+      return
     }
+
+    open ? enterFullscreen() : exitFullscreen()
   }
 
   return (
