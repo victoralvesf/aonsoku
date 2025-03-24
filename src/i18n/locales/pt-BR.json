@@ -57,6 +57,7 @@
   },
   "playlist": {
     "headline": "Playlist",
+    "songCount_zero": "{{count}} músicas",
     "songCount_one": "{{count}} música",
     "songCount_many": "{{count}} músicas",
     "songCount_other": "{{count}} músicas",
@@ -190,6 +191,7 @@
       "options": "Mais opções para {{artist}}"
     },
     "info": {
+      "albumsCount_zero": "{{count}} álbuns",
       "albumsCount_one": "{{count}} álbum",
       "albumsCount_many": "{{count}} álbuns",
       "albumsCount_other": "{{count}} álbuns"
@@ -246,6 +248,7 @@
       }
     },
     "header": {
+      "episodeCount_zero": "{{count}} episódios",
       "episodeCount_one": "{{count}} episódio",
       "episodeCount_many": "{{count}} episódios",
       "episodeCount_other": "{{count}} episódios",
@@ -499,9 +502,11 @@
     "seconds": "{{seconds}}s"
   },
   "server": {
+    "songCount_zero": "{{count}} músicas",
     "songCount_one": "{{count}} música",
     "songCount_many": "{{count}} músicas",
     "songCount_other": "{{count}} músicas",
+    "folderCount_zero": "{{count}} diretórios",
     "folderCount_one": "{{count}} diretório",
     "folderCount_many": "{{count}} diretórios",
     "folderCount_other": "{{count}} diretórios",
