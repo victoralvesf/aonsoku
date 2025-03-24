@@ -84,7 +84,7 @@ export function TableListRow<TData>({
           'group/tablerow w-[calc(100%-10px)] flex flex-row transition-colors',
           'data-[state=selected]:bg-foreground/30',
           isQueue ? 'rounded-md' : 'hover:bg-foreground/20',
-          queueWithDynamicColor && 'hover:bg-background-foreground/80',
+          queueWithDynamicColor && 'hover:bg-background-foreground',
           queueWithoutDynamicColor && 'hover:bg-foreground/20',
           isRowSongActive && {
             'bg-foreground/20': !isQueue || queueWithoutDynamicColor,
