@@ -611,6 +611,10 @@
         "group": "ReplayGain",
         "description": "Automatically normalize audio playback levels for a consistent listening experience.",
         "enabled": "Enabled",
+        "error": {
+          "message": "There was an error playing the track using Replay Gain.",
+          "button": "Try again"
+        },
         "mode": {
           "label": "Mode",
           "track": "Track gain",

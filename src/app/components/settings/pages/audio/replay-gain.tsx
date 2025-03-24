@@ -10,6 +10,7 @@ import {
   ContentItemForm,
   ContentSeparator,
 } from '@/app/components/settings/section'
+import { Button } from '@/app/components/ui/button'
 import { NumericInput } from '@/app/components/ui/numeric-input'
 import {
   Select,
@@ -40,11 +41,18 @@ export function ReplayGainConfig() {
     setReplayGainType,
     setReplayGainPreAmp,
     setReplayGainDefaultGain,
+    setReplayGainError,
   } = useReplayGainActions()
 
   // Disabling the Replay Gain feature in the Linux desktop app
   // due to issues with WebKit2GTK
   if (isLinux) return null
+
+  const handleResetError = () => {
+    setReplayGainError(false)
+    setReplayGainEnabled(true)
+    window.location.reload()
+  }
 
   return (
     <Root>
@@ -68,6 +76,24 @@ export function ReplayGainConfig() {
             />
           </ContentItemForm>
         </ContentItem>
+
+        {replayGainError && (
+          <ContentItem>
+            <ContentItemTitle className="text-destructive font-medium">
+              {t('settings.audio.replayGain.error.message')}
+            </ContentItemTitle>
+            <ContentItemForm>
+              <Button
+                size="sm"
+                variant="destructive"
+                className="h-8"
+                onClick={handleResetError}
+              >
+                {t('settings.audio.replayGain.error.button')}
+              </Button>
+            </ContentItemForm>
+          </ContentItem>
+        )}
 
         {replayGainEnabled && (
           <ContentItem>

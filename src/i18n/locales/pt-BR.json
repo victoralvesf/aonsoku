@@ -625,6 +625,10 @@
         "group": "ReplayGain",
         "description": "Automaticamente normaliza o nível do áudio para uma melhor experiência sonora.",
         "enabled": "Habilitado",
+        "error": {
+          "message": "Houve um erro ao reproduzir a música usando Replay Gain.",
+          "button": "Tentar novamente"
+        },
         "mode": {
           "label": "Modo",
           "track": "Ganho da faixa",
