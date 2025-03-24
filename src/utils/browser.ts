@@ -12,7 +12,10 @@ export enum MouseButton {
 
 export const isChromeOrFirefox = ['Blink', 'Gecko'].includes(engineName)
 
-export const hasPiPSupport = 'documentPictureInPicture' in window
+// Enable only for browsers
+export const hasPiPSupport = isTauri()
+  ? false
+  : 'documentPictureInPicture' in window
 
 function preventContextMenu() {
   document.addEventListener('contextmenu', (e) => {
