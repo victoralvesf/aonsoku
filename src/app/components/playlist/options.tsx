@@ -78,6 +78,16 @@ export function PlaylistOptions({
 
   return (
     <>
+      {variant === 'context' && (
+        <>
+          <div className="px-2 py-0.5 max-w-64">
+            <span className="text-xs font-light text-muted-foreground break-words line-clamp-4">
+              {playlist.name}
+            </span>
+          </div>
+          <DropdownMenuSeparator />
+        </>
+      )}
       {showPlay && (
         <OptionsButtons.Play
           variant={variant}
