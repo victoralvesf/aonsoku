@@ -87,11 +87,15 @@ export default function Album() {
     'select',
   ]
 
-  function removeCurrentAlbumFromList(moreAlbums: Albums[]) {
-    if (moreAlbums.length === 0) return null
+  function removeCurrentAlbumFromList(moreAlbums: Albums[], sort = false) {
+    if (moreAlbums.length === 0 || !album) return null
 
-    let list = moreAlbums.filter((item) => item.id !== album?.id)
-    list = sortRecentAlbums(list)
+    let list = moreAlbums.filter((item) => item.id !== album.id)
+
+    if (sort) {
+      list = sortRecentAlbums(list)
+    }
+
     if (list.length > 16) list = list.slice(0, 16)
 
     if (list.length === 0) return null
@@ -100,7 +104,7 @@ export default function Album() {
   }
 
   const artistAlbums = moreAlbums
-    ? removeCurrentAlbumFromList(moreAlbums)
+    ? removeCurrentAlbumFromList(moreAlbums, true)
     : null
 
   const randomGenreAlbums =
