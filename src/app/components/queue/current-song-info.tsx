@@ -17,13 +17,16 @@ export function CurrentSongInfo() {
 
   return (
     <div className="mr-12 hidden lg:block w-[260px] lg:w-[320px] 2xl:w-[380px]">
-      <AspectRatio ratio={1 / 1} className="shadow-header-image rounded-md">
+      <AspectRatio
+        ratio={1 / 1}
+        className="shadow-header-image rounded-md overflow-hidden bg-accent"
+      >
         <LazyLoadImage
           id="song-info-image"
           src={imageUrl}
           effect="opacity"
           alt={`${currentSong.artist} - ${currentSong.title}`}
-          className="rounded-md aspect-square object-cover bg-background text-transparent"
+          className="rounded-md aspect-square object-cover text-transparent"
           width="100%"
           height="100%"
         />
