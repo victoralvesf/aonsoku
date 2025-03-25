@@ -1,3 +1,4 @@
+import { getCurrentWindow } from '@tauri-apps/api/window'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -6,7 +7,19 @@ import {
   usePlayerSonglist,
 } from '@/store/player.store'
 import { appName } from '@/utils/appName'
+import { logger } from '@/utils/logger'
 import { manageMediaSession } from '@/utils/setMediaSession'
+import { isTauri } from '@/utils/tauriTools'
+
+function setWindowTitle(title: string) {
+  if (!isTauri()) return
+
+  getCurrentWindow()
+    .setTitle(title)
+    .then(() => {
+      logger.info('[MediaSessionObserver] - Title updated to ->', title)
+    })
+}
 
 export function MediaSessionObserver() {
   const { t } = useTranslation()
@@ -31,27 +44,34 @@ export function MediaSessionObserver() {
     if (hasNothingPlaying) {
       document.title = appName
       manageMediaSession.removeMediaSession()
+      setWindowTitle(appName)
     }
   }, [hasNothingPlaying])
 
   useEffect(() => {
     if (isRadio && hasRadiosPlaying) {
-      document.title = `${radioLabel} - ${radio.name} - ${appName}`
+      const title = `${radioLabel} - ${radio.name}`
+      document.title = `${title} - ${appName}`
       manageMediaSession.setRadioMediaSession(radioLabel, radio.name)
+      setWindowTitle(title)
     }
   }, [hasRadiosPlaying, isRadio, radio, radioLabel])
 
   useEffect(() => {
     if (isSong && hasSongsPlaying) {
-      document.title = `${song.title} - ${song.artist} - ${appName}`
+      const title = `${song.title} - ${song.artist}`
+      document.title = `${title} - ${appName}`
       manageMediaSession.setMediaSession(song)
+      setWindowTitle(title)
     }
   }, [hasSongsPlaying, isSong, song])
 
   useEffect(() => {
     if (isPodcast && hasPodcastsPlaying) {
-      document.title = `${episode.title} - ${episode.podcast.title} - ${appName}`
+      const title = `${episode.title} - ${episode.podcast.title}`
+      document.title = `${title} - ${appName}`
       manageMediaSession.setPodcastMediaSession(episode)
+      setWindowTitle(title)
     }
   }, [episode, hasPodcastsPlaying, hasSongsPlaying, isPodcast, isSong, song])
 
