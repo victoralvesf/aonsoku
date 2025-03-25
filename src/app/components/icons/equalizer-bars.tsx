@@ -18,7 +18,6 @@ export function EqualizerBars(props: EqualizerBarsProps) {
       viewBox="0 0 24 24"
       className="text-foreground"
       id="bars"
-      style={{ marginBottom: 4 }}
       {...props}
     >
       {rects.map((rect, index) => (

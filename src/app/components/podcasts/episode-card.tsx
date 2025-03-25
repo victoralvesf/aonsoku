@@ -50,12 +50,12 @@ export function EpisodeCard({
       >
         <MemoEpisodeImage episode={episode} />
         <div className="flex flex-col flex-1 space-y-1 min-w-64">
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-1 items-center max-h-4">
             {isEpisodePlaying && isPlaying && (
               <EqualizerBars
                 width={14}
                 height={14}
-                className="text-muted-foreground mb-[2px]"
+                className="text-muted-foreground mb-[4px]"
               />
             )}
             <span className="text-xs text-muted-foreground font-medium uppercase w-fit">
