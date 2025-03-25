@@ -29,55 +29,57 @@ export function MediaSessionObserver() {
     usePlayerSonglist()
   const radioLabel = t('radios.label')
 
-  const hasSongsPlaying = currentList.length > 0
-  const hasRadiosPlaying = radioList.length > 0
-  const hasPodcastsPlaying = podcastList.length > 0
-
   const song = currentList[currentSongIndex] ?? null
   const radio = radioList[currentSongIndex] ?? null
   const episode = podcastList[currentSongIndex] ?? null
 
   const hasNothingPlaying =
-    !hasSongsPlaying && !hasRadiosPlaying && !hasPodcastsPlaying
+    currentList.length === 0 &&
+    radioList.length === 0 &&
+    podcastList.length === 0
 
-  useEffect(() => {
-    if (hasNothingPlaying) {
-      document.title = appName
-      manageMediaSession.removeMediaSession()
-      setWindowTitle(appName)
-    }
-  }, [hasNothingPlaying])
-
-  useEffect(() => {
-    if (isRadio && hasRadiosPlaying) {
-      const title = `${radioLabel} - ${radio.name}`
-      document.title = `${title} - ${appName}`
-      manageMediaSession.setRadioMediaSession(radioLabel, radio.name)
-      setWindowTitle(title)
-    }
-  }, [hasRadiosPlaying, isRadio, radio, radioLabel])
-
-  useEffect(() => {
-    if (isSong && hasSongsPlaying) {
-      const title = `${song.title} - ${song.artist}`
-      document.title = `${title} - ${appName}`
-      manageMediaSession.setMediaSession(song)
-      setWindowTitle(title)
-    }
-  }, [hasSongsPlaying, isSong, song])
-
-  useEffect(() => {
-    if (isPodcast && hasPodcastsPlaying) {
-      const title = `${episode.title} - ${episode.podcast.title}`
-      document.title = `${title} - ${appName}`
-      manageMediaSession.setPodcastMediaSession(episode)
-      setWindowTitle(title)
-    }
-  }, [episode, hasPodcastsPlaying, hasSongsPlaying, isPodcast, isSong, song])
+  function resetAppTitle() {
+    document.title = appName
+    manageMediaSession.removeMediaSession()
+    setWindowTitle(appName)
+  }
 
   useEffect(() => {
     manageMediaSession.setPlaybackState(isPlaying)
-  }, [isPlaying])
+
+    if (hasNothingPlaying || !isPlaying) {
+      resetAppTitle()
+      return
+    }
+
+    let title = ''
+
+    if (isRadio && radio) {
+      title = `${radioLabel} - ${radio.name}`
+      manageMediaSession.setRadioMediaSession(radioLabel, radio.name)
+    }
+    if (isSong && song) {
+      title = `${song.title} - ${song.artist}`
+      manageMediaSession.setMediaSession(song)
+    }
+    if (isPodcast && episode) {
+      title = `${episode.title} - ${episode.podcast.title}`
+      manageMediaSession.setPodcastMediaSession(episode)
+    }
+
+    document.title = title
+    setWindowTitle(title)
+  }, [
+    episode,
+    hasNothingPlaying,
+    isPlaying,
+    isPodcast,
+    isRadio,
+    isSong,
+    radio,
+    radioLabel,
+    song,
+  ])
 
   return null
 }
