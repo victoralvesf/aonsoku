@@ -1,3 +1,4 @@
+import cs from './locales/cs.json'
 import de from './locales/de.json'
 import en from './locales/en.json'
 import es from './locales/es.json'
@@ -16,6 +17,7 @@ export const resources = {
   ru: { translation: ru },
   fr: { translation: fr },
   sv: { translation: sv },
+  cs: { translation: cs },
 }
 
 export const languages = [
@@ -66,5 +68,11 @@ export const languages = [
     langCode: 'sv',
     flag: 'SE',
     dayjsLocale: 'sv',
+  },
+  {
+    nativeName: 'Čeština',
+    langCode: 'cs',
+    flag: 'CZ',
+    dayjsLocale: 'cs',
   },
 ]
