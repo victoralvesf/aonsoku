@@ -1,0 +1,64 @@
+{
+  "home": {
+    "mostPlayed": "Nejčastěji přehrávané",
+    "recentlyAdded": "Nedávno přidané",
+    "recentlyPlayed": "Nedávno přehrané",
+    "explore": "Objevujte"
+  },
+  "sidebar": {
+    "home": "Domů",
+    "search": "Hledat…",
+    "library": "Knihovna",
+    "songs": "Skladby",
+    "albums": "Alba",
+    "playlists": "Playlisty",
+    "emptyPlaylist": "Zatím nebyly vytvořeny žádné playlisty",
+    "podcasts": "Podcasty",
+    "miniSearch": "Hledat",
+    "radios": "Rádiové stanice",
+    "artists": "Umělci"
+  },
+  "menu": {
+    "language": "Jazyk",
+    "about": "O aplikaci",
+    "server": "Server",
+    "serverLogout": "Odhlásit se"
+  },
+  "generic": {
+    "seeMore": "Ukázat více",
+    "showDetails": "Ukázat detaily",
+    "hideDetails": "Skrýt detaily",
+    "viewAll": "Zobrazit vše",
+    "loading": "Načítání…"
+  },
+  "theme": {
+    "label": "Motiv",
+    "dark": "Tmavý",
+    "system": "Systémový",
+    "light": "Světlý",
+    "black": "Černo-bílý",
+    "one-dark": "One Dark",
+    "night-owl-light": "Night Owl Světlý",
+    "marmalade-beaver": "Marmalade Beaver",
+    "material-theme": "Material Theme",
+    "monokai-pro": "Monokai Pro",
+    "github-dark": "Github Dark",
+    "shades-of-purple": "Odstíny Fialové",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "dracula": "Dracula",
+    "discord": "Discord",
+    "tinacious-design": "Tinacious Design",
+    "vim-dark-soft": "Vim Dark Soft",
+    "nuclear-dark": "Nuclear Dark",
+    "bearded-solarized": "Bearded Solarized",
+    "vue-dark": "Vue Dark",
+    "noctis-lilac": "Noctis Lilac",
+    "achiever": "Achiever"
+  },
+  "playlist": {
+    "headline": "Playlist",
+    "songCount_one": "{{count}} skladba",
+    "songCount_few": "{{count}} skladby",
+    "songCount_other": "{{count}} skladeb"
+  }
+}
