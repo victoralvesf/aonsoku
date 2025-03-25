@@ -21,6 +21,7 @@ import { ROUTES } from '@/routes/routesList'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { Albums } from '@/types/responses/album'
+import { sortRecentAlbums } from '@/utils/album'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 
 export default function Album() {
@@ -90,6 +91,7 @@ export default function Album() {
     if (moreAlbums.length === 0) return null
 
     let list = moreAlbums.filter((item) => item.id !== album?.id)
+    list = sortRecentAlbums(list)
     if (list.length > 16) list = list.slice(0, 16)
 
     if (list.length === 0) return null

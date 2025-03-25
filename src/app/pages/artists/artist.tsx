@@ -17,6 +17,7 @@ import {
 } from '@/app/hooks/use-artist'
 import ErrorPage from '@/app/pages/error-page'
 import { ROUTES } from '@/routes/routesList'
+import { sortRecentAlbums } from '@/utils/album'
 
 export default function Artist() {
   const { t } = useTranslation()
@@ -77,15 +78,7 @@ export default function Artist() {
     },
   ]
 
-  const recentAlbums = artist.album
-    ? artist.album.sort((a, b) => {
-        // if the album does not have a year, send to the end of list
-        const yearA = a.year ?? -Infinity
-        const yearB = b.year ?? -Infinity
-
-        return yearB - yearA
-      })
-    : []
+  const recentAlbums = artist.album ? sortRecentAlbums(artist.album) : []
 
   return (
     <div className="w-full">
