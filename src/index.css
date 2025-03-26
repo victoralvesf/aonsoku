@@ -198,7 +198,7 @@ img {
 }
 
 svg#bars {
-  @apply overflow-visible rotate-180 -scale-x-100;
+  @apply overflow-hidden rotate-180 -scale-x-100;
 }
 
 svg#bars .eq-bar {
@@ -218,27 +218,27 @@ svg#bars .eq-bar--3 {
 }
 
 svg#bars .eq-bar--4 {
-  animation: eq-4 0.6s infinite 0s;
+  animation: eq-4 0.6s infinite 0.07s;
 }
 
 @keyframes eq-1 {
-  0%, 100% { transform: scaleY(0.4) translateY(2px); }
-  50% { transform: scaleY(0.8) translateY(0); }
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(0.8); }
 }
 
 @keyframes eq-2 {
-  0%, 100% { transform: scaleY(0.9) translateY(0); }
-  50% { transform: scaleY(0.5) translateY(1px); }
+  0%, 100% { transform: scaleY(0.9); }
+  50% { transform: scaleY(0.4); }
 }
 
 @keyframes eq-3 {
-  0%, 100% { transform: scaleY(0.8) translateY(0); }
-  50% { transform: scaleY(1) translateY(-0.25px); }
+  0%, 100% { transform: scaleY(0.7); }
+  50% { transform: scaleY(1); }
 }
 
 @keyframes eq-4 {
-  0%, 100% { transform: scaleY(0.7) translateY(0.25px); }
-  50% { transform: scaleY(1.1) translateY(-0.25px); }
+  0%, 100% { transform: scaleY(0.6); }
+  50% { transform: scaleY(1); }
 }
 
 #sync-lyrics-box,

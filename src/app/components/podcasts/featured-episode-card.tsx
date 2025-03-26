@@ -70,11 +70,7 @@ function ReleaseDate({ episode }: FeaturedEpisodeCardProps) {
   return (
     <div className="flex gap-1 items-center mt-3 max-h-4">
       {isEpisodePlaying && isPlaying && (
-        <EqualizerBars
-          width={14}
-          height={14}
-          className="text-muted-foreground mb-[4px]"
-        />
+        <EqualizerBars size={14} className="text-muted-foreground mb-1" />
       )}
       <span className="text-xs text-muted-foreground font-medium uppercase w-fit">
         {episodeReleaseDate}

@@ -40,11 +40,7 @@ export function QueueItem({
         {isPlaying ? (
           <div className="w-6 flex items-center">
             <div className="w-6 h-6 flex items-center justify-center">
-              <EqualizerBars
-                width={20}
-                height={20}
-                className="text-secondary"
-              />
+              <EqualizerBars size={20} className="text-secondary mb-1" />
             </div>
           </div>
         ) : (
