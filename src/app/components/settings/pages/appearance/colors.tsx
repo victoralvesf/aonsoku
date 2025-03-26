@@ -13,24 +13,39 @@ import {
 import { Switch } from '@/app/components/ui/switch'
 import { useSongColor } from '@/store/player.store'
 
-export function BigPlayerSettings() {
+export function ColorSettings() {
   const { t } = useTranslation()
-  const { useSongColorOnBigPlayer, setUseSongColorOnBigPlayer } = useSongColor()
+  const {
+    useSongColorOnQueue,
+    setUseSongColorOnQueue,
+    useSongColorOnBigPlayer,
+    setUseSongColorOnBigPlayer,
+  } = useSongColor()
 
   return (
     <Root>
       <Header>
-        <HeaderTitle>{t('settings.appearance.bigPlayer.group')}</HeaderTitle>
+        <HeaderTitle>{t('settings.appearance.colors.group')}</HeaderTitle>
         <HeaderDescription>
-          {t('settings.appearance.bigPlayer.description')}
+          {t('settings.appearance.colors.description')}
         </HeaderDescription>
       </Header>
       <Content>
         <ContentItem>
-          <ContentItemTitle
-            info={t('settings.appearance.bigPlayer.colors.info')}
-          >
-            {t('settings.appearance.bigPlayer.colors.label')}
+          <ContentItemTitle>
+            {t('settings.appearance.colors.queue.label')}
+          </ContentItemTitle>
+          <ContentItemForm>
+            <Switch
+              checked={useSongColorOnQueue}
+              onCheckedChange={setUseSongColorOnQueue}
+            />
+          </ContentItemForm>
+        </ContentItem>
+
+        <ContentItem>
+          <ContentItemTitle>
+            {t('settings.appearance.colors.bigPlayer.label')}
           </ContentItemTitle>
           <ContentItemForm>
             <Switch

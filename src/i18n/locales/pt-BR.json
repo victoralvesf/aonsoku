@@ -608,20 +608,14 @@
           "info": "Se habilitado, ao acessar o player grande, o app ativará o modo tela cheia automaticamente."
         }
       },
-      "bigPlayer": {
-        "group": "Player Grande",
-        "description": "Personalize a página do player grande.",
-        "colors": {
-          "label": "Habilitar cor de fundo dinâmica",
-          "info": "Se habilitado, o aplicativo usará a cor dominante da arte do álbum em reprodução como fundo, substituindo a imagem da arte do álbum."
-        }
-      },
-      "queue": {
-        "group": "Fila de reprodução e Letra",
-        "description": "Personalize a página da fila de reprodução e letra.",
-        "colors": {
-          "label": "Habilitar cor de fundo dinâmica",
-          "info": "Se habilitado, o aplicativo usará a cor dominante da arte do álbum em reprodução como fundo."
+      "colors": {
+        "group": "Cores Dinâmicas",
+        "description": "Selecione se o aplicativo usará a cor dominante da arte do álbum em reprodução como cor de fundo.",
+        "queue": {
+          "label": "Fila de reprodução e Letra"
+        },
+        "bigPlayer": {
+          "label": "Player Grande"
         }
       }
     },
