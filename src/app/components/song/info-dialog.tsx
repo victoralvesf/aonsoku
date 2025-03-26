@@ -202,7 +202,7 @@ export function SongInfoDialog() {
                         .slice(0, RECORD_LABELS_MAX_NUMBER)
                         .map((label) => (
                           <p key={label.name} className="w-full">
-                            {`℗ ${album.year ?? ''} ${label.name}`}
+                            {label.name}
                           </p>
                         ))}
                     </InfoGridItem>
