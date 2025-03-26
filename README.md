@@ -122,6 +122,24 @@ services:
       - 8080:8080
 ```
 
+* Podman Quadlet
+```ini
+[Unit]
+Description=Aonsoku Container
+
+[Container]
+ContainerName=aonsoku
+Image=ghcr.io/victoralvesf/aonsoku:latest
+PublishPort=8080:8080
+AutoUpdate=registry
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target default.target
+```
+
 <details>
   <summary>Environment Variables</summary>
   </br>
