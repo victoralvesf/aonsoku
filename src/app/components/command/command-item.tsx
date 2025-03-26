@@ -6,44 +6,40 @@ import {
   PlusIcon,
   SquareArrowOutUpRight,
 } from 'lucide-react'
+import { ReactNode } from 'react'
 
-interface Children {
-  children: React.ReactNode
-}
+type Variant =
+  | 'GotoPage'
+  | 'ChangeTheme'
+  | 'Playlists'
+  | 'CreatePlaylist'
+  | 'ServerManagement'
 
-function Wrapper({ children }: Children) {
-  return <div className="flex gap-2 items-center">{children}</div>
-}
-
-interface CommandItemProps extends Children {
-  variant:
-    | 'GotoPage'
-    | 'ChangeTheme'
-    | 'Playlists'
-    | 'CreatePlaylist'
-    | 'ServerManagement'
+type CommandItemProps = {
+  children: ReactNode
+  variant: Variant
 }
 
 const icons = {
   GotoPage: {
     className: 'from-cyan-500 to-blue-500',
-    icon: <SquareArrowOutUpRight className="text-white" />,
+    icon: <SquareArrowOutUpRight />,
   },
   ChangeTheme: {
     className: 'from-purple-500 to-pink-500',
-    icon: <Palette className="text-white" />,
+    icon: <Palette />,
   },
   Playlists: {
     className: 'from-blue-600 to-violet-600',
-    icon: <ListMusic className="text-white" />,
+    icon: <ListMusic />,
   },
   CreatePlaylist: {
     className: 'from-teal-400 to-emerald-600',
-    icon: <PlusIcon className="text-white" />,
+    icon: <PlusIcon />,
   },
   ServerManagement: {
     className: 'from-rose-400 to-red-500',
-    icon: <Cog className="text-white" />,
+    icon: <Cog />,
   },
 }
 
@@ -51,11 +47,13 @@ export function CustomCommandItem({ children, variant }: CommandItemProps) {
   const { className, icon } = icons[variant as keyof typeof icons]
 
   return (
-    <Wrapper>
-      <div className={clsx('bg-gradient-to-r rounded p-1', className)}>
+    <div className="flex gap-2 items-center">
+      <div
+        className={clsx('bg-gradient-to-r rounded p-1 text-white', className)}
+      >
         {icon}
       </div>
       {children}
-    </Wrapper>
+    </div>
   )
 }
