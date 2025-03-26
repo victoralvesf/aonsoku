@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
 import { LogoutObserver } from '@/app/observers/logout-observer'
+import { logoutKeys, shortcutDialogKeys, stringifyShortcut } from '@/shortcuts'
 import { useAppData, useAppStore } from '@/store/app.store'
 import { isWindows } from '@/utils/osType'
 
@@ -66,7 +67,9 @@ export function UserDropdown() {
           <DropdownMenuItem onClick={() => setShortcutsOpen(true)}>
             <Keyboard className="mr-2 h-4 w-4" />
             <span>{t('shortcuts.modal.title')}</span>
-            <DropdownMenuShortcut>{'⌘/'}</DropdownMenuShortcut>
+            <DropdownMenuShortcut>
+              {stringifyShortcut(shortcutDialogKeys)}
+            </DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setAboutOpen(true)}>
@@ -79,7 +82,9 @@ export function UserDropdown() {
               <DropdownMenuItem onClick={() => setLogoutDialogState(true)}>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>{t('menu.serverLogout')}</span>
-                <DropdownMenuShortcut>{'⇧⌃Q'}</DropdownMenuShortcut>
+                <DropdownMenuShortcut>
+                  {stringifyShortcut(logoutKeys)}
+                </DropdownMenuShortcut>
               </DropdownMenuItem>
             </>
           )}
