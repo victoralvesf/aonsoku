@@ -1,5 +1,6 @@
+import randomCSSHexColor from '@chriscodesthings/random-css-hex-color'
 import { AudioLines, Maximize2 } from 'lucide-react'
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -30,14 +31,14 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
     const img = getImageElement()
     if (!img) return
 
-    let color = null
+    let color = randomCSSHexColor(true)
 
     try {
       color = (await getAverageColor(img)).hex
       logger.info('[TrackInfo] - Getting Image Average Color', {
         color,
       })
-    } catch (_) {
+    } catch {
       logger.error('[TrackInfo] - Unable to get image average color.')
     }
 
@@ -52,12 +53,6 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
 
     img.crossOrigin = null
   }
-
-  useEffect(() => {
-    if (song) {
-      getImageColor()
-    }
-  }, [song, getImageColor])
 
   if (!song) {
     return (
@@ -82,6 +77,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
       <div className="group relative">
         <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md">
           <LazyLoadImage
+            key={song.id}
             id="track-song-image"
             src={getCoverArtUrl(song.coverArt, 'song', '240')}
             width="100%"
