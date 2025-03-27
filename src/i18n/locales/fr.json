@@ -663,7 +663,7 @@
   },
   "update": {
     "dialog": {
-      "title": "Nouvelle version disponible!",
+      "title": "Nouvelle version disponible !",
       "remindLater": "Me rappeler plus tard",
       "install": "Installer et redémarrer"
     },
