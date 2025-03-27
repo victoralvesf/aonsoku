@@ -12,11 +12,15 @@ export function ToastContainer() {
 
         return cn(
           toastColors[type],
-          'mb-2 font-sans relative flex flex-row p-1 min-h-10 rounded-md justify-between overflow-hidden shadow-md',
+          'flex font-sans min-h-toast rounded-md justify-between shadow-md overflow-hidden',
         )
       }}
       bodyClassName="flex text-sm block p-3"
       pauseOnHover={false}
+      pauseOnFocusLoss={false}
+      position="top-center"
+      stacked={true}
+      newestOnTop={true}
       autoClose={5000}
       closeButton={(props) => (
         <Button

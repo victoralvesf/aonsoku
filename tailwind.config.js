@@ -21,7 +21,22 @@ module.exports = {
         sans: ['Poppins', 'sans-serif'],
       },
       height: {
+        header: 'var(--header-height)',
         content: 'var(--content-height)',
+        'shadow-header': 'var(--shadow-header-height)',
+        toast: 'var(--toastify-toast-container-height)',
+      },
+      minHeight: {
+        header: 'var(--header-height)',
+        content: 'var(--content-height)',
+        'shadow-header': 'var(--shadow-header-height)',
+        toast: 'var(--toastify-toast-container-height)',
+      },
+      maxHeight: {
+        header: 'var(--header-height)',
+        content: 'var(--content-height)',
+        'shadow-header': 'var(--shadow-header-height)',
+        toast: 'var(--toastify-toast-container-height)',
       },
       colors: {
         border: 'hsl(var(--border))',

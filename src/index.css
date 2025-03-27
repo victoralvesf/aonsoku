@@ -26,14 +26,19 @@
     --shadow-header-height: 80px;
     --shadow-header-distance: calc(var(--shadow-header-height) + 1.5rem);
 
-    --toastify-toast-top: calc(var(--header-height) + 0.5rem);
+    --toastify-toast-top: calc(var(--header-height) + 0.25rem);
+    --toastify-toast-container-height: calc(var(--shadow-header-height) - 0.5rem);
 
     --windows-red: 5 75% 44%;
   }
 }
 
+.Toastify__toast-container {
+  padding: 0px !important;
+}
+
 .Toastify__progress-bar--wrp {
-  height: 2px !important;
+  height: 3px !important;
 }
 
 #root {
