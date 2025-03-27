@@ -387,7 +387,7 @@
           "button": "Réessayer"
         },
         "description": "Normaliser automatiquement les niveaux de lecture audio pour une expérience d'écoute cohérente.",
-        "preAmp": "PreAmp (dB)"
+        "preAmp": "Préamplificateur (dB)"
       },
       "lyrics": {
         "group": "Paroles",
