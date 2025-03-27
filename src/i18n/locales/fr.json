@@ -372,7 +372,8 @@
     "audio": {
       "replayGain": {
         "defaultGain": {
-          "info": "Ce niveau de gain est appliqué aux titres qui n'incluent pas de métadonnées ReplayGain, ce qui garantit un volume audio cohérent. La plage recommandée pour le gain est comprise entre -10 dB et -1 dB."
+          "info": "Ce niveau de gain est appliqué aux titres qui n'incluent pas de métadonnées ReplayGain, ce qui garantit un volume audio cohérent. La plage recommandée pour le gain est comprise entre -10 dB et -1 dB.",
+          "label": "Gain par défaut (dB)"
         },
         "mode": {
           "label": "Mode",
@@ -385,7 +386,8 @@
           "message": "Une erreur s'est produite lors de la lecture de la piste à l'aide du ReplayGain.",
           "button": "Réessayer"
         },
-        "description": "Normaliser automatiquement les niveaux de lecture audio pour une expérience d'écoute cohérente."
+        "description": "Normaliser automatiquement les niveaux de lecture audio pour une expérience d'écoute cohérente.",
+        "preAmp": "PreAmp (dB)"
       },
       "lyrics": {
         "group": "Paroles",
@@ -698,7 +700,8 @@
     },
     "toasts": {
       "success": "La mise à jour a été installée ! L'application va redémarrer.",
-      "started": "La mise à jour a commencé."
+      "started": "La mise à jour a commencé.",
+      "error": "L'installation de la mise à jour a échoué. Veuillez la télécharger directement depuis GitHub."
     }
   }
 }
