@@ -281,9 +281,7 @@ export function SongInfoDialog() {
                 </InfoGridItem>
               )}
 
-              {song.bitDepth && (
-                <InfoGridItem title="bitDepth">{song.bitDepth}</InfoGridItem>
-              )}
+              <InfoGridItem title="bitDepth">{song.bitDepth ?? 0}</InfoGridItem>
             </div>
           </ScrollArea>
         )}
