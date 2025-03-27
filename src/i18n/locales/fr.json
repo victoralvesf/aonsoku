@@ -663,7 +663,13 @@
   },
   "update": {
     "dialog": {
-      "title": "Nouvelle version disponible!"
+      "title": "Nouvelle version disponible!",
+      "remindLater": "Me rappeler plus tard",
+      "install": "Installer et redémarrer"
+    },
+    "toasts": {
+      "success": "La mise à jour a été installée! L'application va redémarrer.",
+      "started": "La mise à jour a commencé"
     }
   }
 }
