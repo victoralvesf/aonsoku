@@ -86,7 +86,17 @@
       "discNumber": "Numéro de disque",
       "path": "Chemin",
       "plays": "Lectures",
-      "lastPlayed": "Écouté récemment"
+      "lastPlayed": "Écouté récemment",
+      "trackGain": "Gain de piste",
+      "albumPeak": "Pic de classement de l'album",
+      "trackPeak": "Pic de niveau de la piste",
+      "albumGain": "Gain de l'album",
+      "albumArtist": "Artiste de l'album",
+      "contributors": "Contributeurs",
+      "channelCount": "Nombre de canaux",
+      "samplingRate": "Taux d'échantillonnage",
+      "bitDepth": "Profondeur de bits",
+      "recordLabel": "Maison de disques"
     },
     "buttons": {
       "play": "Jouer {{title}} par {{artist}}",
@@ -322,7 +332,17 @@
       },
       "play": "Lecture",
       "like": "Ajouter {{song}} de {{artist}} aux favoris",
-      "dislike": "Enlever {{song}} de {{artist}} des favoris"
+      "dislike": "Enlever {{song}} de {{artist}} des favoris",
+      "forward": "Avancer de {{amount}} secondes",
+      "miniPlayer": {
+        "open": "Ouvrir le lecteur réduit",
+        "close": "Fermer le lecteur réduit"
+      },
+      "volume": {
+        "unmute": "Activer le son",
+        "mute": "Couper le son"
+      },
+      "rewind": "Revenir en arrière de {{amount}} secondes"
     },
     "noSongPlaying": "Pas de lecture en cours",
     "noRadioPlaying": "Aucune radio en cours"
@@ -341,7 +361,12 @@
     "download": "Télécharger",
     "play": "Lecture",
     "playNext": "Lecture suivante",
-    "info": "Plus d'informations"
+    "info": "Plus d'informations",
+    "goto": {
+      "episode": "Aller à l'épisode",
+      "podcast": "Aller au podcast"
+    },
+    "markAsPlayed": "Marquer comme joué"
   },
   "settings": {
     "audio": {
@@ -505,12 +530,22 @@
     "playback": {
       "shuffle": "Mélanger",
       "repeat": "Répéter",
-      "play": "Lecture / Pause"
+      "play": "Lecture / Pause",
+      "label": "Relecture",
+      "previous": "Passer au précédent",
+      "next": "Passer au suivant",
+      "raiseVolume": "Augmenter le volume",
+      "lowerVolume": "Baisser le volume"
+    },
+    "navigation": {
+      "label": "Navigation"
     }
   },
   "queue": {
     "clear": "Vider la file d'attente",
-    "title": "File d'attente"
+    "title": "File d'attente",
+    "close": "Fermer la file d'attente",
+    "open": "Ouvrir la file d'attente"
   },
   "downloads": {
     "failed": "Une erreur est survenue lors du téléchargement.",
@@ -518,7 +553,7 @@
     "completed": "Votre fichier a été téléchargé."
   },
   "warnings": {
-    "reload": "Une chanson est en cours de lecture !\nÊtes-vous sûr·e de vouloir recharger la page ?"
+    "reload": "Une musique est en cours de lecture !\nÊtes-vous sûr·e de vouloir recharger la page ?"
   },
   "podcasts": {
     "form": {
@@ -536,7 +571,11 @@
           "atLeastOneUrl": "Veuillez fournir au moins une URL."
         }
       },
-      "latestEpisodes": "Derniers épisodes"
+      "latestEpisodes": "Derniers épisodes",
+      "toasts": {
+        "success": "Podcast créé avec succès ! Il sera disponible à l'écoute dans quelques minutes !",
+        "error": "Échec de la création du podcast !"
+      }
     },
     "filters": {
       "episodes": {
@@ -544,7 +583,8 @@
           "title": "Titre",
           "duration": "Durée",
           "publishDate": "Date de publication"
-        }
+        },
+        "search": "Recherche d'épisodes…"
       },
       "podcasts": {
         "orderBy": {
@@ -578,6 +618,15 @@
         "remainingTime": "il reste {{time}}",
         "completed": "Terminé"
       }
+    },
+    "emptyPage": {
+      "description": "Il semble que vous n'ayez pas encore ajouté de podcasts. Ajoutez-en un ci-dessus !",
+      "message": "Aucun podcast ajouté"
+    },
+    "emptyResults": {
+      "title": "Aucun résultat trouvé.",
+      "info": "Nous n'avons pas trouvé de podcasts correspondant à votre recherche.",
+      "action": "Veuillez vérifier l'orthographe ou essayez d'autres mots-clés."
     }
   },
   "dayjs": {
@@ -606,5 +655,8 @@
     "toasts": {
       "copy": "Lien copié dans le presse-papier !"
     }
+  },
+  "songInfo": {
+    "title": "Détails de la musique"
   }
 }
