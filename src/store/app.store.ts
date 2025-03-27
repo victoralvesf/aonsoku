@@ -6,6 +6,7 @@ import { createWithEqualityFn } from 'zustand/traditional'
 import { pingServer } from '@/api/pingServer'
 import { queryServerInfo } from '@/api/queryServerInfo'
 import { AuthType, IAppContext, IServerConfig } from '@/types/serverConfig'
+import { logger } from '@/utils/logger'
 import {
   genEncodedPassword,
   genPassword,
@@ -15,7 +16,7 @@ import {
   hasValidConfig,
 } from '@/utils/salt'
 
-const { SERVER_URL, HIDE_SERVER, HIDE_RADIOS_SECTION } = window
+const { SERVER_URL, HIDE_SERVER, HIDE_RADIOS_SECTION, SERVER_TYPE } = window
 
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
@@ -30,7 +31,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             password: genPassword(),
             authType: getAuthType(),
             protocolVersion: '1.16.0',
-            serverType: 'subsonic',
+            serverType: SERVER_TYPE ?? 'subsonic',
             logoutDialogState: false,
             hideServer: HIDE_SERVER ?? false,
             lockUser: hasValidConfig,
@@ -211,48 +212,65 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
         name: 'app_store',
         version: 1,
         merge: (persistedState, currentState) => {
-          const persisted = persistedState as Partial<IAppContext>
+          try {
+            const persisted = persistedState as Partial<IAppContext> | undefined
 
-          const hideRadiosSection =
-            HIDE_RADIOS_SECTION !== undefined
-              ? HIDE_RADIOS_SECTION
-              : (persisted.pages?.hideRadiosSection as boolean)
+            let hideRadiosSection = false
 
-          if (hasValidConfig) {
-            const newState = {
-              ...persisted,
+            if (persisted) {
+              hideRadiosSection = persisted.pages?.hideRadiosSection ?? false
+            }
+            if (HIDE_RADIOS_SECTION !== undefined) {
+              hideRadiosSection = HIDE_RADIOS_SECTION
+            }
+
+            if (hasValidConfig) {
+              const newState = {
+                data: {
+                  isServerConfigured: true,
+                  url: SERVER_URL as string,
+                  username: genUser(),
+                  password: genPassword(),
+                  authType: getAuthType(),
+                  hideServer: HIDE_SERVER ?? false,
+                  serverType: SERVER_TYPE ?? 'subsonic',
+                  lockUser: true,
+                },
+                pages: {
+                  hideRadiosSection,
+                },
+              }
+
+              const adjustedState = merge(currentState, newState)
+
+              if (persistedState) {
+                return merge(adjustedState, persistedState)
+              }
+
+              return adjustedState
+            }
+
+            const withoutLockUser = {
               data: {
-                ...persisted.data,
-                isServerConfigured: true,
-                url: SERVER_URL as string,
-                username: genUser(),
-                password: genPassword(),
-                authType: getAuthType(),
-                hideServer: HIDE_SERVER ?? false,
-                lockUser: true,
+                lockUser: false,
               },
               pages: {
-                ...persisted.pages,
                 hideRadiosSection,
               },
             }
 
-            return merge(currentState, newState)
-          }
+            const adjustedState = merge(currentState, withoutLockUser)
 
-          const withoutLockUser = {
-            ...persisted,
-            data: {
-              ...persisted.data,
-              lockUser: false,
-            },
-            pages: {
-              ...persisted.pages,
-              hideRadiosSection,
-            },
-          }
+            if (persistedState) {
+              return merge(adjustedState, persistedState)
+            }
 
-          return merge(currentState, withoutLockUser)
+            return adjustedState
+          } catch (error) {
+            logger.error('[AppStore] [merge] - Unable to merge states', error)
+
+            return currentState
+          }
         },
         partialize: (state) => {
           const appStore = omit(
