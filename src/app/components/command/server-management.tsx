@@ -6,6 +6,7 @@ import { CommandGroup, CommandItem } from '@/app/components/ui/command'
 import { subsonic } from '@/service/subsonic'
 import { useAppStore } from '@/store/app.store'
 import dateTime from '@/utils/dateTime'
+import { checkServerType } from '@/utils/servers'
 
 async function delayedFn<T>(callback: () => T): Promise<T> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -22,6 +23,7 @@ const startScan = async () => {
 
 export function CommandServer() {
   const { t } = useTranslation()
+  const { isLms } = checkServerType()
 
   const {
     data: scanStatus,
@@ -52,6 +54,7 @@ export function CommandServer() {
   }
 
   const showLoader = isLoading || isFetching || isPending
+  const showBadges = !showLoader && scanStatus && !isLms
 
   return (
     <CommandGroup heading={t('server.management')}>
@@ -60,7 +63,7 @@ export function CommandServer() {
           <Loader2 className="h-4 w-4 animate-spin" />
         </div>
       )}
-      {!showLoader && scanStatus && (
+      {showBadges && (
         <div className="flex flex-col gap-2 p-2 mb-2">
           <div className="flex gap-2 flex-wrap">
             {scanStatus.count && (
