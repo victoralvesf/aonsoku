@@ -2,6 +2,7 @@ import { httpClient } from '@/api/httpClient'
 import { usePlayerStore } from '@/store/player.store'
 import { LyricsResponse } from '@/types/responses/song'
 import { lrclibClient } from '@/utils/appName'
+import { checkServerType } from '@/utils/servers'
 
 interface GetLyricsData {
   artist: string
@@ -54,8 +55,16 @@ async function getLyrics(getLyricsData: GetLyricsData) {
 
 async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
   const { lrcLibEnabled } = usePlayerStore.getState().settings.privacy
+  const { isLms } = checkServerType()
 
-  const { artist, title, album, duration } = getLyricsData
+  const { title, album, duration } = getLyricsData
+
+  // LMS server tends to join all artists into a single string
+  // Ex: "Cartoon, Jeja, Daniel Levi, Time To Talk"
+  // To LRCLIB work correctly, we have to send only one
+  const artist = isLms
+    ? getLyricsData.artist.split(',')[0]
+    : getLyricsData.artist
 
   if (!lrcLibEnabled) {
     return {
