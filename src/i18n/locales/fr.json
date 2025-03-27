@@ -553,7 +553,8 @@
     "completed": "Votre fichier a été téléchargé."
   },
   "warnings": {
-    "reload": "Une musique est en cours de lecture !\nÊtes-vous sûr·e de vouloir recharger la page ?"
+    "reload": "Une musique est en cours de lecture !\nÊtes-vous sûr·e de vouloir recharger la page ?",
+    "songError": "Impossible de jouer le titre, vérifiez le serveur!"
   },
   "podcasts": {
     "form": {
@@ -657,6 +658,7 @@
     }
   },
   "songInfo": {
-    "title": "Détails de la musique"
+    "title": "Détails de la musique",
+    "error": "Impossible de récupérer les informations du titre. Veuillez réessayer plus tard."
   }
 }
