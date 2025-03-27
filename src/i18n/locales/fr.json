@@ -168,15 +168,15 @@
     "night-owl-light": "Lumière pour oiseau de nuit",
     "marmalade-beaver": "Marmalade Beaver",
     "noctis-lilac": "Noctis Lilac",
-    "github-dark": "Github Dark",
-    "shades-of-purple": "Shades Of Purple",
+    "github-dark": "Github Sombre",
+    "shades-of-purple": "Nuances de violet",
     "bearded-solarized": "Bearded Solarized",
     "catppuccin-mocha": "Catpuccin Mocha",
-    "nuclear-dark": "Nuclear Dark",
+    "nuclear-dark": "Sombre nucléaire",
     "achiever": "Achiever",
     "discord": "Discord",
-    "vue-dark": "Vue Dark",
-    "vim-dark-soft": "Vim Dark Soft",
+    "vue-dark": "Vue sombre",
+    "vim-dark-soft": "Vim Sombre Doux",
     "dracula": "Dracula",
     "tinacious-design": "Tinacious Design"
   },
@@ -375,9 +375,17 @@
           "info": "Ce niveau de gain est appliqué aux titres qui n'incluent pas de métadonnées ReplayGain, ce qui garantit un volume audio cohérent. La plage recommandée pour le gain est comprise entre -10 dB et -1 dB."
         },
         "mode": {
-          "label": "Mode"
+          "label": "Mode",
+          "track": "Gain de piste",
+          "album": "Gain de l'album"
         },
-        "enabled": "Activé"
+        "enabled": "Activé",
+        "group": "ReplayGain",
+        "error": {
+          "message": "Une erreur s'est produite lors de la lecture de la piste à l'aide du ReplayGain.",
+          "button": "Réessayer"
+        },
+        "description": "Normaliser automatiquement les niveaux de lecture audio pour une expérience d'écoute cohérente."
       },
       "lyrics": {
         "group": "Paroles",
@@ -418,7 +426,8 @@
       "appearance": "Apparence",
       "language": "Langue et région",
       "content": "Contenu",
-      "audio": "Lecteur et audio"
+      "audio": "Lecteur et audio",
+      "privacy": "Confidentialité et sécurité"
     },
     "appearance": {
       "general": {
@@ -436,6 +445,26 @@
           "info": "Si activé, l'application utilisera la couleur dominante de la pochette de l'album actuel comme couleur de fond."
         },
         "description": "Personnaliser la page de la file d'attente et des paroles."
+      },
+      "colors": {
+        "group": "Couleurs dynamiques",
+        "description": "Sélectionnez si l'application doit utiliser la couleur dominante de la pochette de l'album en cours de lecture comme arrière-plan.",
+        "queue": {
+          "label": "File d'attente et paroles"
+        },
+        "bigPlayer": {
+          "label": "Grand Lecteur"
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Services externes",
+        "lrclib": {
+          "label": "LRCLIB",
+          "info": "LRCLIB est utilisé pour trouver les paroles."
+        },
+        "description": "Gérer les services externes auxquels Aonsoku peut accéder."
       }
     }
   },
@@ -554,7 +583,7 @@
   },
   "warnings": {
     "reload": "Une musique est en cours de lecture !\nÊtes-vous sûr·e de vouloir recharger la page ?",
-    "songError": "Impossible de jouer le titre, vérifiez le serveur!"
+    "songError": "Impossible de jouer le titre, vérifiez le serveur !"
   },
   "podcasts": {
     "form": {
@@ -668,8 +697,8 @@
       "install": "Installer et redémarrer"
     },
     "toasts": {
-      "success": "La mise à jour a été installée! L'application va redémarrer.",
-      "started": "La mise à jour a commencé"
+      "success": "La mise à jour a été installée ! L'application va redémarrer.",
+      "started": "La mise à jour a commencé."
     }
   }
 }
