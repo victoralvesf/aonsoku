@@ -241,13 +241,11 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 },
               }
 
-              const adjustedState = merge(currentState, newState)
-
               if (persistedState) {
-                return merge(adjustedState, persistedState)
+                return merge(currentState, persistedState, newState)
               }
 
-              return adjustedState
+              return merge(currentState, newState)
             }
 
             const withoutLockUser = {
@@ -259,13 +257,11 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               },
             }
 
-            const adjustedState = merge(currentState, withoutLockUser)
-
             if (persistedState) {
-              return merge(adjustedState, persistedState)
+              return merge(currentState, persistedState, withoutLockUser)
             }
 
-            return adjustedState
+            return merge(currentState, withoutLockUser)
           } catch (error) {
             logger.error('[AppStore] [merge] - Unable to merge states', error)
 
