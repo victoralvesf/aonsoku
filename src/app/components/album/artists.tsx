@@ -5,6 +5,7 @@ import { Dot } from '@/app/components/dot'
 import { ROUTES } from '@/routes/routesList'
 import { IFeaturedArtist } from '@/types/responses/artist'
 import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
+import { checkServerType } from '@/utils/servers'
 
 type AlbumArtistProps = {
   id: string
@@ -49,6 +50,12 @@ export function AlbumMultipleArtistsInfo({
 }
 
 function ArtistImage({ id, name }: AlbumArtistProps) {
+  const { isLms } = checkServerType()
+
+  // LMS server (https://github.com/epoupon/lms) does not support
+  // retrieving artist images using the artist's own ID.
+  if (isLms) return null
+
   return (
     <div className="size-6 min-w-6 min-h-6 rounded-full bg-accent drop-shadow-lg ring-1 ring-foreground/10">
       <LazyLoadImage
