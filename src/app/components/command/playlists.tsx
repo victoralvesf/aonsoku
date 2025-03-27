@@ -21,21 +21,21 @@ export function CommandPlaylists({ runCommand }: CommandItemProps) {
     queryFn: subsonic.playlists.getAll,
   })
 
+  if (!playlists || playlists.length === 0) return null
+
   return (
     <CommandGroup heading={t('sidebar.playlists')}>
-      {playlists &&
-        playlists.length > 0 &&
-        playlists.map((playlist) => (
-          <CommandItem
-            key={playlist.id}
-            value={playlist.name}
-            onSelect={() =>
-              runCommand(() => navigate(ROUTES.PLAYLIST.PAGE(playlist.id)))
-            }
-          >
-            <PlaylistItem playlist={playlist} />
-          </CommandItem>
-        ))}
+      {playlists.map((playlist) => (
+        <CommandItem
+          key={playlist.id}
+          value={playlist.name}
+          onSelect={() =>
+            runCommand(() => navigate(ROUTES.PLAYLIST.PAGE(playlist.id)))
+          }
+        >
+          <PlaylistItem playlist={playlist} />
+        </CommandItem>
+      ))}
     </CommandGroup>
   )
 }
