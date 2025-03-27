@@ -27,16 +27,19 @@ export function AlbumMultipleArtistsInfo({
   artists,
 }: MultipleArtistsInfoProps) {
   const data = artists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
+  const { isLms } = checkServerType()
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex items-center -space-x-1.5">
-        {data.map(({ id, name }) => (
-          <div key={`artist-image-${id}`} className="rounded-full">
-            <ArtistImage id={id} name={name} />
-          </div>
-        ))}
-      </div>
+      {!isLms && (
+        <div className="flex items-center -space-x-1.5">
+          {data.map(({ id, name }) => (
+            <div key={`artist-image-${id}`} className="rounded-full">
+              <ArtistImage id={id} name={name} />
+            </div>
+          ))}
+        </div>
+      )}
       <div className="flex items-center">
         {data.map(({ id, name }, index) => (
           <div className="flex" key={`artist-link-${id}`}>
