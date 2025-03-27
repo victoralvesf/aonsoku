@@ -660,5 +660,10 @@
   "songInfo": {
     "title": "Détails de la musique",
     "error": "Impossible de récupérer les informations du titre. Veuillez réessayer plus tard."
+  },
+  "update": {
+    "dialog": {
+      "title": "Nouvelle version disponible!"
+    }
   }
 }
