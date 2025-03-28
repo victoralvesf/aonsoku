@@ -5,9 +5,9 @@ import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { LatestEpisodesFallback } from '@/app/components/fallbacks/podcast-fallbacks'
 import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
+import { EmptyLatestEpisodesPage } from '@/app/components/podcasts/empty-latest-episodes'
 import { FeaturedEpisodeCard } from '@/app/components/podcasts/featured-episode-card'
 import { LatestEpisodesList } from '@/app/components/podcasts/latest-episodes-list'
-import ErrorPage from '@/app/pages/error-page'
 import { podcasts } from '@/service/podcasts'
 import { queryKeys } from '@/utils/queryKeys'
 
@@ -33,9 +33,9 @@ export default function LatestEpisodes() {
     return data ? data.slice(0, episodesToFeature) : []
   }, [data])
 
-  if (isLoading || isFetching) return <LatestEpisodesFallback />
-  if (isFetched && !data) {
-    return <ErrorPage status={404} statusText="No episodes found!" />
+  if (isLoading) return <LatestEpisodesFallback />
+  if (!isFetching && isFetched && (!data || data.length === 0)) {
+    return <EmptyLatestEpisodesPage />
   }
 
   return (

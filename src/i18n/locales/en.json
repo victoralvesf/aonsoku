@@ -219,6 +219,13 @@
       "message": "No podcasts added",
       "description": "It looks like you have not added any podcasts yet. Add one above!"
     },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "No episodes available",
+        "description": "Try adding more podcasts.",
+        "goToPodcasts": "Go to Podcasts"
+      }
+    },
     "emptyResults": {
       "title": "No results found.",
       "info": "We couldn't find any podcasts matching your search term.",
