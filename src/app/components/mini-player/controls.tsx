@@ -15,8 +15,9 @@ import {
   usePlayerActions,
   usePlayerIsPlaying,
   usePlayerLoop,
+  usePlayerPrevAndNext,
   usePlayerShuffle,
-  usePlayerState,
+  usePlayerSongStarred,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
 
@@ -24,7 +25,7 @@ export function MiniPlayerControls() {
   const isPlaying = usePlayerIsPlaying()
   const isShuffleActive = usePlayerShuffle()
   const loopState = usePlayerLoop()
-  const { hasPrev, hasNext } = usePlayerState()
+  const { hasPrev, hasNext } = usePlayerPrevAndNext()
   const {
     isPlayingOneSong,
     toggleShuffle,
@@ -125,7 +126,7 @@ export function MiniPlayerControls() {
 }
 
 export function MiniPlayerLikeButton() {
-  const { isSongStarred } = usePlayerState()
+  const isSongStarred = usePlayerSongStarred()
   const { starCurrentSong } = usePlayerActions()
 
   return (
