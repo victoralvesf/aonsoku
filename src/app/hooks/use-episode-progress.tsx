@@ -52,9 +52,7 @@ export function getEpisodePlayProgress({ playback }: PlaybackBase) {
     currentProgress = 0
   }
 
-  return {
-    currentProgress,
-  }
+  return currentProgress
 }
 
 export function useEpisodeReleaseDate(publishedAt: string) {

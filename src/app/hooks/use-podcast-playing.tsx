@@ -40,19 +40,23 @@ export function useIsEpisodePlaying({ id }: IEpisodeProps) {
 export async function getAndFormatEpisode(id: string) {
   const episode = await podcasts.getEpisode(id)
   if (episode) {
-    const { playback } = episode
-    const { currentProgress } = getEpisodePlayProgress({ playback })
-
     // Remove descriptions to avoid storing large texts
     episode.description = ''
     episode.podcast.description = ''
-    // Set saved progress
-    episode.progress = currentProgress
 
-    return episode
+    const { playback } = episode
+    const progress = getEpisodePlayProgress({ playback })
+
+    return {
+      episode,
+      progress,
+    }
   }
 
-  return null
+  return {
+    episode: null,
+    progress: 0,
+  }
 }
 
 export function usePlayEpisode({ id }: IEpisodeProps) {
@@ -73,9 +77,9 @@ export function usePlayEpisode({ id }: IEpisodeProps) {
         return
       }
 
-      const episode = await getAndFormatEpisode(id)
+      const { episode, progress } = await getAndFormatEpisode(id)
       if (episode) {
-        setPlayPodcast([episode], 0)
+        setPlayPodcast([episode], 0, progress)
       }
     },
     [id, isEpisodePlaying, isPlaying, setPlayPodcast, setPlayingState],
@@ -90,16 +94,16 @@ export function useEpisodeQueue({ id }: IEpisodeProps) {
   const { setNextPodcast, setLastPodcast } = usePlayerActions()
 
   const handlePlayNext = useCallback(async () => {
-    const episode = await getAndFormatEpisode(id)
+    const { episode, progress } = await getAndFormatEpisode(id)
     if (episode) {
-      setNextPodcast(episode)
+      setNextPodcast(episode, progress)
     }
   }, [id, setNextPodcast])
 
   const handlePlayLast = useCallback(async () => {
-    const episode = await getAndFormatEpisode(id)
+    const { episode, progress } = await getAndFormatEpisode(id)
     if (episode) {
-      setLastPodcast(episode)
+      setLastPodcast(episode, progress)
     }
   }, [id, setLastPodcast])
 

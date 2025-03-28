@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, memo, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
@@ -7,13 +7,16 @@ import { EpisodeWithPodcast } from '@/types/responses/podcasts'
 
 const placeholderImageSrc = '/default_podcast_art.png'
 
+const MemoLazyLoadImage = memo(LazyLoadImage)
+const MemoMarqueeTitle = memo(MarqueeTitle)
+
 export function PodcastInfo({ podcast }: { podcast: EpisodeWithPodcast }) {
   const [imageError, setImageError] = useState(false)
 
   return (
     <Fragment>
       <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md">
-        <LazyLoadImage
+        <MemoLazyLoadImage
           src={imageError ? placeholderImageSrc : podcast.image_url}
           width="100%"
           height="100%"
@@ -24,7 +27,7 @@ export function PodcastInfo({ podcast }: { podcast: EpisodeWithPodcast }) {
         />
       </div>
       <div className="flex flex-col justify-center w-full overflow-hidden">
-        <MarqueeTitle gap="mr-2">
+        <MemoMarqueeTitle gap="mr-2">
           <Link to={ROUTES.EPISODES.PAGE(podcast.id)}>
             <span
               className="text-sm font-medium hover:underline cursor-pointer"
@@ -33,7 +36,7 @@ export function PodcastInfo({ podcast }: { podcast: EpisodeWithPodcast }) {
               {podcast.title}
             </span>
           </Link>
-        </MarqueeTitle>
+        </MemoMarqueeTitle>
         <Link
           to={ROUTES.PODCASTS.PAGE(podcast.podcast_id)}
           className="w-fit inline-flex max-w-full"

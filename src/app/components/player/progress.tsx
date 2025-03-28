@@ -35,7 +35,8 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   const { currentSong, currentList, podcastList, currentSongIndex } =
     usePlayerSonglist()
   const { isSong, isPodcast } = usePlayerMediaType()
-  const { setProgress, setUpdatePodcastProgress } = usePlayerActions()
+  const { setProgress, setUpdatePodcastProgress, getCurrentPodcastProgress } =
+    usePlayerActions()
   const isScrobbleSentRef = useRef(false)
 
   const isEmpty = isSong && currentList.length === 0
@@ -124,12 +125,15 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
 
     const podcast = podcastList[currentSongIndex] ?? null
     if (!podcast) return
-    if (progress === podcast.progress) return
+
+    const podcastProgress = getCurrentPodcastProgress()
+    if (progress === podcastProgress) return
+
+    setUpdatePodcastProgress(progress)
 
     podcasts
       .saveEpisodeProgress(podcast.id, progress)
       .then(() => {
-        setUpdatePodcastProgress(progress)
         logger.info('Progress sent:', progress)
       })
       .catch((error) => {
@@ -137,6 +141,7 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
       })
   }, [
     currentSongIndex,
+    getCurrentPodcastProgress,
     isPodcast,
     podcastList,
     progress,

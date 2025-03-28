@@ -8,23 +8,25 @@ import { MiniSidebar } from '@/app/layout/mini-sidebar'
 import { Sidebar } from '@/app/layout/sidebar'
 import { MainRoutes } from './main'
 
-const HeaderMemo = memo(Header)
-const MiniSidebarMemo = memo(MiniSidebar)
-const SidebarMemo = memo(Sidebar)
-const PlayerMemo = memo(Player)
+const MemoHeader = memo(Header)
+const MemoMiniSidebar = memo(MiniSidebar)
+const MemoSidebar = memo(Sidebar)
+const MemoPlayer = memo(Player)
+const MemoSongInfoDialog = memo(SongInfoDialog)
+const MemoRemovePlaylistDialog = memo(RemovePlaylistDialog)
 const MemoMainDrawerPage = memo(MainDrawerPage)
 
 export default function BaseLayout() {
   return (
     <div className="h-screen w-screen overflow-hidden">
-      <HeaderMemo />
-      <MiniSidebarMemo />
-      <SidebarMemo />
-      <PlayerMemo />
+      <MemoHeader />
+      <MemoMiniSidebar />
+      <MemoSidebar />
+      <MemoPlayer />
       {/* Routes */}
       <MainRoutes />
-      <SongInfoDialog />
-      <RemovePlaylistDialog />
+      <MemoSongInfoDialog />
+      <MemoRemovePlaylistDialog />
       <MemoMainDrawerPage />
     </div>
   )

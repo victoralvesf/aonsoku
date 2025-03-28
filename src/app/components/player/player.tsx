@@ -35,6 +35,7 @@ const MemoTrackInfo = memo(TrackInfo)
 const MemoRadioInfo = memo(RadioInfo)
 const MemoPodcastInfo = memo(PodcastInfo)
 const MemoPlayerControls = memo(PlayerControls)
+const MemoPlayerProgress = memo(PlayerProgress)
 const MemoPlayerLikeButton = memo(PlayerLikeButton)
 const MemoPlayerQueueButton = memo(PlayerQueueButton)
 const MemoPlayerClearQueueButton = memo(PlayerClearQueueButton)
@@ -42,6 +43,7 @@ const MemoPlayerVolume = memo(PlayerVolume)
 const MemoPodcastPlaybackRate = memo(PodcastPlaybackRate)
 const MemoLyricsButton = memo(PlayerLyricsButton)
 const MemoMiniPlayerButton = memo(MiniPlayerButton)
+const MemoAudioPlayer = memo(AudioPlayer)
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -54,6 +56,7 @@ export function Player() {
     setPlayingState,
     handleSongEnded,
     getCurrentProgress,
+    getCurrentPodcastProgress,
   } = usePlayerActions()
   const { currentList, currentSongIndex, radioList, podcastList } =
     usePlayerSonglist()
@@ -62,7 +65,6 @@ export function Player() {
   const loopState = usePlayerLoop()
   const audioPlayerRef = usePlayerRef()
   const currentPlaybackRate = usePlayerStore().playerState.currentPlaybackRate
-  const progress = getCurrentProgress()
   const { replayGainType, replayGainPreAmp, replayGainDefaultGain } =
     useReplayGainState()
 
@@ -107,21 +109,26 @@ export function Player() {
     }
 
     if (isPodcast) {
+      const podcastProgress = getCurrentPodcastProgress()
+
       logger.info('[Player] - Resuming episode from:', {
-        seconds: podcast.progress,
+        seconds: podcastProgress,
       })
-      setProgress(podcast.progress)
-      audio.currentTime = podcast.progress
+
+      setProgress(podcastProgress)
+      audio.currentTime = podcastProgress
     } else {
+      const progress = getCurrentProgress()
       audio.currentTime = progress
     }
   }, [
     getAudioRef,
     isPodcast,
     podcast,
-    progress,
     setCurrentDuration,
+    getCurrentPodcastProgress,
     setProgress,
+    getCurrentProgress,
   ])
 
   const setupProgress = useCallback(() => {
@@ -187,7 +194,9 @@ export function Player() {
             audioRef={getAudioRef()}
           />
 
-          {(isSong || isPodcast) && <PlayerProgress audioRef={getAudioRef()} />}
+          {(isSong || isPodcast) && (
+            <MemoPlayerProgress audioRef={getAudioRef()} />
+          )}
         </div>
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
@@ -215,7 +224,7 @@ export function Player() {
       </div>
 
       {isSong && song && (
-        <AudioPlayer
+        <MemoAudioPlayer
           replayGain={getTrackReplayGain()}
           src={getSongStreamUrl(song.id)}
           autoPlay={isPlaying}
@@ -232,7 +241,7 @@ export function Player() {
       )}
 
       {isRadio && radio && (
-        <AudioPlayer
+        <MemoAudioPlayer
           src={radio.streamUrl}
           autoPlay={isPlaying}
           audioRef={radioRef}
@@ -244,7 +253,7 @@ export function Player() {
       )}
 
       {isPodcast && podcast && (
-        <AudioPlayer
+        <MemoAudioPlayer
           src={getProxyURL(podcast.audio_url)}
           autoPlay={isPlaying}
           audioRef={podcastRef}

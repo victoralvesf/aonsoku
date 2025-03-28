@@ -17,6 +17,7 @@ export interface ISongList {
   originalSongIndex: number
   radioList: Radio[]
   podcastList: EpisodeWithPodcast[]
+  podcastListProgresses: number[]
 }
 
 export interface IPlayerState {
@@ -135,11 +136,16 @@ export interface IPlayerActions {
   handleSongEnded: () => void
   getCurrentProgress: () => number
   resetConfig: () => void
-  setPlayPodcast: (list: EpisodeWithPodcast[], index: number) => void
+  setPlayPodcast: (
+    list: EpisodeWithPodcast[],
+    index: number,
+    progress: number,
+  ) => void
   setUpdatePodcastProgress: (value: number) => void
+  getCurrentPodcastProgress: () => number
   setPlaybackRate: (value: number) => void
-  setNextPodcast: (episode: EpisodeWithPodcast) => void
-  setLastPodcast: (episode: EpisodeWithPodcast) => void
+  setNextPodcast: (episode: EpisodeWithPodcast, progress: number) => void
+  setLastPodcast: (episode: EpisodeWithPodcast, progress: number) => void
   updateQueueChecks: () => void
   setCurrentSongColor: (value: string | null) => void
   setUseSongColorOnQueue: (value: boolean) => void
