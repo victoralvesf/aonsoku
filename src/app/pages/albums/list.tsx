@@ -101,10 +101,11 @@ export default function AlbumsList() {
   })
 
   useEffect(() => {
-    const handleScroll = debounce(() => {
-      if (!scrollDivRef.current) return
+    const scrollElement = scrollDivRef.current
+    if (!scrollElement) return
 
-      const { scrollTop, clientHeight, scrollHeight } = scrollDivRef.current
+    const handleScroll = debounce(() => {
+      const { scrollTop, clientHeight, scrollHeight } = scrollElement
 
       const isNearBottom =
         scrollTop + clientHeight >= scrollHeight - scrollHeight / 4
@@ -114,10 +115,9 @@ export default function AlbumsList() {
       }
     }, 200)
 
-    const scrollElement = scrollDivRef.current
-    scrollElement?.addEventListener('scroll', handleScroll)
+    scrollElement.addEventListener('scroll', handleScroll)
     return () => {
-      scrollElement?.removeEventListener('scroll', handleScroll)
+      scrollElement.removeEventListener('scroll', handleScroll)
     }
   }, [fetchNextPage, hasNextPage])
 
