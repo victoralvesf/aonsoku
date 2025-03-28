@@ -79,7 +79,7 @@ export function ReplayGainConfig() {
 
         {replayGainError && (
           <ContentItem>
-            <ContentItemTitle className="text-destructive font-medium">
+            <ContentItemTitle className="text-xs text-muted-foreground text-balance">
               {t('settings.audio.replayGain.error.message')}
             </ContentItemTitle>
             <ContentItemForm>
