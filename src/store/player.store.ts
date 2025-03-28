@@ -875,7 +875,24 @@ usePlayerStore.subscribe(
 
 export const usePlayerActions = () => usePlayerStore((state) => state.actions)
 
-export const usePlayerSonglist = () => usePlayerStore((state) => state.songlist)
+export const usePlayerSonglist = () =>
+  usePlayerStore((state) => {
+    const {
+      currentList,
+      currentSong,
+      currentSongIndex,
+      podcastList,
+      radioList,
+    } = state.songlist
+
+    return {
+      currentList,
+      currentSong,
+      currentSongIndex,
+      podcastList,
+      radioList,
+    }
+  })
 
 export const usePlayerCurrentSong = () =>
   usePlayerStore((state) => state.songlist.currentSong)
