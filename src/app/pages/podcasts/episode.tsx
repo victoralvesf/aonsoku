@@ -15,9 +15,6 @@ import { queryKeys } from '@/utils/queryKeys'
 export default function Episode() {
   const { episodeId } = useParams() as { episodeId: string }
 
-  const { isPlaying, isEpisodePlaying } = useIsEpisodePlaying({ id: episodeId })
-  const { handlePlayEpisode } = usePlayEpisode({ id: episodeId })
-
   const { data: episode, isLoading } = useQuery({
     queryKey: [queryKeys.episode.one, episodeId],
     queryFn: () => podcasts.getEpisode(episodeId),
@@ -33,19 +30,13 @@ export default function Episode() {
     return { __html: final }
   }
 
-  const isCurrentlyPlaying = isEpisodePlaying && isPlaying
-  const isNotPlaying = (isEpisodePlaying && !isPlaying) || !isEpisodePlaying
-
   return (
     <div className="h-full">
       <EpisodeInfo episode={episode} />
 
       <ListWrapper>
         <Actions.Container className="mt-0">
-          <Actions.Button buttonStyle="primary" onClick={handlePlayEpisode}>
-            {isCurrentlyPlaying && <Actions.PauseIcon />}
-            {isNotPlaying && <Actions.PlayIcon />}
-          </Actions.Button>
+          <EpisodePlayButton id={episodeId} />
         </Actions.Container>
 
         <div
@@ -54,5 +45,20 @@ export default function Episode() {
         />
       </ListWrapper>
     </div>
+  )
+}
+
+function EpisodePlayButton({ id }: { id: string }) {
+  const { isPlaying, isEpisodePlaying } = useIsEpisodePlaying({ id })
+  const { handlePlayEpisode } = usePlayEpisode({ id })
+
+  const isCurrentlyPlaying = isEpisodePlaying && isPlaying
+  const isNotPlaying = (isEpisodePlaying && !isPlaying) || !isEpisodePlaying
+
+  return (
+    <Actions.Button buttonStyle="primary" onClick={handlePlayEpisode}>
+      {isCurrentlyPlaying && <Actions.PauseIcon />}
+      {isNotPlaying && <Actions.PlayIcon />}
+    </Actions.Button>
   )
 }
