@@ -15,7 +15,7 @@ import {
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerShuffle,
-  usePlayerState,
+  usePlayerPrevAndNext,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
 
@@ -23,7 +23,7 @@ export function FullscreenControls() {
   const isPlaying = usePlayerIsPlaying()
   const isShuffleActive = usePlayerShuffle()
   const loopState = usePlayerLoop()
-  const { hasPrev, hasNext } = usePlayerState()
+  const { hasPrev, hasNext } = usePlayerPrevAndNext()
   const {
     isPlayingOneSong,
     toggleShuffle,

@@ -4,7 +4,7 @@ import {
   usePlayerActions,
   usePlayerDuration,
   usePlayerProgress,
-  usePlayerState,
+  usePlayerRef,
 } from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
@@ -13,7 +13,7 @@ let isSeeking = false
 export function FullscreenProgress() {
   const progress = usePlayerProgress()
   const [localProgress, setLocalProgress] = useState(progress)
-  const { audioPlayerRef } = usePlayerState()
+  const audioPlayerRef = usePlayerRef()
   const currentDuration = usePlayerDuration()
   const { setProgress } = usePlayerActions()
 

@@ -21,7 +21,7 @@ import {
   usePlayerLoop,
   usePlayerMediaType,
   usePlayerShuffle,
-  usePlayerState,
+  usePlayerPrevAndNext,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
 import { EpisodeWithPodcast } from '@/types/responses/podcasts'
@@ -45,7 +45,7 @@ export function PlayerControls({
   const { t } = useTranslation()
   const { isSong, isPodcast } = usePlayerMediaType()
   const isShuffleActive = usePlayerShuffle()
-  const { hasPrev, hasNext } = usePlayerState()
+  const { hasPrev, hasNext } = usePlayerPrevAndNext()
   const loopState = usePlayerLoop()
   const isPlaying = usePlayerIsPlaying()
   const {

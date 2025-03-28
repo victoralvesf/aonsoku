@@ -1,12 +1,12 @@
 import { clsx } from 'clsx'
 import { Heart } from 'lucide-react'
 import { Button } from '@/app/components/ui/button'
-import { usePlayerActions, usePlayerState } from '@/store/player.store'
+import { usePlayerActions, usePlayerSongStarred } from '@/store/player.store'
 import { buttonsStyle } from './controls'
 
 export function LikeButton() {
   const { starCurrentSong } = usePlayerActions()
-  const { isSongStarred } = usePlayerState()
+  const isSongStarred = usePlayerSongStarred()
 
   return (
     <Button

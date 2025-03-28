@@ -970,6 +970,12 @@ export const usePlayerShuffle = () =>
 export const usePlayerLoop = () =>
   usePlayerStore((state) => state.playerState.loopState)
 
+export const usePlayerPrevAndNext = () =>
+  usePlayerStore((state) => ({
+    hasPrev: state.playerState.hasPrev,
+    hasNext: state.playerState.hasNext,
+  }))
+
 export const usePlayerRef = () =>
   usePlayerStore((state) => state.playerState.audioPlayerRef)
 
