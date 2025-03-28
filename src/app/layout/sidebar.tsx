@@ -70,9 +70,19 @@ export function Sidebar({ className }: SidebarProps) {
   )
 }
 
+export enum SidebarItems {
+  Home = 'home',
+  Artists = 'artists',
+  Songs = 'songs',
+  Albums = 'albums',
+  Playlists = 'playlists',
+  Podcasts = 'podcasts',
+  Radios = 'radios',
+}
+
 export const mainMenuItems = [
   {
-    id: 'home',
+    id: SidebarItems.Home,
     title: 'sidebar.home',
     route: ROUTES.LIBRARY.HOME,
     icon: Home,
@@ -81,37 +91,37 @@ export const mainMenuItems = [
 
 export const libraryItems = [
   {
-    id: 'artists',
+    id: SidebarItems.Artists,
     title: 'sidebar.artists',
     route: ROUTES.LIBRARY.ARTISTS,
     icon: Mic2,
   },
   {
-    id: 'songs',
+    id: SidebarItems.Songs,
     title: 'sidebar.songs',
     route: ROUTES.LIBRARY.SONGS,
     icon: Music2,
   },
   {
-    id: 'albums',
+    id: SidebarItems.Albums,
     title: 'sidebar.albums',
     route: ROUTES.LIBRARY.ALBUMS,
     icon: Library,
   },
   {
-    id: 'playlists',
+    id: SidebarItems.Playlists,
     title: 'sidebar.playlists',
     route: ROUTES.LIBRARY.PLAYLISTS,
     icon: ListMusic,
   },
   {
-    id: 'podcasts',
+    id: SidebarItems.Podcasts,
     title: 'sidebar.podcasts',
     route: ROUTES.LIBRARY.PODCASTS,
     icon: Podcast,
   },
   {
-    id: 'radios',
+    id: SidebarItems.Radios,
     title: 'sidebar.radios',
     route: ROUTES.LIBRARY.RADIOS,
     icon: Radio,

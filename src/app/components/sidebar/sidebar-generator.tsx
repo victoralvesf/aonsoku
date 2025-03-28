@@ -7,6 +7,7 @@ import { PlaylistOptions } from '@/app/components/playlist/options'
 import { PodcastSidebarItem } from '@/app/components/podcasts/sidebar-item'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { Button } from '@/app/components/ui/button'
+import { SidebarItems } from '@/app/layout/sidebar'
 import { ROUTES } from '@/routes/routesList'
 import { useAppStore } from '@/store/app.store'
 import { Playlist } from '@/types/responses/playlist'
@@ -40,10 +41,10 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
     <>
       {list.map((item) => {
         // Setting to show/hide Radios/Podcasts section
-        if (hideRadiosSection && item.id === 'radios') return null
-        if (!isPodcastsActive && item.id === 'podcasts') return null
+        if (hideRadiosSection && item.id === SidebarItems.Radios) return null
+        if (!isPodcastsActive && item.id === SidebarItems.Podcasts) return null
 
-        if (isPodcastsActive && item.id === 'podcasts') {
+        if (isPodcastsActive && item.id === SidebarItems.Podcasts) {
           return <MemoPodcastSidebarItem key={item.id} item={item} />
         }
 
