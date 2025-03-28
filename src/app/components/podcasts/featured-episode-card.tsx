@@ -79,7 +79,7 @@ function ReleaseDate({ episode }: FeaturedEpisodeCardProps) {
   )
 }
 
-export function EpisodeContent({ episode }: FeaturedEpisodeCardProps) {
+function EpisodeContent({ episode }: FeaturedEpisodeCardProps) {
   const { isEpisodePlaying } = useIsEpisodePlaying({
     id: episode.id,
   })
