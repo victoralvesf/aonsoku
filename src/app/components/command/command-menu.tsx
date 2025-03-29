@@ -133,7 +133,9 @@ export default function CommandMenu() {
           {t('sidebar.search')}
         </span>
 
-        <Keyboard text="/" />
+        <div className="absolute right-2">
+          <Keyboard text="/" />
+        </div>
       </Button>
       <CommandDialog
         open={open}
@@ -212,11 +214,11 @@ export default function CommandMenu() {
               {activePage === 'SERVER' && <CommandServer />}
             </CommandList>
           </ScrollArea>
-          <div className="flex justify-end p-2 h-10 gap-1 border-t relative">
-            <Keyboard text="ESC" className="static text-sm" />
-            <Keyboard text="↓" className="static text-sm" />
-            <Keyboard text="↑" className="static text-sm" />
-            <Keyboard text="↵" className="static text-sm" />
+          <div className="flex justify-end p-2 h-10 gap-1 border-t">
+            <Keyboard text="ESC" className="text-sm" />
+            <Keyboard text="↓" className="text-sm" />
+            <Keyboard text="↑" className="text-sm" />
+            <Keyboard text="↵" className="text-sm" />
           </div>
         </Command>
       </CommandDialog>

@@ -22,13 +22,13 @@ export function ShortcutsDialog({ open, onOpenChange }: ShortcutsDialogProps) {
       <DialogContent className="p-0 gap-0" aria-describedby={undefined}>
         <DialogHeader className="p-6 border-b-[1px] border-b-border mb-0">
           <DialogTitle>{t('shortcuts.modal.title')}</DialogTitle>
-          <div className="flex gap-1 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <p>{t('shortcuts.modal.description.first')}</p>
             {shortcutDialogKeys.map((key) => (
               <Keyboard
                 key={key}
                 text={key}
-                className="relative top-0 right-0"
+                className="text-base px-1.5 h-6 antialiased"
               />
             ))}
             <p>{t('shortcuts.modal.description.last')}</p>

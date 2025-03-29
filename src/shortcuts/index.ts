@@ -1,6 +1,8 @@
 import { isMacOs } from 'react-device-detect'
 import { IShortcut } from '@/types/shortcuts'
 
+const JOIN_SHORTCUTS_KEY = !isMacOs ? '+' : ''
+
 const META_KEY = isMacOs ? '⌘' : 'Ctrl'
 const CTRL_KEY = isMacOs ? '⌃' : 'Ctrl'
 const SHIFT_KEY = isMacOs ? '⇧' : 'Shift'
@@ -10,7 +12,7 @@ export const shortcutDialogKeys = [META_KEY, '/']
 export const logoutKeys = [SHIFT_KEY, CTRL_KEY, 'Q']
 
 export function stringifyShortcut(keys: string[]) {
-  return keys.join('+')
+  return keys.join(JOIN_SHORTCUTS_KEY)
 }
 
 const playbackShortcuts: IShortcut[] = [

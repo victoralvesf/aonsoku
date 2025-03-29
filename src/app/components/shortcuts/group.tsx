@@ -17,12 +17,12 @@ export function ShortcutsGroup({ title, shortcuts }: ShortcutsGroupProps) {
         {shortcuts.map(({ label, shortcuts: keys }) => (
           <div
             key={label}
-            className="flex justify-between relative text-muted-foreground"
+            className="flex items-center justify-between relative text-muted-foreground"
           >
             <p className="text-sm">{t(label)}</p>
             <div className="flex gap-1">
               {keys.map((key) => (
-                <Keyboard text={key} className="top-0 relative" key={key} />
+                <Keyboard key={key} text={key} className="text-sm px-1.5 h-6" />
               ))}
             </div>
           </div>
