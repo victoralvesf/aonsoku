@@ -299,7 +299,16 @@ export const useAppActions = () => useAppStore((state) => state.actions)
 export const useAppUpdate = () => useAppStore((state) => state.update)
 export const useAppSettings = () => useAppStore((state) => state.settings)
 export const useAppArtistsViewType = () =>
-  useAppStore((state) => ({
-    artistsPageViewType: state.pages.artistsPageViewType,
-    setArtistsPageViewType: state.pages.setArtistsPageViewType,
-  }))
+  useAppStore((state) => {
+    const { artistsPageViewType, setArtistsPageViewType } = state.pages
+
+    const isTableView = artistsPageViewType === 'table'
+    const isGridView = artistsPageViewType === 'grid'
+
+    return {
+      artistsPageViewType,
+      setArtistsPageViewType,
+      isTableView,
+      isGridView,
+    }
+  })

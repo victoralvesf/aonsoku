@@ -39,7 +39,7 @@ export function MainViewTypeSelector({
           <Settings2 className="size-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="min-w-40">
         <DropdownMenuLabel className="text-muted-foreground font-medium">
           View Mode
         </DropdownMenuLabel>
@@ -56,7 +56,7 @@ export function MainViewTypeSelector({
           onCheckedChange={() => setViewType('grid')}
         >
           <LayoutGrid className="size-4 mr-2" />
-          <span>Grid</span>
+          <span>Poster</span>
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>

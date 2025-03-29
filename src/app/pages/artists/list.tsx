@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
+import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { ArtistsGridView } from '@/app/components/artist/artists-grid-view'
-import { SongListFallback } from '@/app/components/fallbacks/song-fallbacks'
+import { ArtistsFallback } from '@/app/components/fallbacks/artists.tsx'
 import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
 import { MainViewTypeSelector } from '@/app/components/main-grid'
@@ -17,12 +17,19 @@ import { usePlayerActions } from '@/store/player.store'
 import { ISimilarArtist } from '@/types/responses/artist'
 import { queryKeys } from '@/utils/queryKeys'
 
+const MemoDataTable = memo(DataTable) as typeof DataTable
+const MemoArtistsGridView = memo(ArtistsGridView)
+
 export default function ArtistsList() {
   const { t } = useTranslation()
   const { getArtistAllSongs } = useSongList()
   const { setSongList } = usePlayerActions()
-  const { artistsPageViewType, setArtistsPageViewType } =
-    useAppArtistsViewType()
+  const {
+    artistsPageViewType,
+    setArtistsPageViewType,
+    isTableView,
+    isGridView,
+  } = useAppArtistsViewType()
 
   const columns = artistsColumns()
 
@@ -37,11 +44,8 @@ export default function ArtistsList() {
     if (songList) setSongList(songList, 0)
   }
 
-  if (isLoading) return <SongListFallback />
+  if (isLoading) return <ArtistsFallback />
   if (!artists) return null
-
-  const isViewTable = artistsPageViewType === 'table'
-  const isViewGrid = artistsPageViewType === 'grid'
 
   return (
     <div className="w-full h-full">
@@ -56,11 +60,9 @@ export default function ArtistsList() {
         </div>
       </ShadowHeader>
 
-      <ListWrapper
-        className={clsx('pt-[--shadow-header-distance]', isViewGrid && 'px-0')}
-      >
-        {isViewTable && (
-          <DataTable
+      {isTableView && (
+        <ListWrapper className="pt-shadow-header-distance">
+          <MemoDataTable
             columns={columns}
             data={artists}
             showPagination={true}
@@ -70,10 +72,14 @@ export default function ArtistsList() {
             allowRowSelection={false}
             dataType="artist"
           />
-        )}
+        </ListWrapper>
+      )}
 
-        {isViewGrid && <ArtistsGridView artists={artists} />}
-      </ListWrapper>
+      {isGridView && (
+        <ListWrapper className="pt-shadow-header-distance px-0">
+          <MemoArtistsGridView artists={artists} />
+        </ListWrapper>
+      )}
     </div>
   )
 }

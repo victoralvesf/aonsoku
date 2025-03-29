@@ -5,6 +5,7 @@ import {
   AlbumFallback,
   AlbumsFallback,
 } from '@/app/components/fallbacks/album-fallbacks'
+import { ArtistsFallback } from '@/app/components/fallbacks/artists.tsx'
 import { HomeFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import {
@@ -60,7 +61,7 @@ export const router = createBrowserRouter([
         path: ROUTES.LIBRARY.ARTISTS,
         errorElement: <ErrorPage />,
         element: (
-          <Suspense fallback={<SongListFallback />}>
+          <Suspense fallback={<ArtistsFallback />}>
             <ArtistsList />
           </Suspense>
         ),

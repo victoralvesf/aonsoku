@@ -20,22 +20,11 @@ module.exports = {
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
       },
-      height: {
+      spacing: {
         header: 'var(--header-height)',
         content: 'var(--content-height)',
         'shadow-header': 'var(--shadow-header-height)',
-        toast: 'var(--toastify-toast-container-height)',
-      },
-      minHeight: {
-        header: 'var(--header-height)',
-        content: 'var(--content-height)',
-        'shadow-header': 'var(--shadow-header-height)',
-        toast: 'var(--toastify-toast-container-height)',
-      },
-      maxHeight: {
-        header: 'var(--header-height)',
-        content: 'var(--content-height)',
-        'shadow-header': 'var(--shadow-header-height)',
+        'shadow-header-distance': 'var(--shadow-header-distance)',
         toast: 'var(--toastify-toast-container-height)',
       },
       colors: {
