@@ -13,11 +13,15 @@ export interface IServerConfig {
   serverType?: string
 }
 
+export type PageViewType = 'grid' | 'table'
+
 interface IAppPages {
   showInfoPanel: boolean
   toggleShowInfoPanel: () => void
   hideRadiosSection: boolean
   setHideRadiosSection: (value: boolean) => void
+  artistsPageViewType: PageViewType
+  setArtistsPageViewType: (type: PageViewType) => void
 }
 
 export interface IAppData extends IServerConfig {

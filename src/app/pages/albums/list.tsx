@@ -7,6 +7,7 @@ import { EmptyAlbums } from '@/app/components/albums/empty-page'
 import { AlbumsHeader } from '@/app/components/albums/header'
 import { AlbumsFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
+import { MainGrid } from '@/app/components/main-grid'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import {
   albumSearch,
@@ -142,10 +143,7 @@ export default function AlbumsList() {
       <AlbumsHeader albumCount={itemsCount} />
 
       <ListWrapper className="pt-[--shadow-header-distance]">
-        <div
-          className="grid grid-cols-6 2xl:grid-cols-8 gap-4 h-full"
-          data-testid="albums-grid"
-        >
+        <MainGrid data-testid="albums-grid">
           {items.map((album) => (
             <PreviewCard.Root key={`album-${album.id}`}>
               <PreviewCard.ImageWrapper link={ROUTES.ALBUM.PAGE(album.id)}>
@@ -170,7 +168,7 @@ export default function AlbumsList() {
               </PreviewCard.InfoWrapper>
             </PreviewCard.Root>
           ))}
-        </div>
+        </MainGrid>
       </ListWrapper>
     </div>
   )

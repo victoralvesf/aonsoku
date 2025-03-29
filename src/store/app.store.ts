@@ -84,6 +84,12 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.pages.hideRadiosSection = value
               })
             },
+            artistsPageViewType: 'table',
+            setArtistsPageViewType: (type) => {
+              set((state) => {
+                state.pages.artistsPageViewType = type
+              })
+            },
           },
           command: {
             open: false,
@@ -190,6 +196,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.songCount = null
                 state.pages.showInfoPanel = true
                 state.pages.hideRadiosSection = HIDE_RADIOS_SECTION ?? false
+                state.pages.artistsPageViewType = 'table'
                 state.podcasts.active = false
                 state.podcasts.serviceUrl = ''
                 state.podcasts.useDefaultUser = true
@@ -291,3 +298,8 @@ export const useAppPages = () => useAppStore((state) => state.pages)
 export const useAppActions = () => useAppStore((state) => state.actions)
 export const useAppUpdate = () => useAppStore((state) => state.update)
 export const useAppSettings = () => useAppStore((state) => state.settings)
+export const useAppArtistsViewType = () =>
+  useAppStore((state) => ({
+    artistsPageViewType: state.pages.artistsPageViewType,
+    setArtistsPageViewType: state.pages.setArtistsPageViewType,
+  }))

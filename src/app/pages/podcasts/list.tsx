@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { AlbumsFallback } from '@/app/components/fallbacks/album-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
+import { MainGrid } from '@/app/components/main-grid'
 import { EmptyPodcastsPage } from '@/app/components/podcasts/empty-page'
 import { EmptyPodcastsResults } from '@/app/components/podcasts/empty-results'
 import { PodcastsHeader } from '@/app/components/podcasts/header'
@@ -111,10 +112,7 @@ export default function PodcastsList() {
       <PodcastsHeader />
 
       <ListWrapper className="pt-[--shadow-header-distance]">
-        <div
-          className="grid grid-cols-6 2xl:grid-cols-8 gap-4 h-full"
-          data-testid="albums-grid"
-        >
+        <MainGrid data-testid="podcasts-grid">
           {items.map((podcast) => (
             <PreviewCard.Root key={`podcast-${podcast.id}`}>
               <PreviewCard.ImageWrapper link={ROUTES.PODCASTS.PAGE(podcast.id)}>
@@ -133,7 +131,7 @@ export default function PodcastsList() {
               </PreviewCard.InfoWrapper>
             </PreviewCard.Root>
           ))}
-        </div>
+        </MainGrid>
       </ListWrapper>
     </div>
   )

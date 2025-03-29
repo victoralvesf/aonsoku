@@ -1,4 +1,5 @@
 import { Play } from 'lucide-react'
+import { ComponentPropsWithoutRef } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { Button } from '@/app/components/ui/button'
@@ -8,10 +9,14 @@ interface Children {
   children: React.ReactNode
 }
 
-interface RootProps extends Children {}
+type RootProps = ComponentPropsWithoutRef<'div'>
 
-function Root({ children }: RootProps) {
-  return <div className="cursor-pointer">{children}</div>
+function Root({ className, children, ...props }: RootProps) {
+  return (
+    <div className={cn('cursor-pointer', className)} {...props}>
+      {children}
+    </div>
+  )
 }
 
 interface ImageWrapperProps extends Children {
@@ -21,7 +26,11 @@ interface ImageWrapperProps extends Children {
 function ImageWrapper({ children, link }: ImageWrapperProps) {
   return (
     <div className="group flex-1 aspect-square rounded bg-border relative overflow-hidden">
-      <Link to={link} data-testid="card-image-link">
+      <Link
+        to={link}
+        data-testid="card-image-link"
+        className="flex h-full w-full"
+      >
         {children}
       </Link>
     </div>
