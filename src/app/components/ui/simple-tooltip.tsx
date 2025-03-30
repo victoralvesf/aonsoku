@@ -15,6 +15,7 @@ interface TooltipContent {
   align?: 'center' | 'end' | 'start'
   delay?: number
   avoidCollisions?: boolean
+  disabled?: boolean
 }
 
 export function SimpleTooltip({
@@ -24,9 +25,10 @@ export function SimpleTooltip({
   align = 'center',
   delay = 700,
   avoidCollisions = true,
+  disabled = false,
 }: TooltipContent) {
   // If is not desktop return only the children element
-  if (!isDesktop) {
+  if (!isDesktop || disabled) {
     return <>{children}</>
   }
 

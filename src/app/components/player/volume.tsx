@@ -49,9 +49,9 @@ export function PlayerVolume({ disabled, audioRef }: PlayerVolumeProps) {
       </div>
 
       <div className="hidden 2xl:flex gap-2 pr-2 items-center">
-        <SimpleTooltip text={tooltipText}>
+        <SimpleTooltip text={tooltipText} disabled={disabled}>
           <div className="h-10 flex items-center">
-            <MuteButton>
+            <MuteButton disabled={disabled}>
               <div className="text-secondary-foreground">
                 <VolumeIcon volume={volume} size={18} />
               </div>
