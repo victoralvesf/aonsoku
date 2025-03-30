@@ -266,6 +266,10 @@ svg#bars .eq-bar--4 {
   @apply bg-gradient-to-b from-background/10 to-background/60;
 }
 
+.secondary-thumb-bar {
+  @apply bg-foreground/30 hover:bg-foreground/40;
+}
+
 @media all and (display-mode: picture-in-picture) {
   body, html {
     @apply w-full h-full overflow-hidden p-0 m-0;

@@ -42,7 +42,12 @@ export function FullscreenSongQueue() {
     )
 
   return (
-    <ScrollArea ref={parentRef} className="min-h-full h-full overflow-auto">
+    <ScrollArea
+      ref={parentRef}
+      type="always"
+      className="min-h-full h-full overflow-auto"
+      thumbClassName="secondary-thumb-bar"
+    >
       <div
         style={{
           height: `${virtualizer.getTotalSize()}px`,

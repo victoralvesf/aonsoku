@@ -115,7 +115,9 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
 
   return (
     <ScrollArea
-      className="w-full h-full overflow-y-auto text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth maskImage-lyrics"
+      type="always"
+      className="w-full h-full overflow-y-auto text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth"
+      thumbClassName="secondary-thumb-bar"
       ref={lyricsBoxRef}
     >
       {lines.map((line, index) => (

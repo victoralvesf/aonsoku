@@ -349,6 +349,7 @@ export function DataTableList<TData, TValue>({
             '[&_div:last-child]:border-0 overflow-auto',
             showHeader ? 'h-[calc(100%-41px)]' : 'h-full',
           )}
+          thumbClassName={clsx(pageType === 'queue' && 'secondary-thumb-bar')}
         >
           <div
             className="w-full relative"

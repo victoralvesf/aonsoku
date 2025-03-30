@@ -25,8 +25,8 @@ export function QueueItem({
   return (
     <div
       className={clsx([
-        'flex items-center w-full h-16 text-sm rounded-md cursor-pointer',
-        'bg-black/0 hover:bg-secondary',
+        'flex items-center w-[calc(100%-10px)] h-16 text-sm rounded-md cursor-pointer',
+        'bg-black/0 hover:bg-foreground/20',
         'data-[state=active]:bg-foreground data-[state=active]:text-secondary',
       ])}
       style={{
