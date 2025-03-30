@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { ShadowHeader } from '@/app/components/album/shadow-header'
-import { ArtistsGridView } from '@/app/components/artist/artists-grid-view'
+import { ArtistGridCard } from '@/app/components/artist/artist-grid-card'
 import { ArtistsFallback } from '@/app/components/fallbacks/artists.tsx'
+import { GridViewWrapper } from '@/app/components/grid-view-wrapper'
 import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
 import { MainViewTypeSelector } from '@/app/components/main-grid'
@@ -17,8 +17,11 @@ import { usePlayerActions } from '@/store/player.store'
 import { ISimilarArtist } from '@/types/responses/artist'
 import { queryKeys } from '@/utils/queryKeys'
 
+const MemoShadowHeader = memo(ShadowHeader)
+const MemoHeaderTitle = memo(HeaderTitle)
+const MemoViewTypeSelector = memo(MainViewTypeSelector)
 const MemoDataTable = memo(DataTable) as typeof DataTable
-const MemoArtistsGridView = memo(ArtistsGridView)
+const MemoListWrapper = memo(ListWrapper)
 
 export default function ArtistsList() {
   const { t } = useTranslation()
@@ -49,19 +52,17 @@ export default function ArtistsList() {
 
   return (
     <div className="w-full h-full">
-      <ShadowHeader className="flex justify-between">
-        <HeaderTitle title={t('sidebar.artists')} count={artists.length} />
+      <MemoShadowHeader className="flex justify-between">
+        <MemoHeaderTitle title={t('sidebar.artists')} count={artists.length} />
 
-        <div>
-          <MainViewTypeSelector
-            viewType={artistsPageViewType}
-            setViewType={setArtistsPageViewType}
-          />
-        </div>
-      </ShadowHeader>
+        <MemoViewTypeSelector
+          viewType={artistsPageViewType}
+          setViewType={setArtistsPageViewType}
+        />
+      </MemoShadowHeader>
 
       {isTableView && (
-        <ListWrapper className="pt-shadow-header-distance">
+        <MemoListWrapper className="pt-shadow-header-distance">
           <MemoDataTable
             columns={columns}
             data={artists}
@@ -72,13 +73,15 @@ export default function ArtistsList() {
             allowRowSelection={false}
             dataType="artist"
           />
-        </ListWrapper>
+        </MemoListWrapper>
       )}
 
       {isGridView && (
-        <ListWrapper className="pt-shadow-header-distance px-0">
-          <MemoArtistsGridView artists={artists} />
-        </ListWrapper>
+        <MemoListWrapper className="pt-shadow-header-distance px-0">
+          <GridViewWrapper list={artists}>
+            {(artist) => <ArtistGridCard artist={artist} />}
+          </GridViewWrapper>
+        </MemoListWrapper>
       )}
     </div>
   )
