@@ -36,7 +36,8 @@
         "list": "List",
         "poster": "Poster"
       }
-    }
+    },
+    "beta": "Beta"
   },
   "theme": {
     "label": "Theme",

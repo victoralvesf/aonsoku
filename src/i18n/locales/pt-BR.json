@@ -36,7 +36,8 @@
         "list": "Lista",
         "poster": "Cartaz"
       }
-    }
+    },
+    "beta": "Beta"
   },
   "theme": {
     "label": "Tema",
