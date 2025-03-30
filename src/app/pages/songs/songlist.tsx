@@ -75,7 +75,7 @@ export default function SongList() {
     'album',
     'duration',
     'playCount',
-    'played',
+    // 'played',
     'contentType',
     'select',
   ]

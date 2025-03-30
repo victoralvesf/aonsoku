@@ -245,8 +245,8 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       accessorKey: 'contentType',
       header: i18n.t('table.columns.quality'),
       style: {
-        width: 120,
-        maxWidth: 120,
+        width: 100,
+        maxWidth: 110,
       },
       className: 'hidden 2xl:flex',
       cell: ({ row }) => {
