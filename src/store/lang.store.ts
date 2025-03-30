@@ -1,6 +1,7 @@
 import merge from 'lodash/merge'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
+import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { languages } from '@/i18n/languages'
 import { ILangContext } from '@/types/langContext'
@@ -40,6 +41,7 @@ export const useLangStore = createWithEqualityFn<ILangContext>()(
       },
     ),
   ),
+  shallow,
 )
 
 export const useLang = () => useLangStore((state) => state)

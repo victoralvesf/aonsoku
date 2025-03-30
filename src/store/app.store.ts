@@ -2,6 +2,7 @@ import merge from 'lodash/merge'
 import omit from 'lodash/omit'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
+import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { pingServer } from '@/api/pingServer'
 import { queryServerInfo } from '@/api/queryServerInfo'
@@ -290,6 +291,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
       },
     ),
   ),
+  shallow,
 )
 
 export const useAppData = () => useAppStore((state) => state.data)
