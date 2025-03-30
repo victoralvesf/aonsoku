@@ -2,7 +2,7 @@ import { Cell, flexRender, Row } from '@tanstack/react-table'
 import clsx from 'clsx'
 import { memo, MouseEvent, TouchEvent, useMemo } from 'react'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
-import { usePlayerCurrentSong, useSongColor } from '@/store/player.store'
+import { usePlayerCurrentSong } from '@/store/player.store'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 
 const MemoContextMenuProvider = memo(ContextMenuProvider)
@@ -33,7 +33,6 @@ export function TableListRow<TData>({
   pageType = 'general',
 }: TableRowProps<TData>) {
   const currentSong = usePlayerCurrentSong()
-  const { useSongColorOnQueue } = useSongColor()
 
   function handleTouchStart() {
     isTap = true
@@ -64,8 +63,6 @@ export function TableListRow<TData>({
   }, [currentSong.id, dataType, row.original])
 
   const isQueue = pageType === 'queue'
-  const queueWithDynamicColor = isQueue && useSongColorOnQueue
-  const queueWithoutDynamicColor = isQueue && !useSongColorOnQueue
 
   return (
     <MemoContextMenuProvider options={getContextMenuOptions(row)}>
@@ -82,14 +79,9 @@ export function TableListRow<TData>({
         onContextMenu={(e) => handleClicks(e, row)}
         className={clsx(
           'group/tablerow w-[calc(100%-10px)] flex flex-row transition-colors',
-          'data-[state=selected]:bg-foreground/30',
-          isQueue ? 'rounded-md' : 'hover:bg-foreground/20',
-          queueWithDynamicColor && 'hover:bg-background-foreground',
-          queueWithoutDynamicColor && 'hover:bg-foreground/20',
-          isRowSongActive && {
-            'bg-foreground/20': !isQueue || queueWithoutDynamicColor,
-            'bg-background-foreground': queueWithDynamicColor,
-          },
+          'data-[state=selected]:bg-foreground/30 hover:bg-foreground/20',
+          isQueue && 'rounded-md',
+          isRowSongActive && 'bg-foreground/20',
         )}
         style={{
           height: `${virtualRow.size}px`,

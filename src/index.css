@@ -263,7 +263,7 @@ svg#bars .eq-bar--4 {
 }
 
 .default-gradient {
-  @apply bg-gradient-to-b from-background/40 to-background/60;
+  @apply bg-gradient-to-b from-background/10 to-background/60;
 }
 
 @media all and (display-mode: picture-in-picture) {

@@ -13,6 +13,7 @@ import {
   useQueueState,
   useSongColor,
 } from '@/store/player.store'
+import { hexToRgba } from '@/utils/getAverageColor'
 
 export function MainDrawerPage() {
   const { currentSongColor, useSongColorOnQueue } = useSongColor()
@@ -21,9 +22,9 @@ export function MainDrawerPage() {
   const { lyricsState } = useLyricsState()
 
   const backgroundColor = useMemo(() => {
-    if (!useSongColorOnQueue) return undefined
+    if (!useSongColorOnQueue || !currentSongColor) return undefined
 
-    return currentSongColor ?? undefined
+    return hexToRgba(currentSongColor, 0.5)
   }, [currentSongColor, useSongColorOnQueue])
 
   return (

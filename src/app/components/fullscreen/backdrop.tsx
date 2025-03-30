@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { usePlayerStore, useSongColor } from '@/store/player.store'
 import { isChromeOrFirefox } from '@/utils/browser'
+import { hexToRgba } from '@/utils/getAverageColor'
 
 export function FullscreenBackdrop() {
   const { coverArt } = usePlayerStore((state) => state.songlist.currentSong)
@@ -49,6 +50,12 @@ export function FullscreenBackdrop() {
 export function DynamicColorBackdrop() {
   const { currentSongColor } = useSongColor()
 
+  const backgroundColor = useMemo(() => {
+    if (!currentSongColor) return undefined
+
+    return hexToRgba(currentSongColor, 0.5)
+  }, [currentSongColor])
+
   return (
     <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
       <div
@@ -65,7 +72,7 @@ export function DynamicColorBackdrop() {
         />
         <div
           className="absolute inset-0 w-full h-full z-0 transition-[background-color] duration-1000"
-          style={{ backgroundColor: currentSongColor ?? 'transparent' }}
+          style={{ backgroundColor }}
         />
       </div>
     </div>
