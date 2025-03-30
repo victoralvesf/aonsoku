@@ -4,6 +4,7 @@ import {
   ReactNode,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -61,7 +62,9 @@ export function GridViewWrapper<T>({
     }
   }, [defaultWidth, gap, gridColumnsSize, padding, titleHeight])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    scrollDivRef.current = getMainScrollElement()
+
     const handleResize = () => {
       const width = window.innerWidth
 
@@ -111,10 +114,6 @@ export function GridViewWrapper<T>({
 
   const rowVirtualizer = useVirtualizer(grid.rowVirtualizer)
   const columnVirtualizer = useVirtualizer(grid.columnVirtualizer)
-
-  useEffect(() => {
-    scrollDivRef.current = getMainScrollElement()
-  }, [])
 
   useEffect(() => {
     rowVirtualizer.measure()
