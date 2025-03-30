@@ -29,7 +29,14 @@
     "showDetails": "Show details",
     "hideDetails": "Hide details",
     "viewAll": "View all",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "viewMode": {
+      "label": "View Mode",
+      "modes": {
+        "list": "List",
+        "poster": "Poster"
+      }
+    }
   },
   "theme": {
     "label": "Theme",

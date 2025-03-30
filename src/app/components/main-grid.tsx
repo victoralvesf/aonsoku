@@ -1,5 +1,6 @@
-import { LayoutGrid, LayoutList, Settings2 } from 'lucide-react'
+import { Settings2 } from 'lucide-react'
 import { ComponentPropsWithoutRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import {
   DropdownMenu,
@@ -35,6 +36,8 @@ export function MainViewTypeSelector({
   viewType,
   setViewType,
 }: MainViewTypeSelectorProps) {
+  const { t } = useTranslation()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -44,22 +47,20 @@ export function MainViewTypeSelector({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-40">
         <DropdownMenuLabel className="text-muted-foreground font-medium">
-          View Mode
+          {t('generic.viewMode.label')}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
           checked={viewType === 'table'}
           onCheckedChange={() => setViewType('table')}
         >
-          <LayoutList className="size-4 mr-2" />
-          <span>Table</span>
+          <span>{t('generic.viewMode.modes.list')}</span>
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={viewType === 'grid'}
           onCheckedChange={() => setViewType('grid')}
         >
-          <LayoutGrid className="size-4 mr-2" />
-          <span>Poster</span>
+          <span>{t('generic.viewMode.modes.poster')}</span>
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>

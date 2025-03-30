@@ -29,7 +29,14 @@
     "showDetails": "Exibir detalhes",
     "hideDetails": "Ocultar detalhes",
     "viewAll": "Ver tudo",
-    "loading": "Carregando…"
+    "loading": "Carregando…",
+    "viewMode": {
+      "label": "Modo de Visualização",
+      "modes": {
+        "list": "Lista",
+        "poster": "Cartaz"
+      }
+    }
   },
   "theme": {
     "label": "Tema",
