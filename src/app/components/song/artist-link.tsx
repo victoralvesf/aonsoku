@@ -34,9 +34,10 @@ export function ArtistLink({ artistId, className, ...props }: ArtistLinkProps) {
 
 type ArtistsLinksProps = {
   artists: IFeaturedArtist[]
+  onClickLink?: () => void
 }
 
-export function ArtistsLinks({ artists }: ArtistsLinksProps) {
+export function ArtistsLinks({ artists, onClickLink }: ArtistsLinksProps) {
   const data = artists.slice(0, TABLE_ARTISTS_MAX_NUMBER)
   const showThreeDots = artists.length > TABLE_ARTISTS_MAX_NUMBER
 
@@ -55,7 +56,13 @@ export function ArtistsLinks({ artists }: ArtistsLinksProps) {
           key={id}
           className={clsx('flex items-center', index > 0 && 'truncate')}
         >
-          <ArtistLink artistId={id} title={showTitle(index, name)}>
+          <ArtistLink
+            artistId={id}
+            title={showTitle(index, name)}
+            onClick={() => {
+              if (onClickLink) onClickLink()
+            }}
+          >
             {name}
           </ArtistLink>
           {showDot(index) && <Dot />}

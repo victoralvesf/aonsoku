@@ -53,7 +53,7 @@ export function queueColumns(): ColumnDefType<ISong>[] {
         const { closeDrawer } = usePlayerStore.getState().actions
 
         if (artists && artists.length > 1) {
-          return <ArtistsLinks artists={artists} />
+          return <ArtistsLinks artists={artists} onClickLink={closeDrawer} />
         }
 
         if (!artistId) return row.original.artist
