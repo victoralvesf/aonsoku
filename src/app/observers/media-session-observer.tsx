@@ -8,11 +8,14 @@ import {
 } from '@/store/player.store'
 import { appName } from '@/utils/appName'
 import { logger } from '@/utils/logger'
+import { isMac } from '@/utils/osType'
 import { manageMediaSession } from '@/utils/setMediaSession'
 import { isTauri } from '@/utils/tauriTools'
 
 function setWindowTitle(title: string) {
-  if (!isTauri()) return
+  // Disabling this feature for macOS
+  // due to a bug with traffic lights position
+  if (!isTauri() || isMac) return
 
   getCurrentWindow()
     .setTitle(title)
