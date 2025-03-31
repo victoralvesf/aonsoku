@@ -9,12 +9,18 @@ import {
   SkipBack,
   SkipForward,
 } from 'lucide-react'
-import { RefObject, useCallback, useEffect } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  RefObject,
+  useCallback,
+  useEffect,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import RepeatOne from '@/app/components/icons/repeat-one'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { usePlayerHotkeys } from '@/app/hooks/use-audio-hotkeys'
+import { cn } from '@/lib/utils'
 import {
   usePlayerActions,
   usePlayerIsPlaying,
@@ -119,103 +125,88 @@ export function PlayerControls({
     <div className="flex w-full gap-1 justify-center items-center mb-1">
       {isSong && (
         <SimpleTooltip text={shuffleTooltip}>
-          <Button
-            variant="ghost"
-            className={clsx(
-              'relative rounded-full w-10 h-10 p-3',
-              isShuffleActive && 'player-button-active',
-            )}
+          <PlayerButton
+            className={clsx(isShuffleActive && 'player-button-active')}
             disabled={!song || isPlayingOneSong() || !hasNext}
             onClick={toggleShuffle}
             data-testid="player-button-shuffle"
           >
             <Shuffle
               className={clsx(
-                'w-10 h-10',
                 isShuffleActive ? 'text-primary' : 'text-secondary-foreground',
               )}
             />
-          </Button>
+          </PlayerButton>
         </SimpleTooltip>
       )}
 
       <SimpleTooltip text={t('player.tooltips.previous')}>
-        <Button
-          variant="ghost"
-          className="rounded-full w-10 h-10 p-3"
+        <PlayerButton
           disabled={disableButtons || !hasPrev}
           onClick={playPrevSong}
           data-testid="player-button-prev"
         >
-          <SkipBack className="w-10 h-10 text-secondary-foreground fill-secondary-foreground" />
-        </Button>
+          <SkipBack className="text-secondary-foreground fill-secondary-foreground" />
+        </PlayerButton>
       </SimpleTooltip>
 
       {isPodcast && (
         <SimpleTooltip text={t('player.tooltips.rewind', { amount: 15 })}>
-          <Button
-            variant="ghost"
-            className="rounded-full w-10 h-10 p-0 relative"
+          <PlayerButton
             onClick={() => handleSeekAction(-15)}
             data-testid="player-button-skip-backward"
           >
             <span className="text-secondary-foreground font-light text-[8px] absolute">
               15
             </span>
-            <RotateCcwIcon className="w-5 h-5 text-secondary-foreground" />
-          </Button>
+            <RotateCcwIcon className="text-secondary-foreground" />
+          </PlayerButton>
         </SimpleTooltip>
       )}
 
       <SimpleTooltip text={playTooltip}>
-        <Button
-          className="rounded-full w-10 h-10 p-3"
+        <PlayerButton
+          variant="default"
           disabled={!song && !radio && !isPodcast}
           onClick={togglePlayPause}
           data-testid={`player-button-${isPlaying ? 'pause' : 'play'}`}
         >
           {isPlaying ? (
-            <Pause className="w-10 h-10 text-primary-foreground fill-primary-foreground" />
+            <Pause className="fill-primary-foreground" />
           ) : (
-            <Play className="w-10 h-10 text-primary-foreground fill-primary-foreground" />
+            <Play className="fill-primary-foreground" />
           )}
-        </Button>
+        </PlayerButton>
       </SimpleTooltip>
 
       {isPodcast && (
         <SimpleTooltip text={t('player.tooltips.forward', { amount: 30 })}>
-          <Button
-            variant="ghost"
-            className="rounded-full w-10 h-10 p-0 relative"
+          <PlayerButton
             onClick={() => handleSeekAction(30)}
             data-testid="player-button-skip-forward"
           >
             <span className="text-secondary-foreground font-light text-[8px] absolute">
               30
             </span>
-            <RotateCwIcon className="w-5 h-5 text-secondary-foreground" />
-          </Button>
+            <RotateCwIcon className="text-secondary-foreground" />
+          </PlayerButton>
         </SimpleTooltip>
       )}
 
       <SimpleTooltip text={t('player.tooltips.next')}>
-        <Button
-          variant="ghost"
-          className="rounded-full w-10 h-10 p-3"
+        <PlayerButton
           disabled={disableButtons || cannotGotoNextSong}
           onClick={playNextSong}
           data-testid="player-button-next"
         >
-          <SkipForward className="w-10 h-10 text-secondary-foreground fill-secondary-foreground" />
-        </Button>
+          <SkipForward className="text-secondary-foreground fill-secondary-foreground" />
+        </PlayerButton>
       </SimpleTooltip>
 
       {isSong && (
         <SimpleTooltip text={repeatTooltip}>
-          <Button
-            variant="ghost"
+          <PlayerButton
             className={clsx(
-              'relative rounded-full w-10 h-10 p-3',
               loopState !== LoopState.Off && 'player-button-active',
             )}
             disabled={!song}
@@ -223,17 +214,30 @@ export function PlayerControls({
             data-testid="player-button-loop"
           >
             {loopState === LoopState.Off && (
-              <Repeat className="w-10 h-10 text-secondary-foreground" />
+              <Repeat className="text-secondary-foreground" />
             )}
-            {loopState === LoopState.All && (
-              <Repeat className="w-10 h-10 text-primary" />
-            )}
+            {loopState === LoopState.All && <Repeat className="text-primary" />}
             {loopState === LoopState.One && (
-              <RepeatOne className="w-10 h-10 text-primary" />
+              <RepeatOne className="text-primary" />
             )}
-          </Button>
+          </PlayerButton>
         </SimpleTooltip>
       )}
     </div>
+  )
+}
+
+type PlayerButtonProps = ComponentPropsWithoutRef<typeof Button>
+
+function PlayerButton({ className, ...props }: PlayerButtonProps) {
+  return (
+    <Button
+      variant="ghost"
+      className={cn(
+        'relative rounded-full size-10 p-0 [&_svg]:pointer-events-none [&_svg]:size-[18px] [&_svg]:shrink-0',
+        className,
+      )}
+      {...props}
+    />
   )
 }
