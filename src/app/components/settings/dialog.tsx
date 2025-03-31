@@ -18,7 +18,7 @@ export function SettingsDialog() {
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogContent
-        className="overflow-hidden p-0 md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]"
+        className="overflow-hidden p-0 h-[500px] max-h-[600px] max-w-3xl 2xl:h-2/3 2xl:max-h-[700px] 2xl:max-w-4xl"
         aria-describedby={undefined}
       >
         <DialogTitle className="sr-only">{t('settings.label')}</DialogTitle>
@@ -28,7 +28,7 @@ export function SettingsDialog() {
               <SettingsOptions />
             </SidebarContent>
           </Sidebar>
-          <main className="flex max-h-[500px] min-h-[500px] h-[500px] flex-1 flex-col overflow-hidden bg-background-foreground">
+          <main className="flex flex-1 flex-col overflow-hidden bg-background-foreground">
             <SettingsBreadcrumb />
             <ScrollArea className="overflow-hidden">
               <div className="w-full h-full gap-4 p-4 pt-0">

@@ -45,26 +45,24 @@ function useSidebar() {
   return context
 }
 
-const SidebarProvider = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<'div'> & {
-    defaultOpen?: boolean
-    open?: boolean
-    onOpenChange?: (open: boolean) => void
-  }
->(
-  (
-    {
+type SidebarProviderProps = React.ComponentProps<'div'> & {
+  defaultOpen?: boolean
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+}
+
+const SidebarProvider = React.forwardRef<HTMLDivElement, SidebarProviderProps>(
+  (props, ref) => {
+    const {
       defaultOpen = true,
       open: openProp,
       onOpenChange: setOpenProp,
       className,
       style,
       children,
-      ...props
-    },
-    ref,
-  ) => {
+      ...rest
+    } = props
+
     const isMobile = useIsMobile()
     const [openMobile, setOpenMobile] = React.useState(false)
 
@@ -151,7 +149,7 @@ const SidebarProvider = React.forwardRef<
               className,
             )}
             ref={ref}
-            {...props}
+            {...rest}
           >
             {children}
           </div>
