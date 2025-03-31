@@ -18,7 +18,7 @@ export function SettingsDialog() {
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogContent
-        className="overflow-hidden p-0 h-[500px] max-h-[600px] max-w-3xl 2xl:h-2/3 2xl:max-h-[700px] 2xl:max-w-4xl"
+        className="overflow-hidden p-0 h-[500px] max-h-[600px] max-w-3xl 2xl:h-[600px] 2xl:max-h-[700px] 2xl:max-w-4xl"
         aria-describedby={undefined}
       >
         <DialogTitle className="sr-only">{t('settings.label')}</DialogTitle>
