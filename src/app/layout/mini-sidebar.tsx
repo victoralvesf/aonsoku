@@ -8,7 +8,7 @@ export function MiniSidebar() {
   const { active: isPodcastEnabled } = useAppPodcasts()
 
   return (
-    <aside className="flex 2xl:hidden flex-col items-center justify-start gap-1 min-w-[--mini-sidebar-width] max-w-[--mini-sidebar-width] border-r fixed top-[--header-height] left-0 bottom-0 pb-[--player-height] bg-background z-10 p-2">
+    <aside className="flex 2xl:hidden flex-col items-center justify-start gap-1 min-w-mini-sidebar max-w-mini-sidebar border-r fixed top-header left-0 bottom-0 pb-player bg-background z-10 p-2">
       <MiniSidebarSearch />
 
       {menuItems.map((item) => {

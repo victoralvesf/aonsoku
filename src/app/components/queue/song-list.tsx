@@ -48,7 +48,7 @@ export function QueueSongList() {
         <div>
           <Button
             variant="ghost"
-            className="px-4 h-8 rounded-full py-0 flex items-center justify-center hover:bg-background"
+            className="px-4 h-8 rounded-full py-0 flex items-center justify-center hover:bg-foreground/20"
             onClick={clearPlayerState}
           >
             <ListXIcon className="mr-1 w-5 h-5" />

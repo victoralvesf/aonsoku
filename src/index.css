@@ -127,7 +127,7 @@ img {
 .main-drawer {
   @apply w-screen;
   @apply h-content;
-  @apply mb-[--player-height];
+  @apply mb-player;
   @apply z-30;
   @apply bg-background-foreground;
 }

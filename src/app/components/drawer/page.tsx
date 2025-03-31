@@ -44,7 +44,7 @@ export function MainDrawerPage() {
       >
         <div
           className={clsx(
-            'flex flex-col w-full h-[--content-height]',
+            'flex flex-col w-full h-content',
             'transition-[background-image,background-color] duration-1000',
             currentSongColor && 'default-gradient',
           )}
@@ -53,7 +53,7 @@ export function MainDrawerPage() {
           <div className="flex w-full h-14 min-h-14 px-[6%] items-center justify-end">
             <Button
               variant="ghost"
-              className="w-10 h-10 rounded-full p-0 hover:bg-background"
+              className="w-10 h-10 rounded-full p-0 hover:bg-foreground/20"
               onClick={closeDrawer}
             >
               <ChevronDownIcon />

@@ -10,7 +10,7 @@ export default function Login() {
       {!isLinux && (
         <header
           {...tauriDragRegion}
-          className="w-full h-[--header-height] border-b bg-background flex justify-center items-center relative"
+          className="w-full h-header border-b bg-background flex justify-center items-center relative"
         >
           <AppTitle />
           <div className="flex items-center absolute right-4">
