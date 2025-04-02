@@ -10,6 +10,8 @@ export function DragRegion({ className, ...props }: DragRegionProps) {
       className={cn('fixed top-0 inset-x-0 h-header cursor-move', className)}
       {...tauriDragRegion}
       {...props}
-    />
+    >
+      <div className="fixed h-6 w-[70px] left-[8px] top-[10px] cursor-default" />
+    </div>
   )
 }

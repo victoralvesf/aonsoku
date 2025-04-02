@@ -29,7 +29,7 @@ export function SongInfo() {
           <Dot className="text-foreground/70" />
           <ArtistNames song={currentSong} />
         </div>
-        <div className="flex gap-2 mt-2 2xl:mt-3">
+        <div className="flex gap-2 mt-2 2xl:mt-3 mb-[1px]">
           {currentSong.genre && (
             <Badge variant="neutral">{currentSong.genre}</Badge>
           )}
