@@ -107,6 +107,13 @@ export function PlayerControls({
   const shuffleTooltip = isShuffleActive
     ? t('player.tooltips.shuffle.disable')
     : t('player.tooltips.shuffle.enable')
+
+  const previousTooltip = t('player.tooltips.previous')
+  const nextTooltip = t('player.tooltips.next')
+
+  const skipRewindTooltip = t('player.tooltips.rewind', { amount: 15 })
+  const skipForwardTooltip = t('player.tooltips.forward', { amount: 30 })
+
   const playTooltip = isPlaying
     ? t('player.tooltips.pause')
     : t('player.tooltips.play')
@@ -124,120 +131,117 @@ export function PlayerControls({
   return (
     <div className="flex w-full gap-1 justify-center items-center mb-1">
       {isSong && (
-        <SimpleTooltip text={shuffleTooltip}>
-          <PlayerButton
-            className={clsx(isShuffleActive && 'player-button-active')}
-            disabled={!song || isPlayingOneSong() || !hasNext}
-            onClick={toggleShuffle}
-            data-testid="player-button-shuffle"
-          >
-            <Shuffle
-              className={clsx(
-                isShuffleActive ? 'text-primary' : 'text-secondary-foreground',
-              )}
-            />
-          </PlayerButton>
-        </SimpleTooltip>
+        <PlayerButton
+          className={clsx(isShuffleActive && 'player-button-active')}
+          disabled={!song || isPlayingOneSong() || !hasNext}
+          onClick={toggleShuffle}
+          data-testid="player-button-shuffle"
+          tooltip={shuffleTooltip}
+        >
+          <Shuffle
+            className={clsx(
+              isShuffleActive ? 'text-primary' : 'text-secondary-foreground',
+            )}
+          />
+        </PlayerButton>
       )}
 
-      <SimpleTooltip text={t('player.tooltips.previous')}>
-        <PlayerButton
-          disabled={disableButtons || !hasPrev}
-          onClick={playPrevSong}
-          data-testid="player-button-prev"
-        >
-          <SkipBack className="text-secondary-foreground fill-secondary-foreground" />
-        </PlayerButton>
-      </SimpleTooltip>
+      <PlayerButton
+        disabled={disableButtons || !hasPrev}
+        onClick={playPrevSong}
+        data-testid="player-button-prev"
+        tooltip={previousTooltip}
+      >
+        <SkipBack className="text-secondary-foreground fill-secondary-foreground" />
+      </PlayerButton>
 
       {isPodcast && (
-        <SimpleTooltip text={t('player.tooltips.rewind', { amount: 15 })}>
-          <PlayerButton
-            onClick={() => handleSeekAction(-15)}
-            data-testid="player-button-skip-backward"
-          >
-            <span className="text-secondary-foreground font-light text-[8px] absolute">
-              15
-            </span>
-            <RotateCcwIcon className="text-secondary-foreground" />
-          </PlayerButton>
-        </SimpleTooltip>
+        <PlayerButton
+          onClick={() => handleSeekAction(-15)}
+          data-testid="player-button-skip-backward"
+          tooltip={skipRewindTooltip}
+        >
+          <span className="text-secondary-foreground font-light text-[8px] absolute">
+            15
+          </span>
+          <RotateCcwIcon className="text-secondary-foreground" />
+        </PlayerButton>
       )}
 
-      <SimpleTooltip text={playTooltip}>
-        <PlayerButton
-          variant="default"
-          disabled={!song && !radio && !isPodcast}
-          onClick={togglePlayPause}
-          data-testid={`player-button-${isPlaying ? 'pause' : 'play'}`}
-        >
-          {isPlaying ? (
-            <Pause className="fill-primary-foreground" />
-          ) : (
-            <Play className="fill-primary-foreground" />
-          )}
-        </PlayerButton>
-      </SimpleTooltip>
+      <PlayerButton
+        variant="default"
+        disabled={!song && !radio && !isPodcast}
+        onClick={togglePlayPause}
+        data-testid={`player-button-${isPlaying ? 'pause' : 'play'}`}
+        tooltip={playTooltip}
+      >
+        {isPlaying ? (
+          <Pause className="fill-primary-foreground" />
+        ) : (
+          <Play className="fill-primary-foreground" />
+        )}
+      </PlayerButton>
 
       {isPodcast && (
-        <SimpleTooltip text={t('player.tooltips.forward', { amount: 30 })}>
-          <PlayerButton
-            onClick={() => handleSeekAction(30)}
-            data-testid="player-button-skip-forward"
-          >
-            <span className="text-secondary-foreground font-light text-[8px] absolute">
-              30
-            </span>
-            <RotateCwIcon className="text-secondary-foreground" />
-          </PlayerButton>
-        </SimpleTooltip>
+        <PlayerButton
+          onClick={() => handleSeekAction(30)}
+          data-testid="player-button-skip-forward"
+          tooltip={skipForwardTooltip}
+        >
+          <span className="text-secondary-foreground font-light text-[8px] absolute">
+            30
+          </span>
+          <RotateCwIcon className="text-secondary-foreground" />
+        </PlayerButton>
       )}
 
-      <SimpleTooltip text={t('player.tooltips.next')}>
-        <PlayerButton
-          disabled={disableButtons || cannotGotoNextSong}
-          onClick={playNextSong}
-          data-testid="player-button-next"
-        >
-          <SkipForward className="text-secondary-foreground fill-secondary-foreground" />
-        </PlayerButton>
-      </SimpleTooltip>
+      <PlayerButton
+        disabled={disableButtons || cannotGotoNextSong}
+        onClick={playNextSong}
+        data-testid="player-button-next"
+        tooltip={nextTooltip}
+      >
+        <SkipForward className="text-secondary-foreground fill-secondary-foreground" />
+      </PlayerButton>
 
       {isSong && (
-        <SimpleTooltip text={repeatTooltip}>
-          <PlayerButton
-            className={clsx(
-              loopState !== LoopState.Off && 'player-button-active',
-            )}
-            disabled={!song}
-            onClick={toggleLoop}
-            data-testid="player-button-loop"
-          >
-            {loopState === LoopState.Off && (
-              <Repeat className="text-secondary-foreground" />
-            )}
-            {loopState === LoopState.All && <Repeat className="text-primary" />}
-            {loopState === LoopState.One && (
-              <RepeatOne className="text-primary" />
-            )}
-          </PlayerButton>
-        </SimpleTooltip>
+        <PlayerButton
+          className={clsx(
+            loopState !== LoopState.Off && 'player-button-active',
+          )}
+          disabled={!song}
+          onClick={toggleLoop}
+          data-testid="player-button-loop"
+          tooltip={repeatTooltip}
+        >
+          {loopState === LoopState.Off && (
+            <Repeat className="text-secondary-foreground" />
+          )}
+          {loopState === LoopState.All && <Repeat className="text-primary" />}
+          {loopState === LoopState.One && (
+            <RepeatOne className="text-primary" />
+          )}
+        </PlayerButton>
       )}
     </div>
   )
 }
 
-type PlayerButtonProps = ComponentPropsWithoutRef<typeof Button>
+type PlayerButtonProps = ComponentPropsWithoutRef<typeof Button> & {
+  tooltip: string
+}
 
-function PlayerButton({ className, ...props }: PlayerButtonProps) {
+function PlayerButton({ className, tooltip, ...props }: PlayerButtonProps) {
   return (
-    <Button
-      variant="ghost"
-      className={cn(
-        'relative rounded-full size-10 p-0 [&_svg]:pointer-events-none [&_svg]:size-[18px] [&_svg]:shrink-0',
-        className,
-      )}
-      {...props}
-    />
+    <SimpleTooltip text={tooltip}>
+      <Button
+        variant="ghost"
+        className={cn(
+          'relative rounded-full size-10 p-0 [&_svg]:pointer-events-none [&_svg]:size-[18px] [&_svg]:shrink-0',
+          className,
+        )}
+        {...props}
+      />
+    </SimpleTooltip>
   )
 }
