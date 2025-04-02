@@ -53,7 +53,7 @@ export function DynamicColorBackdrop() {
   const backgroundColor = useMemo(() => {
     if (!currentSongColor) return undefined
 
-    return hexToRgba(currentSongColor, 0.5)
+    return hexToRgba(currentSongColor, 0.65)
   }, [currentSongColor])
 
   return (

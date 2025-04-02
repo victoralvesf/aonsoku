@@ -24,7 +24,7 @@ export function MainDrawerPage() {
   const backgroundColor = useMemo(() => {
     if (!useSongColorOnQueue || !currentSongColor) return undefined
 
-    return hexToRgba(currentSongColor, 0.5)
+    return hexToRgba(currentSongColor, 0.65)
   }, [currentSongColor, useSongColorOnQueue])
 
   return (
