@@ -6,7 +6,6 @@ use proxy::proxy::spawn_proxy_server;
 use tauri::Manager;
 
 #[cfg(target_os = "macos")]
-#[macro_use]
 extern crate cocoa;
 
 #[cfg(target_os = "macos")]
@@ -23,10 +22,16 @@ mod utils;
 
 #[tokio::main]
 async fn main() {
-    let builder = tauri::Builder::default();
+    let mut builder = tauri::Builder::default()
+        .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_os::init());
 
     #[cfg(target_os = "macos")]
-    let builder = builder.plugin(mac::window::init());
+    {
+        builder = builder.plugin(mac::window::init());
+    }
 
     tokio::task::spawn(async move {
         if let Err(e) = spawn_proxy_server().await {
@@ -39,19 +44,6 @@ async fn main() {
             #[cfg(not(target_os = "windows"))]
             let window = _app.get_window("main").unwrap();
 
-            #[cfg(target_os = "macos")]
-            {
-                use mac::window::setup_traffic_light_positioner;
-
-                let window_ = window.clone();
-
-                window.on_window_event(move |event| {
-                    if let tauri::WindowEvent::ThemeChanged(_theme) = event {
-                        setup_traffic_light_positioner(window_.clone())
-                    }
-                });
-            }
-
             // Only show window after a few seconds, to avoid flashy colors
             #[cfg(not(target_os = "windows"))]
             {
@@ -63,10 +55,6 @@ async fn main() {
 
             Ok(())
         })
-        .plugin(tauri_plugin_shell::init())
-        .plugin(tauri_plugin_updater::Builder::new().build())
-        .plugin(tauri_plugin_process::init())
-        .plugin(tauri_plugin_os::init())
         .invoke_handler(tauri::generate_handler![commands::download_file])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

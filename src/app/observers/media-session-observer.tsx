@@ -1,3 +1,4 @@
+import { emit } from '@tauri-apps/api/event'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,16 +13,40 @@ import { isMac } from '@/utils/osType'
 import { manageMediaSession } from '@/utils/setMediaSession'
 import { isTauri } from '@/utils/tauriTools'
 
-function setWindowTitle(title: string) {
-  // Disabling this feature for macOS
-  // due to a bug with traffic lights position
-  if (!isTauri() || isMac) return
+function setWindowTitle(newTitle: string) {
+  if (!isTauri()) return
 
-  getCurrentWindow()
-    .setTitle(title)
-    .then(() => {
-      logger.info('[MediaSessionObserver] - Title updated to ->', title)
-    })
+  // On macOS, the positioning of the traffic light buttons (close, minimize, maximize)
+  // imposes certain limitations on window management. To ensure proper functionality,
+  // the window title must be set on the Rust side within the custom macOS window handler
+  // plugin located at: [src-tauri/src/mac].
+  if (isMac) {
+    emit('aonsoku_title_changed', newTitle)
+      .then(() => {
+        logger.info(
+          '[MediaSessionObserver] (macOS) - Title updated to ->',
+          newTitle,
+        )
+      })
+      .catch((error) => {
+        logger.error(
+          '[MediaSessionObserver] (macOS) - Error updating window title:',
+          error,
+        )
+      })
+  } else {
+    getCurrentWindow()
+      .setTitle(newTitle)
+      .then(() => {
+        logger.info('[MediaSessionObserver] - Title updated to ->', newTitle)
+      })
+      .catch((error) => {
+        logger.error(
+          '[MediaSessionObserver] - Error updating window title:',
+          error,
+        )
+      })
+  }
 }
 
 export function MediaSessionObserver() {
@@ -62,7 +87,7 @@ export function MediaSessionObserver() {
       manageMediaSession.setRadioMediaSession(radioLabel, radio.name)
     }
     if (isSong && song) {
-      title = `${song.title} - ${song.artist}`
+      title = `${song.artist} - ${song.title}`
       manageMediaSession.setMediaSession(song)
     }
     if (isPodcast && episode) {

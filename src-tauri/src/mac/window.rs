@@ -1,12 +1,14 @@
+use hex_color::HexColor;
 use objc::{msg_send, sel, sel_impl};
 use rand::{distributions::Alphanumeric, Rng};
 use tauri::{
     plugin::{Builder, TauriPlugin},
-    Runtime, Window,
+    Emitter, Listener, Manager, Runtime, Window, WindowEvent,
 }; // 0.8
 
 const WINDOW_CONTROL_PAD_X: f64 = 15.0;
 const WINDOW_CONTROL_PAD_Y: f64 = 20.0;
+const MAIN_WINDOW_LABEL: &str = "main";
 
 struct UnsafeWindowHandle(*mut std::ffi::c_void);
 unsafe impl Send for UnsafeWindowHandle {}
@@ -16,17 +18,139 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("traffic_light_positioner")
         .on_window_ready(|window| {
             #[cfg(target_os = "macos")]
-            setup_traffic_light_positioner(window);
+            {
+                setup_traffic_light_positioner(&window);
+                let h = window.app_handle();
+
+                let window_for_theme = window.clone();
+                let id1 = h.listen("aonsoku_theme_changed", move |ev| {
+                    let color_str: String = match serde_json::from_str(ev.payload()) {
+                        Ok(color) => color,
+                        Err(err) => {
+                            println!("Failed to JSON parse color '{}': {}", ev.payload(), err);
+                            return;
+                        }
+                    };
+
+                    match HexColor::parse_rgb(color_str.trim()) {
+                        Ok(color) => {
+                            update_window_theme(window_for_theme.clone(), color);
+                        }
+                        Err(err) => {
+                            println!("Failed to parse background color '{}': {}", color_str, err)
+                        }
+                    }
+                });
+
+                let window_for_title = window.clone();
+                let id2 = h.listen("aonsoku_title_changed", move |ev| {
+                    let title: String = match serde_json::from_str(ev.payload()) {
+                        Ok(title) => title,
+                        Err(err) => {
+                            println!("Failed to parse window title \"{}\": {}", ev.payload(), err);
+                            return;
+                        }
+                    };
+
+                    update_window_title(window_for_title.clone(), title);
+                });
+
+                let theme_window = window.clone();
+                let h = h.clone();
+
+                window.on_window_event(move |e| {
+                    match e {
+                        WindowEvent::ThemeChanged(_) => {
+                            let window_handle = theme_window
+                                .ns_window()
+                                .expect("Failed to create window handle");
+
+                            position_traffic_lights(
+                                UnsafeWindowHandle(window_handle),
+                                WINDOW_CONTROL_PAD_X,
+                                WINDOW_CONTROL_PAD_Y,
+                                theme_window.label().to_string(),
+                            );
+                        }
+                        WindowEvent::Destroyed => {
+                            h.unlisten(id1);
+                            h.unlisten(id2);
+                        }
+                        _ => {}
+                    };
+                });
+            }
             return;
         })
         .build()
 }
 
 #[cfg(target_os = "macos")]
-fn position_traffic_lights(ns_window_handle: UnsafeWindowHandle, x: f64, y: f64) {
+fn update_window_title<R: Runtime>(window: Window<R>, title: String) {
+    use cocoa::{appkit::NSWindow, base::nil, foundation::NSString};
+
+    unsafe {
+        let window_handle = UnsafeWindowHandle(window.ns_window().unwrap());
+
+        let window2 = window.clone();
+        let label = window.label().to_string();
+        let _ = window.run_on_main_thread(move || {
+            let win_title = NSString::alloc(nil).init_str(&title);
+            let handle = window_handle;
+            NSWindow::setTitle_(handle.0 as cocoa::base::id, win_title);
+            position_traffic_lights(
+                UnsafeWindowHandle(window2.ns_window().expect("Failed to create window handle")),
+                WINDOW_CONTROL_PAD_X,
+                WINDOW_CONTROL_PAD_Y,
+                label,
+            );
+        });
+    }
+}
+
+#[cfg(target_os = "macos")]
+fn update_window_theme<R: Runtime>(window: Window<R>, color: HexColor) {
+    use cocoa::appkit::{
+        NSAppearance, NSAppearanceNameVibrantDark, NSAppearanceNameVibrantLight, NSWindow,
+    };
+
+    let brightness = (color.r as u64 + color.g as u64 + color.b as u64) / 3;
+    let label = window.label().to_string();
+
+    unsafe {
+        let window_handle = UnsafeWindowHandle(window.ns_window().unwrap());
+        let window2 = window.clone();
+        let _ = window.run_on_main_thread(move || {
+            let handle = window_handle;
+
+            let selected_appearance = if brightness >= 128 {
+                NSAppearance(NSAppearanceNameVibrantLight)
+            } else {
+                NSAppearance(NSAppearanceNameVibrantDark)
+            };
+
+            NSWindow::setAppearance(handle.0 as cocoa::base::id, selected_appearance);
+            position_traffic_lights(
+                UnsafeWindowHandle(window2.ns_window().expect("Failed to create window handle")),
+                WINDOW_CONTROL_PAD_X,
+                WINDOW_CONTROL_PAD_Y,
+                label,
+            );
+        });
+    }
+}
+
+#[cfg(target_os = "macos")]
+fn position_traffic_lights(ns_window_handle: UnsafeWindowHandle, x: f64, y: f64, label: String) {
+    if label != MAIN_WINDOW_LABEL {
+        return;
+    }
+
     use cocoa::appkit::{NSView, NSWindow, NSWindowButton};
     use cocoa::foundation::NSRect;
+
     let ns_window = ns_window_handle.0 as cocoa::base::id;
+
     unsafe {
         let close = ns_window.standardWindowButton_(NSWindowButton::NSWindowCloseButton);
         let miniaturize =
@@ -62,19 +186,19 @@ struct WindowState<R: Runtime> {
 }
 
 #[cfg(target_os = "macos")]
-pub fn setup_traffic_light_positioner<R: Runtime>(window: Window<R>) {
+pub fn setup_traffic_light_positioner<R: Runtime>(window: &Window<R>) {
     use cocoa::appkit::NSWindow;
     use cocoa::base::{id, BOOL};
+    use cocoa::delegate;
     use cocoa::foundation::NSUInteger;
     use objc::runtime::{Object, Sel};
     use std::ffi::c_void;
-    use tauri::Emitter;
 
-    // Do the initial positioning
     position_traffic_lights(
         UnsafeWindowHandle(window.ns_window().expect("Failed to create window handle")),
         WINDOW_CONTROL_PAD_X,
         WINDOW_CONTROL_PAD_Y,
+        window.label().to_string(),
     );
 
     // Ensure they stay in place while resizing the window.
@@ -118,11 +242,11 @@ pub fn setup_traffic_light_positioner<R: Runtime>(window: Window<R>) {
                         .expect("NS window should exist on state to handle resize")
                         as id;
 
-                    #[cfg(target_os = "macos")]
                     position_traffic_lights(
-                        UnsafeWindowHandle(id as *mut std::ffi::c_void),
+                        UnsafeWindowHandle(id as *mut c_void),
                         WINDOW_CONTROL_PAD_X,
                         WINDOW_CONTROL_PAD_Y,
+                        state.window.label().to_string(),
                     );
                 });
 
@@ -251,9 +375,10 @@ pub fn setup_traffic_light_positioner<R: Runtime>(window: Window<R>) {
 
                     let id = state.window.ns_window().expect("Failed to emit event") as id;
                     position_traffic_lights(
-                        UnsafeWindowHandle(id as *mut std::ffi::c_void),
+                        UnsafeWindowHandle(id as *mut c_void),
                         WINDOW_CONTROL_PAD_X,
                         WINDOW_CONTROL_PAD_Y,
+                        state.window.label().to_string(),
                     );
                 });
 
@@ -312,10 +437,12 @@ pub fn setup_traffic_light_positioner<R: Runtime>(window: Window<R>) {
             }
         }
 
-        // Are we deallocing this properly ? (I miss safe Rust :(  )
+        // Are we de-allocing this properly? (I miss safe Rust :(  )
         let window_label = window.label().to_string();
 
-        let app_state = WindowState { window };
+        let app_state = WindowState {
+            window: window.clone(),
+        };
         let app_box = Box::into_raw(Box::new(app_state)) as *mut c_void;
         let random_str: String = rand::thread_rng()
             .sample_iter(&Alphanumeric)
