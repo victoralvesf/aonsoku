@@ -38,3 +38,54 @@ export function hexToRgba(hex: string, alpha: number = 1) {
 
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
+
+export function hslToHex(hsl: string) {
+  const [h, s, l] = hsl.split(' ')
+
+  const hue = parseInt(h)
+  let saturation = parseInt(s.replace('%', ''))
+  let lightness = parseInt(l.replace('%', ''))
+
+  // Convert HSL to RGB
+  saturation /= 100
+  lightness /= 100
+
+  const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation
+  const secondComponent = chroma * (1 - Math.abs(((hue / 60) % 2) - 1))
+  const matchLightness = lightness - chroma / 2
+
+  let red, green, blue
+
+  if (hue < 60) {
+    red = chroma
+    green = secondComponent
+    blue = 0
+  } else if (hue < 120) {
+    red = secondComponent
+    green = chroma
+    blue = 0
+  } else if (hue < 180) {
+    red = 0
+    green = chroma
+    blue = secondComponent
+  } else if (hue < 240) {
+    red = 0
+    green = secondComponent
+    blue = chroma
+  } else if (hue < 300) {
+    red = secondComponent
+    green = 0
+    blue = chroma
+  } else {
+    red = chroma
+    green = 0
+    blue = secondComponent
+  }
+
+  const toHex = (value: number) => {
+    const hex = Math.round((value + matchLightness) * 255).toString(16)
+    return hex.length === 1 ? '0' + hex : hex
+  }
+
+  return `#${toHex(red)}${toHex(green)}${toHex(blue)}`
+}
