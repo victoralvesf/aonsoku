@@ -55,23 +55,10 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                     update_window_title(window_for_title.clone(), title);
                 });
 
-                let theme_window = window.clone();
                 let h = h.clone();
 
                 window.on_window_event(move |e| {
                     match e {
-                        WindowEvent::ThemeChanged(_) => {
-                            let window_handle = theme_window
-                                .ns_window()
-                                .expect("Failed to create window handle");
-
-                            position_traffic_lights(
-                                UnsafeWindowHandle(window_handle),
-                                WINDOW_CONTROL_PAD_X,
-                                WINDOW_CONTROL_PAD_Y,
-                                theme_window.label().to_string(),
-                            );
-                        }
                         WindowEvent::Destroyed => {
                             h.unlisten(id1);
                             h.unlisten(id2);
