@@ -9,7 +9,7 @@ export function ControlButton({
   return (
     <button
       className={cn(
-        'inline-flex cursor-default items-center justify-center',
+        'inline-flex cursor-default items-center justify-center outline-none',
         className,
       )}
       {...props}

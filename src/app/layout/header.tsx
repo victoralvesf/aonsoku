@@ -1,10 +1,11 @@
+import { Linux } from '@/app/components/controls/linux'
 import { Windows } from '@/app/components/controls/windows'
 import { NavigationButtons } from '@/app/components/header/navigation-buttons'
 import { UserDropdown } from '@/app/components/header/user-dropdown'
 import { HeaderSongInfo } from '@/app/components/header-song'
 import { SettingsButton } from '@/app/components/settings/header-button'
 import { useAppWindow } from '@/app/hooks/use-app-window'
-import { isMac, isWindows } from '@/utils/osType'
+import { isLinux, isMac, isWindows } from '@/utils/osType'
 import { tauriDragRegion } from '@/utils/tauriDragRegion'
 
 export function Header() {
@@ -21,6 +22,7 @@ export function Header() {
         <SettingsButton />
         <UserDropdown />
         {isWindows && <Windows />}
+        {isLinux && <Linux />}
       </div>
     </header>
   )

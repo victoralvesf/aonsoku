@@ -9,6 +9,7 @@
         "minHeight": 720,
         "maximized": true,
         "useHttpsScheme": false,
+        "decorations": false,
         "backgroundColor": "#18181b",
         "theme": "Dark",
         "visible": false

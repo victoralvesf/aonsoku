@@ -140,4 +140,68 @@ export const Icons = {
       </g>
     </svg>
   ),
+  closeLinux: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <g>
+        <path stroke="currentColor" strokeWidth="2" d="m2.5 2.5 19 19"></path>
+        <path stroke="currentColor" strokeWidth="2" d="m21.5 2.5-19 19"></path>
+      </g>
+    </svg>
+  ),
+  maximizeLinux: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <g>
+        <path stroke="currentColor" strokeWidth="2" d="M3 21V3h18v18z"></path>
+      </g>
+    </svg>
+  ),
+  maximizeRestoreLinux: (
+    props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
+  ) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <g>
+        <path stroke="currentColor" strokeWidth="2" d="M3 21V7H17V21H3Z"></path>
+        <path
+          stroke="currentColor"
+          strokeWidth="2"
+          d="M6 7V3H21V18H17V7H6Z"
+        ></path>
+      </g>
+    </svg>
+  ),
+  minimizeLinux: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <g>
+        <path stroke="currentColor" strokeWidth="2" d="M2 12h20"></path>
+      </g>
+    </svg>
+  ),
 }
