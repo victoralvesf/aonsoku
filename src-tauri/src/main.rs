@@ -1,7 +1,9 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+#[cfg(not(target_os = "linux"))]
 use proxy::proxy::spawn_proxy_server;
+
 #[cfg(not(target_os = "windows"))]
 use tauri::Manager;
 
@@ -17,8 +19,10 @@ mod mac;
 
 mod commands;
 mod progress;
-mod proxy;
 mod utils;
+
+#[cfg(not(target_os = "linux"))]
+mod proxy;
 
 #[tokio::main]
 async fn main() {
@@ -34,11 +38,14 @@ async fn main() {
         builder = builder.plugin(mac::window::init());
     }
 
-    tokio::task::spawn(async move {
-        if let Err(e) = spawn_proxy_server().await {
-            eprintln!("Proxy server error: {}", e);
-        }
-    });
+    #[cfg(not(target_os = "linux"))]
+    {
+        tokio::task::spawn(async move {
+            if let Err(e) = spawn_proxy_server().await {
+                eprintln!("Proxy server error: {}", e);
+            }
+        });
+    }
 
     builder
         .setup(|_app| {
