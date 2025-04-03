@@ -1,16 +1,36 @@
 import clsx from 'clsx'
 import { useEffect, useMemo, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { getCoverArtUrl } from '@/api/httpClient'
-import { usePlayerStore, useSongColor } from '@/store/player.store'
+import { usePlayerCurrentSong, useSongColor } from '@/store/player.store'
 import { isChromeOrFirefox } from '@/utils/browser'
 import { hexToRgba } from '@/utils/getAverageColor'
+import { isSafari } from '@/utils/osType'
 
 export function FullscreenBackdrop() {
-  const { coverArt } = usePlayerStore((state) => state.songlist.currentSong)
-  const imageUrl = getCoverArtUrl(coverArt, 'song', '300')
-  const [backgroundImage, setBackgroundImage] = useState(imageUrl)
+  const { useSongColorOnBigPlayer } = useSongColor()
 
-  const newBackgroundImage = useMemo(() => imageUrl, [imageUrl])
+  if (useSongColorOnBigPlayer) {
+    return <DynamicColorBackdrop />
+  }
+
+  return <ImageBackdrop />
+}
+
+export function ImageBackdrop() {
+  return (
+    <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+      {isSafari ? <MacBackdrop /> : <OtherBackdrop />}
+    </div>
+  )
+}
+
+function OtherBackdrop() {
+  const { coverArt } = usePlayerCurrentSong()
+  const coverArtUrl = getCoverArtUrl(coverArt, 'song', '300')
+  const [backgroundImage, setBackgroundImage] = useState(coverArtUrl)
+
+  const newBackgroundImage = useMemo(() => coverArtUrl, [coverArtUrl])
 
   useEffect(() => {
     const img = new Image()
@@ -21,33 +41,42 @@ export function FullscreenBackdrop() {
   }, [newBackgroundImage])
 
   return (
-    <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+    <div className="relative w-full h-full transition-colors duration-1000 bg-black/0">
       <div
-        className={clsx(
-          'relative w-full h-full transition-colors duration-1000',
-          isChromeOrFirefox && 'bg-black/0',
-        )}
-      >
-        <div
-          className="absolute -inset-10 bg-cover bg-center z-0 transition-[background-image] duration-1000"
-          style={{
-            backgroundImage: `url(${backgroundImage})`,
-            filter: isChromeOrFirefox ? 'blur(40px)' : undefined,
-          }}
-        />
-        <div
-          className={clsx(
-            'absolute inset-0 w-full h-full z-0 transition-colors duration-1000',
-            !isChromeOrFirefox && 'backdrop-blur-2xl',
-            'bg-background/50',
-          )}
-        />
-      </div>
+        className="absolute -inset-10 bg-cover bg-center z-0 transition-[background-image] duration-1000"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          filter: 'blur(40px)',
+        }}
+      />
+      <div className="bg-background/50 absolute inset-0 w-full h-full z-0 transition-colors duration-1000" />
     </div>
   )
 }
 
-export function DynamicColorBackdrop() {
+function MacBackdrop() {
+  const { coverArt, title } = usePlayerCurrentSong()
+  const coverArtUrl = getCoverArtUrl(coverArt, 'song', '300')
+
+  return (
+    <div className="relative w-full h-full flex items-center">
+      <LazyLoadImage
+        key={coverArt}
+        src={coverArtUrl}
+        alt={title}
+        effect="opacity"
+        width="100%"
+        className="w-full bg-contain"
+      />
+      <div
+        className="absolute bg-background/50 inset-0 z-10"
+        style={{ backdropFilter: 'blur(40px)' }}
+      />
+    </div>
+  )
+}
+
+function DynamicColorBackdrop() {
   const { currentSongColor } = useSongColor()
 
   const backgroundColor = useMemo(() => {
