@@ -1,5 +1,6 @@
 import { emit } from '@tauri-apps/api/event'
 import { logger } from './logger'
+import { isMac } from './osType'
 
 declare global {
   interface Window {
@@ -14,7 +15,7 @@ export function isTauri(): boolean {
 }
 
 export async function emitBgChange(color: string) {
-  if (!isTauri()) return
+  if (!isMac) return
 
   try {
     await emit('aonsoku_theme_changed', color)
