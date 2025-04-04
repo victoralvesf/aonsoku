@@ -13,3 +13,4 @@ export type ColumnFilter =
   | 'contentType'
   | 'starred'
   | 'select'
+  | 'remove'

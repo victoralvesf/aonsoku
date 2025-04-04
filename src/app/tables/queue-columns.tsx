@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom'
 import { ArtistLink, ArtistsLinks } from '@/app/components/song/artist-link'
 import PlaySongButton from '@/app/components/table/play-button'
 import { QueueActions } from '@/app/components/table/queue-actions'
 import { TableSongTitle } from '@/app/components/table/song-title'
+import { ROUTES } from '@/routes/routesList'
 import { usePlayerStore } from '@/store/player.store'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISong } from '@/types/responses/song'
@@ -62,6 +64,36 @@ export function queueColumns(): ColumnDefType<ISong>[] {
           <ArtistLink artistId={artistId} onClick={closeDrawer}>
             {artist}
           </ArtistLink>
+        )
+      },
+    },
+    {
+      id: 'album',
+      accessorKey: 'album',
+      style: {
+        width: '24%',
+        minWidth: '14%',
+        maxWidth: '24%',
+      },
+      className: 'hidden lg:flex',
+      enableSorting: true,
+      sortingFn: 'customSortFn',
+      header: '',
+      cell: ({ row }) => {
+        const { closeDrawer } = usePlayerStore.getState().actions
+
+        return (
+          <Link
+            to={ROUTES.ALBUM.PAGE(row.original.albumId)}
+            className="hover:underline truncate"
+            onContextMenu={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+            }}
+            onClick={closeDrawer}
+          >
+            {row.original.album}
+          </Link>
         )
       },
     },

@@ -120,8 +120,9 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       id: 'album',
       accessorKey: 'album',
       style: {
-        width: '15%',
-        maxWidth: '15%',
+        width: '24%',
+        minWidth: '14%',
+        maxWidth: '24%',
       },
       className: 'hidden lg:flex',
       enableSorting: true,

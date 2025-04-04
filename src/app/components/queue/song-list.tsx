@@ -11,6 +11,7 @@ import {
   usePlayerCurrentList,
   usePlayerCurrentSongIndex,
 } from '@/store/player.store'
+import { ColumnFilter } from '@/types/columnFilter'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 
 export function QueueSongList() {
@@ -28,6 +29,15 @@ export function QueueSongList() {
 
     return convertSecondsToHumanRead(minutes)
   }, [currentList])
+
+  const columnsToShow: ColumnFilter[] = [
+    'index',
+    'title',
+    // 'artist',
+    'album',
+    'duration',
+    'remove',
+  ]
 
   return (
     <div className="flex flex-1 flex-col h-full min-w-[300px]">
@@ -62,6 +72,7 @@ export function QueueSongList() {
         <DataTableList
           data={currentList}
           columns={columns}
+          columnFilter={columnsToShow}
           showHeader={false}
           handlePlaySong={(row) => setSongList(currentList, row.index)}
           scrollToIndex={true}
