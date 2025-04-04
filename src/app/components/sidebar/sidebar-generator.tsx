@@ -11,6 +11,7 @@ import { SidebarItems } from '@/app/layout/sidebar'
 import { ROUTES } from '@/routes/routesList'
 import { useAppStore } from '@/store/app.store'
 import { Playlist } from '@/types/responses/playlist'
+import { GridViewWrapperType, resetGridClickedItem } from '@/utils/gridTools'
 
 const ListMusic = memo(ListMusicIcon)
 const MemoPodcastSidebarItem = memo(PodcastSidebarItem)
@@ -56,6 +57,9 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
               'block',
               isActive(item.route) && 'pointer-events-none',
             )}
+            onClick={() => {
+              resetGridClickedItem({ name: item.id as GridViewWrapperType })
+            }}
           >
             <Button
               variant={isActive(item.route) ? 'secondary' : 'ghost'}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { CommandGroup, CommandItem } from '@/app/components/ui/command'
 import { libraryItems, mainMenuItems, SidebarItems } from '@/app/layout/sidebar'
 import { useAppStore } from '@/store/app.store'
+import { GridViewWrapperType, resetGridClickedItem } from '@/utils/gridTools'
 import { CommandItemProps } from './command-menu'
 
 export function CommandGotoPage({ runCommand }: CommandItemProps) {
@@ -22,7 +23,10 @@ export function CommandGotoPage({ runCommand }: CommandItemProps) {
         return (
           <CommandItem
             key={route}
-            onSelect={() => runCommand(() => navigate(route))}
+            onSelect={() => {
+              resetGridClickedItem({ name: id as GridViewWrapperType })
+              runCommand(() => navigate(route))
+            }}
           >
             {t(title)}
           </CommandItem>
