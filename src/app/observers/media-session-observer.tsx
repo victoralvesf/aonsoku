@@ -68,12 +68,15 @@ export function MediaSessionObserver() {
 
   function resetAppTitle() {
     document.title = appName
-    manageMediaSession.removeMediaSession()
     setWindowTitle(appName)
   }
 
   useEffect(() => {
     manageMediaSession.setPlaybackState(isPlaying)
+
+    if (hasNothingPlaying) {
+      manageMediaSession.removeMediaSession()
+    }
 
     if (hasNothingPlaying || !isPlaying) {
       resetAppTitle()
