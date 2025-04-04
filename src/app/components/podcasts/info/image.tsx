@@ -39,13 +39,7 @@ export function PodcastInfoImage({ src, alt }: PodcastInfoImageProps) {
       />
 
       {imageSrc && alt && !isPlaceholder && (
-        <CustomLightBox
-          open={open}
-          close={setOpen}
-          src={imageSrc}
-          alt={alt}
-          size={600}
-        />
+        <CustomLightBox open={open} close={setOpen} src={imageSrc} alt={alt} />
       )}
     </div>
   )
