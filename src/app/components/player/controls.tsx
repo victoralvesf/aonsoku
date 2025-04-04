@@ -58,7 +58,6 @@ export function PlayerControls({
     isPlayingOneSong,
     toggleShuffle,
     toggleLoop,
-    setPlayingState,
     togglePlayPause,
     playPrevSong,
     playNextSong,
@@ -83,26 +82,11 @@ export function PlayerControls({
 
   useEffect(() => {
     if (isPodcast) {
-      manageMediaSession.setPodcastHandlers({
-        setIsPlaying: setPlayingState,
-        seekBackward: handleSeekAction,
-        seekForward: handleSeekAction,
-      })
+      manageMediaSession.setPodcastHandlers({ handleSeekAction })
     } else {
-      manageMediaSession.setHandlers({
-        setIsPlaying: setPlayingState,
-        playPrev: playPrevSong,
-        playNext: playNextSong,
-      })
+      manageMediaSession.setHandlers()
     }
-  }, [
-    handleSeekAction,
-    isPodcast,
-    playNextSong,
-    playPrevSong,
-    setPlayingState,
-    togglePlayPause,
-  ])
+  }, [handleSeekAction, isPodcast, isPlaying])
 
   const shuffleTooltip = isShuffleActive
     ? t('player.tooltips.shuffle.disable')

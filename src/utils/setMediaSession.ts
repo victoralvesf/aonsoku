@@ -1,4 +1,5 @@
 import { getCoverArtUrl } from '@/api/httpClient'
+import { usePlayerStore } from '@/store/player.store'
 import { EpisodeWithPodcast } from '@/types/responses/podcasts'
 import { ISong } from '@/types/responses/song'
 
@@ -73,46 +74,39 @@ function setPlaybackState(state: boolean | null) {
   }
 }
 
-interface SetHandlerParams {
-  setIsPlaying: (value: boolean) => void
-  playPrev: () => void
-  playNext: () => void
-}
-
-function setHandlers({ setIsPlaying, playPrev, playNext }: SetHandlerParams) {
+function setHandlers() {
   const { mediaSession } = navigator
   if (!mediaSession) return
+
+  const state = usePlayerStore.getState()
+  const { togglePlayPause, playNextSong, playPrevSong } = state.actions
 
   mediaSession.setActionHandler('seekbackward', null)
   mediaSession.setActionHandler('seekforward', null)
 
-  mediaSession.setActionHandler('play', () => setIsPlaying(true))
-  mediaSession.setActionHandler('pause', () => setIsPlaying(false))
-  mediaSession.setActionHandler('previoustrack', () => playPrev())
-  mediaSession.setActionHandler('nexttrack', () => playNext())
+  mediaSession.setActionHandler('play', () => togglePlayPause())
+  mediaSession.setActionHandler('pause', () => togglePlayPause())
+  mediaSession.setActionHandler('previoustrack', () => playPrevSong())
+  mediaSession.setActionHandler('nexttrack', () => playNextSong())
 }
 
 interface SetPodcastHandlerParams {
-  setIsPlaying: (value: boolean) => void
-  seekBackward: (value: number) => void
-  seekForward: (value: number) => void
+  handleSeekAction: (value: number) => void
 }
 
-function setPodcastHandlers({
-  setIsPlaying,
-  seekBackward,
-  seekForward,
-}: SetPodcastHandlerParams) {
+function setPodcastHandlers({ handleSeekAction }: SetPodcastHandlerParams) {
   const { mediaSession } = navigator
   if (!mediaSession) return
+
+  const { setPlayingState } = usePlayerStore.getState().actions
 
   mediaSession.setActionHandler('previoustrack', null)
   mediaSession.setActionHandler('nexttrack', null)
 
-  mediaSession.setActionHandler('play', () => setIsPlaying(true))
-  mediaSession.setActionHandler('pause', () => setIsPlaying(false))
-  mediaSession.setActionHandler('seekbackward', () => seekBackward(-15))
-  mediaSession.setActionHandler('seekforward', () => seekForward(30))
+  mediaSession.setActionHandler('play', () => setPlayingState(true))
+  mediaSession.setActionHandler('pause', () => setPlayingState(false))
+  mediaSession.setActionHandler('seekbackward', () => handleSeekAction(-15))
+  mediaSession.setActionHandler('seekforward', () => handleSeekAction(30))
 }
 
 export const manageMediaSession = {
