@@ -17,7 +17,7 @@ export default function AlbumsList() {
       <AlbumsHeader albumCount={albumsCount} />
 
       <ListWrapper className="pt-[--shadow-header-distance] px-0">
-        <GridViewWrapper list={albums} data-testid="albums-grid">
+        <GridViewWrapper list={albums} data-testid="albums-grid" type="albums">
           {(album) => <AlbumGridCard album={album} />}
         </GridViewWrapper>
       </ListWrapper>

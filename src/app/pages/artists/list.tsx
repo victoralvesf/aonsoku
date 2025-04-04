@@ -78,7 +78,11 @@ export default function ArtistsList() {
 
       {isGridView && (
         <MemoListWrapper className="pt-shadow-header-distance px-0">
-          <GridViewWrapper list={artists}>
+          <GridViewWrapper
+            list={artists}
+            data-testid="artists-grid"
+            type="artists"
+          >
             {(artist) => <ArtistGridCard artist={artist} />}
           </GridViewWrapper>
         </MemoListWrapper>

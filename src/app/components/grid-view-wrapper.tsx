@@ -3,12 +3,16 @@ import {
   Fragment,
   ReactNode,
   useCallback,
-  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from 'react'
+import {
+  getGridClickedItem,
+  GridViewWrapperType,
+  saveGridClickedItem,
+} from '@/utils/gridTools'
 import { getMainScrollElement } from '@/utils/scrollPageToTop'
 
 type GridViewWrapperProps<T> = {
@@ -18,6 +22,7 @@ type GridViewWrapperProps<T> = {
   gap?: number
   padding?: number
   defaultWidth?: number
+  type: GridViewWrapperType
 }
 
 export function GridViewWrapper<T>({
@@ -27,6 +32,7 @@ export function GridViewWrapper<T>({
   gap = 16,
   padding = 32,
   defaultWidth = 181,
+  type,
 }: GridViewWrapperProps<T>) {
   const scrollDivRef = useRef<HTMLDivElement | null>(null)
   const [gridColumnsSize, setGridColumnsSize] = useState(4)
@@ -34,6 +40,8 @@ export function GridViewWrapper<T>({
     width: defaultWidth,
     height: defaultWidth + titleHeight,
   })
+
+  const routeKey = location.pathname + location.search
 
   const rows = useMemo(
     () => Math.ceil(list.length / gridColumnsSize),
@@ -115,13 +123,35 @@ export function GridViewWrapper<T>({
   const rowVirtualizer = useVirtualizer(grid.rowVirtualizer)
   const columnVirtualizer = useVirtualizer(grid.columnVirtualizer)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     rowVirtualizer.measure()
   }, [rowVirtualizer, grid.virtualItemHeight])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     columnVirtualizer.measure()
   }, [columnVirtualizer, grid.virtualItemWidth])
+
+  useLayoutEffect(() => {
+    const savedRowPosition = getGridClickedItem({ name: type })
+    if (!savedRowPosition) return
+
+    const offsetTop = savedRowPosition[routeKey] ?? 0
+
+    rowVirtualizer.scrollToOffset(offsetTop)
+  }, [routeKey, rowVirtualizer, type])
+
+  useLayoutEffect(() => {
+    const offsetTop = rowVirtualizer.scrollOffset
+    if (!offsetTop) return
+
+    if (routeKey !== '') {
+      saveGridClickedItem({
+        name: type,
+        offsetTop,
+        routeKey,
+      })
+    }
+  }, [routeKey, rowVirtualizer.scrollOffset, type])
 
   return (
     <div
