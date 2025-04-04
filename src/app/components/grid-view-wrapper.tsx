@@ -7,6 +7,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useEffect,
 } from 'react'
 import {
   getGridClickedItem,
@@ -40,6 +41,9 @@ export function GridViewWrapper<T>({
     width: defaultWidth,
     height: defaultWidth + titleHeight,
   })
+  const initialScrollRestored = useRef(false)
+  const isScrollingSaved = useRef(false)
+  const initialMeasurementDone = useRef(false)
 
   const routeKey = location.pathname + location.search
 
@@ -123,34 +127,64 @@ export function GridViewWrapper<T>({
   const rowVirtualizer = useVirtualizer(grid.rowVirtualizer)
   const columnVirtualizer = useVirtualizer(grid.columnVirtualizer)
 
+  // Initial grid measurement
   useLayoutEffect(() => {
     rowVirtualizer.measure()
-  }, [rowVirtualizer, grid.virtualItemHeight])
-
-  useLayoutEffect(() => {
     columnVirtualizer.measure()
-  }, [columnVirtualizer, grid.virtualItemWidth])
 
+    initialMeasurementDone.current = true
+  }, [
+    rowVirtualizer,
+    columnVirtualizer,
+    grid.virtualItemHeight,
+    grid.virtualItemWidth,
+  ])
+
+  // Restoring scroll position
   useLayoutEffect(() => {
+    // Awaits initial measurement before restoring
+    if (!initialMeasurementDone.current || initialScrollRestored.current) return
+
     const savedRowPosition = getGridClickedItem({ name: type })
-    if (!savedRowPosition) return
+    if (!savedRowPosition) {
+      initialScrollRestored.current = true
+      return
+    }
 
     const offsetTop = savedRowPosition[routeKey] ?? 0
+    if (offsetTop <= 0) {
+      initialScrollRestored.current = true
+      return
+    }
 
-    rowVirtualizer.scrollToOffset(offsetTop)
+    // 50ms timeout to ensure the grid was rendered
+    setTimeout(() => {
+      rowVirtualizer.scrollToOffset(offsetTop)
+      initialScrollRestored.current = true
+
+      // 100ms timeout to allow saving scroll position again avoiding saving wrong offsets
+      setTimeout(() => {
+        isScrollingSaved.current = false
+      }, 100)
+    }, 50)
+
+    // Prevent scroll saves while restoring the scroll
+    isScrollingSaved.current = true
   }, [routeKey, rowVirtualizer, type])
 
-  useLayoutEffect(() => {
-    const offsetTop = rowVirtualizer.scrollOffset
-    if (!offsetTop) return
+  // Saving scroll position
+  useEffect(() => {
+    if (isScrollingSaved.current || !initialScrollRestored.current || !routeKey)
+      return
 
-    if (routeKey !== '') {
-      saveGridClickedItem({
-        name: type,
-        offsetTop,
-        routeKey,
-      })
-    }
+    const offsetTop = rowVirtualizer.scrollOffset ?? 0
+    if (offsetTop <= 0) return
+
+    saveGridClickedItem({
+      name: type,
+      offsetTop,
+      routeKey,
+    })
   }, [routeKey, rowVirtualizer.scrollOffset, type])
 
   return (
