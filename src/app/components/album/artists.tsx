@@ -32,7 +32,7 @@ export function AlbumMultipleArtistsInfo({
   return (
     <div className="flex items-center gap-2">
       {!isLms && (
-        <div className="flex items-center -space-x-1.5">
+        <div className="flex items-center -space-x-0.5">
           {data.map(({ id, name }) => (
             <div key={`artist-image-${id}`} className="rounded-full">
               <ArtistImage id={id} name={name} />
