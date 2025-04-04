@@ -627,10 +627,12 @@
         "group": "Cores Dinâmicas",
         "description": "Selecione se o aplicativo usará a cor dominante da arte do álbum em reprodução como cor de fundo.",
         "queue": {
-          "label": "Fila de reprodução e Letra"
+          "label": "Fila de reprodução e Letra",
+          "intensity": "Nível de Intensidade da Cor"
         },
         "bigPlayer": {
-          "label": "Player Grande"
+          "label": "Player Grande",
+          "blurSize": "Tamanho do Desfoque da Imagem"
         }
       }
     },

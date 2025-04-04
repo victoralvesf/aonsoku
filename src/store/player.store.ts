@@ -12,6 +12,12 @@ import { ISong } from '@/types/responses/song'
 import { areSongListsEqual } from '@/utils/compareSongLists'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
 
+const blurSettings = {
+  min: 20,
+  max: 100,
+  step: 10,
+}
+
 export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
   subscribeWithSelector(
     persist(
@@ -43,9 +49,6 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             currentPlaybackRate: 1,
             hasPrev: false,
             hasNext: false,
-            currentSongColor: null,
-            useSongColorOnQueue: false,
-            useSongColorOnBigPlayer: false,
           },
           playerProgress: {
             progress: 0,
@@ -115,6 +118,20 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                     state.settings.replayGain.values.defaultGain = value
                   })
                 },
+              },
+            },
+            colors: {
+              currentSongColor: null,
+              currentSongColorIntensity: 0.65,
+              bigPlayer: {
+                useSongColor: false,
+                blur: {
+                  value: 40,
+                  settings: blurSettings,
+                },
+              },
+              queue: {
+                useSongColor: false,
               },
             },
           },
@@ -476,7 +493,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.lyricsState = false
                 state.playerState.currentDuration = 0
                 state.playerState.audioPlayerRef = null
-                state.playerState.currentSongColor = null
+                state.settings.colors.currentSongColor = null
               })
             },
             resetProgress: () => {
@@ -780,8 +797,11 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
             resetConfig: () => {
               set((state) => {
-                state.playerState.useSongColorOnQueue = false
-                state.playerState.useSongColorOnBigPlayer = false
+                state.settings.colors.queue.useSongColor = false
+                state.settings.colors.bigPlayer.useSongColor = false
+                state.settings.colors.bigPlayer.blur.value = 40
+                state.settings.colors.bigPlayer.blur.settings = blurSettings
+                state.settings.colors.currentSongColorIntensity = 0.65
                 state.settings.fullscreen.autoFullscreenEnabled = false
                 state.settings.lyrics.preferSyncedLyrics = false
                 state.settings.replayGain.values = {
@@ -795,17 +815,27 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
             setCurrentSongColor: (value) => {
               set((state) => {
-                state.playerState.currentSongColor = value
+                state.settings.colors.currentSongColor = value
+              })
+            },
+            setCurrentSongIntensity: (value) => {
+              set((state) => {
+                state.settings.colors.currentSongColorIntensity = value
               })
             },
             setUseSongColorOnQueue: (value) => {
               set((state) => {
-                state.playerState.useSongColorOnQueue = value
+                state.settings.colors.queue.useSongColor = value
               })
             },
             setUseSongColorOnBigPlayer: (value) => {
               set((state) => {
-                state.playerState.useSongColorOnBigPlayer = value
+                state.settings.colors.bigPlayer.useSongColor = value
+              })
+            },
+            setBigPlayerBlurValue: (value) => {
+              set((state) => {
+                state.settings.colors.bigPlayer.blur.value = value
               })
             },
           },
@@ -826,6 +856,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             'playerState.mainDrawerState',
             'playerState.queueState',
             'playerState.lyricsState',
+            'state.settings.colors.bigPlayer.blur.settings',
           ])
 
           return appStore
@@ -1002,14 +1033,31 @@ export const useLyricsState = () =>
   }))
 
 export const useSongColor = () =>
-  usePlayerStore((state) => ({
-    currentSongColor: state.playerState.currentSongColor,
-    setCurrentSongColor: state.actions.setCurrentSongColor,
-    useSongColorOnQueue: state.playerState.useSongColorOnQueue,
-    useSongColorOnBigPlayer: state.playerState.useSongColorOnBigPlayer,
-    setUseSongColorOnQueue: state.actions.setUseSongColorOnQueue,
-    setUseSongColorOnBigPlayer: state.actions.setUseSongColorOnBigPlayer,
-  }))
+  usePlayerStore((state) => {
+    const { currentSongColor, currentSongColorIntensity, queue } =
+      state.settings.colors
+    const { useSongColor, blur } = state.settings.colors.bigPlayer
+    const {
+      setCurrentSongColor,
+      setUseSongColorOnQueue,
+      setUseSongColorOnBigPlayer,
+      setBigPlayerBlurValue,
+      setCurrentSongIntensity,
+    } = state.actions
+
+    return {
+      currentSongColor,
+      setCurrentSongColor,
+      currentSongColorIntensity,
+      setCurrentSongIntensity,
+      useSongColorOnQueue: queue.useSongColor,
+      useSongColorOnBigPlayer: useSongColor,
+      setUseSongColorOnQueue,
+      setUseSongColorOnBigPlayer,
+      bigPlayerBlur: blur,
+      setBigPlayerBlurValue,
+    }
+  })
 
 export const usePlayerCurrentList = () =>
   usePlayerStore((state) => state.songlist.currentList)

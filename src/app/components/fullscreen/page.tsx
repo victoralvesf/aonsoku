@@ -14,6 +14,7 @@ import { FullscreenBackdrop } from './backdrop'
 import { CloseFullscreenButton } from './buttons'
 import { DragRegion } from './drag-region'
 import { FullscreenPlayer } from './player'
+import { FullscreenSettings } from './settings'
 import { FullscreenTabs } from './tabs'
 
 interface FullscreenModeProps {
@@ -59,6 +60,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
 
           {/* First Row */}
           <div className="flex gap-2 items-center w-full h-[40px] px-16 z-20 justify-end">
+            <FullscreenSettings />
             <DrawerClose>
               <CloseFullscreenButton />
             </DrawerClose>

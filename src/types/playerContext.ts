@@ -35,9 +35,6 @@ export interface IPlayerState {
   lyricsState: boolean
   hasPrev: boolean
   hasNext: boolean
-  currentSongColor: string | null
-  useSongColorOnQueue: boolean
-  useSongColorOnBigPlayer: boolean
 }
 
 export interface IPlayerProgress {
@@ -89,12 +86,38 @@ export interface IPrivacySettings {
   setLrcLibEnabled: (value: boolean) => void
 }
 
+interface IBlurSettings {
+  value: number
+  settings: {
+    min: number
+    max: number
+    step: number
+  }
+}
+
+interface IBigPlayerSettings {
+  useSongColor: boolean
+  blur: IBlurSettings
+}
+
+interface IQueueSettings {
+  useSongColor: boolean
+}
+
+interface IColorsSettings {
+  currentSongColor: string | null
+  currentSongColorIntensity: number
+  bigPlayer: IBigPlayerSettings
+  queue: IQueueSettings
+}
+
 export interface IPlayerSettings {
   volume: IVolumeSettings
   fullscreen: IFullscreen
   lyrics: ILyrics
   replayGain: IReplayGain
   privacy: IPrivacySettings
+  colors: IColorsSettings
 }
 
 export interface IPlayerActions {
@@ -148,8 +171,10 @@ export interface IPlayerActions {
   setLastPodcast: (episode: EpisodeWithPodcast, progress: number) => void
   updateQueueChecks: () => void
   setCurrentSongColor: (value: string | null) => void
+  setCurrentSongIntensity: (value: number) => void
   setUseSongColorOnQueue: (value: boolean) => void
   setUseSongColorOnBigPlayer: (value: boolean) => void
+  setBigPlayerBlurValue: (value: number) => void
 }
 
 export interface IPlayerContext {

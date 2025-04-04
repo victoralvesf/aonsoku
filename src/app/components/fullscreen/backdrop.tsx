@@ -29,6 +29,7 @@ function OtherBackdrop() {
   const { coverArt } = usePlayerCurrentSong()
   const coverArtUrl = getCoverArtUrl(coverArt, 'song', '300')
   const [backgroundImage, setBackgroundImage] = useState(coverArtUrl)
+  const { bigPlayerBlur } = useSongColor()
 
   const newBackgroundImage = useMemo(() => coverArtUrl, [coverArtUrl])
 
@@ -46,7 +47,7 @@ function OtherBackdrop() {
         className="absolute -inset-10 bg-cover bg-center z-0 transition-[background-image] duration-1000"
         style={{
           backgroundImage: `url(${backgroundImage})`,
-          filter: 'blur(40px)',
+          filter: `blur(${bigPlayerBlur.value}px)`,
         }}
       />
       <div className="bg-background/50 absolute inset-0 w-full h-full z-0 transition-colors duration-1000" />
@@ -57,9 +58,20 @@ function OtherBackdrop() {
 function MacBackdrop() {
   const { coverArt, title } = usePlayerCurrentSong()
   const coverArtUrl = getCoverArtUrl(coverArt, 'song', '300')
+  const { bigPlayerBlur } = useSongColor()
+  const { currentSongColor, currentSongColorIntensity } = useSongColor()
+
+  const backgroundColor = useMemo(() => {
+    if (!currentSongColor) return undefined
+
+    return hexToRgba(currentSongColor, currentSongColorIntensity)
+  }, [currentSongColor, currentSongColorIntensity])
 
   return (
-    <div className="relative w-full h-full flex items-center">
+    <div
+      className="relative w-full h-full flex items-center transition-colors duration-1000"
+      style={{ backgroundColor }}
+    >
       <LazyLoadImage
         key={coverArt}
         src={coverArtUrl}
@@ -70,20 +82,23 @@ function MacBackdrop() {
       />
       <div
         className="absolute bg-background/50 inset-0 z-10"
-        style={{ backdropFilter: 'blur(40px)' }}
+        style={{
+          WebkitBackdropFilter: `blur(${bigPlayerBlur.value}px)`,
+          backdropFilter: `blur(${bigPlayerBlur.value}px)`,
+        }}
       />
     </div>
   )
 }
 
 function DynamicColorBackdrop() {
-  const { currentSongColor } = useSongColor()
+  const { currentSongColor, currentSongColorIntensity } = useSongColor()
 
   const backgroundColor = useMemo(() => {
     if (!currentSongColor) return undefined
 
-    return hexToRgba(currentSongColor, 0.65)
-  }, [currentSongColor])
+    return hexToRgba(currentSongColor, currentSongColorIntensity)
+  }, [currentSongColor, currentSongColorIntensity])
 
   return (
     <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">

@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { ChevronDownIcon } from 'lucide-react'
 import { ComponentPropsWithoutRef, useMemo } from 'react'
 import { LyricsTab } from '@/app/components/fullscreen/lyrics'
+import { QueueSettings } from '@/app/components/fullscreen/settings'
 import { CurrentSongInfo } from '@/app/components/queue/current-song-info'
 import { QueueSongList } from '@/app/components/queue/song-list'
 import { Button } from '@/app/components/ui/button'
@@ -16,7 +17,8 @@ import {
 import { hexToRgba } from '@/utils/getAverageColor'
 
 export function MainDrawerPage() {
-  const { currentSongColor, useSongColorOnQueue } = useSongColor()
+  const { currentSongColor, useSongColorOnQueue, currentSongColorIntensity } =
+    useSongColor()
   const { mainDrawerState, closeDrawer } = useMainDrawerState()
   const { queueState } = useQueueState()
   const { lyricsState } = useLyricsState()
@@ -24,8 +26,8 @@ export function MainDrawerPage() {
   const backgroundColor = useMemo(() => {
     if (!useSongColorOnQueue || !currentSongColor) return undefined
 
-    return hexToRgba(currentSongColor, 0.65)
-  }, [currentSongColor, useSongColorOnQueue])
+    return hexToRgba(currentSongColor, currentSongColorIntensity)
+  }, [currentSongColor, useSongColorOnQueue, currentSongColorIntensity])
 
   return (
     <Drawer
@@ -50,7 +52,8 @@ export function MainDrawerPage() {
           )}
           style={{ backgroundColor }}
         >
-          <div className="flex w-full h-14 min-h-14 px-[6%] items-center justify-end">
+          <div className="flex w-full h-14 min-h-14 px-[6%] items-center justify-end gap-2">
+            <QueueSettings />
             <Button
               variant="ghost"
               className="w-10 h-10 rounded-full p-0 hover:bg-foreground/20"

@@ -613,10 +613,12 @@
         "group": "Dynamic Colors",
         "description": "Select whether the app should use the dominant color from the currently playing album art as the background.",
         "queue": {
-          "label": "Queue and Lyrics"
+          "label": "Queue and Lyrics",
+          "intensity": "Color Intensity Level"
         },
         "bigPlayer": {
-          "label": "Big Player"
+          "label": "Big Player",
+          "blurSize": "Image Blur Size"
         }
       }
     },
