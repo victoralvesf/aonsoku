@@ -180,7 +180,6 @@ export default function ImageHeader({
         close={setOpen}
         src={getCoverArtUrl(coverArtId, coverArtType, coverArtSize)}
         alt={coverArtAlt}
-        size={600}
       />
     </div>
   )

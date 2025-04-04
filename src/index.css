@@ -147,8 +147,16 @@ img {
   @apply [&_[cmdk-item]_svg]:w-4;
 }
 
+.yarl__toolbar {
+  @apply !top-header;
+}
+
 .yarl__container {
   @apply !bg-black/70;
+}
+
+.yarl__root.yarl__portal_open .yarl__slide {
+  @apply animate-in zoom-in;
 }
 
 .yarl__slide_image {
