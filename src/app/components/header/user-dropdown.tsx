@@ -19,7 +19,7 @@ import {
 import { LogoutObserver } from '@/app/observers/logout-observer'
 import { logoutKeys, shortcutDialogKeys, stringifyShortcut } from '@/shortcuts'
 import { useAppData, useAppStore } from '@/store/app.store'
-import { isWindows } from '@/utils/osType'
+import { isMac } from '@/utils/osType'
 
 export function UserDropdown() {
   const { username, url, lockUser } = useAppData()
@@ -33,11 +33,7 @@ export function UserDropdown() {
   useHotkeys('shift+ctrl+q', () => setLogoutDialogState(true))
   useHotkeys('mod+/', () => setShortcutsOpen((prev) => !prev))
 
-  function getAlignPosition() {
-    if (isWindows) return 'center'
-
-    return 'end'
-  }
+  const alignPosition = isMac ? 'end' : 'center'
 
   return (
     <Fragment>
@@ -54,7 +50,7 @@ export function UserDropdown() {
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align={getAlignPosition()} className="min-w-64">
+        <DropdownMenuContent align={alignPosition} className="min-w-64">
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-2">
               <p className="text-sm font-medium leading-none">{username}</p>
