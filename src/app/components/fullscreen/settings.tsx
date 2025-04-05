@@ -1,4 +1,4 @@
-import { Settings2Icon } from 'lucide-react'
+import { SlidersHorizontal } from 'lucide-react'
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
@@ -53,7 +53,7 @@ function DynamicSettingsPopover({ children }: PopoverProps) {
           size="icon"
           className="size-10 rounded-full hover:bg-foreground/20 data-[state=open]:bg-foreground/20"
         >
-          <Settings2Icon className="size-5" />
+          <SlidersHorizontal className="size-4" strokeWidth={2.5} />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0" align="end">
