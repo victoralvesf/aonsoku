@@ -62,7 +62,7 @@ export function CustomLightBox({ open, close, src, alt }: CustomLightBoxProps) {
         closeOnBackdropClick: true,
       }}
       animation={{
-        fade: 500,
+        fade: 300,
       }}
       render={{
         buttonNext: () => null,

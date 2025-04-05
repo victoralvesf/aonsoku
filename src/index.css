@@ -156,7 +156,7 @@ img {
 }
 
 .yarl__root.yarl__portal_open .yarl__slide {
-  @apply animate-in zoom-in;
+  @apply animate-in zoom-in fade-in duration-300;
 }
 
 .yarl__slide_image {
