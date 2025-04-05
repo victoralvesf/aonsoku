@@ -79,7 +79,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
           <LazyLoadImage
             key={song.id}
             id="track-song-image"
-            src={getCoverArtUrl(song.coverArt, 'song', '240')}
+            src={getCoverArtUrl(song.coverArt, 'song', '400')}
             width="100%"
             height="100%"
             crossOrigin="anonymous"
