@@ -283,3 +283,12 @@ svg#bars .eq-bar--4 {
     @apply w-full h-full overflow-hidden p-0 m-0;
   }
 }
+
+div[data-test-id="table-row"][data-state="selected"],
+div[data-test-id="table-row"].row-active,
+div[data-test-id="table-row"]:hover {
+  & a,
+  & a > span {
+    @apply text-foreground;
+  }
+}

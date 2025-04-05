@@ -85,7 +85,7 @@ export function queueColumns(): ColumnDefType<ISong>[] {
         return (
           <Link
             to={ROUTES.ALBUM.PAGE(row.original.albumId)}
-            className="hover:underline truncate"
+            className="hover:underline truncate text-foreground/70 hover:text-foreground"
             onContextMenu={(e) => {
               e.stopPropagation()
               e.preventDefault()

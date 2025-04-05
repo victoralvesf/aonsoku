@@ -136,7 +136,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         return (
           <MemoLink
             to={ROUTES.ALBUM.PAGE(row.original.albumId)}
-            className="hover:underline truncate"
+            className="hover:underline truncate text-foreground/70 hover:text-foreground"
             onContextMenu={(e) => {
               e.stopPropagation()
               e.preventDefault()

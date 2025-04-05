@@ -68,6 +68,7 @@ export function TableListRow<TData>({
     <MemoContextMenuProvider options={getContextMenuOptions(row)}>
       <div
         role="row"
+        data-test-id="table-row"
         data-row-index={virtualRow.index}
         data-state={row.getIsSelected() && 'selected'}
         onClick={(e) => handleClicks(e, row)}
@@ -81,7 +82,7 @@ export function TableListRow<TData>({
           'group/tablerow w-[calc(100%-10px)] flex flex-row transition-colors',
           'data-[state=selected]:bg-foreground/30 hover:bg-foreground/20',
           isQueue && 'rounded-md',
-          isRowSongActive && 'bg-foreground/20',
+          isRowSongActive && 'row-active bg-foreground/20',
         )}
         style={{
           height: `${virtualRow.size}px`,

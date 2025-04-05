@@ -45,6 +45,7 @@ export function TableRow<TData>({
       <div
         {...props}
         role="row"
+        data-test-id="table-row"
         data-state={row.getIsSelected() && 'selected'}
         className={clsx(
           'group/tablerow w-full flex flex-row transition-colors',
@@ -59,7 +60,7 @@ export function TableRow<TData>({
           isModern && !row.getIsSelected() && 'rounded-md',
           'hover:bg-foreground/20 data-[state=selected]:bg-foreground/30',
           isClassic && 'border-b',
-          isRowSongActive && isModern && 'bg-foreground/20',
+          isRowSongActive && isModern && 'row-active bg-foreground/20',
         )}
       >
         {row.getVisibleCells().map((cell) => (
