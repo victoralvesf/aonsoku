@@ -56,12 +56,10 @@ export function AudioPlayer({
   const ignoreGain = !isSong || replayGainError || isLinux
 
   useEffect(() => {
-    const audio = audioRef.current
-    if (ignoreGain || !audio) return
+    if (ignoreGain || !audioRef.current) return
 
     if (gainValue === previousGain) return
 
-    audio.crossOrigin = 'anonymous'
     setupGain(gainValue, replayGain)
     setPreviousGain(gainValue)
   }, [audioRef, ignoreGain, gainValue, previousGain, replayGain, setupGain])
@@ -143,5 +141,18 @@ export function AudioPlayer({
     return undefined
   }, [handleRadioError, handleSongError, isRadio, isSong])
 
-  return <audio ref={audioRef} {...props} onError={handleError} />
+  const crossOrigin = useMemo(() => {
+    if (isLinux || !isSong || replayGainError) return undefined
+
+    return 'anonymous'
+  }, [isSong, replayGainError])
+
+  return (
+    <audio
+      ref={audioRef}
+      {...props}
+      crossOrigin={crossOrigin}
+      onError={handleError}
+    />
+  )
 }
