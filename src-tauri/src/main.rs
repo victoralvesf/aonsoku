@@ -50,7 +50,7 @@ async fn main() {
     builder
         .setup(|_app| {
             #[cfg(not(target_os = "windows"))]
-            let window = _app.get_window("main").unwrap();
+            let window = _app.get_webview_window("main").unwrap();
 
             // Only show window after a few seconds, to avoid flashy colors
             #[cfg(not(target_os = "windows"))]

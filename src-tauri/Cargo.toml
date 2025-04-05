@@ -11,7 +11,7 @@ edition = "2021"
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = ["unstable"] }
+tauri = { version = "2", features = [] }
 tauri-plugin-os = "2"
 tauri-plugin-updater = "2"
 tauri-plugin-process = "2"
