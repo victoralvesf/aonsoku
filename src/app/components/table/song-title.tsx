@@ -15,7 +15,7 @@ export function TableSongTitle({ song }: { song: ISong }) {
       />
       <div className="flex flex-col w-full justify-center truncate">
         <span className="font-medium truncate">{song.title}</span>
-        <div className="flex items-center truncate mt-0.5">
+        <div className="flex items-center truncate">
           <TableArtists song={song} />
         </div>
       </div>

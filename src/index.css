@@ -288,7 +288,7 @@ div[data-test-id="table-row"][data-state="selected"],
 div[data-test-id="table-row"].row-active,
 div[data-test-id="table-row"]:hover {
   & a,
-  & a > span {
+  & span {
     @apply text-foreground;
   }
 }
