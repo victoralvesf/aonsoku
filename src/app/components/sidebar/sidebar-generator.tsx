@@ -98,6 +98,7 @@ export function SidebarPlaylistGenerator({
           <Link
             to={ROUTES.PLAYLIST.PAGE(playlist.id)}
             className="block"
+            tabIndex={-1}
             onClick={(e) => {
               if (isActive(playlist.id)) {
                 e.preventDefault()
