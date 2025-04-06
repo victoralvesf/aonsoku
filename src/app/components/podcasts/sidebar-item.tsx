@@ -1,9 +1,10 @@
 import clsx from 'clsx'
 import { ChevronRight, HistoryIcon } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import { ISidebarItem } from '@/app/components/sidebar/sidebar-generator'
+import { Badge } from '@/app/components/ui/badge'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { ROUTES } from '@/routes/routesList'
@@ -23,32 +24,39 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
   const isPodcastActive = isActive(item.route)
   const isLatestEpisodesActive = isActive(ROUTES.EPISODES.LATEST)
 
+  useLayoutEffect(() => {
+    if (!open && isLatestEpisodesActive) {
+      setOpen(true)
+    }
+  }, [isLatestEpisodesActive, open])
+
   return (
     <div
       data-open={open}
       className={clsx(
-        'flex flex-col relative overflow-hidden',
+        'flex flex-col relative',
         'transition-[max-height] duration-300 ease-in-out',
         'data-[open=false]:max-h-9 data-[open=true]:max-h-[72px]',
       )}
     >
       <Link
         to={item.route}
+        tabIndex={-1}
         className={clsx(
-          'z-10 relative',
+          'z-10 block relative rounded-md',
           isPodcastActive && 'pointer-events-none',
         )}
       >
         <Button
           variant={isPodcastActive ? 'secondary' : 'ghost'}
           size="sm"
-          className={clsx(
-            'w-full justify-start',
-            !isPodcastActive && 'bg-background',
-          )}
+          className="w-full justify-start"
         >
-          <item.icon className="w-4 h-4 mr-2" />
+          <item.icon className="size-4 mr-2" />
           {t(item.title)}
+          <Badge variant="beta" className="ml-2">
+            {t('generic.beta')}
+          </Badge>
         </Button>
         <Button
           size="icon"
@@ -56,14 +64,16 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
             e.preventDefault()
             e.stopPropagation()
 
+            if (open && isLatestEpisodesActive) return
+
             setOpen((prev) => !prev)
           }}
-          className="absolute right-2 top-2 p-0 w-5 h-5 z-20 pointer-events-auto"
+          className="absolute right-2.5 top-2 p-0 w-5 h-5 z-20 pointer-events-auto"
         >
           <ChevronRight
             data-visible={open}
             className={clsx(
-              'w-4 h-4 transition-transform duration-150',
+              'size-4 transition-transform duration-150',
               'data-[visible=true]:rotate-90 ease-in-out',
             )}
             strokeWidth={2.5}
@@ -73,7 +83,7 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
       <div
         data-visible={open}
         className={clsx(
-          'my-1 overflow-hidden ease-in-out',
+          'py-1 overflow-hidden ease-in-out',
           'transition-[transform,opacity] duration-300',
           'data-[visible=false]:-translate-y-9',
           'data-[visible=false]:opacity-0',
@@ -83,12 +93,17 @@ export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {
         <div className="ml-5 mr-2 pl-2 border-l">
           <Link
             to={ROUTES.EPISODES.LATEST}
-            className={clsx(isLatestEpisodesActive && 'pointer-events-none')}
+            tabIndex={-1}
+            className={clsx(
+              'block',
+              isLatestEpisodesActive && 'pointer-events-none',
+            )}
           >
             <Button
               variant={isLatestEpisodesActive ? 'secondary' : 'ghost'}
               size="sm"
               className="w-full justify-start text-sm font-normal px-2 h-7"
+              tabIndex={open ? 0 : -1}
             >
               {t('podcasts.form.latestEpisodes')}
             </Button>

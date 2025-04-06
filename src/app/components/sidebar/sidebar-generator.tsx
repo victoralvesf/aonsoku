@@ -53,6 +53,7 @@ export function SidebarGenerator({ list }: { list: ISidebarItem[] }) {
           <Link
             to={item.route}
             key={item.id}
+            tabIndex={-1}
             className={clsx(
               'block',
               isActive(item.route) && 'pointer-events-none',
