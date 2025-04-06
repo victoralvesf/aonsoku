@@ -194,6 +194,14 @@ img {
   scrollbar-color: hsl(var(--border)) transparent;
 }
 
+.default-ring {
+  @apply focus-visible:outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+}
+
+.user-dropdown-trigger {
+  @apply rounded-full default-ring;
+}
+
 .user-dropdown-trigger[data-state="open"] > :first-child {
   @apply bg-accent;
 }

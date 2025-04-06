@@ -43,9 +43,9 @@ export function UserDropdown() {
       <AboutDialog open={aboutOpen} onOpenChange={setAboutOpen} />
 
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="user-dropdown-trigger">
-          <Avatar className="w-8 h-8 rounded-full cursor-pointer bg-muted">
-            <AvatarFallback className="text-sm hover:bg-accent">
+        <DropdownMenuTrigger className="user-dropdown-trigger">
+          <Avatar className="w-8 h-8 rounded-full cursor-pointer">
+            <AvatarFallback className="text-sm bg-transparent hover:bg-accent">
               <User className="w-4 h-4" />
             </AvatarFallback>
           </Avatar>

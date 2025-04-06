@@ -13,6 +13,7 @@ export function ControlButton({
         className,
       )}
       {...props}
+      tabIndex={-1}
     >
       {children}
     </button>
