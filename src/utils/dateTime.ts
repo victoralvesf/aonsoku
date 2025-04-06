@@ -6,6 +6,7 @@ import timezone from 'dayjs/plugin/timezone'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import utc from 'dayjs/plugin/utc'
 
+import 'dayjs/locale/pt'
 import 'dayjs/locale/pt-br'
 import 'dayjs/locale/es'
 import 'dayjs/locale/zh-cn'
