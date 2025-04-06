@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { Linux } from '@/app/components/controls/linux'
 import { Windows } from '@/app/components/controls/windows'
 import { NavigationButtons } from '@/app/components/header/navigation-buttons'
@@ -7,12 +8,18 @@ import { SettingsButton } from '@/app/components/settings/header-button'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { isLinux, isMac, isWindows } from '@/utils/osType'
 import { tauriDragRegion } from '@/utils/tauriDragRegion'
+import { isTauri } from '@/utils/tauriTools'
 
 export function Header() {
   const { isFullscreen } = useAppWindow()
 
   return (
-    <header className="w-full grid grid-cols-header pl-4 h-header fixed top-0 right-0 left-0 z-20 bg-background border-b">
+    <header
+      className={clsx(
+        'w-full grid grid-cols-header h-header fixed top-0 right-0 left-0 z-20 bg-background border-b',
+        isTauri() ? 'pl-4' : 'px-4',
+      )}
+    >
       <div {...tauriDragRegion} className="flex items-center">
         {isMac && !isFullscreen && <div className="w-[70px]" />}
         <NavigationButtons />
