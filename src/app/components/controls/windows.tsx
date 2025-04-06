@@ -6,7 +6,7 @@ import { ControlButton } from './button'
 import { Icons } from './icons'
 
 const regularButton = clsx(
-  'h-8 max-h-8 w-[46px] cursor-default rounded-none bg-transparent',
+  'h-full max-h-full min-h-full w-[46px] cursor-default rounded-none bg-transparent',
   'text-foreground hover:bg-muted active:bg-muted',
 )
 
@@ -15,7 +15,7 @@ export function Windows({ className, ...props }: HTMLProps<HTMLDivElement>) {
     useAppWindow()
 
   return (
-    <div className={cn('h-8', className)} {...props}>
+    <div className={cn('h-header', className)} {...props}>
       <ControlButton onClick={minimizeWindow} className={regularButton}>
         <Icons.minimizeWin />
       </ControlButton>

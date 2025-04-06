@@ -12,7 +12,7 @@ export function Linux({ className, ...props }: LinuxProps) {
 
   return (
     <div
-      className={cn('ml-1 h-auto flex items-center gap-2', className)}
+      className={cn('ml-1 mr-3 h-auto flex items-center gap-2', className)}
       {...props}
     >
       <ControlButton
