@@ -94,7 +94,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
           <Button
             variant="secondary"
             size="icon"
-            className="cursor-pointer w-8 h-8 shadow-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity ease-in-out absolute top-1 right-1"
+            className="cursor-pointer w-8 h-8 shadow-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity ease-in-out absolute top-1 right-1 focus-visible:opacity-100"
             data-testid="track-fullscreen-button"
           >
             <SimpleTooltip text={t('fullscreen.switchButton')} align="start">
@@ -107,7 +107,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
       </div>
       <div className="flex flex-col justify-center w-full overflow-hidden">
         <MarqueeTitle gap="mr-2">
-          <Link to={ROUTES.ALBUM.PAGE(song.albumId)}>
+          <Link to={ROUTES.ALBUM.PAGE(song.albumId)} tabIndex={-1}>
             <span
               className="text-sm font-medium hover:underline cursor-pointer"
               data-testid="track-title"

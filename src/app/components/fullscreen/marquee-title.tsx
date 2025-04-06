@@ -1,5 +1,11 @@
 import { clsx } from 'clsx'
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import {
+  ReactNode,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react'
 import Marquee from 'react-fast-marquee'
 
 interface MarqueeTitleProps {
@@ -24,7 +30,7 @@ export function MarqueeTitle({ children, gap }: MarqueeTitleProps) {
     setIsOverflowing(textWidth > containerWidth)
   }, [containerRef, textRef])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     calculateOverflow()
 
     const handleResize = () => {
@@ -37,7 +43,7 @@ export function MarqueeTitle({ children, gap }: MarqueeTitleProps) {
     }
   }, [calculateOverflow])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsOverflowing(false)
     setIsFinished(false)
     setMarqueeKey(Math.random().toString())
