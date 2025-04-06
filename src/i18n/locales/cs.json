@@ -83,7 +83,7 @@
         "firstPage": "Přejít na první stránku"
       },
       "rowsPerPage": "Řádky na stránce",
-      "currentPage": "Strana {{currentPage}} z {{totalPages}}"
+      "currentPage": "Stránka {{currentPage}} z {{totalPages}}"
     },
     "menu": {
       "selectedCount_one": "{{count}} vybrán",
@@ -95,21 +95,21 @@
     "form": {
       "validations": {
         "protocol": "URL musí začínat http:// nebo https://",
-        "url": "Prosím zadejte platnou URL.",
+        "url": "Prosím zadej platnou URL.",
         "usernameLength": "Uživatelské jméno musí obsahovat alespoň 2 znaky.",
-        "password": "Prosím zadejte heslo",
+        "password": "Prosím zadej heslo",
         "passwordLength": "Heslo musí mít alespoň 2 znaky.",
-        "username": "Prosím zadejte uživatelské jméno"
+        "username": "Prosím zadej uživatelské jméno"
       },
       "connect": "Připojit",
       "connecting": "Připojuji…",
-      "usernamePlaceholder": "Vaše uživatelské jméno",
+      "usernamePlaceholder": "Tvé uživatelské jméno",
       "password": "Heslo",
       "server": "Server",
       "username": "Uživatelské jméno",
-      "description": "Připojte se k vašemu Subsonic serveru.",
+      "description": "Připoj se ke svému Subsonic serveru.",
       "url": "URL",
-      "urlDescription": "Toto je URL vašeho serveru"
+      "urlDescription": "Toto je URL tvého serveru"
     }
   },
   "command": {
@@ -119,7 +119,7 @@
       "heading": "Příkazy"
     },
     "noResults": "Žádné výsledky.",
-    "inputPlaceholder": "Vyhledejte album, umělce nebo skladbu",
+    "inputPlaceholder": "Vyhledej album, umělce nebo skladbu",
     "pages": "Stránky"
   },
   "player": {
@@ -150,7 +150,7 @@
       "previous": "Předchozí",
       "next": "Další"
     },
-    "noSongPlaying": "Nic se nepřehrává",
+    "noSongPlaying": "Nepřehrává se žádná skladba",
     "noRadioPlaying": "Nepřehrává se žádné rádio"
   },
   "options": {
@@ -188,9 +188,43 @@
       "homepage": "URL domovské stránky"
     },
     "empty": {
-      "title": "Nemáte žádné rádiové stanice!"
+      "title": "Nemáš tu žádné rádiové stanice!",
+      "info": "Klikni pro přidání tvé první rádiové stanice."
     },
-    "label": "Rádio"
+    "label": "Rádio",
+    "form": {
+      "create": {
+        "title": "Přidat rádio",
+        "toast": {
+          "error": "Vytváření rádia selhalo!",
+          "success": "Rádio bylo úspěšně vytvořeno!"
+        },
+        "button": "Uložit"
+      },
+      "edit": {
+        "title": "Upravit Rádio",
+        "button": "Aktualizovat",
+        "toast": {
+          "success": "Rádio bylo úspěšně aktualizováno!",
+          "error": "Aktualizace rádia selhala!"
+        }
+      },
+      "delete": {
+        "description": "Tuto akci nelze vrátit zpět.",
+        "toast": {
+          "success": "Rádio bylo úspěšně odstraněno!",
+          "error": "Odstranění rádia selhalo!"
+        },
+        "title": "Jsi si jistý, že chceš tuto rádiovou stanici smazat?"
+      },
+      "validations": {
+        "name": "Název rádia musí obsahovat alespoň 3 znaky.",
+        "url": "Zadej prosím platnou URL.",
+        "homepageUrlLength": "URL domovské stránky musí obsahovat alespoň 10 znaků",
+        "streamUrlLength": "URL streamu musí obsahovat alespoň 10 znaků"
+      }
+    },
+    "error": "Rádio nelze přehrát, zkontroluj si URL streamu!"
   },
   "fullscreen": {
     "noLyrics": "Nebyly nalezeny žádné texty",
@@ -213,5 +247,69 @@
       "success": "Server byl úspěšně uložen!",
       "error": "Komunikace se serverem selhala!"
     }
+  },
+  "time": {
+    "days_one": "{{days}} den",
+    "days_few": "{{days}} dny",
+    "days_other": "{{days}} dní",
+    "hour": "{{hour}} h",
+    "minutes": "{{minutes}} min",
+    "seconds": "{{seconds}} s"
+  },
+  "server": {
+    "songCount_one": "{{count}} skladba",
+    "songCount_few": "{{count}} skladby",
+    "songCount_other": "{{count}} skladeb",
+    "status": "Stav",
+    "incompatible": {
+      "title": "Nekompatibilní server",
+      "description": "Tento server používá starší verzi Subsonic protokolu, která není plně podporovaná. Buď prosím opatrný, protože mohou nastat problémy.",
+      "skip": "Přesto pokračovat"
+    },
+    "buttons": {
+      "refresh": "Obnovit stav",
+      "startScan": "Rychlý sken"
+    },
+    "folderCount_one": "{{count}} složka",
+    "folderCount_few": "{{count}} složky",
+    "folderCount_other": "{{count}} složek",
+    "lastScan": "Poslední sken: {{date}}",
+    "management": "Správa serveru"
+  },
+  "downloads": {
+    "started": "Stahování začalo.",
+    "failed": "Nastala chyba při stahování souboru.",
+    "completed": "Soubor byl stažen."
+  },
+  "shortcuts": {
+    "playback": {
+      "lowerVolume": "Snížit hlasitost",
+      "raiseVolume": "Zvýšit hlasitost",
+      "label": "Přehrávání",
+      "play": "Přehrát / Pozastavit",
+      "shuffle": "Náhodné přehrávání",
+      "repeat": "Opakovat",
+      "previous": "Přeskočit na předchozí",
+      "next": "Přeskočit na další"
+    },
+    "modal": {
+      "title": "Klávesové zkratky",
+      "description": {
+        "first": "Stiskni",
+        "last": "pro přepnutí tohoto dialogového okna."
+      }
+    },
+    "navigation": {
+      "label": "Navigace"
+    }
+  },
+  "queue": {
+    "title": "Fronta",
+    "clear": "Vyprázdnit frontu",
+    "close": "Uzavřít frontu",
+    "open": "Otevřít frontu"
+  },
+  "songInfo": {
+    "title": "Detaily skladby"
   }
 }
