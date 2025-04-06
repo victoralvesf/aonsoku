@@ -2,6 +2,7 @@ import { clsx } from 'clsx'
 import {
   ReactNode,
   useCallback,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -27,23 +28,28 @@ export function MarqueeTitle({ children, gap }: MarqueeTitleProps) {
     const containerWidth = containerRef.current.offsetWidth
     const textWidth = textRef.current.offsetWidth
 
-    setIsOverflowing(textWidth > containerWidth)
-  }, [containerRef, textRef])
+    const isOversizing = textWidth > containerWidth
+
+    if (isOverflowing && !isOversizing) {
+      setMarqueeKey(Math.random().toString())
+    }
+
+    setIsOverflowing(isOversizing)
+  }, [containerRef, textRef, isOverflowing])
 
   useLayoutEffect(() => {
-    calculateOverflow()
-
     const handleResize = () => {
       requestAnimationFrame(calculateOverflow)
     }
 
+    calculateOverflow()
     window.addEventListener('resize', handleResize)
     return () => {
       window.removeEventListener('resize', handleResize)
     }
   }, [calculateOverflow])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setIsOverflowing(false)
     setIsFinished(false)
     setMarqueeKey(Math.random().toString())
