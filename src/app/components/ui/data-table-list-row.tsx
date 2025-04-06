@@ -1,17 +1,22 @@
-import { flexRender, Row } from '@tanstack/react-table'
+import { Cell, flexRender, Row } from '@tanstack/react-table'
 import clsx from 'clsx'
-import { MouseEvent, TouchEvent } from 'react'
+import { memo, MouseEvent, TouchEvent, useMemo } from 'react'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
+import { usePlayerCurrentSong } from '@/store/player.store'
 import { ColumnDefType } from '@/types/react-table/columnDef'
+
+const MemoContextMenuProvider = memo(ContextMenuProvider)
+const MemoTableCell = memo(TableCell) as typeof TableCell
 
 interface TableRowProps<TData> {
   row: Row<TData>
   virtualRow: { index: number; size: number; start: number }
-  index: number
   handleClicks: (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => void
   handleRowDbClick: (e: MouseEvent<HTMLDivElement>, row: Row<TData>) => void
   handleRowTap: (e: TouchEvent<HTMLDivElement>, row: Row<TData>) => void
   getContextMenuOptions: (row: Row<TData>) => JSX.Element | undefined
+  dataType?: 'song' | 'artist' | 'playlist' | 'radio'
+  pageType?: 'general' | 'queue'
 }
 
 let isTap = false
@@ -20,12 +25,15 @@ let tapTimeout: NodeJS.Timeout
 export function TableListRow<TData>({
   row,
   virtualRow,
-  index,
   handleClicks,
   handleRowDbClick,
   handleRowTap,
   getContextMenuOptions,
+  dataType = 'song',
+  pageType = 'general',
 }: TableRowProps<TData>) {
+  const currentSong = usePlayerCurrentSong()
+
   function handleTouchStart() {
     isTap = true
     tapTimeout = setTimeout(() => {
@@ -47,10 +55,20 @@ export function TableListRow<TData>({
     isTap = false
   }
 
+  const isRowSongActive = useMemo(() => {
+    if (dataType !== 'song') return false
+
+    // @ts-expect-error row type
+    return row.original.id === currentSong.id
+  }, [currentSong.id, dataType, row.original])
+
+  const isQueue = pageType === 'queue'
+
   return (
-    <ContextMenuProvider options={getContextMenuOptions(row)}>
+    <MemoContextMenuProvider options={getContextMenuOptions(row)}>
       <div
         role="row"
+        data-test-id="table-row"
         data-row-index={virtualRow.index}
         data-state={row.getIsSelected() && 'selected'}
         onClick={(e) => handleClicks(e, row)}
@@ -61,32 +79,43 @@ export function TableListRow<TData>({
         onTouchCancel={handleTouchCancel}
         onContextMenu={(e) => handleClicks(e, row)}
         className={clsx(
-          'group/tablerow w-full flex flex-row transition-colors',
-          'hover:bg-foreground/20 data-[state=selected]:bg-foreground/30',
+          'group/tablerow w-[calc(100%-10px)] flex flex-row transition-colors',
+          'data-[state=selected]:bg-foreground/30 hover:bg-foreground/20',
+          isQueue && 'rounded-md',
+          isRowSongActive && 'row-active bg-foreground/20',
         )}
         style={{
           height: `${virtualRow.size}px`,
-          transform: `translateY(${virtualRow.start - index * virtualRow.size}px)`,
+          position: 'absolute',
+          top: virtualRow.start,
         }}
       >
-        {row.getVisibleCells().map((cell) => {
-          const columnDef = cell.column.columnDef as ColumnDefType<TData>
-
-          return (
-            <div
-              key={cell.id}
-              className={clsx(
-                'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
-                columnDef.className,
-              )}
-              style={columnDef.style}
-              role="cell"
-            >
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </div>
-          )
-        })}
+        {row.getVisibleCells().map((cell) => (
+          <MemoTableCell key={cell.id} cell={cell} />
+        ))}
       </div>
-    </ContextMenuProvider>
+    </MemoContextMenuProvider>
+  )
+}
+
+interface TableCellProps<TData, TValue> {
+  cell: Cell<TData, TValue>
+}
+
+function TableCell<TData, TValue>({ cell }: TableCellProps<TData, TValue>) {
+  const columnDef = cell.column.columnDef as ColumnDefType<TData>
+
+  return (
+    <div
+      key={cell.id}
+      className={clsx(
+        'p-2 flex flex-row items-center justify-start [&:has([role=checkbox])]:pr-4',
+        columnDef.className,
+      )}
+      style={columnDef.style}
+      role="cell"
+    >
+      {flexRender(columnDef.cell, cell.getContext())}
+    </div>
   )
 }

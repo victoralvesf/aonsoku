@@ -71,7 +71,7 @@ export default function SongList() {
   const columnsToShow: ColumnFilter[] = [
     'index',
     'title',
-    'artist',
+    // 'artist',
     'album',
     'duration',
     'playCount',

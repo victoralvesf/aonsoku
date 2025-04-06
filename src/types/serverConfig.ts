@@ -13,11 +13,15 @@ export interface IServerConfig {
   serverType?: string
 }
 
+export type PageViewType = 'grid' | 'table'
+
 interface IAppPages {
   showInfoPanel: boolean
   toggleShowInfoPanel: () => void
   hideRadiosSection: boolean
   setHideRadiosSection: (value: boolean) => void
+  artistsPageViewType: PageViewType
+  setArtistsPageViewType: (type: PageViewType) => void
 }
 
 export interface IAppData extends IServerConfig {
@@ -59,8 +63,22 @@ interface IAppSettings {
   setCurrentPage: (page: SettingsOptions) => void
 }
 
+interface IPodcasts {
+  active: boolean
+  setActive: (value: boolean) => void
+  serviceUrl: string
+  setServiceUrl: (value: string) => void
+  useDefaultUser: boolean
+  setUseDefaultUser: (value: boolean) => void
+  customUser: string
+  setCustomUser: (value: string) => void
+  customUrl: string
+  setCustomUrl: (value: string) => void
+}
+
 export interface IAppContext {
   data: IAppData
+  podcasts: IPodcasts
   pages: IAppPages
   command: IAppCommand
   actions: IAppActions

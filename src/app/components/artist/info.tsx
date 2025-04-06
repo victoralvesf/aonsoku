@@ -14,9 +14,16 @@ export function ArtistInfo({ artist }: ArtistInfoProps) {
   const hasInfoToShow =
     artistInfo !== undefined && artistInfo.biography !== undefined
 
+  const isArtistEmpty =
+    artist.albumCount === undefined || artist.albumCount === 0
+
   return (
     <Fragment>
-      <ArtistButtons artist={artist} showInfoButton={hasInfoToShow} />
+      <ArtistButtons
+        artist={artist}
+        showInfoButton={hasInfoToShow}
+        isArtistEmpty={isArtistEmpty}
+      />
 
       {hasInfoToShow && (
         <CollapsibleInfo
@@ -24,6 +31,7 @@ export function ArtistInfo({ artist }: ArtistInfoProps) {
           bio={artistInfo.biography}
           lastFmUrl={artistInfo.lastFmUrl}
           musicBrainzId={artistInfo.musicBrainzId}
+          useStateInfo={!isArtistEmpty}
         />
       )}
     </Fragment>

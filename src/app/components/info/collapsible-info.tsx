@@ -10,6 +10,7 @@ interface CollapsibleInfoProps {
   bio?: string
   lastFmUrl?: string
   musicBrainzId?: string
+  useStateInfo?: boolean
 }
 
 export function CollapsibleInfo({
@@ -17,11 +18,12 @@ export function CollapsibleInfo({
   bio,
   lastFmUrl,
   musicBrainzId,
+  useStateInfo = true,
 }: CollapsibleInfoProps) {
   const { showInfoPanel } = useAppPages()
 
   return (
-    <Collapsible open={showInfoPanel}>
+    <Collapsible open={useStateInfo ? showInfoPanel : true}>
       <CollapsibleContent>
         <div className="mb-6">
           {bio && (

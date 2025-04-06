@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ArtistLink, ArtistsLinks } from '@/app/components/song/artist-link'
 import PlaySongButton from '@/app/components/table/play-button'
 import { QueueActions } from '@/app/components/table/queue-actions'
 import { TableSongTitle } from '@/app/components/table/song-title'
@@ -24,11 +25,8 @@ export function queueColumns(): ColumnDefType<ISong>[] {
 
         return (
           <PlaySongButton
-            type="song"
             trackNumber={trackNumber}
             trackId={song.id}
-            title={song.title}
-            artist={song.artist}
             handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
           />
         )
@@ -48,25 +46,53 @@ export function queueColumns(): ColumnDefType<ISong>[] {
       id: 'artist',
       accessorKey: 'artist',
       style: {
-        width: '25%',
-        maxWidth: '25%',
+        width: '30%',
+        maxWidth: '30%',
       },
       header: '',
       cell: ({ row }) => {
-        if (!row.original.artistId) return row.original.artist
-        const { setQueueDrawerState } = usePlayerStore.getState().actions
+        const { artist, artistId, artists } = row.original
+        const { closeDrawer } = usePlayerStore.getState().actions
+
+        if (artists && artists.length > 1) {
+          return <ArtistsLinks artists={artists} onClickLink={closeDrawer} />
+        }
+
+        if (!artistId) return row.original.artist
+
+        return (
+          <ArtistLink artistId={artistId} onClick={closeDrawer}>
+            {artist}
+          </ArtistLink>
+        )
+      },
+    },
+    {
+      id: 'album',
+      accessorKey: 'album',
+      style: {
+        width: '24%',
+        minWidth: '14%',
+        maxWidth: '24%',
+      },
+      className: 'hidden lg:flex',
+      enableSorting: true,
+      sortingFn: 'customSortFn',
+      header: '',
+      cell: ({ row }) => {
+        const { closeDrawer } = usePlayerStore.getState().actions
 
         return (
           <Link
-            to={ROUTES.ARTIST.PAGE(row.original.artistId)}
-            className="hover:underline truncate"
-            onClick={() => setQueueDrawerState(false)}
+            to={ROUTES.ALBUM.PAGE(row.original.albumId)}
+            className="hover:underline truncate text-foreground/70 hover:text-foreground"
             onContextMenu={(e) => {
               e.stopPropagation()
               e.preventDefault()
             }}
+            onClick={closeDrawer}
           >
-            {row.original.artist}
+            {row.original.album}
           </Link>
         )
       },

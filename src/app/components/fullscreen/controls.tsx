@@ -15,6 +15,7 @@ import {
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerShuffle,
+  usePlayerPrevAndNext,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
 
@@ -22,13 +23,12 @@ export function FullscreenControls() {
   const isPlaying = usePlayerIsPlaying()
   const isShuffleActive = usePlayerShuffle()
   const loopState = usePlayerLoop()
+  const { hasPrev, hasNext } = usePlayerPrevAndNext()
   const {
     isPlayingOneSong,
     toggleShuffle,
     playNextSong,
     playPrevSong,
-    hasNextSong,
-    hasPrevSong,
     togglePlayPause,
     toggleLoop,
   } = usePlayerActions()
@@ -45,7 +45,7 @@ export function FullscreenControls() {
         )}
         style={{ ...buttonsStyle.style }}
         onClick={() => toggleShuffle()}
-        disabled={isPlayingOneSong() || !hasNextSong()}
+        disabled={isPlayingOneSong() || !hasNext}
       >
         <Shuffle className={buttonsStyle.secondaryIcon} />
       </Button>
@@ -55,7 +55,7 @@ export function FullscreenControls() {
         className={buttonsStyle.secondary}
         style={{ ...buttonsStyle.style }}
         onClick={() => playPrevSong()}
-        disabled={!hasPrevSong()}
+        disabled={!hasPrev}
       >
         <SkipBack className={buttonsStyle.secondaryIconFilled} />
       </Button>
@@ -78,7 +78,7 @@ export function FullscreenControls() {
         className={buttonsStyle.secondary}
         style={{ ...buttonsStyle.style }}
         onClick={() => playNextSong()}
-        disabled={!hasNextSong() && loopState !== LoopState.All}
+        disabled={!hasNext && loopState !== LoopState.All}
       >
         <SkipForward className={buttonsStyle.secondaryIconFilled} />
       </Button>

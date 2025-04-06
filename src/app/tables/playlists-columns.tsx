@@ -31,10 +31,8 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
 
         return (
           <PlaySongButton
-            type="playlist"
             trackNumber={index}
             trackId={playlist.id}
-            title={playlist.name}
             handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
           />
         )
@@ -133,7 +131,7 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
       cell: ({ row }) => (
         <div>
           {row.original.public ? (
-            <CheckIcon className="w-5 h-5 text-primary" />
+            <CheckIcon className="w-5 h-5 text-green-500" />
           ) : (
             <XIcon className="w-5 h-5 text-red-500" />
           )}

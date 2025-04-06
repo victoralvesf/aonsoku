@@ -1,0 +1,716 @@
+{
+  "generic": {
+    "viewMode": {
+      "label": "Modo de Visualização",
+      "modes": {
+        "list": "Lista",
+        "poster": "Cartaz"
+      }
+    },
+    "beta": "Beta",
+    "seeMore": "Ver mais",
+    "showDetails": "Exibir pormenores",
+    "hideDetails": "Ocultar pormenores",
+    "viewAll": "Ver tudo",
+    "loading": "A carregar…"
+  },
+  "theme": {
+    "material-theme": "Material Theme",
+    "black": "Preto e Branco",
+    "one-dark": "One Dark",
+    "night-owl-light": "Night Owl Light",
+    "marmalade-beaver": "Marmalade Beaver",
+    "noctis-lilac": "Noctis Lilac",
+    "monokai-pro": "Monokai Pro",
+    "github-dark": "Github Dark",
+    "shades-of-purple": "Shades Of Purple",
+    "bearded-solarized": "Bearded Solarized",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "nuclear-dark": "Nuclear Dark",
+    "achiever": "Achiever",
+    "dracula": "Dracula",
+    "discord": "Discord",
+    "tinacious-design": "Tinacious Design",
+    "vue-dark": "Vue Dark",
+    "vim-dark-soft": "Vim Dark Soft",
+    "label": "Tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema"
+  },
+  "artist": {
+    "headline": "Artista",
+    "buttons": {
+      "shuffle": "Tocar a rádio de {{artist}} no modo aleatório",
+      "options": "Mais opções para {{artist}}",
+      "play": "Tocar a rádio de {{artist}}"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} álbum",
+      "albumsCount_many": "{{count}} álbuns",
+      "albumsCount_other": "{{count}} álbuns"
+    },
+    "topSongs": "Populares",
+    "recentAlbums": "Álbuns recentes",
+    "relatedArtists": "Artistas relacionados"
+  },
+  "podcasts": {
+    "filters": {
+      "episodes": {
+        "orderBy": {
+          "publishDate": "Data de Publicação",
+          "title": "Título",
+          "duration": "Duração"
+        },
+        "search": "Buscar episódios…"
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Título",
+          "episodeCount": "Número de Episódios"
+        }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} episódio",
+      "episodeCount_many": "{{count}} episódios",
+      "episodeCount_other": "{{count}} episódios",
+      "feed": "Feed",
+      "unfollow": {
+        "tooltip": "Deixar de seguir {{title}}",
+        "dialog": {
+          "title": "Tem certeza de que deseja deixar de seguir este podcast?",
+          "description": "Para escutar este podcast novamente no futuro, terá de cadastrá-lo novamente."
+        },
+        "toasts": {
+          "error": "Ocorreu um erro ao deixar de seguir o podcast. Por favor, tente novamente.",
+          "success": "Deixou de seguir o podcast com sucesso!"
+        }
+      },
+      "website": "Site Oficial"
+    },
+    "list": {
+      "episodes": "Episódios",
+      "progress": {
+        "remainingTime": "{{time}} restante(s)",
+        "completed": "Reproduzido"
+      },
+      "notFoundMessage": "Este podcast ainda não tem episódios!"
+    },
+    "form": {
+      "latestEpisodes": "Últimos Episódios",
+      "addButton": "Adicionar Podcast",
+      "search": "Buscar podcasts…",
+      "dialog": {
+        "title": "Criar Podcast",
+        "feedUrl": "URL do Feed",
+        "message": "Pode adicionar múltiplas URLs, uma por linha.",
+        "saveButton": "Gravar",
+        "validations": {
+          "url": "Por favor, forneça URLs válidas.",
+          "urlLength": "As URLs devem conter pelo menos 10 caracteres",
+          "protocol": "As URLs devem começar com http:// ou https://",
+          "atLeastOneUrl": "Por favor, forneça pelo menos uma URL."
+        }
+      },
+      "toasts": {
+        "success": "Podcast criado com sucesso! Ele estará disponível para ouvir em alguns minutos!",
+        "error": "Falha ao criar o podcast!"
+      }
+    },
+    "emptyPage": {
+      "message": "Nenhum podcast adicionado",
+      "description": "Parece que ainda não adicionou nenhum podcast. Adicione um acima!"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "Nenhum episódio disponível",
+        "description": "Tente cadastrar mais podcasts.",
+        "goToPodcasts": "Ir para Podcasts"
+      }
+    },
+    "emptyResults": {
+      "title": "Nenhum resultado encontrado.",
+      "info": "Não encontramos podcasts para o termo pesquisado.",
+      "action": "Por favor, verifique a ortografia ou tente palavras-chave diferentes."
+    }
+  },
+  "table": {
+    "columns": {
+      "name": "Nome",
+      "title": "Título",
+      "albumArtist": "Artista do álbum",
+      "artist": "Artista",
+      "contributors": "Contribuidores",
+      "album": "Álbum",
+      "year": "Ano",
+      "duration": "Duração",
+      "plays": "Reproduções",
+      "lastPlayed": "Última reprodução",
+      "bpm": "BPM",
+      "bitrate": "Taxa de bits",
+      "quality": "Qualidade",
+      "albumCount": "Álbuns",
+      "songCount": "Músicas",
+      "comment": "Comentário",
+      "public": "Pública",
+      "track": "Faixa",
+      "genres": "Gêneros",
+      "size": "Tamanho",
+      "codec": "Codec",
+      "path": "Caminho",
+      "favorite": "Curtida",
+      "recordLabel": "Gravadora",
+      "discNumber": "Número do disco",
+      "trackGain": "Ganho da faixa",
+      "trackPeak": "Pico da faixa",
+      "albumGain": "Ganho do álbum",
+      "albumPeak": "Pico do álbum",
+      "channelCount": "Número de canais",
+      "samplingRate": "Taxa de amostragem",
+      "bitDepth": "Profundidade de bits"
+    },
+    "buttons": {
+      "play": "Tocar {{title}} por {{artist}}",
+      "pause": "Pausar {{title}} por {{artist}}"
+    },
+    "lastPlayed": "{{date}} atrás",
+    "pagination": {
+      "rowsPerPage": "Linhas por página",
+      "currentPage": "Página {{currentPage}} de {{totalPages}}",
+      "screenReader": {
+        "firstPage": "Ir para a primeira página",
+        "previousPage": "Ir para a página anterior",
+        "nextPage": "Ir para a próxima página",
+        "lastPage": "Ir para a última página"
+      }
+    },
+    "sort": {
+      "asc": "Crescente",
+      "desc": "Decrescente",
+      "reset": "Restaurar"
+    },
+    "menu": {
+      "selectedCount_one": "{{count}} selecionado",
+      "selectedCount_many": "{{count}} selecionados",
+      "selectedCount_other": "{{count}} selecionados"
+    }
+  },
+  "player": {
+    "tooltips": {
+      "rewind": "Retroceder {{amount}} segundos",
+      "previous": "Voltar",
+      "shuffle": {
+        "enable": "Ativar aleatório",
+        "disable": "Desativar aleatório"
+      },
+      "play": "Play",
+      "pause": "Pausar",
+      "forward": "Avançar {{amount}} segundos",
+      "next": "Avançar",
+      "repeat": {
+        "enable": "Repetir",
+        "enableOne": "Repetir uma faixa",
+        "disable": "Não repetir"
+      },
+      "like": "Curtir {{song}} por {{artist}}",
+      "dislike": "Remover curtida de {{song}} por {{artist}}",
+      "miniPlayer": {
+        "open": "Abrir Miniplayer",
+        "close": "Fechar Miniplayer"
+      },
+      "volume": {
+        "mute": "Mudo",
+        "unmute": "Com som"
+      }
+    },
+    "noSongPlaying": "Nenhuma música tocando",
+    "noRadioPlaying": "Nenhum rádio tocando"
+  },
+  "time": {
+    "minutes": "{{minutes}}min",
+    "seconds": "{{seconds}}s",
+    "days_one": "{{days}} dia",
+    "days_many": "{{days}} dias",
+    "days_other": "{{days}} dias",
+    "hour": "{{hour}}h"
+  },
+  "server": {
+    "lastScan": "Última varredura: {{date}}",
+    "songCount_one": "{{count}} música",
+    "songCount_many": "{{count}} músicas",
+    "songCount_other": "{{count}} músicas",
+    "folderCount_one": "{{count}} diretório",
+    "folderCount_many": "{{count}} diretórios",
+    "folderCount_other": "{{count}} diretórios",
+    "status": "Estado",
+    "management": "Gestão do servidor",
+    "incompatible": {
+      "title": "Servidor incompatível",
+      "description": "Este servidor usa uma versão mais antiga do protocolo Subsonic que não é totalmente compatível. Por favor, proceda com cautela, pois pode enfrentar problemas.",
+      "skip": "Continuar mesmo assim"
+    },
+    "buttons": {
+      "refresh": "Atualizar estado",
+      "startScan": "Varredura rápida"
+    }
+  },
+  "settings": {
+    "options": {
+      "privacy": "Privacidade & Segurança",
+      "appearance": "Aparência",
+      "language": "Linguagem & Região",
+      "audio": "Reprodutor & Áudio",
+      "content": "Conteúdo"
+    },
+    "appearance": {
+      "colors": {
+        "queue": {
+          "label": "Fila de reprodução e Letra",
+          "intensity": "Nível de Intensidade da Cor"
+        },
+        "bigPlayer": {
+          "blurSize": "Tamanho do Desfoque da Imagem",
+          "label": "Player Grande"
+        },
+        "group": "Cores Dinâmicas",
+        "description": "Selecione se a app usará a cor dominante da arte do álbum em reprodução como cor de fundo."
+      },
+      "general": {
+        "group": "Geral",
+        "description": "Personalize o visual e os comportamentos de exibição do app.",
+        "fullscreen": {
+          "label": "Ativar ecrã cheio automática",
+          "info": "Se ativado, ao aceder o player grande, a app automaticamente ativará o modo ecrã cheio."
+        }
+      }
+    },
+    "label": "Configurações",
+    "audio": {
+      "replayGain": {
+        "group": "ReplayGain",
+        "description": "Automaticamente normaliza o nível do áudio para uma melhor experiência sonora.",
+        "enabled": "Ativado",
+        "error": {
+          "message": "Houve um erro ao reproduzir a música usando Replay Gain.",
+          "button": "Tentar novamente"
+        },
+        "mode": {
+          "label": "Modo",
+          "track": "Ganho da faixa",
+          "album": "Ganho do álbum"
+        },
+        "preAmp": "Pré-amplificador (dB)",
+        "defaultGain": {
+          "label": "Ganho Padrão (dB)",
+          "info": "Este nível de ganho é aplicado a músicas que não possuem metadata de ReplayGain, garantindo um volume de áudio consistente. A faixa recomendada para o ganho é entre -10 dB e -1 dB."
+        }
+      },
+      "lyrics": {
+        "group": "Letras",
+        "description": "Personalize as configurações de letras.",
+        "preferSynced": {
+          "label": "Preferir letras sincronizadas",
+          "info": "Quando ativado, letras sincronizadas serão priorizadas em relação às não sincronizadas."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Serviços Externos",
+        "description": "Gira os serviços externos que o Aonsoku pode aceder.",
+        "lrclib": {
+          "info": "O LRCLIB é usado para encontrar letras de músicas.",
+          "label": "LRCLIB"
+        }
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Menu lateral",
+        "description": "Gira a visibilidade e a organização das secções exibidas no menu lateral.",
+        "radios": {
+          "section": "Esconder secção de rádios"
+        }
+      },
+      "podcast": {
+        "group": "Podcasts",
+        "description": "Ativar integração com o serviço Aonsoku Podcasts.",
+        "enabled": {
+          "label": "Ativar Integração"
+        },
+        "service": {
+          "url": "URL do Serviço de Podcast"
+        },
+        "credentials": {
+          "label": "Usar Utilizador Logado e URL do Servidor",
+          "error": "Nome de utilizador e URL do servidor são obrigatórios.",
+          "user": "Nome de Utilizador",
+          "url": "URL do Servidor"
+        }
+      }
+    }
+  },
+  "playlist": {
+    "headline": "Playlist",
+    "songCount_one": "{{count}} música",
+    "songCount_many": "{{count}} músicas",
+    "songCount_other": "{{count}} músicas",
+    "duration": "cerca de {{duration}}",
+    "refresh": "Atualizar playlists",
+    "buttons": {
+      "play": "Tocar {{name}}",
+      "shuffle": "Tocar {{name}} no modo aleatório",
+      "options": "Mais opções para {{name}}"
+    },
+    "noSongList": "Esta playlist não possui nenhuma música!",
+    "form": {
+      "labels": {
+        "name": "Nome",
+        "comment": "Comentário",
+        "commentDescription": "Escreva uma breve descrição desta playlist",
+        "isPublic": "Pública",
+        "isPublicDescription": "Selecione esta opção para tornar a playlist pública. Isto permitirá que outros utilizadores vejam e acessem a sua playlist."
+      },
+      "create": {
+        "title": "Criar Playlist",
+        "button": "Criar",
+        "toast": {
+          "success": "Playlist criada com sucesso!",
+          "error": "Falha ao criar a playlist!"
+        }
+      },
+      "edit": {
+        "title": "Editar Playlist",
+        "button": "Atualizar",
+        "toast": {
+          "success": "Playlist atualizada com sucesso!",
+          "error": "Falha ao atualizar a playlist!"
+        }
+      },
+      "delete": {
+        "title": "Tem certeza de que deseja apagar esta playlist?",
+        "description": "Esta ação não poderá ser desfeita.",
+        "toast": {
+          "success": "Playlist removida com sucesso!",
+          "error": "Falha ao remover esta playlist!"
+        }
+      },
+      "validations": {
+        "nameLength": "O nome da playlist deve conter pelo menos 2 caracteres."
+      },
+      "removeSong": {
+        "title_one": "Você tem certeza de que deseja remover a música selecionada?",
+        "title_many": "Você tem certeza de que deseja remover as músicas selecionadas?",
+        "title_other": "Você tem certeza de que deseja remover as músicas selecionadas?",
+        "description": "Esta ação não poderá ser desfeita.",
+        "toast": {
+          "success_one": "Música removida com sucesso!",
+          "success_many": "Músicas removidas com sucesso!",
+          "success_other": "Músicas removidas com sucesso!",
+          "error_one": "Falha ao remover a música!",
+          "error_many": "Falha ao remover as músicas!",
+          "error_other": "Falha ao remover as músicas!"
+        }
+      }
+    }
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Buscar músicas…"
+      },
+      "byArtist": "Músicas por {{artist}}",
+      "filter": {
+        "clear": "Limpar filtro"
+      }
+    }
+  },
+  "album": {
+    "headline": "Álbum",
+    "buttons": {
+      "like": "Curtir {{name}}",
+      "dislike": "Remover curtida de {{name}}"
+    },
+    "info": {
+      "about": "Sobre {{name}}",
+      "lastfm": "Abrir no Last.fm",
+      "musicbrainz": "Abrir no MusicBrainz"
+    },
+    "more": {
+      "listTitle": "Mais deste artista",
+      "discography": "Discografia do artista",
+      "genreTitle": "Mais de {{genre}}"
+    },
+    "list": {
+      "header": {
+        "albumsByArtist": "Álbuns por {{artist}}"
+      },
+      "empty": {
+        "title": "Nenhum resultado encontrado!",
+        "info": "Não conseguimos encontrar álbuns que correspondam ao seu filtro.",
+        "action": "Talvez queira tentar ajustar os filtros?"
+      },
+      "genre": {
+        "label": "Selecione um gênero…",
+        "search": "Procurar um gênero…",
+        "loading": "A carregar gêneros…",
+        "notFound": "Nenhum gênero encontrado."
+      },
+      "filter": {
+        "artist": "Artista",
+        "genre": "Gênero",
+        "favorites": "Favoritos",
+        "mostPlayed": "Mais reproduzidos",
+        "name": "Nome",
+        "random": "Aleatório",
+        "recentlyAdded": "Adicionados recentemente",
+        "recentlyPlayed": "Reproduzidos recentemente",
+        "releaseYear": "Ano de lançamento",
+        "discography": "Discografia",
+        "search": "Pesquisa"
+      },
+      "search": {
+        "placeholder": "Buscar álbuns…"
+      }
+    },
+    "table": {
+      "discNumber": "Disco {{number}}"
+    }
+  },
+  "home": {
+    "recentlyPlayed": "Reproduzidos recentemente",
+    "mostPlayed": "Mais reproduzidos",
+    "recentlyAdded": "Adicionados recentemente",
+    "explore": "Explorar"
+  },
+  "sidebar": {
+    "home": "Início",
+    "search": "Pesquisar…",
+    "miniSearch": "Pesquisar",
+    "library": "Biblioteca",
+    "artists": "Artistas",
+    "songs": "Músicas",
+    "albums": "Álbuns",
+    "playlists": "Playlists",
+    "radios": "Rádios",
+    "podcasts": "Podcasts",
+    "emptyPlaylist": "Nenhuma playlist criada ainda"
+  },
+  "menu": {
+    "language": "Linguagem",
+    "server": "Servidor",
+    "about": "Sobre",
+    "serverLogout": "Desconectar"
+  },
+  "fullscreen": {
+    "noLyrics": "Letra não encontrada",
+    "loadingLyrics": "A procurar a letra…",
+    "queue": "Fila",
+    "playing": "A reproduzir agora",
+    "lyrics": "Letra",
+    "switchButton": "Alternar para o Player Grande"
+  },
+  "logout": {
+    "dialog": {
+      "title": "Pronto para se despedir por enquanto?",
+      "description": "Confirme para se desconectar.",
+      "cancel": "Cancelar",
+      "confirm": "Continuar"
+    }
+  },
+  "login": {
+    "form": {
+      "server": "Servidor",
+      "description": "Conecte-se ao seu servidor Subsonic.",
+      "url": "URL",
+      "urlDescription": "Esta é a URL do seu servidor",
+      "username": "Nome de utilizador",
+      "usernamePlaceholder": "O seu utilizador",
+      "password": "Palavra-passe",
+      "connect": "Conectar",
+      "connecting": "A conectar…",
+      "validations": {
+        "url": "Por favor, insira uma URL válida.",
+        "protocol": "A URL deve começar com http:// ou https://",
+        "username": "Por favor, forneça um nome de utilizador",
+        "usernameLength": "O nome de utilizador deve conter pelo menos 2 caracteres.",
+        "password": "Por favor, forneça uma palavra-passe",
+        "passwordLength": "A palavra-passe deve conter pelo menos 2 caracteres."
+      }
+    }
+  },
+  "toast": {
+    "server": {
+      "success": "Servidor foi gravado com sucesso!",
+      "error": "Não foi possível comunicar com o servidor!"
+    }
+  },
+  "command": {
+    "inputPlaceholder": "Pesquisar por álbum, artista ou música",
+    "noResults": "Nenhum resultado encontrado.",
+    "commands": {
+      "heading": "Comandos",
+      "pages": "Ir para página",
+      "theme": "Mudar tema"
+    },
+    "pages": "Páginas"
+  },
+  "options": {
+    "play": "Reproduzir",
+    "playNext": "Tocar a seguir",
+    "addLast": "Adicionar ao final",
+    "download": "Descarregar",
+    "playlist": {
+      "add": "Adicionar à playlist",
+      "edit": "Editar playlist",
+      "delete": "Apagar playlist",
+      "search": "Procurar uma playlist",
+      "create": "Nova playlist",
+      "notFound": "Nenhuma playlist encontrada",
+      "removeSong": "Remover da playlist"
+    },
+    "info": "Mais informações",
+    "markAsPlayed": "Marcar como reproduzido",
+    "goto": {
+      "episode": "Ir para o episódio",
+      "podcast": "Ir para o podcast"
+    }
+  },
+  "radios": {
+    "label": "Rádio",
+    "addRadio": "Adicionar Rádio",
+    "table": {
+      "name": "Nome",
+      "homepage": "URL da página inicial",
+      "stream": "URL de transmissão",
+      "actions": {
+        "edit": "Editar rádio",
+        "delete": "Apagar rádio"
+      },
+      "playTooltip": "Tocar rádio {{name}}",
+      "pauseTooltip": "Pausar rádio {{name}}"
+    },
+    "empty": {
+      "title": "Nenhuma rádio disponível!",
+      "info": "Ainda não configurou nenhuma rádio."
+    },
+    "error": "Não foi possível reproduzir a Rádio, verifique o URL de transmissão!",
+    "form": {
+      "create": {
+        "title": "Adicionar Rádio",
+        "button": "Gravar",
+        "toast": {
+          "success": "Rádio criado com sucesso!",
+          "error": "Falha ao criar este rádio!"
+        }
+      },
+      "edit": {
+        "title": "Editar Rádio",
+        "button": "Atualizar",
+        "toast": {
+          "success": "Rádio atualizado com sucesso!",
+          "error": "Falha ao atualizar este rádio!"
+        }
+      },
+      "delete": {
+        "title": "Tem certeza de que deseja apagar este rádio?",
+        "description": "Esta ação não poderá ser desfeita.",
+        "toast": {
+          "success": "Rádio removida com sucesso!",
+          "error": "Falha ao remover esta rádio!"
+        }
+      },
+      "validations": {
+        "name": "O nome do rádio deve conter pelo menos 3 caracteres.",
+        "url": "Por favor, forneça uma URL válida.",
+        "homepageUrlLength": "A URL da página inicial deve conter pelo menos 10 caracteres",
+        "streamUrlLength": "A URL de transmissão deve conter pelo menos 10 caracteres"
+      }
+    }
+  },
+  "downloads": {
+    "started": "Descarga iniciada.",
+    "failed": "Ocorreu um erro ao descarregar o ficheiro.",
+    "completed": "Descarga concluída com sucesso."
+  },
+  "queue": {
+    "title": "Fila de reprodução",
+    "clear": "Limpar fila",
+    "close": "Fechar fila",
+    "open": "Abrir fila"
+  },
+  "shortcuts": {
+    "modal": {
+      "title": "Atalhos de teclado",
+      "description": {
+        "first": "Pressione",
+        "last": "para abrir/fechar esta janela."
+      }
+    },
+    "playback": {
+      "label": "Reprodução",
+      "play": "Play / Pausar",
+      "shuffle": "Ordem aleatória",
+      "repeat": "Repetir",
+      "previous": "Voltar à faixa anterior",
+      "next": "Pular para a próxima faixa",
+      "raiseVolume": "Aumentar volume",
+      "lowerVolume": "Diminuir volume"
+    },
+    "navigation": {
+      "label": "Navegação"
+    }
+  },
+  "songInfo": {
+    "title": "Informações da música",
+    "error": "Não foi possível obter as informações da música. Por favor, tente novamente mais tarde."
+  },
+  "warnings": {
+    "reload": "Há uma música tocando!\nTem certeza que deseja recarregar a página?",
+    "songError": "Não foi possível reproduzir a música, verifique o servidor!"
+  },
+  "update": {
+    "dialog": {
+      "title": "Nova Versão Disponível!",
+      "remindLater": "Lembrar-me mais tarde",
+      "install": "Instalar e Reiniciar"
+    },
+    "toasts": {
+      "started": "O processo de atualização foi iniciado.",
+      "success": "A atualização foi instalada! A app será reiniciada agora.",
+      "error": "Falha ao instalar a atualização. Por favor, tente descarregá-la diretamente do GitHub."
+    }
+  },
+  "about": {
+    "client": "Cliente",
+    "server": "Servidor",
+    "version": "Versão:",
+    "type": "Tipo:",
+    "apiVersion": "Versão da API:",
+    "toasts": {
+      "copy": "Ligação copiada para a área de transferência!"
+    }
+  },
+  "mobile": {
+    "unsupported_message": "{{app_name}} não é compatível com dispositivos móveis.",
+    "access_recommendation": "Por favor, acesse-o a partir de um computador ou tablet."
+  },
+  "dayjs": {
+    "relativeTime": {
+      "future": "em %s",
+      "past": "%s atrás",
+      "s": "alguns segundos",
+      "m": "1 minuto",
+      "mm": "%d minutos",
+      "h": "1 hora",
+      "hh": "%d horas",
+      "d": "1 dia",
+      "dd": "%d dias",
+      "M": "1 mês",
+      "MM": "%d meses",
+      "y": "1 ano",
+      "yy": "%d anos"
+    }
+  }
+}

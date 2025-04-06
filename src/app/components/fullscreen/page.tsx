@@ -1,20 +1,20 @@
-import clsx from 'clsx'
 import { memo, ReactNode } from 'react'
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerTitle,
   DrawerTrigger,
 } from '@/app/components/ui/drawer'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { useFullscreenPlayerSettings } from '@/store/player.store'
 import { enterFullscreen, exitFullscreen } from '@/utils/browser'
-import { isWindows } from '@/utils/osType'
 import { isTauri } from '@/utils/tauriTools'
 import { FullscreenBackdrop } from './backdrop'
 import { CloseFullscreenButton } from './buttons'
 import { DragRegion } from './drag-region'
 import { FullscreenPlayer } from './player'
+import { FullscreenSettings } from './settings'
 import { FullscreenTabs } from './tabs'
 
 interface FullscreenModeProps {
@@ -27,17 +27,15 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
   const { enterFullscreenWindow, exitFullscreenWindow } = useAppWindow()
   const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
 
-  function handleFullscreen(open: boolean) {
+  async function handleFullscreen(open: boolean) {
     if (!autoFullscreenEnabled) return
 
     if (isTauri()) {
-      // flag to prevent enter fullscreen on windows
-      // because it's not fully supported by tauri
-      if (isWindows) return
-      open ? enterFullscreenWindow() : exitFullscreenWindow()
-    } else {
-      open ? enterFullscreen() : exitFullscreen()
+      open ? await enterFullscreenWindow() : await exitFullscreenWindow()
+      return
     }
+
+    open ? enterFullscreen() : exitFullscreen()
   }
 
   return (
@@ -50,21 +48,19 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
       onOpenChange={handleFullscreen}
     >
       <DrawerTrigger asChild>{children}</DrawerTrigger>
+      <DrawerTitle className="sr-only">Big Player</DrawerTitle>
       <DrawerContent
         className="h-screen w-screen rounded-t-none border-none select-none cursor-default mt-0"
         showHandle={false}
+        aria-describedby={undefined}
       >
         <MemoFullscreenBackdrop />
         <div className="absolute inset-0 flex flex-col p-8 w-full h-full gap-4 bg-black/0 z-10">
           {isTauri() && <DragRegion className="z-10" />}
 
           {/* First Row */}
-          <div
-            className={clsx(
-              'flex gap-2 items-center w-full h-[40px] px-16 z-20',
-              isWindows ? 'justify-start' : 'justify-end',
-            )}
-          >
+          <div className="flex gap-2 items-center w-full h-[40px] px-16 z-20 justify-end">
+            <FullscreenSettings />
             <DrawerClose>
               <CloseFullscreenButton />
             </DrawerClose>

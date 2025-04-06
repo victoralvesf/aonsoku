@@ -2,10 +2,12 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 #[cfg(not(target_os = "linux"))]
+use proxy::proxy::spawn_proxy_server;
+
+#[cfg(not(target_os = "windows"))]
 use tauri::Manager;
 
 #[cfg(target_os = "macos")]
-#[macro_use]
 extern crate cocoa;
 
 #[cfg(target_os = "macos")]
@@ -19,40 +21,48 @@ mod commands;
 mod progress;
 mod utils;
 
-fn main() {
-    let builder = tauri::Builder::default();
+#[cfg(not(target_os = "linux"))]
+mod proxy;
+
+#[tokio::main]
+async fn main() {
+    #[allow(unused_mut)]
+    let mut builder = tauri::Builder::default()
+        .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_os::init());
 
     #[cfg(target_os = "macos")]
-    let builder = builder.plugin(mac::window::init());
+    {
+        builder = builder.plugin(mac::window::init());
+    }
+
+    #[cfg(not(target_os = "linux"))]
+    {
+        tokio::task::spawn(async move {
+            if let Err(e) = spawn_proxy_server().await {
+                eprintln!("Proxy server error: {}", e);
+            }
+        });
+    }
 
     builder
         .setup(|_app| {
-            #[cfg(target_os = "macos")]
+            #[cfg(not(target_os = "windows"))]
+            let window = _app.get_webview_window("main").unwrap();
+
+            // Only show window after a few seconds, to avoid flashy colors
+            #[cfg(not(target_os = "windows"))]
             {
-                use mac::window::setup_traffic_light_positioner;
-
-                let window = _app.get_window("main").unwrap();
-                let window_ = window.clone();
-
-                window.on_window_event(move |event| {
-                    if let tauri::WindowEvent::ThemeChanged(_theme) = event {
-                        setup_traffic_light_positioner(window_.clone())
-                    }
+                tokio::spawn(async move {
+                    tokio::time::sleep(std::time::Duration::from_secs(2)).await;
+                    let _ = window.show();
                 });
-            }
-
-            #[cfg(target_os = "windows")]
-            {
-                let main_window = _app.get_webview_window("main").unwrap();
-                let _ = main_window.set_decorations(false);
             }
 
             Ok(())
         })
-        .plugin(tauri_plugin_shell::init())
-        .plugin(tauri_plugin_updater::Builder::new().build())
-        .plugin(tauri_plugin_process::init())
-        .plugin(tauri_plugin_os::init())
         .invoke_handler(tauri::generate_handler![commands::download_file])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

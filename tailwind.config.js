@@ -20,8 +20,15 @@ module.exports = {
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
       },
-      height: {
+      spacing: {
+        header: 'var(--header-height)',
+        sidebar: 'var(--sidebar-width)',
+        'mini-sidebar': 'var(--mini-sidebar-width)',
+        player: 'var(--player-height)',
         content: 'var(--content-height)',
+        'shadow-header': 'var(--shadow-header-height)',
+        'shadow-header-distance': 'var(--shadow-header-distance)',
+        toast: 'var(--toastify-toast-container-height)',
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -106,6 +113,11 @@ module.exports = {
           'minmax(40px, 50px) minmax(0px, 3fr) minmax(0px, 2fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(60px, 70px) minmax(100px, 120px)',
         header:
           'minmax(180px, 1fr) minmax(0px, 1fr) minmax(0px, 1fr) minmax(180px, 1fr)',
+        'mid-player-info': 'minmax(40px, 70px) minmax(168px, 1fr)',
+        'mini-player': 'minmax(30px, 40px) minmax(80px, 1fr) 64px',
+      },
+      gridTemplateRows: {
+        'floating-player': 'minmax(0, 1fr) 40px',
       },
       flexBasis: {
         '1/8': '12.5%',
@@ -118,6 +130,17 @@ module.exports = {
         'carousel-item': 'radial-gradient(circle, white 100%, transparent 0)',
         'big-player-lyrics':
           'linear-gradient(180deg, transparent 0%, rgb(0, 0, 0) 25%, rgb(0, 0, 0) 75%, transparent 100%)',
+        lyrics:
+          'linear-gradient(180deg, transparent 0%, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 90%, transparent 100%)',
+      },
+      boxShadow: {
+        'custom-3': '0 0 3px rgba(255, 255, 255, 0.03)',
+        'custom-5': '0 0 5px rgba(255, 255, 255, 0.05)',
+        'header-image': '0 4px 35px rgba(0, 0, 0, 0.6)',
+      },
+      screens: {
+        'mid-player': { raw: '(min-height: 133px) and (max-height: 170px)' },
+        'mini-player': { raw: '(max-height: 132px)' },
       },
     },
   },

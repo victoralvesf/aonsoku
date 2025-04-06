@@ -25,17 +25,17 @@ export function TableLikeButton({
   const [isStarred, setIsStarred] = useState(starred)
   const { currentSong } = usePlayerSonglist()
   const isSongStarred = usePlayerSongStarred()
-  const mediaType = usePlayerMediaType()
+  const { isRadio, isSong } = usePlayerMediaType()
   const { starCurrentSong, starSongInQueue } = usePlayerActions()
 
   useEffect(() => {
     if (type === 'artist') return
-    if (mediaType === 'radio') return
+    if (isRadio) return
 
     const isSongPlaying = currentSong.id === entityId
 
     if (isSongPlaying) setIsStarred(isSongStarred)
-  }, [currentSong, entityId, isSongStarred, mediaType, type])
+  }, [currentSong, entityId, isSongStarred, isRadio, type])
 
   async function handleStarred() {
     const state = !isStarred
@@ -46,7 +46,7 @@ export function TableLikeButton({
     })
     setIsStarred(state)
 
-    if (type === 'song' && mediaType === 'song') {
+    if (type === 'song' && isSong) {
       const isSongPlaying = currentSong.id === entityId
       isSongPlaying ? starCurrentSong() : starSongInQueue(entityId)
     }

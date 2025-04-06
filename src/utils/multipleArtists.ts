@@ -1,0 +1,5 @@
+export const ALBUM_ARTISTS_MAX_NUMBER = 4
+
+export const TABLE_ARTISTS_MAX_NUMBER = 3
+
+export const RECORD_LABELS_MAX_NUMBER = 3

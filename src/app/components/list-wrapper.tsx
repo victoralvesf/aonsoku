@@ -1,10 +1,7 @@
-import { ReactNode } from 'react'
+import { ComponentPropsWithRef } from 'react'
 import { cn } from '@/lib/utils'
 
-interface ListWrapperProps {
-  children: ReactNode
-  className?: string
-}
+type ListWrapperProps = ComponentPropsWithRef<'div'>
 
 export default function ListWrapper({ children, className }: ListWrapperProps) {
   return (

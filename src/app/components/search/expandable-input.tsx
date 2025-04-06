@@ -93,14 +93,16 @@ export function ExpandableSearchInput({ ...props }: SearchInputProps) {
     <form onSubmit={handleSubmit}>
       <div
         ref={searchRef}
-        className="relative inline-block w-fit min-w-9 h-9 align-bottom rounded-md"
+        className="relative inline-block w-fit min-w-9 h-9 align-bottom rounded-md overflow-hidden"
       >
         <Input
           id="search"
           ref={inputRef}
           onChange={(e) => setSearchValue(e.target.value)}
           className={clsx(
-            'bg-background h-full z-10 left-auto outline-none duration-300 focus-visible:ring-transparent',
+            'bg-background h-full z-10 left-auto duration-300',
+            'focus-visible:ring-transparent ring-offset-background',
+            'focus-visible:ring-offset-0 focus-visible:ring-0',
             searchActive
               ? 'w-[260px] pr-9 text-foreground placeholder:opacity-100'
               : 'w-9 text-transparent placeholder:opacity-0',

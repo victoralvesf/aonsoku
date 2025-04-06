@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import { AlbumComment } from '@/app/components/album/comment'
 import ImageHeader from '@/app/components/album/image-header'
 import { AlbumInfo } from '@/app/components/album/info'
+import { RecordLabelsInfo } from '@/app/components/album/record-labels'
 import { AlbumFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { PreviewListFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { BadgesData } from '@/app/components/header-info'
@@ -19,6 +21,7 @@ import { ROUTES } from '@/routes/routesList'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { Albums } from '@/types/responses/album'
+import { sortRecentAlbums } from '@/utils/album'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 
 export default function Album() {
@@ -31,10 +34,13 @@ export default function Album() {
     isLoading: albumIsLoading,
     isFetched,
   } = useGetAlbum(albumId)
-  const { data: moreAlbums, isLoading: moreAlbumsIsLoading } =
-    useGetArtistAlbums(album?.artist || '')
+  const { data: artist, isLoading: moreAlbumsIsLoading } = useGetArtistAlbums(
+    album?.artistId || '',
+  )
   const { data: randomAlbums, isLoading: randomAlbumsIsLoading } =
     useGetGenreAlbums(album?.genre || '')
+
+  const moreAlbums = artist?.album
 
   if (albumIsLoading) return <AlbumFallback />
   if (isFetched && !album) {
@@ -72,7 +78,7 @@ export default function Album() {
   const columnsToShow: ColumnFilter[] = [
     'trackNumber',
     'title',
-    'artist',
+    // 'artist',
     'duration',
     'playCount',
     'played',
@@ -81,10 +87,15 @@ export default function Album() {
     'select',
   ]
 
-  function removeCurrentAlbumFromList(moreAlbums: Albums[]) {
-    if (moreAlbums.length === 0) return null
+  function removeCurrentAlbumFromList(moreAlbums: Albums[], sort = false) {
+    if (moreAlbums.length === 0 || !album) return null
 
-    let list = moreAlbums.filter((item) => item.id !== album?.id)
+    let list = moreAlbums.filter((item) => item.id !== album.id)
+
+    if (sort) {
+      list = sortRecentAlbums(list)
+    }
+
     if (list.length > 16) list = list.slice(0, 16)
 
     if (list.length === 0) return null
@@ -92,8 +103,8 @@ export default function Album() {
     return list
   }
 
-  const artistAlbums = moreAlbums?.album
-    ? removeCurrentAlbumFromList(moreAlbums.album)
+  const artistAlbums = moreAlbums
+    ? removeCurrentAlbumFromList(moreAlbums, true)
     : null
 
   const randomGenreAlbums =
@@ -105,6 +116,8 @@ export default function Album() {
     ? album.discTitles.length > 1
     : false
 
+  const albumComment = album.song.length > 0 ? album.song[0].comment : null
+
   return (
     <div className="w-full">
       <ImageHeader
@@ -112,6 +125,7 @@ export default function Album() {
         title={album.name}
         subtitle={album.artist}
         artistId={album.artistId}
+        artists={album.artists}
         coverArtId={album.coverArt}
         coverArtType="album"
         coverArtSize="700"
@@ -131,9 +145,13 @@ export default function Album() {
           variant="modern"
         />
 
+        {albumComment && <AlbumComment comment={albumComment} />}
+
+        <RecordLabelsInfo album={album} />
+
         <div className="mt-4">
           {moreAlbumsIsLoading && <PreviewListFallback />}
-          {artistAlbums && !moreAlbumsIsLoading && (
+          {artistAlbums && !moreAlbumsIsLoading && album.artistId && (
             <PreviewList
               list={artistAlbums}
               showMore={true}

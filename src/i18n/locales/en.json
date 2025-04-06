@@ -15,6 +15,7 @@
     "albums": "Albums",
     "playlists": "Playlists",
     "radios": "Radios",
+    "podcasts": "Podcasts",
     "emptyPlaylist": "No playlists created yet"
   },
   "menu": {
@@ -28,7 +29,15 @@
     "showDetails": "Show details",
     "hideDetails": "Hide details",
     "viewAll": "View all",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "viewMode": {
+      "label": "View Mode",
+      "modes": {
+        "list": "List",
+        "poster": "Poster"
+      }
+    },
+    "beta": "Beta"
   },
   "theme": {
     "label": "Theme",
@@ -192,10 +201,93 @@
     "recentAlbums": "Recent albums",
     "relatedArtists": "Related artists"
   },
+  "podcasts": {
+    "form": {
+      "latestEpisodes": "Latest Episodes",
+      "addButton": "Add Podcast",
+      "search": "Search podcasts…",
+      "dialog": {
+        "title": "Create Podcast",
+        "feedUrl": "Feed URL",
+        "message": "You can add multiple URLs, one per line.",
+        "saveButton": "Save",
+        "validations": {
+          "url": "Please provide valid URLs.",
+          "urlLength": "URLs must be at least 10 characters",
+          "protocol": "URLs must start with http:// or https://",
+          "atLeastOneUrl": "Please provide at least one URL."
+        }
+      },
+      "toasts": {
+        "success": "Podcast created successfully! It will be available to listen to in just a few minutes!",
+        "error": "Failed to create podcast!"
+      }
+    },
+    "emptyPage": {
+      "message": "No podcasts added",
+      "description": "It looks like you have not added any podcasts yet. Add one above!"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "No episodes available",
+        "description": "Try adding more podcasts.",
+        "goToPodcasts": "Go to Podcasts"
+      }
+    },
+    "emptyResults": {
+      "title": "No results found.",
+      "info": "We couldn't find any podcasts matching your search term.",
+      "action": "Please check your spelling or try different keywords."
+    },
+    "filters": {
+      "episodes": {
+        "search": "Search episodes…",
+        "orderBy": {
+          "publishDate": "Publish Date",
+          "title": "Title",
+          "duration": "Duration"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Title",
+          "episodeCount": "Episode Count"
+        }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} episode",
+      "episodeCount_many": "{{count}} episodes",
+      "episodeCount_other": "{{count}} episodes",
+      "feed": "Feed",
+      "website": "Official Website",
+      "unfollow": {
+        "tooltip": "Unfollow {{title}}",
+        "dialog": {
+          "title": "Are you sure you want to unfollow this podcast?",
+          "description": "To listen to this podcast again in the future, you'll need to recreate it."
+        },
+        "toasts": {
+          "success": "You have successfully unfollowed the podcast!",
+          "error": "An error occurred while trying to unfollow the podcast. Please try again."
+        }
+      }
+    },
+    "list": {
+      "episodes": "Episodes",
+      "notFoundMessage": "This podcast doesn't have any episodes yet!",
+      "progress": {
+        "remainingTime": "{{time}} remaining",
+        "completed": "Completed"
+      }
+    }
+  },
   "table": {
     "columns": {
       "title": "Title",
+      "albumArtist": "Album artist",
       "artist": "Artist",
+      "contributors": "Contributors",
       "album": "Album",
       "year": "Year",
       "duration": "Duration",
@@ -215,11 +307,15 @@
       "codec": "Codec",
       "path": "Path",
       "favorite": "Favorite",
+      "recordLabel": "Record label",
       "discNumber": "Disc number",
       "trackGain": "Track gain",
       "trackPeak": "Track peak",
       "albumGain": "Album gain",
-      "albumPeak": "Album peak"
+      "albumPeak": "Album peak",
+      "channelCount": "Channel count",
+      "samplingRate": "Sampling rate",
+      "bitDepth": "Bit depth"
     },
     "buttons": {
       "play": "Play {{title}} by {{artist}}",
@@ -307,9 +403,11 @@
         "enable": "Enable shuffle",
         "disable": "Disable shuffle"
       },
+      "rewind": "Rewind {{amount}} seconds",
       "previous": "Previous",
       "play": "Play",
       "pause": "Pause",
+      "forward": "Forward {{amount}} seconds",
       "next": "Next",
       "repeat": {
         "enable": "Enable repeat",
@@ -317,7 +415,15 @@
         "disable": "Disable repeat"
       },
       "like": "Like {{song}} by {{artist}}",
-      "dislike": "Remove like from {{song}} by {{artist}}"
+      "dislike": "Remove like from {{song}} by {{artist}}",
+      "miniPlayer": {
+        "open": "Open Miniplayer",
+        "close": "Close Miniplayer"
+      },
+      "volume": {
+        "mute": "Mute",
+        "unmute": "Unmute"
+      }
     }
   },
   "options": {
@@ -334,7 +440,12 @@
       "notFound": "No playlist found",
       "removeSong": "Remove from playlist"
     },
-    "info": "Get info"
+    "info": "Get info",
+    "markAsPlayed": "Mark as played",
+    "goto": {
+      "episode": "Go to episode",
+      "podcast": "Go to podcast"
+    }
   },
   "radios": {
     "label": "Radio",
@@ -420,7 +531,9 @@
   },
   "queue": {
     "title": "Queue",
-    "clear": "Clear queue"
+    "clear": "Clear queue",
+    "close": "Close queue",
+    "open": "Open queue"
   },
   "shortcuts": {
     "modal": {
@@ -436,7 +549,12 @@
       "shuffle": "Shuffle",
       "repeat": "Repeat",
       "previous": "Skip to previous",
-      "next": "Skip to next"
+      "next": "Skip to next",
+      "raiseVolume": "Raise volume",
+      "lowerVolume": "Lower volume"
+    },
+    "navigation": {
+      "label": "Navigation"
     }
   },
   "songInfo": {
@@ -477,9 +595,10 @@
     "label": "Settings",
     "options": {
       "appearance": "Appearance",
-      "language": "Language & region",
-      "audio": "Player & audio",
-      "content": "Content"
+      "language": "Language & Region",
+      "audio": "Player & Audio",
+      "content": "Content",
+      "privacy": "Privacy & Security"
     },
     "appearance": {
       "general": {
@@ -489,6 +608,18 @@
           "label": "Enable automatic fullscreen",
           "info": "If enabled, when accessing the big player, the app will automatically enter fullscreen mode."
         }
+      },
+      "colors": {
+        "group": "Dynamic Colors",
+        "description": "Select whether the app should use the dominant color from the currently playing album art as the background.",
+        "queue": {
+          "label": "Queue and Lyrics",
+          "intensity": "Color Intensity Level"
+        },
+        "bigPlayer": {
+          "label": "Big Player",
+          "blurSize": "Image Blur Size"
+        }
       }
     },
     "audio": {
@@ -496,6 +627,10 @@
         "group": "ReplayGain",
         "description": "Automatically normalize audio playback levels for a consistent listening experience.",
         "enabled": "Enabled",
+        "error": {
+          "message": "There was an error playing the track using Replay Gain.",
+          "button": "Try again"
+        },
         "mode": {
           "label": "Mode",
           "track": "Track gain",
@@ -516,12 +651,38 @@
         }
       }
     },
+    "privacy": {
+      "services": {
+        "group": "External Services",
+        "description": "Manage the external services that Aonsoku can access.",
+        "lrclib": {
+          "info": "LRCLIB is used to find song lyrics.",
+          "label": "LRCLIB"
+        }
+      }
+    },
     "content": {
       "sidebar": {
         "group": "Sidebar",
         "description": "Manage the visibility and organization of sections displayed in the sidebar.",
         "radios": {
           "section": "Hide radios section"
+        }
+      },
+      "podcast": {
+        "group": "Podcasts",
+        "description": "Enable integration with the Aonsoku Podcasts service.",
+        "enabled": {
+          "label": "Enable Integration"
+        },
+        "service": {
+          "url": "Podcast Service URL"
+        },
+        "credentials": {
+          "label": "Use Logged-In User and Server URL",
+          "error": "Username and Server URL are required.",
+          "user": "Username",
+          "url": "Server URL"
         }
       }
     }

@@ -1,44 +1,33 @@
-import { memo, useEffect } from 'react'
-import { Outlet, useLocation, Location } from 'react-router-dom'
-
+import { memo } from 'react'
+import { MainDrawerPage } from '@/app/components/drawer/page'
 import { Player } from '@/app/components/player/player'
 import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
-import { SongInfoModal } from '@/app/components/song/info-modal'
-import { ScrollArea } from '@/app/components/ui/scroll-area'
+import { SongInfoDialog } from '@/app/components/song/info-dialog'
 import { Header } from '@/app/layout/header'
 import { MiniSidebar } from '@/app/layout/mini-sidebar'
 import { Sidebar } from '@/app/layout/sidebar'
-import { scrollPageToTop } from '@/utils/scrollPageToTop'
+import { MainRoutes } from './main'
 
-const HeaderMemo = memo(Header)
-const MiniSidebarMemo = memo(MiniSidebar)
-const SidebarMemo = memo(Sidebar)
-const PlayerMemo = memo(Player)
+const MemoHeader = memo(Header)
+const MemoMiniSidebar = memo(MiniSidebar)
+const MemoSidebar = memo(Sidebar)
+const MemoPlayer = memo(Player)
+const MemoSongInfoDialog = memo(SongInfoDialog)
+const MemoRemovePlaylistDialog = memo(RemovePlaylistDialog)
+const MemoMainDrawerPage = memo(MainDrawerPage)
 
 export default function BaseLayout() {
-  const { pathname } = useLocation() as Location
-
-  useEffect(() => {
-    scrollPageToTop()
-  }, [pathname])
-
   return (
     <div className="h-screen w-screen overflow-hidden">
-      <HeaderMemo />
-      <MiniSidebarMemo />
-      <SidebarMemo />
-      <PlayerMemo />
+      <MemoHeader />
+      <MemoMiniSidebar />
+      <MemoSidebar />
+      <MemoPlayer />
       {/* Routes */}
-      <main className="flex h-full pl-[--mini-sidebar-width] 2xl:pl-[--sidebar-width] pt-[--header-height] pb-[--player-height]">
-        <ScrollArea
-          id="main-scroll-area"
-          className="w-full bg-background-foreground"
-        >
-          <Outlet />
-        </ScrollArea>
-      </main>
-      <SongInfoModal />
-      <RemovePlaylistDialog />
+      <MainRoutes />
+      <MemoSongInfoDialog />
+      <MemoRemovePlaylistDialog />
+      <MemoMainDrawerPage />
     </div>
   )
 }

@@ -37,7 +37,7 @@ export default function Playlist() {
   const columnsToShow: ColumnFilter[] = [
     'index',
     'title',
-    'artist',
+    // 'artist',
     'album',
     'duration',
     'playCount',
@@ -45,9 +45,15 @@ export default function Playlist() {
     'select',
   ]
 
-  const songCount = t('playlist.songCount', { count: playlist.songCount })
+  const hasSongs = playlist.songCount > 0
   const duration = convertSecondsToHumanRead(playlist.duration)
-  const playlistDuration = t('playlist.duration', { duration })
+
+  const songCount = hasSongs
+    ? t('playlist.songCount', { count: playlist.songCount })
+    : null
+  const playlistDuration = hasSongs
+    ? t('playlist.duration', { duration })
+    : null
 
   const badges: BadgesData = [
     { content: songCount, type: 'text' },

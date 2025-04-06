@@ -1,5 +1,6 @@
 import omit from 'lodash/omit'
 import {
+  CheckIcon,
   DownloadIcon,
   Info,
   Pencil,
@@ -7,6 +8,7 @@ import {
   PlusCircle,
   PlusIcon,
   PlusSquare,
+  PodcastIcon,
   Trash,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -27,7 +29,7 @@ function Play({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   return (
     <MenuItemFactory
       variant={variant}
-      icon={<PlayIcon className="mr-2 h-4 w-4" />}
+      icon={<PlayIcon className="mr-2 h-4 w-4 fill-foreground" />}
       label={t('options.play')}
       {...props}
     />
@@ -154,6 +156,45 @@ function SongInfo({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   )
 }
 
+function MarkAsPlayed({
+  variant = 'dropdown',
+  ...props
+}: DropdownMenuItemProps) {
+  const { t } = useTranslation()
+
+  return (
+    <MenuItemFactory
+      variant={variant}
+      icon={<CheckIcon className="mr-2 h-4 w-4" />}
+      label={t('options.markAsPlayed')}
+      {...props}
+    />
+  )
+}
+
+type GotoPodcastProps = DropdownMenuItemProps & {
+  type: 'podcast' | 'episode'
+}
+
+function GotoPodcast({
+  variant = 'dropdown',
+  type = 'podcast',
+  ...props
+}: GotoPodcastProps) {
+  const { t } = useTranslation()
+
+  const label = t(`options.goto.${type}`)
+
+  return (
+    <MenuItemFactory
+      variant={variant}
+      icon={<PodcastIcon className="mr-2 h-4 w-4" />}
+      label={label}
+      {...props}
+    />
+  )
+}
+
 export const OptionsButtons = {
   Play,
   PlayNext,
@@ -164,4 +205,6 @@ export const OptionsButtons = {
   RemovePlaylist,
   RemoveFromPlaylist,
   SongInfo,
+  MarkAsPlayed,
+  GotoPodcast,
 }

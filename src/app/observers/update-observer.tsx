@@ -17,6 +17,7 @@ import {
 import { Badge } from '@/app/components/ui/badge'
 import { Button } from '@/app/components/ui/button'
 import { useAppUpdate } from '@/store/app.store'
+import { isProd } from '@/utils/env'
 import { queryKeys } from '@/utils/queryKeys'
 
 export function UpdateObserver() {
@@ -28,7 +29,7 @@ export function UpdateObserver() {
   const { data: updateInfo } = useQuery({
     queryKey: [queryKeys.update.check],
     queryFn: () => check(),
-    enabled: !remindOnNextBoot,
+    enabled: !remindOnNextBoot && isProd,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     staleTime: Infinity,

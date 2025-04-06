@@ -1,7 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
+import clsx from 'clsx'
 import { Check, Loader2, XIcon } from 'lucide-react'
+import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { Dot } from '@/app/components/dot'
 import { Badge } from '@/app/components/ui/badge'
 import {
   Dialog,
@@ -16,9 +19,10 @@ import { useSongInfo } from '@/store/ui.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 import { formatBytes } from '@/utils/formatBytes'
+import { RECORD_LABELS_MAX_NUMBER } from '@/utils/multipleArtists'
 import { queryKeys } from '@/utils/queryKeys'
 
-export function SongInfoModal() {
+export function SongInfoDialog() {
   const { t } = useTranslation()
   const { songId, modalOpen, reset } = useSongInfo()
 
@@ -26,6 +30,14 @@ export function SongInfoModal() {
     queryKey: [queryKeys.song.info, songId],
     queryFn: () => subsonic.songs.getSong(songId),
     enabled: modalOpen,
+  })
+
+  const loadedAlbumId = song ? typeof song.albumId === 'string' : false
+
+  const { data: album, isLoading: albumLoading } = useQuery({
+    queryKey: [queryKeys.album.single, song?.albumId],
+    queryFn: () => subsonic.albums.getOne(song?.albumId ?? ''),
+    enabled: loadedAlbumId,
   })
 
   function handleModalChange(value: boolean) {
@@ -65,12 +77,15 @@ export function SongInfoModal() {
 
   return (
     <Dialog open={modalOpen} onOpenChange={handleModalChange}>
-      <DialogContent className="max-w-[620px] p-0 gap-0 overflow-hidden">
+      <DialogContent
+        className="max-w-[620px] p-0 gap-0 overflow-hidden"
+        aria-describedby={undefined}
+      >
         <DialogHeader className="border-b p-6">
           <DialogTitle>{t('songInfo.title')}</DialogTitle>
         </DialogHeader>
 
-        {isLoading && (
+        {(isLoading || albumLoading) && (
           <div className="flex w-full h-32 items-center justify-center p-6">
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           </div>
@@ -102,25 +117,98 @@ export function SongInfoModal() {
                 </Link>
               </InfoGridItem>
 
-              <InfoGridItem title="artist">
-                {song.artistId ? (
+              {/* Multi artists info */}
+              {song.albumArtists && (
+                <InfoGridItem title="albumArtist">
+                  {song.albumArtists.map(({ id, name }, index) => (
+                    <Fragment key={id}>
+                      <Link
+                        to={ROUTES.ARTIST.PAGE(id)}
+                        className="text-foreground hover:underline"
+                        onClick={handleLinkClick}
+                      >
+                        {name}
+                      </Link>
+                      {index < song.albumArtists!.length - 1 && (
+                        <Dot className="mx-0" />
+                      )}
+                    </Fragment>
+                  ))}
+                </InfoGridItem>
+              )}
+
+              {/* Multi artists info */}
+              {song.artists && (
+                <InfoGridItem title="artist">
+                  {song.artists.map(({ id, name }, index) => (
+                    <Fragment key={id}>
+                      <Link
+                        to={ROUTES.ARTIST.PAGE(id)}
+                        className="text-foreground hover:underline"
+                        onClick={handleLinkClick}
+                      >
+                        {name}
+                      </Link>
+                      {index < song.artists!.length - 1 && (
+                        <Dot className="mx-0" />
+                      )}
+                    </Fragment>
+                  ))}
+                </InfoGridItem>
+              )}
+
+              {/* Single artist info */}
+              {!song.artists && (
+                <InfoGridItem title="artist">
                   <Link
-                    to={ROUTES.ARTIST.PAGE(song.artistId)}
-                    className="text-foreground hover:underline"
-                    onClick={handleLinkClick}
+                    to={ROUTES.ARTIST.PAGE(song.artistId ?? '')}
+                    className={clsx(
+                      'text-foreground',
+                      song.artistId ? 'hover:underline' : 'pointer-events-none',
+                    )}
+                    onClick={() => {
+                      if (song.artistId) handleLinkClick()
+                    }}
                   >
                     {song.artist}
                   </Link>
-                ) : (
-                  <>{song.artist}</>
-                )}
-              </InfoGridItem>
+                </InfoGridItem>
+              )}
+
+              {song.contributors && song.contributors.length > 1 && (
+                <InfoGridItem title="contributors">
+                  {song.contributors.map((contributor, index) => (
+                    <p className="w-full" key={contributor.artist.name + index}>
+                      <span className="capitalize">{contributor.role}:</span>
+                      <span className="text-foreground ml-1">
+                        {contributor.artist.name}
+                      </span>
+                    </p>
+                  ))}
+                </InfoGridItem>
+              )}
 
               <InfoGridItem title="year">{song.year}</InfoGridItem>
               <InfoGridItem title="discNumber">
                 {song.discNumber ?? 1}
               </InfoGridItem>
               <InfoGridItem title="track">{song.track}</InfoGridItem>
+
+              {album && !albumLoading && (
+                <>
+                  {album.recordLabels && album.recordLabels.length > 0 && (
+                    <InfoGridItem title="recordLabel">
+                      {album.recordLabels
+                        .slice(0, RECORD_LABELS_MAX_NUMBER)
+                        .map((label) => (
+                          <p key={label.name} className="w-full">
+                            {label.name}
+                          </p>
+                        ))}
+                    </InfoGridItem>
+                  )}
+                </>
+              )}
 
               {formatGenres().length > 0 && (
                 <InfoGridItem title="genres">
@@ -180,6 +268,20 @@ export function SongInfoModal() {
                   </InfoGridItem>
                 </>
               )}
+
+              {song.channelCount && (
+                <InfoGridItem title="channelCount">
+                  {song.channelCount}
+                </InfoGridItem>
+              )}
+
+              {song.samplingRate && (
+                <InfoGridItem title="samplingRate">
+                  {song.samplingRate / 1000} Hz
+                </InfoGridItem>
+              )}
+
+              <InfoGridItem title="bitDepth">{song.bitDepth ?? 0}</InfoGridItem>
             </div>
           </ScrollArea>
         )}

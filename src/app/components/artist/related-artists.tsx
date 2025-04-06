@@ -98,7 +98,7 @@ export default function RelatedArtistsList({
                   <PreviewCard.InfoWrapper>
                     <PreviewCard.Subtitle
                       link={ROUTES.ARTIST.PAGE(artist.id)}
-                      className="mt-1.5"
+                      className="mt-2"
                     >
                       {artist.name}
                     </PreviewCard.Subtitle>

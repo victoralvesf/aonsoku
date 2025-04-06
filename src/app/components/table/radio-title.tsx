@@ -7,11 +7,11 @@ interface TableRadioTitleProps {
 }
 
 export function TableRadioTitle({ name }: TableRadioTitleProps) {
-  const mediaType = usePlayerMediaType()
+  const { isRadio } = usePlayerMediaType()
   const { radioList, currentSongIndex } = usePlayerSonglist()
 
   function getRadioIsPlaying() {
-    if (mediaType === 'song' || !radioList) return false
+    if (!isRadio || !radioList) return false
 
     return radioList[currentSongIndex].name === name
   }

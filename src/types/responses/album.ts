@@ -1,3 +1,4 @@
+import { IFeaturedArtist } from './artist'
 import { ISong } from './song'
 import { SubsonicResponse } from './subsonicResponse'
 
@@ -5,32 +6,21 @@ export interface Genre {
   name: string
 }
 
+interface RecordLabel {
+  name: string
+}
+
 export interface DiscTitle {
   disc: number
 }
 
-export interface OriginalReleaseDate {}
-
-export interface Albums {
-  id: string
-  name: string
-  artist: string
-  year?: number
-  genre?: string
-  coverArt: string
-  duration: number
-  playCount?: number
-  created: string
-  starred?: string
-  artistId: string
-  songCount: number
-}
+export interface ReleaseDate {}
 
 export interface SingleAlbum {
   id: string
   name: string
   artist: string
-  artistId: string
+  artistId?: string
   coverArt: string
   songCount: number
   duration: number
@@ -46,9 +36,19 @@ export interface SingleAlbum {
   isCompilation: boolean
   sortName: string
   discTitles: DiscTitle[]
-  originalReleaseDate: OriginalReleaseDate
+  originalReleaseDate?: ReleaseDate
+  releaseDate?: ReleaseDate
+  releaseTypes?: string[]
+  recordLabels?: RecordLabel[]
+  moods?: string[]
+  artists?: IFeaturedArtist[]
+  displayArtist?: string
+  explicitStatus?: string
+  version?: string
   song: ISong[]
 }
+
+export type Albums = Omit<SingleAlbum, 'song'>
 
 export interface AlbumList {
   album: Albums[]

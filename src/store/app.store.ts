@@ -2,10 +2,12 @@ import merge from 'lodash/merge'
 import omit from 'lodash/omit'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
+import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { pingServer } from '@/api/pingServer'
 import { queryServerInfo } from '@/api/queryServerInfo'
 import { AuthType, IAppContext, IServerConfig } from '@/types/serverConfig'
+import { logger } from '@/utils/logger'
 import {
   genEncodedPassword,
   genPassword,
@@ -15,7 +17,7 @@ import {
   hasValidConfig,
 } from '@/utils/salt'
 
-const { SERVER_URL, HIDE_SERVER, HIDE_RADIOS_SECTION } = window
+const { SERVER_URL, HIDE_SERVER, HIDE_RADIOS_SECTION, SERVER_TYPE } = window
 
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
@@ -30,11 +32,43 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             password: genPassword(),
             authType: getAuthType(),
             protocolVersion: '1.16.0',
-            serverType: 'subsonic',
+            serverType: SERVER_TYPE ?? 'subsonic',
             logoutDialogState: false,
             hideServer: HIDE_SERVER ?? false,
             lockUser: hasValidConfig,
             songCount: null,
+          },
+          podcasts: {
+            active: false,
+            setActive: (value) => {
+              set((state) => {
+                state.podcasts.active = value
+              })
+            },
+            serviceUrl: '',
+            setServiceUrl: (value) => {
+              set((state) => {
+                state.podcasts.serviceUrl = value
+              })
+            },
+            useDefaultUser: true,
+            setUseDefaultUser: (value) => {
+              set((state) => {
+                state.podcasts.useDefaultUser = value
+              })
+            },
+            customUser: '',
+            setCustomUser: (value) => {
+              set((state) => {
+                state.podcasts.customUser = value
+              })
+            },
+            customUrl: '',
+            setCustomUrl: (value) => {
+              set((state) => {
+                state.podcasts.customUrl = value
+              })
+            },
           },
           pages: {
             showInfoPanel: true,
@@ -49,6 +83,12 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             setHideRadiosSection: (value) => {
               set((state) => {
                 state.pages.hideRadiosSection = value
+              })
+            },
+            artistsPageViewType: 'table',
+            setArtistsPageViewType: (type) => {
+              set((state) => {
+                state.pages.artistsPageViewType = type
               })
             },
           },
@@ -151,14 +191,18 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.url = ''
                 state.data.username = ''
                 state.data.password = ''
-                state.data.protocolVersion = undefined
-                state.data.serverType = undefined
                 state.data.authType = AuthType.TOKEN
                 state.data.protocolVersion = '1.16.0'
                 state.data.serverType = 'subsonic'
                 state.data.songCount = null
                 state.pages.showInfoPanel = true
                 state.pages.hideRadiosSection = HIDE_RADIOS_SECTION ?? false
+                state.pages.artistsPageViewType = 'table'
+                state.podcasts.active = false
+                state.podcasts.serviceUrl = ''
+                state.podcasts.useDefaultUser = true
+                state.podcasts.customUser = ''
+                state.podcasts.customUrl = ''
               })
             },
             setLogoutDialogState: (value) => {
@@ -176,48 +220,61 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
         name: 'app_store',
         version: 1,
         merge: (persistedState, currentState) => {
-          const persisted = persistedState as Partial<IAppContext>
+          try {
+            const persisted = persistedState as Partial<IAppContext> | undefined
 
-          const hideRadiosSection =
-            HIDE_RADIOS_SECTION !== undefined
-              ? HIDE_RADIOS_SECTION
-              : (persisted.pages?.hideRadiosSection as boolean)
+            let hideRadiosSection = false
 
-          if (hasValidConfig) {
-            const newState = {
-              ...persisted,
+            if (persisted) {
+              hideRadiosSection = persisted.pages?.hideRadiosSection ?? false
+            }
+            if (HIDE_RADIOS_SECTION !== undefined) {
+              hideRadiosSection = HIDE_RADIOS_SECTION
+            }
+
+            if (hasValidConfig) {
+              const newState = {
+                data: {
+                  isServerConfigured: true,
+                  url: SERVER_URL as string,
+                  username: genUser(),
+                  password: genPassword(),
+                  authType: getAuthType(),
+                  hideServer: HIDE_SERVER ?? false,
+                  serverType: SERVER_TYPE ?? 'subsonic',
+                  lockUser: true,
+                },
+                pages: {
+                  hideRadiosSection,
+                },
+              }
+
+              if (persistedState) {
+                return merge(currentState, persistedState, newState)
+              }
+
+              return merge(currentState, newState)
+            }
+
+            const withoutLockUser = {
               data: {
-                ...persisted.data,
-                isServerConfigured: true,
-                url: SERVER_URL as string,
-                username: genUser(),
-                password: genPassword(),
-                authType: getAuthType(),
-                hideServer: HIDE_SERVER ?? false,
-                lockUser: true,
+                lockUser: false,
               },
               pages: {
-                ...persisted.pages,
                 hideRadiosSection,
               },
             }
 
-            return merge(currentState, newState)
-          }
+            if (persistedState) {
+              return merge(currentState, persistedState, withoutLockUser)
+            }
 
-          const withoutLockUser = {
-            ...persisted,
-            data: {
-              ...persisted.data,
-              lockUser: false,
-            },
-            pages: {
-              ...persisted.pages,
-              hideRadiosSection,
-            },
-          }
+            return merge(currentState, withoutLockUser)
+          } catch (error) {
+            logger.error('[AppStore] [merge] - Unable to merge states', error)
 
-          return merge(currentState, withoutLockUser)
+            return currentState
+          }
         },
         partialize: (state) => {
           const appStore = omit(
@@ -234,10 +291,26 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
       },
     ),
   ),
+  shallow,
 )
 
 export const useAppData = () => useAppStore((state) => state.data)
+export const useAppPodcasts = () => useAppStore((state) => state.podcasts)
 export const useAppPages = () => useAppStore((state) => state.pages)
 export const useAppActions = () => useAppStore((state) => state.actions)
 export const useAppUpdate = () => useAppStore((state) => state.update)
 export const useAppSettings = () => useAppStore((state) => state.settings)
+export const useAppArtistsViewType = () =>
+  useAppStore((state) => {
+    const { artistsPageViewType, setArtistsPageViewType } = state.pages
+
+    const isTableView = artistsPageViewType === 'table'
+    const isGridView = artistsPageViewType === 'grid'
+
+    return {
+      artistsPageViewType,
+      setArtistsPageViewType,
+      isTableView,
+      isGridView,
+    }
+  })

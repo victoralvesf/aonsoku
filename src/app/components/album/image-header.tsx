@@ -2,17 +2,17 @@ import randomCSSHexColor from '@chriscodesthings/random-css-hex-color'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { Link } from 'react-router-dom'
 
 import { getCoverArtUrl } from '@/api/httpClient'
 import { AlbumHeaderFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { BadgesData, HeaderInfoGenerator } from '@/app/components/header-info'
 import { CustomLightBox } from '@/app/components/lightbox'
 import { cn } from '@/lib/utils'
-import { ROUTES } from '@/routes/routesList'
 import { CoverArt } from '@/types/coverArtType'
+import { IFeaturedArtist } from '@/types/responses/artist'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
+import { AlbumArtistInfo, AlbumMultipleArtistsInfo } from './artists'
 import { ImageHeaderEffect } from './header-effect'
 
 interface ImageHeaderProps {
@@ -20,6 +20,7 @@ interface ImageHeaderProps {
   title: string
   subtitle?: string
   artistId?: string
+  artists?: IFeaturedArtist[]
   coverArtId?: string
   coverArtType: CoverArt
   coverArtSize: string
@@ -33,6 +34,7 @@ export default function ImageHeader({
   title,
   subtitle,
   artistId,
+  artists,
   coverArtId,
   coverArtType,
   coverArtSize,
@@ -75,6 +77,8 @@ export default function ImageHeader({
     setLoaded(true)
   }
 
+  const hasMultipleArtists = artists ? artists.length > 1 : false
+
   return (
     <div
       className="flex relative w-full h-[calc(3rem+200px)] 2xl:h-[calc(3rem+250px)]"
@@ -97,7 +101,7 @@ export default function ImageHeader({
             'w-[200px] h-[200px] min-w-[200px] min-h-[200px]',
             '2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px]',
             'bg-skeleton aspect-square bg-cover bg-center rounded',
-            'shadow-[0_4px_35px_rgba(0,0,0,0.6)] overflow-hidden',
+            'shadow-header-image overflow-hidden',
             'hover:scale-[1.02] ease-linear duration-100',
           )}
         >
@@ -117,35 +121,29 @@ export default function ImageHeader({
           />
         </div>
 
-        <div className="flex w-full flex-col justify-end z-10">
+        <div className="flex w-full max-w-[calc(100%-216px)] 2xl:max-w-[calc(100%-266px)] flex-col justify-end z-10">
           <p className="text-xs 2xl:text-sm font-medium drop-shadow">{type}</p>
           <h1
             className={clsx(
-              'scroll-m-20 font-bold tracking-tight antialiased drop-shadow-md line-clamp-2',
+              'max-w-full scroll-m-20 font-bold tracking-tight antialiased drop-shadow-md break-words line-clamp-2',
               getTextSizeClass(title),
             )}
           >
             {title}
           </h1>
 
-          {!isPlaylist && subtitle && (
+          {!isPlaylist && artists && hasMultipleArtists && (
+            <div className="flex items-center mt-2">
+              <AlbumMultipleArtistsInfo artists={artists} />
+              <HeaderInfoGenerator badges={badges} />
+            </div>
+          )}
+
+          {!isPlaylist && subtitle && !hasMultipleArtists && (
             <>
               {artistId ? (
                 <div className="flex items-center mt-2">
-                  <div className="w-6 h-6 rounded-full bg-accent/50 drop-shadow">
-                    <LazyLoadImage
-                      effect="opacity"
-                      src={getCoverArtUrl(artistId, 'artist', '100')}
-                      alt={subtitle}
-                      className="w-full h-full rounded-full aspect-square object-cover"
-                    />
-                  </div>
-                  <Link
-                    className="flex items-center ml-2 hover:underline text-sm font-medium drop-shadow"
-                    to={ROUTES.ARTIST.PAGE(artistId)}
-                  >
-                    {subtitle}
-                  </Link>
+                  <AlbumArtistInfo id={artistId} name={subtitle} />
                   <HeaderInfoGenerator badges={badges} />
                 </div>
               ) : (
@@ -182,7 +180,6 @@ export default function ImageHeader({
         close={setOpen}
         src={getCoverArtUrl(coverArtId, coverArtType, coverArtSize)}
         alt={coverArtAlt}
-        size={600}
       />
     </div>
   )

@@ -23,13 +23,19 @@ export function LangSelect() {
   const { t } = useTranslation()
   const { langCode, setLang, flag, langNativeName } = useLang()
 
+  function handleValueChange(lang: string) {
+    if (lang === langCode) return
+
+    setLang(lang)
+  }
+
   return (
     <Root>
       <Content>
         <ContentItem>
           <ContentItemTitle>{t('menu.language')}</ContentItemTitle>
           <ContentItemForm>
-            <Select value={langCode} onValueChange={(lang) => setLang(lang)}>
+            <Select value={langCode} onValueChange={handleValueChange}>
               <SelectTrigger className="h-8 ring-offset-transparent focus:ring-0 focus:ring-transparent text-left">
                 <SelectValue>
                   <ReactCountryFlag countryCode={flag} svg className="mr-2" />
@@ -44,7 +50,6 @@ export function LangSelect() {
                     <SelectItem
                       key={language.langCode}
                       value={language.langCode}
-                      disabled={language.langCode === langCode}
                     >
                       <ReactCountryFlag
                         countryCode={language.flag}

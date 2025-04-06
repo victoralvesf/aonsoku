@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import clsx from 'clsx'
 import { PlusIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
@@ -6,6 +7,7 @@ import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { SongListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
+import { EmptyPlaylistsPage } from '@/app/components/playlist/empty-page'
 import { Button } from '@/app/components/ui/button'
 import { DataTable } from '@/app/components/ui/data-table'
 import { playlistsColumns } from '@/app/tables/playlists-columns'
@@ -37,8 +39,10 @@ export default function PlaylistsPage() {
   if (isLoading) return <SongListFallback />
   if (!playlists) return null
 
+  const showTable = playlists.length > 0
+
   return (
-    <div className="w-full h-full">
+    <div className={clsx('w-full', showTable ? 'h-full' : 'h-content')}>
       <ShadowHeader>
         <div className="w-full flex items-center justify-between">
           <HeaderTitle
@@ -58,18 +62,23 @@ export default function PlaylistsPage() {
         </Button>
       </ShadowHeader>
 
-      <ListWrapper className="pt-[--shadow-header-distance]">
-        <DataTable
-          columns={columns}
-          data={playlists}
-          showPagination={true}
-          showSearch={true}
-          searchColumn="name"
-          handlePlaySong={(row) => handlePlayPlaylist(row.original.id)}
-          allowRowSelection={false}
-          dataType="playlist"
-        />
-      </ListWrapper>
+      {!showTable && <EmptyPlaylistsPage />}
+
+      {showTable && (
+        <ListWrapper className="pt-[--shadow-header-distance]">
+          <DataTable
+            columns={columns}
+            data={playlists}
+            showPagination={true}
+            showSearch={true}
+            searchColumn="name"
+            handlePlaySong={(row) => handlePlayPlaylist(row.original.id)}
+            allowRowSelection={false}
+            dataType="playlist"
+            noRowsMessage={t('options.playlist.notFound')}
+          />
+        </ListWrapper>
+      )}
     </div>
   )
 }

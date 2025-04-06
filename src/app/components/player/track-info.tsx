@@ -1,4 +1,6 @@
+import randomCSSHexColor from '@chriscodesthings/random-css-hex-color'
 import { AudioLines, Maximize2 } from 'lucide-react'
+import { useCallback } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -11,10 +13,46 @@ import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
+import { useSongColor } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
+import { getAverageColor } from '@/utils/getAverageColor'
+import { logger } from '@/utils/logger'
+import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
 
 export function TrackInfo({ song }: { song: ISong | undefined }) {
   const { t } = useTranslation()
+  const { setCurrentSongColor, currentSongColor } = useSongColor()
+
+  function getImageElement() {
+    return document.getElementById('track-song-image') as HTMLImageElement
+  }
+
+  const getImageColor = useCallback(async () => {
+    const img = getImageElement()
+    if (!img) return
+
+    let color = randomCSSHexColor(true)
+
+    try {
+      color = (await getAverageColor(img)).hex
+      logger.info('[TrackInfo] - Getting Image Average Color', {
+        color,
+      })
+    } catch {
+      logger.error('[TrackInfo] - Unable to get image average color.')
+    }
+
+    if (color !== currentSongColor) {
+      setCurrentSongColor(color)
+    }
+  }, [currentSongColor, setCurrentSongColor])
+
+  function handleError() {
+    const img = getImageElement()
+    if (!img) return
+
+    img.crossOrigin = null
+  }
 
   if (!song) {
     return (
@@ -39,19 +77,24 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
       <div className="group relative">
         <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md">
           <LazyLoadImage
-            src={getCoverArtUrl(song.coverArt, 'song', '140')}
+            key={song.id}
+            id="track-song-image"
+            src={getCoverArtUrl(song.coverArt, 'song', '400')}
             width="100%"
             height="100%"
-            className="aspect-square object-cover w-full h-full cursor-pointer text-transparent"
+            crossOrigin="anonymous"
+            className="aspect-square object-cover w-full h-full cursor-pointer bg-skeleton text-transparent"
             data-testid="track-image"
             alt={`${song.artist} - ${song.title}`}
+            onLoad={getImageColor}
+            onError={handleError}
           />
         </div>
         <FullscreenMode>
           <Button
             variant="secondary"
             size="icon"
-            className="cursor-pointer w-8 h-8 shadow-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity ease-in-out absolute top-1 right-1"
+            className="cursor-pointer w-8 h-8 shadow-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity ease-in-out absolute top-1 right-1 focus-visible:opacity-100"
             data-testid="track-fullscreen-button"
           >
             <SimpleTooltip text={t('fullscreen.switchButton')} align="start">
@@ -64,7 +107,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
       </div>
       <div className="flex flex-col justify-center w-full overflow-hidden">
         <MarqueeTitle gap="mr-2">
-          <Link to={ROUTES.ALBUM.PAGE(song.albumId)}>
+          <Link to={ROUTES.ALBUM.PAGE(song.albumId)} tabIndex={-1}>
             <span
               className="text-sm font-medium hover:underline cursor-pointer"
               data-testid="track-title"
@@ -73,24 +116,57 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
             </span>
           </Link>
         </MarqueeTitle>
-        <Link
-          to={ROUTES.ARTIST.PAGE(song.artistId!)}
-          className={cn(
-            'w-fit inline-flex',
-            !song.artistId && 'pointer-events-none',
-          )}
-          data-testid="track-artist-url"
-        >
-          <span
-            className={cn(
-              'text-xs font-regular text-muted-foreground',
-              song.artistId && 'hover:underline',
-            )}
-          >
-            {song.artist}
-          </span>
-        </Link>
+        <TrackInfoArtistsLinks song={song} />
       </div>
     </Fragment>
+  )
+}
+
+type TrackInfoArtistsLinksProps = {
+  song: ISong
+}
+
+function TrackInfoArtistsLinks({ song }: TrackInfoArtistsLinksProps) {
+  const { artists, artistId, artist } = song
+
+  if (artists && artists.length > 1) {
+    const reducedArtists = artists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
+
+    return (
+      <div className="flex items-center gap-1 text-xs text-muted-foreground w-full maskImage-marquee-fade-finished">
+        {reducedArtists.map(({ id, name }, index) => (
+          <div key={id} className="flex items-center">
+            <ArtistLink id={id} name={name} />
+            {index < reducedArtists.length - 1 && ','}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  return <ArtistLink id={artistId} name={artist} />
+}
+
+type ArtistLinkProps = {
+  id?: string
+  name: string
+}
+
+function ArtistLink({ id, name }: ArtistLinkProps) {
+  return (
+    <Link
+      to={ROUTES.ARTIST.PAGE(id ?? '')}
+      className={cn('w-fit inline-flex', !id && 'pointer-events-none')}
+      data-testid="track-artist-url"
+    >
+      <span
+        className={cn(
+          'text-xs text-muted-foreground text-nowrap',
+          id && 'hover:underline hover:text-foreground',
+        )}
+      >
+        {name}
+      </span>
+    </Link>
   )
 }

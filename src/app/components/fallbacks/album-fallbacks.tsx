@@ -1,8 +1,8 @@
 import { ImageHeaderEffect } from '@/app/components/album/header-effect'
-import { SongsCarouselFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { TableFallback } from '@/app/components/fallbacks/table-fallbacks'
 import { ShadowHeaderFallback } from '@/app/components/fallbacks/ui-fallbacks'
 import ListWrapper from '@/app/components/list-wrapper'
+import { MainGrid } from '@/app/components/main-grid'
 import { Skeleton } from '@/app/components/ui/skeleton'
 
 export function AlbumHeaderFallback() {
@@ -59,12 +59,22 @@ export function AlbumsFallback() {
       <ShadowHeaderFallback />
 
       <ListWrapper className="mt-6 flex flex-col gap-4">
-        <SongsCarouselFallback />
-        <SongsCarouselFallback />
-        <SongsCarouselFallback />
-        <SongsCarouselFallback />
-        <SongsCarouselFallback />
+        <GridFallback />
       </ListWrapper>
     </div>
+  )
+}
+
+function GridFallback() {
+  return (
+    <MainGrid>
+      {Array.from({ length: 40 }).map((_, index) => (
+        <div key={'card-fallback-' + index}>
+          <Skeleton className="aspect-square" />
+          <Skeleton className="h-[13px] w-11/12 mt-2" />
+          <Skeleton className="h-3 w-1/2 mt-[7px]" />
+        </div>
+      ))}
+    </MainGrid>
   )
 }

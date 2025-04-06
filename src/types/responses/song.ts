@@ -1,3 +1,4 @@
+import { IFeaturedArtist } from './artist'
 import { SubsonicResponse } from './subsonicResponse'
 
 export interface IReplayGain {
@@ -15,6 +16,11 @@ export interface ILyric {
   artist?: string
   title?: string
   value?: string
+}
+
+export interface IContributor {
+  role: string
+  artist: IFeaturedArtist
 }
 
 export interface ISong {
@@ -50,6 +56,17 @@ export interface ISong {
   musicBrainzId: string
   genres: IGenre[]
   replayGain: IReplayGain
+  channelCount?: number
+  samplingRate?: number
+  bitDepth?: number
+  moods?: string[]
+  artists?: IFeaturedArtist[]
+  displayArtist?: string
+  albumArtists?: IFeaturedArtist[]
+  displayAlbumArtist?: string
+  contributors?: IContributor[]
+  displayComposer?: string
+  explicitStatus?: string
 }
 
 export interface SongList {

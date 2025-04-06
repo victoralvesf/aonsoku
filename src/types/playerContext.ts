@@ -1,3 +1,4 @@
+import { EpisodeWithPodcast } from './responses/podcasts'
 import { Radio } from './responses/radios'
 import { ISong } from './responses/song'
 
@@ -15,6 +16,8 @@ export interface ISongList {
   originalList: ISong[]
   originalSongIndex: number
   radioList: Radio[]
+  podcastList: EpisodeWithPodcast[]
+  podcastListProgresses: number[]
 }
 
 export interface IPlayerState {
@@ -24,9 +27,14 @@ export interface IPlayerState {
   isSongStarred: boolean
   volume: number
   currentDuration: number
-  mediaType: 'song' | 'radio'
+  mediaType: 'song' | 'radio' | 'podcast'
+  currentPlaybackRate: number
   audioPlayerRef: HTMLAudioElement | null
-  queueDrawerState: boolean
+  mainDrawerState: boolean
+  queueState: boolean
+  lyricsState: boolean
+  hasPrev: boolean
+  hasNext: boolean
 }
 
 export interface IPlayerProgress {
@@ -73,11 +81,43 @@ interface ILyrics {
   setPreferSyncedLyrics: (value: boolean) => void
 }
 
+export interface IPrivacySettings {
+  lrcLibEnabled: boolean
+  setLrcLibEnabled: (value: boolean) => void
+}
+
+interface IBlurSettings {
+  value: number
+  settings: {
+    min: number
+    max: number
+    step: number
+  }
+}
+
+interface IBigPlayerSettings {
+  useSongColor: boolean
+  blur: IBlurSettings
+}
+
+interface IQueueSettings {
+  useSongColor: boolean
+}
+
+interface IColorsSettings {
+  currentSongColor: string | null
+  currentSongColorIntensity: number
+  bigPlayer: IBigPlayerSettings
+  queue: IQueueSettings
+}
+
 export interface IPlayerSettings {
   volume: IVolumeSettings
   fullscreen: IFullscreen
   lyrics: ILyrics
   replayGain: IReplayGain
+  privacy: IPrivacySettings
+  colors: IColorsSettings
 }
 
 export interface IPlayerActions {
@@ -108,11 +148,33 @@ export interface IPlayerActions {
   setNextOnQueue: (songlist: ISong[]) => void
   setLastOnQueue: (songlist: ISong[]) => void
   removeSongFromQueue: (id: string) => void
-  setQueueDrawerState: (state: boolean) => void
+  setMainDrawerState: (state: boolean) => void
+  setQueueState: (state: boolean) => void
+  toggleQueueAction: () => void
+  setLyricsState: (state: boolean) => void
+  toggleLyricsAction: () => void
+  toggleQueueAndLyrics: () => void
+  closeDrawer: () => void
   playFirstSongInQueue: () => void
   handleSongEnded: () => void
   getCurrentProgress: () => number
   resetConfig: () => void
+  setPlayPodcast: (
+    list: EpisodeWithPodcast[],
+    index: number,
+    progress: number,
+  ) => void
+  setUpdatePodcastProgress: (value: number) => void
+  getCurrentPodcastProgress: () => number
+  setPlaybackRate: (value: number) => void
+  setNextPodcast: (episode: EpisodeWithPodcast, progress: number) => void
+  setLastPodcast: (episode: EpisodeWithPodcast, progress: number) => void
+  updateQueueChecks: () => void
+  setCurrentSongColor: (value: string | null) => void
+  setCurrentSongIntensity: (value: number) => void
+  setUseSongColorOnQueue: (value: boolean) => void
+  setUseSongColorOnBigPlayer: (value: boolean) => void
+  setBigPlayerBlurValue: (value: number) => void
 }
 
 export interface IPlayerContext {

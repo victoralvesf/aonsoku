@@ -1,0 +1,315 @@
+{
+  "home": {
+    "mostPlayed": "Nejčastěji přehrávané",
+    "recentlyAdded": "Nedávno přidané",
+    "recentlyPlayed": "Nedávno přehrané",
+    "explore": "Objevujte"
+  },
+  "sidebar": {
+    "home": "Domů",
+    "search": "Hledat…",
+    "library": "Knihovna",
+    "songs": "Skladby",
+    "albums": "Alba",
+    "playlists": "Playlisty",
+    "emptyPlaylist": "Zatím nebyly vytvořeny žádné playlisty",
+    "podcasts": "Podcasty",
+    "miniSearch": "Hledat",
+    "radios": "Rádiové stanice",
+    "artists": "Umělci"
+  },
+  "menu": {
+    "language": "Jazyk",
+    "about": "O aplikaci",
+    "server": "Server",
+    "serverLogout": "Odhlásit se"
+  },
+  "generic": {
+    "seeMore": "Ukázat více",
+    "showDetails": "Ukázat detaily",
+    "hideDetails": "Skrýt detaily",
+    "viewAll": "Zobrazit vše",
+    "loading": "Načítání…",
+    "viewMode": {
+      "label": "Režim zobrazení",
+      "modes": {
+        "list": "Seznam",
+        "poster": "Plakát"
+      }
+    },
+    "beta": "Beta"
+  },
+  "theme": {
+    "label": "Motiv",
+    "dark": "Tmavý",
+    "system": "Systémový",
+    "light": "Světlý",
+    "black": "Černo-bílý",
+    "one-dark": "One Dark",
+    "night-owl-light": "Night Owl Světlý",
+    "marmalade-beaver": "Marmalade Beaver",
+    "material-theme": "Material Theme",
+    "monokai-pro": "Monokai Pro",
+    "github-dark": "Github Dark",
+    "shades-of-purple": "Odstíny Fialové",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "dracula": "Dracula",
+    "discord": "Discord",
+    "tinacious-design": "Tinacious Design",
+    "vim-dark-soft": "Vim Dark Soft",
+    "nuclear-dark": "Nuclear Dark",
+    "bearded-solarized": "Bearded Solarized",
+    "vue-dark": "Vue Dark",
+    "noctis-lilac": "Noctis Lilac",
+    "achiever": "Achiever"
+  },
+  "playlist": {
+    "headline": "Playlist",
+    "songCount_one": "{{count}} skladba",
+    "songCount_few": "{{count}} skladby",
+    "songCount_other": "{{count}} skladeb"
+  },
+  "table": {
+    "sort": {
+      "asc": "Vzestupně",
+      "desc": "Sestupně",
+      "reset": "Resetovat"
+    },
+    "pagination": {
+      "screenReader": {
+        "lastPage": "Přejít na poslední stránku",
+        "previousPage": "Přejít na předchozí stránku",
+        "nextPage": "Přejít na další stránku",
+        "firstPage": "Přejít na první stránku"
+      },
+      "rowsPerPage": "Řádky na stránce",
+      "currentPage": "Stránka {{currentPage}} z {{totalPages}}"
+    },
+    "menu": {
+      "selectedCount_one": "{{count}} vybrán",
+      "selectedCount_few": "{{count}} vybrány",
+      "selectedCount_other": "{{count}} vybráno"
+    }
+  },
+  "login": {
+    "form": {
+      "validations": {
+        "protocol": "URL musí začínat http:// nebo https://",
+        "url": "Prosím zadej platnou URL.",
+        "usernameLength": "Uživatelské jméno musí obsahovat alespoň 2 znaky.",
+        "password": "Prosím zadej heslo",
+        "passwordLength": "Heslo musí mít alespoň 2 znaky.",
+        "username": "Prosím zadej uživatelské jméno"
+      },
+      "connect": "Připojit",
+      "connecting": "Připojuji…",
+      "usernamePlaceholder": "Tvé uživatelské jméno",
+      "password": "Heslo",
+      "server": "Server",
+      "username": "Uživatelské jméno",
+      "description": "Připoj se ke svému Subsonic serveru.",
+      "url": "URL",
+      "urlDescription": "Toto je URL tvého serveru"
+    }
+  },
+  "command": {
+    "commands": {
+      "pages": "Jít na stránku",
+      "theme": "Změna motivu",
+      "heading": "Příkazy"
+    },
+    "noResults": "Žádné výsledky.",
+    "inputPlaceholder": "Vyhledej album, umělce nebo skladbu",
+    "pages": "Stránky"
+  },
+  "player": {
+    "tooltips": {
+      "play": "Přehrát",
+      "pause": "Pozastavit",
+      "forward": "Přetočit dopředu o {{amount}} seconds",
+      "repeat": {
+        "disable": "Vypnout opakování",
+        "enableOne": "Zapnout opakování jednou",
+        "enable": "Zapnout opakování"
+      },
+      "like": "Přidat {{song}} od {{artist}} do oblíbených",
+      "dislike": "Odebrat {{song}} od {{artist}} z oblíbených",
+      "shuffle": {
+        "enable": "Zapnout náhodné přehrávání",
+        "disable": "Vypnout náhodné přehrávání"
+      },
+      "miniPlayer": {
+        "close": "Zavřít minipřehrávač",
+        "open": "Otevřít minipřehrávač"
+      },
+      "volume": {
+        "unmute": "Odztlumit",
+        "mute": "Ztlumit"
+      },
+      "rewind": "Přetočit o {{amount}} sekund",
+      "previous": "Předchozí",
+      "next": "Další"
+    },
+    "noSongPlaying": "Nepřehrává se žádná skladba",
+    "noRadioPlaying": "Nepřehrává se žádné rádio"
+  },
+  "options": {
+    "play": "Přehrát",
+    "info": "Informace",
+    "playNext": "Přehrát jako další",
+    "addLast": "Přidat na konec",
+    "playlist": {
+      "add": "Přidat do playlistu",
+      "edit": "Upravit playlist",
+      "delete": "Smazat playlist",
+      "search": "Vyhledat playlist",
+      "create": "Nový playlist",
+      "removeSong": "Odebrat z playlistu",
+      "notFound": "Nebyl nalezen žádný playlist"
+    },
+    "goto": {
+      "episode": "Přejít na epizodu",
+      "podcast": "Přejít na podcast"
+    },
+    "download": "Stáhnout",
+    "markAsPlayed": "Označit jako přehrané"
+  },
+  "radios": {
+    "addRadio": "Přidat rádio",
+    "table": {
+      "stream": "URL streamu",
+      "actions": {
+        "delete": "Smazat rádio",
+        "edit": "Upravit rádio"
+      },
+      "playTooltip": "Přehrát rádio {{name}}",
+      "pauseTooltip": "Pozastavit rádio {{name}}",
+      "name": "Název",
+      "homepage": "URL domovské stránky"
+    },
+    "empty": {
+      "title": "Nemáš tu žádné rádiové stanice!",
+      "info": "Klikni pro přidání tvé první rádiové stanice."
+    },
+    "label": "Rádio",
+    "form": {
+      "create": {
+        "title": "Přidat rádio",
+        "toast": {
+          "error": "Vytváření rádia selhalo!",
+          "success": "Rádio bylo úspěšně vytvořeno!"
+        },
+        "button": "Uložit"
+      },
+      "edit": {
+        "title": "Upravit Rádio",
+        "button": "Aktualizovat",
+        "toast": {
+          "success": "Rádio bylo úspěšně aktualizováno!",
+          "error": "Aktualizace rádia selhala!"
+        }
+      },
+      "delete": {
+        "description": "Tuto akci nelze vrátit zpět.",
+        "toast": {
+          "success": "Rádio bylo úspěšně odstraněno!",
+          "error": "Odstranění rádia selhalo!"
+        },
+        "title": "Jsi si jistý, že chceš tuto rádiovou stanici smazat?"
+      },
+      "validations": {
+        "name": "Název rádia musí obsahovat alespoň 3 znaky.",
+        "url": "Zadej prosím platnou URL.",
+        "homepageUrlLength": "URL domovské stránky musí obsahovat alespoň 10 znaků",
+        "streamUrlLength": "URL streamu musí obsahovat alespoň 10 znaků"
+      }
+    },
+    "error": "Rádio nelze přehrát, zkontroluj si URL streamu!"
+  },
+  "fullscreen": {
+    "noLyrics": "Nebyly nalezeny žádné texty",
+    "loadingLyrics": "Hledám texty…",
+    "queue": "Fronta",
+    "playing": "Nyní hraje",
+    "lyrics": "Texty",
+    "switchButton": "Přepnout na velký přehrávač"
+  },
+  "logout": {
+    "dialog": {
+      "title": "Jsi připraven se na teď rozloučit?",
+      "description": "Potvrď pro odhlášení.",
+      "cancel": "Zrušit",
+      "confirm": "Pokračovat"
+    }
+  },
+  "toast": {
+    "server": {
+      "success": "Server byl úspěšně uložen!",
+      "error": "Komunikace se serverem selhala!"
+    }
+  },
+  "time": {
+    "days_one": "{{days}} den",
+    "days_few": "{{days}} dny",
+    "days_other": "{{days}} dní",
+    "hour": "{{hour}} h",
+    "minutes": "{{minutes}} min",
+    "seconds": "{{seconds}} s"
+  },
+  "server": {
+    "songCount_one": "{{count}} skladba",
+    "songCount_few": "{{count}} skladby",
+    "songCount_other": "{{count}} skladeb",
+    "status": "Stav",
+    "incompatible": {
+      "title": "Nekompatibilní server",
+      "description": "Tento server používá starší verzi Subsonic protokolu, která není plně podporovaná. Buď prosím opatrný, protože mohou nastat problémy.",
+      "skip": "Přesto pokračovat"
+    },
+    "buttons": {
+      "refresh": "Obnovit stav",
+      "startScan": "Rychlý sken"
+    },
+    "folderCount_one": "{{count}} složka",
+    "folderCount_few": "{{count}} složky",
+    "folderCount_other": "{{count}} složek",
+    "lastScan": "Poslední sken: {{date}}",
+    "management": "Správa serveru"
+  },
+  "downloads": {
+    "started": "Stahování začalo.",
+    "failed": "Nastala chyba při stahování souboru.",
+    "completed": "Soubor byl stažen."
+  },
+  "shortcuts": {
+    "playback": {
+      "lowerVolume": "Snížit hlasitost",
+      "raiseVolume": "Zvýšit hlasitost",
+      "label": "Přehrávání",
+      "play": "Přehrát / Pozastavit",
+      "shuffle": "Náhodné přehrávání",
+      "repeat": "Opakovat",
+      "previous": "Přeskočit na předchozí",
+      "next": "Přeskočit na další"
+    },
+    "modal": {
+      "title": "Klávesové zkratky",
+      "description": {
+        "first": "Stiskni",
+        "last": "pro přepnutí tohoto dialogového okna."
+      }
+    },
+    "navigation": {
+      "label": "Navigace"
+    }
+  },
+  "queue": {
+    "title": "Fronta",
+    "clear": "Vyprázdnit frontu",
+    "close": "Uzavřít frontu",
+    "open": "Otevřít frontu"
+  },
+  "songInfo": {
+    "title": "Detaily skladby"
+  }
+}

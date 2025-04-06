@@ -4,6 +4,7 @@ import {
   useMemo,
   useCallback,
   useEffect,
+  useState,
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -31,15 +32,13 @@ export function AudioPlayer({
   ...props
 }: AudioPlayerProps) {
   const { t } = useTranslation()
+  const [previousGain, setPreviousGain] = useState(1)
   const { replayGainEnabled, replayGainError } = useReplayGainState()
-  const mediaType = usePlayerMediaType()
+  const { isSong, isRadio, isPodcast } = usePlayerMediaType()
   const { setPlayingState } = usePlayerActions()
   const { setReplayGainEnabled, setReplayGainError } = useReplayGainActions()
   const { volume } = usePlayerVolume()
   const isPlaying = usePlayerIsPlaying()
-
-  const isRadio = mediaType === 'radio'
-  const isSong = mediaType === 'song'
 
   const gainValue = useMemo(() => {
     const audioVolume = volume / 100
@@ -54,12 +53,16 @@ export function AudioPlayer({
 
   const { resumeContext, setupGain } = useAudioContext(audioRef.current)
 
-  useEffect(() => {
-    if (isRadio || replayGainError || !audioRef.current || isLinux) return
+  const ignoreGain = !isSong || replayGainError || isLinux
 
-    audioRef.current.crossOrigin = 'anonymous'
+  useEffect(() => {
+    if (ignoreGain || !audioRef.current) return
+
+    if (gainValue === previousGain) return
+
     setupGain(gainValue, replayGain)
-  }, [audioRef, gainValue, isRadio, replayGain, replayGainError, setupGain])
+    setPreviousGain(gainValue)
+  }, [audioRef, ignoreGain, gainValue, previousGain, replayGain, setupGain])
 
   const handleSongError = useCallback(() => {
     const audio = audioRef.current
@@ -103,7 +106,7 @@ export function AudioPlayer({
 
       try {
         if (isPlaying) {
-          await resumeContext()
+          if (isSong) await resumeContext()
           await audio.play()
         } else {
           audio.pause()
@@ -113,8 +116,8 @@ export function AudioPlayer({
         handleSongError()
       }
     }
-    if (isSong) handleSong()
-  }, [audioRef, handleSongError, isPlaying, isSong, resumeContext])
+    if (isSong || isPodcast) handleSong()
+  }, [audioRef, handleSongError, isPlaying, isSong, isPodcast, resumeContext])
 
   useEffect(() => {
     async function handleRadio() {
@@ -138,5 +141,18 @@ export function AudioPlayer({
     return undefined
   }, [handleRadioError, handleSongError, isRadio, isSong])
 
-  return <audio ref={audioRef} {...props} onError={handleError} />
+  const crossOrigin = useMemo(() => {
+    if (isLinux || !isSong || replayGainError) return undefined
+
+    return 'anonymous'
+  }, [isSong, replayGainError])
+
+  return (
+    <audio
+      ref={audioRef}
+      {...props}
+      crossOrigin={crossOrigin}
+      onError={handleError}
+    />
+  )
 }

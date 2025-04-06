@@ -25,7 +25,7 @@ export function HeaderItem({ song }: { song: ISong }) {
     }
   }
 
-  const coverArtUrl = getCoverArtUrl(song.id, 'song', '400')
+  const coverArtUrl = getCoverArtUrl(song.coverArt, 'song', '400')
 
   return (
     <div
@@ -36,7 +36,7 @@ export function HeaderItem({ song }: { song: ISong }) {
     >
       <div
         data-testid="header-bg"
-        className="absolute -inset-10 bg-cover bg-center z-0"
+        className="absolute -inset-10 bg-cover bg-center z-0 bg-skeleton"
         style={{
           backgroundImage: `url(${coverArtUrl})`,
           filter: isFirefox ? 'blur(24px)' : undefined,

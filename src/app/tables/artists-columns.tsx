@@ -1,13 +1,18 @@
-import { Link } from 'react-router-dom'
-
-import { CoverImage } from '@/app/components/table/cover-image'
+import { memo } from 'react'
+import { ArtistTitle } from '@/app/components/table/artist-title.tsx'
 import { TableLikeButton } from '@/app/components/table/like-button'
 import PlaySongButton from '@/app/components/table/play-button'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
 import i18n from '@/i18n'
-import { ROUTES } from '@/routes/routesList'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISimilarArtist } from '@/types/responses/artist'
+
+const MemoArtistTitle = memo(ArtistTitle)
+const MemoPlaySongButton = memo(PlaySongButton)
+const MemoDataTableColumnHeader = memo(
+  DataTableColumnHeader,
+) as typeof DataTableColumnHeader
+const MemoTableLikeButton = memo(TableLikeButton)
 
 export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
   return [
@@ -26,11 +31,9 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
         const artist = row.original
 
         return (
-          <PlaySongButton
-            type="artist"
+          <MemoPlaySongButton
             trackNumber={index}
             trackId={artist.id}
-            title={artist.name}
             handlePlayButton={() => table.options.meta?.handlePlaySong?.(row)}
           />
         )
@@ -46,27 +49,11 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
         minWidth: 100,
       },
       header: ({ column, table }) => (
-        <DataTableColumnHeader column={column} table={table}>
+        <MemoDataTableColumnHeader column={column} table={table}>
           {i18n.t('table.columns.name')}
-        </DataTableColumnHeader>
+        </MemoDataTableColumnHeader>
       ),
-      cell: ({ row }) => (
-        <div className="flex gap-2 items-center min-w-[200px] 2xl:min-w-[350px]">
-          <CoverImage
-            coverArt={row.original.coverArt}
-            coverArtType="artist"
-            altText={row.original.name}
-          />
-          <div className="flex flex-col justify-center items-center">
-            <Link
-              to={ROUTES.ARTIST.PAGE(row.original.id)}
-              className="hover:underline flex w-fit"
-            >
-              <p>{row.original.name}</p>
-            </Link>
-          </div>
-        </div>
-      ),
+      cell: ({ row }) => <MemoArtistTitle artist={row.original} />,
     },
     {
       id: 'albumCount',
@@ -78,9 +65,9 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
         maxWidth: '15%',
       },
       header: ({ column, table }) => (
-        <DataTableColumnHeader column={column} table={table}>
+        <MemoDataTableColumnHeader column={column} table={table}>
           {i18n.t('table.columns.albumCount')}
-        </DataTableColumnHeader>
+        </MemoDataTableColumnHeader>
       ),
     },
     {
@@ -95,7 +82,7 @@ export function artistsColumns(): ColumnDefType<ISimilarArtist>[] {
         const { starred, id } = row.original
 
         return (
-          <TableLikeButton
+          <MemoTableLikeButton
             type="artist"
             entityId={id}
             starred={typeof starred === 'string'}

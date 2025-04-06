@@ -55,15 +55,20 @@ export function ContentItem({
   )
 }
 
-interface ContentItemTitleProps {
+interface ContentItemTitleProps extends ComponentPropsWithoutRef<'span'> {
   info?: string
-  children: ReactNode
 }
 
-export function ContentItemTitle({ info, children }: ContentItemTitleProps) {
+export function ContentItemTitle({
+  info,
+  className,
+  children,
+}: ContentItemTitleProps) {
   return (
     <div className="flex flex-1 items-center gap-1">
-      <span className="text-sm leading-none text-foreground">{children}</span>
+      <span className={cn('text-sm leading-none text-foreground', className)}>
+        {children}
+      </span>
       {info && (
         <SimpleTooltip text={info} delay={0}>
           <div className="hover:bg-muted-foreground/20 p-1 rounded cursor-pointer">
@@ -82,7 +87,7 @@ export function ContentItemForm({
 }: SectionComponent) {
   return (
     <div
-      className={cn('w-1/3 flex items-center justify-end', className)}
+      className={cn('w-2/5 max-w-52 flex items-center justify-end', className)}
       {...props}
     >
       {children}

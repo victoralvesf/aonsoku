@@ -17,8 +17,9 @@ import {
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
 import { LogoutObserver } from '@/app/observers/logout-observer'
+import { logoutKeys, shortcutDialogKeys, stringifyShortcut } from '@/shortcuts'
 import { useAppData, useAppStore } from '@/store/app.store'
-import { isWindows } from '@/utils/osType'
+import { isMac } from '@/utils/osType'
 
 export function UserDropdown() {
   const { username, url, lockUser } = useAppData()
@@ -32,11 +33,7 @@ export function UserDropdown() {
   useHotkeys('shift+ctrl+q', () => setLogoutDialogState(true))
   useHotkeys('mod+/', () => setShortcutsOpen((prev) => !prev))
 
-  function getAlignPosition() {
-    if (isWindows) return 'center'
-
-    return 'end'
-  }
+  const alignPosition = isMac ? 'end' : 'center'
 
   return (
     <Fragment>
@@ -46,14 +43,14 @@ export function UserDropdown() {
       <AboutDialog open={aboutOpen} onOpenChange={setAboutOpen} />
 
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="user-dropdown-trigger">
-          <Avatar className="w-8 h-8 rounded-full cursor-pointer bg-muted">
-            <AvatarFallback className="text-sm hover:bg-accent">
+        <DropdownMenuTrigger className="user-dropdown-trigger">
+          <Avatar className="w-8 h-8 rounded-full cursor-pointer">
+            <AvatarFallback className="text-sm bg-transparent hover:bg-accent">
               <User className="w-4 h-4" />
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align={getAlignPosition()} className="min-w-64">
+        <DropdownMenuContent align={alignPosition} className="min-w-64">
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-2">
               <p className="text-sm font-medium leading-none">{username}</p>
@@ -66,7 +63,9 @@ export function UserDropdown() {
           <DropdownMenuItem onClick={() => setShortcutsOpen(true)}>
             <Keyboard className="mr-2 h-4 w-4" />
             <span>{t('shortcuts.modal.title')}</span>
-            <DropdownMenuShortcut>{'⌘/'}</DropdownMenuShortcut>
+            <DropdownMenuShortcut>
+              {stringifyShortcut(shortcutDialogKeys)}
+            </DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setAboutOpen(true)}>
@@ -79,7 +78,9 @@ export function UserDropdown() {
               <DropdownMenuItem onClick={() => setLogoutDialogState(true)}>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>{t('menu.serverLogout')}</span>
-                <DropdownMenuShortcut>{'⇧⌃Q'}</DropdownMenuShortcut>
+                <DropdownMenuShortcut>
+                  {stringifyShortcut(logoutKeys)}
+                </DropdownMenuShortcut>
               </DropdownMenuItem>
             </>
           )}

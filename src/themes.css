@@ -75,8 +75,8 @@
   }
 
   .one-dark {
-    --background: 220 13% 18%;
-    --background-foreground: 220 13% 16%;
+    --background: 220 13% 16%;
+    --background-foreground: 220 13% 18%;
     --foreground: 219 14% 84%;
     --muted: 220 12% 22%;
     --muted-foreground: 220 12% 72%;
@@ -121,8 +121,8 @@
   }
 
   .marmalade-beaver {
-    --background: 233 18% 19%;
-    --background-foreground: 233 18% 17%;
+    --background: 233 18% 17%;
+    --background-foreground: 233 18% 19%;
     --foreground: 173 24% 93%;
     --muted: 233 12% 23%;
     --muted-foreground: 233 12% 73%;
@@ -167,8 +167,8 @@
   }
 
   .material-theme {
-    --background: 200 19% 18%;
-    --background-foreground: 200 19% 16%;
+    --background: 200 19% 16%;
+    --background-foreground: 200 19% 18%;
     --foreground: 180 100% 97%;
     --muted: 200 12% 22%;
     --muted-foreground: 200 12% 72%;
@@ -190,8 +190,8 @@
   }
 
   .monokai-pro {
-    --background: 285 5% 17%;
-    --background-foreground: 285 5% 15%;
+    --background: 285 5% 15%;
+    --background-foreground: 285 5% 17%;
     --foreground: 60 25% 98%;
     --muted: 285 12% 21%;
     --muted-foreground: 285 12% 71%;
@@ -213,8 +213,8 @@
   }
 
   .github-dark {
-    --background: 216 28% 7%;
-    --background-foreground: 216 28% 5%;
+    --background: 216 28% 5%;
+    --background-foreground: 216 28% 7%;
     --foreground: 210 17% 82%;
     --muted: 216 12% 15%;
     --muted-foreground: 216 12% 65%;
@@ -236,8 +236,8 @@
   }
 
   .shades-of-purple {
-    --background: 243 33% 25%;
-    --background-foreground: 243 33% 23%;
+    --background: 243 33% 23%;
+    --background-foreground: 243 33% 25%;
     --foreground: 0 0% 100%;
     --muted: 243 12% 29%;
     --muted-foreground: 243 12% 79%;
@@ -259,8 +259,8 @@
   }
 
   .bearded-solarized {
-    --background: 195 46% 14%;
-    --background-foreground: 195 46% 12%;
+    --background: 195 46% 12%;
+    --background-foreground: 195 46% 14%;
     --foreground: 194 37% 84%;
     --muted: 195 12% 18%;
     --muted-foreground: 195 12% 68%;
@@ -282,8 +282,8 @@
   }
 
   .catppuccin-mocha {
-    --background: 240 21% 15%;
-    --background-foreground: 240 21% 13%;
+    --background: 240 21% 13%;
+    --background-foreground: 240 21% 15%;
     --foreground: 226 64% 88%;
     --muted: 240 12% 19%;
     --muted-foreground: 240 12% 69%;
@@ -305,8 +305,8 @@
   }
 
   .nuclear-dark {
-    --background: 213 30.3% 12.94%;
-    --background-foreground: 213 30.3% 10.94%;
+    --background: 213 30.3% 10.94%;
+    --background-foreground: 213 30.3% 12.94%;
     --foreground: 90 40% 98.04%;
     --muted: 218.82 17.89% 18.63%;
     --muted-foreground: 0 0% 82.35%;
@@ -320,7 +320,7 @@
     --primary-foreground: 0 0% 100%;
     --secondary: 213.91 26.44% 17.06%;
     --secondary-foreground: 90 40% 98.04%;
-    --accent: 220.91 39.29% 10.98%;
+    --accent: 220.91 39.29% 20.98%;
     --accent-foreground: 90 40% 98.04%;
     --destructive: 344.15 100% 46.54%;
     --destructive-foreground: 0 0% 100%;
@@ -364,7 +364,7 @@
     --input: 225 27% 31%;
     --primary: 265 89% 78%;
     --primary-foreground: 60 30% 96%;
-    --secondary: 326 100% 74%;
+    --secondary: 232 14% 31%;
     --secondary-foreground: 60 30% 96%;
     --accent: 225 27% 31%;
     --accent-foreground: 60 30% 96%;
@@ -374,8 +374,8 @@
   }
 
   .discord {
-    --background: 217.5 9.09% 17.25%;
-    --background-foreground: 221 4% 15%;
+    --background: 221 4% 15%;
+    --background-foreground: 217.5 9.09% 17.25%;
     --foreground: 334 34% 98%;
     --muted: 210 9.09% 12.94%;
     --muted-foreground: 334 0% 60.77%;
@@ -421,7 +421,7 @@
 
   .vue-dark {
     --background: 192 100% 10%;
-    --background-foreground: 192 100% 8%;
+    --background-foreground: 192 100% 12%;
     --foreground: 0 0% 90%;
     --muted: 192 12% 15%;
     --muted-foreground: 192 12% 65%;
@@ -443,12 +443,12 @@
   }
 
   .vim-dark-soft {
-    --background: 20 3% 19%;
-    --background-foreground: 20 3% 16%;
+    --background: 20 3% 17%;
+    --background-foreground: 20 3% 19%;
     --foreground: 43 59% 81%;
     --muted: 20 12% 23%;
     --muted-foreground: 20 12% 73%;
-    --popover: 20 3% 16%;
+    --popover: 20 3% 17%;
     --popover-foreground: 43 59% 91%;
     --card: 20 3% 17%;
     --card-foreground: 43 59% 86%;

@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react'
-import { Slider } from '@/app/components/ui/slider'
+import { ProgressSlider } from '@/app/components/ui/slider'
 import {
   usePlayerActions,
   usePlayerDuration,
   usePlayerProgress,
-  usePlayerState,
+  usePlayerRef,
 } from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
@@ -13,7 +13,7 @@ let isSeeking = false
 export function FullscreenProgress() {
   const progress = usePlayerProgress()
   const [localProgress, setLocalProgress] = useState(progress)
-  const { audioPlayerRef } = usePlayerState()
+  const audioPlayerRef = usePlayerRef()
   const currentDuration = usePlayerDuration()
   const { setProgress } = usePlayerActions()
 
@@ -51,14 +51,16 @@ export function FullscreenProgress() {
   const currentTime = convertSecondsToTime(isSeeking ? localProgress : progress)
 
   return (
-    <div className="flex items-center">
-      <div className="min-w-[55px] text-left drop-shadow-lg">{currentTime}</div>
+    <div className="flex items-center gap-3">
+      <div className="min-w-[50px] max-w-[60px] text-right drop-shadow-lg">
+        {currentTime}
+      </div>
 
-      <Slider
+      <ProgressSlider
         variant="secondary"
         defaultValue={[0]}
         value={isSeeking ? [localProgress] : [progress]}
-        tooltipValue={currentTime}
+        tooltipTransformer={convertSecondsToTime}
         max={currentDuration}
         step={1}
         className="w-full h-4"
@@ -68,7 +70,7 @@ export function FullscreenProgress() {
         onMouseUp={handleSeekedFallback}
       />
 
-      <div className="min-w-[55px] text-right drop-shadow-lg">
+      <div className="min-w-[50px] max-w-[60px] text-left drop-shadow-lg">
         {convertSecondsToTime(currentDuration ?? 0)}
       </div>
     </div>

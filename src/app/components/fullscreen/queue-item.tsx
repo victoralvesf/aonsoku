@@ -5,6 +5,7 @@ import { getCoverArtUrl } from '@/api/httpClient'
 import { EqualizerBars } from '@/app/components/icons/equalizer-bars'
 import { ISong } from '@/types/responses/song'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
+import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
 
 type QueueItemProps = ComponentPropsWithRef<'div'> & {
   song: ISong
@@ -24,8 +25,8 @@ export function QueueItem({
   return (
     <div
       className={clsx([
-        'flex items-center w-full h-16 text-sm rounded-md cursor-pointer',
-        'bg-black/0 hover:bg-secondary',
+        'flex items-center w-[calc(100%-10px)] h-16 text-sm rounded-md cursor-pointer',
+        'bg-black/0 hover:bg-foreground/20',
         'data-[state=active]:bg-foreground data-[state=active]:text-secondary',
       ])}
       style={{
@@ -39,11 +40,7 @@ export function QueueItem({
         {isPlaying ? (
           <div className="w-6 flex items-center">
             <div className="w-6 h-6 flex items-center justify-center">
-              <EqualizerBars
-                width={20}
-                height={20}
-                className="text-secondary"
-              />
+              <EqualizerBars size={20} className="text-secondary mb-1" />
             </div>
           </div>
         ) : (
@@ -62,7 +59,7 @@ export function QueueItem({
         </div>
         <div className="flex flex-col">
           <span className="font-semibold">{song.title}</span>
-          <p className="font-normal text-sm opacity-70">{song.artist}</p>
+          <QueueArtists song={song} />
         </div>
       </div>
       <div className="w-[100px] text-center">
@@ -70,4 +67,25 @@ export function QueueItem({
       </div>
     </div>
   )
+}
+
+function QueueArtists({ song }: { song: ISong }) {
+  const { artist, artists } = song
+
+  if (artists && artists.length > 1) {
+    const data = artists.slice(0, ALBUM_ARTISTS_MAX_NUMBER)
+
+    return (
+      <div className="flex items-center gap-1 font-normal opacity-70">
+        {data.map(({ id, name }, index) => (
+          <div key={id} className="flex items-center text-sm">
+            <p>{name}</p>
+            {index < data.length - 1 && ','}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  return <p className="font-normal text-sm opacity-70">{artist}</p>
 }

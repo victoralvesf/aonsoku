@@ -26,14 +26,19 @@
     --shadow-header-height: 80px;
     --shadow-header-distance: calc(var(--shadow-header-height) + 1.5rem);
 
-    --toastify-toast-top: calc(var(--header-height) + 0.5rem);
+    --toastify-toast-top: calc(var(--header-height) + 0.25rem);
+    --toastify-toast-container-height: calc(var(--shadow-header-height) - 0.5rem);
 
     --windows-red: 5 75% 44%;
   }
 }
 
+.Toastify__toast-container {
+  padding: 0px !important;
+}
+
 .Toastify__progress-bar--wrp {
-  height: 2px !important;
+  height: 3px !important;
 }
 
 #root {
@@ -71,13 +76,44 @@ img {
   -ms-user-select: none;
 }
 
-#artist-biography > p > a,
+.html a,
 .link {
-  @apply text-primary hover:underline;
+  @apply text-primary underline break-words;
+}
+
+.html li {
+  @apply list-disc ml-8;
+}
+
+.html strong,
+.html b {
+  @apply font-semibold;
+}
+
+.html strong:not(a strong),
+.html b:not(a b) {
+  @apply text-foreground;
+}
+
+.html p,
+.html li:not(li a) {
+  @apply text-foreground/80;
+}
+
+.html img {
+  @apply my-2 max-w-full rounded;
+}
+
+.html code {
+  @apply bg-background text-muted-foreground px-1.5 py-0.5 rounded border text-sm font-mono;
 }
 
 .player-button-active {
   @apply after:content-['•'] after:block after:absolute after:-bottom-1 after:text-primary;
+}
+
+.mini-player-button-active {
+  @apply after:content-['•'] after:block after:absolute after:-bottom-1.5 after:text-secondary-foreground !text-secondary-foreground;
 }
 
 .bg-skeleton {
@@ -88,10 +124,10 @@ img {
   @apply after:content-['*'] after:text-destructive after:ml-1;
 }
 
-.queue-list-drawer {
+.main-drawer {
   @apply w-screen;
   @apply h-content;
-  @apply mb-[--player-height] pb-[--player-height];
+  @apply mb-player;
   @apply z-30;
   @apply bg-background-foreground;
 }
@@ -111,8 +147,16 @@ img {
   @apply [&_[cmdk-item]_svg]:w-4;
 }
 
+.yarl__toolbar {
+  @apply !top-header;
+}
+
 .yarl__container {
   @apply !bg-black/70;
+}
+
+.yarl__root.yarl__portal_open .yarl__slide {
+  @apply animate-in zoom-in fade-in duration-300;
 }
 
 .yarl__slide_image {
@@ -150,6 +194,14 @@ img {
   scrollbar-color: hsl(var(--border)) transparent;
 }
 
+.default-ring {
+  @apply focus-visible:outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+}
+
+.user-dropdown-trigger {
+  @apply rounded-full default-ring;
+}
+
 .user-dropdown-trigger[data-state="open"] > :first-child {
   @apply bg-accent;
 }
@@ -167,59 +219,47 @@ img {
 }
 
 svg#bars {
-  overflow: visible;
+  @apply overflow-hidden rotate-180 -scale-x-100;
 }
 
 svg#bars .eq-bar {
-  transform: scale(1, -1) translate(0, -24px);
+  @apply transform-gpu will-change-transform origin-top;
 }
 
 svg#bars .eq-bar--1 {
-  animation-name: eq-1;
-  animation-duration: 0.6s;
-  animation-iteration-count: infinite;
-  animation-delay: 0s;
+  animation: eq-1 0.6s infinite 0s;
 }
 
 svg#bars .eq-bar--2 {
-  animation-name: eq-2;
-  animation-duration: 0.6s;
-  animation-iteration-count: infinite;
-  animation-delay: 0.07s;
+  animation: eq-2 0.6s infinite 0.07s;
 }
 
 svg#bars .eq-bar--3 {
-  animation-name: eq-3;
-  animation-duration: 0.6s;
-  animation-iteration-count: infinite;
-  animation-delay: 0.14s;
+  animation: eq-3 0.6s infinite 0.14s;
 }
 
 svg#bars .eq-bar--4 {
-  animation-name: eq-4;
-  animation-duration: 0.6s;
-  animation-iteration-count: infinite;
-  animation-delay: 0s;
+  animation: eq-4 0.6s infinite 0.07s;
 }
 
 @keyframes eq-1 {
-  0%, 100% { height: 10px }
-  50% { height: 6px }
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(0.8); }
 }
 
 @keyframes eq-2 {
-  0%, 100% { height: 18px }
-  50% { height: 8px }
+  0%, 100% { transform: scaleY(0.9); }
+  50% { transform: scaleY(0.4); }
 }
 
 @keyframes eq-3 {
-  0%, 100% { height: 7px }
-  50% { height: 14px }
+  0%, 100% { transform: scaleY(0.7); }
+  50% { transform: scaleY(1); }
 }
 
 @keyframes eq-4 {
-  0%, 100% { height: 8px }
-  50% { height: 16px }
+  0%, 100% { transform: scaleY(0.6); }
+  50% { transform: scaleY(1); }
 }
 
 #sync-lyrics-box,
@@ -235,5 +275,28 @@ svg#bars .eq-bar--4 {
 }
 
 #sync-lyrics-box .react-lrc-line {
-  @apply w-fit m-auto max-w-[80%];
+  @apply w-fit m-auto max-w-[80%] text-balance;
+}
+
+.default-gradient {
+  @apply bg-gradient-to-b from-background/10 to-background/40;
+}
+
+.secondary-thumb-bar {
+  @apply bg-foreground/30 hover:bg-foreground/40;
+}
+
+@media all and (display-mode: picture-in-picture) {
+  body, html {
+    @apply w-full h-full overflow-hidden p-0 m-0;
+  }
+}
+
+div[data-test-id="table-row"][data-state="selected"],
+div[data-test-id="table-row"].row-active,
+div[data-test-id="table-row"]:hover {
+  & a,
+  & span {
+    @apply text-foreground;
+  }
 }
