@@ -8,7 +8,6 @@ import { SettingsButton } from '@/app/components/settings/header-button'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { isLinux, isMac, isWindows } from '@/utils/osType'
 import { tauriDragRegion } from '@/utils/tauriDragRegion'
-import { isTauri } from '@/utils/tauriTools'
 
 export function Header() {
   const { isFullscreen } = useAppWindow()
@@ -16,8 +15,8 @@ export function Header() {
   return (
     <header
       className={clsx(
-        'w-full grid grid-cols-header h-header fixed top-0 right-0 left-0 z-20 bg-background border-b',
-        isTauri() ? 'pl-4' : 'px-4',
+        'w-full grid grid-cols-header h-header px-4 fixed top-0 right-0 left-0 z-20 bg-background border-b',
+        (isWindows || isLinux) && 'pr-0',
       )}
     >
       <div {...tauriDragRegion} className="flex items-center">
