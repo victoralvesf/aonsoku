@@ -54,6 +54,7 @@
 
 - **Subsonic Integration:** Aonsoku integrates with your Navidrome or Subsonic server, providing you with easy access to your music collection. 
 - **Intuitive UI:** Modern, clean and user-friendly interface designed to enhance your music listening experience.
+- **Podcast Support:** With [Aonsoku Podcasts](https://github.com/victoralvesf/aonsoku-podcasts) you can easily access, manage, and listen to your favorites podcasts directly within the app. Enjoy advanced search options, customizable filters and seamless listening synchronization to enhance your podcast experience. 
 - **Synchronized lyrics**: Aonsoku will automatically find a synced lyric from [LRCLIB](https://lrclib.net/) if none is provided by the server.
 - **Unsynchronized lyrics**: If your songs have embedded unsynchronized lyrics, Aonsoku is able to show them.
 - **Radio:** If your server supports it, listen to radio shows directly within Aonsoku.
@@ -181,7 +182,7 @@ Below is a table describing the environment variables that can be used in this p
 - [x] Queue page
 - [ ] Playlist editor
 - [x] Synced lyrics
-- [ ] Podcast support
+- [x] Podcast support
 
 Feel free to request more cool features [here](https://github.com/victoralvesf/aonsoku/issues/new?labels=enhancement&template=feature-request---.md).
 
