@@ -12,7 +12,7 @@ export function Header() {
   return (
     <header
       className={clsx(
-        'w-full grid grid-cols-header h-header fixed px-4 top-0 right-0 left-0 z-20 bg-background border-b electron-drag',
+        'w-full grid grid-cols-header h-header px-4 fixed top-0 right-0 left-0 z-20 bg-background border-b electron-drag',
         (isWindows || isLinux) && 'pr-[148px]',
       )}
     >
