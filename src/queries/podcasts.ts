@@ -14,7 +14,7 @@ export async function getPodcastList(params: Required<GetAllParams>) {
   if (!response) return emptyPodcastResponse
   if (!response.data) return emptyPodcastResponse
 
-  let nextOffset = null
+  let nextOffset: number | null = null
   if (response.next_page_url !== null) {
     nextOffset = params.page + 1
   }
@@ -45,7 +45,7 @@ export async function getPodcastEpisodes(
   if (!response) return emptyEpisodeResponse
   if (!response.episodes.data) return emptyEpisodeResponse
 
-  let nextOffset = null
+  let nextOffset: number | null = null
   if (response.episodes.next_page_url !== null) {
     nextOffset = params.page + 1
   }
@@ -66,7 +66,7 @@ export async function searchEpisodes(
   if (!response) return emptyEpisodeResponse
   if (!response.data) return emptyEpisodeResponse
 
-  let nextOffset = null
+  let nextOffset: number | null = null
   if (response.next_page_url !== null) {
     nextOffset = params.page + 1
   }
@@ -84,7 +84,7 @@ export async function searchPodcasts(params: Required<SearchParams>) {
   if (!response) return emptyPodcastResponse
   if (!response.data) return emptyPodcastResponse
 
-  let nextOffset = null
+  let nextOffset: number | null = null
   if (response.next_page_url !== null) {
     nextOffset = params.page + 1
   }

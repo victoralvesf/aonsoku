@@ -24,4 +24,6 @@ export function createManualChunks(id: string) {
 
     return undefined
   }
+
+  return undefined
 }

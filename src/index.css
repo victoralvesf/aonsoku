@@ -33,6 +33,14 @@
   }
 }
 
+.electron-drag {
+  app-region: drag;
+}
+
+button {
+  app-region: no-drag;
+}
+
 .Toastify__toast-container {
   padding: 0px !important;
 }

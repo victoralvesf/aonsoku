@@ -82,6 +82,8 @@ async function browserFetch<T>(
         data: data['subsonic-response'] as T,
       }
     }
+
+    return undefined
   } catch (error) {
     console.error('Error on browserFetch request', error)
     return undefined

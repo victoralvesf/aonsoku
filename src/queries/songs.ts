@@ -17,7 +17,7 @@ export async function songsSearch(params: SongSearchParams) {
   if (!response) return emptyResponse
   if (!response.song) return emptyResponse
 
-  let nextOffset = null
+  let nextOffset: number | null = null
   if (response.song.length >= params.songCount) {
     nextOffset = params.songOffset + params.songCount
   }

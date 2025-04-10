@@ -2,6 +2,8 @@
   "name": "aonsoku",
   "private": true,
   "version": "0.9.0",
+  "description": "A modern desktop client for Navidrome/Subsonic servers.",
+  "main": "./out/main/index.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,13 +13,26 @@
     "lint": "eslint \"src/**\"",
     "lint:fix": "pnpm lint --fix",
     "cy:open": "cypress open",
-    "test": "cypress run --component"
+    "test": "cypress run --component",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "pnpm typecheck:node && pnpm typecheck:web",
+    "electron:start": "electron-vite preview",
+    "electron:dev": "electron-vite dev",
+    "electron:build": "pnpm typecheck && electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:unpack": "pnpm electron:build && electron-builder --dir",
+    "build:win": "pnpm electron:build && electron-builder --win",
+    "build:mac": "electron-vite build && electron-builder --mac",
+    "build:linux": "electron-vite build && electron-builder --linux"
   },
   "repository": {
     "url": "https://github.com/victoralvesf/aonsoku"
   },
   "dependencies": {
     "@chriscodesthings/random-css-hex-color": "^1.1.0",
+    "@electron-toolkit/preload": "^3.0.1",
+    "@electron-toolkit/utils": "^4.0.0",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-aspect-ratio": "^1.1.2",
@@ -52,6 +67,7 @@
     "cmdk": "^1.1.1",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
+    "electron-updater": "^6.6.2",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "fast-average-color": "^9.5.0",
@@ -88,6 +104,7 @@
     "zustand": "^4.5.6"
   },
   "devDependencies": {
+    "@electron-toolkit/tsconfig": "^1.0.1",
     "@rocketseat/eslint-config": "^2.2.2",
     "@tanstack/eslint-plugin-query": "^5.71.5",
     "@tauri-apps/cli": "^2.4.1",
@@ -95,7 +112,7 @@
     "@types/html-to-text": "^9.0.4",
     "@types/linkify-it": "^5.0.0",
     "@types/lodash": "^4.17.16",
-    "@types/node": "^20.17.30",
+    "@types/node": "^22.14.0",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "@types/react-lazy-load-image-component": "^1.6.4",
@@ -104,17 +121,21 @@
     "autoprefixer": "^10.4.21",
     "cypress": "^13.17.0",
     "cypress-real-events": "^1.14.0",
+    "electron": "^35.1.5",
+    "electron-builder": "^26.0.12",
+    "electron-vite": "^3.1.0",
     "eslint": "8.56.0",
     "eslint-import-resolver-typescript": "^3.10.0",
     "eslint-plugin-import": "^2.31.0",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2",
-    "vite": "^5.4.17"
+    "vite": "^6.2.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
       "cypress",
+      "electron",
       "esbuild"
     ]
   }

@@ -1,14 +1,10 @@
 import clsx from 'clsx'
-import { Linux } from '@/app/components/controls/linux'
-import { Windows } from '@/app/components/controls/windows'
 import { NavigationButtons } from '@/app/components/header/navigation-buttons'
 import { UserDropdown } from '@/app/components/header/user-dropdown'
 import { HeaderSongInfo } from '@/app/components/header-song'
 import { SettingsButton } from '@/app/components/settings/header-button'
 import { useAppWindow } from '@/app/hooks/use-app-window'
-import { isLinux, isMac, isWindows } from '@/utils/osType'
-import { tauriDragRegion } from '@/utils/tauriDragRegion'
-import { isTauri } from '@/utils/tauriTools'
+import { isWindows, isLinux, isMacOS } from '@/utils/desktop'
 
 export function Header() {
   const { isFullscreen } = useAppWindow()
@@ -16,20 +12,18 @@ export function Header() {
   return (
     <header
       className={clsx(
-        'w-full grid grid-cols-header h-header fixed top-0 right-0 left-0 z-20 bg-background border-b',
-        isTauri() ? 'pl-4' : 'px-4',
+        'w-full grid grid-cols-header h-header fixed px-4 top-0 right-0 left-0 z-20 bg-background border-b electron-drag',
+        (isWindows || isLinux) && 'pr-[148px]',
       )}
     >
-      <div {...tauriDragRegion} className="flex items-center">
-        {isMac && !isFullscreen && <div className="w-[70px]" />}
+      <div className="flex items-center">
+        {isMacOS && !isFullscreen && <div className="w-[70px]" />}
         <NavigationButtons />
       </div>
       <HeaderSongInfo />
-      <div {...tauriDragRegion} className="flex justify-end items-center gap-2">
+      <div className="flex justify-end items-center gap-2">
         <SettingsButton />
         <UserDropdown />
-        {isWindows && <Windows />}
-        {isLinux && <Linux />}
       </div>
     </header>
   )
