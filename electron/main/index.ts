@@ -1,57 +1,6 @@
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { app, shell, BrowserWindow, ipcMain, nativeImage } from 'electron'
-import { join } from 'path'
-
-function appIcon() {
-  let icon = 'icon.png'
-
-  if (process.platform === 'win32') icon = 'icon.ico'
-  if (process.platform === 'darwin') icon = 'icon.icns'
-
-  return nativeImage.createFromPath(join(__dirname, '../../build', icon))
-}
-
-const titleBarOverlay: Electron.TitleBarOverlay = {
-  color: '#00000000',
-  symbolColor: '#ffffff',
-  height: 43,
-}
-
-function createWindow(): void {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 1280,
-    minWidth: 640,
-    height: 720,
-    minHeight: 480,
-    show: false,
-    autoHideMenuBar: true,
-    titleBarStyle: 'hidden',
-    ...(process.platform !== 'darwin' ? { titleBarOverlay } : {}),
-    icon: appIcon(),
-    webPreferences: {
-      preload: join(__dirname, '../preload/index.mjs'),
-      sandbox: false,
-    },
-  })
-
-  mainWindow.on('ready-to-show', async () => {
-    mainWindow.show()
-  })
-
-  mainWindow.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url)
-    return { action: 'deny' }
-  })
-
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env.ELECTRON_RENDERER_URL) {
-    mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL)
-  } else {
-    mainWindow.loadFile(join(__dirname, '../../index.html'))
-  }
-}
+import { electronApp, optimizer } from '@electron-toolkit/utils'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import { createWindow } from './app'
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
