@@ -44,7 +44,7 @@
   "include": [
     "src",
     "cypress",
-    "electron/preload/*.d.ts"
+    "electron/preload/**/*"
   ],
   "exclude": [
     "src/manual-chunks.ts"

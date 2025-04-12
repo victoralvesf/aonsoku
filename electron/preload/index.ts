@@ -1,8 +1,16 @@
 import { electronAPI } from '@electron-toolkit/preload'
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
+import { IAonsokuAPI } from './api.types'
 
 // Custom APIs for renderer
-const api = {}
+const api: IAonsokuAPI = {
+  enterFullScreen: () => ipcRenderer.send('toggle-fullscreen', true),
+  exitFullScreen: () => ipcRenderer.send('toggle-fullscreen', false),
+  isFullScreen: () => ipcRenderer.invoke('is-fullscreen'),
+  receive: (channel, func) => {
+    ipcRenderer.on(channel, (_, ...args) => func(args))
+  },
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise

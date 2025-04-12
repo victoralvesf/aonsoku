@@ -9,10 +9,9 @@ import {
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { useFullscreenPlayerSettings } from '@/store/player.store'
 import { enterFullscreen, exitFullscreen } from '@/utils/browser'
-import { isTauri } from '@/utils/tauriTools'
+import { isDesktop } from '@/utils/desktop'
 import { FullscreenBackdrop } from './backdrop'
 import { CloseFullscreenButton } from './buttons'
-import { DragRegion } from './drag-region'
 import { FullscreenPlayer } from './player'
 import { FullscreenSettings } from './settings'
 import { FullscreenTabs } from './tabs'
@@ -30,7 +29,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
   async function handleFullscreen(open: boolean) {
     if (!autoFullscreenEnabled) return
 
-    if (isTauri()) {
+    if (isDesktop()) {
       open ? await enterFullscreenWindow() : await exitFullscreenWindow()
       return
     }
@@ -56,8 +55,6 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
       >
         <MemoFullscreenBackdrop />
         <div className="absolute inset-0 flex flex-col p-8 w-full h-full gap-4 bg-black/0 z-10">
-          {isTauri() && <DragRegion className="z-10" />}
-
           {/* First Row */}
           <div className="flex gap-2 items-center w-full h-[40px] px-16 z-20 justify-end">
             <FullscreenSettings />

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react'
+import { isSafari } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 import { Lrc } from 'react-lrc'
 import {
@@ -10,7 +11,6 @@ import {
 import { subsonic } from '@/service/subsonic'
 import { usePlayerSonglist, usePlayerRef } from '@/store/player.store'
 import { ILyric } from '@/types/responses/song'
-import { isSafari } from '@/utils/osType'
 
 interface LyricProps {
   lyrics: ILyric

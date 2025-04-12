@@ -1,8 +1,11 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
+import { IAonsokuAPI } from 'electron/preload/api.types'
+
+export {}
 
 declare global {
   interface Window {
     electron: ElectronAPI
-    api: unknown
+    api: IAonsokuAPI
   }
 }

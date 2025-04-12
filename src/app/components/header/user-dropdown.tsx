@@ -19,7 +19,7 @@ import {
 import { LogoutObserver } from '@/app/observers/logout-observer'
 import { logoutKeys, shortcutDialogKeys, stringifyShortcut } from '@/shortcuts'
 import { useAppData, useAppStore } from '@/store/app.store'
-import { isMac } from '@/utils/osType'
+import { isMacOS } from '@/utils/desktop'
 
 export function UserDropdown() {
   const { username, url, lockUser } = useAppData()
@@ -33,7 +33,7 @@ export function UserDropdown() {
   useHotkeys('shift+ctrl+q', () => setLogoutDialogState(true))
   useHotkeys('mod+/', () => setShortcutsOpen((prev) => !prev))
 
-  const alignPosition = isMac ? 'end' : 'center'
+  const alignPosition = isMacOS ? 'end' : 'center'
 
   return (
     <Fragment>

@@ -1,10 +1,9 @@
 import { invoke } from '@tauri-apps/api/core'
-import { once } from '@tauri-apps/api/event'
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { isTauri } from '@/utils/tauriTools'
 
+// TODO: Refactor to use Electron APIs
 export function useDownload() {
   const { t } = useTranslation()
 
@@ -37,11 +36,11 @@ export function useDownload() {
 
   useEffect(() => {
     const setupListeners = async () => {
-      if (isTauri()) {
-        await once('DOWNLOAD_FINISHED', () => {
-          completed()
-        })
-      }
+      // if (isTauri()) {
+      //   await once('DOWNLOAD_FINISHED', () => {
+      //     completed()
+      //   })
+      // }
     }
 
     setupListeners()

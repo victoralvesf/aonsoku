@@ -1,8 +1,8 @@
 import { engineName, isMacOs } from 'react-device-detect'
 import i18n from '@/i18n'
 import { usePlayerStore } from '@/store/player.store'
+import { isDesktop } from './desktop'
 import { isDev } from './env'
-import { isTauri } from './tauriTools'
 
 export enum MouseButton {
   Left = 0,
@@ -13,7 +13,7 @@ export enum MouseButton {
 export const isChromeOrFirefox = ['Blink', 'Gecko'].includes(engineName)
 
 // Enable only for browsers
-export const hasPiPSupport = isTauri()
+export const hasPiPSupport = isDesktop()
   ? false
   : 'documentPictureInPicture' in window
 
@@ -65,7 +65,7 @@ function preventReload() {
 
     e.preventDefault()
 
-    if (isTauri()) return
+    if (isDesktop()) return
 
     const { isPlaying } = usePlayerStore.getState().playerState
 

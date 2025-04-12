@@ -7,7 +7,6 @@ import {
 } from 'standardized-audio-context'
 import { usePlayerMediaType, useReplayGainState } from '@/store/player.store'
 import { logger } from '@/utils/logger'
-import { isLinux } from '@/utils/osType'
 import { ReplayGainParams } from '@/utils/replayGain'
 
 type IAudioSource = IMediaElementAudioSourceNode<IAudioContext>
@@ -21,7 +20,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
   const gainNodeRef = useRef<IGainNode<IAudioContext> | null>(null)
 
   const setupAudioContext = useCallback(() => {
-    if (!audio || !isSong || replayGainError || isLinux) return
+    if (!audio || !isSong || replayGainError) return
 
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext()
@@ -44,7 +43,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
 
   const resumeContext = useCallback(async () => {
     const audioContext = audioContextRef.current
-    if (!audioContext || !isSong || isLinux) return
+    if (!audioContext || !isSong) return
 
     logger.info('AudioContext State', { state: audioContext.state })
 

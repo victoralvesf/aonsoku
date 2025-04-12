@@ -4,7 +4,6 @@ import { ROUTES } from '@/routes/routesList'
 import { podcasts } from '@/service/podcasts'
 import { Episode } from '@/types/responses/podcasts'
 import { queryKeys } from '@/utils/queryKeys'
-import { isTauri } from '@/utils/tauriTools'
 import { useDownload } from './use-download'
 
 interface PodcastOptionsProps {
@@ -14,14 +13,15 @@ interface PodcastOptionsProps {
 export function usePodcastOptions({ episode }: PodcastOptionsProps) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { downloadBrowser, downloadTauri } = useDownload()
+  const { downloadBrowser } = useDownload()
 
   function handleDownload() {
-    if (isTauri()) {
-      downloadTauri(episode.audio_url, episode.id)
-    } else {
-      downloadBrowser(episode.audio_url, episode.id)
-    }
+    // TODO: Update download check for Electron
+    // if (isTauri()) {
+    //   downloadTauri(episode.audio_url, episode.id)
+    // } else {
+    // }
+    downloadBrowser(episode.audio_url, episode.id)
   }
 
   const markAsPlayedMutation = useMutation({
