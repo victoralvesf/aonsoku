@@ -21,14 +21,14 @@ export function useAppWindow(): AppWindowType {
       setIsFullscreen(status)
     }
 
-    window.api.receive('fullscreen-status', (status) =>
-      handleFullScreenStatus(status as boolean),
-    )
+    window.api.fullscreenStatusListener((status) => {
+      handleFullScreenStatus(status)
+    })
 
     return () => {
-      window.api.receive('fullscreen-status', (status) =>
-        handleFullScreenStatus(status as boolean),
-      )
+      window.api.fullscreenStatusListener((status) => {
+        handleFullScreenStatus(status)
+      })
     }
   }, [])
 

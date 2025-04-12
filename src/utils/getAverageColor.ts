@@ -19,7 +19,7 @@ export async function getAverageColor(img: HTMLImageElement | null) {
   })
 }
 
-export function hexToRgba(hex: string, alpha: number = 1) {
+export function hexToRgb(hex: string) {
   hex = hex.replace(/^#/, '')
 
   let r: number, g: number, b: number
@@ -36,10 +36,19 @@ export function hexToRgba(hex: string, alpha: number = 1) {
     return undefined
   }
 
+  return [r, g, b]
+}
+
+export function hexToRgba(hex: string, alpha: number = 1) {
+  const colors = hexToRgb(hex)
+  if (!colors) return undefined
+
+  const [r, g, b] = colors
+
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-export function hslToHex(hsl: string) {
+export function hslToRbg(hsl: string) {
   const [h, s, l] = hsl.split(' ')
 
   const hue = parseInt(h)
@@ -82,10 +91,29 @@ export function hslToHex(hsl: string) {
     blue = secondComponent
   }
 
-  const toHex = (value: number) => {
-    const hex = Math.round((value + matchLightness) * 255).toString(16)
-    return hex.length === 1 ? '0' + hex : hex
-  }
+  red = (red + matchLightness) * 255
+  green = (green + matchLightness) * 255
+  blue = (blue + matchLightness) * 255
+
+  return [red, green, blue]
+}
+
+function toHex(value: number) {
+  const hex = Math.round(value).toString(16)
+  return hex.length === 1 ? '0' + hex : hex
+}
+
+export function hslToHex(hsl: string) {
+  const [red, green, blue] = hslToRbg(hsl)
 
   return `#${toHex(red)}${toHex(green)}${toHex(blue)}`
+}
+
+export function isDarkColor(hsl: string) {
+  const [r, g, b] = hslToRbg(hsl)
+
+  const luminance = 0.299 * r + 0.587 * g + 0.114 * b
+  const isDark = luminance < 128
+
+  return isDark
 }

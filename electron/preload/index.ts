@@ -1,15 +1,21 @@
 import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge, ipcRenderer } from 'electron'
-import { IAonsokuAPI } from './api.types'
+import { IAonsokuAPI, IpcChannels } from './api.types'
 
 // Custom APIs for renderer
 const api: IAonsokuAPI = {
-  enterFullScreen: () => ipcRenderer.send('toggle-fullscreen', true),
-  exitFullScreen: () => ipcRenderer.send('toggle-fullscreen', false),
-  isFullScreen: () => ipcRenderer.invoke('is-fullscreen'),
-  receive: (channel, func) => {
-    ipcRenderer.on(channel, (_, ...args) => func(args))
+  enterFullScreen: () => ipcRenderer.send(IpcChannels.ToggleFullscreen, true),
+  exitFullScreen: () => ipcRenderer.send(IpcChannels.ToggleFullscreen, false),
+  isFullScreen: () => ipcRenderer.invoke(IpcChannels.IsFullScreen),
+  fullscreenStatusListener: (func) => {
+    ipcRenderer.on(IpcChannels.FullscreenStatus, (_, status: boolean) =>
+      func(status),
+    )
   },
+  setTitleBarOverlayColors: (color) =>
+    ipcRenderer.send(IpcChannels.ThemeChanged, color),
+  setNativeTheme: (isDark) =>
+    ipcRenderer.send(IpcChannels.UpdateNativeTheme, isDark),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
