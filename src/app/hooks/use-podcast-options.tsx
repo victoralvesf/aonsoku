@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/routes/routesList'
 import { podcasts } from '@/service/podcasts'
 import { Episode } from '@/types/responses/podcasts'
+import { isDesktop } from '@/utils/desktop'
 import { queryKeys } from '@/utils/queryKeys'
 import { useDownload } from './use-download'
 
@@ -13,15 +14,14 @@ interface PodcastOptionsProps {
 export function usePodcastOptions({ episode }: PodcastOptionsProps) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { downloadBrowser } = useDownload()
+  const { downloadBrowser, downloadDesktop } = useDownload()
 
   function handleDownload() {
-    // TODO: Update download check for Electron
-    // if (isTauri()) {
-    //   downloadTauri(episode.audio_url, episode.id)
-    // } else {
-    // }
-    downloadBrowser(episode.audio_url, episode.id)
+    if (isDesktop()) {
+      downloadDesktop(episode.audio_url, episode.id)
+    } else {
+      downloadBrowser(episode.audio_url, episode.id)
+    }
   }
 
   const markAsPlayedMutation = useMutation({

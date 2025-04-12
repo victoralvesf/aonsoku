@@ -1,9 +1,10 @@
 import { is } from '@electron-toolkit/utils'
 import { BrowserWindow } from 'electron'
 import { join } from 'path'
-import { setupEvents, setupIpcEvents } from './events'
-import { appIcon } from './icon'
-import { titleBarOverlay } from './titleBarOverlay'
+import { setupDownloads } from './core/downloads'
+import { setupEvents, setupIpcEvents } from './core/events'
+import { appIcon } from './core/icon'
+import { titleBarOverlay } from './core/titleBarOverlay'
 
 export let mainWindow: BrowserWindow | null = null
 
@@ -30,6 +31,7 @@ export function createWindow(): void {
 
   setupEvents(mainWindow)
   setupIpcEvents(mainWindow)
+  setupDownloads()
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.

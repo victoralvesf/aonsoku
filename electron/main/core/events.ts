@@ -1,7 +1,7 @@
 import { shell, BrowserWindow, nativeTheme, ipcMain } from 'electron'
 import { setTaskbarButtons } from './taskbar'
 import { DEFAULT_TITLE_BAR_HEIGHT } from './titleBarOverlay'
-import { IpcChannels, OverlayColors } from '../preload/api.types'
+import { IpcChannels, OverlayColors } from '../../preload/api.types'
 
 export function setupEvents(window: BrowserWindow | null) {
   if (!window) return

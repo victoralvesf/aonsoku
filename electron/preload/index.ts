@@ -16,6 +16,18 @@ const api: IAonsokuAPI = {
     ipcRenderer.send(IpcChannels.ThemeChanged, color),
   setNativeTheme: (isDark) =>
     ipcRenderer.send(IpcChannels.UpdateNativeTheme, isDark),
+  downloadFile: (payload) =>
+    ipcRenderer.send(IpcChannels.HandleDownloads, payload),
+  downloadCompletedListener: (func) => {
+    ipcRenderer.once(IpcChannels.DownloadCompleted, (_, fileId: string) =>
+      func(fileId),
+    )
+  },
+  downloadFailedListener: (func) => {
+    ipcRenderer.once(IpcChannels.DownloadFailed, (_, fileId: string) =>
+      func(fileId),
+    )
+  },
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

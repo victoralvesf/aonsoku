@@ -67,6 +67,7 @@
     "cmdk": "^1.1.1",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
+    "electron-dl": "^4.0.0",
     "electron-updater": "^6.6.2",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",

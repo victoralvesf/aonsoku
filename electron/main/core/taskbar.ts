@@ -1,7 +1,8 @@
 import { BrowserWindow, nativeImage, nativeTheme } from 'electron'
 import { join } from 'path'
+import { cwd } from 'process'
 
-const resourcesPath = join(__dirname, '..', '..', 'resources', 'taskbar')
+const resourcesPath = join(cwd(), 'resources', 'taskbar')
 
 export function setTaskbarButtons(window: BrowserWindow) {
   if (!window) return

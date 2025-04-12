@@ -7,6 +7,7 @@ import { usePlaylistRemoveSong } from '@/store/playlists.store'
 import { useSongInfo } from '@/store/ui.store'
 import { UpdateParams } from '@/types/responses/playlist'
 import { ISong } from '@/types/responses/song'
+import { isDesktop } from '@/utils/desktop'
 import { queryKeys } from '@/utils/queryKeys'
 import { useDownload } from './use-download'
 
@@ -14,7 +15,7 @@ type SongIdToAdd = Pick<UpdateParams, 'songIdToAdd'>['songIdToAdd']
 
 export function useOptions() {
   const { setNextOnQueue, setLastOnQueue, setSongList } = usePlayerActions()
-  const { downloadBrowser } = useDownload()
+  const { downloadBrowser, downloadDesktop } = useDownload()
   const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
   const matches = useMatches()
   const { setSongId, setModalOpen } = useSongInfo()
@@ -38,12 +39,12 @@ export function useOptions() {
 
   function startDownload(id: string) {
     const url = getDownloadUrl(id)
-    // TODO: Update download check for Electron
-    // if (isTauri()) {
-    //   downloadTauri(url, id)
-    // } else {
-    // }
-    downloadBrowser(url)
+
+    if (isDesktop()) {
+      downloadDesktop(url, id)
+    } else {
+      downloadBrowser(url)
+    }
   }
 
   const updateMutation = useMutation({

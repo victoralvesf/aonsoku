@@ -1,9 +1,9 @@
-import { invoke } from '@tauri-apps/api/core'
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { isDesktop } from '@/utils/desktop'
+import { logger } from '@/utils/logger'
 
-// TODO: Refactor to use Electron APIs
 export function useDownload() {
   const { t } = useTranslation()
 
@@ -36,11 +36,11 @@ export function useDownload() {
 
   useEffect(() => {
     const setupListeners = async () => {
-      // if (isTauri()) {
-      //   await once('DOWNLOAD_FINISHED', () => {
-      //     completed()
-      //   })
-      // }
+      if (isDesktop()) {
+        window.api.downloadCompletedListener(() => {
+          completed()
+        })
+      }
     }
 
     setupListeners()
@@ -61,19 +61,21 @@ export function useDownload() {
     toast.success(t('downloads.started'))
   }
 
-  async function downloadTauri(url: string, id: string) {
-    try {
-      started()
+  async function downloadDesktop(url: string, id: string) {
+    started()
+    window.api.downloadFile({
+      url,
+      fileId: id,
+    })
 
-      await invoke('download_file', { url, fileId: id })
-    } catch (err) {
-      console.error(err)
+    window.api.downloadFailedListener((fileId) => {
+      logger.error('[DownloadDesktop] - Failed to download fileId:', fileId)
       failed()
-    }
+    })
   }
 
   return {
     downloadBrowser,
-    downloadTauri,
+    downloadDesktop,
   }
 }
