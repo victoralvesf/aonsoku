@@ -15,29 +15,21 @@ const buttons = {
 export function setTaskbarButtons(window: BrowserWindow) {
   if (!window) return
 
-  const themeFolder = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
-
   const result = window.setThumbarButtons([
     {
-      icon: nativeImage.createFromPath(
-        join(taskbarIconsPath, themeFolder, buttons.previous),
-      ),
+      icon: getTaskbarIcon(buttons.previous),
       click() {
         console.log('skip previous clicked.')
       },
     },
     {
-      icon: nativeImage.createFromPath(
-        join(taskbarIconsPath, themeFolder, buttons.play),
-      ),
+      icon: getTaskbarIcon(buttons.play),
       click() {
         console.log('play clicked')
       },
     },
     {
-      icon: nativeImage.createFromPath(
-        join(taskbarIconsPath, themeFolder, buttons.next),
-      ),
+      icon: getTaskbarIcon(buttons.next),
       click() {
         console.log('skip next clicked.')
       },
@@ -45,4 +37,10 @@ export function setTaskbarButtons(window: BrowserWindow) {
   ])
 
   console.log('[TaskbarButtons] - Buttons creation success?', result)
+}
+
+function getTaskbarIcon(icon: string) {
+  const themeFolder = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
+
+  return nativeImage.createFromPath(join(taskbarIconsPath, themeFolder, icon))
 }

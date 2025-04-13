@@ -8,6 +8,7 @@ export function setupEvents(window: BrowserWindow | null) {
 
   window.on('ready-to-show', async () => {
     window.show()
+    setTaskbarButtons(window)
   })
 
   nativeTheme.on('updated', () => {
@@ -17,10 +18,6 @@ export function setupEvents(window: BrowserWindow | null) {
   window.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
-  })
-
-  window.webContents.once('did-finish-load', () => {
-    setTaskbarButtons(window)
   })
 
   window.on('enter-full-screen', () => {
