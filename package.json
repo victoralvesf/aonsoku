@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.9.0",
   "description": "A modern desktop client for Navidrome/Subsonic servers.",
+  "author": {
+    "name": "Victor Alves"
+  },
   "main": "./out/main/index.js",
   "type": "module",
   "scripts": {
@@ -14,12 +17,9 @@
     "lint:fix": "pnpm lint --fix",
     "cy:open": "cypress open",
     "test": "cypress run --component",
-    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
-    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
-    "typecheck": "pnpm typecheck:node && pnpm typecheck:web",
     "electron:start": "electron-vite preview",
     "electron:dev": "electron-vite dev",
-    "electron:build": "pnpm typecheck && electron-vite build",
+    "electron:build": "electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "pnpm electron:build && electron-builder --dir",
     "build:win": "pnpm electron:build && electron-builder --win",

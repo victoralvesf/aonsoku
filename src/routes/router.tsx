@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { createBrowserRouter } from 'react-router-dom'
+import { createHashRouter } from 'react-router-dom'
 
 import {
   AlbumFallback,
@@ -40,7 +40,7 @@ const LatestEpisodes = lazy(
   () => import('@/app/pages/podcasts/latest-episodes'),
 )
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: ROUTES.LIBRARY.HOME,
     element: <BaseLayout />,

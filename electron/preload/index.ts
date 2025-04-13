@@ -1,6 +1,6 @@
 import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge, ipcRenderer } from 'electron'
-import { IAonsokuAPI, IpcChannels } from './api.types'
+import { IAonsokuAPI, IpcChannels } from './types'
 
 // Custom APIs for renderer
 const api: IAonsokuAPI = {

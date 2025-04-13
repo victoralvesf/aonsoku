@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { download } from 'electron-dl'
-import { IpcChannels } from '../../preload/api.types'
+import { IpcChannels } from '../../preload/types'
 
 export interface IDownloadPayload {
   url: string

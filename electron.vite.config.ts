@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'electron-vite'
 import { resolve } from 'path'
-import { createManualChunks } from './src/manual-chunks'
+import { createElectronManualChunks } from './electron.manual-chunks'
 
 export default defineConfig({
   main: {
@@ -36,7 +36,7 @@ export default defineConfig({
           index: resolve(__dirname, 'index.html'),
         },
         output: {
-          manualChunks: createManualChunks,
+          manualChunks: createElectronManualChunks,
         },
       },
     },

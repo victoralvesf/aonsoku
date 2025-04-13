@@ -1,37 +1,48 @@
 appId: com.victoralvesf.aonsoku
 productName: Aonsoku
+icon: ./build/icon.ico
+artifactName: '${productName}_v${version}-${os}-${arch}.${ext}'
 directories:
   buildResources: build
 files:
-  - '!**/.vscode/*'
-  - '!src/*'
-  - '!electron.vite.config.{js,ts,mjs,cjs}'
-  - '!{.eslintignore,.eslintrc.cjs,.eslintrc.json,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
-  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
-  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
-asarUnpack:
-  - resources/**
+  - '!**/*'
+  - 'out/**'
+  - 'package.json'
+extraResources:
+  - from: resources
+    to: resources
 win:
-  executableName: aonsoku
+  executableName: Aonsoku
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - arm64
 nsis:
-  artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  license: ./LICENSE.txt
+  uninstallerIcon: ./build/icon.ico
 mac:
+  category: public.app-category.music
   entitlementsInherit: build/entitlements.mac.plist
   notarize: false
-dmg:
-  artifactName: ${name}-${version}.${ext}
+  icon: ./build/icon.icns
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
 linux:
   target:
     - AppImage
     - snap
     - deb
+    - rpm
   maintainer: victoralvesf
-  category: Music
-appImage:
-  artifactName: ${name}-${version}.${ext}
+  category: AudioVideo
+  synopsis: 'A modern desktop client for Navidrome/Subsonic servers.'
 npmRebuild: false
 publish:
   provider: generic

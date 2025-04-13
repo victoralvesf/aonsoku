@@ -6,6 +6,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/app/components/ui/dialog'
+import roundedIcon from '@/assets/icon.svg'
+import githubIcon from '@/assets/icons/github-mark-white.svg'
 import { subsonic } from '@/service/subsonic'
 import { getAppInfo } from '@/utils/appName'
 import { queryKeys } from '@/utils/queryKeys'
@@ -34,9 +36,9 @@ export function AboutDialog({ open, onOpenChange }: AboutDialogProps) {
         <DialogHeader>
           <div className="flex gap-2 items-center justify-center w-full py-4 bg-gradient-to-b from-accent to-background">
             <img
-              src="/icon.svg"
+              src={roundedIcon}
               alt="Aonsoku"
-              className="w-12 h-12 drop-shadow grayscale"
+              className="size-12 drop-shadow grayscale"
             />
             <h1 className="font-semibold text-2xl drop-shadow">{name}</h1>
           </div>
@@ -91,11 +93,7 @@ export function AboutDialog({ open, onOpenChange }: AboutDialogProps) {
               target="_blank"
               rel="nofollow noreferrer"
             >
-              <img
-                src="/icons/github-mark-white.svg"
-                alt="Github"
-                className="w-4 h-4 mr-2"
-              />
+              <img src={githubIcon} alt="Github" className="size-4 mr-2" />
               Github
             </a>
           </div>

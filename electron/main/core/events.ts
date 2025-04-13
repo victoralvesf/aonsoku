@@ -1,7 +1,7 @@
 import { shell, BrowserWindow, nativeTheme, ipcMain } from 'electron'
 import { setTaskbarButtons } from './taskbar'
 import { DEFAULT_TITLE_BAR_HEIGHT } from './titleBarOverlay'
-import { IpcChannels, OverlayColors } from '../../preload/api.types'
+import { IpcChannels, OverlayColors } from '../../preload/types'
 
 export function setupEvents(window: BrowserWindow | null) {
   if (!window) return
@@ -10,17 +10,17 @@ export function setupEvents(window: BrowserWindow | null) {
     window.show()
   })
 
-  window.webContents.once('did-finish-load', () => {
+  nativeTheme.on('updated', () => {
     setTaskbarButtons(window)
-
-    nativeTheme.on('updated', () => {
-      setTaskbarButtons(window)
-    })
   })
 
   window.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
+  })
+
+  window.webContents.once('did-finish-load', () => {
+    setTaskbarButtons(window)
   })
 
   window.on('enter-full-screen', () => {

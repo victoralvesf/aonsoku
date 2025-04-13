@@ -1,5 +1,5 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
-import { IAonsokuAPI } from 'electron/preload/api.types'
+import { IAonsokuAPI } from '../../electron/preload/types'
 
 export {}
 

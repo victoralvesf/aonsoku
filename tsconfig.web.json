@@ -34,7 +34,8 @@
     "noFallthroughCasesInSwitch": true,
     "typeRoots": [
       "./node_modules/@types",
-      "./src/types"
+      "./src/types",
+      "./electron/preload/types.ts"
     ],
     "types": [
       "cypress",
@@ -44,9 +45,9 @@
   "include": [
     "src",
     "cypress",
-    "electron/preload/**/*"
-  ],
-  "exclude": [
+    "electron/main/**/*",
+    "electron/preload/**/*",
+    "vite.config.ts",
     "src/manual-chunks.ts"
   ],
   "references": [

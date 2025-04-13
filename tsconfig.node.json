@@ -9,15 +9,17 @@
     "types": [
       "electron-vite/node"
     ],
+    "typeRoots": [
+      "./electron/preload/types.ts"
+    ]
   },
   "include": [
-    "src/manual-chunks.ts",
-    "vite.config.ts",
+    "electron.manual-chunks.ts",
     "electron.vite.config.*",
     "electron/main/**/*",
     "electron/preload/**/*",
   ],
   "exclude": [
-    "src/**/*"
-  ]
+    "src/**/*",
+  ],
 }
