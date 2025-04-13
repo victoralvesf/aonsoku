@@ -15,7 +15,7 @@ const buttons = {
 export function setTaskbarButtons(window: BrowserWindow) {
   if (!window) return
 
-  const result = window.setThumbarButtons([
+  window.setThumbarButtons([
     {
       icon: getTaskbarIcon(buttons.previous),
       click() {
@@ -35,8 +35,6 @@ export function setTaskbarButtons(window: BrowserWindow) {
       },
     },
   ])
-
-  console.log('[TaskbarButtons] - Buttons creation success?', result)
 }
 
 function getTaskbarIcon(icon: string) {
