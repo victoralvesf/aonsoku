@@ -117,3 +117,14 @@ export function isDarkColor(hsl: string) {
 
   return isDark
 }
+
+/**
+ * Convert HSL values like "240 10% 3.9%" to "hsla(240, 10%, 3.9%, 1)".
+ * @param hsl - The HSL string.
+ * @param [alpha=1] - The alpha value (opacity), default is 1.
+ */
+export function hslToHsla(hsl: string, alpha = 1) {
+  const hslBaseString = hsl.split(' ').join(', ')
+
+  return `hsla(${hslBaseString}, ${alpha})`
+}

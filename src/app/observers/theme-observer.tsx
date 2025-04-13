@@ -2,7 +2,7 @@ import { useCallback, useLayoutEffect } from 'react'
 import { useTheme } from '@/store/theme.store'
 import { Theme } from '@/types/themeContext'
 import { isDesktop } from '@/utils/desktop'
-import { hslToHex, isDarkColor } from '@/utils/getAverageColor'
+import { hslToHsla, isDarkColor } from '@/utils/getAverageColor'
 
 export const appThemes: Theme[] = Object.values(Theme)
 
@@ -27,8 +27,8 @@ export function ThemeObserver() {
     const root = window.document.documentElement
     const styles = getComputedStyle(root)
 
-    const symbol = hslToHex(styles.getPropertyValue('--foreground').trim())
-    const color = hslToHex(styles.getPropertyValue('--background').trim())
+    const symbol = hslToHsla(styles.getPropertyValue('--foreground').trim())
+    const color = hslToHsla(styles.getPropertyValue('--background').trim())
 
     window.api.setTitleBarOverlayColors({
       color,
