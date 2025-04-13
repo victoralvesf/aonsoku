@@ -17,7 +17,6 @@ export function createManualChunks(id: string) {
     }
     if (includes('i18n')) return 'i18n'
     if (includes('tailwind')) return 'tailwind'
-    if (includes('tauri')) return 'tauri'
     if (includes('@tanstack')) return 'tanstack'
     if (includes('@radix-ui')) return 'radix'
     if (includes('markdown') || includes('remark')) return 'markdown'
