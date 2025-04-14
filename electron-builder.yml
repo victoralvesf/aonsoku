@@ -1,7 +1,7 @@
 appId: com.victoralvesf.aonsoku
 productName: Aonsoku
 icon: ./build/icon.ico
-artifactName: '${productName}_v${version}-${os}-${arch}.${ext}'
+artifactName: '${productName}-v${version}-${os}-${arch}.${ext}'
 directories:
   buildResources: build
 files:

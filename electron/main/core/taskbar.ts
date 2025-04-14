@@ -2,8 +2,11 @@ import { is } from '@electron-toolkit/utils'
 import { app, BrowserWindow, nativeImage, nativeTheme } from 'electron'
 import { join } from 'path'
 
-export const resourcesPath = is.dev ? app.getAppPath() : process.resourcesPath
-const taskbarIconsPath = join(resourcesPath, 'resources', 'taskbar')
+export const resourcesPath = join(
+  is.dev ? app.getAppPath() : process.resourcesPath,
+  'resources',
+)
+const taskbarIconsPath = join(resourcesPath, 'taskbar')
 
 const buttons = {
   previous: 'skip_previous.png',

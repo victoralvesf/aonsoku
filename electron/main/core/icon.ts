@@ -1,6 +1,6 @@
 import { nativeImage } from 'electron'
 import { join } from 'path'
-import { cwd } from 'process'
+import { resourcesPath } from './taskbar'
 
 export function appIcon() {
   let icon = 'icon.png'
@@ -8,5 +8,7 @@ export function appIcon() {
   if (process.platform === 'win32') icon = 'icon.ico'
   if (process.platform === 'darwin') icon = 'icon.icns'
 
-  return nativeImage.createFromPath(join(cwd(), 'build', icon))
+  const iconImage = join(resourcesPath, 'icons', icon)
+
+  return nativeImage.createFromPath(iconImage)
 }
