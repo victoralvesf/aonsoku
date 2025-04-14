@@ -13,8 +13,10 @@ export function setupEvents(window: BrowserWindow | null) {
     updateTray()
   })
 
-  nativeTheme.on('updated', () => {
-    setTaskbarButtons(window)
+  window.webContents.once('did-finish-load', () => {
+    nativeTheme.on('updated', () => {
+      setTaskbarButtons(window)
+    })
   })
 
   window.webContents.setWindowOpenHandler((details) => {
