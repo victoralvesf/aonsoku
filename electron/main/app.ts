@@ -5,16 +5,17 @@ import { setupDownloads } from './core/downloads'
 import { setupEvents, setupIpcEvents } from './core/events'
 import { appIcon } from './core/icon'
 import { titleBarOverlay } from './core/titleBarOverlay'
+import { StatefulBrowserWindow } from './core/windowPosition'
 
 export let mainWindow: BrowserWindow | null = null
 
 export function createWindow(): void {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
+  mainWindow = new StatefulBrowserWindow({
     width: 1280,
     height: 720,
     minWidth: 1280,
     minHeight: 720,
+    supportMaximize: true,
     show: false,
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
