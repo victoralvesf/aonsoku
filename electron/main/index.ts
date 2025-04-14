@@ -1,6 +1,7 @@
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, globalShortcut } from 'electron'
 import { createWindow, mainWindow } from './app'
+import { createTray } from './tray'
 
 const instanceLock = app.requestSingleInstanceLock()
 
@@ -19,6 +20,7 @@ if (!instanceLock) {
     electronApp.setAppUserModelId('com.victoralvesf.aonsoku')
 
     createWindow()
+    createTray()
   })
 
   app.on('activate', function () {

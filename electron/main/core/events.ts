@@ -2,6 +2,7 @@ import { shell, BrowserWindow, nativeTheme, ipcMain } from 'electron'
 import { setTaskbarButtons } from './taskbar'
 import { DEFAULT_TITLE_BAR_HEIGHT } from './titleBarOverlay'
 import { IpcChannels, OverlayColors } from '../../preload/types'
+import { updateTray } from '../tray'
 
 export function setupEvents(window: BrowserWindow | null) {
   if (!window) return
@@ -9,6 +10,7 @@ export function setupEvents(window: BrowserWindow | null) {
   window.on('ready-to-show', async () => {
     window.show()
     setTaskbarButtons(window)
+    updateTray()
   })
 
   nativeTheme.on('updated', () => {
@@ -26,6 +28,16 @@ export function setupEvents(window: BrowserWindow | null) {
 
   window.on('leave-full-screen', () => {
     window.webContents.send(IpcChannels.FullscreenStatus, false)
+  })
+
+  window.on('close', (event) => {
+    event.preventDefault()
+    window.hide()
+    updateTray()
+  })
+
+  window.on('page-title-updated', (_, title) => {
+    updateTray(title)
   })
 }
 
