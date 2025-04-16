@@ -1,7 +1,12 @@
 import { shell, BrowserWindow, nativeTheme, ipcMain } from 'electron'
+import { playerState } from './playerState'
 import { setTaskbarButtons } from './taskbar'
 import { DEFAULT_TITLE_BAR_HEIGHT } from './titleBarOverlay'
-import { IpcChannels, OverlayColors } from '../../preload/types'
+import {
+  IpcChannels,
+  OverlayColors,
+  PlayerStatePayload,
+} from '../../preload/types'
 import { updateTray } from '../tray'
 
 export function setupEvents(window: BrowserWindow | null) {
@@ -9,13 +14,20 @@ export function setupEvents(window: BrowserWindow | null) {
 
   window.on('ready-to-show', async () => {
     window.show()
-    setTaskbarButtons(window)
+  })
+
+  window.on('show', () => {
+    setTaskbarButtons()
+    updateTray()
+  })
+
+  window.on('hide', () => {
     updateTray()
   })
 
   window.webContents.once('did-finish-load', () => {
     nativeTheme.on('updated', () => {
-      setTaskbarButtons(window)
+      setTaskbarButtons()
     })
   })
 
@@ -35,7 +47,6 @@ export function setupEvents(window: BrowserWindow | null) {
   window.on('close', (event) => {
     event.preventDefault()
     window.hide()
-    updateTray()
   })
 
   window.on('page-title-updated', (_, title) => {
@@ -67,4 +78,19 @@ export function setupIpcEvents(window: BrowserWindow | null) {
   ipcMain.on(IpcChannels.UpdateNativeTheme, (_, isDark: boolean) => {
     nativeTheme.themeSource = isDark ? 'dark' : 'light'
   })
+
+  ipcMain.on(
+    IpcChannels.UpdatePlayerState,
+    (_, payload: PlayerStatePayload) => {
+      playerState.setIsPlaying(payload.isPlaying)
+      playerState.setHasPrevious(payload.hasPrevious)
+      playerState.setHasNext(payload.hasNext)
+      playerState.setHasSonglist(payload.hasSonglist)
+
+      setTimeout(() => {
+        setTaskbarButtons()
+        updateTray()
+      }, 150)
+    },
+  )
 }

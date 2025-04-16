@@ -1,6 +1,6 @@
 import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge, ipcRenderer } from 'electron'
-import { IAonsokuAPI, IpcChannels } from './types'
+import { IAonsokuAPI, IpcChannels, PlayerStateListenerActions } from './types'
 
 // Custom APIs for renderer
 const api: IAonsokuAPI = {
@@ -26,6 +26,15 @@ const api: IAonsokuAPI = {
   downloadFailedListener: (func) => {
     ipcRenderer.once(IpcChannels.DownloadFailed, (_, fileId: string) =>
       func(fileId),
+    )
+  },
+  updatePlayerState: (payload) => {
+    ipcRenderer.send(IpcChannels.UpdatePlayerState, payload)
+  },
+  playerStateListener: (func) => {
+    ipcRenderer.on(
+      IpcChannels.PlayerStateListener,
+      (_, state: PlayerStateListenerActions) => func(state),
     )
   },
 }

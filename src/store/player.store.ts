@@ -10,6 +10,7 @@ import { subsonic } from '@/service/subsonic'
 import { IPlayerContext, LoopState } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { areSongListsEqual } from '@/utils/compareSongLists'
+import { isDesktop } from '@/utils/desktop'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
 
 const blurSettings = {
@@ -898,6 +899,52 @@ usePlayerStore.subscribe(
   ],
   () => {
     usePlayerStore.getState().actions.updateQueueChecks()
+  },
+  {
+    equalityFn: shallow,
+  },
+)
+
+function desktopStateListener() {
+  if (!isDesktop()) return
+
+  const { togglePlayPause, playPrevSong, playNextSong } =
+    usePlayerStore.getState().actions
+
+  window.api.playerStateListener((action) => {
+    if (action === 'togglePlayPause') togglePlayPause()
+    if (action === 'skipBackwards') playPrevSong()
+    if (action === 'skipForward') playNextSong()
+  })
+}
+
+desktopStateListener()
+
+function updateDesktopState() {
+  if (!isDesktop()) return
+
+  const { isPlaying, hasPrev, hasNext } = usePlayerStore.getState().playerState
+  const { currentList } = usePlayerStore.getState().songlist
+
+  window.api.updatePlayerState({
+    isPlaying,
+    hasPrevious: hasPrev,
+    hasNext,
+    hasSonglist: currentList.length >= 1,
+  })
+}
+
+updateDesktopState()
+
+usePlayerStore.subscribe(
+  (state) => [
+    state.playerState.isPlaying,
+    state.playerState.hasPrev,
+    state.playerState.hasNext,
+    state.songlist.currentList,
+  ],
+  () => {
+    updateDesktopState()
   },
   {
     equalityFn: shallow,

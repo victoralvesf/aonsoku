@@ -1,6 +1,10 @@
 import { is } from '@electron-toolkit/utils'
-import { app, BrowserWindow, nativeImage, nativeTheme } from 'electron'
+import { app, nativeImage, nativeTheme } from 'electron'
 import { join } from 'path'
+import { sendPlayerEvents } from './playerEvents'
+import { playerState } from './playerState'
+import { IpcChannels } from '../../preload/types'
+import { mainWindow } from '../app'
 
 export const resourcesPath = join(
   is.dev ? app.getAppPath() : process.resourcesPath,
@@ -15,26 +19,34 @@ const buttons = {
   next: 'skip_next.png',
 }
 
-export function setTaskbarButtons(window: BrowserWindow) {
-  if (!window) return
+export function setTaskbarButtons() {
+  if (!mainWindow) return
+  if (!mainWindow.isVisible()) return
 
-  window.setThumbarButtons([
+  const { getHasNext, getHasPrevious, getIsPlaying, getHasSonglist } =
+    playerState
+
+  mainWindow.setThumbarButtons([
     {
       icon: getTaskbarIcon(buttons.previous),
+      flags: getHasPrevious() ? undefined : ['disabled'],
       click() {
-        console.log('skip previous clicked.')
+        sendPlayerEvents('skipBackwards')
+        mainWindow?.webContents.send(IpcChannels.PlayerStateListener, event)
       },
     },
     {
-      icon: getTaskbarIcon(buttons.play),
+      icon: getTaskbarIcon(getIsPlaying() ? buttons.pause : buttons.play),
+      flags: getHasSonglist() ? undefined : ['disabled'],
       click() {
-        console.log('play clicked')
+        sendPlayerEvents('togglePlayPause')
       },
     },
     {
       icon: getTaskbarIcon(buttons.next),
+      flags: getHasNext() ? undefined : ['disabled'],
       click() {
-        console.log('skip next clicked.')
+        sendPlayerEvents('skipForward')
       },
     },
   ])
