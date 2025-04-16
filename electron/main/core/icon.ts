@@ -12,3 +12,9 @@ export function appIcon() {
 
   return nativeImage.createFromPath(iconImage)
 }
+
+export function getAsset(name: string) {
+  const asset = join(resourcesPath, 'assets', name)
+
+  return nativeImage.createFromPath(asset)
+}

@@ -7,6 +7,8 @@ import { appIcon } from './core/icon'
 import { titleBarOverlay } from './core/titleBarOverlay'
 import { StatefulBrowserWindow } from './core/windowPosition'
 
+export const APP_NAME = 'Aonsoku'
+
 export let mainWindow: BrowserWindow | null = null
 
 export function createWindow(): void {

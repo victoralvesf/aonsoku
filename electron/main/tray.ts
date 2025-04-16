@@ -1,13 +1,15 @@
 import { app, Menu, Tray } from 'electron'
-import { mainWindow } from './app'
+import { APP_NAME, mainWindow } from './app'
 import { appIcon } from './core/icon'
+
+const traySpacer = Array.from({ length: 30 }).join(' ')
 
 export let tray: Tray | null = null
 
 export function createTray() {
   tray = new Tray(appIcon())
 
-  tray.setToolTip('Aonsoku')
+  tray.setToolTip(APP_NAME)
   updateTray()
 
   tray.on('click', () => {
@@ -27,12 +29,29 @@ export function updateTray(title?: string) {
   if (!mainWindow || !tray) return
 
   const isVisible = mainWindow.isVisible()
+  const trayTooltip = title ?? mainWindow.title
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: title ?? mainWindow.title,
+      label: APP_NAME + traySpacer,
+      ...(trayTooltip !== APP_NAME ? { sublabel: trayTooltip } : {}),
       type: 'normal',
       enabled: false,
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Previous',
+      type: 'normal',
+    },
+    {
+      label: 'Pause',
+      type: 'normal',
+    },
+    {
+      label: 'Next',
+      type: 'normal',
     },
     {
       type: 'separator',
@@ -52,7 +71,12 @@ export function updateTray(title?: string) {
       },
     },
     {
+      label: 'About',
+      role: 'about',
+    },
+    {
       label: 'Quit',
+      role: 'quit',
       click: () => {
         app.quit()
         tray?.destroy()
@@ -61,6 +85,7 @@ export function updateTray(title?: string) {
     },
   ])
 
-  tray.setToolTip(title ?? mainWindow.title)
+  tray.setToolTip(trayTooltip)
+  tray.setTitle(APP_NAME)
   tray.setContextMenu(contextMenu)
 }
