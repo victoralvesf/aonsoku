@@ -1,4 +1,9 @@
 import { shell, BrowserWindow, nativeTheme, ipcMain } from 'electron'
+import {
+  clearDiscordRpcActivity,
+  RpcPayload,
+  setDiscordRpcActivity,
+} from './discordRpc'
 import { playerState } from './playerState'
 import { setTaskbarButtons } from './taskbar'
 import { DEFAULT_TITLE_BAR_HEIGHT } from './titleBarOverlay'
@@ -93,4 +98,12 @@ export function setupIpcEvents(window: BrowserWindow | null) {
       }, 150)
     },
   )
+
+  ipcMain.on(IpcChannels.SetDiscordRpcActivity, (_, payload: RpcPayload) => {
+    setDiscordRpcActivity(payload)
+  })
+
+  ipcMain.on(IpcChannels.ClearDiscordRpcActivity, () => {
+    clearDiscordRpcActivity()
+  })
 }

@@ -1,8 +1,9 @@
 import { app, Menu, Tray } from 'electron'
-import { APP_NAME, mainWindow } from './app'
+import { mainWindow } from './app'
 import { appIcon } from './core/icon'
 import { sendPlayerEvents } from './core/playerEvents'
 import { playerState } from './core/playerState'
+import { config } from '../../package.json'
 
 const traySpacer = Array.from({ length: 30 }).join(' ')
 
@@ -11,7 +12,7 @@ export let tray: Tray | null = null
 export function createTray() {
   tray = new Tray(appIcon())
 
-  tray.setToolTip(APP_NAME)
+  tray.setToolTip(config.productName)
   updateTray()
 
   tray.on('click', () => {
@@ -30,8 +31,8 @@ export function updateTray(title?: string) {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: APP_NAME + traySpacer,
-      ...(trayTooltip !== APP_NAME ? { sublabel: trayTooltip } : {}),
+      label: config.productName + traySpacer,
+      ...(trayTooltip !== config.productName ? { sublabel: trayTooltip } : {}),
       type: 'normal',
       enabled: false,
     },
@@ -95,6 +96,6 @@ export function updateTray(title?: string) {
   ])
 
   tray.setToolTip(trayTooltip)
-  tray.setTitle(APP_NAME)
+  tray.setTitle(config.productName)
   tray.setContextMenu(contextMenu)
 }

@@ -1,3 +1,4 @@
+import { RpcPayload } from '../main/core/discordRpc'
 import { IDownloadPayload } from '../main/core/downloads'
 
 export enum IpcChannels {
@@ -11,6 +12,8 @@ export enum IpcChannels {
   DownloadFailed = 'download-failed',
   UpdatePlayerState = 'update-player-state',
   PlayerStateListener = 'player-state-listener',
+  SetDiscordRpcActivity = 'set-discord-rpc-activity',
+  ClearDiscordRpcActivity = 'clear-discord-rpc-activity',
 }
 
 export type OverlayColors = {
@@ -46,4 +49,6 @@ export interface IAonsokuAPI {
   playerStateListener: (
     func: (action: PlayerStateListenerActions) => void,
   ) => void
+  setDiscordRpcActivity: (payload: RpcPayload) => void
+  clearDiscordRpcActivity: () => void
 }

@@ -29,6 +29,7 @@ export default defineConfig(async () => ({
 
   build: {
     rollupOptions: {
+      external: ['bufferutil', 'utf-8-validate'],
       output: {
         manualChunks: createManualChunks,
       },

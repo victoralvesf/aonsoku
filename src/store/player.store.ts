@@ -11,6 +11,7 @@ import { IPlayerContext, LoopState } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { areSongListsEqual } from '@/utils/compareSongLists'
 import { isDesktop } from '@/utils/desktop'
+import { discordRpc } from '@/utils/discordRpc'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
 
 const blurSettings = {
@@ -899,6 +900,35 @@ usePlayerStore.subscribe(
   ],
   () => {
     usePlayerStore.getState().actions.updateQueueChecks()
+  },
+  {
+    equalityFn: shallow,
+  },
+)
+
+discordRpc.clear()
+
+usePlayerStore.subscribe(
+  (state) => [
+    state.songlist.currentSong,
+    state.playerState.isPlaying,
+    state.playerState.currentDuration,
+  ],
+  () => {
+    if (!isDesktop()) return
+
+    const playerStore = usePlayerStore.getState()
+
+    const { currentSong } = playerStore.songlist
+    const currentTime = playerStore.actions.getCurrentProgress()
+    const { isPlaying, currentDuration } = playerStore.playerState
+
+    // Clear activity if paused or there is no song
+    if (!currentSong || !isPlaying) discordRpc.clear()
+
+    if (currentSong && isPlaying) {
+      discordRpc.send(currentSong, currentTime, currentDuration)
+    }
   },
   {
     equalityFn: shallow,
