@@ -7,11 +7,10 @@ export interface IDownloadPayload {
   fileId: string
 }
 
-export function setupDownloads() {
+export function setupDownloads(window: BrowserWindow | null) {
   ipcMain.on(
     IpcChannels.HandleDownloads,
     async (_, payload: IDownloadPayload) => {
-      const window = BrowserWindow.getFocusedWindow()
       if (!window) return
 
       const { url, fileId } = payload
