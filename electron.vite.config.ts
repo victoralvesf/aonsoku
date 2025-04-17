@@ -6,6 +6,7 @@ import { createElectronManualChunks } from './electron.manual-chunks'
 export default defineConfig({
   main: {
     build: {
+      sourcemap: true,
       rollupOptions: {
         input: {
           index: resolve(__dirname, 'electron/main/index.ts'),
@@ -15,6 +16,7 @@ export default defineConfig({
   },
   preload: {
     build: {
+      sourcemap: true,
       rollupOptions: {
         input: {
           index: resolve(__dirname, 'electron/preload/index.ts'),

@@ -1,3 +1,4 @@
+import { deezerService } from './deezer'
 import { RPC } from './discord'
 
 export type RpcPayload = {
@@ -6,9 +7,30 @@ export type RpcPayload = {
   artist: string
   startTime: number
   endTime: number
+  duration: number
+  useDeezer?: boolean
 }
 
-export function setDiscordRpcActivity(payload: RpcPayload) {
+export async function setDiscordRpcActivity(payload: RpcPayload) {
+  const { useDeezer = true } = payload
+
+  let externalImage: string | null = null
+
+  if (useDeezer) {
+    try {
+      const searchDeezer = await deezerService.search({
+        artist: payload.artist,
+        album: payload.albumName,
+        track: payload.trackName,
+        duration: payload.duration,
+      })
+
+      if (searchDeezer) {
+        externalImage = searchDeezer.album.cover_big ?? null
+      }
+    } catch {}
+  }
+
   try {
     RPC.init()
     RPC.set({
@@ -19,7 +41,7 @@ export function setDiscordRpcActivity(payload: RpcPayload) {
         end: payload.endTime,
       },
       assets: {
-        large_image: 'icon',
+        large_image: externalImage ?? 'icon',
         small_image: 'song_icon',
       },
     })

@@ -919,6 +919,9 @@ usePlayerStore.subscribe(
 
     const playerStore = usePlayerStore.getState()
 
+    const { mediaType } = playerStore.playerState
+    if (mediaType !== 'song') return
+
     const { currentSong } = playerStore.songlist
     const currentTime = playerStore.actions.getCurrentProgress()
     const { isPlaying, currentDuration } = playerStore.playerState

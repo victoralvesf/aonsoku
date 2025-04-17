@@ -17,6 +17,7 @@ function send(song: ISong, currentTime = 0, duration = 0) {
     artist,
     startTime: Math.floor(Date.now() - currentTime),
     endTime: Math.floor(Date.now() - currentTime + duration),
+    duration,
   }
 
   window.api.setDiscordRpcActivity(statusData)
