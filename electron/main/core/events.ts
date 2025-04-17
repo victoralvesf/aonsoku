@@ -1,3 +1,4 @@
+import { platform } from '@electron-toolkit/utils'
 import { shell, BrowserWindow, nativeTheme, ipcMain } from 'electron'
 import {
   clearDiscordRpcActivity,
@@ -62,16 +63,21 @@ export function setupEvents(window: BrowserWindow | null) {
 export function setupIpcEvents(window: BrowserWindow | null) {
   if (!window) return
 
+  ipcMain.removeAllListeners()
+
   ipcMain.on(IpcChannels.ToggleFullscreen, (_, isFullscreen: boolean) => {
     window.setFullScreen(isFullscreen)
   })
 
+  ipcMain.removeHandler(IpcChannels.IsFullScreen)
   ipcMain.handle(IpcChannels.IsFullScreen, () => {
     return window.isFullScreen()
   })
 
   ipcMain.on(IpcChannels.ThemeChanged, (_, colors: OverlayColors) => {
     const { color, symbol } = colors
+
+    if (platform.isMacOS) return
 
     window.setTitleBarOverlay({
       color,
