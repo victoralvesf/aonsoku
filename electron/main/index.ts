@@ -1,5 +1,5 @@
 import { electronApp, optimizer } from '@electron-toolkit/utils'
-import { app, BrowserWindow, globalShortcut } from 'electron'
+import { app, globalShortcut } from 'electron'
 import { createWindow, mainWindow } from './app'
 import { createTray } from './tray'
 
@@ -24,7 +24,18 @@ if (!instanceLock) {
   })
 
   app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (!mainWindow) {
+      createWindow()
+      return
+    }
+
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore()
+    } else if (!mainWindow.isVisible()) {
+      mainWindow.show()
+    }
+
+    mainWindow.focus()
   })
 
   app.on('browser-window-created', (_, window) => {
