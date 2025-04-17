@@ -71,7 +71,11 @@ function loginRPC() {
   if (!discord) return
 
   const DISCORD_CLIENT_ID = import.meta.env.MAIN_VITE_DISCORD_CLIENT_ID
-  if (!DISCORD_CLIENT_ID) throw new Error('Discord Client ID not found.')
+
+  if (!DISCORD_CLIENT_ID) {
+    console.log('Discord Client ID not found.')
+    return
+  }
 
   discord.login({ clientId: DISCORD_CLIENT_ID }).catch(() => {
     setTimeout(() => loginRPC(), 5000).unref()
