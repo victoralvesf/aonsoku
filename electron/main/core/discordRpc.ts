@@ -15,6 +15,7 @@ export async function setDiscordRpcActivity(payload: RpcPayload) {
   const { useDeezer = true } = payload
 
   let externalImage: string | null = null
+  let externalArtist: string | null = null
 
   if (useDeezer) {
     try {
@@ -27,6 +28,7 @@ export async function setDiscordRpcActivity(payload: RpcPayload) {
 
       if (searchDeezer) {
         externalImage = searchDeezer.album.cover_big ?? null
+        externalArtist = searchDeezer.artist.picture_medium ?? null
       }
     } catch {}
   }
@@ -42,7 +44,7 @@ export async function setDiscordRpcActivity(payload: RpcPayload) {
       },
       assets: {
         large_image: externalImage ?? 'icon',
-        small_image: 'song_icon',
+        small_image: externalArtist ?? 'song_icon',
       },
     })
   } catch {}
