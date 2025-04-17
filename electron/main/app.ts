@@ -23,6 +23,7 @@ export function createWindow(): void {
     roundedCorners: true,
     frame: false,
     ...(process.platform !== 'darwin' ? { titleBarOverlay } : {}),
+    trafficLightPosition: { x: 15, y: 14 },
     icon: appIcon(),
     webPreferences: {
       preload: join(__dirname, '../preload/index.mjs'),
