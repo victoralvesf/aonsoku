@@ -3,7 +3,6 @@ import { app, nativeImage, nativeTheme } from 'electron'
 import { join } from 'path'
 import { sendPlayerEvents } from './playerEvents'
 import { playerState } from './playerState'
-import { IpcChannels } from '../../preload/types'
 import { mainWindow } from '../app'
 
 export const resourcesPath = join(
@@ -32,7 +31,6 @@ export function setTaskbarButtons() {
       flags: getHasPrevious() ? undefined : ['disabled'],
       click() {
         sendPlayerEvents('skipBackwards')
-        mainWindow?.webContents.send(IpcChannels.PlayerStateListener, event)
       },
     },
     {
