@@ -4,8 +4,8 @@ import { isDesktop } from './desktop'
 function send(song: ISong, currentTime = 0, duration = 0) {
   if (!isDesktop()) return
 
-  currentTime = currentTime * 1000
-  duration = duration * 1000
+  const currentTimeInMs = currentTime * 1000
+  const durationInMs = duration * 1000
 
   const artist = song.artists
     ? song.artists.map((artist) => artist.name).join(', ')
@@ -15,8 +15,8 @@ function send(song: ISong, currentTime = 0, duration = 0) {
     trackName: song.title,
     albumName: song.album,
     artist,
-    startTime: Math.floor(Date.now() - currentTime),
-    endTime: Math.floor(Date.now() - currentTime + duration),
+    startTime: Math.floor(Date.now() - currentTimeInMs),
+    endTime: Math.floor(Date.now() - currentTimeInMs + durationInMs),
     duration,
   }
 
