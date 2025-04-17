@@ -6,6 +6,7 @@ import { ISidebarItem } from '@/app/components/sidebar/sidebar-generator'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { ROUTES } from '@/routes/routesList'
+import { GridViewWrapperType, resetGridClickedItem } from '@/utils/gridTools'
 
 export function MiniSidebarItem({ item }: { item: ISidebarItem }) {
   const location = useLocation()
@@ -23,6 +24,9 @@ export function MiniSidebarItem({ item }: { item: ISidebarItem }) {
           'w-full',
           isActive(item.route) && 'pointer-events-none',
         )}
+        onClick={() => {
+          resetGridClickedItem({ name: item.id as GridViewWrapperType })
+        }}
       >
         <SimpleTooltip text={t(item.title)} side="right" delay={50}>
           <Button
