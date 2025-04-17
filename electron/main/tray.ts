@@ -1,5 +1,6 @@
 import { app, Menu, Tray } from 'electron'
 import { mainWindow } from './app'
+import { aboutDialog } from './core/about'
 import { appIcon } from './core/icon'
 import { sendPlayerEvents } from './core/playerEvents'
 import { playerState } from './core/playerState'
@@ -82,11 +83,12 @@ export function updateTray(title?: string) {
     },
     {
       label: 'About',
-      role: 'about',
+      click: () => {
+        aboutDialog()
+      },
     },
     {
       label: 'Quit',
-      role: 'quit',
       click: () => {
         app.quit()
         tray?.destroy()
