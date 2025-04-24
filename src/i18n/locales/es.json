@@ -494,5 +494,17 @@
   "mobile": {
     "access_recommendation": "Por favor, acceda desde un ordenador de sobremesa o una tableta.",
     "unsupported_message": "{{app_name}} no es compatible con dispositivos móviles."
+  },
+  "settings": {
+    "privacy": {
+      "services": {
+        "priority": {
+          "label": "Prioridad de letras",
+          "info": "Prioridad de la letra",
+          "disabled": "Por favor habilite la letra",
+          "suffix": "prioridad"
+        }
+      }
+    }
   }
 }

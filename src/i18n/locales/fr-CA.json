@@ -1,1 +1,14 @@
-{}
+{
+  "settings": {
+    "privacy": {
+      "services": {
+        "priority": {
+          "label": "Priorité des paroles",
+          "info": "Priorité des paroles",
+          "disabled": "S'il vous plaît activer les paroles en premier",
+          "suffix": "priorité"
+        }
+      }
+    }
+  }
+}

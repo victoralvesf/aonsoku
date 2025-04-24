@@ -540,6 +540,12 @@
         "lrclib": {
           "info": "LRCLIB wird für Liedtexte verwendet.",
           "label": "LRCLIB"
+        },
+        "priority": {
+          "label": "Lyrics Priorität",
+          "info": "Priorität der Texte",
+          "disabled": "Bitte aktivieren Sie zuerst Texte",
+          "suffix": "Priorität"
         }
       }
     },

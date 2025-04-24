@@ -25,6 +25,13 @@ export default defineConfig(async () => ({
       // 3. tell vite to ignore watching `src-tauri`
       ignored: ['**/src-tauri/**'],
     },
+    proxy: {
+      '/api/lrc': {
+        target: 'https://api.lrc.cx',
+        changeOrigin: true,
+        rewrite: (path: string) => path.replace(/^\/api\/lrc/, ''),
+      },
+    },
   },
 
   build: {

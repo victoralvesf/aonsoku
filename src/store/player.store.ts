@@ -61,6 +61,18 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                   state.settings.privacy.lrcLibEnabled = value
                 })
               },
+              lrcApiEnabled: true,
+              setLrcApiEnabled(value) {
+                set((state) => {
+                  state.settings.privacy.lrcApiEnabled = value
+                })
+              },
+              lyricsSourcePriority: ['lrcapi', 'lrclib'],
+              setLyricsSourcePriority(priority: string[]) {
+                set((state) => {
+                  state.settings.privacy.lyricsSourcePriority = priority
+                })
+              },
             },
             volume: {
               min: 0,

@@ -311,5 +311,17 @@
   },
   "songInfo": {
     "title": "Detaily skladby"
+  },
+  "settings": {
+    "privacy": {
+      "services": {
+        "priority": {
+          "label": "Texty Priorita",
+          "info": "Priorita textů",
+          "disabled": "Nejprve prosím povolte texty",
+          "suffix": "přednost"
+        }
+      }
+    }
   }
 }

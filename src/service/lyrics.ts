@@ -21,36 +21,51 @@ interface LRCLibResponse {
 
 async function getLyrics(getLyricsData: GetLyricsData) {
   const { preferSyncedLyrics } = usePlayerStore.getState().settings.lyrics
+  const { lyricsSourcePriority } = usePlayerStore.getState().settings.privacy
 
-  // If the user prefers synced lyrics, attempt to fetch them from the LrcLib first.
-  // If lyrics are found, return them immediately.
-  // If not, proceed with the default flow.
-  if (preferSyncedLyrics) {
-    const lyrics = await getLyricsFromLRCLib(getLyricsData)
-
-    if (lyrics.value !== '') return lyrics
-  }
-
-  const response = await httpClient<LyricsResponse>('/getLyrics', {
-    method: 'GET',
-    query: {
-      artist: getLyricsData.artist,
-      title: getLyricsData.title,
+  // Define lyrics source fetchers
+  const sourceMap: Record<string, (data: GetLyricsData) => Promise<any>> = {
+    lrcapi: getLyricsFromLrcApi,
+    lrclib: getLyricsFromLRCLib,
+    subsonic: async (data) => {
+      const response = await httpClient<LyricsResponse>('/getLyrics', {
+        method: 'GET',
+        query: {
+          artist: data.artist,
+          title: data.title,
+        },
+      })
+      return (
+        response?.data.lyrics || {
+          artist: data.artist,
+          title: data.title,
+          value: '',
+        }
+      )
     },
-  })
-
-  const lyricNotFound =
-    !response || !response?.data.lyrics || !response.data.lyrics.value
-
-  // If the Subsonic API did not return lyrics and the user does not prefer synced lyrics,
-  // fallback to fetching lyrics from the LrcLib.
-  // Note: If `preferSyncedLyrics` is true and we reached this point, it means the LrcLib
-  // does not contains lyrics for the track, so the fallback is unnecessary in that case.
-  if (lyricNotFound && !preferSyncedLyrics) {
-    return getLyricsFromLRCLib(getLyricsData)
   }
 
-  return response?.data.lyrics
+  // New logic:
+  // 1. If not prefer synced lyrics, use subsonic only
+  if (!preferSyncedLyrics) {
+    return await sourceMap['subsonic'](getLyricsData)
+  }
+
+  // 2. If prefer synced lyrics, try sources strictly by user priority (could include lrclib, lrcapi, subsonic)
+  const sources =
+    lyricsSourcePriority && lyricsSourcePriority.length > 0
+      ? lyricsSourcePriority
+      : ['lrclib', 'lrcapi', 'subsonic']
+
+  for (const src of sources) {
+    const key = src.toLowerCase()
+    if (!sourceMap[key]) continue
+    const lyrics = await sourceMap[key](getLyricsData)
+    if (lyrics && lyrics.value !== '') return lyrics
+  }
+
+  // Fallback if all sources fail
+  return { artist: getLyricsData.artist, title: getLyricsData.title, value: '' }
 }
 
 async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
@@ -60,8 +75,8 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
   const { title, album, duration } = getLyricsData
 
   // LMS server tends to join all artists into a single string
-  // Ex: "Cartoon, Jeja, Daniel Levi, Time To Talk"
-  // To LRCLIB work correctly, we have to send only one
+  // e.g. "Cartoon, Jeja, Daniel Levi, Time To Talk"
+  // For LRCLIB to work correctly, only send the first artist
   const artist = isLms
     ? getLyricsData.artist.split(',')[0]
     : getLyricsData.artist
@@ -123,7 +138,61 @@ function formatLyrics(lyrics: string) {
   return lyrics.trim().replaceAll('\r\n', '\n')
 }
 
+// Fetch lyrics from LRCAPI
+async function getLyricsFromLrcApi(getLyricsData: GetLyricsData) {
+  const { title, artist, album } = getLyricsData
+  try {
+    const params = new URLSearchParams()
+    if (title) params.append('title', title)
+    if (album) params.append('album', album)
+    if (artist) params.append('artist', artist)
+    // Use proxy path in local dev, real path in production
+    const isDev =
+      typeof window !== 'undefined' &&
+      window.location &&
+      window.location.origin.includes('localhost')
+    const url = isDev
+      ? `/api/lrc/lyrics?${params.toString()}`
+      : `https://api.lrc.cx/lyrics?${params.toString()}`
+
+    let lyric = ''
+    try {
+      const response = await fetch(url)
+      lyric = await response.text()
+    } catch {}
+
+    // Filter lyric lines: keep only lines with timestamp, remove [Intro], [Verse], [Chorus] etc. without timestamp
+    function filterLyricLines(raw: string) {
+      // Remove meaningless lines like [99:00.000]纯音乐，请欣赏
+      return raw
+        .split(/\r?\n/)
+        .filter((line) => {
+          // Only keep lines with timestamp and not '纯音乐，请欣赏' etc.
+          if (/\[\d{2}:\d{2}\.\d{2,3}\]/.test(line)) {
+            // Remove both Chinese and English 'Instrumental' tips
+            const content = line.replace(/\[\d{2}:\d{2}\.\d{2,3}\]/, '').trim()
+            if (
+              content === '' ||
+              /纯音乐请欣赏|纯音乐，请欣赏|Instrumental/i.test(content)
+            ) {
+              return false
+            }
+            return true
+          }
+          return false
+        })
+        .join('\n')
+    }
+    return {
+      artist,
+      title,
+      value: lyric ? filterLyricLines(formatLyrics(lyric)) : '',
+    }
+  } catch {}
+}
+
 export const lyrics = {
   getLyrics,
   getLyricsFromLRCLib,
+  getLyricsFromLrcApi,
 }

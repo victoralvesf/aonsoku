@@ -658,6 +658,16 @@
         "lrclib": {
           "info": "LRCLIB is used to find song lyrics.",
           "label": "LRCLIB"
+        },
+        "lrcapi": {
+          "info": "LRCAPI is used to find song lyrics.",
+          "label": "LRCAPI"
+        },
+        "priority": {
+          "info": "Priority of lyrics",
+          "label": "Lyrics Priority",
+          "disabled": "Please enable lyrics first",
+          "suffix": "priority"
         }
       }
     },

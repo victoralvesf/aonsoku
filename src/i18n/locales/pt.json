@@ -322,6 +322,12 @@
         "lrclib": {
           "info": "O LRCLIB é usado para encontrar letras de músicas.",
           "label": "LRCLIB"
+        },
+        "priority": {
+          "label": "Lyrics Priority",
+          "info": "Prioridade das letras",
+          "disabled": "Por favor, ative as letras primeiro",
+          "suffix": "prioridade"
         }
       }
     },

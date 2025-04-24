@@ -487,7 +487,8 @@
       "language": "语言和地区",
       "audio": "播放器和音频",
       "content": "内容",
-      "appearance": "外观"
+      "appearance": "外观",
+      "privacy": "隐私和安全"
     },
     "appearance": {
       "general": {
@@ -521,6 +522,26 @@
         "preferSynced": {
           "label": "偏好同步的歌词",
           "info": "启用后，同步的歌词将优先于未同步的歌词。"
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "外部服务",
+        "description": "管理 Aonsoku 可以访问的外部服务。",
+        "lrclib": {
+          "info": "LRCLIB 用于查找歌曲歌词。",
+          "label": "LRCLIB"
+        },
+        "lrcapi": {
+          "info": "LRCAPI 用于查找歌曲歌词。",
+          "label": "LRCAPI"
+        },
+        "priority": {
+          "info": "歌词来源的优先级",
+          "label": "歌词源优先级",
+          "disabled": "请先启用歌词源",
+          "suffix": "优先"
         }
       }
     },

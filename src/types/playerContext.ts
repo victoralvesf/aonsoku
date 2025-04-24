@@ -84,6 +84,10 @@ interface ILyrics {
 export interface IPrivacySettings {
   lrcLibEnabled: boolean
   setLrcLibEnabled: (value: boolean) => void
+  lrcApiEnabled: boolean
+  setLrcApiEnabled: (value: boolean) => void
+  lyricsSourcePriority: string[]
+  setLyricsSourcePriority: (priority: string[]) => void
 }
 
 interface IBlurSettings {

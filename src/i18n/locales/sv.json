@@ -524,6 +524,16 @@
           "section": "Dölj radiosektionen"
         }
       }
+    },
+    "privacy": {
+      "services": {
+        "priority": {
+          "label": "Texter prioritet",
+          "info": "Lyrics prioritet",
+          "disabled": "Vänligen aktivera texter först",
+          "suffix": "prioritet"
+        }
+      }
     }
   },
   "dayjs": {

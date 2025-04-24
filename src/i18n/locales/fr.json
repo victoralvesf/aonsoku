@@ -466,7 +466,13 @@
           "label": "LRCLIB",
           "info": "LRCLIB est utilisé pour trouver les paroles."
         },
-        "description": "Gérer les services externes auxquels Aonsoku peut accéder."
+        "description": "Gérer les services externes auxquels Aonsoku peut accéder.",
+        "priority": {
+          "label": "Priorité des paroles",
+          "info": "Priorité des paroles",
+          "disabled": "S'il vous plaît activer les paroles en premier",
+          "suffix": "priorité"
+        }
       }
     }
   },

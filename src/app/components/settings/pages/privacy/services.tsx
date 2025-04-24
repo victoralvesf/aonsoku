@@ -12,10 +12,18 @@ import {
 } from '@/app/components/settings/section'
 import { Switch } from '@/app/components/ui/switch'
 import { usePrivacySettings } from '@/store/player.store'
+import { LyricsSourcePrioritySelect } from '@/app/components/settings/pages/privacy/lyrics-source-priority-select'
 
 export function Services() {
   const { t } = useTranslation()
-  const { lrcLibEnabled, setLrcLibEnabled } = usePrivacySettings()
+  const {
+    lrcLibEnabled,
+    setLrcLibEnabled,
+    lrcApiEnabled,
+    setLrcApiEnabled,
+    lyricsSourcePriority,
+    setLyricsSourcePriority,
+  } = usePrivacySettings()
 
   return (
     <Root>
@@ -34,6 +42,36 @@ export function Services() {
             <Switch
               checked={lrcLibEnabled}
               onCheckedChange={setLrcLibEnabled}
+            />
+          </ContentItemForm>
+        </ContentItem>
+        <ContentItem>
+          <ContentItemTitle info={t('settings.privacy.services.lrcapi.info')}>
+            {t('settings.privacy.services.lrcapi.label')}
+          </ContentItemTitle>
+          <ContentItemForm>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+              }}
+            >
+              <Switch
+                checked={lrcApiEnabled}
+                onCheckedChange={setLrcApiEnabled}
+              />
+            </div>
+          </ContentItemForm>
+        </ContentItem>
+        <ContentItem>
+          <ContentItemTitle info={t('settings.privacy.services.priority.info')}>
+            {t('settings.privacy.services.priority.label')}
+          </ContentItemTitle>
+          <ContentItemForm>
+            <LyricsSourcePrioritySelect
+              value={lyricsSourcePriority || ['lrcapi', 'lrclib']}
+              onChange={setLyricsSourcePriority}
             />
           </ContentItemForm>
         </ContentItem>
