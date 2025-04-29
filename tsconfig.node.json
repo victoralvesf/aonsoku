@@ -6,9 +6,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
-    "types": [
-      "electron-vite/node",
-    ],
+    "types": [""],
     "typeRoots": [
       "./node_modules/@types",
       "./electron/preload/types.ts",
