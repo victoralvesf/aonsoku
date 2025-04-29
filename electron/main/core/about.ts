@@ -1,6 +1,6 @@
 import { dialog } from 'electron'
 import os from 'os'
-import { config, description, version } from '../../../package.json'
+import { productName, description, version } from '../../../package.json'
 import { mainWindow } from '../app'
 
 export function aboutDialog() {
@@ -17,8 +17,8 @@ export function aboutDialog() {
   ].join('\n')
 
   dialog.showMessageBoxSync(mainWindow, {
-    title: config.productName,
-    message: config.productName,
+    title: productName,
+    message: productName,
     type: 'info',
     detail,
   })

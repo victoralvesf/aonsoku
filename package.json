@@ -8,9 +8,7 @@
   },
   "main": "./out/main/index.js",
   "type": "module",
-  "config": {
-    "productName": "Aonsoku"
-  },
+  "productName": "Aonsoku",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

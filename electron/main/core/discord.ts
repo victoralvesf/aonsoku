@@ -1,5 +1,5 @@
 import { Client } from 'discord-rpc'
-import { config } from '../../../package.json'
+import { productName } from '../../../package.json'
 
 const ActivityType = {
   Game: 0,
@@ -38,7 +38,7 @@ const defaultPayload: PayloadType = {
     timestamps: {
       start: Date.now(),
     },
-    details: config.productName,
+    details: productName,
     assets: {
       large_image: 'icon',
       small_image: 'song_icon',

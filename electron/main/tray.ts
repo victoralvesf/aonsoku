@@ -4,7 +4,7 @@ import { aboutDialog } from './core/about'
 import { appIcon } from './core/icon'
 import { sendPlayerEvents } from './core/playerEvents'
 import { playerState } from './core/playerState'
-import { config } from '../../package.json'
+import { productName } from '../../package.json'
 
 const traySpacer = Array.from({ length: 30 }).join(' ')
 
@@ -13,7 +13,7 @@ export let tray: Tray | null = null
 export function createTray() {
   tray = new Tray(appIcon())
 
-  tray.setToolTip(config.productName)
+  tray.setToolTip(productName)
   updateTray()
 
   tray.on('click', () => {
@@ -32,8 +32,8 @@ export function updateTray(title?: string) {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: config.productName + traySpacer,
-      ...(trayTooltip !== config.productName ? { sublabel: trayTooltip } : {}),
+      label: productName + traySpacer,
+      ...(trayTooltip !== productName ? { sublabel: trayTooltip } : {}),
       type: 'normal',
       enabled: false,
     },
@@ -98,6 +98,6 @@ export function updateTray(title?: string) {
   ])
 
   tray.setToolTip(trayTooltip)
-  tray.setTitle(config.productName)
+  tray.setTitle(productName)
   tray.setContextMenu(contextMenu)
 }
