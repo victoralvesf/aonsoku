@@ -18,7 +18,8 @@ export function Header() {
       <div className="flex justify-end items-center gap-2">
         <SettingsButton />
         <UserDropdown />
-        {(isWindows || isLinux) && <div className="w-[122px]" />}
+        {isWindows && !isFullscreen && <div className="w-[122px]" />}
+        {isLinux && !isFullscreen && <div className="w-[94px]" />}
       </div>
     </header>
   )

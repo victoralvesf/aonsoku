@@ -12,7 +12,7 @@ const regularButton = clsx(
 )
 
 export function Windows({ className, ...props }: HTMLProps<HTMLDivElement>) {
-  const { minimizeWindow, maximizeWindow, closeWindow, isWindowMaximized } =
+  const { minimizeWindow, maximizeWindow, closeWindow, isMaximized } =
     useAppWindow()
 
   return (
@@ -21,11 +21,7 @@ export function Windows({ className, ...props }: HTMLProps<HTMLDivElement>) {
         <Icons.minimizeWin />
       </ControlButton>
       <ControlButton onClick={maximizeWindow} className={regularButton}>
-        {!isWindowMaximized ? (
-          <Icons.maximizeWin />
-        ) : (
-          <Icons.maximizeRestoreWin />
-        )}
+        {!isMaximized ? <Icons.maximizeWin /> : <Icons.maximizeRestoreWin />}
       </ControlButton>
       <ControlButton
         onClick={closeWindow}

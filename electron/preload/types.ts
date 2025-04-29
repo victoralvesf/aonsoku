@@ -5,6 +5,11 @@ export enum IpcChannels {
   FullscreenStatus = 'fullscreen-status',
   ToggleFullscreen = 'toggle-fullscreen',
   IsFullScreen = 'is-fullscreen',
+  IsMaximized = 'is-maximized',
+  MaximizedStatus = 'maximized-status',
+  ToggleMaximize = 'toggle-maximize',
+  ToggleMinimize = 'toggle-minimize',
+  CloseWindow = 'close-window',
   ThemeChanged = 'theme-changed',
   UpdateNativeTheme = 'update-native-theme',
   HandleDownloads = 'handle-downloads',
@@ -40,6 +45,11 @@ export interface IAonsokuAPI {
   exitFullScreen: () => void
   isFullScreen: () => Promise<boolean>
   fullscreenStatusListener: (func: (status: boolean) => void) => void
+  isMaximized: () => Promise<boolean>
+  maximizedStatusListener: (func: (status: boolean) => void) => void
+  toggleMaximize: (isMaximized: boolean) => void
+  toggleMinimize: () => void
+  closeWindow: () => void
   setTitleBarOverlayColors: (colors: OverlayColors) => void
   setNativeTheme: (isDark: boolean) => void
   downloadFile: (payload: IDownloadPayload) => void

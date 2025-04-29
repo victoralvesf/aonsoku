@@ -12,6 +12,7 @@ import { enterFullscreen, exitFullscreen } from '@/utils/browser'
 import { isDesktop } from '@/utils/desktop'
 import { FullscreenBackdrop } from './backdrop'
 import { CloseFullscreenButton } from './buttons'
+import { FullscreenDragHandler } from './drag-handler'
 import { FullscreenPlayer } from './player'
 import { FullscreenSettings } from './settings'
 import { FullscreenTabs } from './tabs'
@@ -54,7 +55,8 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
         aria-describedby={undefined}
       >
         <MemoFullscreenBackdrop />
-        <div className="absolute inset-0 flex flex-col p-8 w-full h-full gap-4 bg-black/0 z-10">
+        <FullscreenDragHandler />
+        <div className="absolute inset-0 flex flex-col p-0 2xl:p-8 pt-10 2xl:pt-12 w-full h-full gap-4 bg-black/0 z-10">
           {/* First Row */}
           <div className="flex gap-2 items-center w-full h-[40px] px-16 z-20 justify-end">
             <FullscreenSettings />

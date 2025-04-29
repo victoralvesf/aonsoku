@@ -1,4 +1,4 @@
-import { platform } from '@electron-toolkit/utils'
+import { is, platform } from '@electron-toolkit/utils'
 import { shell, BrowserWindow, nativeTheme, ipcMain } from 'electron'
 import {
   clearDiscordRpcActivity,
@@ -50,9 +50,19 @@ export function setupEvents(window: BrowserWindow | null) {
     window.webContents.send(IpcChannels.FullscreenStatus, false)
   })
 
+  window.on('maximize', () => {
+    window.webContents.send(IpcChannels.MaximizedStatus, true)
+  })
+
+  window.on('unmaximize', () => {
+    window.webContents.send(IpcChannels.MaximizedStatus, false)
+  })
+
   window.on('close', (event) => {
-    event.preventDefault()
-    window.hide()
+    if (!is.dev) {
+      event.preventDefault()
+      window.hide()
+    }
   })
 
   window.on('page-title-updated', (_, title) => {
@@ -74,10 +84,31 @@ export function setupIpcEvents(window: BrowserWindow | null) {
     return window.isFullScreen()
   })
 
+  ipcMain.removeHandler(IpcChannels.IsMaximized)
+  ipcMain.handle(IpcChannels.IsMaximized, () => {
+    return window.isMaximized()
+  })
+
+  ipcMain.on(IpcChannels.ToggleMaximize, (_, isMaximized: boolean) => {
+    if (isMaximized) {
+      window.unmaximize()
+    } else {
+      window.maximize()
+    }
+  })
+
+  ipcMain.on(IpcChannels.ToggleMinimize, () => {
+    window.minimize()
+  })
+
+  ipcMain.on(IpcChannels.CloseWindow, () => {
+    window.close()
+  })
+
   ipcMain.on(IpcChannels.ThemeChanged, (_, colors: OverlayColors) => {
     const { color, symbol } = colors
 
-    if (platform.isMacOS) return
+    if (platform.isMacOS || platform.isLinux) return
 
     window.setTitleBarOverlay({
       color,

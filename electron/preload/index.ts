@@ -12,6 +12,16 @@ const api: IAonsokuAPI = {
       func(status),
     )
   },
+  isMaximized: () => ipcRenderer.invoke(IpcChannels.IsMaximized),
+  maximizedStatusListener: (func) => {
+    ipcRenderer.on(IpcChannels.MaximizedStatus, (_, status: boolean) =>
+      func(status),
+    )
+  },
+  toggleMaximize: (isMaximized) =>
+    ipcRenderer.send(IpcChannels.ToggleMaximize, isMaximized),
+  toggleMinimize: () => ipcRenderer.send(IpcChannels.ToggleMinimize),
+  closeWindow: () => ipcRenderer.send(IpcChannels.CloseWindow),
   setTitleBarOverlayColors: (color) =>
     ipcRenderer.send(IpcChannels.ThemeChanged, color),
   setNativeTheme: (isDark) =>

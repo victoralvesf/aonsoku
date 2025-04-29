@@ -1,4 +1,4 @@
-import { is } from '@electron-toolkit/utils'
+import { is, platform } from '@electron-toolkit/utils'
 import { BrowserWindow } from 'electron'
 import { join } from 'path'
 import { setupDownloads } from './core/downloads'
@@ -22,7 +22,7 @@ export function createWindow(): void {
     visualEffectState: 'followWindow',
     roundedCorners: true,
     frame: false,
-    ...(process.platform !== 'darwin' ? { titleBarOverlay } : {}),
+    ...(platform.isWindows ? { titleBarOverlay } : {}),
     trafficLightPosition: { x: 15, y: 14 },
     icon: appIcon(),
     webPreferences: {
