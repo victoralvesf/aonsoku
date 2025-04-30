@@ -20,8 +20,8 @@ const schema = {
   height: { type: 'integer' },
   isMaximized: { type: 'boolean' },
   width: { type: 'integer' },
-  x: { type: 'integer' },
-  y: { type: 'integer' },
+  x: { type: 'integer', default: 0 },
+  y: { type: 'integer', default: 0 },
 }
 
 const windowStore = new AonsokuStore({
@@ -208,6 +208,12 @@ export class StatefulBrowserWindow extends BrowserWindow {
   }
 
   private saveState() {
-    windowStore.set({ ...this.state })
+    try {
+      if (!this.state) return
+
+      windowStore.set({ ...this.state })
+    } catch (error) {
+      console.log('Unable to save window position to store.', error)
+    }
   }
 }
