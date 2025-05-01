@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react'
+import { memo, ReactNode, useEffect } from 'react'
 import {
   Drawer,
   DrawerClose,
@@ -27,6 +27,19 @@ const MemoFullscreenBackdrop = memo(FullscreenBackdrop)
 export default function FullscreenMode({ children }: FullscreenModeProps) {
   const { enterFullscreenWindow, exitFullscreenWindow } = useAppWindow()
   const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
+
+  useEffect(() => {
+    return () => {
+      if (isDesktop()) {
+        exitFullscreenWindow().then(() => {
+          setDesktopTitleBarColors(false)
+        })
+      } else {
+        exitFullscreen()
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   async function handleFullscreen(open: boolean) {
     // We set title bar colors to transparent,

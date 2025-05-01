@@ -45,8 +45,10 @@ export interface IAonsokuAPI {
   exitFullScreen: () => void
   isFullScreen: () => Promise<boolean>
   fullscreenStatusListener: (func: (status: boolean) => void) => void
+  removeFullscreenStatusListener: () => void
   isMaximized: () => Promise<boolean>
   maximizedStatusListener: (func: (status: boolean) => void) => void
+  removeMaximizedStatusListener: () => void
   toggleMaximize: (isMaximized: boolean) => void
   toggleMinimize: () => void
   closeWindow: () => void

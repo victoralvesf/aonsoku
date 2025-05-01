@@ -42,8 +42,8 @@ export function useAppWindow(): AppWindowType {
     window.api.maximizedStatusListener(handleMaximizedStatus)
 
     return () => {
-      window.api.fullscreenStatusListener(handleFullScreenStatus)
-      window.api.maximizedStatusListener(handleMaximizedStatus)
+      window.api.removeFullscreenStatusListener()
+      window.api.removeMaximizedStatusListener()
     }
   }, [])
 
@@ -52,7 +52,10 @@ export function useAppWindow(): AppWindowType {
 
     const fullscreen = await window.api.isFullScreen()
 
-    if (!fullscreen) window.api.enterFullScreen()
+    if (!fullscreen) {
+      window.api.enterFullScreen()
+      setIsFullscreen(true)
+    }
   }
 
   const exitFullscreenWindow = async () => {
@@ -60,7 +63,10 @@ export function useAppWindow(): AppWindowType {
 
     const fullscreen = await window.api.isFullScreen()
 
-    if (fullscreen) window.api.exitFullScreen()
+    if (fullscreen) {
+      window.api.exitFullScreen()
+      setIsFullscreen(false)
+    }
   }
 
   const maximizeWindow = () => {

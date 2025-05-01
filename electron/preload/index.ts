@@ -12,11 +12,17 @@ const api: IAonsokuAPI = {
       func(status),
     )
   },
+  removeFullscreenStatusListener: () => {
+    ipcRenderer.removeAllListeners(IpcChannels.FullscreenStatus)
+  },
   isMaximized: () => ipcRenderer.invoke(IpcChannels.IsMaximized),
   maximizedStatusListener: (func) => {
     ipcRenderer.on(IpcChannels.MaximizedStatus, (_, status: boolean) =>
       func(status),
     )
+  },
+  removeMaximizedStatusListener: () => {
+    ipcRenderer.removeAllListeners(IpcChannels.MaximizedStatus)
   },
   toggleMaximize: (isMaximized) =>
     ipcRenderer.send(IpcChannels.ToggleMaximize, isMaximized),
