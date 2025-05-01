@@ -10,6 +10,7 @@ import { useAppWindow } from '@/app/hooks/use-app-window'
 import { useFullscreenPlayerSettings } from '@/store/player.store'
 import { enterFullscreen, exitFullscreen } from '@/utils/browser'
 import { isDesktop } from '@/utils/desktop'
+import { setDesktopTitleBarColors } from '@/utils/theme'
 import { FullscreenBackdrop } from './backdrop'
 import { CloseFullscreenButton } from './buttons'
 import { FullscreenDragHandler } from './drag-handler'
@@ -28,6 +29,10 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
   const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
 
   async function handleFullscreen(open: boolean) {
+    // We set title bar colors to transparent,
+    // to not "unstyle" the big player appearance
+    if (isDesktop()) setDesktopTitleBarColors(open)
+
     if (!autoFullscreenEnabled) return
 
     if (isDesktop()) {
