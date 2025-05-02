@@ -598,6 +598,7 @@
       "language": "Language & Region",
       "audio": "Player & Audio",
       "content": "Content",
+      "accounts": "Accounts",
       "privacy": "Privacy & Security"
     },
     "appearance": {
@@ -683,6 +684,15 @@
           "error": "Username and Server URL are required.",
           "user": "Username",
           "url": "Server URL"
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "group": "Discord Rich Presence",
+        "description": "Share your currently playing song with friends on Discord.",
+        "enabled": {
+          "label": "Enable Integration"
         }
       }
     }

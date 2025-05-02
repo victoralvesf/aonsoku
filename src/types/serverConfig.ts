@@ -76,8 +76,16 @@ interface IPodcasts {
   setCustomUrl: (value: string) => void
 }
 
+interface IAccounts {
+  discord: {
+    rpcEnabled: boolean
+    setRpcEnabled: (value: boolean) => void
+  }
+}
+
 export interface IAppContext {
   data: IAppData
+  accounts: IAccounts
   podcasts: IPodcasts
   pages: IAppPages
   command: IAppCommand

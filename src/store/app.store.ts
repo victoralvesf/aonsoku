@@ -38,6 +38,16 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             lockUser: hasValidConfig,
             songCount: null,
           },
+          accounts: {
+            discord: {
+              rpcEnabled: false,
+              setRpcEnabled: (value) => {
+                set((state) => {
+                  state.accounts.discord.rpcEnabled = value
+                })
+              },
+            },
+          },
           podcasts: {
             active: false,
             setActive: (value) => {
@@ -295,6 +305,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
 )
 
 export const useAppData = () => useAppStore((state) => state.data)
+export const useAppAccounts = () => useAppStore((state) => state.accounts)
 export const useAppPodcasts = () => useAppStore((state) => state.podcasts)
 export const useAppPages = () => useAppStore((state) => state.pages)
 export const useAppActions = () => useAppStore((state) => state.actions)

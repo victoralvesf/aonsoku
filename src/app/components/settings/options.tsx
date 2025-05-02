@@ -1,4 +1,5 @@
 import {
+  CircleUserRound,
   EarthLock,
   FileText,
   Globe,
@@ -15,12 +16,14 @@ import {
   SidebarMenuItem,
 } from '@/app/components/ui/sidebar'
 import { useAppSettings } from '@/store/app.store'
+import { isDesktop } from '@/utils/desktop'
 
 export type SettingsOptions =
   | 'appearance'
   | 'language'
   | 'audio'
   | 'content'
+  | 'accounts'
   | 'privacy'
 
 interface OptionsData {
@@ -28,11 +31,14 @@ interface OptionsData {
   icon: ComponentType
 }
 
+const accountsOption: OptionsData = { id: 'accounts', icon: CircleUserRound }
+
 const options: OptionsData[] = [
   { id: 'appearance', icon: Paintbrush },
   { id: 'language', icon: Globe },
   { id: 'audio', icon: Headphones },
   { id: 'content', icon: FileText },
+  ...(isDesktop() ? [accountsOption] : []),
   { id: 'privacy', icon: EarthLock },
 ]
 

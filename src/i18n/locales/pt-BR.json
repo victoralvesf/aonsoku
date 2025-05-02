@@ -612,6 +612,7 @@
       "language": "Linguagem & Região",
       "audio": "Reprodutor & Áudio",
       "content": "Conteúdo",
+      "accounts": "Contas",
       "privacy": "Privacidade & Segurança"
     },
     "appearance": {
@@ -697,6 +698,15 @@
           "error": "Nome de usuário e URL do servidor são obrigatórios.",
           "user": "Nome de Usuário",
           "url": "URL do Servidor"
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "group": "Discord Rich Presence",
+        "description": "Compartilhe a música que está ouvindo com seus amigos no Discord.",
+        "enabled": {
+          "label": "Habilitar Integração"
         }
       }
     }

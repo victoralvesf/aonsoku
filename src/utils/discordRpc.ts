@@ -1,8 +1,12 @@
+import { useAppStore } from '@/store/app.store'
 import { ISong } from '@/types/responses/song'
 import { isDesktop } from './desktop'
 
 function send(song: ISong, currentTime = 0, duration = 0) {
   if (!isDesktop()) return
+
+  const { rpcEnabled } = useAppStore.getState().accounts.discord
+  if (!rpcEnabled) return
 
   const currentTimeInMs = currentTime * 1000
   const durationInMs = duration * 1000
