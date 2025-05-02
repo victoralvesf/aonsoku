@@ -32,6 +32,9 @@ export type PayloadType = {
   activity: IActivity | null
 }
 
+export const DEFAULT_LARGE_IMAGE = 'icon'
+export const DEFAULT_SMALL_IMAGE = 'song_icon'
+
 const defaultPayload: PayloadType = {
   pid: process.pid,
   activity: {
@@ -40,8 +43,8 @@ const defaultPayload: PayloadType = {
     },
     details: productName,
     assets: {
-      large_image: 'icon',
-      small_image: 'song_icon',
+      large_image: DEFAULT_LARGE_IMAGE,
+      small_image: DEFAULT_SMALL_IMAGE,
     },
     instance: true,
     type: ActivityType.Listening,

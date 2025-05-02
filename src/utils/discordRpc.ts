@@ -11,16 +11,17 @@ function send(song: ISong, currentTime = 0, duration = 0) {
     ? song.artists.map((artist) => artist.name).join(', ')
     : song.artist
 
-  const statusData = {
+  const startTime = Math.floor(Date.now() - currentTimeInMs)
+  const endTime = Math.floor(Date.now() - currentTimeInMs + durationInMs)
+
+  window.api.setDiscordRpcActivity({
     trackName: song.title,
     albumName: song.album,
     artist,
-    startTime: Math.floor(Date.now() - currentTimeInMs),
-    endTime: Math.floor(Date.now() - currentTimeInMs + durationInMs),
+    startTime,
+    endTime,
     duration,
-  }
-
-  window.api.setDiscordRpcActivity(statusData)
+  })
 }
 
 function clear() {
