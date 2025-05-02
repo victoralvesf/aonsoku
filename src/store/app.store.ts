@@ -7,6 +7,7 @@ import { createWithEqualityFn } from 'zustand/traditional'
 import { pingServer } from '@/api/pingServer'
 import { queryServerInfo } from '@/api/queryServerInfo'
 import { AuthType, IAppContext, IServerConfig } from '@/types/serverConfig'
+import { discordRpc } from '@/utils/discordRpc'
 import { logger } from '@/utils/logger'
 import {
   genEncodedPassword,
@@ -302,6 +303,17 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
     ),
   ),
   shallow,
+)
+
+useAppStore.subscribe(
+  (state) => state.accounts.discord.rpcEnabled,
+  (currentState) => {
+    if (currentState) {
+      discordRpc.sendCurrentSong()
+    } else {
+      discordRpc.clear()
+    }
+  },
 )
 
 export const useAppData = () => useAppStore((state) => state.data)

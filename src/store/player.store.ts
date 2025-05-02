@@ -906,8 +906,6 @@ usePlayerStore.subscribe(
   },
 )
 
-discordRpc.clear()
-
 usePlayerStore.subscribe(
   (state) => [
     state.songlist.currentSong,
@@ -915,23 +913,7 @@ usePlayerStore.subscribe(
     state.playerState.currentDuration,
   ],
   () => {
-    if (!isDesktop()) return
-
-    const playerStore = usePlayerStore.getState()
-
-    const { mediaType } = playerStore.playerState
-    if (mediaType !== 'song') return
-
-    const { currentSong } = playerStore.songlist
-    const currentTime = playerStore.actions.getCurrentProgress()
-    const { isPlaying, currentDuration } = playerStore.playerState
-
-    // Clear activity if paused or there is no song
-    if (!currentSong || !isPlaying) discordRpc.clear()
-
-    if (currentSong && isPlaying) {
-      discordRpc.send(currentSong, currentTime, currentDuration)
-    }
+    discordRpc.sendCurrentSong()
   },
   {
     equalityFn: shallow,

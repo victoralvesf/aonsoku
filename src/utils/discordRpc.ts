@@ -1,4 +1,5 @@
 import { useAppStore } from '@/store/app.store'
+import { usePlayerStore } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 import { isDesktop } from './desktop'
 
@@ -34,7 +35,28 @@ function clear() {
   window.api.clearDiscordRpcActivity()
 }
 
+function sendCurrentSong() {
+  if (!isDesktop()) return
+
+  const { playerState, songlist, actions } = usePlayerStore.getState()
+
+  const { mediaType } = playerState
+  if (mediaType !== 'song') return
+
+  const { currentSong } = songlist
+  const currentTime = actions.getCurrentProgress()
+  const { isPlaying, currentDuration } = playerState
+
+  // Clear activity if paused or there is no song
+  if (!currentSong || !isPlaying) discordRpc.clear()
+
+  if (currentSong && isPlaying) {
+    discordRpc.send(currentSong, currentTime, currentDuration)
+  }
+}
+
 export const discordRpc = {
   send,
   clear,
+  sendCurrentSong,
 }
