@@ -1,1 +1,235 @@
-{}
+{
+  "menu": {
+    "language": "Język",
+    "about": "O programie",
+    "serverLogout": "Wyloguj",
+    "server": "Serwer"
+  },
+  "generic": {
+    "viewMode": {
+      "modes": {
+        "poster": "Plakat",
+        "list": "Lista"
+      },
+      "label": "Tryb Wyświetlania"
+    },
+    "loading": "Ładowanie…",
+    "showDetails": "Pokaż szczegóły",
+    "viewAll": "Pokaż wszystkie",
+    "beta": "Beta",
+    "seeMore": "Zobacz więcej",
+    "hideDetails": "Ukryj szczegóły"
+  },
+  "songs": {
+    "list": {
+      "filter": {
+        "clear": "Wyczyść filtr"
+      },
+      "search": {
+        "placeholder": "Szukaj piosenek…"
+      },
+      "byArtist": "Piosenki {{artist}}"
+    }
+  },
+  "album": {
+    "list": {
+      "empty": {
+        "title": "Ups, tu nie ma albumów!",
+        "action": "Może spróbuj poprawić filtry?",
+        "info": "Wygląda na to że nie ma albumów z wybranymi filtrami."
+      },
+      "filter": {
+        "releaseYear": "Rok Wydania",
+        "favorites": "Ulubione",
+        "artist": "Wykonawca",
+        "genre": "Gatunek",
+        "mostPlayed": "Najczęściej odtwarzane",
+        "name": "Nazwa",
+        "random": "Losowo",
+        "recentlyAdded": "Ostatnio dodane",
+        "search": "Wyszukiwanie",
+        "discography": "Dyskografia",
+        "recentlyPlayed": "Ostatnio odtwarzane"
+      },
+      "header": {
+        "albumsByArtist": "Albumy od {{artist}}"
+      },
+      "genre": {
+        "label": "Wybierz gatunek…",
+        "search": "Znajdź gatunek…",
+        "loading": "Ładowanie gatunków…",
+        "notFound": "Nie znaleziono gatunku."
+      },
+      "search": {
+        "placeholder": "Wyszukaj albumy…"
+      }
+    },
+    "info": {
+      "musicbrainz": "Otwórz w MusicBrainz",
+      "lastfm": "Otwórz w Last.fm",
+      "about": "O {{name}}"
+    },
+    "more": {
+      "discography": "Dyskografia Wykonawcy",
+      "genreTitle": "Więcej z gatunku {{genre}}",
+      "listTitle": "Więcej od tego wykonawcy"
+    },
+    "headline": "Album",
+    "buttons": {
+      "like": "Polub {{name}}",
+      "dislike": "Usuń {{name}} z ulubionych"
+    },
+    "table": {
+      "discNumber": "Płyta {{number}}"
+    }
+  },
+  "theme": {
+    "dark": "Ciemny",
+    "system": "Systemowy",
+    "one-dark": "One Dark",
+    "night-owl-light": "Night Owl Light",
+    "marmalade-beaver": "Marmalade Beaver",
+    "noctis-lilac": "Noctis Lilac",
+    "material-theme": "Motyw Material",
+    "monokai-pro": "Monokai Pro",
+    "github-dark": "Ciemny Github",
+    "shades-of-purple": "Odcienie Fioletu",
+    "bearded-solarized": "Bearded Solarized",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "nuclear-dark": "Nuclear Dark",
+    "achiever": "Achiever",
+    "dracula": "Dracula",
+    "discord": "Discord",
+    "vue-dark": "Vue Dark",
+    "vim-dark-soft": "Vim Dark Soft",
+    "label": "Motyw",
+    "black": "Czarno-Biały",
+    "light": "Jasny",
+    "tinacious-design": "Tinacious Design"
+  },
+  "podcasts": {
+    "form": {
+      "dialog": {
+        "validations": {
+          "atLeastOneUrl": "Podaj co najmniej jeden adres URL.",
+          "protocol": "Adresy URL muszą zaczynać się od http:// lub https://",
+          "url": "Podaj poprawne adresy URL.",
+          "urlLength": "URL musi mieć co najmniej 10 znaków"
+        },
+        "title": "Utwórz Podcast",
+        "feedUrl": "URL Kanału",
+        "message": "Możesz dodać wiele URL, jeden na jedną linijkę.",
+        "saveButton": "Zapisz"
+      },
+      "latestEpisodes": "Najnowsze odcinki",
+      "addButton": "Dodaj Podcast",
+      "search": "Wyszukaj podcasty…",
+      "toasts": {
+        "success": "Podcast utworzony pomyślnie! Będzie dostępny do posłuchania za parę minut!",
+        "error": "Nie udało się utworzyć podcastu!"
+      }
+    },
+    "emptyPage": {
+      "message": "Nie dodano podcastów"
+    }
+  },
+  "home": {
+    "mostPlayed": "Najczęściej odtwarzane",
+    "recentlyPlayed": "Ostatnio odtwarzane",
+    "recentlyAdded": "Ostatnio dodane",
+    "explore": "Eksploruj"
+  },
+  "sidebar": {
+    "home": "Strona główna",
+    "search": "Szukaj…",
+    "library": "Biblioteka",
+    "songs": "Utwory",
+    "albums": "Albumy",
+    "radios": "Radia",
+    "podcasts": "Podcasty",
+    "miniSearch": "Wyszukiwanie",
+    "artists": "Wykonawcy",
+    "playlists": "Playlisty",
+    "emptyPlaylist": "Nie utworzono jeszcze playlist"
+  },
+  "playlist": {
+    "headline": "Playlista",
+    "songCount_one": "{{count}} piosenka",
+    "songCount_few": "{{count}} piosenki",
+    "songCount_many": "{{count}} piosenek",
+    "duration": "około {{duration}}",
+    "refresh": "Odśwież playlisty",
+    "buttons": {
+      "play": "Odtwórz {{name}}",
+      "shuffle": "Odtwórz {{name}} w trybie losowym",
+      "options": "Więcej opcji dla {{name}}"
+    },
+    "form": {
+      "labels": {
+        "name": "Nazwa",
+        "comment": "Opis",
+        "commentDescription": "Wpisz krótki opis tej playlisty",
+        "isPublic": "Publiczna",
+        "isPublicDescription": "Wybierz tę opcję aby, ta playlista była publiczna. Pozwoli to innym użytkownikom przeglądać i mieć dostęp do twojej playlisty."
+      },
+      "create": {
+        "title": "Utwórz Playlistę",
+        "button": "Utwórz",
+        "toast": {
+          "success": "Playlista utworzona pomyślnie!",
+          "error": "Nie udało się utworzyć playlisty!"
+        }
+      },
+      "edit": {
+        "title": "Edycja Playlisty",
+        "toast": {
+          "success": "Playlista uaktualniona pomyślnie!",
+          "error": "Nie udało się uaktualnić playlisty!"
+        },
+        "button": "Zaktualizuj"
+      },
+      "delete": {
+        "title": "Czy napewno chcesz usunąć tę playlistę?",
+        "description": "Tego działania nie można cofnąć.",
+        "toast": {
+          "error": "Nie udało się usunąć playlisty!",
+          "success": "Playlista usunięta pomyślnie!"
+        }
+      },
+      "validations": {
+        "nameLength": "Nazwa playlisty musi zawierać co najmniej 2 znaki."
+      },
+      "removeSong": {
+        "description": "Tego działania nie można cofnąć.",
+        "toast": {
+          "error_one": "Nie udało się usunąć piosenki!",
+          "error_few": "Nie udało się usunąć piosenek!",
+          "error_many": "Nie udało się usunąć piosenek!",
+          "success_one": "Piosenka usunięta pomyślnie!",
+          "success_few": "Piosenki usunięte pomyślnie!",
+          "success_many": "Piosenki usunięte pomyślnie!"
+        },
+        "title_one": "Czy napewno chcesz usunąć wybraną piosenkę?",
+        "title_few": "Czy napewno chesz usunąć wybrane piosenki?",
+        "title_many": "Czy napewno chcesz usunąć wybrane piosenki?"
+      }
+    },
+    "noSongList": "Ta playlista nie zawiera żadnych piosenek!"
+  },
+  "artist": {
+    "headline": "Wykonawca",
+    "buttons": {
+      "options": "Więcej opcji dla {{artist}}",
+      "shuffle": "Odtwarzaj radio {{artist}} w trybie losowym",
+      "play": "Odtwarzaj radio {{artist}}"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} album",
+      "albumsCount_few": "{{count}} albumy",
+      "albumsCount_many": "{{count}} albumów"
+    },
+    "recentAlbums": "Ostatnie albumy",
+    "relatedArtists": "Powiązani wykonawcy",
+    "topSongs": "Popularne"
+  }
+}
