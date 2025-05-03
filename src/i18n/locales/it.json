@@ -1,1 +1,210 @@
-{}
+{
+  "menu": {
+    "server": "Server",
+    "serverLogout": "Esci",
+    "language": "Lingua",
+    "about": "Più informazioni"
+  },
+  "sidebar": {
+    "radios": "Radio",
+    "home": "Home",
+    "search": "Cerca…",
+    "albums": "Album",
+    "songs": "Brani",
+    "podcasts": "Podcast",
+    "emptyPlaylist": "Nessuna playlist creata",
+    "miniSearch": "Cerca",
+    "library": "Libreria",
+    "artists": "Artisti",
+    "playlists": "Playlist"
+  },
+  "playlist": {
+    "form": {
+      "labels": {
+        "isPublic": "Pubblica",
+        "isPublicDescription": "Seleziona questa opzione per redere questa playlist pubblica. Questo permette agli altri utenti di vedere e accedere alla tua playlist.",
+        "comment": "Commento",
+        "commentDescription": "Scrivi una descrizione più corta di questa playlist",
+        "name": "Nome"
+      },
+      "create": {
+        "title": "Crea Playlist",
+        "toast": {
+          "error": "Impossibile creare la playlist!",
+          "success": "Playlist creata con successo!"
+        },
+        "button": "Crea"
+      },
+      "removeSong": {
+        "title_one": "Sei sicuro di rimuovere il brano selezionata?",
+        "title_many": "Sei sicuro di rimuovere i brani selezionata?",
+        "title_other": "Sei sicuro di rimuovere i brani selezionata?",
+        "toast": {
+          "success_one": "Brano rimosso con successo!",
+          "success_many": "Brani rimossi con successo!",
+          "success_other": "Brani rimossi con successo!",
+          "error_one": "Impossibile rimuovere il brano!",
+          "error_many": "Impossibile rimuovere i brani!",
+          "error_other": "Impossibile rimuovere i brani!"
+        },
+        "description": "Questa azione non può essere annullata."
+      },
+      "edit": {
+        "button": "Aggiorna",
+        "toast": {
+          "success": "Playlist modificata con successo!",
+          "error": "Impossibile modificare la playlist!"
+        },
+        "title": "Modifica Playlist"
+      },
+      "delete": {
+        "description": "Questa azione non può essere annullata.",
+        "toast": {
+          "error": "Impossibile eliminare la playlist!",
+          "success": "Playlist eliminata con succcesso!"
+        },
+        "title": "Sei sicuro di voler eliminare questa playlist?"
+      },
+      "validations": {
+        "nameLength": "Il nome della playlist deve essere lungo almeno 2 caratteri."
+      }
+    },
+    "duration": "circa {{duration}}",
+    "headline": "Playlist",
+    "songCount_one": "{{count}} brano",
+    "songCount_many": "{{count}} brani",
+    "songCount_other": "{{count}} brani",
+    "refresh": "Aggiorna playlist",
+    "buttons": {
+      "shuffle": "Riproduzione casuale di {{name}}",
+      "options": "Più opzioni per {{name}}",
+      "play": "Riproduci {{name}}"
+    },
+    "noSongList": "Questa playlist non contiene brani!"
+  },
+  "album": {
+    "list": {
+      "filter": {
+        "favorites": "Preferiti",
+        "artist": "Artista",
+        "genre": "Generi",
+        "mostPlayed": "Più ascoltati",
+        "name": "Nome",
+        "recentlyAdded": "Recentemente aggiunti",
+        "recentlyPlayed": "Recentemente riprodotte",
+        "releaseYear": "Anno di Rilascio",
+        "discography": "Discografia",
+        "random": "Casuale",
+        "search": "Cerca"
+      },
+      "empty": {
+        "title": "Oops, nessun album qui!",
+        "info": "Sembra che non ci siano album con questo filtro.",
+        "action": "Magari prova a modificare il filtro?"
+      },
+      "header": {
+        "albumsByArtist": "Album di {{artist}}"
+      },
+      "genre": {
+        "label": "Selziona un genere…",
+        "notFound": "Nessun genere trovato.",
+        "search": "Trova un genere…",
+        "loading": "Caricamento generi…"
+      },
+      "search": {
+        "placeholder": "Cerca album…"
+      }
+    },
+    "info": {
+      "about": "Più informazioni su {{name}}",
+      "lastfm": "Apri in Last.fm",
+      "musicbrainz": "Apri in MusicBrainz"
+    },
+    "buttons": {
+      "like": "Metti nei preferiti {{name}}",
+      "dislike": "Rimuovi {{name}} dai preferiti"
+    },
+    "more": {
+      "listTitle": "Altro da questo artista",
+      "genreTitle": "Altro da {{genre}}",
+      "discography": "Discografia dell'Artista"
+    },
+    "headline": "Album",
+    "table": {
+      "discNumber": "Disco {{number}}"
+    }
+  },
+  "theme": {
+    "black": "Bianco e Nero",
+    "marmalade-beaver": "Marmalade Beaver",
+    "monokai-pro": "Monokai Pro",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "vue-dark": "Vue Dark",
+    "label": "Tema",
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "system": "Sistema",
+    "one-dark": "One Dark",
+    "night-owl-light": "Night Owl Chiaro",
+    "noctis-lilac": "Noctis Lilac",
+    "material-theme": "Tema Material",
+    "github-dark": "Github Scuro",
+    "shades-of-purple": "Sfumature di Viola",
+    "nuclear-dark": "Nuclear Scuro",
+    "achiever": "Achiever",
+    "discord": "Discord",
+    "tinacious-design": "Tinacious Design",
+    "dracula": "Dracula",
+    "bearded-solarized": "Bearded Solarized",
+    "vim-dark-soft": "Vim Dark Soft"
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Cerca brani…"
+      },
+      "byArtist": "Musica da {{artist}}",
+      "filter": {
+        "clear": "Azzera filtro"
+      }
+    }
+  },
+  "home": {
+    "mostPlayed": "Più ascoltati",
+    "recentlyAdded": "Aggiunti di recente",
+    "explore": "Esplora",
+    "recentlyPlayed": "Ascoltati di recente"
+  },
+  "generic": {
+    "hideDetails": "Nascondi dettagli",
+    "viewAll": "Mostra tutto",
+    "loading": "Caricamento…",
+    "viewMode": {
+      "label": "Modalità Visualizzazione",
+      "modes": {
+        "list": "Lista",
+        "poster": "Poster"
+      }
+    },
+    "beta": "Beta",
+    "showDetails": "Mostra dettagli",
+    "seeMore": "Per saperne di più"
+  },
+  "artist": {
+    "headline": "Artista",
+    "buttons": {
+      "play": "Riproduci la radio di {{artist}}",
+      "shuffle": "Riproduci la radio di {{artist}} casualmente",
+      "options": "Più opzioni per {{artist}}"
+    }
+  },
+  "podcasts": {
+    "filters": {
+      "podcasts": {
+        "orderBy": {
+          "title": "Titolo"
+        }
+      }
+    }
+  }
+}
