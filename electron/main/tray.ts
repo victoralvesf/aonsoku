@@ -3,7 +3,6 @@ import { app, Menu, NativeImage, nativeImage, screen, Tray } from 'electron'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { mainWindow } from './app'
-import { aboutDialog } from './core/about'
 import { sendPlayerEvents } from './core/playerEvents'
 import { playerState } from './core/playerState'
 import { resourcesPath } from './core/taskbar'
@@ -159,12 +158,6 @@ export function updateTray(title?: string) {
         }
 
         updateTray()
-      },
-    },
-    {
-      label: 'About',
-      click: () => {
-        aboutDialog()
       },
     },
     {

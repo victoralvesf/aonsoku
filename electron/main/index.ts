@@ -2,12 +2,15 @@ import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { app, globalShortcut } from 'electron'
 import { createWindow, mainWindow } from './app'
 import { createTray } from './tray'
+import { createAppMenu } from './core/menu'
 
 const instanceLock = app.requestSingleInstanceLock()
 
 if (!instanceLock) {
   app.quit()
 } else {
+  createAppMenu()
+
   app.on('second-instance', () => {
     if (!mainWindow) return
 
