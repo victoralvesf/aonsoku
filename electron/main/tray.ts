@@ -163,9 +163,9 @@ export function updateTray(title?: string) {
     {
       label: 'Quit',
       click: () => {
-        app.quit()
         tray?.destroy()
         mainWindow?.destroy()
+        app.quit()
       },
     },
   ])
