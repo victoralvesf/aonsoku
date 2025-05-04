@@ -25,8 +25,8 @@
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "pnpm electron:build && electron-builder --dir",
     "build:win": "pnpm electron:build && electron-builder --win",
-    "build:mac": "electron-vite build && electron-builder --mac",
-    "build:linux": "electron-vite build && electron-builder --linux"
+    "build:mac": "pnpm electron:build && electron-builder --mac",
+    "build:linux": "pnpm electron:build && electron-builder --linux"
   },
   "repository": {
     "url": "https://github.com/victoralvesf/aonsoku"
