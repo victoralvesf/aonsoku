@@ -17,24 +17,24 @@ const Variant = {
   Size32: { size: 32, scaleFactor: 2 },
   Size48: { size: 48, scaleFactor: 3 },
   Size256: { size: 256, scaleFactor: 16 },
-} as const;
+} as const
 
-const Variants = Object.values(Variant);
+const Variants = Object.values(Variant)
 
 function getDisplaysMaxScaleFactor(): number {
-  const displays = screen.getAllDisplays();
+  const displays = screen.getAllDisplays()
   const scaleFactors = displays
-    .map(display => display.scaleFactor)
-    .filter(scaleFactor => Number.isFinite(scaleFactor) && scaleFactor > 1.0);
-  return Math.max(1.0, ...scaleFactors);
+    .map((display) => display.scaleFactor)
+    .filter((scaleFactor) => Number.isFinite(scaleFactor) && scaleFactor > 1.0)
+  return Math.max(1.0, ...scaleFactors)
 }
 
 function getVariantForScaleFactor(scaleFactor: number) {
-  const match = Variants.find(variant => {
-    return variant.scaleFactor >= scaleFactor;
-  });
+  const match = Variants.find((variant) => {
+    return variant.scaleFactor >= scaleFactor
+  })
 
-  return match ?? Variant.Size32;
+  return match ?? Variant.Size32
 }
 
 function getTrayIconPath(size: number): string {
@@ -57,7 +57,7 @@ function getTrayIcon(): NativeImage {
     const variant = getVariantForScaleFactor(scaleFactor)
     const iconPath = getTrayIconPath(variant.size)
     const buffer = readFileSync(iconPath)
-    
+
     image = nativeImage.createFromBuffer(buffer, {
       scaleFactor: 1.0,
       width: variant.size,
@@ -92,7 +92,7 @@ export function createTray() {
   if (!platform.isMacOS) {
     tray.setToolTip(productName)
   }
-  
+
   updateTray()
 
   tray.on('click', () => {

@@ -20,6 +20,8 @@
     "electron:start": "electron-vite preview",
     "electron:dev": "electron-vite dev",
     "electron:build": "electron-vite build",
+    "electron:lint": "eslint \"electron/**\"",
+    "electron:lint:fix": "pnpm electron:lint --fix",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "pnpm electron:build && electron-builder --dir",
     "build:win": "pnpm electron:build && electron-builder --win",

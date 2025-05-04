@@ -1,6 +1,6 @@
-import { Menu, app } from "electron"
-import { aboutDialog } from "./about"
-import { platform } from "@electron-toolkit/utils"
+import { platform } from '@electron-toolkit/utils'
+import { Menu, app, shell } from 'electron'
+import { aboutDialog } from './about'
 import { repository } from '../../../package.json'
 
 export function createAppMenu() {
@@ -12,7 +12,7 @@ export function createAppMenu() {
       submenu: [
         {
           label: `About ${app.name}`,
-          click: () => aboutDialog()
+          click: () => aboutDialog(),
         },
         { type: 'separator' },
         { role: 'services' },
@@ -21,14 +21,12 @@ export function createAppMenu() {
         { role: 'hideOthers' },
         { role: 'unhide' },
         { type: 'separator' },
-        { role: 'quit' }
-      ]
+        { role: 'quit' },
+      ],
     },
     {
       label: 'File',
-      submenu: [
-        { role: 'close' },
-      ]
+      submenu: [{ role: 'close' }],
     },
     {
       label: 'Edit',
@@ -44,12 +42,9 @@ export function createAppMenu() {
         { type: 'separator' },
         {
           label: 'Speech',
-          submenu: [
-            { role: 'startSpeaking' },
-            { role: 'stopSpeaking' }
-          ]
-        }
-      ]
+          submenu: [{ role: 'startSpeaking' }, { role: 'stopSpeaking' }],
+        },
+      ],
     },
     {
       label: 'View',
@@ -62,8 +57,8 @@ export function createAppMenu() {
         { role: 'zoomIn' },
         { role: 'zoomOut' },
         { type: 'separator' },
-        { role: 'togglefullscreen' }
-      ]
+        { role: 'togglefullscreen' },
+      ],
     },
     {
       label: 'Window',
@@ -73,8 +68,8 @@ export function createAppMenu() {
         { type: 'separator' },
         { role: 'front' },
         { type: 'separator' },
-        { role: 'window' }
-      ]
+        { role: 'window' },
+      ],
     },
     {
       role: 'help',
@@ -82,12 +77,11 @@ export function createAppMenu() {
         {
           label: 'Github',
           click: async () => {
-            const { shell } = require('electron')
             await shell.openExternal(repository.url)
-          }
-        }
-      ]
-    }
+          },
+        },
+      ],
+    },
   ]
 
   // @ts-expect-error set only roles for menu
