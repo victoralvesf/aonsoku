@@ -4,7 +4,7 @@ import path from 'path'
 import { createManualChunks } from './src/manual-chunks'
 
 // https://vitejs.dev/config/
-export default defineConfig(async () => ({
+export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
@@ -13,6 +13,7 @@ export default defineConfig(async () => ({
     },
   },
   build: {
+    minify: 'terser',
     rollupOptions: {
       external: ['bufferutil', 'utf-8-validate'],
       output: {
@@ -20,4 +21,4 @@ export default defineConfig(async () => ({
       },
     },
   },
-}))
+})

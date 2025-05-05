@@ -6,6 +6,7 @@ import { createElectronManualChunks } from './electron.manual-chunks'
 export default defineConfig({
   main: {
     build: {
+      minify: 'terser',
       sourcemap: true,
       rollupOptions: {
         input: {
@@ -16,6 +17,7 @@ export default defineConfig({
   },
   preload: {
     build: {
+      minify: 'terser',
       sourcemap: true,
       rollupOptions: {
         input: {
@@ -33,6 +35,7 @@ export default defineConfig({
       },
     },
     build: {
+      minify: 'terser',
       rollupOptions: {
         input: {
           index: resolve(__dirname, 'index.html'),
