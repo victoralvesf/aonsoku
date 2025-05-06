@@ -6,15 +6,18 @@ import { setupEvents, setupIpcEvents } from './core/events'
 import { appIcon } from './core/icon'
 import { titleBarOverlay } from './core/titleBarOverlay'
 import { StatefulBrowserWindow } from './core/windowPosition'
+import { electron } from '../../package.json'
 
 export let mainWindow: BrowserWindow | null = null
 
+const { defaultWidth, defaultHeight } = electron.window
+
 export function createWindow(): void {
   mainWindow = new StatefulBrowserWindow({
-    width: 1280,
-    height: 720,
-    minWidth: 1280,
-    minHeight: 720,
+    width: defaultWidth,
+    height: defaultHeight,
+    minWidth: defaultWidth,
+    minHeight: defaultHeight,
     supportMaximize: true,
     show: false,
     autoHideMenuBar: true,

@@ -141,5 +141,11 @@
       "electron",
       "esbuild"
     ]
+  },
+  "electron": {
+    "window": {
+      "defaultWidth": 1280,
+      "defaultHeight": 720
+    }
   }
 }

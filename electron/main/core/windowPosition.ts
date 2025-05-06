@@ -5,29 +5,7 @@ import {
   Rectangle,
 } from 'electron'
 import { AonsokuStore } from './store'
-
-const schema = {
-  displayBounds: {
-    type: 'object',
-    properties: {
-      height: { type: 'integer' },
-      width: { type: 'integer' },
-      x: { type: 'integer' },
-      y: { type: 'integer' },
-    },
-    additionalProperties: false,
-  },
-  height: { type: 'integer' },
-  isMaximized: { type: 'boolean' },
-  width: { type: 'integer' },
-  x: { type: 'integer', default: 0 },
-  y: { type: 'integer', default: 0 },
-}
-
-const windowStore = new AonsokuStore({
-  name: 'window',
-  schema,
-})
+import { electron } from '../../../package.json'
 
 interface ExtraOptions {
   /** Should we automatically maximize the window, if it was last closed maximized. Defaults to `true`. */
@@ -47,6 +25,18 @@ interface State {
   /** The saved y coordinate of the loaded state. `undefined` if the state has not been saved yet. */
   y?: number
 }
+
+const { defaultWidth, defaultHeight } = electron.window
+
+const windowStore = new AonsokuStore<State>({
+  name: 'window',
+  defaults: {
+    width: defaultWidth,
+    height: defaultHeight,
+    x: 0,
+    y: 0,
+  },
+})
 
 const eventHandlingDelay = 100
 
@@ -117,7 +107,7 @@ function refineOptionsAndState(
   let savedState: State | null = null
 
   try {
-    savedState = windowStore.store as State
+    savedState = windowStore.store
   } catch {}
 
   if (!savedState) return restOriginalOptions
@@ -143,7 +133,13 @@ export class StatefulBrowserWindow extends BrowserWindow {
 
     super(newOptions)
 
-    const { x, y, width = 800, height = 600, isMaximized } = newOptions
+    const {
+      x,
+      y,
+      width = defaultWidth,
+      height = defaultHeight,
+      isMaximized,
+    } = newOptions
 
     this.state = { x, y, width, height, isMaximized }
 
@@ -157,15 +153,15 @@ export class StatefulBrowserWindow extends BrowserWindow {
 
     this.on('resize', this.stateChangeHandler)
     this.on('move', this.stateChangeHandler)
-    this.on('hide', this.hideHandler)
     this.on('close', this.closeHandler)
     this.on('closed', this.closedHandler)
   }
 
   private unmanage() {
+    clearTimeout(this.stateChangeTimer)
+
     this.removeListener('resize', this.stateChangeHandler)
     this.removeListener('move', this.stateChangeHandler)
-    clearTimeout(this.stateChangeTimer)
     this.removeListener('close', this.closeHandler)
     this.removeListener('closed', this.closedHandler)
   }
@@ -187,10 +183,6 @@ export class StatefulBrowserWindow extends BrowserWindow {
 
   private closeHandler() {
     this.updateState()
-  }
-
-  private hideHandler() {
-    this.saveState()
   }
 
   private updateState() {
