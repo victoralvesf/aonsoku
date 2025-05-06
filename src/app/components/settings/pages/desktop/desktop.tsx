@@ -11,9 +11,12 @@ import {
   ContentSeparator,
 } from '@/app/components/settings/section'
 import { Switch } from '@/app/components/ui/switch'
+import { useAppDesktopActions, useAppDesktopData } from '@/store/app.store'
 
 export function DesktopSettings() {
   const { t } = useTranslation()
+  const { minimizeToTray } = useAppDesktopData()
+  const { setMinimizeToTray } = useAppDesktopActions()
 
   return (
     <Root>
@@ -30,8 +33,8 @@ export function DesktopSettings() {
           </ContentItemTitle>
           <ContentItemForm>
             <Switch
-            // checked={true}
-            // onCheckedChange={}
+              checked={minimizeToTray}
+              onCheckedChange={setMinimizeToTray}
             />
           </ContentItemForm>
         </ContentItem>

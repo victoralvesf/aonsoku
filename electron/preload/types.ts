@@ -1,5 +1,6 @@
 import { RpcPayload } from '../main/core/discordRpc'
 import { IDownloadPayload } from '../main/core/downloads'
+import { ISettingPayload } from '../main/core/settings'
 
 export enum IpcChannels {
   FullscreenStatus = 'fullscreen-status',
@@ -19,6 +20,7 @@ export enum IpcChannels {
   PlayerStateListener = 'player-state-listener',
   SetDiscordRpcActivity = 'set-discord-rpc-activity',
   ClearDiscordRpcActivity = 'clear-discord-rpc-activity',
+  SaveAppSettings = 'save-app-settings',
 }
 
 export type OverlayColors = {
@@ -63,4 +65,5 @@ export interface IAonsokuAPI {
   ) => void
   setDiscordRpcActivity: (payload: RpcPayload) => void
   clearDiscordRpcActivity: () => void
+  saveAppSettings: (payload: ISettingPayload) => void
 }

@@ -59,6 +59,9 @@ const api: IAonsokuAPI = {
   clearDiscordRpcActivity: () => {
     ipcRenderer.send(IpcChannels.ClearDiscordRpcActivity)
   },
+  saveAppSettings: (payload) => {
+    ipcRenderer.send(IpcChannels.SaveAppSettings, payload)
+  },
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

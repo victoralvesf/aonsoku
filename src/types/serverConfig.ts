@@ -83,11 +83,24 @@ interface IAccounts {
   }
 }
 
+// When changing the desktop data types
+// You have to update the electron one.
+// Located at -> electron > main > core > settings.ts
+interface IDesktop {
+  data: {
+    minimizeToTray: boolean
+  }
+  actions: {
+    setMinimizeToTray: (value: boolean) => void
+  }
+}
+
 export interface IAppContext {
   data: IAppData
   accounts: IAccounts
   podcasts: IPodcasts
   pages: IAppPages
+  desktop: IDesktop
   command: IAppCommand
   actions: IAppActions
   update: IAppUpdate

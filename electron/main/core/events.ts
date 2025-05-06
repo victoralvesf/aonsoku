@@ -6,6 +6,7 @@ import {
   setDiscordRpcActivity,
 } from './discordRpc'
 import { playerState } from './playerState'
+import { getAppSetting, ISettingPayload, saveAppSettings } from './settings'
 import { setTaskbarButtons } from './taskbar'
 import { DEFAULT_TITLE_BAR_HEIGHT } from './titleBarOverlay'
 import {
@@ -59,10 +60,10 @@ export function setupEvents(window: BrowserWindow | null) {
   })
 
   window.on('close', (event) => {
-    if (!is.dev) {
-      event.preventDefault()
-      window.hide()
-    }
+    if (is.dev || !getAppSetting('minimizeToTray')) return
+
+    event.preventDefault()
+    window.hide()
   })
 
   window.on('page-title-updated', (_, title) => {
@@ -142,5 +143,9 @@ export function setupIpcEvents(window: BrowserWindow | null) {
 
   ipcMain.on(IpcChannels.ClearDiscordRpcActivity, () => {
     clearDiscordRpcActivity()
+  })
+
+  ipcMain.on(IpcChannels.SaveAppSettings, (_, payload: ISettingPayload) => {
+    saveAppSettings(payload)
   })
 }
