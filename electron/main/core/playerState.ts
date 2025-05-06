@@ -1,52 +1,36 @@
 import { AonsokuStore } from './store'
+import { PlayerStatePayload } from '../../preload/types'
 
-const schema = {
-  isPlaying: { type: 'boolean' },
-  hasSonglist: { type: 'boolean' },
-  hasPrevious: { type: 'boolean' },
-  hasNext: { type: 'boolean' },
-}
-
-export const playerStore = new AonsokuStore({
+const playerStore = new AonsokuStore<PlayerStatePayload>({
   name: 'player',
-  schema,
+  defaults: {
+    isPlaying: false,
+    hasSonglist: false,
+    hasPrevious: false,
+    hasNext: false,
+  },
 })
 
-function getIsPlaying() {
-  return playerStore.get('isPlaying') as boolean
-}
-function setIsPlaying(status: boolean) {
-  playerStore.set('isPlaying', status)
-}
-
-function getHasSonglist() {
-  return playerStore.get('hasSonglist') as boolean
-}
-function setHasSonglist(status: boolean) {
-  playerStore.set('hasSonglist', status)
+function get<T extends keyof PlayerStatePayload>(
+  key: T,
+): PlayerStatePayload[T] {
+  return playerStore.get(key)
 }
 
-function getHasPrevious() {
-  return playerStore.get('hasPrevious') as boolean
-}
-function setHasPrevious(status: boolean) {
-  playerStore.set('hasPrevious', status)
+function set<T extends keyof PlayerStatePayload>(
+  key: T,
+  status: PlayerStatePayload[T],
+) {
+  playerStore.set(key, status)
 }
 
-function getHasNext() {
-  return playerStore.get('hasNext') as boolean
-}
-function setHasNext(status: boolean) {
-  playerStore.set('hasNext', status)
+function setAll(payload: PlayerStatePayload) {
+  playerStore.set(payload)
 }
 
 export const playerState = {
-  getIsPlaying,
-  setIsPlaying,
-  getHasPrevious,
-  setHasPrevious,
-  getHasNext,
-  setHasNext,
-  getHasSonglist,
-  setHasSonglist,
+  get,
+  set,
+  setAll,
+  value: () => playerStore.store,
 }

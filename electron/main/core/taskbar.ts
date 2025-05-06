@@ -22,27 +22,26 @@ export function setTaskbarButtons() {
   if (!mainWindow) return
   if (!mainWindow.isVisible()) return
 
-  const { getHasNext, getHasPrevious, getIsPlaying, getHasSonglist } =
-    playerState
+  const { isPlaying, hasPrevious, hasNext, hasSonglist } = playerState.value()
 
   mainWindow.setThumbarButtons([
     {
       icon: getTaskbarIcon(buttons.previous),
-      flags: getHasPrevious() ? undefined : ['disabled'],
+      flags: hasPrevious ? undefined : ['disabled'],
       click() {
         sendPlayerEvents('skipBackwards')
       },
     },
     {
-      icon: getTaskbarIcon(getIsPlaying() ? buttons.pause : buttons.play),
-      flags: getHasSonglist() ? undefined : ['disabled'],
+      icon: getTaskbarIcon(isPlaying ? buttons.pause : buttons.play),
+      flags: hasSonglist ? undefined : ['disabled'],
       click() {
         sendPlayerEvents('togglePlayPause')
       },
     },
     {
       icon: getTaskbarIcon(buttons.next),
-      flags: getHasNext() ? undefined : ['disabled'],
+      flags: hasNext ? undefined : ['disabled'],
       click() {
         sendPlayerEvents('skipForward')
       },

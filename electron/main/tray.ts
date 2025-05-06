@@ -106,8 +106,7 @@ export function updateTray(title?: string) {
   const isVisible = mainWindow.isVisible()
   const trayTooltip = title ?? mainWindow.title
 
-  const { getIsPlaying, getHasPrevious, getHasNext, getHasSonglist } =
-    playerState
+  const { isPlaying, hasPrevious, hasNext, hasSonglist } = playerState.value()
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -122,15 +121,15 @@ export function updateTray(title?: string) {
     {
       label: 'Previous',
       type: 'normal',
-      enabled: getHasPrevious(),
+      enabled: hasPrevious,
       click: () => {
         sendPlayerEvents('skipBackwards')
       },
     },
     {
-      label: getIsPlaying() ? 'Pause' : 'Play',
+      label: isPlaying ? 'Pause' : 'Play',
       type: 'normal',
-      enabled: getHasSonglist(),
+      enabled: hasSonglist,
       click: () => {
         sendPlayerEvents('togglePlayPause')
       },
@@ -138,7 +137,7 @@ export function updateTray(title?: string) {
     {
       label: 'Next',
       type: 'normal',
-      enabled: getHasNext(),
+      enabled: hasNext,
       click: () => {
         sendPlayerEvents('skipForward')
       },

@@ -125,10 +125,7 @@ export function setupIpcEvents(window: BrowserWindow | null) {
   ipcMain.on(
     IpcChannels.UpdatePlayerState,
     (_, payload: PlayerStatePayload) => {
-      playerState.setIsPlaying(payload.isPlaying)
-      playerState.setHasPrevious(payload.hasPrevious)
-      playerState.setHasNext(payload.hasNext)
-      playerState.setHasSonglist(payload.hasSonglist)
+      playerState.setAll(payload)
 
       setTimeout(() => {
         setTaskbarButtons()
