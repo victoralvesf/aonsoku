@@ -4,6 +4,7 @@ import {
   FileText,
   Globe,
   Headphones,
+  LaptopIcon,
   Paintbrush,
 } from 'lucide-react'
 import { ComponentType } from 'react'
@@ -24,6 +25,7 @@ export type SettingsOptions =
   | 'audio'
   | 'content'
   | 'accounts'
+  | 'desktop'
   | 'privacy'
 
 interface OptionsData {
@@ -32,13 +34,14 @@ interface OptionsData {
 }
 
 const accountsOption: OptionsData = { id: 'accounts', icon: CircleUserRound }
+const desktopOption: OptionsData = { id: 'desktop', icon: LaptopIcon }
 
 const options: OptionsData[] = [
   { id: 'appearance', icon: Paintbrush },
   { id: 'language', icon: Globe },
   { id: 'audio', icon: Headphones },
   { id: 'content', icon: FileText },
-  ...(isDesktop() ? [accountsOption] : []),
+  ...(isDesktop() ? [accountsOption, desktopOption] : []),
   { id: 'privacy', icon: EarthLock },
 ]
 

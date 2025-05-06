@@ -613,6 +613,7 @@
       "audio": "Reprodutor & Áudio",
       "content": "Conteúdo",
       "accounts": "Contas",
+      "desktop": "Aplicativo para Computador",
       "privacy": "Privacidade & Segurança"
     },
     "appearance": {
@@ -707,6 +708,16 @@
         "description": "Compartilhe a música que está ouvindo com seus amigos no Discord.",
         "enabled": {
           "label": "Habilitar Integração"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Geral",
+        "description": "Personalize as preferências do aplicativo para computador.",
+        "tray": {
+          "label": "Minimizar para a Bandeja",
+          "info": "Quando ativado, o aplicativo será minimizado para a bandeja do sistema em vez de fechar ao clicar no botão de fechar."
         }
       }
     }
