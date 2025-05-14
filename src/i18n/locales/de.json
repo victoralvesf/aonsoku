@@ -9,7 +9,8 @@
     "songs": "Lieder",
     "albums": "Alben",
     "playlists": "Wiedergabelisten",
-    "emptyPlaylist": "Noch keine Wiedergabelisten erstellt"
+    "emptyPlaylist": "Noch keine Wiedergabelisten erstellt",
+    "podcasts": "Podcasts"
   },
   "theme": {
     "nuclear-dark": "Nuclear Dark",
@@ -174,7 +175,13 @@
       "trackGain": "Track-Verstärkung",
       "trackPeak": "Track-Spitzenwert",
       "albumPeak": "Album-Spitzenwert",
-      "albumGain": "Album-Verstärkung"
+      "albumGain": "Album-Verstärkung",
+      "recordLabel": "Musiklabel",
+      "bitDepth": "Bit-Tiefe",
+      "contributors": "Mitwirkende",
+      "albumArtist": "Albumkünstler",
+      "channelCount": "Kanalanzahl",
+      "samplingRate": "Abtastrate"
     },
     "buttons": {
       "play": "{{title}} von {{artist}} abspielen",
@@ -316,7 +323,15 @@
     "showDetails": "Details anzeigen",
     "hideDetails": "Details ausblenden",
     "viewAll": "Alle ansehen",
-    "loading": "Wird geladen…"
+    "loading": "Wird geladen…",
+    "viewMode": {
+      "label": "Anzeigemodus",
+      "modes": {
+        "poster": "Poster",
+        "list": "Liste"
+      }
+    },
+    "beta": "Beta"
   },
   "songs": {
     "list": {
@@ -386,7 +401,17 @@
         "disable": "Wiederholen deaktivieren"
       },
       "like": "{{song}} von {{artist}} gefällt mir",
-      "dislike": "Gefällt mir von {{song}} von {{artist}} entfernen"
+      "dislike": "Gefällt mir von {{song}} von {{artist}} entfernen",
+      "forward": "Spule {{amount}} Sekunden vorwärts",
+      "volume": {
+        "mute": "Stumm",
+        "unmute": "Lautschalten"
+      },
+      "miniPlayer": {
+        "open": "Miniplayer öffnen",
+        "close": "Miniplayer schließen"
+      },
+      "rewind": "Spule {{amount}} Sekunden zurück"
     }
   },
   "options": {
@@ -403,7 +428,12 @@
       "notFound": "Keine Playlist gefunden",
       "removeSong": "Aus Playlist entfernen"
     },
-    "info": "Informationen abrufen"
+    "info": "Informationen abrufen",
+    "goto": {
+      "podcast": "Zum Podcast gehen",
+      "episode": "Zu Episode gehen"
+    },
+    "markAsPlayed": "Als gespielt markieren"
   },
   "time": {
     "days_one": "{{days}} Tag",
@@ -437,7 +467,9 @@
   },
   "queue": {
     "title": "Warteschlange",
-    "clear": "Warteschlange leeren"
+    "clear": "Warteschlange leeren",
+    "open": "Warteschlange öffnen",
+    "close": "Warteschlange schließen"
   },
   "shortcuts": {
     "modal": {
@@ -454,14 +486,18 @@
       "previous": "Zum vorherigen springen",
       "play": "Abspielen / Pause",
       "next": "Zum nächsten springen"
+    },
+    "navigation": {
+      "label": "Navigation"
     }
   },
   "songInfo": {
-    "title": "Songdetails",
-    "error": "Songinformationen konnten nicht abgerufen werden. Bitte versuchen Sie es später erneut."
+    "title": "Lieddetails",
+    "error": "Liedinformationen konnten nicht abgerufen werden. Bitte versuche es später erneut."
   },
   "warnings": {
-    "reload": "Es wird gerade ein Lied abgespielt!\nSind Sie sicher, dass Sie die Seite neu laden möchten?"
+    "reload": "Es wird gerade ein Lied abgespielt!\nBist du sicher, dass du die Seite neu laden möchtest?",
+    "songError": "Unfähig, das Lied abzuspielen, überprüfe den Server!"
   },
   "update": {
     "dialog": {
@@ -551,6 +587,86 @@
         },
         "description": "Sichtbarkeit und Anordnung der Abschnitte in der Seitenleiste verwalten."
       }
+    }
+  },
+  "podcasts": {
+    "header": {
+      "episodeCount_one": "{{count}} Episode",
+      "episodeCount_other": "{{count}} Episoden",
+      "feed": "Feed",
+      "website": "Offizielle Website",
+      "unfollow": {
+        "dialog": {
+          "title": "Bist du sicher, dass du diesem Podcast entfolgen willst?",
+          "description": "Um diesen Podcast in Zukunft erneut anzuhören zu können, wirst du ihn erneut erstellen müssen."
+        },
+        "toasts": {
+          "error": "Ein Fehler ist aufgetreten als du versucht hast dem Podcast zu entfolgen. Bitte versuche es erneut.",
+          "success": "Du bist diesem Podcast erfolgreich entfolgt!"
+        },
+        "tooltip": "{{title}} entfolgen"
+      }
+    },
+    "filters": {
+      "podcasts": {
+        "orderBy": {
+          "episodeCount": "Episodenanzahl",
+          "title": "Titel"
+        }
+      },
+      "episodes": {
+        "orderBy": {
+          "duration": "Laufzeit",
+          "title": "Titel",
+          "publishDate": "Veröffentlichungsdatum"
+        },
+        "search": "Suche nach Episoden …"
+      }
+    },
+    "list": {
+      "episodes": "Episoden",
+      "notFoundMessage": "Dieser Podcast hat noch keine Episoden!",
+      "progress": {
+        "completed": "Abgeschlossen",
+        "remainingTime": "{{time}} verbleibend"
+      }
+    },
+    "form": {
+      "latestEpisodes": "Neueste Episoden",
+      "dialog": {
+        "saveButton": "Speichern",
+        "validations": {
+          "url": "Bitte gib valide URLs an.",
+          "urlLength": "URLs müssen mindestens 10 Zeichen lang sein",
+          "protocol": "URLs müssen mit http:// oder https:// anfangen",
+          "atLeastOneUrl": "Bitte gib mindestens eine URL an."
+        },
+        "title": "Podcast erstellen",
+        "feedUrl": "Feed-URL",
+        "message": "Du kannst mehrere URLs auf einmal hinzufügen, eine pro Zeile."
+      },
+      "toasts": {
+        "success": "Der Podcast wurde erfolgreich hinzugefügt! Er wird in Kürze zum Hören bereitstehen!",
+        "error": "Erstellen des Podcasts fehlgeschlagen!"
+      },
+      "addButton": "Podcast hinzufügen",
+      "search": "Durchsuche Podcasts …"
+    },
+    "emptyResults": {
+      "info": "Wir konnten keine Podcasts passend zu deiner Suche finden.",
+      "action": "Bitte überprüfe deine Rechtschreibung oder benutze andere Schlüsselwörter.",
+      "title": "Keine Ergebnisse gefunden."
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "Keine Episoden verfügbar",
+        "goToPodcasts": "Zu den Podcasts gehen",
+        "description": "Versuche mehr Podcasts hinzuzufügen."
+      }
+    },
+    "emptyPage": {
+      "description": "Es sieht so aus, als noch keine Podcasts hinzugefügt wurden. Füge oberhalb einen hinzu!",
+      "message": "Kein Podcast hinzugefügt"
     }
   }
 }
