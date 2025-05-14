@@ -321,7 +321,7 @@
   "songs": {
     "list": {
       "search": {
-        "placeholder": "Lieder suchen…"
+        "placeholder": "Lieder suchen …"
       },
       "byArtist": "Lieder von {{artist}}",
       "filter": {
