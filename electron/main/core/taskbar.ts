@@ -18,6 +18,15 @@ const buttons = {
   next: 'skip_next.png',
 }
 
+export function getTaskbarIcon(icon: keyof typeof buttons) {
+  const themeFolder = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
+
+  const iconName = buttons[icon]
+  const iconPath = join(taskbarIconsPath, themeFolder, iconName)
+
+  return nativeImage.createFromPath(iconPath)
+}
+
 export function setTaskbarButtons() {
   if (!mainWindow) return
   if (!mainWindow.isVisible()) return
@@ -26,31 +35,25 @@ export function setTaskbarButtons() {
 
   mainWindow.setThumbarButtons([
     {
-      icon: getTaskbarIcon(buttons.previous),
+      icon: getTaskbarIcon('previous'),
       flags: hasPrevious ? undefined : ['disabled'],
       click() {
         sendPlayerEvents('skipBackwards')
       },
     },
     {
-      icon: getTaskbarIcon(isPlaying ? buttons.pause : buttons.play),
+      icon: getTaskbarIcon(isPlaying ? 'pause' : 'play'),
       flags: hasSonglist ? undefined : ['disabled'],
       click() {
         sendPlayerEvents('togglePlayPause')
       },
     },
     {
-      icon: getTaskbarIcon(buttons.next),
+      icon: getTaskbarIcon('next'),
       flags: hasNext ? undefined : ['disabled'],
       click() {
         sendPlayerEvents('skipForward')
       },
     },
   ])
-}
-
-function getTaskbarIcon(icon: string) {
-  const themeFolder = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
-
-  return nativeImage.createFromPath(join(taskbarIconsPath, themeFolder, icon))
 }

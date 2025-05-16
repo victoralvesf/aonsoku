@@ -1,41 +1,22 @@
 import { platform } from '@electron-toolkit/utils'
-import { app, Menu, NativeImage, nativeImage, screen, Tray } from 'electron'
+import { app, Menu, NativeImage, nativeImage, Tray } from 'electron'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { mainWindow } from './app'
+import {
+  getDisplaysMaxScaleFactor,
+  getVariantForScaleFactor,
+  NativeIconVariants
+} from './core/nativeIcons'
 import { sendPlayerEvents } from './core/playerEvents'
 import { playerState } from './core/playerState'
 import { resourcesPath } from './core/taskbar'
 import { productName } from '../../package.json'
+import { getMacOsMediaIcon } from './core/macMedia'
 
 const traySpacer = Array.from({ length: 30 }).join(' ')
 
 export let tray: Tray | null = null
-
-const Variant = {
-  Size16: { size: 16, scaleFactor: 1 },
-  Size32: { size: 32, scaleFactor: 2 },
-  Size48: { size: 48, scaleFactor: 3 },
-  Size256: { size: 256, scaleFactor: 16 },
-} as const
-
-const Variants = Object.values(Variant)
-
-function getDisplaysMaxScaleFactor(): number {
-  const displays = screen.getAllDisplays()
-  const scaleFactors = displays
-    .map((display) => display.scaleFactor)
-    .filter((scaleFactor) => Number.isFinite(scaleFactor) && scaleFactor > 1.0)
-  return Math.max(1.0, ...scaleFactors)
-}
-
-function getVariantForScaleFactor(scaleFactor: number) {
-  const match = Variants.find((variant) => {
-    return variant.scaleFactor >= scaleFactor
-  })
-
-  return match ?? Variant.Size32
-}
 
 function getTrayIconPath(size: number): string {
   let dirName = 'other'
@@ -67,7 +48,7 @@ function getTrayIcon(): NativeImage {
     // Windows/macOS: Responsive tray icons
     image = nativeImage.createEmpty()
 
-    for (const variant of Variants) {
+    for (const variant of NativeIconVariants) {
       const iconPath = getTrayIconPath(variant.size)
       const buffer = readFileSync(iconPath)
       image.addRepresentation({
@@ -102,6 +83,8 @@ export function createTray() {
 
 export function updateTray(title?: string) {
   if (!mainWindow || !tray) return
+  
+  const trayIcon = getTrayIcon()
 
   const isVisible = mainWindow.isVisible()
   const trayTooltip = title ?? mainWindow.title
@@ -112,6 +95,7 @@ export function updateTray(title?: string) {
     {
       label: productName + traySpacer,
       ...(trayTooltip !== productName ? { sublabel: trayTooltip } : {}),
+      ...(platform.isMacOS ? { icon: trayIcon }: {}),
       type: 'normal',
       enabled: false,
     },
@@ -122,6 +106,10 @@ export function updateTray(title?: string) {
       label: 'Previous',
       type: 'normal',
       enabled: hasPrevious,
+      ...(platform.isMacOS ? {
+        icon: getMacOsMediaIcon('previous'),
+        accelerator: 'Cmd+Left',
+      }: {}),
       click: () => {
         sendPlayerEvents('skipBackwards')
       },
@@ -130,6 +118,10 @@ export function updateTray(title?: string) {
       label: isPlaying ? 'Pause' : 'Play',
       type: 'normal',
       enabled: hasSonglist,
+      ...(platform.isMacOS ? {
+        icon: getMacOsMediaIcon(isPlaying ? 'pause' : 'play'),
+        accelerator: 'Space'
+      }: {}),
       click: () => {
         sendPlayerEvents('togglePlayPause')
       },
@@ -138,6 +130,10 @@ export function updateTray(title?: string) {
       label: 'Next',
       type: 'normal',
       enabled: hasNext,
+      ...(platform.isMacOS ? {
+        icon: getMacOsMediaIcon('next'),
+        accelerator: 'Cmd+Right',
+      }: {}),
       click: () => {
         sendPlayerEvents('skipForward')
       },
