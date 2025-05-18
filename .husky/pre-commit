@@ -1,1 +1,2 @@
-pnpm electron:lint && pnpm lint
+pnpm electron:lint
+pnpm lint
