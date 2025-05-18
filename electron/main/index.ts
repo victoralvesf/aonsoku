@@ -1,7 +1,6 @@
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { app, globalShortcut } from 'electron'
 import { createAppMenu } from './core/menu'
-import { createTray } from './tray'
 import { createWindow, mainWindow } from './window'
 
 const instanceLock = app.requestSingleInstanceLock()
@@ -12,7 +11,7 @@ if (!instanceLock) {
   createAppMenu()
 
   app.on('second-instance', () => {
-    if (!mainWindow) return
+    if (!mainWindow || mainWindow.isDestroyed()) return
 
     if (mainWindow.isMinimized()) mainWindow.restore()
 
@@ -23,11 +22,10 @@ if (!instanceLock) {
     electronApp.setAppUserModelId('com.victoralvesf.aonsoku')
 
     createWindow()
-    createTray()
   })
 
   app.on('activate', function () {
-    if (!mainWindow) {
+    if (!mainWindow || mainWindow.isDestroyed()) {
       createWindow()
       return
     }

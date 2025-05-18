@@ -28,7 +28,7 @@ export function getTaskbarIcon(icon: keyof typeof buttons) {
 }
 
 export function setTaskbarButtons() {
-  if (!mainWindow) return
+  if (!mainWindow || mainWindow.isDestroyed()) return
   if (!mainWindow.isVisible()) return
 
   const { isPlaying, hasPrevious, hasNext, hasSonglist } = playerState.value()

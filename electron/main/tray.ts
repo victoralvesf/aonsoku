@@ -150,12 +150,12 @@ export function updateTray(title?: string) {
     {
       label: isVisible ? 'Hide' : 'Show',
       click: () => {
-        if (!mainWindow) return
+        if (!mainWindow || mainWindow.isDestroyed()) return
 
         if (isVisible) {
           mainWindow.hide()
         } else {
-          mainWindow?.show()
+          mainWindow.show()
         }
 
         updateTray()
@@ -164,9 +164,10 @@ export function updateTray(title?: string) {
     {
       label: 'Quit',
       click: () => {
-        tray?.destroy()
-        mainWindow?.destroy()
-        app.quit()
+        if (tray) tray.destroy()
+        if (mainWindow) mainWindow.destroy()
+
+        if (!platform.isMacOS) app.quit()
       },
     },
   ])

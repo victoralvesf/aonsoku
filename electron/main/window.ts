@@ -7,6 +7,7 @@ import { appIcon } from './core/icon'
 import { titleBarOverlay } from './core/titleBarOverlay'
 import { StatefulBrowserWindow } from './core/windowPosition'
 import { electron } from '../../package.json'
+import { createTray } from './tray'
 
 export let mainWindow: BrowserWindow | null = null
 
@@ -34,6 +35,7 @@ export function createWindow(): void {
     },
   })
 
+  createTray()
   setupEvents(mainWindow)
   setupIpcEvents(mainWindow)
   setupDownloads(mainWindow)

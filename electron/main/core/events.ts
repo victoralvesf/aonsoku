@@ -14,7 +14,7 @@ import {
   OverlayColors,
   PlayerStatePayload,
 } from '../../preload/types'
-import { updateTray } from '../tray'
+import { tray, updateTray } from '../tray'
 
 export function setupEvents(window: BrowserWindow | null) {
   if (!window) return
@@ -60,7 +60,10 @@ export function setupEvents(window: BrowserWindow | null) {
   })
 
   window.on('close', (event) => {
-    if (is.dev || !getAppSetting('minimizeToTray')) return
+    if (is.dev || !getAppSetting('minimizeToTray')) {
+      if (tray && !tray.isDestroyed()) tray.destroy()
+      return
+    }
 
     event.preventDefault()
     window.hide()

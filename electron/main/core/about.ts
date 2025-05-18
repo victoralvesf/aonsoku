@@ -4,7 +4,7 @@ import { productName, description, version } from '../../../package.json'
 import { mainWindow } from '../window'
 
 export function aboutDialog() {
-  if (!mainWindow) return
+  if (!mainWindow || mainWindow.isDestroyed()) return
 
   const detail = [
     `${description} \n`,
