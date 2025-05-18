@@ -13,20 +13,21 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint \"src/**\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "pnpm lint --fix",
     "cy:open": "cypress open",
     "test": "cypress run --component",
     "electron:start": "electron-vite preview",
     "electron:dev": "electron-vite dev",
     "electron:build": "electron-vite build",
-    "electron:lint": "eslint \"electron/**\"",
+    "electron:lint": "eslint \"electron/**/*.{ts,tsx}\"",
     "electron:lint:fix": "pnpm electron:lint --fix",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "pnpm electron:build && electron-builder --dir",
     "build:win": "pnpm electron:build && electron-builder --win",
     "build:mac": "pnpm electron:build && electron-builder --mac",
-    "build:linux": "pnpm electron:build && electron-builder --linux"
+    "build:linux": "pnpm electron:build && electron-builder --linux",
+    "prepare": "husky"
   },
   "repository": {
     "url": "https://github.com/victoralvesf/aonsoku"
@@ -129,6 +130,7 @@
     "eslint": "8.56.0",
     "eslint-import-resolver-typescript": "^3.10.0",
     "eslint-plugin-import": "^2.31.0",
+    "husky": "^9.1.7",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "terser": "^5.39.0",
