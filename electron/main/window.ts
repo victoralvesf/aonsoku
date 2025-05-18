@@ -6,8 +6,8 @@ import { setupEvents, setupIpcEvents } from './core/events'
 import { appIcon } from './core/icon'
 import { titleBarOverlay } from './core/titleBarOverlay'
 import { StatefulBrowserWindow } from './core/windowPosition'
-import { electron } from '../../package.json'
 import { createTray } from './tray'
+import { electron } from '../../package.json'
 
 export let mainWindow: BrowserWindow | null = null
 
