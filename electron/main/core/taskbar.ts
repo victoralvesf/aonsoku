@@ -3,7 +3,7 @@ import { app, nativeImage, nativeTheme } from 'electron'
 import { join } from 'path'
 import { sendPlayerEvents } from './playerEvents'
 import { playerState } from './playerState'
-import { mainWindow } from '../app'
+import { mainWindow } from '../window'
 
 export const resourcesPath = join(
   is.dev ? app.getAppPath() : process.resourcesPath,

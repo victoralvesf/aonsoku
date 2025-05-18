@@ -1,8 +1,8 @@
-import { nativeImage, NativeImage, nativeTheme } from "electron"
-import { readFileSync } from "fs"
-import { join } from "path"
-import { resourcesPath } from "./taskbar"
-import { NativeIconVariants } from "./nativeIcons"
+import { nativeImage, NativeImage, nativeTheme } from 'electron'
+import { readFileSync } from 'fs'
+import { join } from 'path'
+import { NativeIconVariants } from './nativeIcons'
+import { resourcesPath } from './taskbar'
 
 const mediaIcons = {
   pause: 'pause',
@@ -14,16 +14,27 @@ const mediaIcons = {
   repeatOne: 'repeat_one',
 }
 
-function getMacOsMediaIconPath(icon: keyof typeof mediaIcons, size: number): string {
+function getMacOsMediaIconPath(
+  icon: keyof typeof mediaIcons,
+  size: number,
+): string {
   const iconName = mediaIcons[icon]
   const fileName = `${iconName}_${size}x${size}.png`
   const themeFolder = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
 
-  return join(resourcesPath, 'assets', 'tray', 'mac', 'media', themeFolder, fileName)
+  return join(
+    resourcesPath,
+    'assets',
+    'tray',
+    'mac',
+    'media',
+    themeFolder,
+    fileName,
+  )
 }
 
 export function getMacOsMediaIcon(icon: keyof typeof mediaIcons): NativeImage {
-  let image = nativeImage.createEmpty()
+  const image = nativeImage.createEmpty()
 
   for (const variant of NativeIconVariants) {
     const iconPath = getMacOsMediaIconPath(icon, variant.size)
@@ -40,4 +51,3 @@ export function getMacOsMediaIcon(icon: keyof typeof mediaIcons): NativeImage {
 
   return image
 }
-

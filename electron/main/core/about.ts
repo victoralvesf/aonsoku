@@ -1,7 +1,7 @@
 import { dialog } from 'electron'
 import os from 'os'
 import { productName, description, version } from '../../../package.json'
-import { mainWindow } from '../app'
+import { mainWindow } from '../window'
 
 export function aboutDialog() {
   if (!mainWindow) return

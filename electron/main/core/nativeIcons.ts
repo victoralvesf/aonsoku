@@ -1,4 +1,4 @@
-import { screen } from "electron"
+import { screen } from 'electron'
 
 export const NativeIconVariant = {
   Size16: { size: 16, scaleFactor: 1 },

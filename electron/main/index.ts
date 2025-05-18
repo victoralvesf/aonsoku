@@ -1,8 +1,8 @@
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { app, globalShortcut } from 'electron'
-import { createWindow, mainWindow } from './app'
 import { createAppMenu } from './core/menu'
 import { createTray } from './tray'
+import { createWindow, mainWindow } from './window'
 
 const instanceLock = app.requestSingleInstanceLock()
 

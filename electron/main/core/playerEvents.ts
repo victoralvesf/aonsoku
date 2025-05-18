@@ -1,5 +1,5 @@
 import { IpcChannels, PlayerStateListenerActions } from '../../preload/types'
-import { mainWindow } from '../app'
+import { mainWindow } from '../window'
 
 export function sendPlayerEvents(event: PlayerStateListenerActions) {
   if (!mainWindow) return

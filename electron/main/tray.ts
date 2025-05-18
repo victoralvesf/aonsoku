@@ -2,17 +2,17 @@ import { platform } from '@electron-toolkit/utils'
 import { app, Menu, NativeImage, nativeImage, Tray } from 'electron'
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import { mainWindow } from './app'
+import { getMacOsMediaIcon } from './core/macMedia'
 import {
   getDisplaysMaxScaleFactor,
   getVariantForScaleFactor,
-  NativeIconVariants
+  NativeIconVariants,
 } from './core/nativeIcons'
 import { sendPlayerEvents } from './core/playerEvents'
 import { playerState } from './core/playerState'
 import { resourcesPath } from './core/taskbar'
+import { mainWindow } from './window'
 import { productName } from '../../package.json'
-import { getMacOsMediaIcon } from './core/macMedia'
 
 const traySpacer = Array.from({ length: 30 }).join(' ')
 
@@ -83,7 +83,7 @@ export function createTray() {
 
 export function updateTray(title?: string) {
   if (!mainWindow || !tray) return
-  
+
   const trayIcon = getTrayIcon()
 
   const isVisible = mainWindow.isVisible()
@@ -95,7 +95,7 @@ export function updateTray(title?: string) {
     {
       label: productName + traySpacer,
       ...(trayTooltip !== productName ? { sublabel: trayTooltip } : {}),
-      ...(platform.isMacOS ? { icon: trayIcon }: {}),
+      ...(platform.isMacOS ? { icon: trayIcon } : {}),
       type: 'normal',
       enabled: false,
     },
@@ -106,10 +106,12 @@ export function updateTray(title?: string) {
       label: 'Previous',
       type: 'normal',
       enabled: hasPrevious,
-      ...(platform.isMacOS ? {
-        icon: getMacOsMediaIcon('previous'),
-        accelerator: 'Cmd+Left',
-      }: {}),
+      ...(platform.isMacOS
+        ? {
+            icon: getMacOsMediaIcon('previous'),
+            accelerator: 'Cmd+Left',
+          }
+        : {}),
       click: () => {
         sendPlayerEvents('skipBackwards')
       },
@@ -118,10 +120,12 @@ export function updateTray(title?: string) {
       label: isPlaying ? 'Pause' : 'Play',
       type: 'normal',
       enabled: hasSonglist,
-      ...(platform.isMacOS ? {
-        icon: getMacOsMediaIcon(isPlaying ? 'pause' : 'play'),
-        accelerator: 'Space'
-      }: {}),
+      ...(platform.isMacOS
+        ? {
+            icon: getMacOsMediaIcon(isPlaying ? 'pause' : 'play'),
+            accelerator: 'Space',
+          }
+        : {}),
       click: () => {
         sendPlayerEvents('togglePlayPause')
       },
@@ -130,10 +134,12 @@ export function updateTray(title?: string) {
       label: 'Next',
       type: 'normal',
       enabled: hasNext,
-      ...(platform.isMacOS ? {
-        icon: getMacOsMediaIcon('next'),
-        accelerator: 'Cmd+Right',
-      }: {}),
+      ...(platform.isMacOS
+        ? {
+            icon: getMacOsMediaIcon('next'),
+            accelerator: 'Cmd+Right',
+          }
+        : {}),
       click: () => {
         sendPlayerEvents('skipForward')
       },
