@@ -7,12 +7,17 @@ import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { subsonic } from '@/service/subsonic'
-import { IPlayerContext, LoopState } from '@/types/playerContext'
+import { IPlayerContext, ISongList, LoopState } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { areSongListsEqual } from '@/utils/compareSongLists'
 import { isDesktop } from '@/utils/desktop'
 import { discordRpc } from '@/utils/discordRpc'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
+import { idbStorage } from './idb'
+
+const miniStores = {
+  songlist: 'player_songlist',
+}
 
 const blurSettings = {
   min: 20,
@@ -848,10 +853,23 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
         name: 'player_store',
         version: 1,
         merge: (persistedState, currentState) => {
-          return merge(currentState, persistedState)
+          let merged = merge(currentState, persistedState)
+
+          idbStorage.getItem<ISongList>(miniStores.songlist, (value) => {
+            if (!value) return
+
+            const newState = {
+              songlist: value,
+            }
+
+            merged = merge(merged, newState)
+          })
+
+          return merged
         },
         partialize: (state) => {
           const appStore = omit(state, [
+            'songlist',
             'actions',
             'playerState.isPlaying',
             'playerState.audioPlayerRef',
@@ -867,6 +885,16 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
     ),
   ),
   shallow,
+)
+
+usePlayerStore.subscribe(
+  (state) => [state.songlist],
+  ([songlist]) => {
+    idbStorage.setItem(miniStores.songlist, songlist)
+  },
+  {
+    equalityFn: shallow,
+  },
 )
 
 usePlayerStore.subscribe(
