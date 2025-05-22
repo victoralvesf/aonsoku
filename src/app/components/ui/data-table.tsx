@@ -175,10 +175,15 @@ export function DataTable<TData, TValue>({
       : undefined
 
   const getDiscIndexes = useCallback(() => {
-    if (!showDiscNumber) return []
-
     const uniqueIndices: number[] = []
     const seen = new Set<number>()
+
+    if (!showDiscNumber) {
+      return {
+        uniqueIndices,
+        seen,
+      }
+    }
 
     rows.forEach(({ original }, index) => {
       const item = original as DiscNumber
@@ -190,10 +195,15 @@ export function DataTable<TData, TValue>({
       }
     })
 
-    return uniqueIndices
+    return {
+      uniqueIndices,
+      seen,
+    }
   }, [rows, showDiscNumber])
 
-  const discNumberIndexes = getDiscIndexes()
+  const discIndexes = getDiscIndexes()
+  const isSingleDisk = discIndexes.seen.size <= 1
+  const discNumberIndexes = discIndexes.uniqueIndices
 
   const getContextMenuOptions = useCallback(
     (row: Row<TData>) => {
@@ -414,24 +424,26 @@ export function DataTable<TData, TValue>({
               {rows?.length ? (
                 rows.map((row, index) => (
                   <Fragment key={row.id}>
-                    {showDiscNumber && discNumberIndexes.includes(index) && (
-                      <div
-                        className={clsx(
-                          'w-full h-14 flex flex-row items-center transition-colors text-muted-foreground',
-                          isClassic && 'border-b',
-                        )}
-                        role="row"
-                      >
-                        <div className="w-12 flex items-center justify-center">
-                          <Disc2Icon strokeWidth={1.75} />
+                    {showDiscNumber &&
+                      !isSingleDisk &&
+                      discNumberIndexes.includes(index) && (
+                        <div
+                          className={clsx(
+                            'w-full h-14 flex flex-row items-center transition-colors text-muted-foreground',
+                            isClassic && 'border-b',
+                          )}
+                          role="row"
+                        >
+                          <div className="w-12 flex items-center justify-center">
+                            <Disc2Icon strokeWidth={1.75} />
+                          </div>
+                          <span className="font-medium ml-[7px]">
+                            {t('album.table.discNumber', {
+                              number: (row.original as DiscNumber).discNumber,
+                            })}
+                          </span>
                         </div>
-                        <span className="font-medium ml-[7px]">
-                          {t('album.table.discNumber', {
-                            number: (row.original as DiscNumber).discNumber,
-                          })}
-                        </span>
-                      </div>
-                    )}
+                      )}
                     <MemoTableRow
                       index={index}
                       row={row}
