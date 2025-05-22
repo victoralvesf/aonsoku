@@ -1,6 +1,7 @@
 import { is, platform } from '@electron-toolkit/utils'
 import { BrowserWindow } from 'electron'
 import { join } from 'path'
+import { colorsState } from './core/colors'
 import { setupDownloads } from './core/downloads'
 import { setupEvents, setupIpcEvents } from './core/events'
 import { appIcon } from './core/icon'
@@ -11,14 +12,17 @@ import { electron } from '../../package.json'
 
 export let mainWindow: BrowserWindow | null = null
 
-const { defaultWidth, defaultHeight } = electron.window
+const { defaultWidth, defaultHeight, defaultBgColor } = electron.window
 
 export function createWindow(): void {
+  const backgroundColor = colorsState.get('bgColor') ?? defaultBgColor
+
   mainWindow = new StatefulBrowserWindow({
     width: defaultWidth,
     height: defaultHeight,
     minWidth: defaultWidth,
     minHeight: defaultHeight,
+    backgroundColor,
     supportMaximize: true,
     show: false,
     autoHideMenuBar: true,

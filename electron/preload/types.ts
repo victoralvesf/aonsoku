@@ -26,6 +26,7 @@ export enum IpcChannels {
 export type OverlayColors = {
   color: string
   symbol: string
+  bgColor: string
 }
 
 export type PlayerStatePayload = {

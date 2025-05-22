@@ -1,5 +1,6 @@
 import { is, platform } from '@electron-toolkit/utils'
 import { shell, BrowserWindow, nativeTheme, ipcMain } from 'electron'
+import { colorsState } from './colors'
 import {
   clearDiscordRpcActivity,
   RpcPayload,
@@ -110,7 +111,11 @@ export function setupIpcEvents(window: BrowserWindow | null) {
   })
 
   ipcMain.on(IpcChannels.ThemeChanged, (_, colors: OverlayColors) => {
-    const { color, symbol } = colors
+    const { color, symbol, bgColor } = colors
+
+    if (bgColor) {
+      colorsState.set('bgColor', bgColor)
+    }
 
     if (platform.isMacOS || platform.isLinux) return
 

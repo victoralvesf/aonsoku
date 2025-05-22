@@ -1,5 +1,5 @@
 import { isDesktop } from './desktop'
-import { hslToHsla } from './getAverageColor'
+import { hslToHex, hslToHsla } from './getAverageColor'
 
 const DEFAULT_TITLE_BAR_COLOR = '#ff000000'
 const DEFAULT_TITLE_BAR_SYMBOL = '#ffffff'
@@ -18,8 +18,11 @@ export function setDesktopTitleBarColors(transparent = false) {
     color = hslToHsla(styles.getPropertyValue('--background').trim())
   }
 
+  const bgColor = hslToHex(styles.getPropertyValue('--background').trim())
+
   window.api.setTitleBarOverlayColors({
     color,
     symbol,
+    bgColor,
   })
 }
