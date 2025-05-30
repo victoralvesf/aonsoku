@@ -56,6 +56,8 @@
     "black": "Чорно-біла",
     "dark": "Темна",
     "one-dark": "",
-    "light": "Світла"
+    "light": "Світла",
+    "vue-dark": "Vue Dark",
+    "vim-dark-soft": "Vim Dark Soft"
   }
 }
