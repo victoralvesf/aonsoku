@@ -485,7 +485,9 @@
       "repeat": "Wiederholen",
       "previous": "Zum vorherigen springen",
       "play": "Abspielen / Pause",
-      "next": "Zum nächsten springen"
+      "next": "Zum nächsten springen",
+      "raiseVolume": "Lautstärke erhöhen",
+      "lowerVolume": "Lautstärke verringern"
     },
     "navigation": {
       "label": "Navigation"
@@ -534,6 +536,18 @@
         },
         "group": "Allgemein",
         "description": "Aussehen und Anzeigeverhalten der Anwendung anpassen."
+      },
+      "colors": {
+        "queue": {
+          "label": "Warteschlange und Lyrics",
+          "intensity": "Farbintensität"
+        },
+        "bigPlayer": {
+          "blurSize": "Größe der Bildunschärfe",
+          "label": "Großer Player"
+        },
+        "group": "Dynamische Farben",
+        "description": "Auswählen, ob die App die dominante Farbe des aktuellen Albumcovers als Hintergrund verwendet werden soll."
       }
     },
     "label": "Einstellungen",
@@ -558,7 +572,11 @@
           "info": "Dieser Verstärkungspegel wird auf Songs angewendet, die keine ReplayGain-Metadaten enthalten, um eine gleichbleibende Lautstärke zu gewährleisten. Der empfohlene Bereich für die Verstärkung liegt zwischen -10 dB und -1 dB.",
           "label": "Standardverstärkung (dB)"
         },
-        "preAmp": "Vorverstärkung (dB)"
+        "preAmp": "Vorverstärkung (dB)",
+        "error": {
+          "button": "Nochmal versuchen",
+          "message": "Beim Abspielen des Titels mit Replay Gain ist ein Fehler aufgetreten."
+        }
       },
       "lyrics": {
         "preferSynced": {
@@ -586,6 +604,22 @@
           "section": "Radio-Abschnitt ausblenden"
         },
         "description": "Sichtbarkeit und Anordnung der Abschnitte in der Seitenleiste verwalten."
+      },
+      "podcast": {
+        "description": "Aktivieren Sie die Integration mit dem Aonsoku Podcasts-Dienst.",
+        "enabled": {
+          "label": "Integration aktivieren"
+        },
+        "group": "Podcasts",
+        "credentials": {
+          "error": "Benutzername und Server-URL sind erforderlich.",
+          "label": "Eingeloggten Benutzer und Server-URL verwenden",
+          "user": "Benutzername",
+          "url": "Server-URL"
+        },
+        "service": {
+          "url": "URL des Podcast-Dienstes"
+        }
       }
     }
   },
