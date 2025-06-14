@@ -44,6 +44,7 @@ linux:
   category: AudioVideo
   synopsis: 'A modern desktop client for Navidrome/Subsonic servers.'
 npmRebuild: false
+nativeRebuilder: legacy
 publish:
   provider: generic
   url: https://example.com/auto-updates
