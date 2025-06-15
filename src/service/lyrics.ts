@@ -1,10 +1,11 @@
 import { httpClient } from '@/api/httpClient'
 import { usePlayerStore } from '@/store/player.store'
-import { LyricsResponse } from '@/types/responses/song'
+import { ILyric, IStructuredLyric, LyricsResponse, StructuredLyricsResponse } from '@/types/responses/song'
 import { lrclibClient } from '@/utils/appName'
-import { checkServerType } from '@/utils/servers'
+import { checkServerType, getServerExtensions } from '@/utils/servers'
 
 interface GetLyricsData {
+  id: string
   artist: string
   title: string
   album?: string
@@ -21,14 +22,44 @@ interface LRCLibResponse {
 
 async function getLyrics(getLyricsData: GetLyricsData) {
   const { preferSyncedLyrics } = usePlayerStore.getState().settings.lyrics
+  const { songLyricsEnabled } = getServerExtensions()
 
-  // If the user prefers synced lyrics, attempt to fetch them from the LrcLib first.
-  // If lyrics are found, return them immediately.
-  // If not, proceed with the default flow.
+  // First attempt to retrieve lyrics from the server. 
+  // If we know it supports the OpenSubsonic songLyrics extension with timing info, use that.
+  // If the server does not support the extension or the lyrics returned from the server did 
+  // not include timing information, fetch them from the LrcLib
+
+  let osUnsyncedLyricsFound: ILyric | undefined;
+  if (songLyricsEnabled) {
+    const response = await httpClient<StructuredLyricsResponse>('/getLyricsBySongId', {
+      method: 'GET',
+      query: {
+        id: getLyricsData.id,
+      },
+    })
+
+    if (preferSyncedLyrics) {
+      if (response?.data.lyricsList.structuredLyrics && response.data.lyricsList.structuredLyrics.length > 0) {
+        const syncedLyrics = response?.data.lyricsList.structuredLyrics.find((lyrics) => lyrics.synced)
+
+        if (syncedLyrics) {
+          return osStructuredLyricsToILyric(syncedLyrics)
+        }
+        // save the plain lyrics from this call
+        osUnsyncedLyricsFound = osStructuredLyricsToILyric(response.data.lyricsList.structuredLyrics[0])
+      }
+    }
+  }
+  
   if (preferSyncedLyrics) {
     const lyrics = await getLyricsFromLRCLib(getLyricsData)
 
     if (lyrics.value !== '') return lyrics
+  }
+
+  // if the server supported the songLyrics extension and lrc did not have the synced lyrics, return the 
+  if (osUnsyncedLyricsFound) {
+    return osUnsyncedLyricsFound
   }
 
   const response = await httpClient<LyricsResponse>('/getLyrics', {
@@ -121,6 +152,14 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
 
 function formatLyrics(lyrics: string) {
   return lyrics.trim().replaceAll('\r\n', '\n')
+}
+
+function osStructuredLyricsToILyric(lyrics: IStructuredLyric): ILyric {
+  return {
+    artist: lyrics.displayArtist,
+    title: lyrics.displayTitle,
+    value: formatLyrics(lyrics.line.map(l => l.value).join("\n")),
+  } 
 }
 
 export const lyrics = {
