@@ -165,6 +165,8 @@ function osStructuredLyricsToILyric(lyrics: IStructuredLyric): ILyric {
 }
 
 function osStartMsToLRCTimestamp(startTime: number): string {
+  // Date() isoString is formatted as:
+  // YYYY-MM-DDTHH:mm:ss.sssZ -> mm:ss.ss
   // 2011-10-05T14:48:00.000Z -> 48:00.00
   return `[${new Date(startTime).toISOString().slice(14, -2)}]`;
 
