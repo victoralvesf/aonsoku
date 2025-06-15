@@ -38,16 +38,14 @@ async function getLyrics(getLyricsData: GetLyricsData) {
       },
     })
 
-    if (preferSyncedLyrics) {
-      if (response?.data.lyricsList.structuredLyrics && response.data.lyricsList.structuredLyrics.length > 0) {
-        const syncedLyrics = response?.data.lyricsList.structuredLyrics.find((lyrics) => lyrics.synced)
+    if (response?.data.lyricsList.structuredLyrics && response.data.lyricsList.structuredLyrics.length > 0) {
+      const syncedLyrics = response?.data.lyricsList.structuredLyrics.find((lyrics) => lyrics.synced)
 
-        if (syncedLyrics) {
-          return osStructuredLyricsToILyric(syncedLyrics)
-        }
-        // save the plain lyrics from this call
-        osUnsyncedLyricsFound = osStructuredLyricsToILyric(response.data.lyricsList.structuredLyrics[0])
+      if (syncedLyrics) {
+        return osStructuredLyricsToILyric(syncedLyrics)
       }
+      // save the plain lyrics retrieved from the server
+      osUnsyncedLyricsFound = osStructuredLyricsToILyric(response.data.lyricsList.structuredLyrics[0])
     }
   }
   
@@ -57,7 +55,8 @@ async function getLyrics(getLyricsData: GetLyricsData) {
     if (lyrics.value !== '') return lyrics
   }
 
-  // if the server supported the songLyrics extension and lrc did not have the synced lyrics, return the 
+  // if the server supported the songLyrics extension and lrc did not have lyrics, we don't need to query the server and lrc again. 
+  // so return the plain lyrics if we found them
   if (osUnsyncedLyricsFound) {
     return osUnsyncedLyricsFound
   }
@@ -158,8 +157,17 @@ function osStructuredLyricsToILyric(lyrics: IStructuredLyric): ILyric {
   return {
     artist: lyrics.displayArtist,
     title: lyrics.displayTitle,
-    value: formatLyrics(lyrics.line.map(l => l.value).join("\n")),
+    value: formatLyrics(lyrics.line.map(l => {
+      const ts = l.start? osStartMsToLRCTimestamp(l.start) : "";
+      return ts? `${ts} ${l.value}`: l.value
+    }).join("\n")),
   } 
+}
+
+function osStartMsToLRCTimestamp(startTime: number): string {
+  // 2011-10-05T14:48:00.000Z -> 48:00.00
+  return `[${new Date(startTime).toISOString().slice(14, -2)}]`;
+
 }
 
 export const lyrics = {

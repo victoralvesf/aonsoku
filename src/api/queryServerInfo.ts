@@ -19,14 +19,14 @@ export async function queryServerInfo(url: string) {
     const data = await response.json()
     
     const extensionsMap: {[key: string]: number[]} = {}
-    if (data['openSubsonic']) {
-      const eResponse = await fetch(`${url}/rest/getOpenSubsonicExtensions.view?${queries}`, {
+    if (data['subsonic-response']['openSubsonic']) {
+      const response = await fetch(`${url}/rest/getOpenSubsonicExtensions.view?${queries}`, {
         method: 'GET',
       })
 
-      const eData = await eResponse.json()
+      const eData = await response.json()
 
-      for (const extension of eData['openSubsonicExtensions']) {
+      for (const extension of eData['subsonic-response']['openSubsonicExtensions']) {
         extensionsMap[extension['name']] = extension['versions']
       }
     }
