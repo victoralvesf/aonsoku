@@ -158,18 +158,19 @@ function osStructuredLyricsToILyric(lyrics: IStructuredLyric): ILyric {
     artist: lyrics.displayArtist,
     title: lyrics.displayTitle,
     value: formatLyrics(lyrics.line.map(l => {
-      const ts = l.start? osStartMsToLRCTimestamp(l.start) : "";
-      return ts? `${ts} ${l.value}`: l.value
+      if (l.start != undefined) { // l.start may have actual value 0 (falsy)
+        return `[${osStartMsToSongTimestamp(l.start)}] ${l.value}`
+      }
+      return l.value
     }).join("\n")),
   } 
 }
 
-function osStartMsToLRCTimestamp(startTime: number): string {
+function osStartMsToSongTimestamp(startTime: number): string {
   // Date() isoString is formatted as:
   // YYYY-MM-DDTHH:mm:ss.sssZ -> mm:ss.ss
   // 2011-10-05T14:48:00.000Z -> 48:00.00
-  return `[${new Date(startTime).toISOString().slice(14, -2)}]`;
-
+  return new Date(startTime).toISOString().slice(14, -2);
 }
 
 export const lyrics = {
