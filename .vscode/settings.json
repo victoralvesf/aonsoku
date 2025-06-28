@@ -1,0 +1,22 @@
+{
+	"biome.enabled": true,
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"editor.rulers": [120],
+	"[javascript][typescript]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.biome": "explicit",
+			"source.organizeImports.biome": "explicit"
+		}
+	},
+	"[json][jsonc]": {
+		"editor.quickSuggestions": {
+			"strings": true
+		},
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.biome": "explicit"
+		}
+	}
+}
