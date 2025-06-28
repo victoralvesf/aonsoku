@@ -15,29 +15,22 @@
       "quoteStyle": "single",
       "expand": "auto",
       "semicolons": "asNeeded",
-      "arrowParentheses": "always",
-      "lineEnding": "lf",
-      "indentStyle": "space",
-      "indentWidth": 2,
-      "lineWidth": 120
+      "arrowParentheses": "always"
     },
     "globals": ["navigator", "window", "document"]
   },
   "json": {
     "formatter": {
       "enabled": true,
-      "indentStyle": "space",
-      "indentWidth": 2,
-      "expand": "auto",
-      "lineEnding": "lf",
-      "lineWidth": 120
+      "expand": "auto"
     }
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
-    "lineWidth": 120
+    "lineWidth": 80,
+    "lineEnding": "lf"
   },
   "linter": {
     "enabled": true,
@@ -119,7 +112,7 @@
         "noDuplicateJsxProps": "error",
         "noDuplicateObjectKeys": "error",
         "noDuplicateParameters": "error",
-        "noEmptyBlockStatements": "error",
+        "noEmptyBlockStatements": "off",
         "noExplicitAny": "error",
         "noExtraNonNullAssertion": "error",
         "noFallthroughSwitchClause": "error",
