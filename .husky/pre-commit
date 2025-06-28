@@ -1,2 +1,1 @@
-pnpm electron:lint
 pnpm lint
