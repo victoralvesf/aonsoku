@@ -10,7 +10,7 @@
     "typeRoots": [
       "./node_modules/@types",
       "./electron/preload/types.ts",
-      "./electron/env.d.ts",
+      "./electron/env.d.ts"
     ]
   },
   "include": [
@@ -18,9 +18,7 @@
     "electron.vite.config.*",
     "electron/env.d.ts",
     "electron/main/**/*",
-    "electron/preload/**/*",
+    "electron/preload/**/*"
   ],
-  "exclude": [
-    "src/**/*",
-  ],
+  "exclude": ["src/**/*"]
 }

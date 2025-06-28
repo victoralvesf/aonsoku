@@ -1,6 +1,3 @@
 {
-  "recommendations": [
-    "biomejs.biome",
-    "bradlc.vscode-tailwindcss"
-  ]
+  "recommendations": ["biomejs.biome", "bradlc.vscode-tailwindcss"]
 }
