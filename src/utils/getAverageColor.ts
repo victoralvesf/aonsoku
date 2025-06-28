@@ -22,21 +22,23 @@ export async function getAverageColor(img: HTMLImageElement | null) {
 export function hexToRgb(hex: string) {
   hex = hex.replace(/^#/, '')
 
-  let r: number, g: number, b: number
+  let red: number
+  let green: number
+  let blue: number
 
   if (hex.length === 3) {
-    r = parseInt(hex[0] + hex[0], 16)
-    g = parseInt(hex[1] + hex[1], 16)
-    b = parseInt(hex[2] + hex[2], 16)
+    red = parseInt(hex[0] + hex[0], 16)
+    green = parseInt(hex[1] + hex[1], 16)
+    blue = parseInt(hex[2] + hex[2], 16)
   } else if (hex.length === 6) {
-    r = parseInt(hex.substring(0, 2), 16)
-    g = parseInt(hex.substring(2, 4), 16)
-    b = parseInt(hex.substring(4, 6), 16)
+    red = parseInt(hex.substring(0, 2), 16)
+    green = parseInt(hex.substring(2, 4), 16)
+    blue = parseInt(hex.substring(4, 6), 16)
   } else {
     return undefined
   }
 
-  return [r, g, b]
+  return [red, green, blue]
 }
 
 export function hexToRgba(hex: string, alpha: number = 1) {
@@ -63,7 +65,9 @@ export function hslToRbg(hsl: string) {
   const secondComponent = chroma * (1 - Math.abs(((hue / 60) % 2) - 1))
   const matchLightness = lightness - chroma / 2
 
-  let red, green, blue
+  let red: number
+  let green: number
+  let blue: number
 
   if (hue < 60) {
     red = chroma

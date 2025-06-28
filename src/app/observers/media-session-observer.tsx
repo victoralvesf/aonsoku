@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   usePlayerIsPlaying,
@@ -25,9 +25,9 @@ export function MediaSessionObserver() {
     radioList.length === 0 &&
     podcastList.length === 0
 
-  function resetAppTitle() {
+  const resetAppTitle = useCallback(() => {
     document.title = appName
-  }
+  }, [])
 
   useEffect(() => {
     manageMediaSession.setPlaybackState(isPlaying)
@@ -67,6 +67,7 @@ export function MediaSessionObserver() {
     radio,
     radioLabel,
     song,
+    resetAppTitle,
   ])
 
   return null

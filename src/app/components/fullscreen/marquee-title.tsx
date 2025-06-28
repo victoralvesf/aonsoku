@@ -22,6 +22,7 @@ export function MarqueeTitle({ children, gap }: MarqueeTitleProps) {
   const [marqueeKey, setMarqueeKey] = useState('')
   const [containerKey, setContainerKey] = useState('')
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: needed to calculate properly
   const calculateOverflow = useCallback(() => {
     if (!containerRef.current || !textRef.current) return
 
@@ -49,6 +50,7 @@ export function MarqueeTitle({ children, gap }: MarqueeTitleProps) {
     }
   }, [calculateOverflow])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: needed to reset states
   useEffect(() => {
     setIsOverflowing(false)
     setIsFinished(false)

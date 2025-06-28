@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from './tooltip'
 
-interface TooltipContent {
+interface SimpleTooltipProps {
   children: ReactNode
   text: string
   side?: 'top' | 'right' | 'bottom' | 'left'
@@ -26,7 +26,7 @@ export function SimpleTooltip({
   delay = 700,
   avoidCollisions = true,
   disabled = false,
-}: TooltipContent) {
+}: SimpleTooltipProps) {
   // If is not desktop return only the children element
   if (!isDesktop || disabled) {
     return <>{children}</>
