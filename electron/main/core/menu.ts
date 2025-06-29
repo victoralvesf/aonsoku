@@ -1,7 +1,7 @@
 import { platform } from '@electron-toolkit/utils'
-import { Menu, app, shell } from 'electron'
-import { aboutDialog } from './about'
+import { app, Menu, shell } from 'electron'
 import { repository } from '../../../package.json'
+import { aboutDialog } from './about'
 
 export function createAppMenu() {
   if (!platform.isMacOS) return

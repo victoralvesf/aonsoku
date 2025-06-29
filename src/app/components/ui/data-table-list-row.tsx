@@ -1,6 +1,6 @@
 import { Cell, flexRender, Row } from '@tanstack/react-table'
 import clsx from 'clsx'
-import { memo, MouseEvent, TouchEvent, useMemo } from 'react'
+import { MouseEvent, memo, TouchEvent, useMemo } from 'react'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
 import { usePlayerCurrentSong } from '@/store/player.store'
 import { ColumnDefType } from '@/types/react-table/columnDef'

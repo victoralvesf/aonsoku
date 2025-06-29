@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
 import path from 'path'
+import { defineConfig } from 'vite'
 import { createManualChunks } from './src/manual-chunks'
 
 // https://vitejs.dev/config/

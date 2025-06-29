@@ -15,6 +15,7 @@
     "preview": "vite preview",
     "lint": "biome lint",
     "lint:fix": "biome lint --write",
+    "lint:check": "biome check --write",
     "lint:format": "biome format --write",
     "cy:open": "cypress open",
     "test": "cypress run --component",

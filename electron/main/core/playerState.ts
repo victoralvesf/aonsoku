@@ -1,5 +1,5 @@
-import { AonsokuStore } from './store'
 import { PlayerStatePayload } from '../../preload/types'
+import { AonsokuStore } from './store'
 
 const playerStore = new AonsokuStore<PlayerStatePayload>({
   name: 'player',

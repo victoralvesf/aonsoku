@@ -3,7 +3,7 @@ import { UserDropdown } from '@/app/components/header/user-dropdown'
 import { HeaderSongInfo } from '@/app/components/header-song'
 import { SettingsButton } from '@/app/components/settings/header-button'
 import { useAppWindow } from '@/app/hooks/use-app-window'
-import { isWindows, isLinux, isMacOS } from '@/utils/desktop'
+import { isLinux, isMacOS, isWindows } from '@/utils/desktop'
 
 export function Header() {
   const { isFullscreen } = useAppWindow()

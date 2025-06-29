@@ -62,6 +62,7 @@
         "useRegexLiterals": "error"
       },
       "correctness": {
+        "noUnusedImports": "error",
         "noChildrenProp": "error",
         "noConstAssign": "error",
         "noConstantCondition": "error",
@@ -171,6 +172,10 @@
   ],
   "assist": {
     "enabled": true,
-    "actions": { "source": { "organizeImports": "on" } }
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   }
 }

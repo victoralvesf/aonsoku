@@ -1,5 +1,5 @@
-import { AonsokuStore } from './store'
 import { electron } from '../../../package.json'
+import { AonsokuStore } from './store'
 
 interface State {
   bgColor: string

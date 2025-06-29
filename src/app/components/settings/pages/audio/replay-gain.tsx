@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import {
-  Root,
-  Header,
-  HeaderTitle,
-  HeaderDescription,
   Content,
   ContentItem,
-  ContentItemTitle,
   ContentItemForm,
+  ContentItemTitle,
   ContentSeparator,
+  Header,
+  HeaderDescription,
+  HeaderTitle,
+  Root,
 } from '@/app/components/settings/section'
 import { Button } from '@/app/components/ui/button'
 import { NumericInput } from '@/app/components/ui/numeric-input'

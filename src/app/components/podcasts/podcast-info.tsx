@@ -6,7 +6,7 @@ import { Podcast } from '@/types/responses/podcasts'
 import { parseHtmlToText } from '@/utils/parseTexts'
 import { PodcastInfoContainer } from './info/container'
 import { PodcastInfoImage } from './info/image'
-import { Root, Title, Subtitle, Description, Details } from './info/texts'
+import { Description, Details, Root, Subtitle, Title } from './info/texts'
 import { UnfollowButton } from './unfollow-button'
 
 interface PodcastInfoProps {

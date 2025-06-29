@@ -1,9 +1,9 @@
 import { is } from '@electron-toolkit/utils'
 import { app, nativeImage, nativeTheme } from 'electron'
 import { join } from 'path'
+import { mainWindow } from '../window'
 import { sendPlayerEvents } from './playerEvents'
 import { playerState } from './playerState'
-import { mainWindow } from '../window'
 
 export const resourcesPath = join(
   is.dev ? app.getAppPath() : process.resourcesPath,

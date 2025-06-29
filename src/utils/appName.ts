@@ -1,4 +1,4 @@
-import { version, repository } from '@/../package.json'
+import { repository, version } from '@/../package.json'
 
 export const appName = 'Aonsoku'
 

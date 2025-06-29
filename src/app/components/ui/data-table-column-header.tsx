@@ -1,8 +1,8 @@
 import { Column, Table } from '@tanstack/react-table'
 import {
   ChevronDownIcon,
-  ChevronUpIcon,
   ChevronsUpDownIcon,
+  ChevronUpIcon,
 } from 'lucide-react'
 import { HTMLAttributes, useCallback } from 'react'
 import { Button } from '@/app/components/ui/button'

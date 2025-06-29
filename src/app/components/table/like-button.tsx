@@ -7,8 +7,8 @@ import { subsonic } from '@/service/subsonic'
 import {
   usePlayerActions,
   usePlayerMediaType,
-  usePlayerSongStarred,
   usePlayerSonglist,
+  usePlayerSongStarred,
 } from '@/store/player.store'
 
 interface TableLikeButtonProps {
