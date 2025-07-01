@@ -196,7 +196,14 @@
       "play": "Riproduci la radio di {{artist}}",
       "shuffle": "Riproduci la radio di {{artist}} casualmente",
       "options": "Più opzioni per {{artist}}"
-    }
+    },
+    "info": {
+      "albumsCount_one": "{{count}} album",
+      "albumsCount_many": "{{count}} album",
+      "albumsCount_other": "{{count}} album"
+    },
+    "recentAlbums": "Album recenti",
+    "relatedArtists": "Artisti correlati"
   },
   "podcasts": {
     "filters": {
@@ -204,6 +211,13 @@
         "orderBy": {
           "title": "Titolo"
         }
+      }
+    },
+    "form": {
+      "addButton": "Aggiungi Podcast",
+      "search": "Cerca podcast…",
+      "dialog": {
+        "title": "Crea Podcast"
       }
     }
   }
