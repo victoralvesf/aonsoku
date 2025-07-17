@@ -20,12 +20,13 @@ export function LyricsTab() {
   const { currentSong } = usePlayerSonglist()
   const { t } = useTranslation()
 
-  const { artist, title, duration } = currentSong
+  const { id, artist, title, duration } = currentSong
 
   const { data: lyrics, isLoading } = useQuery({
     queryKey: ['get-lyrics', artist, title, duration],
     queryFn: () =>
       subsonic.lyrics.getLyrics({
+        id,
         artist,
         title,
         duration,
