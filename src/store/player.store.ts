@@ -774,7 +774,15 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 playNextSong,
                 setPlayingState,
                 clearPlayerState,
+                resetProgress,
               } = get().actions
+
+              // Handle repeat one - reset progress and keep playing
+              if (loopState === LoopState.One) {
+                resetProgress()
+                setPlayingState(true)
+                return
+              }
 
               if (hasNextSong() || loopState === LoopState.All) {
                 playNextSong()
