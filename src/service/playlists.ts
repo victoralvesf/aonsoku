@@ -1,8 +1,8 @@
 import { httpClient } from '@/api/httpClient'
 import {
   CreateParams,
-  PlaylistWithEntriesResponse,
   PlaylistsResponse,
+  PlaylistWithEntriesResponse,
   SinglePlaylistResponse,
   UpdateParams,
 } from '@/types/responses/playlist'

@@ -1,6 +1,6 @@
 import { dialog } from 'electron'
 import os from 'os'
-import { productName, description, version } from '../../../package.json'
+import { description, productName, version } from '../../../package.json'
 import { mainWindow } from '../window'
 
 export function aboutDialog() {

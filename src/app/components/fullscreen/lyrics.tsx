@@ -9,7 +9,7 @@ import {
   scrollAreaViewportSelector,
 } from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
-import { usePlayerSonglist, usePlayerRef } from '@/store/player.store'
+import { usePlayerRef, usePlayerSonglist } from '@/store/player.store'
 import { ILyric } from '@/types/responses/song'
 
 interface LyricProps {
@@ -100,6 +100,7 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
 
   const lines = lyrics.value!.split('\n')
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: recomputed when song changes
   useEffect(() => {
     if (lyricsBoxRef.current) {
       const scrollArea = lyricsBoxRef.current.querySelector(

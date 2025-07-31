@@ -28,6 +28,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
   const { enterFullscreenWindow, exitFullscreenWindow } = useAppWindow()
   const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: initial useEffect
   useEffect(() => {
     return () => {
       if (isDesktop()) {
@@ -38,7 +39,6 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
         exitFullscreen()
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   async function handleFullscreen(open: boolean) {

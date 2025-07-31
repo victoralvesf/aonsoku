@@ -7,7 +7,7 @@ export function MainRoutes() {
   const { pathname } = useLocation() as Location
 
   useEffect(() => {
-    scrollPageToTop()
+    if (pathname) scrollPageToTop()
   }, [pathname])
 
   return (

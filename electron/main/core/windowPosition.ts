@@ -1,11 +1,11 @@
 import {
-  screen,
   BrowserWindow,
   BrowserWindowConstructorOptions,
   Rectangle,
+  screen,
 } from 'electron'
-import { AonsokuStore } from './store'
 import { electron } from '../../../package.json'
+import { AonsokuStore } from './store'
 
 interface ExtraOptions {
   /** Should we automatically maximize the window, if it was last closed maximized. Defaults to `true`. */

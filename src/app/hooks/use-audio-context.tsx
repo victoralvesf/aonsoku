@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef } from 'react'
 import {
   AudioContext,
   type IAudioContext,
-  type IMediaElementAudioSourceNode,
   type IGainNode,
+  type IMediaElementAudioSourceNode,
 } from 'standardized-audio-context'
 import { usePlayerMediaType, useReplayGainState } from '@/store/player.store'
 import { logger } from '@/utils/logger'
@@ -72,7 +72,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
     [replayGainEnabled],
   )
 
-  function resetRefs() {
+  const resetRefs = useCallback(() => {
     if (sourceNodeRef.current) {
       sourceNodeRef.current.disconnect()
       sourceNodeRef.current = null
@@ -85,12 +85,13 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
       audioContextRef.current.close()
       audioContextRef.current = null
     }
-  }
+  }, [])
 
   useEffect(() => {
     if (replayGainError) resetRefs()
-  }, [replayGainError])
+  }, [replayGainError, resetRefs])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: clear state after unmount
   useEffect(() => {
     return () => resetRefs()
   }, [])

@@ -11,8 +11,8 @@ import {
 import { AlbumListType } from '@/types/responses/album'
 import {
   AlbumsFilters,
-  albumsFilterValues,
   AlbumsSearchParams,
+  albumsFilterValues,
 } from '@/utils/albumsFilter'
 import { scrollPageToTop } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'

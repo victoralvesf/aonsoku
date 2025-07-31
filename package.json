@@ -13,15 +13,15 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "lint:fix": "pnpm lint --fix",
+    "lint": "biome lint",
+    "lint:fix": "biome lint --write",
+    "lint:check": "biome check --write",
+    "lint:format": "biome format --write",
     "cy:open": "cypress open",
     "test": "cypress run --component",
     "electron:start": "electron-vite preview",
     "electron:dev": "electron-vite dev",
     "electron:build": "electron-vite build",
-    "electron:lint": "eslint \"electron/**/*.{ts,tsx}\"",
-    "electron:lint:fix": "pnpm electron:lint --fix",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "pnpm electron:build && electron-builder --dir",
     "build:win": "pnpm electron:build && electron-builder --win",
@@ -108,9 +108,8 @@
     "zustand": "^4.5.6"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.0.6",
     "@electron-toolkit/tsconfig": "^1.0.1",
-    "@rocketseat/eslint-config": "^2.2.2",
-    "@tanstack/eslint-plugin-query": "^5.71.5",
     "@types/crypto-js": "^4.2.2",
     "@types/discord-rpc": "4.0.1",
     "@types/html-to-text": "^9.0.4",
@@ -120,7 +119,6 @@
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "@types/react-lazy-load-image-component": "^1.6.4",
-    "@typescript-eslint/parser": "^7.18.0",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "cypress": "^13.17.0",
@@ -128,9 +126,6 @@
     "electron": "^36.4.0",
     "electron-builder": "^26.0.12",
     "electron-vite": "^3.1.0",
-    "eslint": "8.56.0",
-    "eslint-import-resolver-typescript": "^3.10.0",
-    "eslint-plugin-import": "^2.31.0",
     "husky": "^9.1.7",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
@@ -139,11 +134,7 @@
     "vite": "^6.2.3"
   },
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "cypress",
-      "electron",
-      "esbuild"
-    ]
+    "onlyBuiltDependencies": ["cypress", "electron", "esbuild"]
   },
   "electron": {
     "window": {

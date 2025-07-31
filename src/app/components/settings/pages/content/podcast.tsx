@@ -11,8 +11,8 @@ import {
   ContentItemTitle,
   ContentSeparator,
   Header,
-  HeaderTitle,
   HeaderDescription,
+  HeaderTitle,
   Root,
 } from '@/app/components/settings/section'
 import { Input } from '@/app/components/ui/input'

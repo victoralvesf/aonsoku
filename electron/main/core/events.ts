@@ -1,5 +1,11 @@
 import { is, platform } from '@electron-toolkit/utils'
-import { shell, BrowserWindow, nativeTheme, ipcMain } from 'electron'
+import { BrowserWindow, ipcMain, nativeTheme, shell } from 'electron'
+import {
+  IpcChannels,
+  OverlayColors,
+  PlayerStatePayload,
+} from '../../preload/types'
+import { tray, updateTray } from '../tray'
 import { colorsState } from './colors'
 import {
   clearDiscordRpcActivity,
@@ -10,12 +16,6 @@ import { playerState } from './playerState'
 import { getAppSetting, ISettingPayload, saveAppSettings } from './settings'
 import { setTaskbarButtons } from './taskbar'
 import { DEFAULT_TITLE_BAR_HEIGHT } from './titleBarOverlay'
-import {
-  IpcChannels,
-  OverlayColors,
-  PlayerStatePayload,
-} from '../../preload/types'
-import { tray, updateTray } from '../tray'
 
 export function setupEvents(window: BrowserWindow | null) {
   if (!window) return

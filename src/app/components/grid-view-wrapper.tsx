@@ -3,15 +3,15 @@ import {
   Fragment,
   ReactNode,
   useCallback,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
-  useEffect,
 } from 'react'
 import {
-  getGridClickedItem,
   GridViewWrapperType,
+  getGridClickedItem,
   saveGridClickedItem,
 } from '@/utils/gridTools'
 import { getMainScrollElement } from '@/utils/scrollPageToTop'
@@ -127,7 +127,7 @@ export function GridViewWrapper<T>({
   const rowVirtualizer = useVirtualizer(grid.rowVirtualizer)
   const columnVirtualizer = useVirtualizer(grid.columnVirtualizer)
 
-  // Initial grid measurement
+  // biome-ignore lint/correctness/useExhaustiveDependencies: initial grid measurement
   useLayoutEffect(() => {
     rowVirtualizer.measure()
     columnVirtualizer.measure()

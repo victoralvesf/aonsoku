@@ -2,6 +2,7 @@ import { platform } from '@electron-toolkit/utils'
 import { app, Menu, NativeImage, nativeImage, Tray } from 'electron'
 import { readFileSync } from 'fs'
 import { join } from 'path'
+import { productName } from '../../package.json'
 import { getMacOsMediaIcon } from './core/macMedia'
 import {
   getDisplaysMaxScaleFactor,
@@ -12,7 +13,6 @@ import { sendPlayerEvents } from './core/playerEvents'
 import { playerState } from './core/playerState'
 import { resourcesPath } from './core/taskbar'
 import { mainWindow } from './window'
-import { productName } from '../../package.json'
 
 const traySpacer = Array.from({ length: 30 }).join(' ')
 

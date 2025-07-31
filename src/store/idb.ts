@@ -1,4 +1,4 @@
-import { get, set, del } from 'idb-keyval'
+import { del, get, set } from 'idb-keyval'
 
 export const idbStorage = {
   getItem: <T>(name: string, callback: (value: T | null) => void): void => {

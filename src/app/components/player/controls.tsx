@@ -26,8 +26,8 @@ import {
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerMediaType,
-  usePlayerShuffle,
   usePlayerPrevAndNext,
+  usePlayerShuffle,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
 import { EpisodeWithPodcast } from '@/types/responses/podcasts'
@@ -80,6 +80,7 @@ export function PlayerControls({
     [audioRef],
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: isPlaying needed to trigger
   useEffect(() => {
     if (isPodcast) {
       manageMediaSession.setPodcastHandlers({ handleSeekAction })

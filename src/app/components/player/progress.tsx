@@ -13,10 +13,10 @@ import { subsonic } from '@/service/subsonic'
 import {
   usePlayerActions,
   usePlayerDuration,
+  usePlayerIsPlaying,
   usePlayerMediaType,
   usePlayerProgress,
   usePlayerSonglist,
-  usePlayerIsPlaying,
 } from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { logger } from '@/utils/logger'

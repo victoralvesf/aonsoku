@@ -1,4 +1,4 @@
-import { nativeImage, NativeImage, nativeTheme } from 'electron'
+import { NativeImage, nativeImage, nativeTheme } from 'electron'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { NativeIconVariants } from './nativeIcons'

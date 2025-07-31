@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useEffect, useState, type HTMLProps } from 'react'
+import { type HTMLProps, useEffect, useState } from 'react'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { cn } from '@/lib/utils'
 import { ControlButton } from './button'
