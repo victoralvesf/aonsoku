@@ -46,6 +46,7 @@ mac:
 linux:
   target:
     - AppImage
+    - snap
     - deb
     - rpm
   maintainer: victoralvesf
