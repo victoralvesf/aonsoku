@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Check, ChevronsUpDown } from 'lucide-react'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '@/app/components/ui/button'
@@ -20,7 +20,7 @@ import {
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { subsonic } from '@/service/subsonic'
-import { AlbumsSearchParams } from '@/utils/albumsFilter'
+import { AlbumsSearchParams, PersistedAlbumListKeys } from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { scrollPageToTop } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
@@ -36,9 +36,35 @@ export function AlbumsFilterByGenre() {
     queryFn: subsonic.genres.get,
   })
 
-  const genre = getSearchParam<string>(AlbumsSearchParams.Genre, '')
+  function getGenreFilter() {
+    return getSearchParam<string>(AlbumsSearchParams.Genre, '')
+  }
+
+  const genre = getGenreFilter()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only when mounted
+  useLayoutEffect(() => {
+    const savedGenre = localStorage.getItem(PersistedAlbumListKeys.GenreFilter)
+
+    const hasGenreFilter = searchParams.has(AlbumsSearchParams.Genre)
+
+    if (savedGenre && !hasGenreFilter) {
+      setSearchParams((state) => {
+        state.set(AlbumsSearchParams.Genre, savedGenre)
+        return state
+      })
+    }
+
+    if (hasGenreFilter) {
+      const currentGenre = getGenreFilter()
+
+      localStorage.setItem(PersistedAlbumListKeys.GenreFilter, currentGenre)
+    }
+  }, [])
 
   function handleChangeGenreFilter(value: string) {
+    localStorage.setItem(PersistedAlbumListKeys.GenreFilter, value)
+
     setSearchParams((state) => {
       state.set(AlbumsSearchParams.Genre, value)
 

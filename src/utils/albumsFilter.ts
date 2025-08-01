@@ -7,6 +7,12 @@ export enum AlbumsSearchParams {
   Query = 'query',
 }
 
+export enum PersistedAlbumListKeys {
+  MainFilter = 'albums-list-filter',
+  YearFilter = 'albums-list-year',
+  GenreFilter = 'albums-list-genre',
+}
+
 export enum YearSortOptions {
   Oldest = 'oldest',
   Newest = 'newest',
