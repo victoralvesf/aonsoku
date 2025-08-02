@@ -3,11 +3,11 @@ import {
   CheckIcon,
   DownloadIcon,
   Info,
+  ListEnd,
+  ListPlus,
   Pencil,
   PlayIcon,
-  PlusCircle,
   PlusIcon,
-  PlusSquare,
   PodcastIcon,
   Trash,
 } from 'lucide-react'
@@ -42,7 +42,7 @@ function PlayNext({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   return (
     <MenuItemFactory
       variant={variant}
-      icon={<PlusCircle className="mr-2 h-4 w-4" />}
+      icon={<ListPlus className="mr-2 h-4 w-4" />}
       label={t('options.playNext')}
       {...props}
     />
@@ -55,7 +55,7 @@ function PlayLast({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   return (
     <MenuItemFactory
       variant={variant}
-      icon={<PlusSquare className="mr-2 h-4 w-4" />}
+      icon={<ListEnd className="mr-2 h-4 w-4" />}
       label={t('options.addLast')}
       {...props}
     />
