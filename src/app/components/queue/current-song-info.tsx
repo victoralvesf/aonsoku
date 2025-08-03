@@ -47,9 +47,9 @@ export function CurrentSongInfo() {
           )}
         </h4>
 
-        <p className="leading-5 mt-1 text-foreground/70 drop-shadow-md flex items-center justify-center flex-wrap gap-1">
+        <div className="leading-5 mt-1 text-foreground/70 drop-shadow-md flex items-center justify-center flex-wrap gap-1">
           <QueueArtistsLinks song={currentSong} />
-        </p>
+        </div>
       </div>
     </div>
   )
