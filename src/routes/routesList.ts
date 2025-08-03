@@ -1,4 +1,4 @@
-import { AlbumsFilters } from '@/utils/albumsFilter'
+import { AlbumsFilters, YearFilter } from '@/utils/albumsFilter'
 
 const LIBRARY = {
   HOME: '/',
@@ -32,6 +32,8 @@ const ALBUMS = {
   RANDOM: `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.Random}`,
   SEARCH: (query: string) =>
     `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.Search}&query=${encodeURIComponent(query)}`,
+  YEAR: (yearFilter: YearFilter) =>
+    `${LIBRARY.ALBUMS}?filter=${AlbumsFilters.ByYear}&yearFilter=${yearFilter}`,
 }
 
 const SONGS = {

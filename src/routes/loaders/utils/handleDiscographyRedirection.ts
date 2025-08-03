@@ -1,4 +1,3 @@
-// loaders/utils/handleDiscographyRedirection.ts
 import { redirect } from 'react-router-dom'
 import { ROUTES } from '@/routes/routesList'
 import {
