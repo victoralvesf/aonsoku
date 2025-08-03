@@ -1,5 +1,4 @@
 import { ListFilter } from 'lucide-react'
-import { useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '@/app/components/ui/button'
@@ -26,40 +25,14 @@ export function AlbumsMainFilter() {
   const [searchParams, setSearchParams] = useSearchParams()
   const { getSearchParam } = new SearchParamsHandler(searchParams)
 
-  function getFilter() {
-    return getSearchParam<AlbumListType>(
-      AlbumsSearchParams.MainFilter,
-      AlbumsFilters.RecentlyAdded,
-    )
-  }
-
-  const currentFilter = getFilter()
+  const currentFilter = getSearchParam<AlbumListType>(
+    AlbumsSearchParams.MainFilter,
+    AlbumsFilters.RecentlyAdded,
+  )
 
   const currentFilterLabel = albumsFilterValues.filter(
     (item) => item.key === currentFilter,
   )[0].label
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: only when mounted
-  useLayoutEffect(() => {
-    const savedFilter = localStorage.getItem(
-      PersistedAlbumListKeys.MainFilter,
-    ) as AlbumListType | null
-
-    const hasMainFilter = searchParams.has(AlbumsSearchParams.MainFilter)
-
-    if (savedFilter && !hasMainFilter) {
-      setSearchParams((state) => {
-        state.set(AlbumsSearchParams.MainFilter, savedFilter)
-        return state
-      })
-    }
-
-    if (hasMainFilter) {
-      const currentFilter = getFilter()
-
-      localStorage.setItem(PersistedAlbumListKeys.MainFilter, currentFilter)
-    }
-  }, [])
 
   function handleChangeFilter(filter: AlbumListType) {
     localStorage.setItem(PersistedAlbumListKeys.MainFilter, filter)

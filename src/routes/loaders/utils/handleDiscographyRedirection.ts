@@ -39,6 +39,10 @@ export function handleDiscographyRedirection(searchParams: URLSearchParams) {
     const artistName = getSearchParam<string>(AlbumsSearchParams.ArtistName, '')
     const artistId = getSearchParam<string>(AlbumsSearchParams.ArtistId, '')
 
+    localStorage.setItem(
+      PersistedAlbumListKeys.MainFilter,
+      AlbumsFilters.ByDiscography,
+    )
     localStorage.setItem(PersistedAlbumListKeys.ArtistNameFilter, artistName)
     localStorage.setItem(PersistedAlbumListKeys.ArtistIdFilter, artistId)
   }
