@@ -967,13 +967,18 @@ function updateDesktopState() {
   if (!isDesktop()) return
 
   const { isPlaying, hasPrev, hasNext } = usePlayerStore.getState().playerState
-  const { currentList } = usePlayerStore.getState().songlist
+  const { currentList, podcastList, radioList } =
+    usePlayerStore.getState().songlist
+
+  const hasSongs = currentList.length >= 1
+  const hasPodcasts = podcastList.length >= 1
+  const hasRadios = radioList.length >= 1
 
   window.api.updatePlayerState({
     isPlaying,
     hasPrevious: hasPrev,
     hasNext,
-    hasSonglist: currentList.length >= 1,
+    hasSonglist: hasSongs || hasPodcasts || hasRadios,
   })
 }
 
