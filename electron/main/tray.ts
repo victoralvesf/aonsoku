@@ -167,7 +167,7 @@ export function updateTray(title?: string) {
         if (tray) tray.destroy()
         if (mainWindow) mainWindow.destroy()
 
-        if (!platform.isMacOS) app.quit()
+        app.quit()
       },
     },
   ])
