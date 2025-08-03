@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs } from 'react-router-dom'
 import { handleDiscographyRedirection } from './utils/handleDiscographyRedirection'
+import { handleGenreFilterRedirection } from './utils/handleGenreFilterRedirection'
 import { handleYearFilterRedirection } from './utils/handleYearFilterRedirection'
 
 export function albumsLoader({ request }: LoaderFunctionArgs) {
@@ -11,6 +12,9 @@ export function albumsLoader({ request }: LoaderFunctionArgs) {
   if (redirectResponse) return redirectResponse
 
   redirectResponse = handleYearFilterRedirection(searchParams)
+  if (redirectResponse) return redirectResponse
+
+  redirectResponse = handleGenreFilterRedirection(searchParams)
   if (redirectResponse) return redirectResponse
 
   return true
