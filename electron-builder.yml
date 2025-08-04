@@ -26,6 +26,7 @@ win:
 
 nsis:
   shortcutName: ${productName}
+  oneClick: false
   allowToChangeInstallationDirectory: true
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
