@@ -691,7 +691,7 @@
       "dd": "%d jours",
       "M": "1 mois",
       "h": "1 heure",
-      "MM": "%s mois",
+      "MM": "%d mois",
       "hh": "%d heures"
     }
   },
