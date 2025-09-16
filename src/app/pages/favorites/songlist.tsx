@@ -10,7 +10,7 @@ import { songsColumns } from '@/app/tables/songs-columns'
 import { getFavoriteSongs } from '@/queries/songs'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
-import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
+import { AlbumsSearchParams } from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
