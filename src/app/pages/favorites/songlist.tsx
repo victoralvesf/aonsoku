@@ -4,20 +4,15 @@ import { useSearchParams } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { InfinitySongListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import { HeaderTitle } from '@/app/components/header-title'
-import { ClearFilterButton } from '@/app/components/search/clear-filter-button'
-import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
 import { DataTableList } from '@/app/components/ui/data-table-list'
-import { useTotalSongs } from '@/app/hooks/use-total-songs'
 import { useTotalFavorites } from '@/app/hooks/use-favorite-songs'
 import { songsColumns } from '@/app/tables/songs-columns'
-import { getArtistAllSongs, songsSearch, getFavoriteSongs } from '@/queries/songs'
+import { getFavoriteSongs } from '@/queries/songs'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
-
-const DEFAULT_OFFSET = 100
 
 export default function SongList() {
   const { t } = useTranslation()
@@ -29,11 +24,6 @@ export default function SongList() {
   const filter = getSearchParam<string>(AlbumsSearchParams.MainFilter, '')
   const query = getSearchParam<string>(AlbumsSearchParams.Query, '')
   const artistId = getSearchParam<string>(AlbumsSearchParams.ArtistId, '')
-  const artistName = getSearchParam<string>(AlbumsSearchParams.ArtistName, '')
-
-  const searchFilterIsSet = filter === AlbumsFilters.Search && query !== ''
-  const filterByArtist = artistId !== '' && artistName !== ''
-
 
   async function fetchSongs() {
     return getFavoriteSongs()
@@ -73,9 +63,7 @@ export default function SongList() {
     'select',
   ]
 
-  const title = filterByArtist
-    ? t('songs.list.byArtist', { artist: artistName })
-    : t('sidebar.favorites')
+  const title = t('sidebar.favorites')
 
   return (
     <div className="w-full h-content">
@@ -90,12 +78,6 @@ export default function SongList() {
           loading={songCountIsLoading}
         />
 
-        <div className="flex gap-2 flex-1 justify-end">
-          {filterByArtist && <ClearFilterButton />}
-          <ExpandableSearchInput
-            placeholder={t('songs.list.search.placeholder')}
-          />
-        </div>
       </ShadowHeader>
 
       <div className="w-full h-[calc(100%-80px)] overflow-auto">
