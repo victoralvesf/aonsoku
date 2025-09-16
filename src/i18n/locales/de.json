@@ -8,6 +8,7 @@
     "artists": "Künstler",
     "songs": "Lieder",
     "albums": "Alben",
+    "favorites": "Favoriten",
     "playlists": "Wiedergabelisten",
     "emptyPlaylist": "Noch keine Wiedergabelisten erstellt"
   },

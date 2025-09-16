@@ -6,6 +6,7 @@ import {
   HomeIcon,
   LibraryIcon,
   PodcastIcon,
+  Heart,
 } from 'lucide-react'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -75,6 +76,7 @@ export enum SidebarItems {
   Artists = 'artists',
   Songs = 'songs',
   Albums = 'albums',
+  Favorites = 'favorites',
   Playlists = 'playlists',
   Podcasts = 'podcasts',
   Radios = 'radios',
@@ -107,6 +109,12 @@ export const libraryItems = [
     title: 'sidebar.albums',
     route: ROUTES.LIBRARY.ALBUMS,
     icon: Library,
+  },
+  {
+    id: SidebarItems.Favorites,
+    title: 'sidebar.favorites',
+    route: ROUTES.LIBRARY.FAVORITES,
+    icon: Heart,
   },
   {
     id: SidebarItems.Playlists,
