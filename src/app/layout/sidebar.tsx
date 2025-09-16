@@ -1,4 +1,5 @@
 import {
+  Heart,
   HomeIcon,
   LibraryIcon,
   ListMusicIcon,
@@ -30,6 +31,7 @@ export enum SidebarItems {
   Artists = 'artists',
   Songs = 'songs',
   Albums = 'albums',
+  Favorites = 'favorites',
   Playlists = 'playlists',
   Podcasts = 'podcasts',
   Radios = 'radios',
@@ -64,6 +66,12 @@ export const libraryItems = [
     title: 'sidebar.albums',
     route: ROUTES.LIBRARY.ALBUMS,
     icon: Library,
+  },
+  {
+    id: SidebarItems.Favorites,
+    title: 'sidebar.favorites',
+    route: ROUTES.LIBRARY.FAVORITES,
+    icon: Heart,
   },
   {
     id: SidebarItems.Playlists,

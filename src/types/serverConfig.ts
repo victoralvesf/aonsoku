@@ -32,6 +32,7 @@ export interface IAppData extends IServerConfig {
   hideServer: boolean
   lockUser: boolean
   songCount: number | null
+  favoriteCount: number | null
 }
 
 export interface IAppActions {
