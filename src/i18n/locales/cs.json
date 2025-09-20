@@ -67,7 +67,64 @@
     "headline": "Playlist",
     "songCount_one": "{{count}} skladba",
     "songCount_few": "{{count}} skladby",
-    "songCount_other": "{{count}} skladeb"
+    "songCount_other": "{{count}} skladeb",
+    "refresh": "Obnovit playlisty",
+    "buttons": {
+      "play": "Přehrát {{name}}",
+      "shuffle": "Přehrát {{name}} v náhodném pořadí",
+      "options": "Více možností pro {{name}}"
+    },
+    "noSongList": "Tento playlist neobsahuje žádné písně!",
+    "form": {
+      "labels": {
+        "name": "Název",
+        "comment": "Komentář",
+        "commentDescription": "Napište krátký popis tohoto playlistu",
+        "isPublic": "Veřejné",
+        "isPublicDescription": "Vyberte tuto možnost pro zveřejnění playlistu. Umožníte tím ostatním uživatelům zobrazení a přístup k vašemu playlistu."
+      },
+      "create": {
+        "title": "Vytvořit Playlist",
+        "button": "Vytvořit",
+        "toast": {
+          "success": "Playlist byl úspěšně vytvořen!",
+          "error": "Nepodařilo se vytvořit playlist!"
+        }
+      },
+      "edit": {
+        "title": "Upravit Playlist",
+        "button": "Aktualizovat",
+        "toast": {
+          "success": "Playlist by úspěšně aktualizován!",
+          "error": "Nepodařilo se aktualizovat playlist!"
+        }
+      },
+      "delete": {
+        "title": "Opravdu chcete smazat tento playlist?",
+        "description": "Tato akce je nevratná.",
+        "toast": {
+          "success": "Playlist byl úspěšně smazán!",
+          "error": "Nepodařilo se smazat playlist!"
+        }
+      },
+      "validations": {
+        "nameLength": "Playlist musí obsahovat alespoň 2 znaky."
+      },
+      "removeSong": {
+        "title_one": "Opravdu chcete smazat vybranou skladbu?",
+        "title_few": "Opravdu chcete smazat vybrané skladby?",
+        "title_other": "Opravdu chcete smazat vybrané skladby?",
+        "description": "Tato akce je nevratná.",
+        "toast": {
+          "success_one": "Skladba byla úspěšně smazána.",
+          "success_few": "Skladby byly úspěšně smazány.",
+          "success_other": "Skladby byly úspěšně smazány.",
+          "error_one": "Nepodařilo se smazat skladbu!",
+          "error_few": "Nepodařilo se smazat skladby!",
+          "error_other": "Nepodařilo se smazat skladby!"
+        }
+      }
+    }
   },
   "table": {
     "sort": {
@@ -311,5 +368,19 @@
   },
   "songInfo": {
     "title": "Detaily skladby"
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Vyhledat skladby…"
+      },
+      "byArtist": "Skladby od {{artist}}",
+      "filter": {
+        "clear": "Vymazat filtr"
+      }
+    }
+  },
+  "album": {
+    "headline": "Album"
   }
 }
