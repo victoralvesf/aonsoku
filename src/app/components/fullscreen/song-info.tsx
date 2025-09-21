@@ -5,9 +5,12 @@ import { Badge } from '@/app/components/ui/badge'
 import { usePlayerStore } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { FullscreenSongImage } from './song-image'
+import i18n from '@/i18n'
 
 const MemoFullscreenSongImage = memo(FullscreenSongImage)
+const MemoSimpleTooltip = memo(SimpleTooltip)
 
 export function SongInfo() {
   const currentSong = usePlayerStore((state) => state.songlist.currentSong)
@@ -29,7 +32,33 @@ export function SongInfo() {
           <Dot className="text-foreground/70" />
           <ArtistNames song={currentSong} />
         </div>
-        <div className="flex gap-2 mt-2 2xl:mt-3 mb-[1px]">
+        <div className="mt-5 text-base 1xl:text-lg flex gap-2 text-foreground/70 truncate maskImage-marquee-fade-finished">
+          
+          {currentSong.bitRate && (
+          <div className="truncate drop-shadow-lg text-foreground">
+            {i18n.t('table.columns.bitrate')} <Badge variant="neutral" >{currentSong.bitRate}</Badge>
+          </div>
+          )}
+
+          {currentSong.samplingRate && (
+          <div className="ml-2 truncate drop-shadow-lg text-foreground">
+            {i18n.t('table.columns.samplingRate')} <Badge variant="neutral" >{currentSong.samplingRate/1000} kHz</Badge>
+          </div>
+          )}
+
+          {currentSong.size && (
+          <div className="ml-2 truncate drop-shadow-lg text-foreground">
+            {i18n.t('table.columns.size')} <Badge variant="neutral" >{ (currentSong.size/1024/1024).toFixed(2) } MB</Badge>
+          </div>
+          )}
+
+          {currentSong.size && (
+          <div className="ml-2 truncate drop-shadow-lg text-foreground">
+            {i18n.t('table.columns.quality')} <Badge variant="neutral" >{ currentSong.suffix.toUpperCase() } </Badge>
+          </div>
+          )}
+        </div>
+        <div className="flex gap-2 mt-3 2xl:mt-3 mb-[1px]">
           {currentSong.genre && (
             <Badge variant="neutral">{currentSong.genre}</Badge>
           )}

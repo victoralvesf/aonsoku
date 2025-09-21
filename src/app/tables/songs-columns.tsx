@@ -251,9 +251,18 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       },
       className: 'hidden 2xl:flex',
       cell: ({ row }) => {
-        const { suffix } = row.original
-
-        return <MemoBadge>{suffix.toUpperCase()}</MemoBadge>
+        //const { suffix } = row.original
+        const { suffix, bitRate, size } = row.original;
+        const tooltipContent = `
+          ${i18n.t('table.columns.quality')}: ${suffix}
+          ${i18n.t('table.columns.bitrate')}: ${bitRate}
+          ${i18n.t('table.columns.size')}: ${size/1024/1024 > 1 ? (size/1024/1024).toFixed(2) + ' MB' : (size/1024).toFixed(2) + ' KB'}
+          `;
+        return <MemoSimpleTooltip text={tooltipContent}>
+          <div>
+          <MemoBadge variant="secondary">{suffix.toUpperCase()}</MemoBadge>
+          </div>
+        </MemoSimpleTooltip>
       },
     },
     {
