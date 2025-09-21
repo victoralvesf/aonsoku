@@ -13,7 +13,7 @@ export function SidebarPlaylistButtons() {
       <SimpleTooltip text={t('playlist.form.create.title')}>
         <Button
           size="icon"
-          variant="default"
+          variant="secondary"
           className="w-6 h-6 p-[5px]"
           onClick={() => setPlaylistDialogState(true)}
         >
