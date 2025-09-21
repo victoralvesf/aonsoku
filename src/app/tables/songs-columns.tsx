@@ -197,7 +197,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
           {i18n.t('table.columns.plays')}
         </MemoDataTableColumnHeader>
       ),
-      cell: ({ row }) => row.original.playCount ?? 0,
+      cell: ({ row }) => row.original.playCount ?? '',
     },
     {
       id: 'played',
