@@ -6,13 +6,14 @@ import { InfinitySongListFallback } from '@/app/components/fallbacks/song-fallba
 import { HeaderTitle } from '@/app/components/header-title'
 import { ClearFilterButton } from '@/app/components/search/clear-filter-button'
 import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
+import { SongsOrderByFilter, SongsSortFilter } from '@/app/components/songs/songs-filters'
 import { DataTableList } from '@/app/components/ui/data-table-list'
 import { useTotalSongs } from '@/app/hooks/use-total-songs'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { getArtistAllSongs, songsSearch } from '@/queries/songs'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
-import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
+import { AlbumsFilters, AlbumsSearchParams, SongsOrderByOptions, SortOptions } from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
@@ -29,6 +30,8 @@ export default function SongList() {
   const query = getSearchParam<string>(AlbumsSearchParams.Query, '')
   const artistId = getSearchParam<string>(AlbumsSearchParams.ArtistId, '')
   const artistName = getSearchParam<string>(AlbumsSearchParams.ArtistName, '')
+  const orderBy = getSearchParam<SongsOrderByOptions>('orderBy', SongsOrderByOptions.LastAdded)
+  const sort = getSearchParam<SortOptions>('sort', SortOptions.Desc)
 
   const searchFilterIsSet = filter === AlbumsFilters.Search && query !== ''
   const filterByArtist = artistId !== '' && artistName !== ''
@@ -36,19 +39,21 @@ export default function SongList() {
 
   async function fetchSongs({ pageParam = 0 }) {
     if (filterByArtist) {
-      return getArtistAllSongs(artistId)
+      return getArtistAllSongs(artistId, { orderBy, sort })
     }
 
     return songsSearch({
       query: searchFilterIsSet ? query : '',
       songCount: DEFAULT_OFFSET,
       songOffset: pageParam,
+      orderBy,
+      sort,
     })
   }
 
   const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: [queryKeys.song.all, filter, query, artistId],
+      queryKey: [queryKeys.song.all, filter, query, artistId, orderBy, sort],
       initialPageParam: 0,
       queryFn: fetchSongs,
       getNextPageParam: (lastPage) => lastPage.nextOffset,
@@ -102,6 +107,8 @@ export default function SongList() {
           <ExpandableSearchInput
             placeholder={t('songs.list.search.placeholder')}
           />
+          <SongsSortFilter />
+          <SongsOrderByFilter />
         </div>
       </ShadowHeader>
 
