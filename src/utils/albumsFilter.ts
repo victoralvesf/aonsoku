@@ -90,3 +90,10 @@ export enum PodcastsOrderByOptions {
   Title = 'title',
   EpisodeCount = 'episode_count',
 }
+
+export enum SongsOrderByOptions {
+  LastAdded = 'created',
+  Artist = 'artist',
+  Title = 'title',
+  Album = 'album',
+}

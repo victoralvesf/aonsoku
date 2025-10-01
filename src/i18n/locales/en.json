@@ -132,6 +132,12 @@
       "filter": {
         "clear": "Clear filter"
       }
+    },
+    "sort": {
+      "lastAdded": "Last Added",
+      "artist": "Artist A-Z",
+      "title": "Song A-Z",
+      "album": "Album A-Z"
     }
   },
   "album": {
