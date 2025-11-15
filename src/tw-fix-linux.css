@@ -30,8 +30,10 @@
 .text-2xl #sync-lyrics-box .scale-125 {
   transform: none !important;
   font-size: 1.875rem !important;
+  line-height: 1.35em;
 }
 .text-3xl #sync-lyrics-box .scale-125 {
   transform: none !important;
   font-size: 2.34375rem !important;
+  line-height: 1.35em;
 }
