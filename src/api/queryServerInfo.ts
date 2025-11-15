@@ -17,6 +17,19 @@ export async function queryServerInfo(url: string) {
       method: 'GET',
     })
     const data = await response.json()
+    
+    const extensionsMap: {[key: string]: number[]} = {}
+    if (data['subsonic-response']['openSubsonic']) {
+      const response = await fetch(`${url}/rest/getOpenSubsonicExtensions.view?${queries}`, {
+        method: 'GET',
+      })
+
+      const eData = await response.json()
+
+      for (const extension of eData['subsonic-response']['openSubsonicExtensions']) {
+        extensionsMap[extension['name']] = extension['versions']
+      }
+    }
 
     return {
       protocolVersion: data['subsonic-response'].version,
@@ -24,6 +37,7 @@ export async function queryServerInfo(url: string) {
         data['subsonic-response'].version.replaceAll('.', ''),
       ),
       serverType: data['subsonic-response'].type.toLowerCase() || 'subsonic',
+      extensionsSupported: extensionsMap,
     }
   } catch (_) {
     return {
