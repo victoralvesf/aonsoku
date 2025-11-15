@@ -26,3 +26,12 @@
   -webkit-backdrop-filter: blur(64px) !important;
   backdrop-filter: blur(64px) !important;
 }
+/* no subpixel rendering on Gnome/webkit2gtk workaround */
+.text-2xl #sync-lyrics-box .scale-125 {
+  transform: none !important;
+  font-size: 1.875rem !important;
+}
+.text-3xl #sync-lyrics-box .scale-125 {
+  transform: none !important;
+  font-size: 2.34375rem !important;
+}
