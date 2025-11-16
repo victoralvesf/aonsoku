@@ -26,3 +26,7 @@
   -webkit-backdrop-filter: blur(64px) !important;
   backdrop-filter: blur(64px) !important;
 }
+/* heavier stroke weight on webkit2gtk workaround */
+:lang(ja), :lang(zh), :lang(ko) {
+  font-weight: lighter;
+}

@@ -16,6 +16,7 @@ export interface ILyric {
   artist?: string
   title?: string
   value?: string
+  lang?: string
 }
 
 export interface ILyricsList {

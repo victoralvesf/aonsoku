@@ -101,6 +101,7 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
       artist,
       title,
       value: '',
+      lang: 'xxx', // for the moment, LRCLib doesn't return language info
     }
   }
 
@@ -138,6 +139,7 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
         artist,
         title,
         value: formatLyrics(finalLyric),
+        lang: 'xxx',
       }
     }
   } catch {}
@@ -146,6 +148,7 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
     artist,
     title,
     value: '',
+    lang: "xxx",
   }
 }
 
@@ -157,6 +160,7 @@ function osStructuredLyricsToILyric(lyrics: IStructuredLyric): ILyric {
   return {
     artist: lyrics.displayArtist,
     title: lyrics.displayTitle,
+    lang: lyrics.lang,
     value: formatLyrics(lyrics.line.map(l => {
       if (l.start != undefined) { // l.start may have actual value 0 (falsy)
         return `[${osStartMsToSongTimestamp(l.start)}] ${l.value}`

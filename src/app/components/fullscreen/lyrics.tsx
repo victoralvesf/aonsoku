@@ -86,6 +86,7 @@ function SyncedLyrics({ lyrics }: LyricProps) {
               'transition-[opacity,transform] motion-reduce:transition-none',
               active ? 'opacity-100 scale-125' : 'opacity-50',
             )}
+            lang={lyrics.lang}
           >
             {line.content}
           </p>
@@ -129,6 +130,7 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
             index === 0 && 'mt-6',
             index === lines.length - 1 && 'mb-10',
           )}
+          lang={lyrics.lang}
         >
           {line}
         </p>
