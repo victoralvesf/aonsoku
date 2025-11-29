@@ -20,12 +20,13 @@ export function LyricsTab() {
   const { currentSong } = usePlayerSonglist()
   const { t } = useTranslation()
 
-  const { artist, title, duration } = currentSong
+  const { id, artist, title, duration } = currentSong
 
   const { data: lyrics, isLoading } = useQuery({
     queryKey: ['get-lyrics', artist, title, duration],
     queryFn: () =>
       subsonic.lyrics.getLyrics({
+        id,
         artist,
         title,
         duration,
@@ -82,9 +83,10 @@ function SyncedLyrics({ lyrics }: LyricProps) {
             onClick={() => skipToTime(line.startMillisecond)}
             className={clsx(
               'drop-shadow-lg my-5 cursor-pointer hover:opacity-100 duration-500',
-              'transition-[opacity,transform] motion-reduce:transition-none',
+              'transition-[opacity,transform,font-size] motion-reduce:transition-none',
               active ? 'opacity-100 scale-125' : 'opacity-50',
             )}
+            lang={lyrics.lang}
           >
             {line.content}
           </p>
@@ -128,6 +130,7 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
             index === 0 && 'mt-6',
             index === lines.length - 1 && 'mb-10',
           )}
+          lang={lyrics.lang}
         >
           {line}
         </p>

@@ -64,7 +64,7 @@ checksum = "dcfed56ad506cb2c684a14971b8861fdc3baaaae314b9e5f9bb532cbe3ba7a4f"
 
 [[package]]
 name = "aonsoku"
-version = "0.9.0"
+version = "0.9.1"
 dependencies = [
  "bytes",
  "cocoa",
