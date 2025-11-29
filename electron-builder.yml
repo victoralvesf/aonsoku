@@ -58,5 +58,6 @@ npmRebuild: true
 nativeRebuilder: legacy
 
 publish:
-  provider: generic
-  url: https://example.com/auto-updates
+  provider: github
+  owner: victoralvesf
+  repo: aonsoku
