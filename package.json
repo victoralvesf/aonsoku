@@ -27,6 +27,9 @@
     "build:win": "pnpm electron:build && electron-builder --win",
     "build:mac": "pnpm electron:build && electron-builder --mac",
     "build:linux": "pnpm electron:build && electron-builder --linux",
+    "ci:build:win": "electron-builder --win --publish always",
+    "ci:build:mac": "electron-builder --mac --publish always",
+    "ci:build:linux": "electron-builder --linux --publish always",
     "prepare": "husky"
   },
   "repository": {
