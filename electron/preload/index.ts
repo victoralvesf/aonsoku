@@ -62,6 +62,26 @@ const api: IAonsokuAPI = {
   saveAppSettings: (payload) => {
     ipcRenderer.send(IpcChannels.SaveAppSettings, payload)
   },
+  checkForUpdates: () => ipcRenderer.invoke(IpcChannels.CheckForUpdates),
+  downloadUpdate: () => ipcRenderer.send(IpcChannels.DownloadUpdate),
+  quitAndInstall: () => ipcRenderer.send(IpcChannels.QuitAndInstall),
+  onUpdateAvailable: (callback) => {
+    ipcRenderer.on(IpcChannels.UpdateAvailable, (_, info) => callback(info))
+  },
+  onUpdateNotAvailable: (callback) => {
+    ipcRenderer.on(IpcChannels.UpdateNotAvailable, () => callback())
+  },
+  onUpdateError: (callback) => {
+    ipcRenderer.on(IpcChannels.UpdateError, (_, error) => callback(error))
+  },
+  onDownloadProgress: (callback) => {
+    ipcRenderer.on(IpcChannels.DownloadProgress, (_, progress) =>
+      callback(progress),
+    )
+  },
+  onUpdateDownloaded: (callback) => {
+    ipcRenderer.on(IpcChannels.UpdateDownloaded, (_, info) => callback(info))
+  },
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

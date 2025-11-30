@@ -21,6 +21,14 @@ export enum IpcChannels {
   SetDiscordRpcActivity = 'set-discord-rpc-activity',
   ClearDiscordRpcActivity = 'clear-discord-rpc-activity',
   SaveAppSettings = 'save-app-settings',
+  CheckForUpdates = 'check-for-updates',
+  DownloadUpdate = 'download-update',
+  QuitAndInstall = 'quit-and-install',
+  UpdateAvailable = 'update-available',
+  UpdateNotAvailable = 'update-not-available',
+  UpdateError = 'update-error',
+  DownloadProgress = 'download-progress',
+  UpdateDownloaded = 'update-downloaded',
 }
 
 export type OverlayColors = {
@@ -42,6 +50,24 @@ export type PlayerStateListenerActions =
   | 'skipForward'
   | 'toggleShuffle'
   | 'toggleRepeat'
+
+export type UpdateInfo = {
+  version: string
+  files: { url: string; sha512: string; size: number }[]
+  path: string
+  sha512: string
+  releaseName: string | null
+  releaseNotes: string | null
+  releaseDate: string
+}
+
+export type ProgressInfo = {
+  total: number
+  delta: number
+  transferred: number
+  percent: number
+  bytesPerSecond: number
+}
 
 export interface IAonsokuAPI {
   enterFullScreen: () => void
@@ -67,4 +93,12 @@ export interface IAonsokuAPI {
   setDiscordRpcActivity: (payload: RpcPayload) => void
   clearDiscordRpcActivity: () => void
   saveAppSettings: (payload: ISettingPayload) => void
+  checkForUpdates: () => Promise<UpdateInfo | null>
+  downloadUpdate: () => void
+  quitAndInstall: () => void
+  onUpdateAvailable: (callback: (info: UpdateInfo) => void) => void
+  onUpdateNotAvailable: (callback: () => void) => void
+  onUpdateError: (callback: (error: string) => void) => void
+  onDownloadProgress: (callback: (progress: ProgressInfo) => void) => void
+  onUpdateDownloaded: (callback: (info: UpdateInfo) => void) => void
 }

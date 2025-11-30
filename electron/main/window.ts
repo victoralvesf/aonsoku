@@ -7,6 +7,7 @@ import { setupDownloads } from './core/downloads'
 import { setupEvents, setupIpcEvents } from './core/events'
 import { appIcon } from './core/icon'
 import { titleBarOverlay } from './core/titleBarOverlay'
+import { setupUpdater } from './core/updater'
 import { StatefulBrowserWindow } from './core/windowPosition'
 import { createTray } from './tray'
 
@@ -43,6 +44,7 @@ export function createWindow(): void {
   setupEvents(mainWindow)
   setupIpcEvents(mainWindow)
   setupDownloads(mainWindow)
+  setupUpdater(mainWindow)
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
