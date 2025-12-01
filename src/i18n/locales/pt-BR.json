@@ -594,9 +594,9 @@
   "about": {
     "client": "Cliente",
     "server": "Servidor",
-    "version": "Versão:",
-    "type": "Tipo:",
-    "apiVersion": "Versão da API:",
+    "version": "Versão",
+    "type": "Tipo",
+    "apiVersion": "Versão da API",
     "toasts": {
       "copy": "Link copiado para a área de transferência!"
     }

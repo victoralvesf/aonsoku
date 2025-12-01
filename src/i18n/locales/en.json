@@ -580,9 +580,9 @@
   "about": {
     "client": "Client",
     "server": "Server",
-    "version": "Version:",
-    "type": "Type:",
-    "apiVersion": "API Version:",
+    "version": "Version",
+    "type": "Type",
+    "apiVersion": "API Version",
     "toasts": {
       "copy": "Link copied to clipboard!"
     }

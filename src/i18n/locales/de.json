@@ -478,9 +478,9 @@
   "about": {
     "client": "Client",
     "server": "Server",
-    "version": "Version:",
-    "type": "Typ:",
-    "apiVersion": "API-Version:",
+    "version": "Version",
+    "type": "Typ",
+    "apiVersion": "API-Version",
     "toasts": {
       "copy": "Link in die Zwischenablage kopiert!"
     }

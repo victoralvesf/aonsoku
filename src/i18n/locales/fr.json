@@ -680,10 +680,10 @@
   },
   "about": {
     "server": "Serveur",
-    "version": "Version :",
+    "version": "Version",
     "client": "Client",
-    "type": "Type :",
-    "apiVersion": "Version API :",
+    "type": "Type",
+    "apiVersion": "Version API",
     "toasts": {
       "copy": "Lien copié dans le presse-papier !"
     }
