@@ -18,6 +18,8 @@ const badgeVariants = cva(
         neutral:
           'border-transparent bg-foreground text-background hover:bg-foreground/80',
         beta: 'border-primary/80 bg-primary/20 text-primary font-normal px-2 py-0',
+        multi:
+          'border-primary/80 bg-primary/60 text-primary-foreground text-xs font-light pl-2 pr-[2px] py-[2px]',
       },
     },
     defaultVariants: {
@@ -26,9 +28,10 @@ const badgeVariants = cva(
   },
 )
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+type BadgeVariantProps = VariantProps<typeof badgeVariants>
+type DivProps = React.HTMLAttributes<HTMLDivElement>
+
+export type BadgeProps = DivProps & BadgeVariantProps
 
 function Badge({ className, variant, ...props }: BadgeProps) {
   return (
@@ -36,4 +39,34 @@ function Badge({ className, variant, ...props }: BadgeProps) {
   )
 }
 
-export { Badge, badgeVariants }
+export type MultiBadgeProps = React.HTMLAttributes<HTMLDivElement> &
+  BadgeVariantProps & {
+    label?: string | React.ReactNode
+  }
+
+function MultiBadge({
+  className,
+  variant,
+  label,
+  children,
+  ...props
+}: MultiBadgeProps) {
+  variant = 'multi'
+
+  return (
+    <div className={cn(badgeVariants({ variant }), className)} {...props}>
+      <div className="drop-shadow-sm">{label}</div>
+
+      <span
+        className={cn(
+          'ml-1.5 pl-1.5 pr-2 leading-5 font-light bg-background text-foreground',
+          'rounded-r-full',
+        )}
+      >
+        {children}
+      </span>
+    </div>
+  )
+}
+
+export { Badge, badgeVariants, MultiBadge }
