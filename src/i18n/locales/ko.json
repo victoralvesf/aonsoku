@@ -1,0 +1,696 @@
+{
+  "theme": {
+    "bearded-solarized": "Bearded Solarized",
+    "marmalade-beaver": "마멀레이드 비버",
+    "dark": "다크",
+    "catppuccin-mocha": "냥푸치노 모카",
+    "black": "흑백",
+    "monokai-pro": "모노카이 프로",
+    "shades-of-purple": "보라색 그림자",
+    "dracula": "드라큘라",
+    "label": "테마",
+    "material-theme": "머티리얼 테마",
+    "light": "라이트",
+    "nuclear-dark": "뉴클리어 다크",
+    "vim-dark-soft": "Vim 다크 소프트",
+    "tinacious-design": "Tinacious 디자인",
+    "achiever": "Achiever",
+    "discord": "Discord",
+    "night-owl-light": "올빼미 라이트",
+    "noctis-lilac": "Noctis 라일락",
+    "system": "시스템",
+    "one-dark": "원 다크",
+    "github-dark": "Github 다크",
+    "vue-dark": "Vue 다크"
+  },
+  "sidebar": {
+    "home": "홈",
+    "search": "검색…",
+    "miniSearch": "검색",
+    "library": "라이브러리",
+    "artists": "아티스트",
+    "songs": "곡",
+    "albums": "앨범",
+    "playlists": "재생목록",
+    "radios": "라디오",
+    "podcasts": "팟캐스트",
+    "emptyPlaylist": "생성된 재생목록 없음"
+  },
+  "playlist": {
+    "buttons": {
+      "play": "{{name}} 재생",
+      "shuffle": "무작위 모드로 {{name}} 재생",
+      "options": "{{name}} 옵션 더 보기"
+    },
+    "form": {
+      "create": {
+        "button": "만들기",
+        "toast": {
+          "success": "재생목록이 생성되었습니다!",
+          "error": "재생목록을 만들지 못했습니다!"
+        },
+        "title": "재생목록 만들기"
+      },
+      "edit": {
+        "button": "업데이트",
+        "toast": {
+          "error": "재생목록을 업데이트하지 못했습니다!",
+          "success": "재생목록이 업데이트되었습니다!"
+        },
+        "title": "재생목록 편집"
+      },
+      "removeSong": {
+        "title_other": "선택된 곡을 제거할까요?",
+        "description": "이 작업은 되돌릴 수 없습니다.",
+        "toast": {
+          "success_other": "곡이 삭제되었습니다!",
+          "error_other": "곡을 삭제하지 못했습니다!"
+        }
+      },
+      "labels": {
+        "name": "이름",
+        "comment": "코멘트",
+        "isPublic": "공용",
+        "isPublicDescription": "이 옵션을 선택하면 공용 재생목록이 됩니다. 다른 사용자가 재생목록을 보거나 접근할 수 있습니다.",
+        "commentDescription": "이 재생목록에 대한 짧은 설명을 입력하세요"
+      },
+      "delete": {
+        "title": "정말로 이 재생목록을 삭제할까요?",
+        "toast": {
+          "success": "재생목록이 삭제되었습니다!",
+          "error": "재생목록을 삭제하지 못했습니다!"
+        },
+        "description": "이 작업은 되돌릴 수 없습니다."
+      },
+      "validations": {
+        "nameLength": "2글자 이상의 이름을 입력하세요."
+      }
+    },
+    "headline": "재생목록",
+    "duration": "약 {{duration}}",
+    "songCount_other": "{{count}}개의 곡",
+    "noSongList": "재생목록이 비어 있습니다!",
+    "refresh": "재생목록 새로고침"
+  },
+  "about": {
+    "version": "버전:",
+    "server": "서버",
+    "type": "유형:",
+    "apiVersion": "API 버전:",
+    "toasts": {
+      "copy": "링크가 클립보드에 복사되었습니다!"
+    },
+    "client": "클라이언트"
+  },
+  "table": {
+    "pagination": {
+      "currentPage": "{{totalPages}}페이지 중 {{currentPage}}페이지",
+      "screenReader": {
+        "nextPage": "다음 페이지",
+        "previousPage": "이전 페이지",
+        "lastPage": "끝 페이지",
+        "firstPage": "첫 페이지"
+      },
+      "rowsPerPage": "페이지 당 줄 수"
+    },
+    "columns": {
+      "albumArtist": "앨범 아티스트",
+      "favorite": "즐겨찾기",
+      "recordLabel": "음반 레이블",
+      "songCount": "곡 수",
+      "trackGain": "트랙 게인",
+      "lastPlayed": "최근 재생일",
+      "comment": "코멘트",
+      "public": "공용",
+      "track": "트랙",
+      "genres": "장르",
+      "size": "크기",
+      "codec": "코덱",
+      "albumCount": "앨범 수",
+      "title": "제목",
+      "name": "이름",
+      "album": "앨범",
+      "plays": "재생 횟수",
+      "year": "연도",
+      "channelCount": "채널 수",
+      "bitDepth": "비트 심도",
+      "contributors": "기여자",
+      "bpm": "분당 박자수",
+      "bitrate": "비트레이트",
+      "path": "경로",
+      "quality": "음질",
+      "discNumber": "디스크 번호",
+      "samplingRate": "샘플 레이트",
+      "artist": "아티스트",
+      "duration": "길이",
+      "trackPeak": "트랙 피크",
+      "albumGain": "앨범 게인",
+      "albumPeak": "앨범 피크"
+    },
+    "sort": {
+      "reset": "재설정",
+      "desc": "내림차순",
+      "asc": "오름차순"
+    },
+    "buttons": {
+      "play": "{{artist}}의 {{title}} 재생",
+      "pause": "{{artist}}의 {{title}} 일시정지"
+    },
+    "lastPlayed": "{{date}}일 전",
+    "menu": {
+      "selectedCount_other": "{{count}} 선택됨"
+    }
+  },
+  "logout": {
+    "dialog": {
+      "cancel": "취소",
+      "description": "로그아웃하기.",
+      "title": "정말로 로그아웃할까요?",
+      "confirm": "계속"
+    }
+  },
+  "login": {
+    "form": {
+      "server": "서버",
+      "validations": {
+        "username": "사용자명을 입력하세요",
+        "usernameLength": "사용자명은 최소 두 글자여야 합니다.",
+        "password": "비밀번호를 입력하세요",
+        "protocol": "URL은 http:// 또는 https://로 시작해야 합니다",
+        "url": "유효한 URL을 입력하세요.",
+        "passwordLength": "비밀번호는 최소 두 글자여야 합니다."
+      },
+      "usernamePlaceholder": "사용자명",
+      "connecting": "연결 중…",
+      "username": "사용자명",
+      "password": "비밀번호",
+      "urlDescription": "서버 URL입니다",
+      "url": "URL",
+      "connect": "연결",
+      "description": "Subsonic 서버에 접속하세요."
+    }
+  },
+  "player": {
+    "tooltips": {
+      "shuffle": {
+        "enable": "무작위 재생 활성화",
+        "disable": "무작위 재생 비활성화"
+      },
+      "miniPlayer": {
+        "close": "미니플레이어 닫기",
+        "open": "미니플레이어 열기"
+      },
+      "play": "재생",
+      "rewind": "{{amount}}초 전으로 이동",
+      "repeat": {
+        "enable": "반복 재생 활성화",
+        "disable": "반복 재생 비활성화",
+        "enableOne": "한 곡 반복 재생 활성화"
+      },
+      "like": "{{artist}}의 {{song}} 좋아요",
+      "volume": {
+        "mute": "음소거",
+        "unmute": "음소거 해제"
+      },
+      "previous": "이전",
+      "forward": "{{amount}}초 후로 이동",
+      "pause": "일시정지",
+      "dislike": "{{artist}}의 {{song}} 좋아요 취소",
+      "next": "다음"
+    },
+    "noSongPlaying": "재생 중인 곡 없음",
+    "noRadioPlaying": "재생 중인 라디오 없음"
+  },
+  "radios": {
+    "form": {
+      "create": {
+        "button": "저장",
+        "title": "라디오 추가",
+        "toast": {
+          "success": "라디오가 생성되었습니다!",
+          "error": "라디오를 생성하지 못했습니다!"
+        }
+      },
+      "validations": {
+        "homepageUrlLength": "홈페이지 주소는 10글자 이상이어야 합니다",
+        "name": "최소 세 글자 이상의 이름을 입력하세요.",
+        "url": "유효한 주소를 입력하세요.",
+        "streamUrlLength": "스트림 주소는 최소 10글자여야 합니다"
+      },
+      "edit": {
+        "title": "라디오 편집",
+        "button": "업데이트",
+        "toast": {
+          "success": "라디오가 업데이트되었습니다!",
+          "error": "라디오를 업데이트하지 못했습니다!"
+        }
+      },
+      "delete": {
+        "title": "이 라디오 스테이션을 삭제할까요?",
+        "toast": {
+          "error": "라디오를 제거하지 못했습니다!",
+          "success": "라디오가 제거되었습니다!"
+        },
+        "description": "이 작업은 되돌릴 수 없습니다."
+      }
+    },
+    "table": {
+      "stream": "스트림 URL",
+      "name": "이름",
+      "homepage": "홈페이지 URL",
+      "actions": {
+        "delete": "라디오 삭제",
+        "edit": "라디오 편집"
+      },
+      "playTooltip": "라디오 {{name}} 재생",
+      "pauseTooltip": "라디오 {{name}} 일시정지"
+    },
+    "label": "라디오",
+    "addRadio": "라디오 추가",
+    "empty": {
+      "title": "라디오가 없습니다!",
+      "info": "클릭하여 첫 번째 라디오 스테이션을 추가하세요."
+    },
+    "error": "라디오를 재생할 수 없습니다. 스트림 주소를 확인하세요!"
+  },
+  "command": {
+    "noResults": "검색 결과 없음.",
+    "commands": {
+      "theme": "테마 변경",
+      "pages": "페이지로 이동",
+      "heading": "명령"
+    },
+    "pages": "페이지",
+    "inputPlaceholder": "앨범, 아티스트, 곡을 검색하세요"
+  },
+  "settings": {
+    "label": "설정",
+    "appearance": {
+      "general": {
+        "fullscreen": {
+          "info": "큰 플레이어를 실행하면 자동으로 전체 화면 모드에 진입합니다.",
+          "label": "자동 전체 화면 활성화"
+        },
+        "group": "일반",
+        "description": "이 앱의 외관과 표시 방식을 설정합니다."
+      },
+      "colors": {
+        "group": "동적 색상",
+        "queue": {
+          "label": "대기열 및 가사",
+          "intensity": "색조 레벨"
+        },
+        "bigPlayer": {
+          "label": "큰 플레이어",
+          "blurSize": "이미지 흐림 정도"
+        },
+        "description": "현재 재생 중인 앨범 아트로부터 앱 색상을 결정합니다."
+      }
+    },
+    "audio": {
+      "replayGain": {
+        "defaultGain": {
+          "label": "기본 게인 (dB)",
+          "info": "이 게인 수준은 리플레이게인 메타데이터가 없는 곡들에 적용되어 일관된 오디오 음량을 제공합니다. -10에서 -1 dB 사이의 값을 추천합니다."
+        },
+        "description": "일관된 청취 경험을 위해 오디오 음량을 자동으로 표준화합니다.",
+        "error": {
+          "message": "리플레이게인을 통한 재생에 실패하였습니다.",
+          "button": "다시 시도"
+        },
+        "mode": {
+          "album": "앨범 게인",
+          "track": "트랙 게인",
+          "label": "모드"
+        },
+        "preAmp": "프리앰프 (dB)",
+        "enabled": "활성화됨",
+        "group": "리플레이게인"
+      },
+      "lyrics": {
+        "description": "가사 설정을 변경합니다.",
+        "preferSynced": {
+          "label": "싱크 가사 우선 표시",
+          "info": "싱크 가사를 우선적으로 표시합니다."
+        },
+        "group": "가사"
+      }
+    },
+    "options": {
+      "language": "언어 및 지역",
+      "audio": "플레이어 및 오디오",
+      "privacy": "개인정보 및 보안",
+      "content": "내용",
+      "appearance": "외관"
+    },
+    "privacy": {
+      "services": {
+        "group": "외부 서비스",
+        "description": "Aonsoku가 접근할 수 있는 외부 서비스를 관리합니다.",
+        "lrclib": {
+          "info": "LRCLIB은 가사 검색에 사용됩니다.",
+          "label": "LRCLIB"
+        }
+      }
+    },
+    "content": {
+      "sidebar": {
+        "description": "사이드바에 표시된 구역의 가시성과 구성을 설정합니다.",
+        "radios": {
+          "section": "라디오 구역 가리기"
+        },
+        "group": "사이드바"
+      },
+      "podcast": {
+        "group": "팟캐스트",
+        "enabled": {
+          "label": "통합 활성화"
+        },
+        "credentials": {
+          "label": "로그인된 사용자 및 서버 주소를 사용하세요",
+          "error": "사용자명과 서버 주소가 필요합니다.",
+          "user": "사용자명",
+          "url": "서버 주소"
+        },
+        "description": "Aonsoku 팟캐스트 서비스와의 통합을 활성화합니다.",
+        "service": {
+          "url": "팟캐스트 서비스 주소"
+        }
+      }
+    }
+  },
+  "time": {
+    "seconds": "{{seconds}}초",
+    "hour": "{{hour}}시간",
+    "minutes": "{{minutes}}분",
+    "days_other": "{{days}}일"
+  },
+  "shortcuts": {
+    "playback": {
+      "label": "재생 관련",
+      "play": "재생 / 일시정지",
+      "lowerVolume": "음량 줄이기",
+      "previous": "이전 곡으로",
+      "raiseVolume": "음량 키우기",
+      "next": "다음 곡으로",
+      "repeat": "반복",
+      "shuffle": "무작위"
+    },
+    "modal": {
+      "title": "키보드 단축키",
+      "description": {
+        "first": "이 창을 열고 닫으려면",
+        "last": "를 누르세요."
+      }
+    },
+    "navigation": {
+      "label": "살펴보기"
+    }
+  },
+  "album": {
+    "info": {
+      "musicbrainz": "MusicBrainz에서 열기",
+      "about": "{{name}} 정보",
+      "lastfm": "Last.fm에서 열기"
+    },
+    "list": {
+      "filter": {
+        "mostPlayed": "자주 재생됨",
+        "artist": "아티스트",
+        "favorites": "즐겨찾기",
+        "name": "이름",
+        "random": "무작위",
+        "recentlyAdded": "최근 추가됨",
+        "recentlyPlayed": "최근 재생됨",
+        "releaseYear": "발매 연도",
+        "discography": "전체 앨범",
+        "search": "검색",
+        "genre": "장르"
+      },
+      "genre": {
+        "search": "장르 찾기…",
+        "label": "장르 선택…",
+        "loading": "장르 로딩 중…",
+        "notFound": "장르 검색 결과 없음."
+      },
+      "header": {
+        "albumsByArtist": "{{artist}}의 앨범"
+      },
+      "empty": {
+        "title": "앗, 앨범이 없습니다!",
+        "info": "현재 필터에 해당하는 앨범이 없습니다.",
+        "action": "필터를 재조정하면 어떨까요?"
+      },
+      "search": {
+        "placeholder": "앨범 검색…"
+      }
+    },
+    "headline": "앨범",
+    "buttons": {
+      "like": "{{name}} 좋아요",
+      "dislike": "{{name}} 좋아요 취소"
+    },
+    "more": {
+      "listTitle": "이 아티스트의 다른 곡",
+      "discography": "아티스트의 전체 앨범",
+      "genreTitle": "{{genre}} 더 보기"
+    },
+    "table": {
+      "discNumber": "{{number}}번 디스크"
+    }
+  },
+  "home": {
+    "recentlyPlayed": "최근 재생됨",
+    "recentlyAdded": "최근 추가됨",
+    "explore": "탐색",
+    "mostPlayed": "자주 재생됨"
+  },
+  "downloads": {
+    "completed": "다운로드가 완료되었습니다.",
+    "started": "다운로드 시작.",
+    "failed": "다운로드에 실패했습니다."
+  },
+  "generic": {
+    "viewMode": {
+      "modes": {
+        "poster": "포스터",
+        "list": "목록"
+      },
+      "label": "표시 모드"
+    },
+    "seeMore": "더 보기",
+    "showDetails": "세부 사항 보기",
+    "hideDetails": "세부 사항 가리기",
+    "viewAll": "모두 표시",
+    "loading": "로딩 중…",
+    "beta": "베타"
+  },
+  "options": {
+    "info": "추가 정보",
+    "playlist": {
+      "removeSong": "재생목록에서 제거",
+      "edit": "재생목록 편집",
+      "delete": "재생목록 삭제",
+      "search": "재생목록 검색",
+      "create": "새 재생목록",
+      "add": "재생목록에 추가",
+      "notFound": "검색된 재생목록 없음"
+    },
+    "playNext": "다음 곡 재생",
+    "markAsPlayed": "재생 완료된 것으로 설정",
+    "goto": {
+      "episode": "에피소드로 이동",
+      "podcast": "팟캐스트로 이동"
+    },
+    "addLast": "대기열 끝에 추가",
+    "play": "재생",
+    "download": "다운로드"
+  },
+  "fullscreen": {
+    "loadingLyrics": "가사 검색 중…",
+    "lyrics": "가사",
+    "noLyrics": "가사가 발견되지 않음",
+    "queue": "대기열",
+    "playing": "지금 재생 중",
+    "switchButton": "큰 플레이어로 전환"
+  },
+  "artist": {
+    "headline": "아티스트",
+    "buttons": {
+      "play": "{{artist}} 라디오 재생",
+      "shuffle": "무작위 모드로 {{artist}} 라디오 재생",
+      "options": "{{artist}}에 대한 옵션 더 보기"
+    },
+    "info": {
+      "albumsCount_other": "{{count}}개의 앨범"
+    },
+    "topSongs": "인기",
+    "recentAlbums": "최근 앨범",
+    "relatedArtists": "관련 아티스트"
+  },
+  "menu": {
+    "language": "언어",
+    "server": "서버",
+    "about": "앱 정보",
+    "serverLogout": "로그아웃"
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "곡 검색…"
+      },
+      "byArtist": "{{artist}}의 곡",
+      "filter": {
+        "clear": "필터 재설정"
+      }
+    }
+  },
+  "podcasts": {
+    "form": {
+      "dialog": {
+        "saveButton": "저장",
+        "message": "한 줄 당 하나의 주소를 입력하여 여러 주소를 한꺼번에 추가할 수 있습니다.",
+        "validations": {
+          "atLeastOneUrl": "하나 이상의 주소를 입력하세요.",
+          "urlLength": "주소는 최소 10글자 이상이어야 합니다",
+          "protocol": "주소는 http:// 또는 https://로 시작해야 합니다",
+          "url": "유효한 주소를 입력하세요."
+        },
+        "title": "팟캐스트 만들기",
+        "feedUrl": "피드 주소"
+      },
+      "toasts": {
+        "success": "팟캐스트가 생성되었습니다! 몇 분만 기다리시면 청취 가능합니다!",
+        "error": "팟캐스트를 만들지 못했습니다!"
+      },
+      "search": "팟캐스트 검색…",
+      "addButton": "팟캐스트 추가",
+      "latestEpisodes": "최신 에피소드"
+    },
+    "emptyPage": {
+      "message": "추가된 팟캐스트 없음",
+      "description": "구독 중인 팟캐스트가 없습니다. 추가해 보세요!"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "청취 가능한 에피소드 없음",
+        "description": "더 많은 팟캐스트를 추가하세요.",
+        "goToPodcasts": "팟캐스트로 이동"
+      }
+    },
+    "emptyResults": {
+      "title": "검색 결과 없음.",
+      "info": "검색어와 일치하는 팟캐스트를 찾지 못했습니다.",
+      "action": "철자를 확인하거나 다른 키워드를 입력하세요."
+    },
+    "filters": {
+      "episodes": {
+        "search": "에피소드 검색…",
+        "orderBy": {
+          "publishDate": "공개일",
+          "title": "제목",
+          "duration": "길이"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "제목",
+          "episodeCount": "에피소드 수"
+        }
+      }
+    },
+    "header": {
+      "feed": "피드",
+      "unfollow": {
+        "tooltip": "{{title}} 구독 해제",
+        "dialog": {
+          "description": "다음에 이 팟캐스트를 다시 청취하기 위해서는 팟캐스트를 다시 만들어야 합니다.",
+          "title": "이 팟캐스트의 구독을 해제할까요?"
+        },
+        "toasts": {
+          "success": "팟캐스트 구독을 해제했습니다!",
+          "error": "팟캐스트 구독 해제 중 오류가 발생했습니다. 다시 시도하세요."
+        }
+      },
+      "episodeCount_other": "{{count}}개의 에피소드",
+      "website": "공식 웹사이트"
+    },
+    "list": {
+      "notFoundMessage": "이 팟캐스트는 아직 비어 있습니다!",
+      "progress": {
+        "remainingTime": "{{time}} 남음",
+        "completed": "완료"
+      },
+      "episodes": "에피소드"
+    }
+  },
+  "server": {
+    "lastScan": "마지막 스캔: {{date}}",
+    "status": "상태",
+    "management": "서버 관리",
+    "incompatible": {
+      "title": "호환되지 않는 서버",
+      "skip": "그래도 계속",
+      "description": "이 서버는 이전 Subsonic 프로토콜을 사용하고 있어 완벽히 지원되지 않습니다. 발생 가능한 오류에 주의하세요."
+    },
+    "buttons": {
+      "refresh": "새로고침 상태",
+      "startScan": "빠른 스캔"
+    },
+    "songCount_other": "{{count}}개의 곡",
+    "folderCount_other": "{{count}}개의 폴더"
+  },
+  "queue": {
+    "title": "대기열",
+    "clear": "대기열 비우기",
+    "close": "대기열 닫기",
+    "open": "대기열 열기"
+  },
+  "songInfo": {
+    "title": "곡 정보",
+    "error": "곡 정보를 불러오지 못했습니다. 다시 시도하세요."
+  },
+  "warnings": {
+    "reload": "현재 재생 중인 곡이 있습니다!\n정말로 페이지를 다시 로딩할까요?",
+    "songError": "곡을 재생할 수 없습니다. 서버의 상태를 확인하세요!"
+  },
+  "update": {
+    "dialog": {
+      "title": "새 버전을 설치할 수 있습니다!",
+      "remindLater": "다시 알리기",
+      "install": "설치 및 재실행"
+    },
+    "toasts": {
+      "error": "업데이트를 설치하지 못했습니다. GitHub에서 직접 다운로드하세요.",
+      "started": "업데이트가 시작되었습니다.",
+      "success": "업데이트 설치가 완료되었습니다! 앱을 재실행합니다."
+    }
+  },
+  "mobile": {
+    "unsupported_message": "{{app_name}}는 모바일 기기를 지원하지 않습니다.",
+    "access_recommendation": "컴퓨터 및 태블릿에서 접속하세요."
+  },
+  "dayjs": {
+    "relativeTime": {
+      "s": "몇 초",
+      "m": "1분",
+      "mm": "%d분",
+      "M": "1개월",
+      "MM": "%d개월",
+      "y": "1년",
+      "yy": "%d년",
+      "hh": "%d시간",
+      "past": "%s 이전",
+      "future": "%s 이내",
+      "h": "1시간",
+      "dd": "%d일",
+      "d": "1일"
+    }
+  },
+  "toast": {
+    "server": {
+      "error": "서버와의 통신에 실패했습니다!",
+      "success": "서버가 저장되었습니다!"
+    }
+  }
+}
