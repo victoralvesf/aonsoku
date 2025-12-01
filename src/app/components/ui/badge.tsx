@@ -19,7 +19,7 @@ const badgeVariants = cva(
           'border-transparent bg-foreground text-background hover:bg-foreground/80',
         beta: 'border-primary/80 bg-primary/20 text-primary font-normal px-2 py-0',
         multi:
-          'border-primary/80 bg-primary/60 text-primary-foreground text-xs font-light pl-2 pr-[2px] py-[2px]',
+          'border-primary/40 bg-primary/40 text-foreground font-normal pl-2 pr-[2px] py-[2px]',
       },
     },
     defaultVariants: {
@@ -59,7 +59,7 @@ function MultiBadge({
 
       <span
         className={cn(
-          'ml-1.5 pl-1.5 pr-2 leading-5 font-light bg-background text-foreground',
+          'ml-1.5 pl-1.5 pr-2 leading-5 font-normal bg-background text-foreground',
           'rounded-r-full',
         )}
       >

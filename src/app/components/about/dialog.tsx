@@ -70,10 +70,11 @@ export function AboutDialog({ open, onOpenChange }: AboutDialogProps) {
             </div>
           </div>
         </div>
+
         <DialogFooter className="w-full border-t border-border px-6 py-4 bg-background-foreground">
           <div className="flex justify-end">
             <a
-              className="px-2 py-1 rounded-md bg-primary/60 hover:bg-primary/50 text-primary-foreground border border-primary/80 text-sm font-medium flex items-center justify-center"
+              className="px-2 py-1 rounded-md bg-primary/40 hover:bg-primary/50 text-foreground border border-primary/40 text-sm font-medium flex items-center justify-center"
               href={url}
               target="_blank"
               rel="nofollow noreferrer"
