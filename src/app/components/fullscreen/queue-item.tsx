@@ -44,7 +44,7 @@ export function QueueItem({
             </div>
           </div>
         ) : (
-          <div className="w-6 h-6 text-center flex justify-center items-center drop-shadow-lg">
+          <div className="w-6 h-6 text-center flex justify-center items-center text-shadow-lg">
             <p>{index + 1}</p>
           </div>
         )}
