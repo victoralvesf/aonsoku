@@ -40,8 +40,8 @@ import { Input } from '@/app/components/ui/input'
 import { Password } from '@/app/components/ui/password'
 import { ROUTES } from '@/routes/routesList'
 import { useAppActions, useAppData } from '@/store/app.store'
+import { isDesktop } from '@/utils/desktop'
 import { removeSlashFromUrl } from '@/utils/removeSlashFromUrl'
-import { isTauri } from '@/utils/tauriTools'
 
 const loginSchema = z.object({
   url: z
@@ -60,7 +60,7 @@ const loginSchema = z.object({
 
 type FormData = z.infer<typeof loginSchema>
 
-const defaultUrl = isTauri() ? 'http://' : 'https://'
+const defaultUrl = isDesktop() ? 'http://' : 'https://'
 const url = window.SERVER_URL || defaultUrl
 const urlIsValid = url !== defaultUrl
 

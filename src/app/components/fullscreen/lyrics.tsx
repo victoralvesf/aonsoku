@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react'
+import { isSafari } from 'react-device-detect'
 import { useTranslation } from 'react-i18next'
 import { Lrc } from 'react-lrc'
 import {
@@ -8,9 +9,9 @@ import {
   scrollAreaViewportSelector,
 } from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
-import { usePlayerSonglist, usePlayerRef } from '@/store/player.store'
+import { usePlayerRef, usePlayerSonglist } from '@/store/player.store'
 import { ILyric } from '@/types/responses/song'
-import { isSafari } from '@/utils/osType'
+import { isDeviceLinux } from '@/utils/desktop'
 
 interface LyricProps {
   lyrics: ILyric
@@ -81,9 +82,11 @@ function SyncedLyrics({ lyrics }: LyricProps) {
           <p
             onClick={() => skipToTime(line.startMillisecond)}
             className={clsx(
-              'drop-shadow-lg my-5 cursor-pointer hover:opacity-100 duration-500',
-              'transition-[opacity,transform] motion-reduce:transition-none',
-              active ? 'opacity-100 scale-125' : 'opacity-50',
+              'text-shadow-lg my-5 cursor-pointer hover:opacity-100 duration-500',
+              'transition-[opacity,transform,font-size] motion-reduce:transition-none',
+              active ? 'opacity-100' : 'opacity-50',
+              !isDeviceLinux && active && 'scale-125',
+              isDeviceLinux && active && 'text-3xl 2xl:text-4xl',
             )}
           >
             {line.content}
@@ -100,6 +103,7 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
 
   const lines = lyrics.value!.split('\n')
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: recomputed when song changes
   useEffect(() => {
     if (lyricsBoxRef.current) {
       const scrollArea = lyricsBoxRef.current.querySelector(
@@ -116,7 +120,7 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
   return (
     <ScrollArea
       type="always"
-      className="w-full h-full overflow-y-auto text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth"
+      className="w-full h-full overflow-y-auto text-center font-semibold text-xl 2xl:text-2xl px-2 scroll-smooth maskImage-unsynced-lyrics"
       thumbClassName="secondary-thumb-bar"
       ref={lyricsBoxRef}
     >
@@ -124,9 +128,9 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
         <p
           key={index}
           className={clsx(
-            'leading-10 drop-shadow-lg text-balance',
-            index === 0 && 'mt-6',
-            index === lines.length - 1 && 'mb-10',
+            'leading-10 text-shadow-lg text-balance',
+            index === 0 && 'mt-4',
+            index === lines.length - 1 && 'mb-16',
           )}
         >
           {line}
@@ -141,7 +145,7 @@ type CenteredMessageProps = ComponentPropsWithoutRef<'p'>
 function CenteredMessage({ children }: CenteredMessageProps) {
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <p className="leading-10 drop-shadow-lg text-center font-semibold text-xl 2xl:text-2xl">
+      <p className="leading-10 text-shadow-lg text-center font-semibold text-xl 2xl:text-2xl">
         {children}
       </p>
     </div>

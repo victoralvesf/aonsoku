@@ -7,10 +7,17 @@ import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { subsonic } from '@/service/subsonic'
-import { IPlayerContext, LoopState } from '@/types/playerContext'
+import { IPlayerContext, ISongList, LoopState } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { areSongListsEqual } from '@/utils/compareSongLists'
+import { isDesktop } from '@/utils/desktop'
+import { discordRpc } from '@/utils/discordRpc'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
+import { idbStorage } from './idb'
+
+const miniStores = {
+  songlist: 'player_songlist',
+}
 
 const blurSettings = {
   min: 20,
@@ -846,10 +853,23 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
         name: 'player_store',
         version: 1,
         merge: (persistedState, currentState) => {
-          return merge(currentState, persistedState)
+          let merged = merge(currentState, persistedState)
+
+          idbStorage.getItem<ISongList>(miniStores.songlist, (value) => {
+            if (!value) return
+
+            const newState = {
+              songlist: value,
+            }
+
+            merged = merge(merged, newState)
+          })
+
+          return merged
         },
         partialize: (state) => {
           const appStore = omit(state, [
+            'songlist',
             'actions',
             'playerState.isPlaying',
             'playerState.audioPlayerRef',
@@ -865,6 +885,16 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
     ),
   ),
   shallow,
+)
+
+usePlayerStore.subscribe(
+  (state) => [state.songlist],
+  ([songlist]) => {
+    idbStorage.setItem(miniStores.songlist, songlist)
+  },
+  {
+    equalityFn: shallow,
+  },
 )
 
 usePlayerStore.subscribe(
@@ -898,6 +928,71 @@ usePlayerStore.subscribe(
   ],
   () => {
     usePlayerStore.getState().actions.updateQueueChecks()
+  },
+  {
+    equalityFn: shallow,
+  },
+)
+
+usePlayerStore.subscribe(
+  (state) => [
+    state.songlist.currentSong,
+    state.playerState.isPlaying,
+    state.playerState.currentDuration,
+  ],
+  () => {
+    discordRpc.sendCurrentSong()
+  },
+  {
+    equalityFn: shallow,
+  },
+)
+
+function desktopStateListener() {
+  if (!isDesktop()) return
+
+  const { togglePlayPause, playPrevSong, playNextSong } =
+    usePlayerStore.getState().actions
+
+  window.api.playerStateListener((action) => {
+    if (action === 'togglePlayPause') togglePlayPause()
+    if (action === 'skipBackwards') playPrevSong()
+    if (action === 'skipForward') playNextSong()
+  })
+}
+
+desktopStateListener()
+
+function updateDesktopState() {
+  if (!isDesktop()) return
+
+  const { isPlaying, hasPrev, hasNext } = usePlayerStore.getState().playerState
+  const { currentList, podcastList, radioList } =
+    usePlayerStore.getState().songlist
+
+  const hasSongs = currentList.length >= 1
+  const hasPodcasts = podcastList.length >= 1
+  const hasRadios = radioList.length >= 1
+
+  window.api.updatePlayerState({
+    isPlaying,
+    hasPrevious: hasPrev,
+    hasNext,
+    hasSonglist: hasSongs || hasPodcasts || hasRadios,
+  })
+}
+
+updateDesktopState()
+
+usePlayerStore.subscribe(
+  (state) => [
+    state.playerState.isPlaying,
+    state.playerState.hasPrev,
+    state.playerState.hasNext,
+    state.songlist.currentList,
+  ],
+  () => {
+    updateDesktopState()
   },
   {
     equalityFn: shallow,

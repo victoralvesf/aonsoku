@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useNavigationType } from 'react-router-dom'
 
 const useNavigationHistory = () => {
@@ -8,6 +8,7 @@ const useNavigationHistory = () => {
   const [canGoBack, setCanGoBack] = useState(false)
   const [canGoForward, setCanGoForward] = useState(false)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: using navigationType to trigger
   useEffect(() => {
     setCanGoBack(false)
     setCanGoForward(false)

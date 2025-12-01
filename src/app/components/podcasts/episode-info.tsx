@@ -7,7 +7,7 @@ import { EpisodeWithPodcast } from '@/types/responses/podcasts'
 import dateTime from '@/utils/dateTime'
 import { PodcastInfoContainer } from './info/container'
 import { PodcastInfoImage } from './info/image'
-import { Root, Title, SubtitleLink, Details } from './info/texts'
+import { Details, Root, SubtitleLink, Title } from './info/texts'
 
 interface EpisodeInfoProps {
   episode: EpisodeWithPodcast

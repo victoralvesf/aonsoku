@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { ComponentPropsWithoutRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { useDebouncedCallback } from 'use-debounce'
 import { z } from 'zod'
 import {
   Content,
@@ -11,8 +12,8 @@ import {
   ContentItemTitle,
   ContentSeparator,
   Header,
-  HeaderTitle,
   HeaderDescription,
+  HeaderTitle,
   Root,
 } from '@/app/components/settings/section'
 import { Input } from '@/app/components/ui/input'
@@ -43,6 +44,8 @@ const podcastSchema = z
       path: ['useDefaultUser'],
     },
   )
+
+type PodcastSchemaType = z.infer<typeof podcastSchema>
 
 export function PodcastContent() {
   const { t } = useTranslation()
@@ -76,13 +79,17 @@ export function PodcastContent() {
     },
   })
 
-  watch((data) => {
+  const debounce = useDebouncedCallback((data: Partial<PodcastSchemaType>) => {
     if (data.active !== undefined) setActive(data.active)
     if (data.serviceUrl !== undefined) setServiceUrl(data.serviceUrl)
     if (data.useDefaultUser !== undefined)
       setUseDefaultUser(data.useDefaultUser)
     if (data.customUser !== undefined) setCustomUser(data.customUser)
     if (data.customUrl !== undefined) setCustomUrl(data.customUrl)
+  }, 500)
+
+  watch((data) => {
+    debounce(data)
   })
 
   return (

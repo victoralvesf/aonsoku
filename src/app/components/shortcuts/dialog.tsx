@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/app/components/ui/dialog'
-import { shortcutDialogKeys, allShortcuts } from '@/shortcuts'
+import { allShortcuts, shortcutDialogKeys } from '@/shortcuts'
 import { ShortcutsGroup } from './group'
 
 interface ShortcutsDialogProps {

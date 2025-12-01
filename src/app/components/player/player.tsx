@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, memo } from 'react'
+import { memo, useCallback, useEffect, useRef } from 'react'
 import { getSongStreamUrl } from '@/api/httpClient'
 import { getProxyURL } from '@/api/podcastClient'
 import { MiniPlayerButton } from '@/app/components/mini-player/button'
@@ -6,15 +6,15 @@ import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
 import { podcasts } from '@/service/podcasts'
 import {
+  getVolume,
   usePlayerActions,
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerMediaType,
   usePlayerRef,
   usePlayerSonglist,
-  getVolume,
-  useReplayGainState,
   usePlayerStore,
+  useReplayGainState,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
 import { hasPiPSupport } from '@/utils/browser'
@@ -79,6 +79,7 @@ export function Player() {
     return audioRef
   }, [isPodcast, isRadio])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: audioRef needed
   useEffect(() => {
     if (!isSong && !song) return
 
@@ -88,7 +89,7 @@ export function Player() {
 
   useEffect(() => {
     const audio = podcastRef.current
-    if (!audio) return
+    if (!audio || !isPodcast) return
 
     audio.playbackRate = currentPlaybackRate
   }, [currentPlaybackRate, isPodcast])

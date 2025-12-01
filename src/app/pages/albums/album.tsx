@@ -112,10 +112,6 @@ export default function Album() {
       ? removeCurrentAlbumFromList(randomAlbums.list)
       : null
 
-  const albumHasMoreThanOneDisc = album.discTitles
-    ? album.discTitles.length > 1
-    : false
-
   const albumComment = album.song.length > 0 ? album.song[0].comment : null
 
   return (
@@ -141,7 +137,7 @@ export default function Album() {
           data={album.song}
           handlePlaySong={(row) => setSongList(album.song, row.index)}
           columnFilter={columnsToShow}
-          showDiscNumber={albumHasMoreThanOneDisc}
+          showDiscNumber={true}
           variant="modern"
         />
 

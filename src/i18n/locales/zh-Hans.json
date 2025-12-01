@@ -472,14 +472,14 @@
     }
   },
   "about": {
-    "version": "版本：",
-    "type": "类型：",
+    "version": "版本",
+    "type": "类型",
     "toasts": {
       "copy": "链接已经复制到剪贴板！"
     },
     "client": "客户端",
     "server": "服务器",
-    "apiVersion": "API 版本："
+    "apiVersion": "API 版本"
   },
   "dayjs": {
     "relativeTime": {

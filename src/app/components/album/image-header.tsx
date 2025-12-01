@@ -122,10 +122,12 @@ export default function ImageHeader({
         </div>
 
         <div className="flex w-full max-w-[calc(100%-216px)] 2xl:max-w-[calc(100%-266px)] flex-col justify-end z-10">
-          <p className="text-xs 2xl:text-sm font-medium drop-shadow">{type}</p>
+          <p className="text-xs 2xl:text-sm font-medium text-shadow-lg">
+            {type}
+          </p>
           <h1
             className={clsx(
-              'max-w-full scroll-m-20 font-bold tracking-tight antialiased drop-shadow-md break-words line-clamp-2',
+              'max-w-full scroll-m-20 font-bold tracking-tight antialiased text-shadow-2xl break-words line-clamp-2',
               getTextSizeClass(title),
             )}
           >
@@ -154,7 +156,7 @@ export default function ImageHeader({
 
           {isPlaylist && subtitle && (
             <>
-              <p className="text-sm opacity-80 drop-shadow line-clamp-2 mt-1 mb-2">
+              <p className="text-sm opacity-80 text-shadow-lg line-clamp-2 mt-1 mb-2">
                 {subtitle}
               </p>
               <HeaderInfoGenerator badges={badges} showFirstDot={false} />

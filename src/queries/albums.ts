@@ -33,7 +33,7 @@ export async function albumSearch({ query, count, offset }: AlbumSearch) {
   if (!response) return emptyResponse
   if (!response.album) return emptyResponse
 
-  let nextOffset = null
+  let nextOffset: number | null = null
   if (response.album.length >= count) {
     nextOffset = offset + count
   }
@@ -51,7 +51,7 @@ export async function getAlbumList(params: Required<AlbumListParams>) {
   if (!response) return emptyResponse
   if (!response.list) return emptyResponse
 
-  let nextOffset = null
+  let nextOffset: number | null = null
   if (response.list.length >= params.size) {
     nextOffset = params.offset + params.size
   }

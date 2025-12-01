@@ -498,12 +498,12 @@
   "about": {
     "client": "Клиент",
     "server": "Сервер",
-    "version": "Версия:",
-    "apiVersion": "Версия API:",
+    "version": "Версия",
+    "type": "Тип",
+    "apiVersion": "Версия API",
     "toasts": {
       "copy": "Ссылка скопирована в буфер обмена!"
-    },
-    "type": "Тип:"
+    }
   },
   "mobile": {
     "unsupported_message": "{{app_name}} несовместимо с мобильными телефонами.",

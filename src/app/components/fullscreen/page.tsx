@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react'
+import { memo, ReactNode, useEffect } from 'react'
 import {
   Drawer,
   DrawerClose,
@@ -9,10 +9,11 @@ import {
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { useFullscreenPlayerSettings } from '@/store/player.store'
 import { enterFullscreen, exitFullscreen } from '@/utils/browser'
-import { isTauri } from '@/utils/tauriTools'
+import { isDesktop } from '@/utils/desktop'
+import { setDesktopTitleBarColors } from '@/utils/theme'
 import { FullscreenBackdrop } from './backdrop'
 import { CloseFullscreenButton } from './buttons'
-import { DragRegion } from './drag-region'
+import { FullscreenDragHandler } from './drag-handler'
 import { FullscreenPlayer } from './player'
 import { FullscreenSettings } from './settings'
 import { FullscreenTabs } from './tabs'
@@ -27,10 +28,27 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
   const { enterFullscreenWindow, exitFullscreenWindow } = useAppWindow()
   const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: initial useEffect
+  useEffect(() => {
+    return () => {
+      if (isDesktop()) {
+        exitFullscreenWindow().then(() => {
+          setDesktopTitleBarColors(false)
+        })
+      } else {
+        exitFullscreen()
+      }
+    }
+  }, [])
+
   async function handleFullscreen(open: boolean) {
+    // We set title bar colors to transparent,
+    // to not "unstyle" the big player appearance
+    if (isDesktop()) setDesktopTitleBarColors(open)
+
     if (!autoFullscreenEnabled) return
 
-    if (isTauri()) {
+    if (isDesktop()) {
       open ? await enterFullscreenWindow() : await exitFullscreenWindow()
       return
     }
@@ -55,9 +73,8 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
         aria-describedby={undefined}
       >
         <MemoFullscreenBackdrop />
-        <div className="absolute inset-0 flex flex-col p-8 w-full h-full gap-4 bg-black/0 z-10">
-          {isTauri() && <DragRegion className="z-10" />}
-
+        <FullscreenDragHandler />
+        <div className="absolute inset-0 flex flex-col p-0 2xl:p-8 pt-10 2xl:pt-12 w-full h-full gap-4 bg-black/0 z-10">
           {/* First Row */}
           <div className="flex gap-2 items-center w-full h-[40px] px-16 z-20 justify-end">
             <FullscreenSettings />

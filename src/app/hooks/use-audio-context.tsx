@@ -2,12 +2,11 @@ import { useCallback, useEffect, useRef } from 'react'
 import {
   AudioContext,
   type IAudioContext,
-  type IMediaElementAudioSourceNode,
   type IGainNode,
+  type IMediaElementAudioSourceNode,
 } from 'standardized-audio-context'
 import { usePlayerMediaType, useReplayGainState } from '@/store/player.store'
 import { logger } from '@/utils/logger'
-import { isLinux } from '@/utils/osType'
 import { ReplayGainParams } from '@/utils/replayGain'
 
 type IAudioSource = IMediaElementAudioSourceNode<IAudioContext>
@@ -21,7 +20,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
   const gainNodeRef = useRef<IGainNode<IAudioContext> | null>(null)
 
   const setupAudioContext = useCallback(() => {
-    if (!audio || !isSong || replayGainError || isLinux) return
+    if (!audio || !isSong || replayGainError) return
 
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext()
@@ -44,7 +43,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
 
   const resumeContext = useCallback(async () => {
     const audioContext = audioContextRef.current
-    if (!audioContext || !isSong || isLinux) return
+    if (!audioContext || !isSong) return
 
     logger.info('AudioContext State', { state: audioContext.state })
 
@@ -73,7 +72,7 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
     [replayGainEnabled],
   )
 
-  function resetRefs() {
+  const resetRefs = useCallback(() => {
     if (sourceNodeRef.current) {
       sourceNodeRef.current.disconnect()
       sourceNodeRef.current = null
@@ -86,12 +85,13 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
       audioContextRef.current.close()
       audioContextRef.current = null
     }
-  }
+  }, [])
 
   useEffect(() => {
     if (replayGainError) resetRefs()
-  }, [replayGainError])
+  }, [replayGainError, resetRefs])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: clear state after unmount
   useEffect(() => {
     return () => resetRefs()
   }, [])

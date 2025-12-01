@@ -1,11 +1,11 @@
 import clsx from 'clsx'
 import { useEffect, useMemo, useState } from 'react'
+import { isSafari } from 'react-device-detect'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { usePlayerCurrentSong, useSongColor } from '@/store/player.store'
 import { isChromeOrFirefox } from '@/utils/browser'
 import { hexToRgba } from '@/utils/getAverageColor'
-import { isSafari } from '@/utils/osType'
 
 export function FullscreenBackdrop() {
   const { useSongColorOnBigPlayer } = useSongColor()

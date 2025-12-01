@@ -26,7 +26,7 @@ export function convertSecondsToHumanRead(time: number, showExact = false) {
   const minutes = t('time.minutes', { minutes: dur.format('mm') })
   const seconds = t('time.seconds', { seconds: dur.format('ss') })
 
-  const finalText = []
+  const finalText: string[] = []
 
   if (numberOfDays > 0) finalText.push(days)
   if (numberOfHours > 0) finalText.push(hours)

@@ -2,8 +2,8 @@ import { ReactNode } from 'react'
 import { Button } from '@/app/components/ui/button'
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
+  PopoverTrigger,
 } from '@/app/components/ui/popover'
 import { VolumeSlider } from './volume'
 

@@ -60,7 +60,7 @@ function ArtistImage({ id, name }: AlbumArtistProps) {
   if (isLms) return null
 
   return (
-    <div className="size-6 min-w-6 min-h-6 rounded-full bg-accent drop-shadow-lg ring-1 ring-foreground/10">
+    <div className="size-6 min-w-6 min-h-6 rounded-full bg-accent text-shadow-lg ring-1 ring-foreground/10">
       <LazyLoadImage
         effect="opacity"
         src={getCoverArtUrl(id, 'artist', '100')}
@@ -74,7 +74,7 @@ function ArtistImage({ id, name }: AlbumArtistProps) {
 function ArtistLink({ id, name }: AlbumArtistProps) {
   return (
     <Link
-      className="flex items-center hover:underline text-sm font-medium drop-shadow"
+      className="flex items-center hover:underline text-sm font-medium text-shadow-lg"
       to={ROUTES.ARTIST.PAGE(id)}
     >
       {name}

@@ -23,9 +23,9 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
   const { t } = useTranslation()
   const { setCurrentSongColor, currentSongColor } = useSongColor()
 
-  function getImageElement() {
+  const getImageElement = useCallback(() => {
     return document.getElementById('track-song-image') as HTMLImageElement
-  }
+  }, [])
 
   const getImageColor = useCallback(async () => {
     const img = getImageElement()
@@ -45,7 +45,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
     if (color !== currentSongColor) {
       setCurrentSongColor(color)
     }
-  }, [currentSongColor, setCurrentSongColor])
+  }, [currentSongColor, setCurrentSongColor, getImageElement])
 
   function handleError() {
     const img = getImageElement()

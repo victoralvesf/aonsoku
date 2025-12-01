@@ -18,12 +18,12 @@ export function SongInfo() {
 
       <div className="flex flex-col w-[66%] max-w-full h-full max-h-[450px] 2xl:max-h-[550px] justify-end text-left overflow-hidden">
         <MarqueeTitle gap="mr-6">
-          <h2 className="scroll-m-20 text-4xl 2xl:text-5xl font-bold tracking-tight py-2 2xl:py-3 drop-shadow-lg">
+          <h2 className="scroll-m-20 text-4xl 2xl:text-5xl font-bold tracking-tight py-2 2xl:py-3 text-shadow-2xl">
             {currentSong.title}
           </h2>
         </MarqueeTitle>
         <div className="text-base 2xl:text-lg flex gap-1 text-foreground/70 truncate maskImage-marquee-fade-finished">
-          <p className="truncate drop-shadow-lg text-foreground">
+          <p className="truncate text-shadow-lg text-foreground">
             {currentSong.album}
           </p>
           <Dot className="text-foreground/70" />
@@ -52,7 +52,7 @@ function ArtistNames({ song }: { song: ISong }) {
       <div className="flex items-center gap-1">
         {data.map(({ id, name }, index) => (
           <div key={id} className="flex">
-            <p className="truncate drop-shadow-lg">{name}</p>
+            <p className="truncate text-shadow-lg">{name}</p>
             {index < data.length - 1 && ','}
           </div>
         ))}
@@ -60,5 +60,5 @@ function ArtistNames({ song }: { song: ISong }) {
     )
   }
 
-  return <p className="truncate drop-shadow-lg">{artist}</p>
+  return <p className="truncate text-shadow-lg">{artist}</p>
 }

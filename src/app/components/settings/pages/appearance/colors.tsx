@@ -6,8 +6,8 @@ import {
   ContentItemTitle,
   ContentSeparator,
   Header,
-  HeaderTitle,
   HeaderDescription,
+  HeaderTitle,
   Root,
 } from '@/app/components/settings/section'
 import { Switch } from '@/app/components/ui/switch'

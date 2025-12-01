@@ -14,8 +14,8 @@ import {
   usePlayerActions,
   usePlayerIsPlaying,
   usePlayerLoop,
-  usePlayerShuffle,
   usePlayerPrevAndNext,
+  usePlayerShuffle,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
 
