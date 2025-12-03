@@ -1,9 +1,728 @@
 {
+  "home": {
+    "recentlyPlayed": "Son çalınanlar",
+    "mostPlayed": "En çok çalınanlar",
+    "recentlyAdded": "Son eklenenler",
+    "explore": "Keşfet"
+  },
   "sidebar": {
+    "home": "Ana Sayfa",
+    "search": "Ara…",
+    "miniSearch": "Ara",
+    "library": "Kitaplık",
+    "artists": "Sanatçılar",
     "songs": "Şarkılar",
     "albums": "Albümler",
     "playlists": "Çalma Listeleri",
     "radios": "Radyo İstasyonları",
-    "podcasts": "Podcastler"
+    "podcasts": "Podcastler",
+    "emptyPlaylist": "Henüz çalma listesi oluşturulmadı"
+  },
+  "menu": {
+    "language": "Dil",
+    "server": "Sunucu",
+    "about": "Hakkında",
+    "serverLogout": "Çıkış Yap"
+  },
+  "generic": {
+    "seeMore": "Daha fazla gör",
+    "showDetails": "Detayları göster",
+    "hideDetails": "Detayları gizle",
+    "viewAll": "Tümünü görüntüle",
+    "loading": "Yükleniyor…",
+    "viewMode": {
+      "label": "Görünüm Modu",
+      "modes": {
+        "list": "Liste",
+        "poster": "Poster"
+      }
+    },
+    "beta": "Beta"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem",
+    "black": "Siyah Beyaz",
+    "one-dark": "One Dark",
+    "night-owl-light": "Night Owl Light",
+    "marmalade-beaver": "Marmalade Beaver",
+    "noctis-lilac": "Noctis Lilac",
+    "material-theme": "Material Theme",
+    "monokai-pro": "Monokai Pro",
+    "github-dark": "Github Dark",
+    "shades-of-purple": "Shades Of Purple",
+    "bearded-solarized": "Bearded Solarized",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "nuclear-dark": "Nuclear Dark",
+    "achiever": "Achiever",
+    "dracula": "Dracula",
+    "discord": "Discord",
+    "tinacious-design": "Tinacious Design",
+    "vue-dark": "Vue Dark",
+    "vim-dark-soft": "Vim Dark Soft"
+  },
+  "playlist": {
+    "headline": "Çalma Listesi",
+    "songCount_one": "{{count}} şarkı",
+    "songCount_other": "{{count}} şarkı",
+    "duration": "yaklaşık {{duration}}",
+    "refresh": "Listeleri yenile",
+    "buttons": {
+      "play": "{{name}} çal",
+      "shuffle": "{{name}} listesini karıştır",
+      "options": "{{name}} için diğer seçenekler"
+    },
+    "noSongList": "Bu çalma listesinde hiç şarkı yok!",
+    "form": {
+      "labels": {
+        "name": "İsim",
+        "comment": "Yorum",
+        "commentDescription": "Bu çalma listesi için kısa bir açıklama yazın",
+        "isPublic": "Herkese Açık",
+        "isPublicDescription": "Çalma listesini herkese açık hale getirmek için bu seçeneği seçin. Bu, diğer kullanıcıların çalma listenizi görmesine ve erişmesine izin verir."
+      },
+      "create": {
+        "title": "Çalma Listesi Oluştur",
+        "button": "Oluştur",
+        "toast": {
+          "success": "Çalma listesi başarıyla oluşturuldu!",
+          "error": "Çalma listesi oluşturulamadı!"
+        }
+      },
+      "edit": {
+        "title": "Çalma Listesini Düzenle",
+        "button": "Güncelle",
+        "toast": {
+          "success": "Çalma listesi başarıyla güncellendi!",
+          "error": "Çalma listesi güncellenemedi!"
+        }
+      },
+      "delete": {
+        "title": "Bu çalma listesini silmek istediğinizden emin misiniz?",
+        "description": "Bu işlem geri alınamaz.",
+        "toast": {
+          "success": "Çalma listesi başarıyla kaldırıldı!",
+          "error": "Çalma listesi kaldırılamadı!"
+        }
+      },
+      "validations": {
+        "nameLength": "Çalma listesi adı en az 2 karakter olmalıdır."
+      },
+      "removeSong": {
+        "title_one": "Seçilen şarkıyı kaldırmak istediğinizden emin misiniz?",
+        "title_other": "Seçilen şarkıları kaldırmak istediğinizden emin misiniz?",
+        "description": "Bu işlem geri alınamaz.",
+        "toast": {
+          "success_one": "Şarkı başarıyla kaldırıldı!",
+          "success_other": "Şarkılar başarıyla kaldırıldı!",
+          "error_one": "Şarkı kaldırılamadı!",
+          "error_other": "Şarkılar kaldırılamadı!"
+        }
+      }
+    }
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Şarkı ara…"
+      },
+      "byArtist": "{{artist}} şarkıları",
+      "filter": {
+        "clear": "Filtreyi temizle"
+      }
+    }
+  },
+  "album": {
+    "headline": "Albüm",
+    "buttons": {
+      "like": "{{name}} beğen",
+      "dislike": "{{name}} beğenmekten vazgeç"
+    },
+    "info": {
+      "about": "{{name}} hakkında",
+      "lastfm": "Last.fm'de aç",
+      "musicbrainz": "MusicBrainz'de aç"
+    },
+    "more": {
+      "listTitle": "Bu sanatçıdan daha fazlası",
+      "discography": "Sanatçı Diskografisi",
+      "genreTitle": "{{genre}} türünden daha fazlası"
+    },
+    "list": {
+      "header": {
+        "albumsByArtist": "{{artist}} albümleri"
+      },
+      "empty": {
+        "title": "Hata, burada hiç albüm yok!",
+        "info": "Mevcut filtreyle eşleşen albüm bulunamadı.",
+        "action": "Filtreleri değiştirmeyi deneyebilirsiniz?"
+      },
+      "genre": {
+        "label": "Bir tür seçin…",
+        "search": "Bir tür bul…",
+        "loading": "Türler yükleniyor…",
+        "notFound": "Tür bulunamadı."
+      },
+      "filter": {
+        "artist": "Sanatçı",
+        "genre": "Tür",
+        "favorites": "Favoriler",
+        "mostPlayed": "En çok çalınanlar",
+        "name": "İsim",
+        "random": "Rastgele",
+        "recentlyAdded": "Son eklenenler",
+        "recentlyPlayed": "Son çalınanlar",
+        "releaseYear": "Yayın Yılı",
+        "discography": "Diskografi",
+        "search": "Ara"
+      },
+      "search": {
+        "placeholder": "Albüm ara…"
+      }
+    },
+    "table": {
+      "discNumber": "Disk {{number}}"
+    }
+  },
+  "artist": {
+    "headline": "Sanatçı",
+    "buttons": {
+      "play": "{{artist}} radyosunu çal",
+      "shuffle": "{{artist}} radyosunu karışık çal",
+      "options": "{{artist}} için diğer seçenekler"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} albüm",
+      "albumsCount_other": "{{count}} albüm"
+    },
+    "topSongs": "Popüler",
+    "recentAlbums": "Son albümler",
+    "relatedArtists": "İlgili sanatçılar"
+  },
+  "podcasts": {
+    "form": {
+      "latestEpisodes": "Son Bölümler",
+      "addButton": "Podcast Ekle",
+      "search": "Podcast ara…",
+      "dialog": {
+        "title": "Podcast Oluştur",
+        "feedUrl": "Feed URL'si",
+        "message": "Birden fazla URL ekleyebilirsiniz, her satıra bir tane.",
+        "saveButton": "Kaydet",
+        "validations": {
+          "url": "Lütfen geçerli URL'ler sağlayın.",
+          "urlLength": "URL'ler en az 10 karakter olmalıdır",
+          "protocol": "URL'ler http:// veya https:// ile başlamalıdır",
+          "atLeastOneUrl": "Lütfen en az bir URL sağlayın."
+        }
+      },
+      "toasts": {
+        "success": "Podcast başarıyla oluşturuldu! Birkaç dakika içinde dinlemeye hazır olacak!",
+        "error": "Podcast oluşturulamadı!"
+      }
+    },
+    "emptyPage": {
+      "message": "Podcast eklenmedi",
+      "description": "Henüz hiç podcast eklememişsiniz. Yukarıdan bir tane ekleyin!"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "Bölüm bulunamadı",
+        "description": "Daha fazla podcast eklemeyi deneyin.",
+        "goToPodcasts": "Podcast'lere Git"
+      }
+    },
+    "emptyResults": {
+      "title": "Sonuç bulunamadı.",
+      "info": "Arama teriminizle eşleşen podcast bulamadık.",
+      "action": "Lütfen yazım hatası olup olmadığını kontrol edin veya farklı anahtar kelimeler deneyin."
+    },
+    "filters": {
+      "episodes": {
+        "search": "Bölüm ara…",
+        "orderBy": {
+          "publishDate": "Yayın Tarihi",
+          "title": "Başlık",
+          "duration": "Süre"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Başlık",
+          "episodeCount": "Bölüm Sayısı"
+        }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} bölüm",
+      "episodeCount_many": "{{count}} bölüm",
+      "episodeCount_other": "{{count}} bölüm",
+      "feed": "Feed",
+      "website": "Resmi Web Sitesi",
+      "unfollow": {
+        "tooltip": "{{title}} takibini bırak",
+        "dialog": {
+          "title": "Bu podcast'i takibi bırakmak istediğinizden emin misiniz?",
+          "description": "Gelecekte bu podcast'i tekrar dinlemek için yeniden oluşturmanız gerekecektir."
+        },
+        "toasts": {
+          "success": "Podcast takibini başarıyla bıraktınız!",
+          "error": "Podcast takibini bırakırken bir hata oluştu. Lütfen tekrar deneyin."
+        }
+      }
+    },
+    "list": {
+      "episodes": "Bölümler",
+      "notFoundMessage": "Bu podcast'in henüz hiç bölümü yok!",
+      "progress": {
+        "remainingTime": "{{time}} kaldı",
+        "completed": "Tamamlandı"
+      }
+    }
+  },
+  "table": {
+    "columns": {
+      "title": "Başlık",
+      "albumArtist": "Albüm sanatçısı",
+      "artist": "Sanatçı",
+      "contributors": "Katkıda bulunanlar",
+      "album": "Albüm",
+      "year": "Yıl",
+      "duration": "Süre",
+      "plays": "Oynatma",
+      "lastPlayed": "Son oynatılan",
+      "bpm": "BPM",
+      "bitrate": "Bit hızı",
+      "quality": "Kalite",
+      "name": "İsim",
+      "albumCount": "Albüm sayısı",
+      "songCount": "Şarkı sayısı",
+      "comment": "Yorum",
+      "public": "Herkese açık",
+      "track": "Parça",
+      "genres": "Türler",
+      "size": "Boyut",
+      "codec": "Codec",
+      "path": "Yol",
+      "favorite": "Favori",
+      "recordLabel": "Plak şirketi",
+      "discNumber": "Disk numarası",
+      "trackGain": "Parça kazancı (Track gain)",
+      "trackPeak": "Parça tepe değeri (Track peak)",
+      "albumGain": "Albüm kazancı (Album gain)",
+      "albumPeak": "Albüm tepe değeri (Album peak)",
+      "channelCount": "Kanal sayısı",
+      "samplingRate": "Örnekleme hızı",
+      "bitDepth": "Bit derinliği"
+    },
+    "buttons": {
+      "play": "{{artist}} - {{title}} çal",
+      "pause": "{{artist}} - {{title}} duraklat"
+    },
+    "lastPlayed": "{{date}} önce",
+    "pagination": {
+      "rowsPerPage": "Sayfa başına satır",
+      "currentPage": "Sayfa {{currentPage}} / {{totalPages}}",
+      "screenReader": {
+        "firstPage": "İlk sayfaya git",
+        "previousPage": "Önceki sayfaya git",
+        "nextPage": "Sonraki sayfaya git",
+        "lastPage": "Son sayfaya git"
+      }
+    },
+    "sort": {
+      "asc": "Artan",
+      "desc": "Azalan",
+      "reset": "Sıfırla"
+    },
+    "menu": {
+      "selectedCount_one": "{{count}} seçildi",
+      "selectedCount_other": "{{count}} seçildi"
+    }
+  },
+  "fullscreen": {
+    "noLyrics": "Şarkı sözü bulunamadı",
+    "loadingLyrics": "Şarkı sözleri aranıyor…",
+    "queue": "Kuyruk",
+    "playing": "Şu an çalıyor",
+    "lyrics": "Şarkı Sözleri",
+    "switchButton": "Büyük Oynatıcıya geç"
+  },
+  "logout": {
+    "dialog": {
+      "title": "Şimdilik vedalaşmaya hazır mısın?",
+      "description": "Çıkışı onayla.",
+      "cancel": "İptal",
+      "confirm": "Devam Et"
+    }
+  },
+  "login": {
+    "form": {
+      "server": "Sunucu",
+      "description": "Subsonic sunucunuza bağlanın.",
+      "url": "URL",
+      "urlDescription": "Bu sizin sunucu URL'nizdir",
+      "username": "Kullanıcı Adı",
+      "usernamePlaceholder": "Kullanıcı adınız",
+      "password": "Şifre",
+      "connect": "Bağlan",
+      "connecting": "Bağlanıyor…",
+      "validations": {
+        "url": "Lütfen geçerli bir URL girin.",
+        "protocol": "URL http:// veya https:// ile başlamalıdır",
+        "username": "Lütfen bir kullanıcı adı girin",
+        "usernameLength": "Kullanıcı adı en az 2 karakter olmalıdır.",
+        "password": "Lütfen bir şifre girin",
+        "passwordLength": "Şifre en az 2 karakter olmalıdır."
+      }
+    }
+  },
+  "toast": {
+    "server": {
+      "success": "Sunucu başarıyla kaydedildi!",
+      "error": "Sunucu iletişimi başarısız oldu!"
+    }
+  },
+  "command": {
+    "inputPlaceholder": "Albüm, sanatçı veya şarkı ara",
+    "noResults": "Sonuç bulunamadı.",
+    "commands": {
+      "heading": "Komutlar",
+      "pages": "Sayfaya git",
+      "theme": "Temayı değiştir"
+    },
+    "pages": "Sayfalar"
+  },
+  "player": {
+    "noSongPlaying": "Çalan şarkı yok",
+    "noRadioPlaying": "Çalan radyo yok",
+    "tooltips": {
+      "shuffle": {
+        "enable": "Karışık çalmayı aç",
+        "disable": "Karışık çalmayı kapat"
+      },
+      "rewind": "{{amount}} saniye geri sar",
+      "previous": "Önceki",
+      "play": "Oynat",
+      "pause": "Duraklat",
+      "forward": "{{amount}} saniye ileri sar",
+      "next": "Sonraki",
+      "repeat": {
+        "enable": "Tekrarı aç",
+        "enableOne": "Birini tekrarla",
+        "disable": "Tekrarı kapat"
+      },
+      "like": "{{artist}} - {{song}} beğen",
+      "dislike": "{{artist}} - {{song}} beğenmekten vazgeç",
+      "miniPlayer": {
+        "open": "Mini Oynatıcıyı Aç",
+        "close": "Mini Oynatıcıyı Kapat"
+      },
+      "volume": {
+        "mute": "Sessiz",
+        "unmute": "Sesi aç"
+      }
+    }
+  },
+  "options": {
+    "play": "Oynat",
+    "playNext": "Sıradakini oynat",
+    "addLast": "Sona ekle",
+    "download": "İndir",
+    "playlist": {
+      "add": "Çalma listesine ekle",
+      "edit": "Çalma listesini düzenle",
+      "delete": "Çalma listesini sil",
+      "search": "Çalma listesi bul",
+      "create": "Yeni çalma listesi",
+      "notFound": "Çalma listesi bulunamadı",
+      "removeSong": "Çalma listesinden kaldır"
+    },
+    "info": "Bilgi al",
+    "markAsPlayed": "Oynatıldı olarak işaretle",
+    "goto": {
+      "episode": "Bölüme git",
+      "podcast": "Podcast'e git"
+    }
+  },
+  "radios": {
+    "label": "Radyo",
+    "addRadio": "Radyo Ekle",
+    "table": {
+      "name": "İsim",
+      "homepage": "Ana Sayfa URL'si",
+      "stream": "Yayın URL'si",
+      "actions": {
+        "edit": "Radyoyu düzenle",
+        "delete": "Radyoyu sil"
+      },
+      "playTooltip": "{{name}} radyosunu çal",
+      "pauseTooltip": "{{name}} radyosunu duraklat"
+    },
+    "empty": {
+      "title": "Hiç radyonuz yok!",
+      "info": "İlk radyo istasyonunuzu eklemek için tıklayın."
+    },
+    "error": "Radyo çalınamıyor, Yayın URL'sini kontrol edin!",
+    "form": {
+      "create": {
+        "title": "Radyo Ekle",
+        "button": "Kaydet",
+        "toast": {
+          "success": "Radyo başarıyla oluşturuldu!",
+          "error": "Radyo oluşturulamadı!"
+        }
+      },
+      "edit": {
+        "title": "Radyoyu Düzenle",
+        "button": "Güncelle",
+        "toast": {
+          "success": "Radyo başarıyla güncellendi!",
+          "error": "Radyo güncellenemedi!"
+        }
+      },
+      "delete": {
+        "title": "Bu radyo istasyonunu silmek istediğinizden emin misiniz?",
+        "description": "Bu işlem geri alınamaz.",
+        "toast": {
+          "success": "Radyo başarıyla kaldırıldı!",
+          "error": "Radyo kaldırılamadı!"
+        }
+      },
+      "validations": {
+        "name": "Radyo adı en az 3 karakter olmalıdır.",
+        "url": "Lütfen geçerli bir URL sağlayın.",
+        "homepageUrlLength": "Ana Sayfa URL'si en az 10 karakter olmalıdır",
+        "streamUrlLength": "Yayın URL'si en az 10 karakter olmalıdır"
+      }
+    }
+  },
+  "time": {
+    "days_one": "{{days}} gün",
+    "days_other": "{{days}} gün",
+    "hour": "{{hour}} sa",
+    "minutes": "{{minutes}} dk",
+    "seconds": "{{seconds}} sn"
+  },
+  "server": {
+    "songCount_one": "{{count}} şarkı",
+    "songCount_other": "{{count}} şarkı",
+    "folderCount_one": "{{count}} klasör",
+    "folderCount_other": "{{count}} klasör",
+    "lastScan": "Son tarama: {{date}}",
+    "status": "Durum",
+    "management": "Sunucu yönetimi",
+    "incompatible": {
+      "title": "Uyumsuz sunucu",
+      "description": "Bu sunucu, tam olarak desteklenmeyen eski bir Subsonic protokol sürümünü kullanıyor. Sorun yaşayabileceğiniz için lütfen dikkatli devam edin.",
+      "skip": "Yine de devam et"
+    },
+    "buttons": {
+      "refresh": "Durumu yenile",
+      "startScan": "Hızlı Tarama"
+    }
+  },
+  "downloads": {
+    "started": "İndirme başlatıldı.",
+    "failed": "Dosyanız indirilirken bir hata oluştu.",
+    "completed": "Dosyanız indirildi."
+  },
+  "queue": {
+    "title": "Kuyruk",
+    "clear": "Kuyruğu temizle",
+    "close": "Kuyruğu kapat",
+    "open": "Kuyruğu aç"
+  },
+  "shortcuts": {
+    "modal": {
+      "title": "Klavye Kısayolları",
+      "description": {
+        "first": "Bu pencereyi açıp kapatmak için",
+        "last": "tuşuna basın."
+      }
+    },
+    "playback": {
+      "label": "Oynatma",
+      "play": "Oynat / Duraklat",
+      "shuffle": "Karışık Çal",
+      "repeat": "Tekrarla",
+      "previous": "Öncekine geç",
+      "next": "Sonrakine geç",
+      "raiseVolume": "Sesi aç",
+      "lowerVolume": "Sesi kıs"
+    },
+    "navigation": {
+      "label": "Navigasyon"
+    }
+  },
+  "songInfo": {
+    "title": "Şarkı Detayları",
+    "error": "Şarkı bilgileri alınamadı. Lütfen daha sonra tekrar deneyin."
+  },
+  "warnings": {
+    "reload": "Şu an çalan bir şarkı var!\nSayfayı yenilemek istediğinizden emin misiniz?",
+    "songError": "Şarkı çalınamıyor, Sunucuyu kontrol edin!"
+  },
+  "update": {
+    "dialog": {
+      "title": "Yeni Sürüm Mevcut!",
+      "remindLater": "Bana Daha Sonra Hatırlat",
+      "install": "Yükle ve Yeniden Başlat"
+    },
+    "toasts": {
+      "started": "Güncelleme işlemi başladı.",
+      "success": "Güncelleme yüklendi! Uygulama şimdi yeniden başlatılacak.",
+      "error": "Güncelleme yüklenemedi. Lütfen doğrudan GitHub'dan indirmeyi deneyin."
+    }
+  },
+  "about": {
+    "client": "İstemci",
+    "server": "Sunucu",
+    "version": "Sürüm",
+    "type": "Tip",
+    "apiVersion": "API Sürümü",
+    "toasts": {
+      "copy": "Bağlantı panoya kopyalandı!"
+    }
+  },
+  "mobile": {
+    "unsupported_message": "{{app_name}} cep telefonlarıyla uyumlu değildir.",
+    "access_recommendation": "Lütfen bir bilgisayar veya tabletten erişin."
+  },
+  "settings": {
+    "label": "Ayarlar",
+    "options": {
+      "appearance": "Görünüm",
+      "language": "Dil ve Bölge",
+      "audio": "Oynatıcı ve Ses",
+      "content": "İçerik",
+      "accounts": "Hesaplar",
+      "desktop": "Masaüstü Uygulaması",
+      "privacy": "Gizlilik ve Güvenlik"
+    },
+    "appearance": {
+      "general": {
+        "group": "Genel",
+        "description": "Uygulamanın görünümünü ve görüntüleme davranışlarını özelleştirin.",
+        "fullscreen": {
+          "label": "Otomatik tam ekranı etkinleştir",
+          "info": "Etkinleştirilirse, büyük oynatıcıya erişildiğinde uygulama otomatik olarak tam ekran moduna geçer."
+        }
+      },
+      "colors": {
+        "group": "Dinamik Renkler",
+        "description": "Uygulamanın arka plan olarak o an çalan albüm kapağındaki baskın rengi kullanıp kullanmayacağını seçin.",
+        "queue": {
+          "label": "Kuyruk ve Şarkı Sözleri",
+          "intensity": "Renk Yoğunluğu Seviyesi"
+        },
+        "bigPlayer": {
+          "label": "Büyük Oynatıcı",
+          "blurSize": "Görüntü Bulanıklık Boyutu"
+        }
+      }
+    },
+    "audio": {
+      "replayGain": {
+        "group": "ReplayGain",
+        "description": "Tutarlı bir dinleme deneyimi için ses çalma seviyelerini otomatik olarak normalleştirin.",
+        "enabled": "Etkin",
+        "error": {
+          "message": "Replay Gain kullanarak parça çalınırken bir hata oluştu.",
+          "button": "Tekrar dene"
+        },
+        "mode": {
+          "label": "Mod",
+          "track": "Parça kazancı (Track gain)",
+          "album": "Albüm kazancı (Album gain)"
+        },
+        "preAmp": "Ön Amplifikatör (dB)",
+        "defaultGain": {
+          "label": "Varsayılan Kazanç (dB)",
+          "info": "Bu kazanç seviyesi, ReplayGain meta verisi içermeyen şarkılara uygulanarak tutarlı ses seviyesi sağlar. Önerilen kazanç aralığı -10 dB ile -1 dB arasındadır."
+        }
+      },
+      "lyrics": {
+        "group": "Şarkı Sözleri",
+        "description": "Şarkı sözü ayarlarını özelleştirin.",
+        "preferSynced": {
+          "label": "Senkronize şarkı sözlerini tercih et",
+          "info": "Etkinleştirildiğinde, senkronize şarkı sözleri senkronize olmayanlara göre önceliklendirilecektir."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Harici Hizmetler",
+        "description": "Aonsoku'nun erişebileceği harici hizmetleri yönetin.",
+        "lrclib": {
+          "info": "LRCLIB şarkı sözlerini bulmak için kullanılır.",
+          "label": "LRCLIB"
+        }
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Kenar Çubuğu",
+        "description": "Kenar çubuğunda görüntülenen bölümlerin görünürlüğünü ve organizasyonunu yönetin.",
+        "radios": {
+          "section": "Radyolar bölümünü gizle"
+        }
+      },
+      "podcast": {
+        "group": "Podcast'ler",
+        "description": "Aonsoku Podcast servisi ile entegrasyonu etkinleştirin.",
+        "enabled": {
+          "label": "Entegrasyonu Etkinleştir"
+        },
+        "service": {
+          "url": "Podcast Servis URL'si"
+        },
+        "credentials": {
+          "label": "Oturum Açmış Kullanıcıyı ve Sunucu URL'sini Kullan",
+          "error": "Kullanıcı adı ve Sunucu URL'si gereklidir.",
+          "user": "Kullanıcı Adı",
+          "url": "Sunucu URL'si"
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "group": "Discord Rich Presence",
+        "description": "Şu an dinlediğiniz şarkıyı Discord'daki arkadaşlarınızla paylaşın.",
+        "enabled": {
+          "label": "Entegrasyonu Etkinleştir"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Genel",
+        "description": "Masaüstü uygulaması için tercihleri özelleştirin.",
+        "tray": {
+          "label": "Sistem tepsisine küçült",
+          "info": "Etkinleştirildiğinde, kapat düğmesine tıkladığınızda uygulama kapanmak yerine sistem tepsisine küçülür."
+        }
+      }
+    }
+  },
+  "dayjs": {
+    "relativeTime": {
+      "future": "%s içinde",
+      "past": "%s önce",
+      "s": "birkaç saniye",
+      "m": "1 dakika",
+      "mm": "%d dakika",
+      "h": "1 saat",
+      "hh": "%d saat",
+      "d": "1 gün",
+      "dd": "%d gün",
+      "M": "1 ay",
+      "MM": "%d ay",
+      "y": "1 yıl",
+      "yy": "%d yıl"
+    }
   }
 }

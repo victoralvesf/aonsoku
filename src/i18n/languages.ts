@@ -3,10 +3,17 @@ import de from './locales/de.json'
 import en from './locales/en.json'
 import es from './locales/es.json'
 import fr from './locales/fr.json'
+import frCa from './locales/fr-CA.json'
+import it from './locales/it.json'
+import ko from './locales/ko.json'
+import ml from './locales/ml.json'
+import pl from './locales/pl.json'
 import pt from './locales/pt.json'
 import ptBr from './locales/pt-BR.json'
 import ru from './locales/ru.json'
 import sv from './locales/sv.json'
+import tr from './locales/tr.json'
+import uk from './locales/uk.json'
 import zhHans from './locales/zh-Hans.json'
 
 export const resources = {
@@ -14,11 +21,18 @@ export const resources = {
   de: { translation: de },
   'en-US': { translation: en },
   'es-ES': { translation: es },
+  'fr-CA': { translation: frCa },
   fr: { translation: fr },
+  it: { translation: it },
+  ko: { translation: ko },
+  ml: { translation: ml },
+  pl: { translation: pl },
   pt: { translation: pt },
   'pt-BR': { translation: ptBr },
   ru: { translation: ru },
   sv: { translation: sv },
+  tr: { translation: tr },
+  uk: { translation: uk },
   'zh-Hans': { translation: zhHans },
 }
 
@@ -48,10 +62,40 @@ export const languages = [
     dayjsLocale: 'es',
   },
   {
+    nativeName: 'Français (Canada)',
+    langCode: 'fr-CA',
+    flag: 'CA',
+    dayjsLocale: 'fr-ca',
+  },
+  {
     nativeName: 'Français',
     langCode: 'fr',
     flag: 'FR',
     dayjsLocale: 'fr',
+  },
+  {
+    nativeName: 'Italiano',
+    langCode: 'it',
+    flag: 'IT',
+    dayjsLocale: 'it',
+  },
+  {
+    nativeName: '한국어',
+    langCode: 'ko',
+    flag: 'KR',
+    dayjsLocale: 'ko',
+  },
+  {
+    nativeName: 'മലയാളം',
+    langCode: 'ml',
+    flag: 'IN',
+    dayjsLocale: 'ml',
+  },
+  {
+    nativeName: 'Polski',
+    langCode: 'pl',
+    flag: 'PL',
+    dayjsLocale: 'pl',
   },
   {
     nativeName: 'Português (Portugal)',
@@ -76,6 +120,18 @@ export const languages = [
     langCode: 'sv',
     flag: 'SE',
     dayjsLocale: 'sv',
+  },
+  {
+    nativeName: 'Türkçe',
+    langCode: 'tr',
+    flag: 'TR',
+    dayjsLocale: 'tr',
+  },
+  {
+    nativeName: 'Українська',
+    langCode: 'uk',
+    flag: 'UA',
+    dayjsLocale: 'uk',
   },
   {
     nativeName: '简体中文',
