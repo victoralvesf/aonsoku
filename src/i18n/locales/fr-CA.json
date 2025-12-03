@@ -388,7 +388,7 @@
       "d": "1 jour",
       "dd": "%d jours",
       "M": "1 mois",
-      "MM": "%s mois",
+      "MM": "%d mois",
       "y": "1 an",
       "yy": "%d ans"
     }
