@@ -528,8 +528,8 @@
   },
   "dayjs": {
     "relativeTime": {
-      "future": "i %er",
-      "past": "%er sedan",
+      "future": "i %s",
+      "past": "%s sedan",
       "s": "några sekunder",
       "m": "1 minut",
       "mm": "%d minuter",
