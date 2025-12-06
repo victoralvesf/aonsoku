@@ -20,7 +20,6 @@ import { useAppStore } from '@/store/app.store'
 import { byteLength } from '@/utils/byteLength'
 import { convertMinutesToMs } from '@/utils/convertSecondsToTime'
 import { queryKeys } from '@/utils/queryKeys'
-import { MiniSidebarSearch } from '../sidebar/mini-search'
 import { CommandAlbumResult } from './album-result'
 import { CommandArtistResult } from './artist-result'
 import { CommandGotoPage } from './goto-page'
@@ -36,7 +35,7 @@ export type CommandItemProps = {
 
 export default function CommandMenu() {
   const { t } = useTranslation()
-  const { open: sidebarOpen } = useMainSidebar()
+  const { open: sidebarOpen, openMobile: sidebarOpenMobile } = useMainSidebar()
   const { open, setOpen } = useAppStore((state) => state.command)
 
   const [query, setQuery] = useState('')
@@ -126,26 +125,20 @@ export default function CommandMenu() {
 
   return (
     <>
-      {sidebarOpen ? (
-        <Button
-          variant="outline"
-          className="flex justify-start w-full px-2 gap-2 relative min-w-max"
-          onClick={() => setOpen(true)}
-        >
-          <>
-            <SearchIcon className="h-4 w-4 text-muted-foreground" />
-            <span className="inline-flex text-muted-foreground text-sm">
-              {t('sidebar.search')}
-            </span>
+      <Button
+        variant={sidebarOpen || sidebarOpenMobile ? 'outline' : 'ghost'}
+        className="flex justify-start w-full px-2 gap-2 relative min-w-max overflow-x-clip group-data-[collapsible=icon]:h-fit"
+        onClick={() => setOpen(true)}
+      >
+        <SearchIcon className="h-4 w-4 text-muted-foreground" />
+        <span className="inline-flex text-muted-foreground text-sm group-data-[collapsible=icon]:hidden">
+          {t('sidebar.search')}
+        </span>
 
-            <div className="absolute right-2">
-              <Keyboard text="/" />
-            </div>
-          </>
-        </Button>
-      ) : (
-        <MiniSidebarSearch />
-      )}
+        <div className="absolute right-2 group-data-[collapsible=icon]:hidden">
+          <Keyboard text="/" />
+        </div>
+      </Button>
       <CommandDialog
         open={open}
         onOpenChange={(state) => {

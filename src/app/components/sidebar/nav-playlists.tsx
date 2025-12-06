@@ -15,6 +15,7 @@ import { SidebarItems } from '@/app/layout/sidebar'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { queryKeys } from '@/utils/queryKeys'
+import { ScrollArea } from '../ui/scroll-area'
 
 export const mainNavItems = [
   {
@@ -42,22 +43,24 @@ export function NavPlaylists() {
 
         <SidebarPlaylistButtons />
       </div>
-      <MainSidebarContent className="flex px-4 pb-4 h-full overflow-x-clip transition-[margin,opacity] group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0">
-        <MainSidebarMenu>
-          {hasPlaylists &&
-            playlists.map((playlist) => (
-              <MainSidebarMenuItem key={playlist.id}>
-                <MainSidebarMenuButton asChild>
-                  <Link to={ROUTES.PLAYLIST.PAGE(playlist.id)}>
-                    <ListMusic />
-                    <span className="truncate">{playlist.name}</span>
-                  </Link>
-                </MainSidebarMenuButton>
-              </MainSidebarMenuItem>
-            ))}
+      <MainSidebarContent className="flex pl-4 h-full overflow-x-clip transition-[margin,opacity] group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0">
+        <ScrollArea className="pb-4">
+          <MainSidebarMenu className="pr-4">
+            {hasPlaylists &&
+              playlists.map((playlist) => (
+                <MainSidebarMenuItem key={playlist.id}>
+                  <MainSidebarMenuButton asChild>
+                    <Link to={ROUTES.PLAYLIST.PAGE(playlist.id)}>
+                      <ListMusic />
+                      <span className="truncate">{playlist.name}</span>
+                    </Link>
+                  </MainSidebarMenuButton>
+                </MainSidebarMenuItem>
+              ))}
 
-          {!hasPlaylists && <EmptyPlaylistsMessage />}
-        </MainSidebarMenu>
+            {!hasPlaylists && <EmptyPlaylistsMessage />}
+          </MainSidebarMenu>
+        </ScrollArea>
       </MainSidebarContent>
     </>
   )

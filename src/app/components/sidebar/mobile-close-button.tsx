@@ -7,7 +7,7 @@ export function MobileCloseButton() {
   const { setOpenMobile } = useMainSidebar()
 
   return (
-    <div className="flex md:hidden justify-between items-center p-2">
+    <div className="flex md:hidden justify-between items-center pt-4 px-4">
       <AppTitle />
       <Button
         variant="ghost"
