@@ -2,6 +2,7 @@ import { NavigationButtons } from '@/app/components/header/navigation-buttons'
 import { UserDropdown } from '@/app/components/header/user-dropdown'
 import { HeaderSongInfo } from '@/app/components/header-song'
 import { SettingsButton } from '@/app/components/settings/header-button'
+import { MainSidebarTrigger } from '@/app/components/ui/main-sidebar'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { isLinux, isMacOS, isWindows } from '@/utils/desktop'
 
@@ -13,6 +14,10 @@ export function Header() {
       <div className="flex items-center">
         {isMacOS && !isFullscreen && <div className="w-[70px]" />}
         <NavigationButtons />
+        
+        <div className="ml-2">
+          <MainSidebarTrigger />
+        </div>
       </div>
       <HeaderSongInfo />
       <div className="flex justify-end items-center gap-2">

@@ -17,8 +17,6 @@
   }
   :root {
     --header-height: 44px;
-    --sidebar-width: 280px;
-    --mini-sidebar-width: 48px;
     --player-height: 96px;
     --content-height: calc(100vh - var(--header-height) - var(--player-height));
 

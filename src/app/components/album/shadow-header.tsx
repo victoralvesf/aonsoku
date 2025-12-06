@@ -17,10 +17,8 @@ export function ShadowHeader({
     <div
       className={cn(
         'flex items-center justify-start px-8 h-[--shadow-header-height] border-b bg-background',
-        fixed &&
-          'fixed top-header right-0 left-mini-sidebar 2xl:left-sidebar z-30',
-        showGlassEffect &&
-          'backdrop-blur-lg supports-[backdrop-filter]:bg-background/80',
+        fixed && 'sticky top-0 left-0 right-0 z-30',
+        showGlassEffect && 'backdrop-blur-lg supports-[backdrop-filter]:bg-background/80',
         className,
       )}
       {...rest}

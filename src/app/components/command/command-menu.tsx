@@ -13,12 +13,14 @@ import {
   CommandInput,
   CommandList,
 } from '@/app/components/ui/command'
+import { useMainSidebar } from '@/app/components/ui/main-sidebar'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
 import { useAppStore } from '@/store/app.store'
 import { byteLength } from '@/utils/byteLength'
 import { convertMinutesToMs } from '@/utils/convertSecondsToTime'
 import { queryKeys } from '@/utils/queryKeys'
+import { MiniSidebarSearch } from '../sidebar/mini-search'
 import { CommandAlbumResult } from './album-result'
 import { CommandArtistResult } from './artist-result'
 import { CommandGotoPage } from './goto-page'
@@ -34,6 +36,7 @@ export type CommandItemProps = {
 
 export default function CommandMenu() {
   const { t } = useTranslation()
+  const { open: sidebarOpen } = useMainSidebar()
   const { open, setOpen } = useAppStore((state) => state.command)
 
   const [query, setQuery] = useState('')
@@ -123,20 +126,26 @@ export default function CommandMenu() {
 
   return (
     <>
-      <Button
-        variant="outline"
-        className="flex justify-start w-full px-2 gap-2 relative"
-        onClick={() => setOpen(true)}
-      >
-        <SearchIcon className="h-4 w-4 text-muted-foreground" />
-        <span className="inline-flex text-muted-foreground text-sm">
-          {t('sidebar.search')}
-        </span>
+      {sidebarOpen ? (
+        <Button
+          variant="outline"
+          className="flex justify-start w-full px-2 gap-2 relative min-w-max"
+          onClick={() => setOpen(true)}
+        >
+          <>
+            <SearchIcon className="h-4 w-4 text-muted-foreground" />
+            <span className="inline-flex text-muted-foreground text-sm">
+              {t('sidebar.search')}
+            </span>
 
-        <div className="absolute right-2">
-          <Keyboard text="/" />
-        </div>
-      </Button>
+            <div className="absolute right-2">
+              <Keyboard text="/" />
+            </div>
+          </>
+        </Button>
+      ) : (
+        <MiniSidebarSearch />
+      )}
       <CommandDialog
         open={open}
         onOpenChange={(state) => {

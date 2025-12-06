@@ -22,8 +22,6 @@ module.exports = {
       },
       spacing: {
         header: 'var(--header-height)',
-        sidebar: 'var(--sidebar-width)',
-        'mini-sidebar': 'var(--mini-sidebar-width)',
         player: 'var(--player-height)',
         content: 'var(--content-height)',
         'shadow-header': 'var(--shadow-header-height)',

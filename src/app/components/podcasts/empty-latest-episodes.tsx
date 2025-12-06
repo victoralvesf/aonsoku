@@ -16,7 +16,7 @@ export function EmptyLatestEpisodesPage() {
         <HeaderTitle title={t('podcasts.form.latestEpisodes')} />
       </ShadowHeader>
 
-      <ListWrapper className="pt-[--shadow-header-distance] h-full">
+      <ListWrapper className="h-full">
         <EmptyWrapper>
           <div className="text-center max-w-[500px]">
             <h3 className="text-2xl font-semibold tracking-tight">

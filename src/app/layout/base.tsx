@@ -1,16 +1,18 @@
 import { memo } from 'react'
 import { MainDrawerPage } from '@/app/components/drawer/page'
 import { Player } from '@/app/components/player/player'
+import { CreatePlaylistDialog } from '@/app/components/playlist/form-dialog'
 import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
+import { AppSidebar } from '@/app/components/sidebar/app-sidebar'
 import { SongInfoDialog } from '@/app/components/song/info-dialog'
+import {
+  MainSidebarInset,
+  MainSidebarProvider,
+} from '@/app/components/ui/main-sidebar'
 import { Header } from '@/app/layout/header'
-import { MiniSidebar } from '@/app/layout/mini-sidebar'
-import { Sidebar } from '@/app/layout/sidebar'
 import { MainRoutes } from './main'
 
 const MemoHeader = memo(Header)
-const MemoMiniSidebar = memo(MiniSidebar)
-const MemoSidebar = memo(Sidebar)
 const MemoPlayer = memo(Player)
 const MemoSongInfoDialog = memo(SongInfoDialog)
 const MemoRemovePlaylistDialog = memo(RemovePlaylistDialog)
@@ -19,15 +21,18 @@ const MemoMainDrawerPage = memo(MainDrawerPage)
 export default function BaseLayout() {
   return (
     <div className="h-screen w-screen overflow-hidden">
-      <MemoHeader />
-      <MemoMiniSidebar />
-      <MemoSidebar />
-      <MemoPlayer />
-      {/* Routes */}
-      <MainRoutes />
+      <MainSidebarProvider>
+        <MemoHeader />
+        <AppSidebar />
+        <MainSidebarInset>
+          <MainRoutes />
+        </MainSidebarInset>
+        <MemoPlayer />
+      </MainSidebarProvider>
       <MemoSongInfoDialog />
       <MemoRemovePlaylistDialog />
       <MemoMainDrawerPage />
+      <CreatePlaylistDialog />
     </div>
   )
 }

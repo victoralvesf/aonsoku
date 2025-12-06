@@ -10,7 +10,7 @@ export function EmptyPodcastsResults() {
     <div className="w-full h-content">
       <PodcastsHeader />
 
-      <ListWrapper className="pt-[--shadow-header-distance] h-full">
+      <ListWrapper className="h-full">
         <EmptyWrapper>
           <div className="text-center max-w-[500px]">
             <h3 className="text-2xl font-semibold tracking-tight">
