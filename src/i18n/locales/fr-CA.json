@@ -351,7 +351,9 @@
       "appearance": "Apparence",
       "audio": "Lecteur et audio",
       "content": "Contenu",
-      "privacy": "Confidentialité et sécurité"
+      "privacy": "Confidentialité et sécurité",
+      "accounts": "Comptes",
+      "desktop": "Application de bureau"
     },
     "appearance": {
       "general": {
@@ -373,6 +375,20 @@
           "label": "Grand Lecteur",
           "blurSize": "Taille du floutage des images"
         }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "description": "Partager la chanson que vous écoutez avec vos amis sur Discord.",
+        "enabled": {
+          "label": "Activer l'intégration"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Général",
+        "description": "Personnaliser les préférences pour l'application de bureau."
       }
     }
   },
