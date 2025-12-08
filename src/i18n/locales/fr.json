@@ -437,7 +437,9 @@
       "language": "Langue et région",
       "content": "Contenu",
       "audio": "Lecteur et audio",
-      "privacy": "Confidentialité et sécurité"
+      "privacy": "Confidentialité et sécurité",
+      "accounts": "Comptes",
+      "desktop": "Application de bureau"
     },
     "appearance": {
       "general": {
@@ -477,6 +479,20 @@
           "info": "LRCLIB est utilisé pour trouver les paroles."
         },
         "description": "Gérer les services externes auxquels Aonsoku peut accéder."
+      }
+    },
+    "desktop": {
+      "general": {
+        "description": "Personnaliser les préférences pour l'application de bureau.",
+        "group": "Général"
+      }
+    },
+    "accounts": {
+      "discord": {
+        "enabled": {
+          "label": "Activer l'intégration"
+        },
+        "description": "Partagez la chanson que vous écoutez avec vos amis sur Discord."
       }
     }
   },
