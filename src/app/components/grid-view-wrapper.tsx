@@ -104,9 +104,16 @@ export function GridViewWrapper<T>({
     handleResize()
     window.addEventListener('resize', resizeHandler)
 
+    const resizeObserver = new ResizeObserver(resizeHandler)
+
+    if (scrollDivRef.current) {
+      resizeObserver.observe(scrollDivRef.current)
+    }
+
     return () => {
       window.removeEventListener('resize', resizeHandler)
       cancelAnimationFrame(animationFrameId)
+      resizeObserver.disconnect()
     }
   }, [calculateSize])
 
