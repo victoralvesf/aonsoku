@@ -203,7 +203,7 @@
   },
   "podcasts": {
     "form": {
-      "all": "All",
+      "all": "Browse",
       "latestEpisodes": "Latest Episodes",
       "addButton": "Add Podcast",
       "search": "Search podcasts…",
