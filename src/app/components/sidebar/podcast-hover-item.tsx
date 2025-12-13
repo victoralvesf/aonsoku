@@ -40,7 +40,7 @@ export function SidebarPodcastHoverItem({ item }: { item: ISidebarItem }) {
                 variant="ghost"
                 asChild
                 className={clsx(
-                  'justify-start px-2 py-0 text-sm font-normal h-7 rounded-sm',
+                  'justify-start px-2 py-0 text-sm font-normal h-8 rounded-sm',
                   isActive(item.route) && 'pointer-events-none bg-accent',
                 )}
               >
