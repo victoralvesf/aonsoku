@@ -26,7 +26,7 @@ export function NavLibrary() {
             return null
 
           if (item.id === SidebarItems.Podcasts) {
-            return <SidebarPodcastItem item={item} />
+            return <SidebarPodcastItem key={item.id} item={item} />
           }
 
           return (
