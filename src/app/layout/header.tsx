@@ -14,10 +14,7 @@ export function Header() {
       <div className="flex items-center">
         {isMacOS && !isFullscreen && <div className="w-[70px]" />}
         <NavigationButtons />
-
-        <div className="ml-2">
-          <MainSidebarTrigger />
-        </div>
+        <MainSidebarTrigger className="ml-2" />
       </div>
       <HeaderSongInfo />
       <div className="flex justify-end items-center gap-2">

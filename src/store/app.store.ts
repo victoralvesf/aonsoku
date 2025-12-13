@@ -350,10 +350,11 @@ useAppStore.subscribe(
 export const useAppData = () => useAppStore((state) => state.data)
 export const useAppAccounts = () => useAppStore((state) => state.accounts)
 export const useAppPodcasts = () => useAppStore((state) => state.podcasts)
-export const useAppPodcastSidebarState = () => useAppStore((state) => ({
-  sidebarState: state.podcasts.sidebarState,
-  setSidebarState: state.podcasts.setSidebarState
-}))
+export const useAppPodcastSidebarState = () =>
+  useAppStore((state) => ({
+    sidebarState: state.podcasts.sidebarState,
+    setSidebarState: state.podcasts.setSidebarState,
+  }))
 export const useAppPages = () => useAppStore((state) => state.pages)
 export const useAppDesktopData = () =>
   useAppStore((state) => state.desktop.data)
