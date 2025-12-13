@@ -6,6 +6,7 @@ import {
   MainSidebarRail,
 } from '@/app/components/ui/main-sidebar'
 import { MiniSidebarSearch } from './mini-search'
+import { SidebarMiniSeparator } from './mini-separator'
 import { MobileCloseButton } from './mobile-close-button'
 import { NavLibrary } from './nav-library'
 import { NavMain } from './nav-main'
@@ -19,9 +20,10 @@ export function AppSidebar({
       <MobileCloseButton />
       <MainSidebarHeader>
         <CommandMenu />
-        <MiniSidebarSearch />
       </MainSidebarHeader>
+      <MiniSidebarSearch />
       <NavMain />
+      <SidebarMiniSeparator />
       <MainSidebarContent className="max-h-fit flex-none overflow-x-clip">
         <NavLibrary />
       </MainSidebarContent>

@@ -7,7 +7,7 @@ import { SidebarMainItem } from './main-item'
 
 export function NavMain() {
   return (
-    <MainSidebarGroup className="px-4">
+    <MainSidebarGroup className="px-4 group-data-[collapsible=icon]:py-1">
       <MainSidebarMenu>
         {mainNavItems.map((item) => (
           <SidebarMainItem key={item.id} item={item} />

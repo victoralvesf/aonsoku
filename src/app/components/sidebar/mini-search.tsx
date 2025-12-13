@@ -2,7 +2,6 @@ import { SearchIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { useMainSidebar } from '@/app/components/ui/main-sidebar'
-import { Separator } from '@/app/components/ui/separator'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
 import { useAppStore } from '@/store/app.store'
@@ -19,7 +18,7 @@ export function MiniSidebarSearch({
   }
 
   return (
-    <>
+    <div className="w-full px-4">
       <SimpleTooltip text={t('sidebar.miniSearch')} side="right" delay={50}>
         <Button
           variant="ghost"
@@ -32,7 +31,6 @@ export function MiniSidebarSearch({
           <SearchIcon className="w-4 h-4" />
         </Button>
       </SimpleTooltip>
-      <Separator className="mt-2" />
-    </>
+    </div>
   )
 }
