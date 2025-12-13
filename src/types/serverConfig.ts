@@ -74,6 +74,8 @@ interface IPodcasts {
   setCustomUser: (value: string) => void
   customUrl: string
   setCustomUrl: (value: string) => void
+  sidebarState: boolean
+  setSidebarState: (value: boolean) => void
 }
 
 interface IAccounts {

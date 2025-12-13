@@ -12,19 +12,27 @@ import {
   useMainSidebar,
 } from '@/app/components/ui/main-sidebar'
 import { ISidebarItem, podcastItems } from '@/app/layout/sidebar'
+import { useAppPodcastSidebarState } from '@/store/app.store'
 import { SidebarMainSubItem } from './main-sub-item'
 import { SidebarPodcastHoverItem } from './podcast-hover-item'
 
 export function SidebarPodcastItem({ item }: { item: ISidebarItem }) {
   const { t } = useTranslation()
   const { state, isMobile } = useMainSidebar()
+  const { sidebarState, setSidebarState } = useAppPodcastSidebarState()
 
   if (state === 'collapsed' && !isMobile) {
     return <SidebarPodcastHoverItem item={item} />
   }
 
   return (
-    <Collapsible key={item.title} asChild className="group/collapsible">
+    <Collapsible
+      key={item.title}
+      open={sidebarState}
+      onOpenChange={setSidebarState}
+      className="group/collapsible"
+      asChild
+    >
       <MainSidebarMenuItem>
         <CollapsibleTrigger asChild>
           <MainSidebarMenuButton tooltip={t(item.title)}>
