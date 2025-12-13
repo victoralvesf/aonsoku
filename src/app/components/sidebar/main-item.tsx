@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { MainSidebarMenuButton } from '@/app/components/ui/main-sidebar'
 import { useRouteIsActive } from '@/app/hooks/use-route-is-active'
-import { ISidebarItem } from './sidebar-generator'
+import { ISidebarItem } from '@/app/layout/sidebar'
 
 export function SidebarMainItem({ item }: { item: ISidebarItem }) {
   const { t } = useTranslation()

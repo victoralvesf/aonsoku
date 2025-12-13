@@ -1,4 +1,3 @@
-import { Library, ListMusic, Mic2, Music2, Podcast, Radio } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import {
   MainSidebarGroup,
@@ -6,50 +5,10 @@ import {
   MainSidebarMenu,
   MainSidebarMenuItem,
 } from '@/app/components/ui/main-sidebar'
-import { SidebarItems } from '@/app/layout/sidebar'
-import { ROUTES } from '@/routes/routesList'
+import { libraryItems, SidebarItems } from '@/app/layout/sidebar'
 import { useAppStore } from '@/store/app.store'
 import { SidebarMainItem } from './main-item'
 import { SidebarPodcastItem } from './podcast-item'
-
-export const libraryItems = [
-  {
-    id: SidebarItems.Artists,
-    title: 'sidebar.artists',
-    route: ROUTES.LIBRARY.ARTISTS,
-    icon: Mic2,
-  },
-  {
-    id: SidebarItems.Songs,
-    title: 'sidebar.songs',
-    route: ROUTES.LIBRARY.SONGS,
-    icon: Music2,
-  },
-  {
-    id: SidebarItems.Albums,
-    title: 'sidebar.albums',
-    route: ROUTES.LIBRARY.ALBUMS,
-    icon: Library,
-  },
-  {
-    id: SidebarItems.Playlists,
-    title: 'sidebar.playlists',
-    route: ROUTES.LIBRARY.PLAYLISTS,
-    icon: ListMusic,
-  },
-  {
-    id: SidebarItems.Podcasts,
-    title: 'sidebar.podcasts',
-    route: ROUTES.LIBRARY.PODCASTS,
-    icon: Podcast,
-  },
-  {
-    id: SidebarItems.Radios,
-    title: 'sidebar.radios',
-    route: ROUTES.LIBRARY.RADIOS,
-    icon: Radio,
-  },
-]
 
 export function NavLibrary() {
   const { t } = useTranslation()

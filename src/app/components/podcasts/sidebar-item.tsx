@@ -3,10 +3,10 @@ import { ChevronRight, HistoryIcon } from 'lucide-react'
 import { useCallback, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
-import { ISidebarItem } from '@/app/components/sidebar/sidebar-generator'
 import { Badge } from '@/app/components/ui/badge'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import { ISidebarItem } from '@/app/layout/sidebar'
 import { ROUTES } from '@/routes/routesList'
 
 export function PodcastSidebarItem({ item }: { item: ISidebarItem }) {

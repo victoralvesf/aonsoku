@@ -13,8 +13,8 @@ import {
   MainSidebarMenuSubButton,
   MainSidebarMenuSubItem,
 } from '@/app/components/ui/main-sidebar'
+import { ISidebarItem } from '@/app/layout/sidebar'
 import { ROUTES } from '@/routes/routesList'
-import { ISidebarItem } from './sidebar-generator'
 
 export function SidebarPodcastItem({ item }: { item: ISidebarItem }) {
   const { t } = useTranslation()
