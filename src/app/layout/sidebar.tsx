@@ -33,6 +33,8 @@ export enum SidebarItems {
   Playlists = 'playlists',
   Podcasts = 'podcasts',
   Radios = 'radios',
+  PodcastAll = 'podcast-all',
+  PodcastLatest = 'podcast-latest',
 }
 
 export const mainNavItems = [
@@ -80,5 +82,20 @@ export const libraryItems = [
     title: 'sidebar.radios',
     route: ROUTES.LIBRARY.RADIOS,
     icon: Radio,
+  },
+]
+
+export const podcastItems = [
+  {
+    id: SidebarItems.PodcastAll,
+    title: 'podcasts.form.all',
+    route: ROUTES.LIBRARY.PODCASTS,
+    icon: () => null,
+  },
+  {
+    id: SidebarItems.PodcastLatest,
+    title: 'podcasts.form.latestEpisodes',
+    route: ROUTES.EPISODES.LATEST,
+    icon: () => null,
   },
 ]

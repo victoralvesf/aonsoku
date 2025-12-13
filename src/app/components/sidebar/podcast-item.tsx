@@ -1,6 +1,5 @@
 import { ChevronRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import {
   Collapsible,
   CollapsibleContent,
@@ -10,11 +9,9 @@ import {
   MainSidebarMenuButton,
   MainSidebarMenuItem,
   MainSidebarMenuSub,
-  MainSidebarMenuSubButton,
-  MainSidebarMenuSubItem,
 } from '@/app/components/ui/main-sidebar'
-import { ISidebarItem } from '@/app/layout/sidebar'
-import { ROUTES } from '@/routes/routesList'
+import { ISidebarItem, podcastItems } from '@/app/layout/sidebar'
+import { SidebarMainSubItem } from './main-sub-item'
 
 export function SidebarPodcastItem({ item }: { item: ISidebarItem }) {
   const { t } = useTranslation()
@@ -31,20 +28,9 @@ export function SidebarPodcastItem({ item }: { item: ISidebarItem }) {
         </CollapsibleTrigger>
         <CollapsibleContent>
           <MainSidebarMenuSub>
-            <MainSidebarMenuSubItem>
-              <MainSidebarMenuSubButton asChild>
-                <Link to={ROUTES.LIBRARY.PODCASTS}>
-                  {t('podcasts.form.all')}
-                </Link>
-              </MainSidebarMenuSubButton>
-            </MainSidebarMenuSubItem>
-            <MainSidebarMenuSubItem>
-              <MainSidebarMenuSubButton asChild>
-                <Link to={ROUTES.EPISODES.LATEST}>
-                  {t('podcasts.form.latestEpisodes')}
-                </Link>
-              </MainSidebarMenuSubButton>
-            </MainSidebarMenuSubItem>
+            {podcastItems.map((item) => (
+              <SidebarMainSubItem key={item.id} item={item} />
+            ))}
           </MainSidebarMenuSub>
         </CollapsibleContent>
       </MainSidebarMenuItem>
