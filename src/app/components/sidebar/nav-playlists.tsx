@@ -1,21 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
-import { Home, ListMusic } from 'lucide-react'
+import { Home } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import { EmptyPlaylistsMessage } from '@/app/components/playlist/empty-message'
 import { SidebarPlaylistButtons } from '@/app/components/playlist/sidebar-buttons'
 import {
   MainSidebarContent,
   MainSidebarGroupLabel,
   MainSidebarMenu,
-  MainSidebarMenuButton,
-  MainSidebarMenuItem,
 } from '@/app/components/ui/main-sidebar'
+import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { SidebarItems } from '@/app/layout/sidebar'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { queryKeys } from '@/utils/queryKeys'
-import { ScrollArea } from '../ui/scroll-area'
+import { SidebarPlaylistItem } from './playlist-item'
 
 export const mainNavItems = [
   {
@@ -48,14 +46,7 @@ export function NavPlaylists() {
           <MainSidebarMenu className="pr-4">
             {hasPlaylists &&
               playlists.map((playlist) => (
-                <MainSidebarMenuItem key={playlist.id}>
-                  <MainSidebarMenuButton asChild>
-                    <Link to={ROUTES.PLAYLIST.PAGE(playlist.id)}>
-                      <ListMusic />
-                      <span className="truncate">{playlist.name}</span>
-                    </Link>
-                  </MainSidebarMenuButton>
-                </MainSidebarMenuItem>
+                <SidebarPlaylistItem key={playlist.id} playlist={playlist} />
               ))}
 
             {!hasPlaylists && <EmptyPlaylistsMessage />}

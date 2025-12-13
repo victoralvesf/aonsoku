@@ -1,15 +1,16 @@
 import { Library, ListMusic, Mic2, Music2, Podcast, Radio } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import {
   MainSidebarGroup,
   MainSidebarGroupLabel,
   MainSidebarMenu,
-  MainSidebarMenuButton,
   MainSidebarMenuItem,
 } from '@/app/components/ui/main-sidebar'
 import { SidebarItems } from '@/app/layout/sidebar'
 import { ROUTES } from '@/routes/routesList'
+import { useAppStore } from '@/store/app.store'
+import { SidebarMainItem } from './main-item'
+import { SidebarPodcastItem } from './podcast-item'
 
 export const libraryItems = [
   {
@@ -52,21 +53,29 @@ export const libraryItems = [
 
 export function NavLibrary() {
   const { t } = useTranslation()
+  const hideRadiosSection = useAppStore().pages.hideRadiosSection
+  const isPodcastsActive = useAppStore().podcasts.active
 
   return (
     <MainSidebarGroup className="px-4 py-0">
       <MainSidebarGroupLabel>{t('sidebar.library')}</MainSidebarGroupLabel>
       <MainSidebarMenu>
-        {libraryItems.map((item) => (
-          <MainSidebarMenuItem key={item.id}>
-            <MainSidebarMenuButton asChild>
-              <Link to={item.route}>
-                <item.icon />
-                {t(item.title)}
-              </Link>
-            </MainSidebarMenuButton>
-          </MainSidebarMenuItem>
-        ))}
+        {libraryItems.map((item) => {
+          // Setting to show/hide Radios/Podcasts section
+          if (hideRadiosSection && item.id === SidebarItems.Radios) return null
+          if (!isPodcastsActive && item.id === SidebarItems.Podcasts)
+            return null
+
+          if (item.id === SidebarItems.Podcasts) {
+            return <SidebarPodcastItem item={item} />
+          }
+
+          return (
+            <MainSidebarMenuItem key={item.id}>
+              <SidebarMainItem item={item} />
+            </MainSidebarMenuItem>
+          )
+        })}
       </MainSidebarMenu>
     </MainSidebarGroup>
   )
