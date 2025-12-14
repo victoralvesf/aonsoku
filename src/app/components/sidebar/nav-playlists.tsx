@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { Home } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { EmptyPlaylistsMessage } from '@/app/components/playlist/empty-message'
 import { SidebarPlaylistButtons } from '@/app/components/playlist/sidebar-buttons'
@@ -9,20 +8,9 @@ import {
   MainSidebarMenu,
 } from '@/app/components/ui/main-sidebar'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
-import { SidebarItems } from '@/app/layout/sidebar'
-import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { queryKeys } from '@/utils/queryKeys'
 import { SidebarPlaylistItem } from './playlist-item'
-
-export const mainNavItems = [
-  {
-    id: SidebarItems.Home,
-    title: 'sidebar.home',
-    route: ROUTES.LIBRARY.HOME,
-    icon: Home,
-  },
-]
 
 export function NavPlaylists() {
   const { t } = useTranslation()
