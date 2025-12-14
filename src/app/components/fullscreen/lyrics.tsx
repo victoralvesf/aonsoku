@@ -11,7 +11,6 @@ import {
 import { subsonic } from '@/service/subsonic'
 import { usePlayerRef, usePlayerSonglist } from '@/store/player.store'
 import { ILyric } from '@/types/responses/song'
-import { isDeviceLinux } from '@/utils/desktop'
 
 interface LyricProps {
   lyrics: ILyric
@@ -83,10 +82,8 @@ function SyncedLyrics({ lyrics }: LyricProps) {
             onClick={() => skipToTime(line.startMillisecond)}
             className={clsx(
               'text-shadow-lg my-5 cursor-pointer hover:opacity-100 duration-500',
-              'transition-[opacity,transform,font-size] motion-reduce:transition-none',
-              active ? 'opacity-100' : 'opacity-50',
-              !isDeviceLinux && active && 'scale-125',
-              isDeviceLinux && active && 'text-3xl 2xl:text-4xl',
+              'transition-[opacity,transform] motion-reduce:transition-none',
+              active ? 'opacity-100 scale-125' : 'opacity-50',
             )}
           >
             {line.content}
