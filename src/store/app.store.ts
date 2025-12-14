@@ -81,10 +81,10 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.podcasts.customUrl = value
               })
             },
-            sidebarState: false,
-            setSidebarState: (value) => {
+            collapsibleState: false,
+            setCollapsibleState: (value) => {
               set((state) => {
-                state.podcasts.sidebarState = value
+                state.podcasts.collapsibleState = value
               })
             },
           },
@@ -350,10 +350,10 @@ useAppStore.subscribe(
 export const useAppData = () => useAppStore((state) => state.data)
 export const useAppAccounts = () => useAppStore((state) => state.accounts)
 export const useAppPodcasts = () => useAppStore((state) => state.podcasts)
-export const useAppPodcastSidebarState = () =>
+export const useAppPodcastCollapsibleState = () =>
   useAppStore((state) => ({
-    sidebarState: state.podcasts.sidebarState,
-    setSidebarState: state.podcasts.setSidebarState,
+    collapsibleState: state.podcasts.collapsibleState,
+    setCollapsibleState: state.podcasts.setCollapsibleState,
   }))
 export const useAppPages = () => useAppStore((state) => state.pages)
 export const useAppDesktopData = () =>
