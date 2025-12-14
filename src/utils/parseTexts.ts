@@ -65,12 +65,14 @@ export function sanitizeLinks(text: string) {
   const tagWhiteList = [
     'a',
     'p',
+    'figure',
     'h1',
     'h2',
     'h3',
     'h4',
     'h5',
     'h6',
+    'img',
     'strong',
     'em',
     'ul',
@@ -80,7 +82,7 @@ export function sanitizeLinks(text: string) {
     'span',
     'div',
   ]
-  const attributeWhiteList = ['href', 'class', 'rel', 'target']
+  const attributeWhiteList = ['href', 'class', 'rel', 'target', 'src', 'alt']
 
   // Remove all tags not in the whitelist
   doc.body.querySelectorAll('*').forEach((node) => {
@@ -100,15 +102,31 @@ export function sanitizeLinks(text: string) {
       const link = node as HTMLAnchorElement
       const href = link.getAttribute('href') ?? ''
       
-      // Removes empty spaces and control characters for verification
-      // This prevents bypasses like "j a v a s c r i p t :"
-      const normalizedHref = href.replace(/\s+/g, '').toLowerCase()
+      // Normalize href: decode URL-encoded sequences, remove control characters and whitespace, lowercase
+      // This prevents bypasses like "j a v a s c r i p t :", "%6A%61%76%61%73%63%72%69%70%74", or null bytes
+      let normalizedHref = href
+      try {
+        normalizedHref = decodeURIComponent(normalizedHref)
+      } catch (_) {
+        // If decoding fails, fallback to original
+      }
+      // Remove control characters (ASCII 0-31 and 127-159)
+      normalizedHref = normalizedHref.replace(
+        // biome-ignore lint/suspicious/noControlCharactersInRegex: necessary for URL validation
+        /[\u0000-\u001F\u007F-\u009F]/g,
+        '',
+      )
+      // Remove whitespace
+      normalizedHref = normalizedHref.replace(/\s+/g, '')
+      // Lowercase
+      normalizedHref = normalizedHref.toLowerCase()
 
       // if it's not http, https or mailto, we consider invalid or dangerous
       const isSafeProtocol = /^(https?:|mailto:)/.test(normalizedHref)
 
-      // checks if it's a relative URL, starting with / or . or #
-      const isRelativeUrl = /^(\/|\.|#)/.test(normalizedHref)
+      // checks if it's a relative URL:
+      // absolute path, hash anchor, same-directory, or parent-directory reference
+      const isRelativeUrl = /^(\/#|\.\/|\.\.\/|\/|#)/.test(normalizedHref)
   
       if (!isSafeProtocol && !isRelativeUrl) {
         // If it's not a safe protocol or a relative URL
