@@ -32,53 +32,75 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Check execution logic
+        id: check
+        shell: bash
+        run: |
+          SHOULD_RUN="false"
+
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            SHOULD_RUN="true"
+          else
+            if [[ "${{ matrix.os }}" == "macos-latest" && "${{ inputs.run_mac }}" == "true" ]]; then SHOULD_RUN="true"; fi
+            if [[ "${{ matrix.os }}" == "ubuntu-latest" && "${{ inputs.run_linux }}" == "true" ]]; then SHOULD_RUN="true"; fi
+            if [[ "${{ matrix.os }}" == "windows-latest" && "${{ inputs.run_win }}" == "true" ]]; then SHOULD_RUN="true"; fi
+          fi
+          
+          echo "SHOULD_RUN=$SHOULD_RUN" >> $GITHUB_ENV
+          echo "Decision for ${{ matrix.os }}: $SHOULD_RUN"
+
       - name: Checkout repository
+        if: env.SHOULD_RUN == 'true'
         uses: actions/checkout@v4
 
       - name: Set Release Tag (Manual Workflow Dispatch)
-        if: github.event_name == 'workflow_dispatch'
+        if: env.SHOULD_RUN == 'true' && github.event_name == 'workflow_dispatch'
         shell: bash
         run: echo "GITHUB_REF=refs/tags/${{ inputs.target_tag }}" >> $GITHUB_ENV
 
       - name: Install pnpm
+        if: env.SHOULD_RUN == 'true'
         uses: pnpm/action-setup@v3
         with:
           version: 9.15.2
 
       - name: Setup Node.js and cache
+        if: env.SHOULD_RUN == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: "pnpm"
 
       - name: Install dependencies
+        if: env.SHOULD_RUN == 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Build Main/Renderer
+        if: env.SHOULD_RUN == 'true'
         env:
           MAIN_VITE_DISCORD_CLIENT_ID: ${{ secrets.MAIN_VITE_DISCORD_CLIENT_ID }}
         run: pnpm electron:build
 
       - name: Build and Release (macOS)
-        if: matrix.os == 'macos-latest' && (github.event_name == 'push' || inputs.run_mac == true)
+        if: env.SHOULD_RUN == 'true' && matrix.os == 'macos-latest'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm ci:build:mac
 
       - name: Build and Release (Windows)
-        if: matrix.os == 'windows-latest' && (github.event_name == 'push' || inputs.run_win == true)
+        if: env.SHOULD_RUN == 'true' && matrix.os == 'windows-latest'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm ci:build:win
 
       - name: Install Linux dependencies
-        if: matrix.os == 'ubuntu-latest' && (github.event_name == 'push' || inputs.run_linux == true)
+        if: env.SHOULD_RUN == 'true' && matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y libfuse2
 
       - name: Build and Release (Linux)
-        if: matrix.os == 'ubuntu-latest' && (github.event_name == 'push' || inputs.run_linux == true)
+        if: env.SHOULD_RUN == 'true' && matrix.os == 'ubuntu-latest'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm ci:build:linux
