@@ -65,6 +65,7 @@ export function sanitizeLinks(text: string) {
   const tagWhiteList = [
     'a',
     'p',
+    'u',
     'figure',
     'h1',
     'h2',
@@ -103,7 +104,7 @@ export function sanitizeLinks(text: string) {
       const href = link.getAttribute('href') ?? ''
       
       // Normalize href: decode URL-encoded sequences, remove control characters and whitespace, lowercase
-      // This prevents bypasses like "j a v a s c r i p t :", "%6A%61%76%61%73%63%72%69%70%74", or null bytes
+      // This prevents bypasses like "j a v a s c r i p t :", "%6A%61%76%61%73%63%72%69%74", or null bytes
       let normalizedHref = href
       try {
         normalizedHref = decodeURIComponent(normalizedHref)
@@ -135,6 +136,24 @@ export function sanitizeLinks(text: string) {
       } else {
         link.setAttribute('target', '_blank')
         link.setAttribute('rel', 'noreferrer nofollow')
+      }
+    }
+
+    // Specific handling for img tags
+    if (node.tagName.toLowerCase() === 'img') {
+      const img = node as HTMLImageElement
+      const src = img.getAttribute('src') ?? ''
+
+      let normalizedSrc = src
+      try {
+        normalizedSrc = decodeURIComponent(normalizedSrc)
+      } catch (_) {
+        // If decoding fails, fallback to original
+      }
+
+      // Check for < or > which indicates injected HTML
+      if (/[<>]/.test(normalizedSrc)) {
+        node.remove()
       }
     }
   })
