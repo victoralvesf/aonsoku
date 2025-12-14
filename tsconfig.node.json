@@ -1,13 +1,24 @@
 {
+  "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
   "compilerOptions": {
     "composite": true,
     "skipLibCheck": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "types": [""],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./electron/preload/types.ts",
+      "./electron/env.d.ts"
+    ]
   },
   "include": [
-    "src/manual-chunks.ts",
-    "vite.config.ts"
-  ]
+    "electron.manual-chunks.ts",
+    "electron.vite.config.*",
+    "electron/env.d.ts",
+    "electron/main/**/*",
+    "electron/preload/**/*"
+  ],
+  "exclude": ["src/**/*"]
 }

@@ -1,0 +1,414 @@
+{
+  "menu": {
+    "server": "Server",
+    "serverLogout": "Esci",
+    "language": "Lingua",
+    "about": "Più informazioni"
+  },
+  "sidebar": {
+    "radios": "Radio",
+    "home": "Home",
+    "search": "Cerca…",
+    "albums": "Album",
+    "songs": "Brani",
+    "podcasts": "Podcast",
+    "emptyPlaylist": "Nessuna playlist creata",
+    "miniSearch": "Cerca",
+    "library": "Libreria",
+    "artists": "Artisti",
+    "playlists": "Playlist"
+  },
+  "playlist": {
+    "form": {
+      "labels": {
+        "isPublic": "Pubblica",
+        "isPublicDescription": "Seleziona questa opzione per redere questa playlist pubblica. Questo permette agli altri utenti di vedere e accedere alla tua playlist.",
+        "comment": "Commento",
+        "commentDescription": "Scrivi una descrizione più corta di questa playlist",
+        "name": "Nome"
+      },
+      "create": {
+        "title": "Crea Playlist",
+        "toast": {
+          "error": "Impossibile creare la playlist!",
+          "success": "Playlist creata con successo!"
+        },
+        "button": "Crea"
+      },
+      "removeSong": {
+        "title_one": "Sei sicuro di rimuovere il brano selezionata?",
+        "title_many": "Sei sicuro di rimuovere i brani selezionata?",
+        "title_other": "Sei sicuro di rimuovere i brani selezionata?",
+        "toast": {
+          "success_one": "Brano rimosso con successo!",
+          "success_many": "Brani rimossi con successo!",
+          "success_other": "Brani rimossi con successo!",
+          "error_one": "Impossibile rimuovere il brano!",
+          "error_many": "Impossibile rimuovere i brani!",
+          "error_other": "Impossibile rimuovere i brani!"
+        },
+        "description": "Questa azione non può essere annullata."
+      },
+      "edit": {
+        "button": "Aggiorna",
+        "toast": {
+          "success": "Playlist modificata con successo!",
+          "error": "Impossibile modificare la playlist!"
+        },
+        "title": "Modifica Playlist"
+      },
+      "delete": {
+        "description": "Questa azione non può essere annullata.",
+        "toast": {
+          "error": "Impossibile eliminare la playlist!",
+          "success": "Playlist eliminata con succcesso!"
+        },
+        "title": "Sei sicuro di voler eliminare questa playlist?"
+      },
+      "validations": {
+        "nameLength": "Il nome della playlist deve essere lungo almeno 2 caratteri."
+      }
+    },
+    "duration": "circa {{duration}}",
+    "headline": "Playlist",
+    "songCount_one": "{{count}} brano",
+    "songCount_many": "{{count}} brani",
+    "songCount_other": "{{count}} brani",
+    "refresh": "Aggiorna playlist",
+    "buttons": {
+      "shuffle": "Riproduzione casuale di {{name}}",
+      "options": "Più opzioni per {{name}}",
+      "play": "Riproduci {{name}}"
+    },
+    "noSongList": "Questa playlist non contiene brani!"
+  },
+  "album": {
+    "list": {
+      "filter": {
+        "favorites": "Preferiti",
+        "artist": "Artista",
+        "genre": "Generi",
+        "mostPlayed": "Più ascoltati",
+        "name": "Nome",
+        "recentlyAdded": "Recentemente aggiunti",
+        "recentlyPlayed": "Recentemente riprodotte",
+        "releaseYear": "Anno di Rilascio",
+        "discography": "Discografia",
+        "random": "Casuale",
+        "search": "Cerca"
+      },
+      "empty": {
+        "title": "Oops, nessun album qui!",
+        "info": "Sembra che non ci siano album con questo filtro.",
+        "action": "Magari prova a modificare il filtro?"
+      },
+      "header": {
+        "albumsByArtist": "Album di {{artist}}"
+      },
+      "genre": {
+        "label": "Selziona un genere…",
+        "notFound": "Nessun genere trovato.",
+        "search": "Trova un genere…",
+        "loading": "Caricamento generi…"
+      },
+      "search": {
+        "placeholder": "Cerca album…"
+      }
+    },
+    "info": {
+      "about": "Più informazioni su {{name}}",
+      "lastfm": "Apri in Last.fm",
+      "musicbrainz": "Apri in MusicBrainz"
+    },
+    "buttons": {
+      "like": "Metti nei preferiti {{name}}",
+      "dislike": "Rimuovi {{name}} dai preferiti"
+    },
+    "more": {
+      "listTitle": "Altro da questo artista",
+      "genreTitle": "Altro da {{genre}}",
+      "discography": "Discografia dell'Artista"
+    },
+    "headline": "Album",
+    "table": {
+      "discNumber": "Disco {{number}}"
+    }
+  },
+  "theme": {
+    "black": "Bianco e Nero",
+    "marmalade-beaver": "Marmalade Beaver",
+    "monokai-pro": "Monokai Pro",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "vue-dark": "Vue Scuro",
+    "label": "Tema",
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "system": "Sistema",
+    "one-dark": "One Scuro",
+    "night-owl-light": "Night Owl Chiaro",
+    "noctis-lilac": "Noctis Lilla",
+    "material-theme": "Tema Material",
+    "github-dark": "Github Scuro",
+    "shades-of-purple": "Sfumature di Viola",
+    "nuclear-dark": "Nuclear Scuro",
+    "achiever": "Achiever",
+    "discord": "Discord",
+    "tinacious-design": "Tinacious Design",
+    "dracula": "Dracula",
+    "bearded-solarized": "Bearded Solarized",
+    "vim-dark-soft": "Vim Scuro Leggero"
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Cerca brani…"
+      },
+      "byArtist": "Musica da {{artist}}",
+      "filter": {
+        "clear": "Azzera filtro"
+      }
+    }
+  },
+  "home": {
+    "mostPlayed": "Più ascoltati",
+    "recentlyAdded": "Aggiunti di recente",
+    "explore": "Esplora",
+    "recentlyPlayed": "Ascoltati di recente"
+  },
+  "generic": {
+    "hideDetails": "Nascondi dettagli",
+    "viewAll": "Mostra tutto",
+    "loading": "Caricamento…",
+    "viewMode": {
+      "label": "Modalità visualizzazione",
+      "modes": {
+        "list": "Lista",
+        "poster": "Poster"
+      }
+    },
+    "beta": "Beta",
+    "showDetails": "Mostra dettagli",
+    "seeMore": "Per saperne di più"
+  },
+  "artist": {
+    "headline": "Artista",
+    "buttons": {
+      "play": "Riproduci la radio di {{artist}}",
+      "shuffle": "Riproduci la radio di {{artist}} casualmente",
+      "options": "Più opzioni per {{artist}}"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} album",
+      "albumsCount_many": "{{count}} album",
+      "albumsCount_other": "{{count}} album"
+    },
+    "recentAlbums": "Album recenti",
+    "relatedArtists": "Artisti correlati",
+    "topSongs": "Popolari"
+  },
+  "podcasts": {
+    "filters": {
+      "podcasts": {
+        "orderBy": {
+          "title": "Titolo",
+          "episodeCount": "Numero di Episodi"
+        }
+      },
+      "episodes": {
+        "search": "Cerca episodi…",
+        "orderBy": {
+          "publishDate": "Data di pubblicazione",
+          "title": "Titolo",
+          "duration": "Durata"
+        }
+      }
+    },
+    "form": {
+      "addButton": "Aggiungi Podcast",
+      "search": "Cerca podcast…",
+      "dialog": {
+        "title": "Crea Podcast",
+        "feedUrl": "URL del feed",
+        "message": "Puoi aggiungere più URL, uno per riga.",
+        "saveButton": "Salva",
+        "validations": {
+          "url": "Per favore fornisci URL validi.",
+          "urlLength": "Gli URL devono avere almeno 10 caratteri",
+          "protocol": "Gli URL devono cominciare con http:// o https://",
+          "atLeastOneUrl": "Per favore fornisci almeno un URL."
+        }
+      },
+      "latestEpisodes": "Ultimi episodi",
+      "toasts": {
+        "success": "Il podcast è stato creato con successo! Sarà disponibile all'ascolto tra pochi minuti!",
+        "error": "Creazione del podcast fallita!"
+      }
+    },
+    "emptyPage": {
+      "message": "Nessun podcast aggiunto",
+      "description": "Sembra che tu non abbia ancora aggiunto nessun podcast. Aggiungine uno sopra!"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "Nessun episodio disponibile",
+        "description": "Prova ad aggiungere più podcast.",
+        "goToPodcasts": "Vai ai Podcast"
+      }
+    },
+    "emptyResults": {
+      "title": "Nessun risultato trovato.",
+      "info": "Non si sono potuti trovare podcast che corrispondono ai termini della tua ricerca.",
+      "action": "Per favore controlla l'ortografia della tua ricerca o prova con altre parole chiave."
+    },
+    "header": {
+      "episodeCount_one": "{{count}} episodio",
+      "episodeCount_many": "{{count}} episodi",
+      "episodeCount_other": "{{count}} episodi",
+      "feed": "Feed",
+      "website": "Sito Ufficiale",
+      "unfollow": {
+        "tooltip": "Smetti di seguire {{title}}",
+        "dialog": {
+          "title": "Sei sicuro di voler smettere di seguire questo podcast?",
+          "description": "Per ascoltare questo podcast di nuovo in futuro, dovrai ricrearlo."
+        },
+        "toasts": {
+          "success": "Hai smesso di seguire il podcast con successo!",
+          "error": "Si è verificato un errore durante il tentativo di rimuovere il podcast. Per favore riprova."
+        }
+      }
+    },
+    "list": {
+      "episodes": "Episodi",
+      "notFoundMessage": "Questo podcast non ha ancora nessun episodio!",
+      "progress": {
+        "remainingTime": "{{time}} rimanente",
+        "completed": "Completato"
+      }
+    }
+  },
+  "login": {
+    "form": {
+      "connect": "Connessione",
+      "connecting": "Connessione in corso…",
+      "server": "Server",
+      "description": "Collegati al tuo server Subsonic.",
+      "url": "URL",
+      "urlDescription": "Questo è l'URL del tuo server",
+      "username": "Nome utente",
+      "usernamePlaceholder": "Il tuo nome utente",
+      "password": "Password",
+      "validations": {
+        "url": "Inserisci un URL valido.",
+        "protocol": "L'URL deve iniziare con http:// o http://",
+        "username": "Si prega di fornire un nome utente",
+        "usernameLength": "Il nome utente deve essere di almeno 2 caratteri.",
+        "password": "Si prega di fornire una password",
+        "passwordLength": "La password deve essere di almeno 2 caratteri."
+      }
+    }
+  },
+  "table": {
+    "columns": {
+      "title": "Titolo",
+      "albumArtist": "Artista Album",
+      "artist": "Artista",
+      "contributors": "Contributori",
+      "album": "Album",
+      "year": "Anno",
+      "duration": "Durata",
+      "plays": "Riproduzioni",
+      "lastPlayed": "Ultima riproduzione",
+      "bpm": "BPM",
+      "bitrate": "Bitrate",
+      "quality": "Qualità",
+      "name": "Nome",
+      "albumCount": "Numero di album",
+      "songCount": "Numero di canzoni",
+      "comment": "Commento",
+      "public": "Pubblico",
+      "track": "Traccia",
+      "genres": "Generi",
+      "size": "Dimensione",
+      "codec": "Codec",
+      "path": "Percorso",
+      "favorite": "Preferito",
+      "recordLabel": "Etichetta discografica",
+      "discNumber": "Numero di disco",
+      "trackGain": "Gain della traccia",
+      "trackPeak": "Picco della traccia",
+      "albumGain": "Gain dell'album",
+      "albumPeak": "Picco dell'album",
+      "channelCount": "Numero di canali",
+      "samplingRate": "Frequenza di campionamento",
+      "bitDepth": "Profondità di bit"
+    },
+    "buttons": {
+      "play": "Riproduci {{title}} di {{artist}}",
+      "pause": "Metti in pausa {{title}} di {{artist}}"
+    },
+    "lastPlayed": "{{date}} fa",
+    "pagination": {
+      "rowsPerPage": "Righe per pagina",
+      "currentPage": "Pagina {{currentPage}} di {{totalPages}}",
+      "screenReader": {
+        "firstPage": "Vai alla prima pagina",
+        "previousPage": "Vai alla pagina precedente",
+        "nextPage": "Vai alla pagina successiva",
+        "lastPage": "Vai all'ultima pagina"
+      }
+    },
+    "sort": {
+      "asc": "Crescente",
+      "desc": "Decrescente",
+      "reset": "Resetta"
+    },
+    "menu": {
+      "selectedCount_one": "{{count}} selezionato",
+      "selectedCount_many": "{{count}} selezionati",
+      "selectedCount_other": "{{count}} selezionati"
+    }
+  },
+  "fullscreen": {
+    "noLyrics": "Nessun testo trovato",
+    "loadingLyrics": "Cercando i testi…",
+    "queue": "Coda",
+    "playing": "In riproduzione",
+    "lyrics": "Testi",
+    "switchButton": "Passa a Riproduttore Grande"
+  },
+  "logout": {
+    "dialog": {
+      "title": "Pronto a salutarci per ora?",
+      "description": "Confermare per eseguire il logout.",
+      "cancel": "Cancella",
+      "confirm": "Continua"
+    }
+  },
+  "toast": {
+    "server": {
+      "success": "Il server è stato salvato con successo!",
+      "error": "La comunicazione con il server è fallita!"
+    }
+  },
+  "command": {
+    "inputPlaceholder": "Cerca un album, un artista o una canzone",
+    "noResults": "Nessun risultato trovato.",
+    "commands": {
+      "heading": "Comandi",
+      "pages": "Vai alla pagina",
+      "theme": "Tema del cambiamento"
+    },
+    "pages": "Pagine"
+  },
+  "player": {
+    "noSongPlaying": "Nessuna canzone in riproduzione",
+    "noRadioPlaying": "Nessuna radio in riproduzione",
+    "tooltips": {
+      "shuffle": {
+        "enable": "Attiva riproduzione random",
+        "disable": "Disattiva riproduzione random"
+      }
+    }
+  }
+}

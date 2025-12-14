@@ -210,6 +210,7 @@
   },
   "podcasts": {
     "form": {
+      "all": "Navegar",
       "latestEpisodes": "Últimos Episódios",
       "addButton": "Adicionar Podcast",
       "search": "Buscar podcasts…",
@@ -569,6 +570,9 @@
     },
     "navigation": {
       "label": "Navegação"
+    },
+    "sidebar": {
+      "toggle": "Alternar barra lateral"
     }
   },
   "songInfo": {
@@ -594,9 +598,9 @@
   "about": {
     "client": "Cliente",
     "server": "Servidor",
-    "version": "Versão:",
-    "type": "Tipo:",
-    "apiVersion": "Versão da API:",
+    "version": "Versão",
+    "type": "Tipo",
+    "apiVersion": "Versão da API",
     "toasts": {
       "copy": "Link copiado para a área de transferência!"
     }
@@ -612,6 +616,8 @@
       "language": "Linguagem & Região",
       "audio": "Reprodutor & Áudio",
       "content": "Conteúdo",
+      "accounts": "Contas",
+      "desktop": "Aplicativo para Computador",
       "privacy": "Privacidade & Segurança"
     },
     "appearance": {
@@ -697,6 +703,25 @@
           "error": "Nome de usuário e URL do servidor são obrigatórios.",
           "user": "Nome de Usuário",
           "url": "URL do Servidor"
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "group": "Discord Rich Presence",
+        "description": "Compartilhe a música que está ouvindo com seus amigos no Discord.",
+        "enabled": {
+          "label": "Habilitar Integração"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Geral",
+        "description": "Personalize as preferências do aplicativo para computador.",
+        "tray": {
+          "label": "Minimizar para a Bandeja",
+          "info": "Quando ativado, o aplicativo será minimizado para a bandeja do sistema em vez de fechar ao clicar no botão de fechar."
         }
       }
     }

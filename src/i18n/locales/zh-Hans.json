@@ -29,7 +29,15 @@
     "viewAll": "查看所有",
     "loading": "加载中…",
     "showDetails": "显示详情",
-    "hideDetails": "隐藏详情"
+    "hideDetails": "隐藏详情",
+    "viewMode": {
+      "modes": {
+        "poster": "海报",
+        "list": "列表"
+      },
+      "label": "视图模式"
+    },
+    "beta": "Beta"
   },
   "theme": {
     "label": "主题",
@@ -215,7 +223,13 @@
       "comment": "注解",
       "public": "公开",
       "favorite": "收藏",
-      "albumGain": "专辑增益"
+      "albumGain": "专辑增益",
+      "recordLabel": "唱片厂牌",
+      "contributors": "贡献者",
+      "albumArtist": "专辑艺术家",
+      "channelCount": "声道数",
+      "samplingRate": "采样率",
+      "bitDepth": "位深度"
     },
     "buttons": {
       "play": "播放 {{artist}} 的 {{title}}",
@@ -305,7 +319,17 @@
       "pause": "暂停",
       "next": "下一曲",
       "previous": "上一曲",
-      "dislike": "取消喜欢 {{artist}} 的 {{song}}"
+      "dislike": "取消喜欢 {{artist}} 的 {{song}}",
+      "volume": {
+        "mute": "静音",
+        "unmute": "取消静音"
+      },
+      "forward": "前进 {{amount}} 秒",
+      "rewind": "倒退 {{amount}} 秒",
+      "miniPlayer": {
+        "open": "打开 Mini 播放器",
+        "close": "关闭 Mini 播放器"
+      }
     },
     "noSongPlaying": "没有正在播放的歌曲"
   },
@@ -323,7 +347,12 @@
     },
     "play": "播放",
     "addLast": "添加到队列末尾",
-    "info": "获取信息"
+    "info": "获取信息",
+    "goto": {
+      "episode": "前往单集",
+      "podcast": "前往播客"
+    },
+    "markAsPlayed": "标记为已播放"
   },
   "radios": {
     "label": "电台",
@@ -418,7 +447,12 @@
       "shuffle": "随机播放",
       "repeat": "循环播放",
       "previous": "跳到上一曲",
-      "next": "跳到下一曲"
+      "next": "跳到下一曲",
+      "lowerVolume": "降低音量",
+      "raiseVolume": "提高音量"
+    },
+    "navigation": {
+      "label": "导航"
     }
   },
   "songInfo": {
@@ -438,14 +472,14 @@
     }
   },
   "about": {
-    "version": "版本：",
-    "type": "类型：",
+    "version": "版本",
+    "type": "类型",
     "toasts": {
       "copy": "链接已经复制到剪贴板！"
     },
     "client": "客户端",
     "server": "服务器",
-    "apiVersion": "API 版本："
+    "apiVersion": "API 版本"
   },
   "dayjs": {
     "relativeTime": {
@@ -472,7 +506,9 @@
   },
   "queue": {
     "title": "队列",
-    "clear": "清空队列"
+    "clear": "清空队列",
+    "open": "打开队列",
+    "close": "关闭队列"
   },
   "warnings": {
     "reload": "有一首歌曲正在播放！\n你确定要重新加载页面吗？",
@@ -487,7 +523,8 @@
       "language": "语言和地区",
       "audio": "播放器和音频",
       "content": "内容",
-      "appearance": "外观"
+      "appearance": "外观",
+      "privacy": "隐私和安全"
     },
     "appearance": {
       "general": {
@@ -497,6 +534,18 @@
         },
         "group": "通用",
         "description": "自定义 app 的外观和显示行为。"
+      },
+      "colors": {
+        "group": "动态颜色",
+        "queue": {
+          "intensity": "颜色强度等级",
+          "label": "队列和歌词"
+        },
+        "bigPlayer": {
+          "label": "大播放器",
+          "blurSize": "图片模糊大小"
+        },
+        "description": "选择是否将当前播放专辑封面中的主色调作为背景。"
       }
     },
     "audio": {
@@ -513,6 +562,10 @@
         "defaultGain": {
           "info": "该增益设置会应用于未包含回放增益元数据的歌曲，以确保音频响度统一。增益推荐范围介于-10 dB至-1 dB之间。",
           "label": "默认增益（dB）"
+        },
+        "error": {
+          "message": "使用回放增益播放曲目时出现错误。",
+          "button": "重试"
         }
       },
       "lyrics": {
@@ -531,24 +584,50 @@
         "radios": {
           "section": "隐藏电台区域"
         }
+      },
+      "podcast": {
+        "description": "开启与 Aonsoku Podcasts 服务的集成。",
+        "group": "播客",
+        "credentials": {
+          "url": "服务器 URL",
+          "error": "用户名和服务器 URL 是必需的。",
+          "user": "用户名",
+          "label": "使用已登录用户和服务器 URL"
+        },
+        "enabled": {
+          "label": "开启集成"
+        },
+        "service": {
+          "url": "播客服务 URL"
+        }
       }
     },
-    "label": "设置"
+    "label": "设置",
+    "privacy": {
+      "services": {
+        "group": "外部服务",
+        "lrclib": {
+          "label": "LRCLIB",
+          "info": "LRCLIB 用于查找歌词。"
+        },
+        "description": "管理 Aonsoku 可以访问的外部服务。"
+      }
+    }
   },
   "podcasts": {
     "form": {
       "latestEpisodes": "最新单集",
       "addButton": "添加播客",
       "dialog": {
-        "message": "可以添加多个URL，每行一个。",
+        "message": "可以添加多个 URL，每行一个。",
         "saveButton": "保存",
         "validations": {
-          "url": "请输入有效的URL。",
-          "protocol": "URL必须以 http:// 或 https:// 开头",
-          "urlLength": "URL长度须不少于10个字符",
-          "atLeastOneUrl": "请至少输入一个URL。"
+          "url": "请输入有效的 URL。",
+          "protocol": "URL 必须以 http:// 或 https:// 开头",
+          "urlLength": "URL 长度须不少于 10 个字符",
+          "atLeastOneUrl": "请至少输入一个 URL。"
         },
-        "feedUrl": "订阅源URL",
+        "feedUrl": "订阅源 URL",
         "title": "创建播客"
       },
       "toasts": {
@@ -556,6 +635,62 @@
         "error": "创建播客失败！"
       },
       "search": "搜索播客…"
+    },
+    "emptyPage": {
+      "message": "还没有添加播客",
+      "description": "看起来你还没有添加任何播客。请点击上方按钮添加！"
+    },
+    "emptyResults": {
+      "title": "没有找到任何结果。",
+      "info": "不能找到任何匹配你的搜索词的播客。",
+      "action": "请检查你的拼写或者尝试其它关键词。"
+    },
+    "filters": {
+      "episodes": {
+        "search": "搜索单集…",
+        "orderBy": {
+          "publishDate": "发布日期",
+          "title": "标题",
+          "duration": "时长"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "标题",
+          "episodeCount": "单集数量"
+        }
+      }
+    },
+    "header": {
+      "unfollow": {
+        "dialog": {
+          "description": "如果想要再次收听这个播客，你需要重新创建它。",
+          "title": "你确定你要取消关注这个播客吗？"
+        },
+        "toasts": {
+          "error": "尝试取消关注这个播客时发生了错误。请稍候再试。",
+          "success": "你已经成功取消关注这个播客！"
+        },
+        "tooltip": "取消关注 {{title}}"
+      },
+      "episodeCount_other": "{{count}} 集",
+      "website": "官方网站",
+      "feed": "信息流"
+    },
+    "list": {
+      "progress": {
+        "remainingTime": "剩余 {{time}}",
+        "completed": "已完成"
+      },
+      "notFoundMessage": "这个播客还没有任何单集！",
+      "episodes": "单集"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "没有找到任何单集",
+        "description": "请尝试添加更多播客。",
+        "goToPodcasts": "前往播客"
+      }
     }
   }
 }

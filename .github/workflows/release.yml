@@ -1,4 +1,4 @@
-name: 'publish'
+name: Release Desktop
 
 on:
   push:
@@ -6,45 +6,22 @@ on:
       - 'v*'
 
 jobs:
-  publish-tauri:
+  release:
     permissions:
       contents: write
     strategy:
-      fail-fast: false
       matrix:
-        include:
-          - platform: 'macos-latest'
-            # for Arm based macs (M1 and above).
-            args: '--target aarch64-apple-darwin'
-          - platform: 'macos-latest'
-            # for Intel based macs.
-            args: '--target x86_64-apple-darwin'
-          - platform: 'ubuntu-22.04'
-            args: ''
-          - platform: 'windows-latest'
-            args: ''
-    runs-on: ${{ matrix.platform }}
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: install dependencies (ubuntu only)
-        # This must match the platform value defined above.
-        if: matrix.platform == 'ubuntu-22.04'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev librsvg2-dev patchelf
-
-      - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable
+      - name: Setup Node.js and cache
+        uses: actions/setup-node@v4
         with:
-          # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
-
-      - name: Rust cache
-        uses: swatinem/rust-cache@v2
-        with:
-          workspaces: "./src-tauri -> target"
+          node-version: 22
+          cache: "pnpm"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v3
@@ -64,25 +41,33 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-        
-      - name: Setup node and setup cache
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
 
-      - name: install frontend dependencies
-        run: pnpm install --ignore-scripts
+      - name: Install dependencies
+        run: pnpm install
 
-      - uses: tauri-apps/tauri-action@v0
+      - name: Build Main/Renderer
+        run: pnpm electron:build
+
+      - name: Build and Release (macOS)
+        if: matrix.os == 'macos-latest'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
-          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-        with:
-          tagName: ${{ github.ref_name }}
-          releaseName: 'Aonsoku ${{ github.ref_name }}'
-          releaseBody: 'See the assets to download this version and install.'
-          releaseDraft: true
-          prerelease: false
-          args: ${{ matrix.args }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm ci:build:mac
+
+      - name: Build and Release (Windows)
+        if: matrix.os == 'windows-latest'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm ci:build:win
+
+      - name: Install Linux dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rpm
+
+      - name: Build and Release (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm ci:build:linux

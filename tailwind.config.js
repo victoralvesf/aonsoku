@@ -22,8 +22,6 @@ module.exports = {
       },
       spacing: {
         header: 'var(--header-height)',
-        sidebar: 'var(--sidebar-width)',
-        'mini-sidebar': 'var(--mini-sidebar-width)',
         player: 'var(--player-height)',
         content: 'var(--content-height)',
         'shadow-header': 'var(--shadow-header-height)',
@@ -132,11 +130,22 @@ module.exports = {
           'linear-gradient(180deg, transparent 0%, rgb(0, 0, 0) 25%, rgb(0, 0, 0) 75%, transparent 100%)',
         lyrics:
           'linear-gradient(180deg, transparent 0%, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 90%, transparent 100%)',
+        'unsynced-lyrics':
+          'linear-gradient(180deg, transparent 0%, rgb(0, 0, 0) 4%, rgb(0, 0, 0) 96%, transparent 100%)',
       },
       boxShadow: {
         'custom-3': '0 0 3px rgba(255, 255, 255, 0.03)',
         'custom-5': '0 0 5px rgba(255, 255, 255, 0.05)',
         'header-image': '0 4px 35px rgba(0, 0, 0, 0.6)',
+      },
+      textShadow: {
+        xs: '0px 1px 1px rgb(0 0 0 / 0.2)',
+        sm: '0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075), 0px 2px 2px rgb(0 0 0 / 0.075)',
+        md: '0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1), 0px 2px 4px rgb(0 0 0 / 0.1)',
+        lg: '0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1), 0px 4px 8px rgb(0 0 0 / 0.1)',
+        xl: '0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 4px rgb(0 0 0 / 0.1), 0px 6px 12px rgb(0 0 0 / 0.1)',
+        '2xl':
+          '0px 2px 4px rgb(0 0 0 / 0.15), 0px 6px 8px rgb(0 0 0 / 0.15), 0px 10px 24px rgb(0 0 0 / 0.15)',
       },
       screens: {
         'mid-player': { raw: '(min-height: 133px) and (max-height: 170px)' },
@@ -158,6 +167,20 @@ module.exports = {
         },
         {
           values: theme('maskImage'),
+        },
+      )
+    },
+    function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'text-shadow': (value) => {
+            return {
+              textShadow: value,
+            }
+          },
+        },
+        {
+          values: theme('textShadow'),
         },
       )
     },

@@ -462,9 +462,9 @@
   "about": {
     "client": "Klient",
     "server": "Server",
-    "version": "Version:",
-    "type": "Typ:",
-    "apiVersion": "API version:",
+    "version": "Version",
+    "type": "Typ",
+    "apiVersion": "API version",
     "toasts": {
       "copy": "Länken kopierad till urklipp!"
     }
@@ -528,8 +528,8 @@
   },
   "dayjs": {
     "relativeTime": {
-      "future": "i %er",
-      "past": "%er sedan",
+      "future": "i %s",
+      "past": "%s sedan",
       "s": "några sekunder",
       "m": "1 minut",
       "mm": "%d minuter",

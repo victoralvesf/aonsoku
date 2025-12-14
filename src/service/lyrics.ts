@@ -1,3 +1,4 @@
+import { get, set } from 'idb-keyval'
 import { httpClient } from '@/api/httpClient'
 import { usePlayerStore } from '@/store/player.store'
 import { LyricsResponse } from '@/types/responses/song'
@@ -22,13 +23,25 @@ interface LRCLibResponse {
 async function getLyrics(getLyricsData: GetLyricsData) {
   const { preferSyncedLyrics } = usePlayerStore.getState().settings.lyrics
 
+  const cacheKey = getLyricsCacheKey(getLyricsData, preferSyncedLyrics)
+
+  const cachedLyrics = await get(cacheKey)
+
+  if (cachedLyrics) {
+    return cachedLyrics
+  }
+
   // If the user prefers synced lyrics, attempt to fetch them from the LrcLib first.
   // If lyrics are found, return them immediately.
   // If not, proceed with the default flow.
   if (preferSyncedLyrics) {
     const lyrics = await getLyricsFromLRCLib(getLyricsData)
 
-    if (lyrics.value !== '') return lyrics
+    if (lyrics.value !== '') {
+      set(cacheKey, lyrics)
+
+      return lyrics
+    }
   }
 
   const response = await httpClient<LyricsResponse>('/getLyrics', {
@@ -47,7 +60,17 @@ async function getLyrics(getLyricsData: GetLyricsData) {
   // Note: If `preferSyncedLyrics` is true and we reached this point, it means the LrcLib
   // does not contains lyrics for the track, so the fallback is unnecessary in that case.
   if (lyricNotFound && !preferSyncedLyrics) {
-    return getLyricsFromLRCLib(getLyricsData)
+    const lyrics = await getLyricsFromLRCLib(getLyricsData)
+
+    if (lyrics.value !== '') {
+      set(cacheKey, lyrics)
+    }
+
+    return lyrics
+  }
+
+  if (response?.data.lyrics) {
+    set(cacheKey, response.data.lyrics)
   }
 
   return response?.data.lyrics
@@ -121,6 +144,17 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
 
 function formatLyrics(lyrics: string) {
   return lyrics.trim().replaceAll('\r\n', '\n')
+}
+
+function getLyricsCacheKey(
+  getLyricsData: GetLyricsData,
+  preferSyncedLyrics: boolean,
+) {
+  const { artist, title } = getLyricsData
+
+  const type = preferSyncedLyrics ? 'synced' : 'plain'
+
+  return `lyrics:${artist}:${title}:${type}`
 }
 
 export const lyrics = {

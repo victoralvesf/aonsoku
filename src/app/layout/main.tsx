@@ -7,11 +7,11 @@ export function MainRoutes() {
   const { pathname } = useLocation() as Location
 
   useEffect(() => {
-    scrollPageToTop()
+    if (pathname) scrollPageToTop()
   }, [pathname])
 
   return (
-    <main className="flex h-full pl-mini-sidebar 2xl:pl-sidebar pt-header pb-player">
+    <main className="flex h-full">
       <ScrollArea
         id="main-scroll-area"
         className="w-full bg-background-foreground"

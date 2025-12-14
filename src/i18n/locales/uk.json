@@ -1,0 +1,63 @@
+{
+  "home": {
+    "recentlyAdded": "Нещодавно додані",
+    "mostPlayed": "Найчастіше відтворювані",
+    "explore": "Відкрити для себе",
+    "recentlyPlayed": "Нещодавно відтворені"
+  },
+  "generic": {
+    "viewAll": "Показати все",
+    "viewMode": {
+      "modes": {
+        "poster": "Постер",
+        "list": "Список"
+      },
+      "label": "Режим перегляду"
+    },
+    "seeMore": "Показати більше",
+    "showDetails": "Показати деталі",
+    "loading": "Завантаження…",
+    "beta": "Beta",
+    "hideDetails": "Приховати деталі"
+  },
+  "playlist": {
+    "headline": "Список відтворення",
+    "refresh": "Оновити список відтворення",
+    "buttons": {
+      "play": "Відтворити {{name}}"
+    },
+    "duration": "приблизно {{duration}}",
+    "songCount_one": "{{count}} пісня",
+    "songCount_few": "{{count}} пісні",
+    "songCount_many": "{{count}} пісень"
+  },
+  "sidebar": {
+    "home": "Головна",
+    "search": "Пошук…",
+    "miniSearch": "Пошук",
+    "library": "Бібліотека",
+    "artists": "Виконавці",
+    "songs": "Пісні",
+    "albums": "Альбоми",
+    "playlists": "Списки відтворення",
+    "radios": "Радіо",
+    "podcasts": "Подкасти",
+    "emptyPlaylist": "Ще не було створено жодного списку відтворення"
+  },
+  "menu": {
+    "server": "Сервер",
+    "about": "Про додаток",
+    "serverLogout": "Вийти",
+    "language": "Мова"
+  },
+  "theme": {
+    "label": "Тема",
+    "system": "Системна",
+    "black": "Чорно-біла",
+    "dark": "Темна",
+    "one-dark": "",
+    "light": "Світла",
+    "vue-dark": "Vue Dark",
+    "vim-dark-soft": "Vim Dark Soft"
+  }
+}

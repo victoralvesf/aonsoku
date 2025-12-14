@@ -7,15 +7,15 @@ import { usePlaylistRemoveSong } from '@/store/playlists.store'
 import { useSongInfo } from '@/store/ui.store'
 import { UpdateParams } from '@/types/responses/playlist'
 import { ISong } from '@/types/responses/song'
+import { isDesktop } from '@/utils/desktop'
 import { queryKeys } from '@/utils/queryKeys'
-import { isTauri } from '@/utils/tauriTools'
 import { useDownload } from './use-download'
 
 type SongIdToAdd = Pick<UpdateParams, 'songIdToAdd'>['songIdToAdd']
 
 export function useOptions() {
   const { setNextOnQueue, setLastOnQueue, setSongList } = usePlayerActions()
-  const { downloadBrowser, downloadTauri } = useDownload()
+  const { downloadBrowser, downloadDesktop } = useDownload()
   const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
   const matches = useMatches()
   const { setSongId, setModalOpen } = useSongInfo()
@@ -39,8 +39,9 @@ export function useOptions() {
 
   function startDownload(id: string) {
     const url = getDownloadUrl(id)
-    if (isTauri()) {
-      downloadTauri(url, id)
+
+    if (isDesktop()) {
+      downloadDesktop(url, id)
     } else {
       downloadBrowser(url)
     }

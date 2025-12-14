@@ -4,10 +4,10 @@ import {
   Episode,
   Episodes,
   EpisodeWithPodcast,
+  Playback,
   Podcast,
   Podcasts,
   PodcastWithEpisodes,
-  Playback,
 } from '@/types/responses/podcasts'
 
 type PodcastOrderBy = 'title' | 'episode_count'

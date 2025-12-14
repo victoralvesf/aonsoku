@@ -1,7 +1,6 @@
 import omit from 'lodash/omit'
 import { useAppStore } from '@/store/app.store'
-import { isLinux } from '@/utils/osType'
-import { isTauri } from '@/utils/tauriTools'
+// import { isDesktop } from '@/utils/desktop'
 import { FetchOptions } from './httpClient'
 
 function getBaseUrl() {
@@ -85,12 +84,13 @@ export async function podcastClient<T>(
 }
 
 export function getProxyURL(url: string) {
-  if (isTauri() && !isLinux) {
-    const proxied = new URL('/proxy', 'http://127.0.0.1:12720')
-    proxied.searchParams.append('url', url)
+  // TODO: wait to confirm the need for a proxy server
+  // if (isDesktop()) {
+  //   const proxied = new URL('/proxy', 'http://127.0.0.1:12720')
+  //   proxied.searchParams.append('url', url)
 
-    return proxied.toString()
-  }
+  //   return proxied.toString()
+  // }
 
   return url
 }

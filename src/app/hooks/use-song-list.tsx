@@ -22,13 +22,17 @@ export function useSongList() {
       artistCount: 0,
     })
 
-    if (response?.song) return response.song
+    if (!response || !response.song) return undefined
+
+    return response.song
   }
 
   async function getAlbumSongs(albumId: string) {
     const songs = await subsonic.albums.getOne(albumId)
 
-    if (songs?.song) return songs.song
+    if (!songs || !songs.song) return undefined
+
+    return songs.song
   }
 
   return {

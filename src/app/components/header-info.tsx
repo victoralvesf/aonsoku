@@ -35,12 +35,12 @@ export function HeaderInfoGenerator({
               {item.type === 'link' ? (
                 <Link
                   to={item.link}
-                  className="flex opacity-80 drop-shadow hover:opacity-100 hover:underline"
+                  className="flex opacity-80 text-shadow-md hover:opacity-100 hover:underline"
                 >
                   {item.content}
                 </Link>
               ) : (
-                <p className="opacity-80 drop-shadow">{item.content}</p>
+                <p className="opacity-80 text-shadow-md">{item.content}</p>
               )}
               {index < array.length - 1 && <Dot />}
             </Fragment>

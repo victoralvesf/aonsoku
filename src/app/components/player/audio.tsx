@@ -1,9 +1,9 @@
 import {
   ComponentPropsWithoutRef,
   RefObject,
-  useMemo,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +18,6 @@ import {
   useReplayGainState,
 } from '@/store/player.store'
 import { logger } from '@/utils/logger'
-import { isLinux } from '@/utils/osType'
 import { calculateReplayGain, ReplayGainParams } from '@/utils/replayGain'
 
 type AudioPlayerProps = ComponentPropsWithoutRef<'audio'> & {
@@ -53,7 +52,7 @@ export function AudioPlayer({
 
   const { resumeContext, setupGain } = useAudioContext(audioRef.current)
 
-  const ignoreGain = !isSong || replayGainError || isLinux
+  const ignoreGain = !isSong || replayGainError
 
   useEffect(() => {
     if (ignoreGain || !audioRef.current) return
@@ -142,7 +141,7 @@ export function AudioPlayer({
   }, [handleRadioError, handleSongError, isRadio, isSong])
 
   const crossOrigin = useMemo(() => {
-    if (isLinux || !isSong || replayGainError) return undefined
+    if (!isSong || replayGainError) return undefined
 
     return 'anonymous'
   }, [isSong, replayGainError])

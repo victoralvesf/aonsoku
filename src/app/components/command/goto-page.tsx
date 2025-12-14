@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { CommandGroup, CommandItem } from '@/app/components/ui/command'
-import { libraryItems, mainMenuItems, SidebarItems } from '@/app/layout/sidebar'
+import { libraryItems, mainNavItems, SidebarItems } from '@/app/layout/sidebar'
 import { useAppStore } from '@/store/app.store'
 import { GridViewWrapperType, resetGridClickedItem } from '@/utils/gridTools'
 import { CommandItemProps } from './command-menu'
@@ -12,7 +12,7 @@ export function CommandGotoPage({ runCommand }: CommandItemProps) {
   const hideRadiosSection = useAppStore().pages.hideRadiosSection
   const isPodcastsActive = useAppStore().podcasts.active
 
-  const pages = [...mainMenuItems, ...libraryItems]
+  const pages = [...mainNavItems, ...libraryItems]
 
   return (
     <CommandGroup heading={t('command.pages')}>

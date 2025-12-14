@@ -65,7 +65,7 @@ export default function PlaylistsPage() {
       {!showTable && <EmptyPlaylistsPage />}
 
       {showTable && (
-        <ListWrapper className="pt-[--shadow-header-distance]">
+        <ListWrapper>
           <DataTable
             columns={columns}
             data={playlists}

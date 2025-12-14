@@ -41,9 +41,9 @@
       "removeSong": {
         "description": "Cette action ne peut pas être annulée.",
         "toast": {
-          "error_one": "Echec de la suppression du titre !",
-          "error_many": "Echec de la suppression des titres !",
-          "error_other": "Echec de la suppression des titres !",
+          "error_one": "Échec de la suppression du titre !",
+          "error_many": "Échec de la suppression des titres !",
+          "error_other": "Échec de la suppression des titres !",
           "success_one": "Titre supprimé avec succès !",
           "success_many": "Titres supprimés avec succès !",
           "success_other": "Titres supprimés avec succès !"
@@ -148,7 +148,15 @@
     "viewAll": "Tout voir",
     "showDetails": "Afficher les détails",
     "hideDetails": "Masquer les détails",
-    "loading": "Chargement en cours…"
+    "loading": "Chargement en cours…",
+    "viewMode": {
+      "modes": {
+        "list": "Liste",
+        "poster": "Affiche"
+      },
+      "label": "Mode d'affichage"
+    },
+    "beta": "Bêta"
   },
   "home": {
     "recentlyAdded": "Ajoutés récemment",
@@ -239,7 +247,7 @@
   "songs": {
     "list": {
       "search": {
-        "placeholder": "Rechercher des titres …"
+        "placeholder": "Rechercher des titres…"
       },
       "filter": {
         "clear": "Supprimer le filtre"
@@ -361,7 +369,7 @@
     "download": "Télécharger",
     "play": "Lecture",
     "playNext": "Lecture suivante",
-    "info": "Plus d'informations",
+    "info": "Plus d'infos",
     "goto": {
       "episode": "Aller à l'épisode",
       "podcast": "Aller au podcast"
@@ -429,7 +437,9 @@
       "language": "Langue et région",
       "content": "Contenu",
       "audio": "Lecteur et audio",
-      "privacy": "Confidentialité et sécurité"
+      "privacy": "Confidentialité et sécurité",
+      "accounts": "Comptes",
+      "desktop": "Application de bureau"
     },
     "appearance": {
       "general": {
@@ -452,10 +462,12 @@
         "group": "Couleurs dynamiques",
         "description": "Sélectionnez si l'application doit utiliser la couleur dominante de la pochette de l'album en cours de lecture comme arrière-plan.",
         "queue": {
-          "label": "File d'attente et paroles"
+          "label": "File d'attente et paroles",
+          "intensity": "Niveau d'intensité des couleurs"
         },
         "bigPlayer": {
-          "label": "Grand Lecteur"
+          "label": "Grand Lecteur",
+          "blurSize": "Taille du floutage des images"
         }
       }
     },
@@ -467,6 +479,20 @@
           "info": "LRCLIB est utilisé pour trouver les paroles."
         },
         "description": "Gérer les services externes auxquels Aonsoku peut accéder."
+      }
+    },
+    "desktop": {
+      "general": {
+        "description": "Personnaliser les préférences pour l'application de bureau.",
+        "group": "Général"
+      }
+    },
+    "accounts": {
+      "discord": {
+        "enabled": {
+          "label": "Activer l'intégration"
+        },
+        "description": "Partagez la chanson que vous écoutez avec vos amis sur Discord."
       }
     }
   },
@@ -659,6 +685,13 @@
       "title": "Aucun résultat trouvé.",
       "info": "Nous n'avons pas trouvé de podcasts correspondant à votre recherche.",
       "action": "Veuillez vérifier l'orthographe ou essayez d'autres mots-clés."
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "goToPodcasts": "Aller aux podcasts",
+        "description": "Essayer d'ajouter plus de podcasts.",
+        "message": "Aucun épisode disponible"
+      }
     }
   },
   "dayjs": {
@@ -674,16 +707,16 @@
       "dd": "%d jours",
       "M": "1 mois",
       "h": "1 heure",
-      "MM": "%s mois",
+      "MM": "%d mois",
       "hh": "%d heures"
     }
   },
   "about": {
     "server": "Serveur",
-    "version": "Version :",
+    "version": "Version",
     "client": "Client",
-    "type": "Type :",
-    "apiVersion": "Version API :",
+    "type": "Type",
+    "apiVersion": "Version API",
     "toasts": {
       "copy": "Lien copié dans le presse-papier !"
     }

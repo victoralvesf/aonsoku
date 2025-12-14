@@ -11,8 +11,9 @@ import {
 import { AlbumListType } from '@/types/responses/album'
 import {
   AlbumsFilters,
-  albumsFilterValues,
   AlbumsSearchParams,
+  albumsFilterValues,
+  PersistedAlbumListKeys,
 } from '@/utils/albumsFilter'
 import { scrollPageToTop } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
@@ -34,6 +35,8 @@ export function AlbumsMainFilter() {
   )[0].label
 
   function handleChangeFilter(filter: AlbumListType) {
+    localStorage.setItem(PersistedAlbumListKeys.MainFilter, filter)
+
     setSearchParams((state) => {
       state.set(AlbumsSearchParams.MainFilter, filter)
 

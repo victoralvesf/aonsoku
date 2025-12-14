@@ -1,13 +1,19 @@
 import clsx from 'clsx'
-import { useEffect, useState, type HTMLProps } from 'react'
+import { type HTMLProps, useEffect, useState } from 'react'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { cn } from '@/lib/utils'
 import { ControlButton } from './button'
 import { Icons } from './icons'
 
 export function MacOS({ className, ...props }: HTMLProps<HTMLDivElement>) {
-  const { minimizeWindow, maximizeWindow, toggleFullscreen, closeWindow } =
-    useAppWindow()
+  const {
+    minimizeWindow,
+    maximizeWindow,
+    enterFullscreenWindow,
+    exitFullscreenWindow,
+    closeWindow,
+    isFullscreen,
+  } = useAppWindow()
 
   const [isAltKeyPressed, setIsAltKeyPressed] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
@@ -27,6 +33,19 @@ export function MacOS({ className, ...props }: HTMLProps<HTMLDivElement>) {
       window.removeEventListener('keyup', handleKeyChange)
     }
   }, [isAltKeyPressed])
+
+  function handleMaximize() {
+    if (isAltKeyPressed) {
+      maximizeWindow()
+      return
+    }
+
+    if (isFullscreen) {
+      exitFullscreenWindow()
+    } else {
+      enterFullscreenWindow()
+    }
+  }
 
   return (
     <div
@@ -61,7 +80,7 @@ export function MacOS({ className, ...props }: HTMLProps<HTMLDivElement>) {
         />
       </ControlButton>
       <ControlButton
-        onClick={isAltKeyPressed ? maximizeWindow : toggleFullscreen}
+        onClick={handleMaximize}
         className="relative aspect-square h-3 w-3 cursor-default content-center items-center justify-center self-center rounded-full border border-black/[.12] bg-[#28c93f] text-center text-black/60 hover:bg-[#28c93f] active:bg-[#1e9930] active:text-black/60 dark:border-none"
       >
         <Icons.fullMac

@@ -15,7 +15,8 @@
     "albums": "Álbumes",
     "playlists": "Listas de reproducción",
     "radios": "Radios",
-    "emptyPlaylist": "Aún no se han creado listas de reproducción"
+    "emptyPlaylist": "Aún no se han creado listas de reproducción",
+    "podcasts": "Podcasts"
   },
   "menu": {
     "language": "Idioma",
@@ -28,7 +29,15 @@
     "showDetails": "Mostrar detalles",
     "hideDetails": "Ocultar detalles",
     "viewAll": "Ver todos",
-    "loading": "Cargando…"
+    "loading": "Cargando…",
+    "viewMode": {
+      "label": "Modo de Visualización",
+      "modes": {
+        "poster": "Póster",
+        "list": "Lista"
+      }
+    },
+    "beta": "Beta"
   },
   "theme": {
     "label": "Tema",
@@ -85,7 +94,7 @@
         }
       },
       "edit": {
-        "title": "Editar lista de reproducción",
+        "title": "Editar Lista de Reproducción",
         "button": "Actualizar",
         "toast": {
           "success": "¡Lista de reproducción actualizada con éxito!",
@@ -226,7 +235,13 @@
       "genres": "Géneros",
       "albumCount": "Número de álbumes",
       "songCount": "Número de canciones",
-      "albumGain": "Ganancia del álbum"
+      "albumGain": "Ganancia del álbum",
+      "contributors": "Contribuidores",
+      "recordLabel": "Discográfica",
+      "samplingRate": "Velocidad de muestreo",
+      "bitDepth": "Profundidad de bits",
+      "channelCount": "Número de canales",
+      "albumArtist": "Artista del Album"
     },
     "buttons": {
       "play": "Reproducir {{title}} de {{artist}}",
@@ -258,7 +273,7 @@
     "playing": "En reproducción",
     "noLyrics": "No se ha encontrado letra",
     "lyrics": "Letra",
-    "switchButton": "Cambiar a pantalla completa",
+    "switchButton": "Cambiar a Reproductor Grande",
     "queue": "Cola",
     "loadingLyrics": "Buscando letra…"
   },
@@ -324,7 +339,17 @@
       },
       "like": "Me gusta {{song}} de {{artist}}",
       "dislike": "Eliminar me gusta de {{song}} de {{artist}}",
-      "pause": "Pausa"
+      "pause": "Pausa",
+      "forward": "Avanzar {{amount}} segundos",
+      "rewind": "Rebobinar {{amount}} segundos",
+      "volume": {
+        "mute": "Silenciar",
+        "unmute": "Quitar silencio"
+      },
+      "miniPlayer": {
+        "open": "Abrir mini reproductor",
+        "close": "Cerrar mini reproductor"
+      }
     },
     "noRadioPlaying": "No se reproduce ninguna radio"
   },
@@ -334,7 +359,7 @@
     "download": "Descargar",
     "playlist": {
       "add": "Añadir a lista de reproducción",
-      "edit": "Editar lista de reproducción",
+      "edit": "Editar Lista de Reproducción",
       "delete": "Eliminar lista de reproducción",
       "search": "Encontrar una lista de reproducción",
       "create": "Nueva lista de reproducción",
@@ -342,7 +367,12 @@
       "removeSong": "Eliminar de la lista de reproducción"
     },
     "info": "Obtener información",
-    "playNext": "Reproducir siguiente"
+    "playNext": "Reproducir siguiente",
+    "goto": {
+      "episode": "Ir al episodio",
+      "podcast": "Ir al podcast"
+    },
+    "markAsPlayed": "Marcar como reproducido"
   },
   "radios": {
     "label": "Radio",
@@ -373,7 +403,7 @@
       },
       "edit": {
         "button": "Actualizar",
-        "title": "Editar radio",
+        "title": "Editar Radio",
         "toast": {
           "success": "¡Radio actualizada con éxito!",
           "error": "¡Error al actualizar la radio!"
@@ -417,7 +447,12 @@
       "refresh": "Actualizar estado",
       "startScan": "Exploración rápida"
     },
-    "management": "Gestión de servidor"
+    "management": "Gestión de servidor",
+    "incompatible": {
+      "skip": "Continuar de todas formas",
+      "title": "Servidor incompatible",
+      "description": "El servidor usa una versión antigua de el protocolo Subsonic que no tiene soporte completo. Por favor, proceda con precaución ya que pueden aparecer problemas."
+    }
   },
   "downloads": {
     "started": "Descarga iniciada.",
@@ -426,7 +461,9 @@
   },
   "queue": {
     "clear": "Limpiar cola",
-    "title": "Cola"
+    "title": "Cola",
+    "close": "Cerrar cola",
+    "open": "Abrir cola"
   },
   "shortcuts": {
     "modal": {
@@ -442,7 +479,12 @@
       "previous": "Saltar a la anterior",
       "next": "Saltar a la siguiente",
       "play": "Reproducir / Pausar",
-      "shuffle": "Aleatorio"
+      "shuffle": "Aleatorio",
+      "lowerVolume": "Bajar volumen",
+      "raiseVolume": "Subir volumen"
+    },
+    "navigation": {
+      "label": "Navegación"
     }
   },
   "songInfo": {
@@ -450,7 +492,8 @@
     "error": "No se pudo recuperar la información de la canción. Por favor, inténtelo de nuevo más tarde."
   },
   "warnings": {
-    "reload": "¡Hay una canción en reproducción!\n¿Seguro que quiere recargar la página?"
+    "reload": "¡Hay una canción en reproducción!\n¿Seguro que quiere recargar la página?",
+    "songError": "Incapaz de reproducir la canción, revisa el servidor!"
   },
   "update": {
     "dialog": {
@@ -467,9 +510,9 @@
   "about": {
     "client": "Cliente",
     "server": "Servidor",
-    "version": "Versión:",
-    "type": "Tipo:",
-    "apiVersion": "Versión de la API:",
+    "version": "Versión",
+    "type": "Tipo",
+    "apiVersion": "Versión de la API",
     "toasts": {
       "copy": "¡Enlace copiado al portapapeles!"
     }
@@ -494,5 +537,182 @@
   "mobile": {
     "access_recommendation": "Por favor, acceda desde un ordenador de sobremesa o una tableta.",
     "unsupported_message": "{{app_name}} no es compatible con dispositivos móviles."
+  },
+  "podcasts": {
+    "form": {
+      "dialog": {
+        "saveButton": "Guardar",
+        "title": "Crear Podcast",
+        "feedUrl": "Añadir URL",
+        "validations": {
+          "url": "Por favor agrega URLs válidas.",
+          "urlLength": "Las URLs deben ser de al menos 10 caracteres de longitud",
+          "atLeastOneUrl": "Por favor agregue al menos una URL.",
+          "protocol": "Las URLs deben empezar con http:// o https://"
+        },
+        "message": "Puedes añadir múltiples URLs, una por línea."
+      },
+      "search": "Buscar podcasts…",
+      "toasts": {
+        "error": "No se pudo crear el podcast!",
+        "success": "Podcast creado correctamente! Estará disponible para escuchar en unos pocos minutos!"
+      },
+      "addButton": "Añadir Podcast",
+      "latestEpisodes": "Últimos Episodios"
+    },
+    "emptyPage": {
+      "message": "No se agregaron podcasts",
+      "description": "Parece que no has añadido ningún podcast todavía. Añade uno arriba!"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "description": "Prueba a añadir más podcasts.",
+        "goToPodcasts": "Ir a Podcasts",
+        "message": "No hay episodios disponibles"
+      }
+    },
+    "emptyResults": {
+      "info": "No pudimos encontrar ningún podcast que coincida con tu búsqueda.",
+      "action": "Por favor revisa la búsqueda o prueba con otras palabras clave.",
+      "title": "No se encontraron resultados."
+    },
+    "filters": {
+      "podcasts": {
+        "orderBy": {
+          "title": "Título",
+          "episodeCount": "Número de Episodios"
+        }
+      },
+      "episodes": {
+        "orderBy": {
+          "publishDate": "Fecha de Publicación",
+          "title": "Título",
+          "duration": "Duración"
+        },
+        "search": "Buscar episodios…"
+      }
+    },
+    "header": {
+      "website": "Web Oficial",
+      "unfollow": {
+        "dialog": {
+          "title": "¿Estás seguro de que quieres dejar de seguir este podcast?",
+          "description": "Para escuchar este podcast de nuevo en el futuro tendrás que recrearlo."
+        },
+        "toasts": {
+          "error": "Un error ha ocurrido al intentar dejar de seguir el podcast. Por favor, inténtelo de nuevo.",
+          "success": "Has dejado de seguir este podcast!"
+        },
+        "tooltip": "Dejar de seguir {{title}}"
+      },
+      "feed": "Sección Principal",
+      "episodeCount_one": "{{count}} Episodio",
+      "episodeCount_many": "{{count}} Episodios",
+      "episodeCount_other": "{{count}} Episodios"
+    },
+    "list": {
+      "notFoundMessage": "Este podcast no tiene ningún episodio todavía!",
+      "progress": {
+        "remainingTime": "Quedan {{time}}",
+        "completed": "Completado"
+      },
+      "episodes": "Episodios"
+    }
+  },
+  "settings": {
+    "options": {
+      "audio": "Reproductor & Audio",
+      "content": "Contenido",
+      "appearance": "Apariencia",
+      "language": "Lenguaje & Región",
+      "privacy": "Privacidad & Seguridad"
+    },
+    "appearance": {
+      "general": {
+        "fullscreen": {
+          "label": "Activar pantalla completa automática",
+          "info": "Si esta activo, al acceder al reproductor grande, la aplicación entrará automáticamente en pantalla completa."
+        },
+        "group": "General",
+        "description": "Personaliza como se ve la app y sus comportamientos."
+      },
+      "colors": {
+        "group": "Colores dinámicos",
+        "queue": {
+          "label": "Cola y Letras",
+          "intensity": "Nivel de Intensidad del Color"
+        },
+        "bigPlayer": {
+          "label": "Reproductor Grande",
+          "blurSize": "Tanaño de Desenfoque de Imagen"
+        },
+        "description": "Selecciona si la aplicación deberia usar el color predominante de la portada del álbum en reproducción como color de fondo."
+      }
+    },
+    "audio": {
+      "replayGain": {
+        "preAmp": "Preamplificador (dB)",
+        "mode": {
+          "album": "Ganancia de álbum",
+          "label": "Modo",
+          "track": "Ganancia de pista"
+        },
+        "group": "ReplayGain",
+        "error": {
+          "button": "Inténtalo otra vez",
+          "message": "Ha ahbudo un error al reproducir la pista usando ReplayGain."
+        },
+        "defaultGain": {
+          "info": "Este nivel de ganancia se aplica a las canciones que no incluyen metadatos de ReplayGain, asegurando un volumen de audio consistente. El rsngo recomendado de ganancia es entre -10dB y -1dB.",
+          "label": "Ganancia Estándar (dB)"
+        },
+        "description": "Normaliza los niveles de audio para una experiencia consiste.",
+        "enabled": "Activado"
+      },
+      "lyrics": {
+        "group": "Letras",
+        "description": "Personalizar configuración de letras.",
+        "preferSynced": {
+          "label": "Preferir letras sincronizadas",
+          "info": "Al activarse, se priorizarán las letras sincronizadas sobre las no sincronizadas."
+        }
+      }
+    },
+    "content": {
+      "podcast": {
+        "credentials": {
+          "user": "Nombre de usuario",
+          "url": "URL del Servidor",
+          "error": "Se requiere el Nombre de Usuario y la URL del Servidor.",
+          "label": "Usa un Usuario con Sesión Iniciada y la URL del Servidor"
+        },
+        "description": "Activar integracion con el servicio Aonsoku Podcasts.",
+        "enabled": {
+          "label": "Activar integración"
+        },
+        "service": {
+          "url": "URL del Servicio de Podcast"
+        },
+        "group": "Podcasts"
+      },
+      "sidebar": {
+        "radios": {
+          "section": "Esconder la sección de radios"
+        },
+        "description": "Organiza la visibilidad y organización de las secciones mostradas en la barra lateral.",
+        "group": "Barra lateral"
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Servicios Externos",
+        "lrclib": {
+          "info": "LRCLIB es usado para encontrar letras de canciones.",
+          "label": "LRCLIB"
+        },
+        "description": "Organiza los servicios externos a los que Aonsoku puede acceder."
+      }
+    },
+    "label": "Configuración"
   }
 }

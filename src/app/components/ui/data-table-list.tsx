@@ -1,26 +1,26 @@
 import {
   ColumnFiltersState,
-  SortingState,
   getCoreRowModel,
-  useReactTable,
+  getSortedRowModel,
   Row,
   RowData,
-  getSortedRowModel,
   SortingFn,
+  SortingState,
   Table,
+  useReactTable,
 } from '@tanstack/react-table'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import clsx from 'clsx'
 import debounce from 'lodash/debounce'
 import {
-  useEffect,
   MouseEvent,
+  memo,
   TouchEvent,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
-  memo,
 } from 'react'
 import { isMacOs } from 'react-device-detect'
 import { useHotkeys } from 'react-hotkeys-hook'

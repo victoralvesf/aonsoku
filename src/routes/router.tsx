@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { createBrowserRouter } from 'react-router-dom'
+import { createHashRouter } from 'react-router-dom'
 
 import {
   AlbumFallback,
@@ -17,6 +17,7 @@ import {
   InfinitySongListFallback,
   SongListFallback,
 } from '@/app/components/fallbacks/song-fallbacks'
+import { albumsLoader } from '@/routes/loaders/albumsLoader'
 import { loginLoader } from '@/routes/loginLoader'
 import { podcastsLoader, protectedLoader } from '@/routes/protectedLoader'
 import { ROUTES } from '@/routes/routesList'
@@ -40,7 +41,7 @@ const LatestEpisodes = lazy(
   () => import('@/app/pages/podcasts/latest-episodes'),
 )
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: ROUTES.LIBRARY.HOME,
     element: <BaseLayout />,
@@ -79,6 +80,7 @@ export const router = createBrowserRouter([
       {
         id: 'albums',
         path: ROUTES.LIBRARY.ALBUMS,
+        loader: albumsLoader,
         errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<AlbumsFallback />}>

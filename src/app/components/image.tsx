@@ -1,10 +1,10 @@
 import omit from 'lodash/omit'
 import { ImgHTMLAttributes } from 'react'
 import {
-  LazyLoadImage,
-  trackWindowScroll,
-  ScrollPosition,
   Effect,
+  LazyLoadImage,
+  ScrollPosition,
+  trackWindowScroll,
 } from 'react-lazy-load-image-component'
 
 interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {

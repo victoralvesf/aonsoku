@@ -1,6 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { relaunch } from '@tauri-apps/plugin-process'
-import { check } from '@tauri-apps/plugin-updater'
 import { Loader2, RocketIcon } from 'lucide-react'
 import { FormEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -28,7 +26,7 @@ export function UpdateObserver() {
 
   const { data: updateInfo } = useQuery({
     queryKey: [queryKeys.update.check],
-    queryFn: () => check(),
+    queryFn: async () => await window.api.checkForUpdates(),
     enabled: !remindOnNextBoot && isProd,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -37,12 +35,36 @@ export function UpdateObserver() {
   })
 
   useEffect(() => {
-    if (updateInfo) {
+    if (updateInfo?.files?.length) {
       setOpenDialog(true)
     }
   }, [setOpenDialog, updateInfo])
 
-  if (!updateInfo || !updateInfo.available) return null
+  useEffect(() => {
+    window.api.onUpdateDownloaded(() => {
+      toast.update('update', {
+        render: t('update.toasts.success'),
+        type: 'success',
+        autoClose: 5000,
+        isLoading: false,
+      })
+      window.api.quitAndInstall()
+    })
+
+    window.api.onUpdateError(() => {
+      setUpdateHasStarted(false)
+      setRemindOnNextBoot(true)
+
+      toast.update('update', {
+        render: t('update.toasts.error'),
+        type: 'error',
+        autoClose: 5000,
+        isLoading: false,
+      })
+    })
+  }, [t, setRemindOnNextBoot])
+
+  if (!updateInfo || !updateInfo.files?.length) return null
 
   const handleUpdate = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -54,29 +76,8 @@ export function UpdateObserver() {
       toastId: 'update',
     })
 
-    try {
-      setUpdateHasStarted(true)
-      await updateInfo.downloadAndInstall()
-
-      toast.update('update', {
-        render: t('update.toasts.success'),
-        type: 'success',
-        autoClose: 5000,
-        isLoading: false,
-      })
-
-      await relaunch()
-    } catch (_) {
-      setUpdateHasStarted(false)
-      setRemindOnNextBoot(true)
-
-      toast.update('update', {
-        render: t('update.toasts.error'),
-        type: 'error',
-        autoClose: 5000,
-        isLoading: false,
-      })
-    }
+    setUpdateHasStarted(true)
+    window.api.downloadUpdate()
   }
 
   return (
@@ -95,7 +96,7 @@ export function UpdateObserver() {
           className="w-full min-h-16 max-h-80 overflow-auto text-muted-foreground bg-background-foreground p-4 border rounded-md"
         >
           <Markdown className="space-y-2 text-sm" remarkPlugins={[remarkGfm]}>
-            {updateInfo.body}
+            {updateInfo.releaseNotes || ''}
           </Markdown>
         </div>
 
