@@ -80,7 +80,7 @@ export function sanitizeLinks(text: string) {
     'span',
     'div',
   ]
-  const attributeWhiteList = ['href', 'class', 'style', 'rel', 'target']
+  const attributeWhiteList = ['href', 'class', 'rel', 'target']
 
   // Remove all tags not in the whitelist
   doc.body.querySelectorAll('*').forEach((node) => {
@@ -94,18 +94,30 @@ export function sanitizeLinks(text: string) {
         node.removeAttribute(attr.name)
       }
     })
-  })
 
-  doc.querySelectorAll('a').forEach((link) => {
-    const href = link.getAttribute('href') ?? ''
+    // Specific handling for anchor tags
+    if (node.tagName.toLowerCase() === 'a') {
+      const link = node as HTMLAnchorElement
+      const href = link.getAttribute('href') ?? ''
+      
+      // Removes empty spaces and control characters for verification
+      // This prevents bypasses like "j a v a s c r i p t :"
+      const normalizedHref = href.replace(/\s+/g, '').toLowerCase()
 
-    if (href.includes('javascript')) {
-      // There is no legitimate reason to have javascript: links
-      // Delete the link entirely
-      link.replaceWith(document.createTextNode(''))
-    } else {
-      link.setAttribute('target', '_blank')
-      link.setAttribute('rel', 'noreferrer nofollow')
+      // if it's not http, https or mailto, we consider invalid or dangerous
+      const isSafeProtocol = /^(https?:|mailto:)/.test(normalizedHref)
+
+      // checks if it's a relative URL, starting with / or . or #
+      const isRelativeUrl = /^(\/|\.|#)/.test(normalizedHref)
+  
+      if (!isSafeProtocol && !isRelativeUrl) {
+        // If it's not a safe protocol or a relative URL
+        // remove the link but keep the text
+        link.replaceWith(document.createTextNode(link.textContent || ''))
+      } else {
+        link.setAttribute('target', '_blank')
+        link.setAttribute('rel', 'noreferrer nofollow')
+      }
     }
   })
 
