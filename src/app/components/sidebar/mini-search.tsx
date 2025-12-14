@@ -18,7 +18,7 @@ export function MiniSidebarSearch({
   }
 
   return (
-    <div className="w-full px-4">
+    <div className="w-full px-4 mt-4">
       <SimpleTooltip text={t('sidebar.miniSearch')} side="right" delay={50}>
         <Button
           variant="ghost"
