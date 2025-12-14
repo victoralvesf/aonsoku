@@ -46,6 +46,8 @@ jobs:
         run: pnpm install
 
       - name: Build Main/Renderer
+        env:
+          MAIN_VITE_DISCORD_CLIENT_ID: ${{ secrets.MAIN_VITE_DISCORD_CLIENT_ID }}
         run: pnpm electron:build
 
       - name: Build and Release (macOS)
