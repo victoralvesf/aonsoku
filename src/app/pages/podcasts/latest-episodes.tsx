@@ -44,7 +44,7 @@ export default function LatestEpisodes() {
         <MemoHeaderTitle title={t('podcasts.form.latestEpisodes')} />
       </MemoShadowHeader>
 
-      <ListWrapper className="px-4 pt-[--shadow-header-distance]">
+      <ListWrapper className="px-4">
         <div className="grid grid-cols-5 gap-4 px-4 mb-6">
           {featuredEpisodes.map((episode) => (
             <MemoFeaturedEpisodeCard key={episode.id} episode={episode} />

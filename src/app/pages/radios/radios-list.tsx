@@ -62,7 +62,7 @@ export default function Radios() {
       </ShadowHeader>
 
       {showTable && (
-        <ListWrapper className="pt-[--shadow-header-distance]">
+        <ListWrapper>
           <DataTable
             columns={columns}
             data={radios}
@@ -77,7 +77,7 @@ export default function Radios() {
       )}
 
       {!showTable && (
-        <ListWrapper className="pt-[--shadow-header-distance] h-full">
+        <ListWrapper>
           <EmptyWrapper>
             <EmptyRadiosInfo />
           </EmptyWrapper>

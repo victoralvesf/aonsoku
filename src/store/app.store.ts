@@ -81,6 +81,12 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.podcasts.customUrl = value
               })
             },
+            collapsibleState: false,
+            setCollapsibleState: (value) => {
+              set((state) => {
+                state.podcasts.collapsibleState = value
+              })
+            },
           },
           pages: {
             showInfoPanel: true,
@@ -344,6 +350,11 @@ useAppStore.subscribe(
 export const useAppData = () => useAppStore((state) => state.data)
 export const useAppAccounts = () => useAppStore((state) => state.accounts)
 export const useAppPodcasts = () => useAppStore((state) => state.podcasts)
+export const useAppPodcastCollapsibleState = () =>
+  useAppStore((state) => ({
+    collapsibleState: state.podcasts.collapsibleState,
+    setCollapsibleState: state.podcasts.setCollapsibleState,
+  }))
 export const useAppPages = () => useAppStore((state) => state.pages)
 export const useAppDesktopData = () =>
   useAppStore((state) => state.desktop.data)

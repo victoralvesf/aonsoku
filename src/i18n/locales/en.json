@@ -203,6 +203,7 @@
   },
   "podcasts": {
     "form": {
+      "all": "Browse",
       "latestEpisodes": "Latest Episodes",
       "addButton": "Add Podcast",
       "search": "Search podcasts…",
@@ -555,6 +556,9 @@
     },
     "navigation": {
       "label": "Navigation"
+    },
+    "sidebar": {
+      "toggle": "Toggle sidebar"
     }
   },
   "songInfo": {

@@ -111,7 +111,7 @@ export default function PodcastsList() {
     <div className="w-full h-full">
       <PodcastsHeader />
 
-      <ListWrapper className="pt-[--shadow-header-distance]">
+      <ListWrapper>
         <MainGrid data-testid="podcasts-grid">
           {items.map((podcast) => (
             <PreviewCard.Root key={`podcast-${podcast.id}`}>

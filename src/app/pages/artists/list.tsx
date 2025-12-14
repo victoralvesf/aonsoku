@@ -62,7 +62,7 @@ export default function ArtistsList() {
       </MemoShadowHeader>
 
       {isTableView && (
-        <MemoListWrapper className="pt-shadow-header-distance">
+        <MemoListWrapper>
           <MemoDataTable
             columns={columns}
             data={artists}
@@ -77,7 +77,7 @@ export default function ArtistsList() {
       )}
 
       {isGridView && (
-        <MemoListWrapper className="pt-shadow-header-distance px-0">
+        <MemoListWrapper className="px-0">
           <GridViewWrapper
             list={artists}
             data-testid="artists-grid"
