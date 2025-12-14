@@ -11,13 +11,13 @@ export function MainRoutes() {
   }, [pathname])
 
   return (
-    <div className="flex h-full">
+    <main className="flex h-full">
       <ScrollArea
         id="main-scroll-area"
         className="w-full bg-background-foreground"
       >
         <Outlet />
       </ScrollArea>
-    </div>
+    </main>
   )
 }
