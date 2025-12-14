@@ -58,7 +58,7 @@ export function AlbumsFallback() {
     <div className="w-full">
       <ShadowHeaderFallback />
 
-      <ListWrapper className="mt-6 flex flex-col gap-4">
+      <ListWrapper className="flex flex-col gap-4">
         <GridFallback />
       </ListWrapper>
     </div>

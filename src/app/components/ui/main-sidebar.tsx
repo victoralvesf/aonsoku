@@ -367,7 +367,10 @@ function MainSidebarHeader({
     <div
       data-slot="sidebar-header"
       data-sidebar="header"
-      className={cn('flex flex-col gap-2 px-4 pt-4 pb-2', className)}
+      className={cn(
+        'flex flex-col gap-2 px-4 pt-4 pb-2 group-data-[collapsible=icon]:hidden',
+        className,
+      )}
       {...props}
     />
   )

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { EmptyPlaylistsMessage } from '@/app/components/playlist/empty-message'
 import { SidebarPlaylistButtons } from '@/app/components/playlist/sidebar-buttons'
@@ -24,12 +25,24 @@ export function NavPlaylists() {
 
   return (
     <>
-      <div className="flex items-center justify-between px-4 mt-4 overflow-x-clip transition-opacity group-data-[collapsible=icon]:opacity-0">
+      <div
+        className={clsx(
+          'flex items-center justify-between px-4 mt-4 overflow-x-clip',
+          'transition-opacity group-data-[collapsible=icon]:opacity-0',
+          'group-data-[collapsible=icon]:pointer-events-none',
+        )}
+      >
         <MainSidebarGroupLabel>{t('sidebar.playlists')}</MainSidebarGroupLabel>
 
         <SidebarPlaylistButtons />
       </div>
-      <MainSidebarContent className="flex pl-4 h-full overflow-x-clip transition-[margin,opacity] group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0">
+      <MainSidebarContent
+        className={clsx(
+          'flex pl-4 h-full overflow-x-clip transition-[margin,opacity]',
+          'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0',
+          'group-data-[collapsible=icon]:pointer-events-none',
+        )}
+      >
         <ScrollArea className="pb-4">
           <MainSidebarMenu className="pr-4">
             {hasPlaylists &&
