@@ -119,21 +119,22 @@ export function sanitizeLinks(text: string) {
       )
       // Remove whitespace
       normalizedHref = normalizedHref.replace(/\s+/g, '')
-      // Lowercase
-      normalizedHref = normalizedHref.toLowerCase()
+      // Lowercase for validation checks
+      const lowercasedHref = normalizedHref.toLowerCase()
 
       // if it's not http, https or mailto, we consider invalid or dangerous
-      const isSafeProtocol = /^(https?:|mailto:)/.test(normalizedHref)
+      const isSafeProtocol = /^(https?:|mailto:)/.test(lowercasedHref)
 
       // checks if it's a relative URL:
       // absolute path, hash anchor, same-directory, or parent-directory reference
-      const isRelativeUrl = /^(\/#|\.\/|\.\.\/|\/|#)/.test(normalizedHref)
+      const isRelativeUrl = /^(\/#|\.\/|\.\.\/|\/|#)/.test(lowercasedHref)
 
       if (!isSafeProtocol && !isRelativeUrl) {
         // If it's not a safe protocol or a relative URL
         // remove the link but keep the text
         link.replaceWith(...Array.from(link.childNodes))
       } else {
+        link.setAttribute('href', normalizedHref)
         link.setAttribute('target', '_blank')
         link.setAttribute('rel', 'noreferrer nofollow')
       }
