@@ -34,7 +34,7 @@ export function FeaturedEpisodeCard({ episode }: FeaturedEpisodeCardProps) {
       <EpisodeImage episode={episode} />
       <ReleaseDate episode={episode} />
       <EpisodeContent episode={episode} />
-      <div className="flex justify-between mt-4">
+      <div className="flex justify-between mt-auto pt-4">
         <FeaturedEpisodeCardAction episode={episode} />
 
         <MemoPodcastActionButton featured={true}>
