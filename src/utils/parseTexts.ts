@@ -106,10 +106,15 @@ export function sanitizeLinks(text: string) {
       // Normalize href: decode URL-encoded sequences, remove control characters and whitespace, lowercase
       // This prevents bypasses like "j a v a s c r i p t :", "%6A%61%76%61%73%63%72%69%74", or null bytes
       let normalizedHref = href
-      try {
-        normalizedHref = decodeURIComponent(normalizedHref)
-      } catch (_) {
-        // If decoding fails, fallback to original
+      // Decode recursively up to 10 times to prevent double-encoding attacks
+      for (let i = 0; i < 10; i++) {
+        try {
+          const decoded = decodeURIComponent(normalizedHref)
+          if (decoded === normalizedHref) break
+          normalizedHref = decoded
+        } catch (_) {
+          break
+        }
       }
       // Remove control characters (ASCII 0-31 and 127-159)
       normalizedHref = normalizedHref.replace(
@@ -146,10 +151,15 @@ export function sanitizeLinks(text: string) {
       const src = img.getAttribute('src') ?? ''
 
       let normalizedSrc = src
-      try {
-        normalizedSrc = decodeURIComponent(normalizedSrc)
-      } catch (_) {
-        // If decoding fails, fallback to original
+      // Decode recursively up to 10 times to prevent double-encoding attacks
+      for (let i = 0; i < 10; i++) {
+        try {
+          const decoded = decodeURIComponent(normalizedSrc)
+          if (decoded === normalizedSrc) break
+          normalizedSrc = decoded
+        } catch (_) {
+          break
+        }
       }
 
       // Check for < or > (HTML injection) OR dangerous protocols (javascript:)
