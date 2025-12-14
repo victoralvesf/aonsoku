@@ -19,7 +19,8 @@ import { SidebarPodcastHoverItem } from './podcast-hover-item'
 export function SidebarPodcastItem({ item }: { item: ISidebarItem }) {
   const { t } = useTranslation()
   const { state, isMobile } = useMainSidebar()
-  const { collapsibleState, setCollapsibleState } = useAppPodcastCollapsibleState()
+  const { collapsibleState, setCollapsibleState } =
+    useAppPodcastCollapsibleState()
 
   if (state === 'collapsed' && !isMobile) {
     return <SidebarPodcastHoverItem item={item} />
