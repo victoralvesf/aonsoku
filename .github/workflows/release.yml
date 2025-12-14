@@ -4,6 +4,24 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      target_tag:
+        description: 'Release tag'
+        required: true
+        default: 'v0.x.x'
+      run_linux:
+        description: 'Build for Linux?'
+        type: boolean
+        default: true
+      run_mac:
+        description: 'Build for macOS?'
+        type: boolean
+        default: true
+      run_win:
+        description: 'Build for Windows?'
+        type: boolean
+        default: true
 
 jobs:
   release:
@@ -16,6 +34,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set Release Tag (Manual Workflow Dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: echo "GITHUB_REF=refs/tags/${{ inputs.target_tag }}" >> $GITHUB_ENV
 
       - name: Install pnpm
         uses: pnpm/action-setup@v3
@@ -37,25 +60,25 @@ jobs:
         run: pnpm electron:build
 
       - name: Build and Release (macOS)
-        if: matrix.os == 'macos-latest'
+        if: matrix.os == 'macos-latest' && (github.event_name == 'push' || inputs.run_mac == true)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm ci:build:mac
 
       - name: Build and Release (Windows)
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-latest' && (github.event_name == 'push' || inputs.run_win == true)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm ci:build:win
 
       - name: Install Linux dependencies
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' && (github.event_name == 'push' || inputs.run_linux == true)
         run: |
           sudo apt-get update
-          sudo apt-get install -y rpm
+          sudo apt-get install -y libfuse2
 
       - name: Build and Release (Linux)
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' && (github.event_name == 'push' || inputs.run_linux == true)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm ci:build:linux

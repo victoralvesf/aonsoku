@@ -47,10 +47,8 @@ mac:
 linux:
   target:
     - AppImage
-    - snap
     - deb
     - tar.gz
-    # - rpm
   maintainer: victoralvesf
   category: AudioVideo
   synopsis: 'A modern desktop music client for Navidrome and OpenSubsonic servers.'
