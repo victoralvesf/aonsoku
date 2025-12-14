@@ -102,7 +102,7 @@ export function sanitizeLinks(text: string) {
     if (node.tagName.toLowerCase() === 'a') {
       const link = node as HTMLAnchorElement
       const href = link.getAttribute('href') ?? ''
-      
+
       // Normalize href: decode URL-encoded sequences, remove control characters and whitespace, lowercase
       // This prevents bypasses like "j a v a s c r i p t :", "%6A%61%76%61%73%63%72%69%74", or null bytes
       let normalizedHref = href
@@ -128,11 +128,11 @@ export function sanitizeLinks(text: string) {
       // checks if it's a relative URL:
       // absolute path, hash anchor, same-directory, or parent-directory reference
       const isRelativeUrl = /^(\/#|\.\/|\.\.\/|\/|#)/.test(normalizedHref)
-  
+
       if (!isSafeProtocol && !isRelativeUrl) {
         // If it's not a safe protocol or a relative URL
         // remove the link but keep the text
-        link.replaceWith(document.createTextNode(link.textContent || ''))
+        link.replaceWith(...Array.from(link.childNodes))
       } else {
         link.setAttribute('target', '_blank')
         link.setAttribute('rel', 'noreferrer nofollow')
@@ -151,8 +151,15 @@ export function sanitizeLinks(text: string) {
         // If decoding fails, fallback to original
       }
 
-      // Check for < or > which indicates injected HTML
-      if (/[<>]/.test(normalizedSrc)) {
+      // Check for < or > (HTML injection) OR dangerous protocols (javascript:)
+      const hasHtml = /[<>]/.test(normalizedSrc)
+      const normalizedSrcNoSpace = normalizedSrc.replace(/\s+/g, '')
+      const hasDangerousProtocol = /\b(javascript|vbscript|data):/i.test(
+        normalizedSrcNoSpace,
+      )
+      const isSafeSrc = !hasHtml && !hasDangerousProtocol
+
+      if (!isSafeSrc) {
         node.remove()
       }
     }
