@@ -38,6 +38,7 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   const { setProgress, setUpdatePodcastProgress, getCurrentPodcastProgress } =
     usePlayerActions()
   const isScrobbleSentRef = useRef(false)
+  const isNowPlayingSentRef = useRef(false)
 
   const isEmpty = isSong && currentList.length === 0
 
@@ -82,6 +83,26 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   }, [])
 
   const progressTicks = useRef(0)
+
+  useEffect(() => {
+    if (!isSong || !isPlaying || !currentSong?.id) return
+
+    // Send now playing notification when song starts
+    if (progress === 0 && !isNowPlayingSentRef.current) {
+      subsonic.scrobble.send(currentSong.id, false)
+      isNowPlayingSentRef.current = true
+    }
+
+    // Reset flag when song changes or stops
+    if (progress === 0 && !isPlaying) {
+      isNowPlayingSentRef.current = false
+    }
+  }, [isSong, isPlaying, currentSong?.id, progress])
+
+  // Reset the flag when the song changes
+  useEffect(() => {
+    isNowPlayingSentRef.current = false
+  }, [currentSong?.id])
 
   useEffect(() => {
     if (isSeeking || !isPlaying) {
