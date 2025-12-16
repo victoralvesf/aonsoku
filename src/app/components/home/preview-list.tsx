@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { getCoverArtUrl } from '@/api/httpClient'
+import { ImageLoader } from '@/app/components/image-loader'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import {
   Carousel,
@@ -116,10 +116,11 @@ export default function PreviewList({
               >
                 <PreviewCard.Root>
                   <PreviewCard.ImageWrapper link={ROUTES.ALBUM.PAGE(album.id)}>
-                    <PreviewCard.Image
-                      src={getCoverArtUrl(album.coverArt, 'album')}
-                      alt={album.name}
-                    />
+                    <ImageLoader id={album.coverArt} type="album">
+                      {(src) => (
+                        <PreviewCard.Image src={src} alt={album.name} />
+                      )}
+                    </ImageLoader>
                     <PreviewCard.PlayButton
                       onClick={() => handlePlayAlbum(album)}
                     />
