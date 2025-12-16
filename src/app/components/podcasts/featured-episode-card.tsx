@@ -53,6 +53,7 @@ function EpisodeImage({ episode }: FeaturedEpisodeCardProps) {
           src={episode.image_url}
           alt={episode.title}
           className="bg-contain aspect-square"
+          effect="opacity"
           width="100%"
           height="100%"
         />

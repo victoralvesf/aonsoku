@@ -1,5 +1,5 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { getCoverArtUrl } from '@/api/httpClient'
+import { ImageLoader } from '@/app/components/image-loader'
 import { cn } from '@/lib/utils'
 import { CoverArt } from '@/types/coverArtType'
 
@@ -33,14 +33,18 @@ export function CoverImage({
         setSizes(),
       )}
     >
-      <LazyLoadImage
-        src={getCoverArtUrl(coverArt, coverArtType, coverArtSize.toString())}
-        alt={altText}
-        effect="opacity"
-        width={size}
-        height={size}
-        className="aspect-square object-cover bg-center"
-      />
+      <ImageLoader id={coverArt} type={coverArtType} size={coverArtSize}>
+        {(src) => (
+          <LazyLoadImage
+            src={src}
+            alt={altText}
+            effect="opacity"
+            width={size}
+            height={size}
+            className="aspect-square object-cover bg-center"
+          />
+        )}
+      </ImageLoader>
     </div>
   )
 }
