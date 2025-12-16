@@ -14,6 +14,7 @@ export function MiniPlayerSongImage() {
             width="100%"
             height="100%"
             loading="eager"
+            effect="opacity"
             className="aspect-square object-cover object-center w-full max-w-full bg-skeleton text-transparent rounded shadow-md"
             data-testid="track-image"
             alt={`${song.artist} - ${song.title}`}

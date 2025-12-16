@@ -53,6 +53,7 @@ export function QueueItem({
             {(src) => (
               <LazyLoadImage
                 src={src}
+                effect="opacity"
                 className="w-10 h-10 rounded text-transparent"
                 alt={`${song.title} - ${song.artist}`}
               />
