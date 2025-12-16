@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { getCoverArtUrl } from '@/api/httpClient'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import {
   Carousel,
@@ -12,6 +11,7 @@ import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
 import { usePlayerActions } from '@/store/player.store'
 import { ISimilarArtist } from '@/types/responses/artist'
+import { ImageLoader } from '../image-loader'
 
 interface RelatedArtistsListProps {
   title: string
@@ -87,10 +87,11 @@ export default function RelatedArtistsList({
                   <PreviewCard.ImageWrapper
                     link={ROUTES.ARTIST.PAGE(artist.id)}
                   >
-                    <PreviewCard.Image
-                      src={getCoverArtUrl(artist.coverArt, 'artist')}
-                      alt={artist.name}
-                    />
+                    <ImageLoader id={artist.coverArt} type="artist">
+                      {(src) => (
+                        <PreviewCard.Image src={src} alt={artist.name} />
+                      )}
+                    </ImageLoader>
                     <PreviewCard.PlayButton
                       onClick={() => handlePlayArtistRadio(artist)}
                     />
