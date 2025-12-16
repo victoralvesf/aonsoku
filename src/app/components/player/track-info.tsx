@@ -82,6 +82,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
                 width="100%"
                 height="100%"
                 crossOrigin="anonymous"
+                effect="opacity"
                 className="aspect-square object-cover w-full h-full cursor-pointer bg-skeleton text-transparent"
                 data-testid="track-image"
                 alt={`${song.artist} - ${song.title}`}
