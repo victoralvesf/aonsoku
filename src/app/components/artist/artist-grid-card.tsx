@@ -1,11 +1,11 @@
 import { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ImageLoader } from '@/app/components/image-loader'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
 import { usePlayerActions } from '@/store/player.store'
 import { ISimilarArtist } from '@/types/responses/artist'
-import { ImageLoader } from '../image-loader'
 
 type ArtistCardProps = {
   artist: ISimilarArtist
