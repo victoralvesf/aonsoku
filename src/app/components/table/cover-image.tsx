@@ -1,7 +1,7 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { ImageLoader } from '@/app/components/image-loader'
 import { cn } from '@/lib/utils'
 import { CoverArt } from '@/types/coverArtType'
-import { ImageLoader } from '../image-loader'
 
 interface CoverImageProps {
   coverArt: string

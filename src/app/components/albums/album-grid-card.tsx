@@ -1,10 +1,10 @@
 import { memo } from 'react'
+import { ImageLoader } from '@/app/components/image-loader'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { Albums } from '@/types/responses/album'
-import { ImageLoader } from '../image-loader'
 
 type AlbumCardProps = {
   album: Albums

@@ -1,11 +1,11 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { Dot } from '@/app/components/dot'
+import { ImageLoader } from '@/app/components/image-loader'
 import { ROUTES } from '@/routes/routesList'
 import { IFeaturedArtist } from '@/types/responses/artist'
 import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
 import { checkServerType } from '@/utils/servers'
-import { ImageLoader } from '../image-loader'
 
 type AlbumArtistProps = {
   id: string
