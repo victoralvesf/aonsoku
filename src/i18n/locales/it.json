@@ -87,7 +87,7 @@
       "filter": {
         "favorites": "Preferiti",
         "artist": "Artista",
-        "genre": "Generi",
+        "genre": "Genere",
         "mostPlayed": "Più ascoltati",
         "name": "Nome",
         "recentlyAdded": "Recentemente aggiunti",
@@ -483,7 +483,7 @@
         }
       },
       "edit": {
-        "title": "Modifica radio",
+        "title": "Modifica Radio",
         "button": "Aggiorna",
         "toast": {
           "success": "Radio aggiornata correttamente!",
