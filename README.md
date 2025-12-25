@@ -24,7 +24,7 @@
 </div>
 
 <!-- TABLE OF CONTENTS -->
-<details>
+<details open>
   <summary>Table of Contents</summary>
   <ol>
     <li>
@@ -42,6 +42,7 @@
         <li><a href="#recommended-ide-setup">Recommended IDE Setup</a></li>
       </ul>
     </li>
+    <li><a href="#apple-users">macOS Users: "App cannot be opened" or Crash on Launch</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#translation">Translation</a></li>
@@ -163,6 +164,32 @@ Below is a table describing the environment variables that can be used in this p
 ### Recommended IDE Setup
 
 - [VS Code](https://code.visualstudio.com/) + [Biome.js](https://marketplace.visualstudio.com/items?itemName=biomejs.biome)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<div id="apple-users"></div>
+
+## macOS Users: "App cannot be opened" or Crash on Launch
+
+Since this application is not signed and notarized by Apple, macOS Gatekeeper may block it from running to protect your system. You might encounter:
+1. A message saying the app **"is damaged and can't be opened."**
+2. An immediate crash or error window upon launching.
+
+To fix this, please follow these steps:
+
+1. Move **Aonsoku** to your `/Applications` folder.
+2. Open your **Terminal**.
+3. Run the following commands to repair the permission and signature (you may need to enter your system password):
+
+```bash
+# 1. Remove the quarantine attribute (Fixes "App is damaged")
+sudo xattr -cr /Applications/Aonsoku.app
+
+# 2. Re-sign the application locally (Fixes immediate crashes/library errors)
+sudo codesign --force --deep --sign - /Applications/Aonsoku.app
+```
+
+4. You can now open Aonsoku normally.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
