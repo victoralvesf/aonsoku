@@ -29,7 +29,10 @@ import { PodcastInfo } from './podcast-info'
 import { PodcastPlaybackRate } from './podcast-playback-rate'
 import { PlayerProgress } from './progress'
 import { PlayerQueueButton } from './queue-button'
-import { PlayerVolume } from './volume'
+import { PlayerVolume, VolumeVertical } from './volume'
+
+import { QueuePreview } from './queue-preview'
+const MemoQueuePreview = memo(QueuePreview)
 
 const MemoTrackInfo = memo(TrackInfo)
 const MemoRadioInfo = memo(RadioInfo)
@@ -40,6 +43,7 @@ const MemoPlayerLikeButton = memo(PlayerLikeButton)
 const MemoPlayerQueueButton = memo(PlayerQueueButton)
 const MemoPlayerClearQueueButton = memo(PlayerClearQueueButton)
 const MemoPlayerVolume = memo(PlayerVolume)
+const MemoVolumeVertical = memo(VolumeVertical)
 const MemoPodcastPlaybackRate = memo(PodcastPlaybackRate)
 const MemoLyricsButton = memo(PlayerLyricsButton)
 const MemoMiniPlayerButton = memo(MiniPlayerButton)
@@ -199,14 +203,29 @@ export function Player() {
             <MemoPlayerProgress audioRef={getAudioRef()} />
           )}
         </div>
+
+
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
+
+            {/* <MemoPlayerVolume
+              audioRef={getAudioRef()}
+              disabled={!song && !radio && !podcast}
+            /> */}
+
+            <MemoQueuePreview song={song} />
+
+            <MemoVolumeVertical
+              audioRef={getAudioRef()}
+              disabled={!song && !radio && !podcast}
+            />
+
             {isSong && (
               <>
-                <MemoPlayerLikeButton disabled={!song} />
-                <MemoLyricsButton disabled={!song} />
-                <MemoPlayerQueueButton disabled={!song} />
+                {/* <MemoPlayerLikeButton disabled={!song} /> */}
+                {/* <MemoLyricsButton disabled={!song} /> */}
+                {/* <MemoPlayerQueueButton disabled={!song} /> */}
               </>
             )}
             {isPodcast && <MemoPodcastPlaybackRate />}
@@ -214,14 +233,11 @@ export function Player() {
               <MemoPlayerClearQueueButton disabled={!radio && !podcast} />
             )}
 
-            <MemoPlayerVolume
-              audioRef={getAudioRef()}
-              disabled={!song && !radio && !podcast}
-            />
-
             {isSong && hasPiPSupport && <MemoMiniPlayerButton />}
           </div>
         </div>
+
+        
       </div>
 
       {isSong && song && (

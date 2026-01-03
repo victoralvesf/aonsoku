@@ -6,9 +6,11 @@ import { PlaylistOptions } from './options'
 
 interface PlaylistButtonsProps {
   playlist: PlaylistWithEntries
+  isEditingPlaylist: boolean
+  setIsEditingPlaylist: (isEditing: boolean) => void
 }
 
-export function PlaylistButtons({ playlist }: PlaylistButtonsProps) {
+export function PlaylistButtons({ playlist, isEditingPlaylist, setIsEditingPlaylist }: PlaylistButtonsProps) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
 
@@ -20,34 +22,50 @@ export function PlaylistButtons({ playlist }: PlaylistButtonsProps) {
 
   return (
     <Actions.Container>
-      <Actions.Button
-        tooltip={buttonsTooltips.play}
-        buttonStyle="primary"
-        onClick={() => setSongList(playlist.entry, 0)}
-        disabled={!playlist.entry}
-      >
-        <Actions.PlayIcon />
-      </Actions.Button>
 
-      <Actions.Button
-        tooltip={buttonsTooltips.shuffle}
-        onClick={() => setSongList(playlist.entry, 0, true)}
-        disabled={!playlist.entry}
-      >
-        <Actions.ShuffleIcon />
-      </Actions.Button>
+      {isEditingPlaylist ? (
+        <Actions.Button
+          buttonStyle="primary"
+          onClick={() => setIsEditingPlaylist(false)} >
+          Save
+        </Actions.Button>
+      ) : (
+        <>
+        <Actions.Button
+          tooltip={buttonsTooltips.play}
+          buttonStyle="primary"
+          onClick={() => setSongList(playlist.entry, 0)}
+          disabled={!playlist.entry}
+        >
+          <Actions.PlayIcon />
+        </Actions.Button>
 
-      <Actions.Dropdown
-        tooltip={buttonsTooltips.options}
-        options={
-          <PlaylistOptions
-            playlist={playlist}
-            disablePlayNext={!playlist.entry}
-            disableAddLast={!playlist.entry}
-            disableDownload={!playlist.entry}
-          />
-        }
-      />
+        <Actions.Button
+          tooltip={buttonsTooltips.shuffle}
+          onClick={() => setSongList(playlist.entry, 0, true)}
+          disabled={!playlist.entry}
+        >
+          <Actions.ShuffleIcon />
+        </Actions.Button>
+
+        <Actions.Dropdown
+          tooltip={buttonsTooltips.options}
+          options={
+            <PlaylistOptions
+              playlist={playlist}
+              disablePlayNext={!playlist.entry}
+              disableAddLast={!playlist.entry}
+              disableDownload={!playlist.entry}
+              setIsEditingPlaylist={setIsEditingPlaylist}
+              disableEdit={isEditingPlaylist}
+            />
+          }
+        />
+
+      </>
+      )}
+
+
     </Actions.Container>
   )
 }

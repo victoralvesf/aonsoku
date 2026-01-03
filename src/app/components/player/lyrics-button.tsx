@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { MicVocalIcon } from 'lucide-react'
+import { MicVocalIcon as LyricsMicrophoneIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
@@ -32,7 +32,7 @@ export function PlayerLyricsButton({ disabled }: PlayerLyricsButtonProps) {
         onClick={handleClick}
         disabled={disabled}
       >
-        <MicVocalIcon className={clsx('w-4 h-4', isActive && 'text-primary')} />
+        <LyricsMicrophoneIcon className={clsx('w-4 h-4', isActive && 'text-primary')} />
       </Button>
     </SimpleTooltip>
   )

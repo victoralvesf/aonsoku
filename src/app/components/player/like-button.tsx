@@ -3,11 +3,17 @@ import { Heart } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+
+import { useState } from 'react'
+
+import { StarRating } from '@/app/components/ui/StarRating'
+
 import {
   usePlayerActions,
   usePlayerSongStarred,
   usePlayerStore,
 } from '@/store/player.store'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@radix-ui/react-tooltip'
 
 interface PlayerLikeButtonProps {
   disabled: boolean
@@ -20,12 +26,24 @@ export function PlayerLikeButton({ disabled }: PlayerLikeButtonProps) {
     (state) => state.songlist.currentSong,
   )
   const { starCurrentSong } = usePlayerActions()
+  const [rating, setRating] = useState<number>(0)
 
   const translationLabel = `player.tooltips.${isSongStarred ? 'dislike' : 'like'}`
   const likeTooltip = t(translationLabel, { song, artist })
 
+  /**
+   * stars:
+   * 0 - nothing
+   * 1 - thin outline
+   * 2 - thick outline
+   * 3 - thin outline, half filled
+   * 4 - filled
+   * 5 - filled with sparkles
+   */
+
   return (
-    <SimpleTooltip text={likeTooltip}>
+    <Tooltip side='right'>
+      <TooltipTrigger asChild>
       <Button
         variant="ghost"
         className="rounded-full w-10 h-10 p-3 text-secondary-foreground"
@@ -41,6 +59,10 @@ export function PlayerLikeButton({ disabled }: PlayerLikeButtonProps) {
           data-testid="player-like-icon"
         />
       </Button>
-    </SimpleTooltip>
+      </TooltipTrigger>
+      <TooltipContent side='right'>
+        <StarRating value={rating} setValue={setRating} />
+      </TooltipContent>
+    </Tooltip>
   )
 }

@@ -1,8 +1,8 @@
 import clsx from 'clsx'
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon as DrawerMinimiseDownChevron } from 'lucide-react'
 import { ComponentPropsWithoutRef, useMemo } from 'react'
 import { LyricsTab } from '@/app/components/fullscreen/lyrics'
-import { QueueSettings } from '@/app/components/fullscreen/settings'
+import { QueueSettings as DrawerSettings } from '@/app/components/fullscreen/settings'
 import { CurrentSongInfo } from '@/app/components/queue/current-song-info'
 import { QueueSongList } from '@/app/components/queue/song-list'
 import { Button } from '@/app/components/ui/button'
@@ -53,15 +53,16 @@ export function MainDrawerPage() {
           style={{ backgroundColor }}
         >
           <div className="flex w-full h-14 min-h-14 px-[6%] items-center justify-end gap-2">
-            <QueueSettings />
+            <DrawerSettings />
             <Button
               variant="ghost"
               className="w-10 h-10 rounded-full p-0 hover:bg-foreground/20"
               onClick={closeDrawer}
             >
-              <ChevronDownIcon />
+              <DrawerMinimiseDownChevron />
             </Button>
           </div>
+          
           <div className="flex w-full h-full mt-8 px-[6%] mb-0">
             <CurrentSongInfo />
 

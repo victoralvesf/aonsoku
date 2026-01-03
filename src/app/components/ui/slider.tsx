@@ -42,7 +42,7 @@ const Slider = React.forwardRef<
     >
       <SliderPrimitive.Track
         className={clsx(
-          'relative h-1 w-full grow overflow-hidden rounded-full select-none',
+          'relative h-full grow overflow-hidden rounded-full select-none',
           variant === 'default' && 'bg-secondary',
           variant === 'secondary' && 'bg-muted-foreground/70',
         )}
@@ -50,7 +50,7 @@ const Slider = React.forwardRef<
       >
         <SliderPrimitive.Range
           className={clsx(
-            'absolute h-full select-none rounded',
+            'absolute w-full select-none rounded',
             variant === 'default' && 'bg-primary',
             variant === 'secondary' && 'bg-secondary-foreground',
           )}

@@ -1,6 +1,6 @@
 import randomCSSHexColor from '@chriscodesthings/random-css-hex-color'
 import { AudioLines, Maximize2 } from 'lucide-react'
-import { useCallback } from 'react'
+import { useCallback, memo } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -18,6 +18,14 @@ import { ISong } from '@/types/responses/song'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { logger } from '@/utils/logger'
 import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
+
+import { PlayerLikeButton } from './like-button'
+const MemoPlayerLikeButton = memo(PlayerLikeButton)
+
+import { PlayerLyricsButton } from './lyrics-button'
+const MemoLyricsButton = memo(PlayerLyricsButton)
+
+
 
 export function TrackInfo({ song }: { song: ISong | undefined }) {
   const { t } = useTranslation()
@@ -76,6 +84,7 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
     <Fragment>
       <div className="group relative">
         <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md">
+        <FullscreenMode>
           <LazyLoadImage
             key={song.id}
             id="track-song-image"
@@ -89,8 +98,8 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
             onLoad={getImageColor}
             onError={handleError}
           />
+          </FullscreenMode>
         </div>
-        <FullscreenMode>
           <Button
             variant="secondary"
             size="icon"
@@ -99,11 +108,10 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
           >
             <SimpleTooltip text={t('fullscreen.switchButton')} align="start">
               <div className="w-full h-full flex items-center justify-center">
-                <Maximize2 className="w-4 h-4" />
+                <Maximize2  />
               </div>
             </SimpleTooltip>
           </Button>
-        </FullscreenMode>
       </div>
       <div className="flex flex-col justify-center w-full overflow-hidden">
         <MarqueeTitle gap="mr-2">
@@ -117,6 +125,11 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
           </Link>
         </MarqueeTitle>
         <TrackInfoArtistsLinks song={song} />
+        <div className="flex items-center gap-1">
+          <MemoLyricsButton disabled={!song} />
+          <MemoPlayerLikeButton disabled={!song} />
+        </div>
+
       </div>
     </Fragment>
   )
