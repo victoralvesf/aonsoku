@@ -2,37 +2,70 @@
 <component type="desktop-application">
   <id>io.github.victoralvesf.aonsoku</id>
 
-  <name>Aonsoku</name>
-  <summary>A modern desktop client for Navidrome/Subsonic servers.</summary>
-
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
 
+  <name>Aonsoku</name>
+  <summary>A modern desktop client for Navidrome/Subsonic servers</summary>
+
+  <developer id="io.github.victoralves">
+    <name>Victor Alves</name>
+  </developer>
+
   <description>
-    <p>
-      <h3>Features</h3>
-      <ul>
-        <li>Subsonic Integration: Aonsoku integrates with your Navidrome or Subsonic server, providing you with easy access to your music collection.</li>
-        <li>Intuitive UI: Modern, clean and user-friendly interface designed to enhance your music listening experience.</li>
-        <li>Podcast Support: With Aonsoku Podcasts you can easily access, manage, and listen to your favorites podcasts directly within the app. Enjoy advanced search options, customizable filters and seamless listening synchronization to enhance your podcast experience.</li>
-        <li>Synchronized lyrics: Aonsoku will automatically find a synced lyric from LRCLIB if none is provided by the server.</li>
-        <li>Unsynchronized lyrics: If your songs have embedded unsynchronized lyrics, Aonsoku is able to show them.</li>
-        <li>Radio: If your server supports it, listen to radio shows directly within Aonsoku.</li>
-        <li>Scrobble: Sync played songs with your server.</li>
-      </ul>
-    </p>
+    <ul>
+      <li>**Subsonic Integration:** Aonsoku integrates with your Navidrome or Subsonic server, providing you with easy access to your music collection.</li>
+      <li>**Intuitive UI:** Modern, clean and user-friendly interface designed to enhance your music listening experience.</li>
+      <li>**Podcast Support:** With Aonsoku Podcasts you can easily access, manage, and listen to your favorites podcasts directly within the app. Enjoy advanced search options, customizable filters and seamless listening synchronization to enhance your podcast experience.</li>
+      <li>**Synchronized lyrics:** Aonsoku will automatically find a synced lyric from LRCLIB if none is provided by the server.</li>
+      <li>**Unsynchronized lyrics:** If your songs have embedded unsynchronized lyrics, Aonsoku is able to show them.</li>
+      <li>**Radio:** If your server supports it, listen to radio shows directly within Aonsoku.</li>
+      <li>**Scrobble:** Sync played songs with your server.</li>
+    </ul>
   </description>
 
   <launchable type="desktop-id">io.github.victoralvesf.aonsoku.desktop</launchable>
+
+  <content_rating type="oars-1.1" />
+
+  <url type="homepage">https://aonsoku.vercel.app</url>
+  <url type="vcs-browser">https://github.com/victoralvesf/aonsoku</url>
+
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/victoralvesf/aonsoku/e5cb4546f2f874fd24c25045882c908b8032e728/media/home.png</image>
+      <caption>Home page</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/victoralvesf/aonsoku/e5cb4546f2f874fd24c25045882c908b8032e728/media/playlist.png</image>
+      <caption>Playlist</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/victoralvesf/aonsoku/e5cb4546f2f874fd24c25045882c908b8032e728/media/artist.png</image>
+      <caption>Artist view</caption>
     </screenshot>
   </screenshots>
+
+  <releases>
+    <release version="0.10.2" date="2025-12-14">
+      <url type="details">https://github.com/victoralvesf/aonsoku/releases/tag/v0.10.2</url>
+      <description>
+        <p>New Features</p>
+        <ul>
+            <li>Dynamic Sidebar: Added a toggle to resize the sidebar width.</li>
+            <li>Discord Rich Presence: Added support to share the currently playing song via Discord Rich Presence.</li>
+            <li>Minimize to Tray: Added support for minimizing the app to the system tray with accessible player controls.</li>
+            <li>About Dialog: Improved the styling of the "About" information dialog.</li>
+            <li>New Languages: Added support for Canadian French, Italian, Korean, Malay, Polish, Turkish, and Ukrainian.</li>
+            <li>Sync Lyrics Cache: Implemented a persistent cache layer for synced lyrics to improve performance on subsequent requests.</li>
+        </ul>
+        <p>Fixes</p>
+        <ul>
+          <li>Security: Fixed an XSS vulnerability in the sanitization function.</li>
+          <li>UI: Fixed shadow rendering for Album, Playlist, and Artist titles.</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+
 </component>
