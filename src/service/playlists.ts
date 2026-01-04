@@ -68,9 +68,9 @@ async function update({
   const query = new URLSearchParams({
     playlistId,
   })
-  if (name) query.append('name', name)
-  if (comment) query.append('comment', comment)
-  if (isPublic) query.append('public', isPublic)
+  if (name !== undefined) query.append('name', name)
+  if (comment !== undefined) query.append('comment', comment)
+  if (isPublic !== undefined) query.append('public', isPublic)
 
   if (songIdToAdd) {
     if (typeof songIdToAdd === 'string') {
