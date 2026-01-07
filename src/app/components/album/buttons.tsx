@@ -17,7 +17,6 @@ export function AlbumButtons({ album, showInfoButton }: AlbumButtonsProps) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
   const { showInfoPanel, toggleShowInfoPanel } = useAppPages()
-
   const isAlbumStarred = album.starred !== undefined
 
   const queryClient = useQueryClient()
@@ -56,43 +55,44 @@ export function AlbumButtons({ album, showInfoButton }: AlbumButtonsProps) {
 
   return (
     <Actions.Container>
+    <Actions.Button
+    tooltip={buttonsTooltips.play}
+    buttonStyle="primary"
+    onClick={() => setSongList(album.song, 0)}
+    >
+    <Actions.PlayIcon />
+    </Actions.Button>
+
+    {album.song.length > 1 && (
       <Actions.Button
-        tooltip={buttonsTooltips.play}
-        buttonStyle="primary"
-        onClick={() => setSongList(album.song, 0)}
+      tooltip={buttonsTooltips.shuffle}
+      onClick={() => setSongList(album.song, 0, true)}
       >
-        <Actions.PlayIcon />
+      <Actions.ShuffleIcon />
       </Actions.Button>
+    )}
 
-      {album.song.length > 1 && (
-        <Actions.Button
-          tooltip={buttonsTooltips.shuffle}
-          onClick={() => setSongList(album.song, 0, true)}
-        >
-          <Actions.ShuffleIcon />
-        </Actions.Button>
-      )}
+    <Actions.Button
+    tooltip={buttonsTooltips.like()}
+    onClick={handleLikeButton}
+    >
+    <Actions.LikeIcon isStarred={isAlbumStarred} />
+    </Actions.Button>
 
+    {showInfoButton && (
       <Actions.Button
-        tooltip={buttonsTooltips.like()}
-        onClick={handleLikeButton}
+      tooltip={buttonsTooltips.info()}
+      onClick={toggleShowInfoPanel}
       >
-        <Actions.LikeIcon isStarred={isAlbumStarred} />
+      <Actions.InfoIcon />
       </Actions.Button>
+    )}
 
-      {showInfoButton && (
-        <Actions.Button
-          tooltip={buttonsTooltips.info()}
-          onClick={toggleShowInfoPanel}
-        >
-          <Actions.InfoIcon />
-        </Actions.Button>
-      )}
-
-      <Actions.Dropdown
-        tooltip={buttonsTooltips.options}
-        options={<AlbumOptions album={album} />}
-      />
+    <Actions.Dropdown
+    tooltip={buttonsTooltips.options}
+    options={<AlbumOptions album={album} />}
+    />
     </Actions.Container>
   )
 }
+

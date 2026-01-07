@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useMatches } from 'react-router-dom'
 import { getDownloadUrl } from '@/api/httpClient'
+import { getShareUrl } from '@/api/httpClient'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { usePlaylistRemoveSong } from '@/store/playlists.store'
@@ -44,6 +45,29 @@ export function useOptions() {
       downloadDesktop(url, id)
     } else {
       downloadBrowser(url)
+    }
+  }
+
+  async function createShare(id: string) {
+    try {
+      const response = await fetch(getShareUrl(id))
+      const rawText = await response.text()
+      console.log('Raw response:', rawText)
+
+      const data = JSON.parse(rawText)
+      console.log('Parsed JSON:', data)
+      const shareUrl = data['subsonic-response']?.shares?.share?.[0]?.url
+
+      if (shareUrl) {
+        await navigator.clipboard.writeText(shareUrl)
+        alert('Copied to clipboard!')
+      } else {
+        console.error('URL Not found in response!:', data)
+        alert('Cannot fetch!')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('Error: ' + error.message)
     }
   }
 
@@ -107,5 +131,6 @@ export function useOptions() {
     openSongInfo,
     isOnPlaylistPage,
     playlistId,
+    createShare,
   }
 }

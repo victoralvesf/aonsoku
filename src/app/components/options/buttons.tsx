@@ -62,6 +62,19 @@ function PlayLast({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   )
 }
 
+function Share({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
+  const { t } = useTranslation()
+
+  return (
+    <MenuItemFactory
+    variant={variant}
+    icon={<ListPlus className="mr-2 h-4 w-4" />}
+    label={t('options.share')}
+    {...props}
+    />
+  )
+}
+
 function Download({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   const { t } = useTranslation()
 
@@ -200,6 +213,7 @@ export const OptionsButtons = {
   PlayNext,
   PlayLast,
   Download,
+  Share,
   AddToPlaylistOption,
   EditPlaylist,
   RemovePlaylist,

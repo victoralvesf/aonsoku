@@ -16,6 +16,7 @@ export function AlbumOptions({ album }: AlbumOptionsProps) {
     playNext,
     playLast,
     addToPlaylist,
+    createShare,
     createNewPlaylist,
   } = useOptions()
 
@@ -25,6 +26,10 @@ export function AlbumOptions({ album }: AlbumOptionsProps) {
 
   function handlePlayLast() {
     playLast(album.song)
+  }
+
+  function handleShare() {
+    createShare(album.id)
   }
 
   function handleAddToPlaylist(id: string) {
@@ -44,6 +49,7 @@ export function AlbumOptions({ album }: AlbumOptionsProps) {
       <DropdownMenuGroup>
         <OptionsButtons.PlayNext onClick={handlePlayNext} />
         <OptionsButtons.PlayLast onClick={handlePlayLast} />
+        <OptionsButtons.Share onClick={handleShare} />
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <OptionsButtons.AddToPlaylistOption variant="dropdown">

@@ -141,3 +141,10 @@ export function getDownloadUrl(id: string, maxBitRate = '0', format = 'raw') {
     format,
   })
 }
+
+export function getShareUrl(id: string) {
+  return getUrl('createShare', {
+    id,
+  })
+
+}
