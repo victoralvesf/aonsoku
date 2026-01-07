@@ -4,8 +4,8 @@ import { useSearchParams } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { InfinitySongListFallback } from '@/app/components/fallbacks/song-fallbacks'
 import { HeaderTitle } from '@/app/components/header-title'
-import { ClearFilterButton } from '@/app/components/search/clear-filter-button'
-import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
+//import { ClearFilterButton } from '@/app/components/search/clear-filter-button' (riddlah): Disable search in loved songs. We need make it at first
+//import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
 import { DataTableList } from '@/app/components/ui/data-table-list'
 import { useLovedSongs } from '@/app/hooks/use-loved-songs'
 import { songsColumns } from '@/app/tables/songs-columns'
@@ -96,13 +96,14 @@ export default function SongList() {
           count={songCount}
           loading={songCountIsLoading}
         />
-
+{/* (riddlah): Disable search for loved songs. We need make at first lol
         <div className="flex gap-2 flex-1 justify-end">
           {filterByArtist && <ClearFilterButton />}
           <ExpandableSearchInput
             placeholder={t('songs.list.search.placeholder')}
           />
         </div>
+*/}
       </ShadowHeader>
 
       <div className="w-full h-[calc(100%-80px)] overflow-auto">
