@@ -60,6 +60,12 @@ export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
     reset(() => songOptions.openSongInfo(firstSong.id))
   }
 
+  function handleShareOption() {
+    if (!isSingleSelected) return
+
+      reset(() => songOptions.createShare(firstSong.id))
+  }
+
   return (
     <>
       <OptionsButtons.PlayNext
@@ -76,6 +82,13 @@ export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
           handlePlayLast()
         }}
       />
+      <ContextMenuSeparator />
+      <OptionsButtons.Share
+        variant="context"
+        onClick={(e) => {
+          e.stopPropagation()
+          handleShareOption()}
+        } />
       <ContextMenuSeparator />
       <OptionsButtons.AddToPlaylistOption variant="context">
         <AddToPlaylistSubMenu
