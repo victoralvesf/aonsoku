@@ -15,8 +15,6 @@ async function fetchSongs(offset: number, count: number) {
 }
 
 async function fetchLovedSongs() {
-  console.log("test")
-
   const songCount = 100
   let lowerBound = 0
   let upperBound = songCount

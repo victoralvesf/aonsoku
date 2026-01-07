@@ -6,6 +6,7 @@ import {
   Music2Icon,
   PodcastIcon,
   RadioIcon,
+  Heart,
 } from 'lucide-react'
 import { ElementType, memo } from 'react'
 import { ROUTES } from '@/routes/routesList'
@@ -58,7 +59,7 @@ export const libraryItems = [
     id: SidebarItems.LovedSongs,
     title: 'sidebar.lovedsongs',
     route: ROUTES.LIBRARY.LOVEDSONGS,
-    icon: Music2,
+    icon: Heart,
   },
   {
     id: SidebarItems.Songs,
