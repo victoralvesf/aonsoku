@@ -28,7 +28,7 @@ export function PlaylistOptions({
   disableDelete = false,
 }: PlaylistOptionsProps) {
   const { setPlaylistDialogState, setData } = usePlaylists()
-  const { play, playNext, playLast } = useOptions()
+  const { play, playNext, playLast, createShare } = useOptions()
   const { setPlaylistId, setConfirmDialogState } = useRemovePlaylist()
 
   function handleEdit() {
@@ -72,6 +72,10 @@ export function PlaylistOptions({
     }
   }
 
+  async function handleShare() {
+    createShare(playlist.id)
+  }
+
   return (
     <>
       {variant === 'context' && (
@@ -110,6 +114,8 @@ export function PlaylistOptions({
         }}
       />
       <DropdownMenuSeparator />
+      <OptionsButtons.Share onClick={handleShare} />
+
       <OptionsButtons.EditPlaylist
         variant={variant}
         onClick={(e) => {

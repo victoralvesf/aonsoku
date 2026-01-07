@@ -14,7 +14,7 @@ interface ArtistOptionsProps {
 
 export function ArtistOptions({ artist }: ArtistOptionsProps) {
   const { getArtistAllSongs } = useSongList()
-  const { playLast, playNext } = useOptions()
+  const { playLast, playNext, createShare } = useOptions()
 
   async function getSongsToQueue(callback: (songs: ISong[]) => void) {
     const songs = await getArtistAllSongs(artist.name)
@@ -31,13 +31,17 @@ export function ArtistOptions({ artist }: ArtistOptionsProps) {
     await getSongsToQueue(playLast)
   }
 
+  function handleShare() {
+    createShare(artist.id)
+  }
+
   return (
     <>
       <DropdownMenuGroup>
         <OptionsButtons.PlayNext onClick={handlePlayNext} />
         <OptionsButtons.PlayLast onClick={handlePlayLast} />
-        <DropdownMenuSeparator />
-      </DropdownMenuGroup>
+        <OptionsButtons.Share onClick={handleShare} />
+        </DropdownMenuGroup>
     </>
   )
 }

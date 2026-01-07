@@ -23,6 +23,7 @@ export function SongMenuOptions({
     removeSongFromPlaylist,
     openSongInfo,
     isOnPlaylistPage,
+    createShare,
   } = useOptions()
   const songIndexes = [index.toString()]
 
@@ -43,6 +44,9 @@ export function SongMenuOptions({
         }}
       />
       <ContextMenuSeparator />
+      <OptionsButtons.Share onClick={(e) => {createShare(song.id)}} />
+      <ContextMenuSeparator />
+
       <OptionsButtons.AddToPlaylistOption variant={variant}>
         <AddToPlaylistSubMenu
           type={variant}
