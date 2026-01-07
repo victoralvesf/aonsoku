@@ -28,6 +28,7 @@ export interface ISidebarItem {
 export enum SidebarItems {
   Home = 'home',
   Artists = 'artists',
+  LovedSongs = 'lovedsongs',
   Songs = 'songs',
   Albums = 'albums',
   Playlists = 'playlists',
@@ -52,6 +53,12 @@ export const libraryItems = [
     title: 'sidebar.artists',
     route: ROUTES.LIBRARY.ARTISTS,
     icon: Mic2,
+  },
+  {
+    id: SidebarItems.LovedSongs,
+    title: 'sidebar.lovedsongs',
+    route: ROUTES.LIBRARY.LOVEDSONGS,
+    icon: Music2,
   },
   {
     id: SidebarItems.Songs,
