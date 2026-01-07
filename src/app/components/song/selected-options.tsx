@@ -102,14 +102,6 @@ export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
       {isSingleSelected && (
         <>
           <ContextMenuSeparator />
-          <OptionsButtons.Download
-            variant="context"
-            onClick={(e) => {
-              e.stopPropagation()
-              handleDownload()
-            }}
-          />
-          <ContextMenuSeparator />
           <OptionsButtons.SongInfo
             variant="context"
             onClick={(e) => {

@@ -61,14 +61,6 @@ export function SongMenuOptions({
         />
       )}
       <ContextMenuSeparator />
-      <OptionsButtons.Download
-        variant={variant}
-        onClick={(e) => {
-          e.stopPropagation()
-          startDownload(song.id)
-        }}
-      />
-      <ContextMenuSeparator />
       <OptionsButtons.SongInfo
         variant={variant}
         onClick={(e) => {

@@ -41,7 +41,6 @@ export function ArtistOptions({ artist }: ArtistOptionsProps) {
         <OptionsButtons.PlayNext onClick={handlePlayNext} />
         <OptionsButtons.PlayLast onClick={handlePlayLast} />
         <DropdownMenuSeparator />
-        <OptionsButtons.Download onClick={handleDownload} />
       </DropdownMenuGroup>
     </>
   )

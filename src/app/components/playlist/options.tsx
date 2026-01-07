@@ -114,15 +114,6 @@ export function PlaylistOptions({
         }}
       />
       <DropdownMenuSeparator />
-      <OptionsButtons.Download
-        variant={variant}
-        disabled={disableDownload}
-        onClick={(e) => {
-          e.stopPropagation()
-          handleDownload()
-        }}
-      />
-      <DropdownMenuSeparator />
       <OptionsButtons.EditPlaylist
         variant={variant}
         onClick={(e) => {

@@ -58,10 +58,6 @@ export function AlbumOptions({ album }: AlbumOptionsProps) {
           addToPlaylistFn={handleAddToPlaylist}
         />
       </OptionsButtons.AddToPlaylistOption>
-      <DropdownMenuSeparator />
-      <DropdownMenuGroup>
-        <OptionsButtons.Download onClick={handleDownload} />
-      </DropdownMenuGroup>
     </>
   )
 }
