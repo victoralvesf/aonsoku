@@ -1,7 +1,6 @@
 import { OptionsButtons } from '@/app/components/options/buttons'
 import {
   DropdownMenuGroup,
-  DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
 import { useOptions } from '@/app/hooks/use-options'
 import { useSongList } from '@/app/hooks/use-song-list'
