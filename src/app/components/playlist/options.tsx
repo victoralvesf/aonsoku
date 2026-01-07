@@ -114,7 +114,15 @@ export function PlaylistOptions({
         }}
       />
       <DropdownMenuSeparator />
-      <OptionsButtons.Share onClick={handleShare} />
+
+      <OptionsButtons.Share
+        variant={variant}
+        onClick={(e) => {
+          e.stopPropagation()
+          handleShare()
+          }
+        }
+      />
 
       <OptionsButtons.EditPlaylist
         variant={variant}
