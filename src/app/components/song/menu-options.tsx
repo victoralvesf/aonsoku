@@ -44,7 +44,12 @@ export function SongMenuOptions({
         }}
       />
       <ContextMenuSeparator />
-      <OptionsButtons.Share onClick={(e) => {createShare(song.id)}} />
+      <OptionsButtons.Share
+        variant={variant}
+        onClick={(e) => {
+          e.stopPropagation()
+          createShare(song.id)}
+        } />
       <ContextMenuSeparator />
 
       <OptionsButtons.AddToPlaylistOption variant={variant}>
