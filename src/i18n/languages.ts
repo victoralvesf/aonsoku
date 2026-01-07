@@ -38,105 +38,15 @@ export const resources = {
 
 export const languages = [
   {
-    nativeName: 'Čeština',
-    langCode: 'cs',
-    flag: 'CZ',
-    dayjsLocale: 'cs',
-  },
-  {
-    nativeName: 'Deutsch',
-    langCode: 'de',
-    flag: 'DE',
-    dayjsLocale: 'de',
-  },
-  {
     nativeName: 'English (US)',
     langCode: 'en-US',
     flag: 'US',
     dayjsLocale: 'en',
   },
   {
-    nativeName: 'Español (España)',
-    langCode: 'es-ES',
-    flag: 'ES',
-    dayjsLocale: 'es',
-  },
-  {
-    nativeName: 'Français (Canada)',
-    langCode: 'fr-CA',
-    flag: 'CA',
-    dayjsLocale: 'fr-ca',
-  },
-  {
-    nativeName: 'Français',
-    langCode: 'fr',
-    flag: 'FR',
-    dayjsLocale: 'fr',
-  },
-  {
-    nativeName: 'Italiano',
-    langCode: 'it',
-    flag: 'IT',
-    dayjsLocale: 'it',
-  },
-  {
-    nativeName: '한국어',
-    langCode: 'ko',
-    flag: 'KR',
-    dayjsLocale: 'ko',
-  },
-  {
-    nativeName: 'മലയാളം',
-    langCode: 'ml',
-    flag: 'IN',
-    dayjsLocale: 'ml',
-  },
-  {
-    nativeName: 'Polski',
-    langCode: 'pl',
-    flag: 'PL',
-    dayjsLocale: 'pl',
-  },
-  {
-    nativeName: 'Português (Portugal)',
-    langCode: 'pt',
-    flag: 'PT',
-    dayjsLocale: 'pt',
-  },
-  {
-    nativeName: 'Português (Brasil)',
-    langCode: 'pt-BR',
-    flag: 'BR',
-    dayjsLocale: 'pt-br',
-  },
-  {
     nativeName: 'Русский',
     langCode: 'ru',
     flag: 'RU',
     dayjsLocale: 'ru',
-  },
-  {
-    nativeName: 'Svenska',
-    langCode: 'sv',
-    flag: 'SE',
-    dayjsLocale: 'sv',
-  },
-  {
-    nativeName: 'Türkçe',
-    langCode: 'tr',
-    flag: 'TR',
-    dayjsLocale: 'tr',
-  },
-  {
-    nativeName: 'Українська',
-    langCode: 'uk',
-    flag: 'UA',
-    dayjsLocale: 'uk',
-  },
-  {
-    nativeName: '简体中文',
-    langCode: 'zh-Hans',
-    flag: 'CN',
-    dayjsLocale: 'zh-cn',
   },
 ]

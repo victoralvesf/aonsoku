@@ -174,12 +174,12 @@
         "password": "Пожалуйста, введите пароль",
         "url": "Введите корректный URL-адрес."
       },
-      "server": "Сервер",
+      "server": "Вход",
       "url": "URL",
       "username": "Имя пользователя",
       "password": "Пароль",
       "connect": "Подключиться",
-      "description": "Подключитесь к вашему серверу Subsonic.",
+      "description": "Войдите в Ваш аккаунт",
       "usernamePlaceholder": "Ваше имя пользователя",
       "urlDescription": "Это URL вашего сервера",
       "connecting": "Подключение…"

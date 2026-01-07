@@ -361,8 +361,8 @@
   },
   "login": {
     "form": {
-      "server": "Server",
-      "description": "Connect to your Subsonic server.",
+      "server": "Login",
+      "description": "Enter your credentials.",
       "url": "URL",
       "urlDescription": "This is your server URL",
       "username": "Username",
