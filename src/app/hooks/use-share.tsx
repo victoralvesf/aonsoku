@@ -1,29 +1,9 @@
-import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { getShareUrl } from '@/api/httpClient'
 
 export function useShare() {
   const { t } = useTranslation()
-
-  const started = useCallback(() => {
-    toast(t('downloads.started'), {
-      autoClose: false,
-      type: 'default',
-      isLoading: true,
-      toastId: 'download',
-    })
-  }, [t])
-
-  const completed = useCallback(() => {
-    toast.update('download', {
-      render: t('downloads.completed'),
-                 type: 'success',
-                 autoClose: 5000,
-                 isLoading: false,
-    })
-  }, [t])
-
 
   async function copyShareLinkToClipboard(id: string) {
     try {
