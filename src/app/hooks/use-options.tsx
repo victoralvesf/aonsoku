@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useMatches } from 'react-router-dom'
 import { getDownloadUrl } from '@/api/httpClient'
-import { getShareUrl } from '@/api/httpClient'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions } from '@/store/player.store'
 import { usePlaylistRemoveSong } from '@/store/playlists.store'
@@ -11,12 +10,13 @@ import { ISong } from '@/types/responses/song'
 import { isDesktop } from '@/utils/desktop'
 import { queryKeys } from '@/utils/queryKeys'
 import { useDownload } from './use-download'
-
+import { useShare } from './use-share'
 type SongIdToAdd = Pick<UpdateParams, 'songIdToAdd'>['songIdToAdd']
 
 export function useOptions() {
   const { setNextOnQueue, setLastOnQueue, setSongList } = usePlayerActions()
   const { downloadBrowser, downloadDesktop } = useDownload()
+  const { copyShareLinkToClipboard } = useShare()
   const { setActionData, setConfirmDialogState } = usePlaylistRemoveSong()
   const matches = useMatches()
   const { setSongId, setModalOpen } = useSongInfo()
@@ -48,27 +48,8 @@ export function useOptions() {
     }
   }
 
-  async function createShare(id: string) {
-    try {
-      const response = await fetch(getShareUrl(id))
-      const rawText = await response.text()
-      console.log('Raw response:', rawText)
-
-      const data = JSON.parse(rawText)
-      console.log('Parsed JSON:', data)
-      const shareUrl = data['subsonic-response']?.shares?.share?.[0]?.url
-
-      if (shareUrl) {
-        await navigator.clipboard.writeText(shareUrl)
-        alert('Copied to clipboard!')
-      } else {
-        console.error('URL Not found in response!:', data)
-        alert('Cannot fetch!')
-      }
-    } catch (error) {
-      console.error('Error:', error)
-      alert('Error: ' + error.message)
-    }
+  function createShare(id: string) {
+    copyShareLinkToClipboard(id)
   }
 
   const updateMutation = useMutation({

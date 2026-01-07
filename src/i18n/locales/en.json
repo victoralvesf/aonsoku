@@ -589,7 +589,8 @@
     "type": "Type",
     "apiVersion": "API Version",
     "toasts": {
-      "copy": "Link copied to clipboard!"
+      "copy": "Link copied to clipboard!",
+      "copy-error": "Cannot create link! Error!"
     }
   },
   "mobile": {
