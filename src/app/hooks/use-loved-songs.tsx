@@ -16,11 +16,6 @@ async function fetchSongs(offset: number, count: number) {
 
 async function fetchLovedSongs() {
   console.log("test")
-  const storedSongCount = useAppStore.getState().data.songCount
-
-  if (storedSongCount && storedSongCount > 0) {
-    return storedSongCount
-  }
 
   const songCount = 100
   let lowerBound = 0
@@ -38,6 +33,13 @@ async function fetchLovedSongs() {
   }
 
   let totalSongs = lowerBound
+
+  const storedSongCount = totalSongs
+
+  if (storedSongCount && storedSongCount > 0) {
+    return storedSongCount
+  }
+
 
   while (lowerBound < upperBound) {
     const midPoint = Math.floor((lowerBound + upperBound) / 2)
