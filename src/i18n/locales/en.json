@@ -588,6 +588,8 @@
     "version": "Version",
     "type": "Type",
     "apiVersion": "API Version",
+    "description": "Builded atop of Aonsoku",
+    "socials": "We in socials",
     "toasts": {
       "copy": "Link copied to clipboard!",
       "copy-error": "Cannot create link! Error!"

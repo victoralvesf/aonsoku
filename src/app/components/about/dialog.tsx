@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from '@/app/components/ui/dialog'
 import githubIcon from '@/assets/icons/github-mark-white.svg'
+import telegramIcon from '@/assets/icons/telegram-mark.svg'
 import { subsonic } from '@/service/subsonic'
 import { getAppInfo } from '@/utils/appName'
 import { queryKeys } from '@/utils/queryKeys'
@@ -21,7 +22,7 @@ interface AboutDialogProps {
 
 export function AboutDialog({ open, onOpenChange }: AboutDialogProps) {
   const { t } = useTranslation()
-  const { name, version, url } = getAppInfo()
+  const { name, version, url, tg_url } = getAppInfo()
 
   const { data: server, isLoading } = useQuery({
     queryKey: [queryKeys.update.serverInfo],
@@ -72,6 +73,25 @@ export function AboutDialog({ open, onOpenChange }: AboutDialogProps) {
         </div>
 
         <DialogFooter className="w-full border-t border-border px-6 py-4 bg-background-foreground">
+          <div>
+            <a className="text-xs font-medium">{t('about.socials')}</a>
+          </div>
+          <div className="flex justify-end">
+            <a
+              className="px-2 py-1 rounded-md bg-primary/40 hover:bg-primary/50 text-foreground border border-primary/40 text-sm font-medium flex items-center justify-center"
+              href={tg_url}
+              target="_blank"
+              rel="nofollow noreferrer"
+            >
+              <img src={telegramIcon} alt="telegram" className="size-4 mr-2" />
+              Telegram
+            </a>
+          </div>
+        </DialogFooter>
+        <DialogFooter className="w-full border-t border-border px-6 py-4 bg-background-foreground">
+          <div>
+            <a className="text-xs font-medium">{t('about.description')}</a>
+          </div>
           <div className="flex justify-end">
             <a
               className="px-2 py-1 rounded-md bg-primary/40 hover:bg-primary/50 text-foreground border border-primary/40 text-sm font-medium flex items-center justify-center"
