@@ -36,12 +36,6 @@ export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
     reset(() => songOptions.playLast(songs))
   }
 
-  async function handleDownload() {
-    if (!isSingleSelected) return
-
-    reset(() => songOptions.startDownload(firstSong.id))
-  }
-
   async function handleAddToPlaylist(id: string) {
     const songIdToAdd = songs.map((s) => s.id)
 

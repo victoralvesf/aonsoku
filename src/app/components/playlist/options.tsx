@@ -28,7 +28,7 @@ export function PlaylistOptions({
   disableDelete = false,
 }: PlaylistOptionsProps) {
   const { setPlaylistDialogState, setData } = usePlaylists()
-  const { play, playNext, playLast, startDownload } = useOptions()
+  const { play, playNext, playLast } = useOptions()
   const { setPlaylistId, setConfirmDialogState } = useRemovePlaylist()
 
   function handleEdit() {
@@ -70,10 +70,6 @@ export function PlaylistOptions({
     } else {
       await getSongsToQueue(playLast)
     }
-  }
-
-  function handleDownload() {
-    startDownload(playlist.id)
   }
 
   return (

@@ -15,7 +15,6 @@ export function AlbumOptions({ album }: AlbumOptionsProps) {
   const {
     playNext,
     playLast,
-    startDownload,
     addToPlaylist,
     createNewPlaylist,
   } = useOptions()
@@ -26,10 +25,6 @@ export function AlbumOptions({ album }: AlbumOptionsProps) {
 
   function handlePlayLast() {
     playLast(album.song)
-  }
-
-  function handleDownload() {
-    startDownload(album.id)
   }
 
   function handleAddToPlaylist(id: string) {

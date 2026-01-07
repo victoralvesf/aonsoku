@@ -14,7 +14,7 @@ interface ArtistOptionsProps {
 
 export function ArtistOptions({ artist }: ArtistOptionsProps) {
   const { getArtistAllSongs } = useSongList()
-  const { playLast, playNext, startDownload } = useOptions()
+  const { playLast, playNext } = useOptions()
 
   async function getSongsToQueue(callback: (songs: ISong[]) => void) {
     const songs = await getArtistAllSongs(artist.name)
@@ -29,10 +29,6 @@ export function ArtistOptions({ artist }: ArtistOptionsProps) {
 
   async function handlePlayLast() {
     await getSongsToQueue(playLast)
-  }
-
-  function handleDownload() {
-    startDownload(artist.id)
   }
 
   return (

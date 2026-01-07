@@ -5,7 +5,7 @@ export function AppTitle() {
     <div className="flex gap-2 items-center">
       <AppIcon size={24} />
       <span className="leading-7 text-sm font-medium text-muted-foreground">
-        Aonsoku
+        Пацанский Atmospheric Black Metal
       </span>
     </div>
   )

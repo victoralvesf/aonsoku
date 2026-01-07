@@ -21,7 +21,6 @@ export function SongMenuOptions({
     createNewPlaylist,
     addToPlaylist,
     removeSongFromPlaylist,
-    startDownload,
     openSongInfo,
     isOnPlaylistPage,
   } = useOptions()
