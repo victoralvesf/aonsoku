@@ -1,13 +1,27 @@
-import { useTranslation } from 'react-i18next'
-import { appName } from '@/utils/appName'
+import { RouterProvider } from 'react-router-dom'
+import { Linux } from '@/app/components/controls/linux'
+import { SettingsDialog } from '@/app/components/settings/dialog'
+import { LangObserver } from '@/app/observers/lang-observer'
+import { MediaSessionObserver } from '@/app/observers/media-session-observer'
+import { ThemeObserver } from '@/app/observers/theme-observer'
+import { ToastContainer } from '@/app/observers/toast-container'
+import { UpdateObserver } from '@/app/observers/update-observer'
+import { router } from '@/routes/router'
+import { isDesktop as isElectron, isLinux } from '@/utils/desktop'
 
 export function Mobile() {
-  const { t } = useTranslation()
 
+  //(riddlah): TODO! Mobile mode!
   return (
-    <div className="flex flex-col gap-1 w-screen h-screen items-center justify-center px-6 text-center bg-slate-800 text-slate-200 text-xl">
-      <p>{t('mobile.unsupported_message', { app_name: appName })}</p>
-      <p>{t('mobile.access_recommendation')}</p>
-    </div>
+    <>
+      {isElectron() && <UpdateObserver />}
+      <MediaSessionObserver />
+      <LangObserver />
+      <ThemeObserver />
+      <SettingsDialog />
+      <RouterProvider router={router} />
+      <ToastContainer />
+      {isLinux && <Linux />}
+    </>
   )
 }
