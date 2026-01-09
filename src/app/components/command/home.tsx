@@ -39,11 +39,13 @@ export function CommandHome({ pages, setPages, runCommand }: HomeProps) {
           {t('playlist.form.create.title')}
         </CustomCommandItem>
       </CommandItem>
+{/* (riddlah): Disable Server control for users
       <CommandItem onSelect={async () => setPages([...pages, 'SERVER'])}>
         <CustomCommandItem variant="ServerManagement">
           {t('server.management')}
         </CustomCommandItem>
       </CommandItem>
+*/}
     </CommandGroup>
   )
 }

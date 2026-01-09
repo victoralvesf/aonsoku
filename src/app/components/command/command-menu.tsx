@@ -25,7 +25,7 @@ import { CommandArtistResult } from './artist-result'
 import { CommandGotoPage } from './goto-page'
 import { CommandHome, CommandPages } from './home'
 import { CommandPlaylists } from './playlists'
-import { CommandServer } from './server-management'
+//import { CommandServer } from './server-management' (riddlah): Disable Server control for users
 import { CommandSongResult } from './song-result'
 import { CommandThemes } from './themes'
 
@@ -217,7 +217,7 @@ export default function CommandMenu() {
                 <CommandPlaylists runCommand={runCommand} />
               )}
 
-              {activePage === 'SERVER' && <CommandServer />}
+              {/*activePage === 'SERVER' && <CommandServer /> (riddlah): Disable Server control for users*/}
             </CommandList>
           </ScrollArea>
           <div className="flex justify-end p-2 h-10 gap-1 border-t">
