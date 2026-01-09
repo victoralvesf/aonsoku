@@ -50,16 +50,16 @@ export const mainNavItems = [
 
 export const libraryItems = [
   {
-    id: SidebarItems.Artists,
-    title: 'sidebar.artists',
-    route: ROUTES.LIBRARY.ARTISTS,
-    icon: Mic2,
-  },
-  {
     id: SidebarItems.LovedSongs,
     title: 'sidebar.lovedsongs',
     route: ROUTES.LIBRARY.LOVEDSONGS,
     icon: Heart,
+  },
+  {
+    id: SidebarItems.Artists,
+    title: 'sidebar.artists',
+    route: ROUTES.LIBRARY.ARTISTS,
+    icon: Mic2,
   },
   {
     id: SidebarItems.Songs,
