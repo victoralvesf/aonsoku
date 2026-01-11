@@ -61,7 +61,7 @@ export function setupEvents(window: BrowserWindow | null) {
   })
 
   window.on('close', (event) => {
-    if (is.dev || !getAppSetting('minimizeToTray')) {
+    if (is.dev || !getAppSetting('minimizeToTray') || !tray) {
       if (tray && !tray.isDestroyed()) tray.destroy()
       return
     }
