@@ -1,5 +1,5 @@
-appId: com.victoralvesf.aonsoku
-productName: Aonsoku
+appId: com.pabm.radiopabm
+productName: radioPABM
 copyright: Copyright © 2025 Victor Alves
 icon: ./build/icon.ico
 artifactName: '${productName}-v${version}-${os}-${arch}.${ext}'
@@ -17,7 +17,7 @@ extraResources:
     to: resources
 
 win:
-  executableName: Aonsoku
+  executableName: radioPABM
   target:
     - target: nsis
       arch:
@@ -51,7 +51,7 @@ linux:
     - tar.gz
   maintainer: victoralvesf
   category: AudioVideo
-  synopsis: 'A modern desktop music client for Navidrome and OpenSubsonic servers.'
+  synopsis: 'radopPABM Client build atop of Aonsoku'
 
 npmRebuild: true
 nativeRebuilder: legacy

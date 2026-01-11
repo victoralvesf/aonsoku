@@ -1,14 +1,14 @@
 {
-  "name": "aonsoku",
+  "name": "radiopabm",
   "private": true,
   "version": "0.10.2",
-  "description": "A modern desktop client for Navidrome/Subsonic servers.",
+  "description": "radioPABM Client based on Aonsoku",
   "author": {
-    "name": "Victor Alves"
+    "name": "Victor Alves & npc_riddlah"
   },
   "main": "./out/main/index.js",
   "type": "module",
-  "productName": "Aonsoku",
+  "productName": "radioPABM",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

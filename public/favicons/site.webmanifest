@@ -1,7 +1,7 @@
 {
-  "name": "Aonsoku",
-  "short_name": "Aonsoku",
-  "description": "A modern desktop client for Navidrome/Subsonic servers.",
+  "name": "radioPABM",
+  "short_name": "radopPABM",
+  "description": "radioPABM Client build atop of Aonsoku",
   "theme_color": "#060E23",
   "categories": ["music", "entertainment"],
   "background_color": "#20b358",
