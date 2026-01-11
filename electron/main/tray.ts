@@ -67,15 +67,6 @@ function getTrayIcon(): NativeImage {
 }
 
 export function createTray() {
-  // Check if we are running on Gnome and skip tray creation
-  const currentDesktop = process.env.XDG_CURRENT_DESKTOP || ''
-  if (
-    platform.isLinux &&
-    currentDesktop.toLowerCase().includes('gnome')
-  ) {
-    return
-  }
-
   const trayIcon = getTrayIcon()
   tray = new Tray(trayIcon)
 
