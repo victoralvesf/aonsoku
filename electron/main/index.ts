@@ -2,9 +2,10 @@ import { electronApp, optimizer, platform } from '@electron-toolkit/utils'
 import { app, globalShortcut } from 'electron'
 
 if (platform.isLinux) {
-  // Force XDG_CURRENT_DESKTOP to Unity to ensure tray icon visibility on Gnome/Flatpak
-  process.env.ORIGINAL_XDG_CURRENT_DESKTOP = process.env.XDG_CURRENT_DESKTOP
-  process.env.XDG_CURRENT_DESKTOP = 'Unity'
+
+  if (process.env.XDG_CURRENT_DESKTOP.toLowerCase().includes('gnome')) {
+    process.env.XDG_CURRENT_DESKTOP = 'Unity'
+  }
 }
 import { createAppMenu } from './core/menu'
 import { createWindow, mainWindow } from './window'
