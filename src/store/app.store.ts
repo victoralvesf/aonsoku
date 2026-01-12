@@ -112,7 +112,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
           },
           desktop: {
             data: {
-              minimizeToTray: true,
+              minimizeToTray: false,
             },
             actions: {
               setMinimizeToTray: (value) => {

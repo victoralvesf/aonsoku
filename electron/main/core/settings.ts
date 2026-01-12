@@ -7,7 +7,7 @@ export interface ISettingPayload {
 const settingsStore = new AonsokuStore<ISettingPayload>({
   name: 'settings',
   defaults: {
-    minimizeToTray: true,
+    minimizeToTray: false,
   },
 })
 
