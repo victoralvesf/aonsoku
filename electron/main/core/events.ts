@@ -61,14 +61,7 @@ export function setupEvents(window: BrowserWindow | null) {
   })
 
   window.on('close', (event) => {
-    const currentDesktop = (process.env.XDG_CURRENT_DESKTOP || '').toLowerCase()
-    const isGnomeOrUnity = currentDesktop.includes('gnome') || currentDesktop.includes('unity')
-    if (
-      is.dev ||
-      !getAppSetting('minimizeToTray') ||
-      !tray ||
-      (platform.isLinux && isGnomeOrUnity)
-    ) {
+    if (is.dev || !getAppSetting('minimizeToTray')) {
       if (tray && !tray.isDestroyed()) tray.destroy()
       return
     }
