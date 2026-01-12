@@ -277,7 +277,7 @@ export function SongInfoDialog() {
 
               {song.samplingRate && (
                 <InfoGridItem title="samplingRate">
-                  {song.samplingRate / 1000} Hz
+                  {song.samplingRate / 1000} kHz
                 </InfoGridItem>
               )}
 
