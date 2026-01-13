@@ -56,6 +56,7 @@ export default function SongList() {
           data={songlist}
           handlePlaySong={(row) => handlePlaySong(row.index)}
           columnFilter={columnsToShow}
+          noRowsMessage={t('favorites.noSongList')}
         />
       </div>
     </div>

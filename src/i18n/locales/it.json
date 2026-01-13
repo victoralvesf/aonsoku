@@ -190,6 +190,9 @@
     "showDetails": "Mostra dettagli",
     "seeMore": "Per saperne di più"
   },
+  "favorites": {
+    "noSongList": "Non hai ancora aggiunto brani ai preferiti!"
+  },
   "artist": {
     "headline": "Artista",
     "buttons": {

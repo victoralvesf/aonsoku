@@ -178,6 +178,9 @@
     },
     "headline": "Album"
   },
+  "favorites": {
+    "noSongList": "Du har inte lagt till några låtar i favoriter än!"
+  },
   "artist": {
     "buttons": {
       "play": "Spela {{artist}} radio",

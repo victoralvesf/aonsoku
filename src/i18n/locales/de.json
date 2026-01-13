@@ -345,6 +345,9 @@
       }
     }
   },
+  "favorites": {
+    "noSongList": "Du hast noch keine Lieder zu den Favoriten hinzugefügt!"
+  },
   "artist": {
     "headline": "Künstler",
     "buttons": {

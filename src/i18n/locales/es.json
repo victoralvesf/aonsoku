@@ -193,6 +193,9 @@
       "discNumber": "Disco {{number}}"
     }
   },
+  "favorites": {
+    "noSongList": "¡Aún no has añadido canciones a favoritos!"
+  },
   "artist": {
     "headline": "Artista",
     "buttons": {

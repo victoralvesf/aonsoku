@@ -256,6 +256,9 @@
       "byArtist": "Titres de {{artist}}"
     }
   },
+  "favorites": {
+    "noSongList": "Vous n'avez pas encore ajouté de chansons aux favoris !"
+  },
   "artist": {
     "recentAlbums": "Albums récents",
     "relatedArtists": "Artistes similaires",

@@ -183,6 +183,9 @@
       "discNumber": "碟片 {{number}}"
     }
   },
+  "favorites": {
+    "noSongList": "您还没有添加任何歌曲到收藏夹！"
+  },
   "artist": {
     "headline": "艺术家",
     "buttons": {
