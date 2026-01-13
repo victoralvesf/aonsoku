@@ -16,6 +16,7 @@
     "radios": "Радио",
     "miniSearch": "Поиск",
     "albums": "Альбомы",
+    "favorites": "Избранное",
     "playlists": "Плейлисты",
     "songs": "Треки",
     "library": "Библиотека",
@@ -259,6 +260,9 @@
         "placeholder": "Искать треки…"
       }
     }
+  },
+  "favorites": {
+    "noSongList": "Вы еще не добавили песни в избранное!"
   },
   "artist": {
     "buttons": {

@@ -14,6 +14,7 @@
     "radios": "电台",
     "emptyPlaylist": "还没有创建播放列表",
     "albums": "专辑",
+    "favorites": "收藏夹",
     "search": "搜索…",
     "miniSearch": "搜索",
     "podcasts": "播客"
@@ -181,6 +182,9 @@
     "table": {
       "discNumber": "碟片 {{number}}"
     }
+  },
+  "favorites": {
+    "noSongList": "您还没有添加任何歌曲到收藏夹！"
   },
   "artist": {
     "headline": "艺术家",

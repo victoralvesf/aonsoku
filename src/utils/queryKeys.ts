@@ -22,6 +22,10 @@ const artist = {
   topSongs: 'get-artist-top-songs',
 }
 
+const favorites = {
+  songs: 'get-favorite-songs',
+}
+
 const song = {
   all: 'get-all-songs',
   random: 'get-random-songs',
@@ -56,6 +60,7 @@ const episode = {
 export const queryKeys = {
   album,
   artist,
+  favorites,
   playlist,
   song,
   radio,

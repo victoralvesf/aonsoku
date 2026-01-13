@@ -131,6 +131,7 @@
     "home": "Accueil",
     "songs": "Titres",
     "albums": "Albums",
+    "favorites": "Favoris",
     "miniSearch": "Recherche",
     "library": "Bibliothèque",
     "artists": "Artistes",
@@ -254,6 +255,9 @@
       },
       "byArtist": "Titres de {{artist}}"
     }
+  },
+  "favorites": {
+    "noSongList": "Vous n'avez pas encore ajouté de chansons aux favoris !"
   },
   "artist": {
     "recentAlbums": "Albums récents",

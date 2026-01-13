@@ -538,6 +538,9 @@
     "playing": "지금 재생 중",
     "switchButton": "큰 플레이어로 전환"
   },
+  "favorites": {
+    "noSongList": "아직 즐겨찾기에 곡을 추가하지 않았습니다!"
+  },
   "artist": {
     "headline": "아티스트",
     "buttons": {

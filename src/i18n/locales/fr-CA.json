@@ -66,6 +66,9 @@
       "dislike": "Enlever {{name}} des favoris"
     }
   },
+  "favorites": {
+    "noSongList": "Vous n'avez pas encore ajouté de chansons aux favoris !"
+  },
   "artist": {
     "topSongs": "Populaire",
     "recentAlbums": "Albums récents",

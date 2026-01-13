@@ -271,6 +271,9 @@
     },
     "noSongList": "Ta playlista nie zawiera żadnych piosenek!"
   },
+  "favorites": {
+    "noSongList": "Nie dodałeś jeszcze żadnych utworów do ulubionych!"
+  },
   "artist": {
     "headline": "Wykonawca",
     "buttons": {
