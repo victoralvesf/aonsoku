@@ -1,12 +1,13 @@
 import { electronApp, optimizer, platform } from '@electron-toolkit/utils'
 import { app, globalShortcut } from 'electron'
-
-if (platform.isLinux && process.env.XDG_CURRENT_DESKTOP.toLowerCase().includes('gnome')) {
-    process.env.XDG_CURRENT_DESKTOP = 'Unity'
-}
-
 import { createAppMenu } from './core/menu'
 import { createWindow, mainWindow } from './window'
+
+const currentDesktop = process.env.XDG_CURRENT_DESKTOP ?? ''
+
+if (platform.isLinux && currentDesktop.toLowerCase().includes('gnome')) {
+  process.env.XDG_CURRENT_DESKTOP = 'Unity'
+}
 
 const instanceLock = app.requestSingleInstanceLock()
 
