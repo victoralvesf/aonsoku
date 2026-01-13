@@ -1,5 +1,5 @@
 import {
-  Heart,
+  HeartIcon,
   HomeIcon,
   LibraryIcon,
   ListMusicIcon,
@@ -18,6 +18,7 @@ const Radio = memo(RadioIcon)
 const Home = memo(HomeIcon)
 const Library = memo(LibraryIcon)
 const Podcast = memo(PodcastIcon)
+const Heart = memo(HeartIcon)
 
 export interface ISidebarItem {
   id: string

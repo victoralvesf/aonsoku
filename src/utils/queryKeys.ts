@@ -23,7 +23,7 @@ const artist = {
 }
 
 const favorites = {
-  count: 'get-favorite-count',
+  songs: 'get-favorite-songs',
 }
 
 const song = {

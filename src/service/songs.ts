@@ -37,10 +37,9 @@ async function getFavoriteSongs() {
   const response = await httpClient<FavoritesResponse>('/getStarred2', {
     method: 'GET',
   })
-  console.log(response);
+
   return response?.data.starred2
 }
-
 
 async function getTopSongs(artistName: string) {
   const response = await httpClient<TopSongsResponse>('/getTopSongs', {

@@ -47,7 +47,7 @@ const SONGS = {
 }
 
 const FAVORITES = {
-  PAGE: `${LIBRARY.FAVORITES}`,
+  PAGE: LIBRARY.FAVORITES,
 }
 
 const PLAYLIST = {

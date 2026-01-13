@@ -39,7 +39,6 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             hideServer: HIDE_SERVER ?? false,
             lockUser: hasValidConfig,
             songCount: null,
-            favoriteCount: null,
           },
           accounts: {
             discord: {
@@ -226,7 +225,6 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.protocolVersion = '1.16.0'
                 state.data.serverType = 'subsonic'
                 state.data.songCount = null
-                state.data.favoriteCount = null
                 state.pages.showInfoPanel = true
                 state.pages.hideRadiosSection = HIDE_RADIOS_SECTION ?? false
                 state.pages.artistsPageViewType = 'table'
