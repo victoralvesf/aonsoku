@@ -205,6 +205,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                     state.data.protocolVersion = serverInfo.protocolVersion
                     state.data.serverType = serverInfo.serverType
                     state.data.isServerConfigured = true
+                    state.data.extensionsSupported = serverInfo.extensionsSupported
                   })
                   return true
                 }
@@ -225,6 +226,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.protocolVersion = '1.16.0'
                 state.data.serverType = 'subsonic'
                 state.data.songCount = null
+                state.data.extensionsSupported = {}
                 state.pages.showInfoPanel = true
                 state.pages.hideRadiosSection = HIDE_RADIOS_SECTION ?? false
                 state.pages.artistsPageViewType = 'table'
