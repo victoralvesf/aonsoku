@@ -205,7 +205,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                     state.data.protocolVersion = serverInfo.protocolVersion
                     state.data.serverType = serverInfo.serverType
                     state.data.isServerConfigured = true
-                    state.data.extensionsSupported = serverInfo.extensionsSupported
+                    state.data.extensionsSupported =
+                      serverInfo.extensionsSupported
                   })
                   return true
                 }

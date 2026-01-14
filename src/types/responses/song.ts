@@ -101,6 +101,7 @@ export interface FavoritesResponse
   extends SubsonicResponse<{ starred2: SongList }> {}
 
 export interface LyricsResponse extends SubsonicResponse<{ lyrics: ILyric }> {}
-export interface StructuredLyricsResponse extends SubsonicResponse<{ lyricsList: ILyricsList }> {}
+export interface StructuredLyricsResponse
+  extends SubsonicResponse<{ lyricsList: ILyricsList }> {}
 
 export interface GetSongResponse extends SubsonicResponse<{ song: ISong }> {}
