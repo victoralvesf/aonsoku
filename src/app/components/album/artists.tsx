@@ -1,7 +1,7 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
-import { getCoverArtUrl } from '@/api/httpClient'
 import { Dot } from '@/app/components/dot'
+import { ImageLoader } from '@/app/components/image-loader'
 import { ROUTES } from '@/routes/routesList'
 import { IFeaturedArtist } from '@/types/responses/artist'
 import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
@@ -61,12 +61,16 @@ function ArtistImage({ id, name }: AlbumArtistProps) {
 
   return (
     <div className="size-6 min-w-6 min-h-6 rounded-full bg-accent">
-      <LazyLoadImage
-        effect="opacity"
-        src={getCoverArtUrl(id, 'artist', '100')}
-        alt={name}
-        className="w-full h-full rounded-full aspect-square object-cover shadow-md"
-      />
+      <ImageLoader id={id} type="artist" size={100}>
+        {(src) => (
+          <LazyLoadImage
+            effect="opacity"
+            src={src}
+            alt={name}
+            className="w-full h-full rounded-full aspect-square object-cover shadow-md"
+          />
+        )}
+      </ImageLoader>
     </div>
   )
 }
