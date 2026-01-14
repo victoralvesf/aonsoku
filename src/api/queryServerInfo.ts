@@ -17,17 +17,22 @@ export async function queryServerInfo(url: string) {
       method: 'GET',
     })
     const data = await response.json()
-    
-    const extensionsMap: {[key: string]: number[]} = {}
-    if (data['subsonic-response']['openSubsonic']) {
-      const response = await fetch(`${url}/rest/getOpenSubsonicExtensions.view?${queries}`, {
-        method: 'GET',
-      })
+
+    const extensionsMap: Record<string, number[]> = {}
+
+    if (data['subsonic-response'].openSubsonic) {
+      const response = await fetch(
+        `${url}/rest/getOpenSubsonicExtensions.view?${queries}`,
+        {
+          method: 'GET',
+        },
+      )
 
       const eData = await response.json()
+      const extensions = eData['subsonic-response'].openSubsonicExtensions
 
-      for (const extension of eData['subsonic-response']['openSubsonicExtensions']) {
-        extensionsMap[extension['name']] = extension['versions']
+      for (const extension of extensions) {
+        extensionsMap[extension.name] = extension.versions
       }
     }
 

@@ -3,6 +3,7 @@ import { httpClient } from '@/api/httpClient'
 import { usePlayerStore } from '@/store/player.store'
 import {
   ILyric,
+  IStructuredLine,
   IStructuredLyric,
   LyricsResponse,
   StructuredLyricsResponse,
@@ -30,7 +31,11 @@ async function getLyrics(getLyricsData: GetLyricsData) {
   const { preferSyncedLyrics } = usePlayerStore.getState().settings.lyrics
   const { songLyricsEnabled } = getServerExtensions()
 
-  const cacheKey = getLyricsCacheKey(getLyricsData, preferSyncedLyrics)
+  const cacheKey = getLyricsCacheKey(
+    getLyricsData,
+    preferSyncedLyrics,
+    songLyricsEnabled,
+  )
 
   const cachedLyrics = await get(cacheKey)
 
@@ -44,6 +49,7 @@ async function getLyrics(getLyricsData: GetLyricsData) {
   // not include timing information, fetch them from the LrcLib
 
   let osUnsyncedLyricsFound: ILyric | undefined
+
   if (songLyricsEnabled) {
     const response = await httpClient<StructuredLyricsResponse>(
       '/getLyricsBySongId',
@@ -55,27 +61,23 @@ async function getLyrics(getLyricsData: GetLyricsData) {
       },
     )
 
-    if (preferSyncedLyrics) {
-      if (
-        response?.data.lyricsList.structuredLyrics &&
-        response.data.lyricsList.structuredLyrics.length > 0
-      ) {
-        const syncedLyrics = response?.data.lyricsList.structuredLyrics.find(
-          (lyrics) => lyrics.synced,
-        )
+    if (response && preferSyncedLyrics) {
+      const { structuredLyrics } = response.data.lyricsList
+
+      if (structuredLyrics && structuredLyrics.length > 0) {
+        const syncedLyrics = structuredLyrics.find((lyrics) => lyrics.synced)
 
         if (syncedLyrics) {
-          return osStructuredLyricsToILyric(syncedLyrics)
+          const serverSyncedLyrics = osStructuredLyricsToILyric(syncedLyrics)
+
+          set(cacheKey, serverSyncedLyrics)
+
+          return serverSyncedLyrics
         }
-        // save the plain lyrics from this call
-        osUnsyncedLyricsFound = osStructuredLyricsToILyric(
-          response.data.lyricsList.structuredLyrics[0],
-        )
       }
+
       // save the plain lyrics retrieved from the server
-      osUnsyncedLyricsFound = osStructuredLyricsToILyric(
-        response.data.lyricsList.structuredLyrics[0],
-      )
+      osUnsyncedLyricsFound = osStructuredLyricsToILyric(structuredLyrics[0])
     }
   }
 
@@ -92,6 +94,8 @@ async function getLyrics(getLyricsData: GetLyricsData) {
   // if the server supported the songLyrics extension and lrc did not have lyrics, we don't need to query the server and lrc again.
   // so return the plain lyrics if we found them
   if (osUnsyncedLyricsFound) {
+    set(cacheKey, osUnsyncedLyricsFound)
+
     return osUnsyncedLyricsFound
   }
 
@@ -200,30 +204,31 @@ function formatLyrics(lyrics: string) {
 function getLyricsCacheKey(
   getLyricsData: GetLyricsData,
   preferSyncedLyrics: boolean,
+  songLyricsEnabled?: boolean,
 ) {
   const { artist, title } = getLyricsData
 
   const type = preferSyncedLyrics ? 'synced' : 'plain'
+  const serverExtension = songLyricsEnabled ? 'internal' : 'external'
 
-  return `lyrics:${artist}:${title}:${type}`
+  const keys = ['lyrics', artist, title, type, serverExtension]
+
+  return keys.join(':')
 }
 
 function osStructuredLyricsToILyric(lyrics: IStructuredLyric): ILyric {
   return {
     artist: lyrics.displayArtist,
     title: lyrics.displayTitle,
-    value: formatLyrics(
-      lyrics.line
-        .map((l) => {
-          if (l.start != undefined) {
-            // l.start may have actual value 0 (falsy)
-            return `[${osStartMsToSongTimestamp(l.start)}] ${l.value}`
-          }
-          return l.value
-        })
-        .join('\n'),
-    ),
+    value: formatLyrics(lyrics.line.map(osLineToILyricLine).join('\n')),
   }
+}
+
+function osLineToILyricLine(line: IStructuredLine): string {
+  if (line.start !== undefined) {
+    return `[${osStartMsToSongTimestamp(line.start)}] ${line.value}`
+  }
+  return line.value
 }
 
 function osStartMsToSongTimestamp(startTime: number): string {
