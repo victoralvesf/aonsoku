@@ -1,11 +1,18 @@
 import { get, set } from 'idb-keyval'
 import { httpClient } from '@/api/httpClient'
 import { usePlayerStore } from '@/store/player.store'
-import { LyricsResponse } from '@/types/responses/song'
+import {
+  ILyric,
+  IStructuredLine,
+  IStructuredLyric,
+  LyricsResponse,
+  StructuredLyricsResponse,
+} from '@/types/responses/song'
 import { lrclibClient } from '@/utils/appName'
-import { checkServerType } from '@/utils/servers'
+import { checkServerType, getServerExtensions } from '@/utils/servers'
 
 interface GetLyricsData {
+  id: string
   artist: string
   title: string
   album?: string
@@ -22,8 +29,13 @@ interface LRCLibResponse {
 
 async function getLyrics(getLyricsData: GetLyricsData) {
   const { preferSyncedLyrics } = usePlayerStore.getState().settings.lyrics
+  const { songLyricsEnabled } = getServerExtensions()
 
-  const cacheKey = getLyricsCacheKey(getLyricsData, preferSyncedLyrics)
+  const cacheKey = getLyricsCacheKey(
+    getLyricsData,
+    preferSyncedLyrics,
+    songLyricsEnabled,
+  )
 
   const cachedLyrics = await get(cacheKey)
 
@@ -31,9 +43,44 @@ async function getLyrics(getLyricsData: GetLyricsData) {
     return cachedLyrics
   }
 
-  // If the user prefers synced lyrics, attempt to fetch them from the LrcLib first.
-  // If lyrics are found, return them immediately.
-  // If not, proceed with the default flow.
+  // First attempt to retrieve lyrics from the server.
+  // If we know it supports the OpenSubsonic songLyrics extension with timing info, use that.
+  // If the server does not support the extension or the lyrics returned from the server did
+  // not include timing information, fetch them from the LrcLib
+
+  let osUnsyncedLyricsFound: ILyric | undefined
+
+  if (songLyricsEnabled) {
+    const response = await httpClient<StructuredLyricsResponse>(
+      '/getLyricsBySongId',
+      {
+        method: 'GET',
+        query: {
+          id: getLyricsData.id,
+        },
+      },
+    )
+
+    if (response && preferSyncedLyrics) {
+      const { structuredLyrics } = response.data.lyricsList
+
+      if (structuredLyrics && structuredLyrics.length > 0) {
+        const syncedLyrics = structuredLyrics.find((lyrics) => lyrics.synced)
+
+        if (syncedLyrics) {
+          const serverSyncedLyrics = osStructuredLyricsToILyric(syncedLyrics)
+
+          set(cacheKey, serverSyncedLyrics)
+
+          return serverSyncedLyrics
+        }
+      }
+
+      // save the plain lyrics retrieved from the server
+      osUnsyncedLyricsFound = osStructuredLyricsToILyric(structuredLyrics[0])
+    }
+  }
+
   if (preferSyncedLyrics) {
     const lyrics = await getLyricsFromLRCLib(getLyricsData)
 
@@ -42,6 +89,14 @@ async function getLyrics(getLyricsData: GetLyricsData) {
 
       return lyrics
     }
+  }
+
+  // if the server supported the songLyrics extension and lrc did not have lyrics, we don't need to query the server and lrc again.
+  // so return the plain lyrics if we found them
+  if (osUnsyncedLyricsFound) {
+    set(cacheKey, osUnsyncedLyricsFound)
+
+    return osUnsyncedLyricsFound
   }
 
   const response = await httpClient<LyricsResponse>('/getLyrics', {
@@ -149,12 +204,38 @@ function formatLyrics(lyrics: string) {
 function getLyricsCacheKey(
   getLyricsData: GetLyricsData,
   preferSyncedLyrics: boolean,
+  songLyricsEnabled?: boolean,
 ) {
   const { artist, title } = getLyricsData
 
   const type = preferSyncedLyrics ? 'synced' : 'plain'
+  const serverExtension = songLyricsEnabled ? 'internal' : 'external'
 
-  return `lyrics:${artist}:${title}:${type}`
+  const keys = ['lyrics', artist, title, type, serverExtension]
+
+  return keys.join(':')
+}
+
+function osStructuredLyricsToILyric(lyrics: IStructuredLyric): ILyric {
+  return {
+    artist: lyrics.displayArtist,
+    title: lyrics.displayTitle,
+    value: formatLyrics(lyrics.line.map(osLineToILyricLine).join('\n')),
+  }
+}
+
+function osLineToILyricLine(line: IStructuredLine): string {
+  if (line.start !== undefined) {
+    return `[${osStartMsToSongTimestamp(line.start)}] ${line.value}`
+  }
+  return line.value
+}
+
+function osStartMsToSongTimestamp(startTime: number): string {
+  // Date() isoString is formatted as:
+  // YYYY-MM-DDTHH:mm:ss.sssZ -> mm:ss.ss
+  // 2011-10-05T14:48:00.000Z -> 48:00.00
+  return new Date(startTime).toISOString().slice(14, -2)
 }
 
 export const lyrics = {

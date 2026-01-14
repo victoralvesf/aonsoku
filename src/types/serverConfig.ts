@@ -11,6 +11,7 @@ export interface IServerConfig {
   password: string
   protocolVersion?: string
   serverType?: string
+  extensionsSupported?: Record<string, number[]>
 }
 
 export type PageViewType = 'grid' | 'table'
