@@ -253,7 +253,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       cell: ({ row }) => {
         const { suffix } = row.original
 
-        return <MemoBadge>{suffix.toUpperCase()}</MemoBadge>
+        return <MemoBadge variant="secondary">{suffix.toUpperCase()}</MemoBadge>
       },
     },
     {

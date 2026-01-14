@@ -218,7 +218,7 @@ export function SongInfoDialog() {
                       key={genre}
                       onClick={handleLinkClick}
                     >
-                      <Badge variant="neutral">{genre}</Badge>
+                      <Badge variant="secondary">{genre}</Badge>
                     </Link>
                   ))}
                 </InfoGridItem>
@@ -233,7 +233,7 @@ export function SongInfoDialog() {
               <InfoGridItem title="bpm">{song.bpm ?? 0}</InfoGridItem>
               <InfoGridItem title="bitrate">{song.bitRate} kbps</InfoGridItem>
               <InfoGridItem title="codec">
-                <Badge>{song.suffix.toUpperCase()}</Badge>
+                <Badge variant="secondary">{song.suffix.toUpperCase()}</Badge>
               </InfoGridItem>
 
               <InfoGridItem title="plays">{song.playCount ?? 0}</InfoGridItem>
