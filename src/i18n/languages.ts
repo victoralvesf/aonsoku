@@ -49,4 +49,10 @@ export const languages = [
     flag: 'RU',
     dayjsLocale: 'ru',
   },
+{
+  nativeName: 'Українська',
+  langCode: 'uk',
+  flag: 'UA',
+  dayjsLocale: 'uk',
+},
 ]
