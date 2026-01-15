@@ -49,7 +49,7 @@ linux:
     - AppImage
     - deb
     - tar.gz
-  maintainer: victoralvesf
+  maintainer: npc-riddlah
   category: AudioVideo
   synopsis: 'radopPABM Client build atop of Aonsoku'
 
@@ -58,5 +58,5 @@ nativeRebuilder: legacy
 
 publish:
   provider: github
-  owner: victoralvesf
+  owner: npc-riddlah
   repo: aonsoku
