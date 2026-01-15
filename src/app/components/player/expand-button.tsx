@@ -13,7 +13,7 @@ export function PlayerExpandButton({ disabled }: PlayerExpandButtonProps) {
   const { toggleBigPlayerState } = useBigPlayerState()
 
   return (
-    <SimpleTooltip text={t('fullscreen.switchButton')} align="end">
+    <SimpleTooltip text={t('fullscreen.switchButton')}>
       <Button
         variant="ghost"
         className="rounded-full w-10 h-10 p-3 text-secondary-foreground"
