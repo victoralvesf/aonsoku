@@ -24,6 +24,7 @@ module.exports = {
         header: 'var(--header-height)',
         player: 'var(--player-height)',
         content: 'var(--content-height)',
+        'empty-content': 'var(--empty-content-height)',
         'shadow-header': 'var(--shadow-header-height)',
         'shadow-header-distance': 'var(--shadow-header-distance)',
         toast: 'var(--toastify-toast-container-height)',
