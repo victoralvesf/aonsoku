@@ -1,10 +1,10 @@
 {
   "name": "radiopabm",
   "private": true,
-  "version": "0.10.2",
+  "version": "0.0.1",
   "description": "radioPABM Client based on Aonsoku",
   "author": {
-    "name": "Victor Alves & npc_riddlah"
+    "name": "Victor Alves & PABM"
   },
   "main": "./out/main/index.js",
   "type": "module",
