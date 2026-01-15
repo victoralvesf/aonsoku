@@ -30,6 +30,7 @@ export interface IPlayerState {
   mediaType: 'song' | 'radio' | 'podcast'
   currentPlaybackRate: number
   audioPlayerRef: HTMLAudioElement | null
+  bigPlayerState: boolean
   mainDrawerState: boolean
   queueState: boolean
   lyricsState: boolean
@@ -148,6 +149,7 @@ export interface IPlayerActions {
   setNextOnQueue: (songlist: ISong[]) => void
   setLastOnQueue: (songlist: ISong[]) => void
   removeSongFromQueue: (id: string) => void
+  toggleBigPlayerState: () => void
   setMainDrawerState: (state: boolean) => void
   setQueueState: (state: boolean) => void
   toggleQueueAction: () => void
