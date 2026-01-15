@@ -13,6 +13,7 @@ import i18n from '@/i18n'
 import { ROUTES } from '@/routes/routesList'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISong } from '@/types/responses/song'
+import { formatBitrate } from '@/utils/audioInfo'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 
@@ -238,7 +239,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       },
       className: 'hidden 2xl:flex',
       cell: ({ row }) => {
-        return `${row.original.bitRate} kbps`
+        return formatBitrate(row.original.bitRate)
       },
     },
     {

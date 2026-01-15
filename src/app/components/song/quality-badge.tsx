@@ -9,6 +9,7 @@ import {
   TooltipTrigger,
 } from '@/app/components/ui/tooltip'
 import { ISong } from '@/types/responses/song'
+import { formatBitrate, formatSamplingRate } from '@/utils/audioInfo'
 import { formatBytes } from '@/utils/formatBytes'
 
 interface SongQualityBadgeProps {
@@ -23,10 +24,8 @@ export function SongQualityBadge({
   const { t } = useTranslation()
 
   const quality = song.suffix.toUpperCase()
-  const bitrate = `${song.bitRate} kbps`
-  const samplingRate = song.samplingRate
-    ? `${song.samplingRate / 1000} kHz`
-    : '-'
+  const bitrate = formatBitrate(song.bitRate)
+  const samplingRate = formatSamplingRate(song.samplingRate)
   const size = formatBytes(song.size ?? 0)
 
   const lines = [
