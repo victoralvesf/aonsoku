@@ -1,29 +1,28 @@
-import { Expand } from 'lucide-react'
-import FullscreenMode from '@/app/components/fullscreen/page'
+import { Maximize2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
+import { useBigPlayerState } from '@/store/player.store'
 
 interface PlayerExpandButtonProps {
   disabled: boolean
 }
 
-export function PlayerExpandButton({}: PlayerExpandButtonProps) {
+export function PlayerExpandButton({ disabled }: PlayerExpandButtonProps) {
   const { t } = useTranslation()
+  const { toggleBigPlayerState } = useBigPlayerState()
 
   return (
-    <SimpleTooltip text={t('fullscreen.switchButton')}>
-        <FullscreenMode>
-            <Button
-                variant="ghost"
-                className="rounded-full w-10 h-10 p-3 text-secondary-foreground"
-                data-testid="player-expand-button"
-            >
-                <Expand
-                data-testid="player-expand-icon"
-                />
-            </Button>
-      </FullscreenMode>
+    <SimpleTooltip text={t('fullscreen.switchButton')} align="end">
+      <Button
+        variant="ghost"
+        className="rounded-full w-10 h-10 p-3 text-secondary-foreground"
+        data-testid="track-fullscreen-button"
+        disabled={disabled}
+        onClick={toggleBigPlayerState}
+      >
+        <Maximize2 data-testid="track-fullscreen-icon" />
+      </Button>
     </SimpleTooltip>
   )
 }

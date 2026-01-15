@@ -206,7 +206,6 @@ export function Player() {
           <div className="flex items-center gap-1">
             {isSong && (
               <>
-                <MemoPlayerExpandButton disabled={!song} />
                 <MemoPlayerLikeButton disabled={!song} />
                 <MemoLyricsButton disabled={!song} />
                 <MemoPlayerQueueButton disabled={!song} />
@@ -222,6 +221,7 @@ export function Player() {
               disabled={!song && !radio && !podcast}
             />
 
+            {isSong && <MemoPlayerExpandButton disabled={!song} />}
             {isSong && hasPiPSupport && <MemoMiniPlayerButton />}
           </div>
         </div>

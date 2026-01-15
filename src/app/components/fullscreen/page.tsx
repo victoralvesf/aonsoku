@@ -1,13 +1,10 @@
-import { memo, ReactNode, useEffect } from 'react'
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/app/components/ui/drawer'
+import { memo, useEffect } from 'react'
+import { Drawer, DrawerContent, DrawerTitle } from '@/app/components/ui/drawer'
 import { useAppWindow } from '@/app/hooks/use-app-window'
-import { useFullscreenPlayerSettings } from '@/store/player.store'
+import {
+  useBigPlayerState,
+  useFullscreenPlayerSettings,
+} from '@/store/player.store'
 import { enterFullscreen, exitFullscreen } from '@/utils/browser'
 import { isDesktop } from '@/utils/desktop'
 import { setDesktopTitleBarColors } from '@/utils/theme'
@@ -18,15 +15,12 @@ import { FullscreenPlayer } from './player'
 import { FullscreenSettings } from './settings'
 import { FullscreenTabs } from './tabs'
 
-interface FullscreenModeProps {
-  children: ReactNode
-}
-
 const MemoFullscreenBackdrop = memo(FullscreenBackdrop)
 
-export default function FullscreenMode({ children }: FullscreenModeProps) {
+export function FullscreenMode() {
   const { enterFullscreenWindow, exitFullscreenWindow } = useAppWindow()
   const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
+  const { bigPlayerState } = useBigPlayerState()
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: initial useEffect
   useEffect(() => {
@@ -58,14 +52,14 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
 
   return (
     <Drawer
-      fixed
-      dismissible={true}
+      open={bigPlayerState}
+      onOpenChange={handleFullscreen}
+      fixed={true}
       handleOnly={true}
       disablePreventScroll={true}
+      dismissible={true}
       modal={false}
-      onOpenChange={handleFullscreen}
     >
-      <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerTitle className="sr-only">Big Player</DrawerTitle>
       <DrawerContent
         className="h-screen w-screen rounded-t-none border-none select-none cursor-default mt-0"
@@ -78,9 +72,7 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
           {/* First Row */}
           <div className="flex gap-2 items-center w-full h-[40px] px-16 z-20 justify-end">
             <FullscreenSettings />
-            <DrawerClose>
-              <CloseFullscreenButton />
-            </DrawerClose>
+            <CloseFullscreenButton />
           </div>
 
           {/* Second Row */}
