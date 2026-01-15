@@ -33,7 +33,7 @@
     "prepare": "husky"
   },
   "repository": {
-    "url": "https://github.com/victoralvesf/aonsoku"
+    "url": "https://github.com/npc-riddlah/aonsoku"
   },
   "dependencies": {
     "@chriscodesthings/random-css-hex-color": "^1.1.0",
