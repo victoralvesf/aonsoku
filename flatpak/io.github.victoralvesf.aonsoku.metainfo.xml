@@ -14,13 +14,13 @@
 
   <description>
     <ul>
-      <li>**Subsonic Integration:** Aonsoku integrates with your Navidrome or Subsonic server, providing you with easy access to your music collection.</li>
-      <li>**Intuitive UI:** Modern, clean and user-friendly interface designed to enhance your music listening experience.</li>
-      <li>**Podcast Support:** With Aonsoku Podcasts you can easily access, manage, and listen to your favorites podcasts directly within the app. Enjoy advanced search options, customizable filters and seamless listening synchronization to enhance your podcast experience.</li>
-      <li>**Synchronized lyrics:** Aonsoku will automatically find a synced lyric from LRCLIB if none is provided by the server.</li>
-      <li>**Unsynchronized lyrics:** If your songs have embedded unsynchronized lyrics, Aonsoku is able to show them.</li>
-      <li>**Radio:** If your server supports it, listen to radio shows directly within Aonsoku.</li>
-      <li>**Scrobble:** Sync played songs with your server.</li>
+      <li><em>Subsonic Integration:</em> Aonsoku integrates with your Navidrome or Subsonic server, providing you with easy access to your music collection.</li>
+      <li><em>Intuitive UI:</em> Modern, clean and user-friendly interface designed to enhance your music listening experience.</li>
+      <li><em>Podcast Support:</em> With Aonsoku Podcasts you can easily access, manage, and listen to your favorites podcasts directly within the app. Enjoy advanced search options, customizable filters and seamless listening synchronization to enhance your podcast experience.</li>
+      <li><em>Synchronized lyrics:</em> Aonsoku will automatically find a synced lyric from LRCLIB if none is provided by the server.</li>
+      <li><em>Unsynchronized lyrics:</em> If your songs have embedded unsynchronized lyrics, Aonsoku is able to show them.</li>
+      <li><em>Radio:</em> If your server supports it, listen to radio shows directly within Aonsoku.</li>
+      <li><em>Scrobble:</em> Sync played songs with your server.</li>
     </ul>
   </description>
 
