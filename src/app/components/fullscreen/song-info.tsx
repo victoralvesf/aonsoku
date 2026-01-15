@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import { Dot } from '@/app/components/dot'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
+import { SongQualityBadge } from '@/app/components/song/quality-badge'
 import { Badge } from '@/app/components/ui/badge'
 import { usePlayerStore } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
@@ -36,6 +37,7 @@ export function SongInfo() {
           {currentSong.year && (
             <Badge variant="neutral">{currentSong.year}</Badge>
           )}
+          <SongQualityBadge song={currentSong} variant="neutral" />
         </div>
       </div>
     </div>
