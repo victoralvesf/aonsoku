@@ -7,7 +7,7 @@ type AppIconProps = SVGProps<SVGSVGElement> & {
 export function AppIcon({ size = 48, className, ...props }: AppIconProps) {
   return (
     <img
-      src="/icon.svg"
+      src="icon.svg"
       height="32"
       width="32"
       alt="pabm"
