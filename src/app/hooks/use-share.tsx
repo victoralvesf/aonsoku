@@ -9,10 +9,8 @@ export function useShare() {
     try {
       const response = await fetch(getShareUrl(id))
       const rawText = await response.text()
-      console.log('Raw response:', rawText)
 
       const data = JSON.parse(rawText)
-      console.log('Parsed JSON:', data)
       const shareUrl = data['subsonic-response']?.shares?.share?.[0]?.url
 
       if (shareUrl) {
