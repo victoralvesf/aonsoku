@@ -381,6 +381,36 @@
       }
     }
   },
+  "userParams": {
+    "form":{
+      "changePassword": "Change password",
+      "changingOwnPassword": "You wanna change your secrets?",
+      "oldPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "enterOldPassword": "Enter current password",
+      "enterNewPassword": "Enter new password",
+      "enterConfirmPassword": "Confirm new password",
+      "passwordRequired": "Password is required",
+      "passwordsDoNotMatch": "Wrong confirm password. Check it and try again, please",
+      "passwordTooShort": "Password too short. Allowed at least 8 symbols.",
+      "changePasswordButton": "Change",
+      "cancel": "Cancel"
+    },
+    "error":{
+      "userDataNotSet": "User Credentials not set",
+      "auth": "Authenthication error",
+      "tokenFetchError": "Failed to fetch token",
+      "wrongOldPassword": "Wrong old password",
+      "passwordChangeFailed": "Failed to change password",
+      "passwordChangeSuccess": "Password changed",
+      "passwordChangeError": "Error on password change",
+      "unknownError": "Unknown Error",
+      "userFetchError": "Failed to fetch user",
+      "dataUpdateFailed": "Failed to update data",
+      "dataUpdateSuccess": "Data updated"
+    }
+  },
   "toast": {
     "server": {
       "success": "Server was saved successfully!",

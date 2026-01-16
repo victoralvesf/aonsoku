@@ -185,6 +185,36 @@
       "connecting": "Підключення…"
     }
   },
+  "userParams": {
+    "form": {
+      "changePassword": "Змінити пароль",
+      "changingOwnPassword": "Для зміни пароля введіть поточний пароль, бажаний новий пароль та підтвердіть його",
+      "oldPassword": "Поточний пароль",
+      "newPassword": "Новий пароль",
+      "confirmPassword": "Підтвердження нового пароля",
+      "enterOldPassword": "Введіть поточний пароль",
+      "enterNewPassword": "Введіть новий пароль",
+      "enterConfirmPassword": "Підтвердіть новий пароль",
+      "passwordRequired": "Потрібно ввести пароль",
+      "passwordsDoNotMatch": "Паролі не співпадають. Перевірте та спробуйте знову",
+      "passwordTooShort": "Пароль занадто короткий. Мінімум 8 символів.",
+      "changePasswordButton": "Змінити",
+      "cancel": "Скасувати"
+    },
+    "error": {
+      "userDataNotSet": "Дані користувача не встановлено",
+      "auth": "Помилка автентифікації",
+      "tokenFetchError": "Помилка отримання токена",
+      "wrongOldPassword": "Невірний поточний пароль",
+      "passwordChangeFailed": "Не вдалося змінити пароль",
+      "passwordChangeSuccess": "Пароль змінено",
+      "passwordChangeError": "Помилка зміни пароля",
+      "unknownError": "Невідома помилка",
+      "userFetchError": "Помилка отримання даних користувача",
+      "dataUpdateFailed": "Помилка оновлення даних",
+      "dataUpdateSuccess": "Дані оновлено"
+    }
+  },
   "playlist": {
     "duration": "приблизно {{duration}}",
     "refresh": "Оновити плейлисти",

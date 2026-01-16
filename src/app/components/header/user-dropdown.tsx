@@ -1,4 +1,4 @@
-import { Info, Keyboard, LogOut, User } from 'lucide-react'
+import { Info, Keyboard, LogOut, User, Key } from 'lucide-react'
 import { useState } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -16,6 +16,8 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
+import { ChangePasswordModal } from '@/app/components/user/ChangePasswordModal'
+
 import { LogoutObserver } from '@/app/observers/logout-observer'
 import { logoutKeys, shortcutDialogKeys, stringifyShortcut } from '@/shortcuts'
 import { useAppData, useAppStore } from '@/store/app.store'
@@ -29,6 +31,7 @@ export function UserDropdown() {
   const { t } = useTranslation()
   const [shortcutsOpen, setShortcutsOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
+  const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false)
 
   useHotkeys('shift+ctrl+q', () => setLogoutDialogState(true))
   useHotkeys('mod+/', () => setShortcutsOpen((prev) => !prev))
@@ -41,7 +44,10 @@ export function UserDropdown() {
 
       <ShortcutsDialog open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
       <AboutDialog open={aboutOpen} onOpenChange={setAboutOpen} />
-
+      <ChangePasswordModal
+      isOpen={isChangePasswordOpen}
+      onClose={() => setIsChangePasswordOpen(false)}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger className="user-dropdown-trigger">
           <Avatar className="w-8 h-8 rounded-full cursor-pointer">
@@ -75,6 +81,10 @@ export function UserDropdown() {
           {!lockUser && (
             <>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setIsChangePasswordOpen(true)}>
+                <Key className="mr-2 h-4 w-4" />
+                <span>{t('userParams.form.changePassword')}</span>
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLogoutDialogState(true)}>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>{t('menu.serverLogout')}</span>

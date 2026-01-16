@@ -34,7 +34,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             password: genPassword(),
             authType: getAuthType(),
             protocolVersion: '1.16.0',
-            serverType: SERVER_TYPE ?? 'subsonic',
+            serverType: SERVER_TYPE ?? 'navidrome',
             logoutDialogState: false,
             hideServer: HIDE_SERVER ?? false,
             lockUser: hasValidConfig,

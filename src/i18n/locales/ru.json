@@ -159,9 +159,9 @@
   },
   "logout": {
     "dialog": {
-      "description": "Подтвердите выход из системы.",
-      "confirm": "Продолжить",
-      "title": "Готовы ли вы попрощаться?",
+      "description": "Подтвердите выход",
+      "confirm": "Выйти",
+      "title": "Уже?",
       "cancel": "Отменить"
     }
   },
@@ -184,6 +184,36 @@
       "usernamePlaceholder": "Ваше имя пользователя",
       "urlDescription": "Это URL вашего сервера",
       "connecting": "Подключение…"
+    }
+  },
+  "userParams": {
+    "form":{
+      "changePassword": "Сменить пароль",
+      "changingOwnPassword": "Для смены пароля укажите текущий пароль, желаемый и снова желаемый для подтверждения",
+      "oldPassword": "Текущий пароль",
+      "newPassword": "Новый пароль",
+      "confirmPassword": "Ещё раз новый пароль",
+      "enterOldPassword": "Введите текущий пароль",
+      "enterNewPassword": "Введите новый пароль",
+      "enterConfirmPassword": "Введите новый пароль для подтверждения",
+      "passwordRequired": "Необходимо ввести пароль",
+      "passwordsDoNotMatch": "Неправильный пароль подтверждения. Проверьте и попробуйте снова",
+      "passwordTooShort": "Слишком короткий пароль. Как минимум 8 символов.",
+      "changePasswordButton": "Изменить",
+      "cancel": "Отмена"
+    },
+    "error":{
+      "userDataNotSet": "Не заданы данные пользователя",
+      "auth": "Ошибка аутентификации",
+      "tokenFetchError": "Ошибка получения токена",
+      "wrongOldPassword": "Неправильный текущий пароль",
+      "passwordChangeFailed": "Не получилось сменить пароль",
+      "passwordChangeSuccess": "Пароль изменён",
+      "passwordChangeError": "Ошибка изменения пароля",
+      "unknownError": "Неизвестная ошибка",
+      "userFetchError": "Ошибка получения пользователя",
+      "dataUpdateFailed": "Ошибка обновления данных",
+      "dataUpdateSuccess": "Данные обновлены"
     }
   },
   "playlist": {
@@ -348,8 +378,8 @@
   },
   "toast": {
     "server": {
-      "success": "Сервер успешно сохранен!",
-      "error": "Связь с сервером не удалась!"
+      "success": "Добро пожаловать!",
+      "error": "Что-то пошло не так"
     }
   },
   "options": {
