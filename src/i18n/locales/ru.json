@@ -200,7 +200,8 @@
       "passwordsDoNotMatch": "Неправильный пароль подтверждения. Проверьте и попробуйте снова",
       "passwordTooShort": "Слишком короткий пароль. Как минимум 8 символов.",
       "changePasswordButton": "Изменить",
-      "cancel": "Отмена"
+      "cancel": "Отмена",
+      "changing": "Меняем"
     },
     "error":{
       "userDataNotSet": "Не заданы данные пользователя",

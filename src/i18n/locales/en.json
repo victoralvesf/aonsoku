@@ -395,7 +395,8 @@
       "passwordsDoNotMatch": "Wrong confirm password. Check it and try again, please",
       "passwordTooShort": "Password too short. Allowed at least 8 symbols.",
       "changePasswordButton": "Change",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "changing": "Changing"
     },
     "error":{
       "userDataNotSet": "User Credentials not set",

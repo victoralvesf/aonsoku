@@ -199,7 +199,8 @@
       "passwordsDoNotMatch": "Паролі не співпадають. Перевірте та спробуйте знову",
       "passwordTooShort": "Пароль занадто короткий. Мінімум 8 символів.",
       "changePasswordButton": "Змінити",
-      "cancel": "Скасувати"
+      "cancel": "Скасувати",
+      "changing": "Міняємо"
     },
     "error": {
       "userDataNotSet": "Дані користувача не встановлено",
