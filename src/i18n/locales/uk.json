@@ -29,7 +29,17 @@
     "duration": "приблизно {{duration}}",
     "songCount_one": "{{count}} пісня",
     "songCount_few": "{{count}} пісні",
-    "songCount_many": "{{count}} пісень"
+    "songCount_many": "{{count}} пісень",
+    "form": {
+      "labels": {
+        "commentDescription": "Напишіть короткий опис цього плейлиста"
+      },
+      "create": {
+        "toast": {
+          "success": "Плейлист створений успішно!"
+        }
+      }
+    }
   },
   "sidebar": {
     "home": "Головна",
