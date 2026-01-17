@@ -129,6 +129,18 @@ class NavidromeNativeApi {
       const loginData: LoginResponse = await loginResponse.json()
       console.log(loginData)
       const { id, token } = loginData
+      let currentUser = await fetch(`${serverUrl}/api/user/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-ND-Authorization': `Bearer ${token}`,
+        }
+      })
+
+      currentUser = await currentUser.json()
+      currentUser.currentPassword = oldPassword
+      currentUser.password = newPassword
+      currentUser.changePassword = true
 
       const updateResponse = await fetch(`${serverUrl}/api/user/${id}`, {
         method: 'PUT',
@@ -136,14 +148,8 @@ class NavidromeNativeApi {
           'Content-Type': 'application/json',
           'X-ND-Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          currentPassword: oldPassword,
-          password: newPassword,
-          changePassword: true,
-        }),
+        body: JSON.stringify(currentUser),
       })
-
-      console.log(updateResponse)
 
       if (!updateResponse.ok) {
         return {
