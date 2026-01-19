@@ -8,6 +8,7 @@ import { ISong } from '@/types/responses/song'
 
 interface PlaylistOptionsProps {
   playlist: PlaylistWithEntries | Playlist
+  setIsEditingPlaylist: (isEditing: boolean) => void
   variant?: 'context' | 'dropdown'
   showPlay?: boolean
   disablePlayNext?: boolean
@@ -19,26 +20,27 @@ interface PlaylistOptionsProps {
 
 export function PlaylistOptions({
   playlist,
+  setIsEditingPlaylist,
   variant = 'dropdown',
   showPlay = false,
   disablePlayNext = false,
   disableAddLast = false,
   disableDownload = false,
-  disableEdit = false,
+  disableEdit,
   disableDelete = false,
 }: PlaylistOptionsProps) {
-  const { setPlaylistDialogState, setData } = usePlaylists()
+  const { setData } = usePlaylists()
   const { play, playNext, playLast, startDownload } = useOptions()
   const { setPlaylistId, setConfirmDialogState } = useRemovePlaylist()
 
   function handleEdit() {
+    setIsEditingPlaylist(true)
     setData({
       id: playlist.id,
       name: playlist.name,
       comment: playlist.comment,
       public: playlist.public,
     })
-    setPlaylistDialogState(true)
   }
 
   async function getSongsToQueue(callback: (songs: ISong[]) => void) {
@@ -123,6 +125,7 @@ export function PlaylistOptions({
         }}
       />
       <DropdownMenuSeparator />
+
       <OptionsButtons.EditPlaylist
         variant={variant}
         onClick={(e) => {
@@ -131,6 +134,7 @@ export function PlaylistOptions({
         }}
         disabled={disableEdit}
       />
+
       <OptionsButtons.RemovePlaylist
         variant={variant}
         onClick={(e) => {

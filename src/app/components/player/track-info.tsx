@@ -1,6 +1,6 @@
 import randomCSSHexColor from '@chriscodesthings/random-css-hex-color'
-import { AudioLines, Maximize2 } from 'lucide-react'
-import { useCallback } from 'react'
+import { AudioLines } from 'lucide-react'
+import { useCallback, memo } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -9,8 +9,6 @@ import { Link } from 'react-router-dom'
 import { getCoverArtUrl } from '@/api/httpClient'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
 import FullscreenMode from '@/app/components/fullscreen/page'
-import { Button } from '@/app/components/ui/button'
-import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { useSongColor } from '@/store/player.store'
@@ -18,6 +16,14 @@ import { ISong } from '@/types/responses/song'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { logger } from '@/utils/logger'
 import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
+
+import { PlayerLikeButton } from './like-button'
+const MemoPlayerLikeButton = memo(PlayerLikeButton)
+
+import { PlayerLyricsButton } from './lyrics-button'
+const MemoLyricsButton = memo(PlayerLyricsButton)
+
+
 
 export function TrackInfo({ song }: { song: ISong | undefined }) {
   const { t } = useTranslation()
@@ -76,47 +82,39 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
     <Fragment>
       <div className="group relative">
         <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md">
-          <LazyLoadImage
-            key={song.id}
-            id="track-song-image"
-            src={getCoverArtUrl(song.coverArt, 'song', '400')}
-            width="100%"
-            height="100%"
-            crossOrigin="anonymous"
-            className="aspect-square object-cover w-full h-full cursor-pointer bg-skeleton text-transparent"
-            data-testid="track-image"
-            alt={`${song.artist} - ${song.title}`}
-            onLoad={getImageColor}
-            onError={handleError}
-          />
+          <FullscreenMode>
+            <LazyLoadImage
+              key={song.id}
+              id="track-song-image"
+              src={getCoverArtUrl(song.coverArt, 'song', '400')}
+              width="100%"
+              height="100%"
+              crossOrigin="anonymous"
+              className="aspect-square object-cover w-full h-full cursor-pointer bg-skeleton text-transparent"
+              data-testid="track-image"
+              alt={`${song.artist} - ${song.title}`}
+              onLoad={getImageColor}
+              onError={handleError}
+            />
+          </FullscreenMode>
         </div>
-        <FullscreenMode>
-          <Button
-            variant="secondary"
-            size="icon"
-            className="cursor-pointer w-8 h-8 shadow-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity ease-in-out absolute top-1 right-1 focus-visible:opacity-100"
-            data-testid="track-fullscreen-button"
-          >
-            <SimpleTooltip text={t('fullscreen.switchButton')} align="start">
-              <div className="w-full h-full flex items-center justify-center">
-                <Maximize2 className="w-4 h-4" />
-              </div>
-            </SimpleTooltip>
-          </Button>
-        </FullscreenMode>
       </div>
       <div className="flex flex-col justify-center w-full overflow-hidden">
         <MarqueeTitle gap="mr-2">
           <Link to={ROUTES.ALBUM.PAGE(song.albumId)} tabIndex={-1}>
             <span
               className="text-sm font-medium hover:underline cursor-pointer"
-              data-testid="track-title"
-            >
+              data-testid="track-title" >
               {song.title}
             </span>
           </Link>
         </MarqueeTitle>
         <TrackInfoArtistsLinks song={song} />
+        <div className="flex items-center gap-1">
+          <MemoLyricsButton disabled={!song} />
+          <MemoPlayerLikeButton disabled={!song} />
+        </div>
+
       </div>
     </Fragment>
   )

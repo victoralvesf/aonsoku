@@ -1,7 +1,10 @@
+import { CloseFullscreenButton } from './buttons'
 import { FullscreenControls } from './controls'
 import { LikeButton } from './like-button'
+import { RateButton } from './rate-button'
 import { FullscreenProgress } from './progress'
 import { VolumeContainer } from './volume-container'
+import { DrawerClose } from '../ui/drawer'
 
 export function FullscreenPlayer() {
   return (
@@ -10,7 +13,11 @@ export function FullscreenPlayer() {
 
       <div className="flex items-center justify-between gap-4 mt-5">
         <div className="w-[200px] flex justify-start">
+          <DrawerClose>
+            <CloseFullscreenButton />
+          </DrawerClose>
           <LikeButton />
+          <RateButton />
         </div>
 
         <div className="flex flex-1 justify-center items-center gap-2">

@@ -1,11 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
-import ImageHeader from '@/app/components/album/image-header'
+
+// import ImageHeader from '@/app/components/album/image-header'
+import ImageHeader from './playlist-header'
+
+
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import { BadgesData } from '@/app/components/header-info'
 import ListWrapper from '@/app/components/list-wrapper'
-import { PlaylistButtons } from '@/app/components/playlist/buttons'
+// import { PlaylistButtons } from '@/app/components/playlist/buttons'
 import { RemoveSongFromPlaylistDialog } from '@/app/components/playlist/remove-song-dialog'
 import { DataTable } from '@/app/components/ui/data-table'
 import ErrorPage from '@/app/pages/error-page'
@@ -21,6 +25,8 @@ export default function Playlist() {
   const { t } = useTranslation()
   const columns = songsColumns()
   const { setSongList } = usePlayerActions()
+
+  // const [isEditingPlaylist, setIsEditingPlaylist] = useState(false)
 
   const {
     data: playlist,
@@ -41,6 +47,7 @@ export default function Playlist() {
     'album',
     'duration',
     'playCount',
+    'bpm',
     'contentType',
     'select',
   ]
@@ -77,10 +84,11 @@ export default function Playlist() {
         coverArtAlt={playlist.name}
         badges={badges}
         isPlaylist={true}
+        // isEditingPlaylist={isEditingPlaylist}
       />
 
       <ListWrapper>
-        <PlaylistButtons playlist={playlist} />
+        {/* <PlaylistButtons playlist={playlist} isEditingPlaylist={isEditingPlaylist} setIsEditingPlaylist={setIsEditingPlaylist} /> */}
 
         <DataTable
           columns={columns}

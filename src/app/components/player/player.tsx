@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useRef } from 'react'
 import { getSongStreamUrl } from '@/api/httpClient'
 import { getProxyURL } from '@/api/podcastClient'
-import { MiniPlayerButton } from '@/app/components/mini-player/button'
 import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
 import { podcasts } from '@/service/podcasts'
@@ -17,32 +16,27 @@ import {
   useReplayGainState,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
-import { hasPiPSupport } from '@/utils/browser'
 import { logger } from '@/utils/logger'
 import { ReplayGainParams } from '@/utils/replayGain'
 import { AudioPlayer } from './audio'
 import { PlayerClearQueueButton } from './clear-queue-button'
 import { PlayerControls } from './controls'
-import { PlayerLikeButton } from './like-button'
-import { PlayerLyricsButton } from './lyrics-button'
 import { PodcastInfo } from './podcast-info'
 import { PodcastPlaybackRate } from './podcast-playback-rate'
 import { PlayerProgress } from './progress'
-import { PlayerQueueButton } from './queue-button'
-import { PlayerVolume } from './volume'
+import { VolumeVertical } from './volume'
+
+import { QueuePreview } from './queue-preview'
+const MemoQueuePreview = memo(QueuePreview)
 
 const MemoTrackInfo = memo(TrackInfo)
 const MemoRadioInfo = memo(RadioInfo)
 const MemoPodcastInfo = memo(PodcastInfo)
 const MemoPlayerControls = memo(PlayerControls)
 const MemoPlayerProgress = memo(PlayerProgress)
-const MemoPlayerLikeButton = memo(PlayerLikeButton)
-const MemoPlayerQueueButton = memo(PlayerQueueButton)
 const MemoPlayerClearQueueButton = memo(PlayerClearQueueButton)
-const MemoPlayerVolume = memo(PlayerVolume)
+const MemoVolumeVertical = memo(VolumeVertical)
 const MemoPodcastPlaybackRate = memo(PodcastPlaybackRate)
-const MemoLyricsButton = memo(PlayerLyricsButton)
-const MemoMiniPlayerButton = memo(MiniPlayerButton)
 const MemoAudioPlayer = memo(AudioPlayer)
 
 export function Player() {
@@ -199,14 +193,29 @@ export function Player() {
             <MemoPlayerProgress audioRef={getAudioRef()} />
           )}
         </div>
+
+
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
+
+            {/* <MemoPlayerVolume
+              audioRef={getAudioRef()}
+              disabled={!song && !radio && !podcast}
+            /> */}
+
+            <MemoQueuePreview song={song} />
+
+            <MemoVolumeVertical
+              audioRef={getAudioRef()}
+              disabled={!song && !radio && !podcast}
+            />
+
             {isSong && (
               <>
-                <MemoPlayerLikeButton disabled={!song} />
-                <MemoLyricsButton disabled={!song} />
-                <MemoPlayerQueueButton disabled={!song} />
+                {/* <MemoPlayerLikeButton disabled={!song} /> */}
+                {/* <MemoLyricsButton disabled={!song} /> */}
+                {/* <MemoPlayerQueueButton disabled={!song} /> */}
               </>
             )}
             {isPodcast && <MemoPodcastPlaybackRate />}
@@ -214,14 +223,12 @@ export function Player() {
               <MemoPlayerClearQueueButton disabled={!radio && !podcast} />
             )}
 
-            <MemoPlayerVolume
-              audioRef={getAudioRef()}
-              disabled={!song && !radio && !podcast}
-            />
-
-            {isSong && hasPiPSupport && <MemoMiniPlayerButton />}
+            {/* This doesn't really add to the experience - it's fun once, but noisy in practice */}
+            {/* {isSong && hasPiPSupport && <MemoMiniPlayerButton />} */}
           </div>
         </div>
+
+        
       </div>
 
       {isSong && song && (

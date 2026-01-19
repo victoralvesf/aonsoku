@@ -80,6 +80,8 @@ export default function Album() {
     'title',
     // 'artist',
     'duration',
+    'contentType',
+    'bpm',
     'playCount',
     'played',
     'bitRate',

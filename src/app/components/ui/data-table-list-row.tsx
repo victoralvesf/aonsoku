@@ -1,8 +1,8 @@
 import { Cell, flexRender, Row } from '@tanstack/react-table'
 import clsx from 'clsx'
-import { MouseEvent, memo, TouchEvent, useMemo } from 'react'
+import { DragEvent, MouseEvent, memo, TouchEvent, useMemo, useState } from 'react'
 import { ContextMenuProvider } from '@/app/components/table/context-menu'
-import { usePlayerCurrentSong } from '@/store/player.store'
+import { usePlayerActions, usePlayerCurrentSong } from '@/store/player.store'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 
 const MemoContextMenuProvider = memo(ContextMenuProvider)
@@ -33,6 +33,8 @@ export function TableListRow<TData>({
   pageType = 'general',
 }: TableRowProps<TData>) {
   const currentSong = usePlayerCurrentSong()
+  const { reorderSongInQueue } = usePlayerActions()
+  const [isDragOver, setIsDragOver] = useState(false)
 
   function handleTouchStart() {
     isTap = true
@@ -64,6 +66,41 @@ export function TableListRow<TData>({
 
   const isQueue = pageType === 'queue'
 
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+    if (!isQueue) return
+    e.preventDefault()
+    e.stopPropagation()
+    e.dataTransfer.dropEffect = 'move'
+    setIsDragOver(true)
+  }
+
+  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
+    if (!isQueue) return
+    // Only clear drag over state if we're actually leaving the row element
+    const currentTarget = e.currentTarget
+    const relatedTarget = e.relatedTarget as Node | null
+    if (!currentTarget.contains(relatedTarget)) {
+      e.preventDefault()
+      e.stopPropagation()
+      setIsDragOver(false)
+    }
+  }
+
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+    if (!isQueue) return
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(false)
+
+    const sourceIndexStr = e.dataTransfer.getData('text/plain')
+    const sourceIndex = parseInt(sourceIndexStr, 10)
+    const destinationIndex = row.index
+
+    if (!isNaN(sourceIndex) && sourceIndex !== destinationIndex) {
+      reorderSongInQueue(sourceIndex, destinationIndex)
+    }
+  }
+
   return (
     <MemoContextMenuProvider options={getContextMenuOptions(row)}>
       <div
@@ -78,11 +115,15 @@ export function TableListRow<TData>({
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchCancel}
         onContextMenu={(e) => handleClicks(e, row)}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
         className={clsx(
           'group/tablerow w-[calc(100%-10px)] flex flex-row transition-colors',
           'data-[state=selected]:bg-foreground/30 hover:bg-foreground/20',
           isQueue && 'rounded-md',
           isRowSongActive && 'row-active bg-foreground/20',
+          isQueue && isDragOver && 'bg-foreground/30 border-t-2 border-primary',
         )}
         style={{
           height: `${virtualRow.size}px`,

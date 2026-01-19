@@ -1,7 +1,7 @@
 import { memo, ReactNode, useEffect } from 'react'
 import {
   Drawer,
-  DrawerClose,
+  // DrawerClose,
   DrawerContent,
   DrawerTitle,
   DrawerTrigger,
@@ -12,10 +12,10 @@ import { enterFullscreen, exitFullscreen } from '@/utils/browser'
 import { isDesktop } from '@/utils/desktop'
 import { setDesktopTitleBarColors } from '@/utils/theme'
 import { FullscreenBackdrop } from './backdrop'
-import { CloseFullscreenButton } from './buttons'
+// import { CloseFullscreenButton } from './buttons'
 import { FullscreenDragHandler } from './drag-handler'
 import { FullscreenPlayer } from './player'
-import { FullscreenSettings } from './settings'
+// import { FullscreenSettings } from './settings'
 import { FullscreenTabs } from './tabs'
 
 interface FullscreenModeProps {
@@ -76,15 +76,12 @@ export default function FullscreenMode({ children }: FullscreenModeProps) {
         <FullscreenDragHandler />
         <div className="absolute inset-0 flex flex-col p-0 2xl:p-8 pt-10 2xl:pt-12 w-full h-full gap-4 bg-black/0 z-10">
           {/* First Row */}
-          <div className="flex gap-2 items-center w-full h-[40px] px-16 z-20 justify-end">
+          {/* <div className="flex gap-2 items-center w-full h-[40px] px-16 z-20 justify-end">
             <FullscreenSettings />
-            <DrawerClose>
-              <CloseFullscreenButton />
-            </DrawerClose>
-          </div>
+          </div> */}
 
           {/* Second Row */}
-          <div className="w-full max-h-[calc(100%-220px)] min-h-[calc(100%-220px)] px-16">
+          <div className="w-full h-full px-16">
             <div className="min-h-[300px] h-full max-h-full">
               <FullscreenTabs />
             </div>

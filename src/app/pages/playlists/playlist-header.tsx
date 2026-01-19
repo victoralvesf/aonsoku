@@ -23,8 +23,7 @@ import { CoverArt } from '@/types/coverArtType'
 import { IFeaturedArtist } from '@/types/responses/artist'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
-import { AlbumArtistInfo, AlbumMultipleArtistsInfo } from './artists'
-import { ImageHeaderEffect } from './header-effect'
+import { ImageHeaderEffect } from '@/app/components/album/header-effect'
 
 import { Input } from '@/app/components/ui/input'
 
@@ -74,8 +73,8 @@ export default function ImageHeader({
   type,
   title,
   subtitle,
-  artistId,
-  artists,
+//   artistId,
+//   artists,
   coverArtId,
   coverArtType,
   coverArtSize,
@@ -85,10 +84,11 @@ export default function ImageHeader({
   isEditingPlaylist = false,
 }: ImageHeaderProps) {
   const { t } = useTranslation()
+  //todo: remove playlistDialogState and setPlaylistDialogState from the app entirely
   const { data } = usePlaylists()
 
   const [loaded, setLoaded] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [openLightbox, setOpenLightbox] = useState(false)
   const [bgColor, setBgColor] = useState('')
 
   const [titleState, setTitleState] = useState(title)
@@ -124,9 +124,6 @@ export default function ImageHeader({
 
     setLoaded(true)
   }
-
-  const hasMultipleArtists = artists ? artists.length > 1 : false
-
 
 
 
@@ -173,14 +170,15 @@ export default function ImageHeader({
 
   return (
     <div
-      className="flex relative w-full h-[calc(3rem+200px)] 2xl:h-[calc(3rem+250px)]"
-      key={`header-${coverArtId}`}
-    >
+      className={cn("flex relative w-full h-[calc(3rem+200px)] 2xl:h-[calc(3rem+250px)]")}
+      key={`header-${coverArtId}`} >
+
       {!loaded && (
         <div className="absolute inset-0 z-20">
           <AlbumHeaderFallback />
         </div>
       )}
+
       <div
         className={cn(
           'w-full px-8 py-6 flex gap-4 absolute inset-0',
@@ -188,15 +186,12 @@ export default function ImageHeader({
         )}
         style={{ backgroundColor: bgColor }}
       >
-        <div
-          className={cn(
+        <div className={cn(
             'w-[200px] h-[200px] min-w-[200px] min-h-[200px]',
             '2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px]',
             'bg-skeleton aspect-square bg-cover bg-center rounded',
             'shadow-header-image overflow-hidden',
-            'hover:scale-[1.02] ease-linear duration-100',
-          )}
-        >
+            'hover:scale-[1.02] ease-linear duration-100')} >
           <LazyLoadImage
             key={coverArtId}
             effect="opacity"
@@ -209,7 +204,7 @@ export default function ImageHeader({
             height="100%"
             onLoad={handleLoadImage}
             onError={handleError}
-            onClick={() => setOpen(true)}
+            onClick={() => setOpenLightbox(true)}
           />
         </div>
 
@@ -235,25 +230,8 @@ export default function ImageHeader({
           )}
 
 
-          {!isPlaylist && artists && hasMultipleArtists && (
-            <div className="flex items-center mt-2">
-              <AlbumMultipleArtistsInfo artists={artists} />
-              <HeaderInfoGenerator badges={badges} />
-            </div>
-          )}
 
-          {!isPlaylist && subtitle && !hasMultipleArtists && (
-            <>
-              {artistId ? (
-                <div className="flex items-center mt-2">
-                  <AlbumArtistInfo id={artistId} name={subtitle} />
-                  <HeaderInfoGenerator badges={badges} />
-                </div>
-              ) : (
-                <p className="opacity-80 text-sm font-medium">{subtitle}</p>
-              )}
-            </>
-          )}
+
 
           {isPlaylist && subtitle && (
             <>
@@ -318,8 +296,8 @@ export default function ImageHeader({
       )}
 
       <CustomLightBox
-        open={open}
-        close={setOpen}
+        open={openLightbox}
+        close={setOpenLightbox}
         src={getCoverArtUrl(coverArtId, coverArtType, coverArtSize)}
         alt={coverArtAlt}
       />

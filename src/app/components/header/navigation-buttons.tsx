@@ -14,8 +14,7 @@ export function NavigationButtons() {
         className={clsx(
           'size-8',
           !canGoBack && !mainDrawerState && 'cursor-not-allowed',
-        )}
-      >
+        )} >
         <Button
           variant="ghost"
           size="sm"
@@ -26,12 +25,12 @@ export function NavigationButtons() {
           <ChevronLeft className="size-5" />
         </Button>
       </div>
+
       <div
         className={clsx(
           'size-8',
           !canGoForward && !mainDrawerState && 'cursor-not-allowed',
-        )}
-      >
+        )} >
         <Button
           variant="ghost"
           size="sm"

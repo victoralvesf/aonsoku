@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArtistLink, ArtistsLinks } from '@/app/components/song/artist-link'
 import PlaySongButton from '@/app/components/table/play-button'
 import { QueueActions } from '@/app/components/table/queue-actions'
+import { QueueReorderButton } from '@/app/components/table/queue-reorder-button'
 import { TableSongTitle } from '@/app/components/table/song-title'
 import { ROUTES } from '@/routes/routesList'
 import { usePlayerStore } from '@/store/player.store'
@@ -112,6 +113,15 @@ export function queueColumns(): ColumnDefType<ISong>[] {
 
         return formattedDuration
       },
+    },
+    {
+      id: 'select',
+      style: {
+        width: 60,
+        maxWidth: 60,
+        minWidth: 60,
+      },
+      cell: ({ row }) => <QueueReorderButton row={row} />,
     },
     {
       id: 'remove',

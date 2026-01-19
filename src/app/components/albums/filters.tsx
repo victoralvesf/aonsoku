@@ -20,13 +20,14 @@ export function AlbumsFilter() {
 
   return (
     <div className="flex gap-2 flex-1 justify-end">
+      <div> {'searchParams: ' + searchParams} </div>
+      <div> {'currentFilter: ' + currentFilter} </div>
       {currentFilter === AlbumsFilters.ByYear && <AlbumsFilterByYear />}
 
       {currentFilter === AlbumsFilters.ByGenre && <AlbumsFilterByGenre />}
 
-      <AlbumsMainFilter />
-
       <ExpandableSearchInput placeholder={t('album.list.search.placeholder')} />
+      <AlbumsMainFilter />
     </div>
   )
 }

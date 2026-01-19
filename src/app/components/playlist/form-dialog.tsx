@@ -188,7 +188,7 @@ export function CreatePlaylistDialog() {
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 bg-accent/40">
                     <div>
                       <FormLabel>
-                        {t('playlist.form.labels.isPublic')}
+                        {'omfg' + t('playlist.form.labels.isPublic')}
                       </FormLabel>
                       <FormDescription className="my-1">
                         {t('playlist.form.labels.isPublicDescription')}
