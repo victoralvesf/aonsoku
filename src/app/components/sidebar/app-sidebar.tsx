@@ -10,7 +10,6 @@ import { SidebarMiniSeparator } from './mini-separator'
 import { MobileCloseButton } from './mobile-close-button'
 import { NavLibrary } from './nav-library'
 import { NavMain } from './nav-main'
-import { NavPlaylists } from './nav-playlists'
 
 import { useEffect, useState, useRef, ComponentPropsWithoutRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
@@ -22,23 +21,18 @@ import {
   ScrollArea,
   scrollAreaViewportSelector,
 } from '@/app/components/ui/scroll-area'
-import { usePlayerRef, usePlayerSonglist } from '@/store/player.store'
+import { useLyricsState, usePlayerRef, usePlayerSonglist } from '@/store/player.store'
 import { subsonic } from '@/service/subsonic'
 import { ILyric } from '@/types/responses/song'
+
+
+import { useMainSidebar } from '@/app/components/ui/main-sidebar'
+
 
 interface LyricProps {
   lyrics: ILyric
 }
 
-
-const Dev = () => {
-  return (
-    <div>
-      <h1>dev slicers!</h1>
-      {/* <Button>Click me</Button> */}
-    </div>
-  )
-}
 
 
 function UnsyncedLyrics({ lyrics }: LyricProps) {
@@ -121,6 +115,12 @@ const LyricsSidebar = () => {
 export function AppSidebar({
   ...props
 }: React.ComponentProps<typeof MainSidebar>) {
+
+    const { lyricsState } = useLyricsState()
+  const { state: sidebarState } = useMainSidebar()
+  const sidebarOpen = sidebarState === 'expanded'
+
+
   return (
     <MainSidebar collapsible="icon" {...props}>
       <MobileCloseButton />
@@ -133,9 +133,8 @@ export function AppSidebar({
       <MainSidebarContent className="max-h-fit flex-none overflow-x-clip">
         <NavLibrary />
       </MainSidebarContent>
-
-      <Dev />
-      <LyricsSidebar />
+      
+      {lyricsState && sidebarOpen && <LyricsSidebar />}
 
       {/* <NavPlaylists /> */}
       <MainSidebarRail />

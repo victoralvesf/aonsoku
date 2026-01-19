@@ -9,7 +9,7 @@ import ImageHeader from './playlist-header'
 import { PlaylistFallback } from '@/app/components/fallbacks/playlist-fallbacks'
 import { BadgesData } from '@/app/components/header-info'
 import ListWrapper from '@/app/components/list-wrapper'
-import { PlaylistButtons } from '@/app/components/playlist/buttons'
+// import { PlaylistButtons } from '@/app/components/playlist/buttons'
 import { RemoveSongFromPlaylistDialog } from '@/app/components/playlist/remove-song-dialog'
 import { DataTable } from '@/app/components/ui/data-table'
 import ErrorPage from '@/app/pages/error-page'
@@ -20,15 +20,13 @@ import { ColumnFilter } from '@/types/columnFilter'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
 import { queryKeys } from '@/utils/queryKeys'
 
-import { useState } from 'react'
-
 export default function Playlist() {
   const { playlistId } = useParams() as { playlistId: string }
   const { t } = useTranslation()
   const columns = songsColumns()
   const { setSongList } = usePlayerActions()
 
-  const [isEditingPlaylist, setIsEditingPlaylist] = useState(false)
+  // const [isEditingPlaylist, setIsEditingPlaylist] = useState(false)
 
   const {
     data: playlist,
@@ -86,7 +84,7 @@ export default function Playlist() {
         coverArtAlt={playlist.name}
         badges={badges}
         isPlaylist={true}
-        isEditingPlaylist={isEditingPlaylist}
+        // isEditingPlaylist={isEditingPlaylist}
       />
 
       <ListWrapper>

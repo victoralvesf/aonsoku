@@ -22,7 +22,6 @@ interface PlayerVolumeProps {
 }
 
 export function VolumeVertical({ disabled, audioRef }: PlayerVolumeProps) {
-  const { t } = useTranslation()
   const { volume, handleVolumeWheel } = usePlayerVolume()
   const { useAudioHotkeys } = usePlayerHotkeys()
 

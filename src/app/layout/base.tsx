@@ -31,7 +31,7 @@ export default function BaseLayout() {
       </MainSidebarProvider>
       <MemoSongInfoDialog />
       <MemoRemovePlaylistDialog />
-      <MemoMainDrawerPage />
+      <MemoMainDrawerPage />÷
       <CreatePlaylistDialog />
     </div>
   )

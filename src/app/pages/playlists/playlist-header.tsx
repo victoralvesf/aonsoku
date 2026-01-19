@@ -23,8 +23,7 @@ import { CoverArt } from '@/types/coverArtType'
 import { IFeaturedArtist } from '@/types/responses/artist'
 import { getAverageColor } from '@/utils/getAverageColor'
 import { getTextSizeClass } from '@/utils/getTextSizeClass'
-import { AlbumArtistInfo, AlbumMultipleArtistsInfo } from './artists'
-import { ImageHeaderEffect } from './header-effect'
+import { ImageHeaderEffect } from '@/app/components/album/header-effect'
 
 import { Input } from '@/app/components/ui/input'
 
@@ -32,11 +31,9 @@ import { useForm } from 'react-hook-form'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/app/components/ui/form'
 import { Switch } from '@/app/components/ui/switch'
 
@@ -76,8 +73,8 @@ export default function ImageHeader({
   type,
   title,
   subtitle,
-  artistId,
-  artists,
+//   artistId,
+//   artists,
   coverArtId,
   coverArtType,
   coverArtSize,
@@ -88,7 +85,7 @@ export default function ImageHeader({
 }: ImageHeaderProps) {
   const { t } = useTranslation()
   //todo: remove playlistDialogState and setPlaylistDialogState from the app entirely
-  const { data, setData } = usePlaylists()
+  const { data } = usePlaylists()
 
   const [loaded, setLoaded] = useState(false)
   const [openLightbox, setOpenLightbox] = useState(false)
@@ -127,9 +124,6 @@ export default function ImageHeader({
 
     setLoaded(true)
   }
-
-  const hasMultipleArtists = artists ? artists.length > 1 : false
-
 
 
 

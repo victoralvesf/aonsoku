@@ -1,17 +1,13 @@
-import randomCSSHexColor from '@chriscodesthings/random-css-hex-color'
-import { AudioLines, Maximize2 } from 'lucide-react'
-import { useCallback, memo, useMemo } from 'react'
+import { AudioLines } from 'lucide-react'
 import { Fragment } from 'react/jsx-runtime'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import { getCoverArtUrl } from '@/api/httpClient'
-import { usePlayerCurrentList, usePlayerCurrentSong, usePlayerCurrentSongIndex, useQueueState, useSongColor } from '@/store/player.store'
+import { usePlayerCurrentList, usePlayerCurrentSongIndex, useQueueState } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
-import { getAverageColor } from '@/utils/getAverageColor'
-import { logger } from '@/utils/logger'
-import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
-
+import { useMemo } from 'react'
+import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
 
 const MiniQueueInfo = () => {
@@ -31,9 +27,9 @@ const MiniQueueInfo = () => {
   const fullQueueLength = useMemo(() => fullQueue.length, [fullQueue])
   const fullQueueDuration = useMemo(() => fullQueue.reduce((acc, song) => acc + song.duration, 0), [fullQueue])
 
-  let endSummaryTrack: string = `${remainingQueueLength} track${remainingQueueLength > 1 ? 's' : ''}, ~${remainingQueueDuration} s (of ${fullQueueLength}, ~${fullQueueDuration} s)`;
+  let endSummaryTrack: string = `${remainingQueueLength} track${remainingQueueLength > 1 ? 's' : ''}, ${convertSecondsToTime(remainingQueueDuration)}`;
   if (remainingQueueLength === 0) {
-    endSummaryTrack = `That's all! (of ${fullQueueLength}, ~${fullQueueDuration} s)`;
+    endSummaryTrack = `It's over! (of ${fullQueueLength}, ${convertSecondsToTime(fullQueueDuration)})`;
   }
   const endOfQueue: ISongAdvanced = {id: 'end-of-queue', title: endSummaryTrack};
 
@@ -57,11 +53,13 @@ const MiniQueueInfo = () => {
         <div className="flex gap-1 items-center w-200px h-25px justify-end" key={song.id}>
           <div className="flex flex-col items-end gap-0">  
             <div className="text-xs font-light leading-tight">{song.numQueuedAlbumTracks > 1 ? song.album : song.title}</div>
-            <div className="text-xs font-thin  leading-tight">{song.artist}</div>
+            <div className="text-xs font-thin leading-tight">{song.artist}</div>
           </div>
-          <div>
-            {song.numQueuedAlbumTracks > 1 ? song.numQueuedAlbumTracks : ''}
-          </div>
+          {song.numQueuedAlbumTracks > 1 && (
+            <div>
+              <div className="text-xs font-small border border-current w-6 h-6 flex items-center justify-center">{song.numQueuedAlbumTracks}</div>
+            </div>
+          )}
           <LazyLoadImage className="w-25px h-25px mr-2"
             src={getCoverArtUrl(song.coverArt, 'song', '25')}
             width="25px"
@@ -77,45 +75,13 @@ const MiniQueueInfo = () => {
 
 
 export function QueuePreview({ song }: { song: ISong | undefined }) {
-  const { toggleQueueAction, queueState } = useQueueState()
+  const { toggleQueueAction } = useQueueState()
   const { t } = useTranslation()
-  const { setCurrentSongColor, currentSongColor } = useSongColor()
 
   function handleClick() {
     toggleQueueAction()
   }
 
-
-  const getImageElement = useCallback(() => {
-    return document.getElementById('track-song-image') as HTMLImageElement
-  }, [])
-
-  const getImageColor = useCallback(async () => {
-    const img = getImageElement()
-    if (!img) return
-
-    let color = randomCSSHexColor(true)
-
-    try {
-      color = (await getAverageColor(img)).hex
-      logger.info('[TrackInfo] - Getting Image Average Color', {
-        color,
-      })
-    } catch {
-      logger.error('[TrackInfo] - Unable to get image average color.')
-    }
-
-    if (color !== currentSongColor) {
-      setCurrentSongColor(color)
-    }
-  }, [currentSongColor, setCurrentSongColor, getImageElement])
-
-  function handleError() {
-    const img = getImageElement()
-    if (!img) return
-
-    img.crossOrigin = null
-  }
 
   if (!song) {
     return (

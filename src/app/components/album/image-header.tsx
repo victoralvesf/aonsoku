@@ -32,11 +32,9 @@ import { useForm } from 'react-hook-form'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/app/components/ui/form'
 import { Switch } from '@/app/components/ui/switch'
 
@@ -87,7 +85,7 @@ export default function ImageHeader({
   isEditingPlaylist = false,
 }: ImageHeaderProps) {
   const { t } = useTranslation()
-  const { data, setData } = usePlaylists()
+  const { data } = usePlaylists()
 
   const [loaded, setLoaded] = useState(false)
   const [open, setOpen] = useState(false)

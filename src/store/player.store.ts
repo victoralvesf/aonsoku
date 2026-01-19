@@ -707,6 +707,76 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.originalSongIndex = updatedOriginalIndex
               })
             },
+            reorderSongInQueue: (sourceIndex: number, destinationIndex: number) => {
+              const {
+                currentList,
+                originalList,
+                shuffledList,
+                currentSongIndex,
+                originalSongIndex,
+              } = get().songlist
+
+              // Validate indices
+              if (
+                sourceIndex < 0 ||
+                sourceIndex >= currentList.length ||
+                destinationIndex < 0 ||
+                destinationIndex >= currentList.length ||
+                sourceIndex === destinationIndex
+              ) {
+                return
+              }
+
+              // Move song from sourceIndex to destinationIndex in currentList
+              const newCurrentList = [...currentList]
+              const [movedSong] = newCurrentList.splice(sourceIndex, 1)
+              newCurrentList.splice(destinationIndex, 0, movedSong)
+
+              // Update originalList - reorder to match currentList order
+              const newOriginalList = newCurrentList.map((song) => {
+                const found = originalList.find((s) => s.id === song.id)
+                return found || song
+              })
+
+              // Update shuffledList - reorder to match currentList order
+              const newShuffledList = newCurrentList.map((song) => {
+                const found = shuffledList.find((s) => s.id === song.id)
+                return found || song
+              })
+
+              // Update currentSongIndex if the current song was moved
+              let updatedCurrentIndex = currentSongIndex
+              if (sourceIndex === currentSongIndex) {
+                updatedCurrentIndex = destinationIndex
+              } else if (
+                sourceIndex < currentSongIndex &&
+                destinationIndex >= currentSongIndex
+              ) {
+                // Song moved from before current to after current
+                updatedCurrentIndex = currentSongIndex - 1
+              } else if (
+                sourceIndex > currentSongIndex &&
+                destinationIndex <= currentSongIndex
+              ) {
+                // Song moved from after current to before current
+                updatedCurrentIndex = currentSongIndex + 1
+              }
+
+              // Update originalSongIndex - find where the current song is now in originalList
+              const currentSong = currentList[currentSongIndex]
+              const updatedOriginalIndex = newOriginalList.findIndex(
+                (song) => song.id === currentSong.id,
+              )
+
+              set((state) => {
+                state.songlist.currentList = newCurrentList
+                state.songlist.originalList = newOriginalList
+                state.songlist.shuffledList = newShuffledList
+                state.songlist.currentSongIndex = updatedCurrentIndex
+                state.songlist.originalSongIndex =
+                  updatedOriginalIndex !== -1 ? updatedOriginalIndex : originalSongIndex
+              })
+            },
             setMainDrawerState: (status) => {
               set((state) => {
                 state.playerState.mainDrawerState = status

@@ -6,38 +6,38 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/app/components/ui/tabs'
+import { SongInfo } from './song-info'
 import { LyricsTab } from './lyrics'
 import { FullscreenSongQueue } from './queue'
-import { SongInfo } from './song-info'
 
-const MemoSongQueue = memo(FullscreenSongQueue)
 const MemoSongInfo = memo(SongInfo)
 const MemoLyricsTab = memo(LyricsTab)
+const MemoSongQueue = memo(FullscreenSongQueue)
 
 enum TabsEnum {
-  Queue = 'queue',
   Playing = 'playing',
   Lyrics = 'lyrics',
+  Queue = 'queue',
 }
 
 type TabValue = TabsEnum
 
 const getTransform = (currentTab: TabValue, tabValue: TabValue) => {
   const positions = {
-    queue: {
-      queue: '0',
-      playing: '-120%',
-      lyrics: '-240%',
-    },
     playing: {
-      queue: '120%',
       playing: '0',
       lyrics: '-120%',
+      queue: '-240%',
     },
     lyrics: {
-      queue: '240%',
       playing: '120%',
       lyrics: '0',
+      queue: '-120%',
+    },
+    queue: {
+      playing: '240%',
+      lyrics: '120%',
+      queue: '0',
     },
   }
 
@@ -62,28 +62,17 @@ export function FullscreenTabs() {
       className="w-full h-full min-h-full"
     >
       <TabsList className="w-full bg-foreground/20 mb-4">
-        <TabsTrigger value={TabsEnum.Queue} className={triggerStyles}>
-          {t('fullscreen.queue')}
-        </TabsTrigger>
         <TabsTrigger value={TabsEnum.Playing} className={triggerStyles}>
           {t('fullscreen.playing')}
         </TabsTrigger>
         <TabsTrigger value={TabsEnum.Lyrics} className={triggerStyles}>
           {t('fullscreen.lyrics')}
         </TabsTrigger>
+        <TabsTrigger value={TabsEnum.Queue} className={triggerStyles}>
+          {t('fullscreen.queue')}
+        </TabsTrigger>
       </TabsList>
       <div className="relative w-full h-full">
-        <TabsContent
-          value={TabsEnum.Queue}
-          className={tabStyles}
-          style={{
-            backfaceVisibility: 'hidden',
-            transform: getTransform(tab, TabsEnum.Queue),
-          }}
-          forceMount={true}
-        >
-          <MemoSongQueue />
-        </TabsContent>
         <TabsContent
           value={TabsEnum.Playing}
           className={tabStyles}
@@ -105,6 +94,17 @@ export function FullscreenTabs() {
           forceMount={true}
         >
           <MemoLyricsTab />
+        </TabsContent>
+        <TabsContent
+          value={TabsEnum.Queue}
+          className={tabStyles}
+          style={{
+            backfaceVisibility: 'hidden',
+            transform: getTransform(tab, TabsEnum.Queue),
+          }}
+          forceMount={true}
+        >
+          <MemoSongQueue />
         </TabsContent>
       </div>
     </Tabs>

@@ -36,6 +36,7 @@ export function QueueSongList() {
     // 'artist',
     'album',
     'duration',
+    'select',
     'remove',
   ]
 
