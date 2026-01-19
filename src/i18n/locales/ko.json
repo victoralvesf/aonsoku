@@ -34,7 +34,8 @@
     "playlists": "재생목록",
     "radios": "라디오",
     "podcasts": "팟캐스트",
-    "emptyPlaylist": "생성된 재생목록 없음"
+    "emptyPlaylist": "생성된 재생목록 없음",
+    "favorites": "즐겨찾기"
   },
   "playlist": {
     "buttons": {
