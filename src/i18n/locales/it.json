@@ -16,7 +16,8 @@
     "miniSearch": "Cerca",
     "library": "Libreria",
     "artists": "Artisti",
-    "playlists": "Playlist"
+    "playlists": "Playlist",
+    "favorites": "Preferiti"
   },
   "playlist": {
     "form": {
