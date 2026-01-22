@@ -1,4 +1,4 @@
-import { Eye, EyeOff, CheckIcon, ClockIcon, XIcon } from 'lucide-react'
+import { ClockIcon, Eye, EyeOff } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { PlaylistOptions } from '@/app/components/playlist/options'
@@ -131,9 +131,9 @@ export function playlistsColumns(): ColumnDefType<Playlist>[] {
       cell: ({ row }) => (
         <div>
           {row.original.public ? (
-            <Eye className="w-5 h-5 text-white-500" />
+            <Eye className="w-5 h-5 text-foreground" />
           ) : (
-            <EyeOff className="w-5 h-5 text-gray-500" />
+            <EyeOff className="w-5 h-5 text-muted-foreground opacity-70" />
           )}
         </div>
       ),
