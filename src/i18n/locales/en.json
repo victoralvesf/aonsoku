@@ -694,6 +694,14 @@
           "user": "Username",
           "url": "Server URL"
         }
+      },
+      "images": {
+        "group": "Images",
+        "description": "Customize images settings.",
+        "cacheLayer": {
+          "info": "When enabled, images will be cached locally to improve performance.",
+          "label": "Enable Image Cache"
+        }
       }
     },
     "accounts": {
