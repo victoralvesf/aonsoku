@@ -1,4 +1,4 @@
-import { getCoverArtUrl } from '@/api/httpClient'
+import { ImageLoader } from '@/app/components/image-loader'
 import { SingleAlbum } from '@/types/responses/album'
 import { PreviewCard } from './card'
 
@@ -17,10 +17,14 @@ describe('PreviewCard Component', () => {
         <Wrapper>
           <PreviewCard.Root>
             <PreviewCard.ImageWrapper link="/test">
-              <PreviewCard.Image
-                src={getCoverArtUrl(album.coverArt, 'album')}
-                alt={album.name}
-              />
+              <ImageLoader id={album.coverArt} type="album">
+                {(src) => (
+                  <PreviewCard.Image
+                    src={src}
+                    alt={album.name}
+                  />
+                )}
+              </ImageLoader>
             </PreviewCard.ImageWrapper>
           </PreviewCard.Root>
         </Wrapper>,
@@ -42,10 +46,14 @@ describe('PreviewCard Component', () => {
         <Wrapper>
           <PreviewCard.Root>
             <PreviewCard.ImageWrapper link="/test">
-              <PreviewCard.Image
-                src={getCoverArtUrl(album.coverArt, 'album')}
-                alt={album.name}
-              />
+              <ImageLoader id={album.coverArt} type="album">
+                {(src) => (
+                  <PreviewCard.Image
+                    src={src}
+                    alt={album.name}
+                  />
+                )}
+              </ImageLoader>
               <PreviewCard.PlayButton onClick={onClickSpy} />
             </PreviewCard.ImageWrapper>
           </PreviewCard.Root>
@@ -67,10 +75,14 @@ describe('PreviewCard Component', () => {
         <Wrapper>
           <PreviewCard.Root>
             <PreviewCard.ImageWrapper link="/test">
-              <PreviewCard.Image
-                src={getCoverArtUrl(album.coverArt, 'album')}
-                alt={album.name}
-              />
+              <ImageLoader id={album.coverArt} type="album">
+                {(src) => (
+                  <PreviewCard.Image
+                    src={src}
+                    alt={album.name}
+                  />
+                )}
+              </ImageLoader>
             </PreviewCard.ImageWrapper>
             <PreviewCard.InfoWrapper>
               <PreviewCard.Title link="/cy-test">

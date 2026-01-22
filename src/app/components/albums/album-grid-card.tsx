@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { getCoverArtUrl } from '@/api/httpClient'
+import { ImageLoader } from '@/app/components/image-loader'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
@@ -24,10 +24,9 @@ function AlbumCard({ album }: AlbumCardProps) {
   return (
     <PreviewCard.Root>
       <PreviewCard.ImageWrapper link={ROUTES.ALBUM.PAGE(album.id)}>
-        <PreviewCard.Image
-          src={getCoverArtUrl(album.coverArt, 'album', '300')}
-          alt={album.name}
-        />
+        <ImageLoader id={album.coverArt} type="album" size={300}>
+          {(src) => <PreviewCard.Image src={src} alt={album.name} />}
+        </ImageLoader>
         <PreviewCard.PlayButton onClick={handlePlayAlbum} />
       </PreviewCard.ImageWrapper>
       <PreviewCard.InfoWrapper>

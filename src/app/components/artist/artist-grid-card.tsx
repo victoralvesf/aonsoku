@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getCoverArtUrl } from '@/api/httpClient'
+import { ImageLoader } from '@/app/components/image-loader'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
@@ -27,10 +27,9 @@ function ArtistCard({ artist }: ArtistCardProps) {
   return (
     <PreviewCard.Root className="flex flex-col w-full h-full">
       <PreviewCard.ImageWrapper link={ROUTES.ARTIST.PAGE(artist.id)}>
-        <PreviewCard.Image
-          src={getCoverArtUrl(artist.coverArt, 'artist')}
-          alt={artist.name}
-        />
+        <ImageLoader id={artist.coverArt} type="artist" size={300}>
+          {(src) => <PreviewCard.Image src={src} alt={artist.name} />}
+        </ImageLoader>
         <PreviewCard.PlayButton onClick={handlePlayArtistRadio} />
       </PreviewCard.ImageWrapper>
       <PreviewCard.InfoWrapper>

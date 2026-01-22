@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getCoverArtUrl } from '@/api/httpClient'
+import { ImageLoader } from '@/app/components/image-loader'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import {
   Carousel,
@@ -87,10 +87,11 @@ export default function RelatedArtistsList({
                   <PreviewCard.ImageWrapper
                     link={ROUTES.ARTIST.PAGE(artist.id)}
                   >
-                    <PreviewCard.Image
-                      src={getCoverArtUrl(artist.coverArt, 'artist')}
-                      alt={artist.name}
-                    />
+                    <ImageLoader id={artist.coverArt} type="artist">
+                      {(src) => (
+                        <PreviewCard.Image src={src} alt={artist.name} />
+                      )}
+                    </ImageLoader>
                     <PreviewCard.PlayButton
                       onClick={() => handlePlayArtistRadio(artist)}
                     />

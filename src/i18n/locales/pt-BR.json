@@ -708,6 +708,14 @@
           "user": "Nome de Usuário",
           "url": "URL do Servidor"
         }
+      },
+      "images": {
+        "group": "Imagens",
+        "description": "Personalize as configurações de imagens.",
+        "cacheLayer": {
+          "info": "Quando ativado, as imagens serão armazenadas localmente para melhorar o desempenho.",
+          "label": "Habilitar Cache de Imagens"
+        }
       }
     },
     "accounts": {
