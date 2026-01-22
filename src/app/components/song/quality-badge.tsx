@@ -37,7 +37,7 @@ export function SongQualityBadge({
 
   return (
     <TooltipProvider>
-      <Tooltip>
+      <Tooltip delayDuration={100}>
         <TooltipTrigger className="cursor-default flex">
           <Badge variant={variant}>{quality}</Badge>
         </TooltipTrigger>
