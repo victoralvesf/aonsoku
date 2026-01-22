@@ -138,6 +138,7 @@ module.exports = {
         'custom-3': '0 0 3px rgba(255, 255, 255, 0.03)',
         'custom-5': '0 0 5px rgba(255, 255, 255, 0.05)',
         'header-image': '0 4px 35px rgba(0, 0, 0, 0.6)',
+        kbd: '0 0.1rem 0 1px hsl(var(--border))',
       },
       textShadow: {
         xs: '0px 1px 1px rgb(0 0 0 / 0.2)',

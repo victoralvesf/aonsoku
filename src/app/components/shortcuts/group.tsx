@@ -22,7 +22,7 @@ export function ShortcutsGroup({ title, shortcuts }: ShortcutsGroupProps) {
             <p className="text-sm">{t(label)}</p>
             <div className="flex gap-1">
               {keys.map((key) => (
-                <Keyboard key={key} text={key} className="text-sm px-1.5 h-6" />
+                <Keyboard key={key} text={key} />
               ))}
             </div>
           </div>
