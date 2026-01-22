@@ -109,6 +109,12 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.pages.artistsPageViewType = type
               })
             },
+            imagesCacheLayerEnabled: false,
+            setImagesCacheLayerEnabled: (value) => {
+              set((state) => {
+                state.pages.imagesCacheLayerEnabled = value
+              })
+            },
           },
           desktop: {
             data: {
@@ -380,3 +386,8 @@ export const useAppArtistsViewType = () =>
       isGridView,
     }
   })
+export const useAppImagesCacheLayer = () =>
+  useAppStore((state) => ({
+    imagesCacheLayerEnabled: state.pages.imagesCacheLayerEnabled,
+    setImagesCacheLayerEnabled: state.pages.setImagesCacheLayerEnabled,
+  }))
