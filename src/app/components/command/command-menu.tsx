@@ -138,7 +138,7 @@ export default function CommandMenu() {
             {t('sidebar.search')}
           </span>
 
-          <div className="absolute right-2 top-[7px]">
+          <div className="absolute right-2">
             <Keyboard text="/" />
           </div>
         </Button>
