@@ -25,11 +25,7 @@ export function ShortcutsDialog({ open, onOpenChange }: ShortcutsDialogProps) {
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <p>{t('shortcuts.modal.description.first')}</p>
             {shortcutDialogKeys.map((key) => (
-              <Keyboard
-                key={key}
-                text={key}
-                className="text-base px-1.5 h-6 antialiased"
-              />
+              <Keyboard key={key} text={key} className="mt-1" />
             ))}
             <p>{t('shortcuts.modal.description.last')}</p>
           </div>
