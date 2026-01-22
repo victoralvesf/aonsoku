@@ -20,7 +20,7 @@
 
   [![React][React.js]][React-url] [![Electron][Electron]][Electron-url]
 
-  [![Download][Release-badge]][Release-url]
+  [![Download][Download-badge]][Download-url] [![Flathub][Flathub-badge]][Flathub-url]
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -248,5 +248,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [React-url]: https://reactjs.org/
 [Electron]: https://img.shields.io/badge/Electron-000000?style=for-the-badge&logo=electron&logoColor=9FEAF9
 [Electron-url]: https://www.electronjs.org/
-[Release-badge]: https://img.shields.io/github/v/release/victoralvesf/aonsoku?display_name=release&style=for-the-badge&label=Download&labelColor=%23000&color=%2310B77F&logo=rocket&logoColor=%2310B77F&logoSize=auto
-[Release-url]: https://github.com/victoralvesf/aonsoku/releases/latest
+[Download-badge]: ./.github/assets/github.svg
+[Download-url]: https://github.com/victoralvesf/aonsoku/releases/latest
+[Flathub-badge]: ./.github/assets/flathub.svg
+[Flathub-url]: https://flathub.org/apps/io.github.victoralvesf.aonsoku
