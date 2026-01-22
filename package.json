@@ -142,8 +142,8 @@
   },
   "electron": {
     "window": {
-      "defaultWidth": 1280,
-      "defaultHeight": 720,
+      "defaultWidth": 960,
+      "defaultHeight": 600,
       "defaultBgColor": "#060e23"
     }
   }
