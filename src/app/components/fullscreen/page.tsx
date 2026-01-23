@@ -1,4 +1,5 @@
 import { memo, useEffect } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { Drawer, DrawerContent, DrawerTitle } from '@/app/components/ui/drawer'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import {
@@ -9,10 +10,8 @@ import { enterFullscreen, exitFullscreen } from '@/utils/browser'
 import { isDesktop } from '@/utils/desktop'
 import { setDesktopTitleBarColors } from '@/utils/theme'
 import { FullscreenBackdrop } from './backdrop'
-import { CloseFullscreenButton } from './buttons'
 import { FullscreenDragHandler } from './drag-handler'
 import { FullscreenPlayer } from './player'
-import { FullscreenSettings } from './settings'
 import { FullscreenTabs } from './tabs'
 
 const MemoFullscreenBackdrop = memo(FullscreenBackdrop)
@@ -20,7 +19,7 @@ const MemoFullscreenBackdrop = memo(FullscreenBackdrop)
 export function FullscreenMode() {
   const { enterFullscreenWindow, exitFullscreenWindow } = useAppWindow()
   const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
-  const { bigPlayerState } = useBigPlayerState()
+  const { bigPlayerState, toggleBigPlayerState } = useBigPlayerState()
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: initial useEffect
   useEffect(() => {
@@ -34,6 +33,8 @@ export function FullscreenMode() {
       }
     }
   }, [])
+
+  useHotkeys('esc', () => toggleBigPlayerState(), { enabled: bigPlayerState })
 
   async function handleFullscreen(open: boolean) {
     // We set title bar colors to transparent,
@@ -70,20 +71,14 @@ export function FullscreenMode() {
         <FullscreenDragHandler />
         <div className="absolute inset-0 flex flex-col p-0 2xl:p-8 pt-10 2xl:pt-12 w-full h-full gap-4 bg-black/0 z-10">
           {/* First Row */}
-          <div className="flex gap-2 items-center w-full h-[40px] px-16 z-20 justify-end">
-            <FullscreenSettings />
-            <CloseFullscreenButton />
-          </div>
-
-          {/* Second Row */}
-          <div className="w-full max-h-[calc(100%-220px)] min-h-[calc(100%-220px)] px-16">
+          <div className="w-full max-h-[calc(100%-180px)] min-h-[calc(100%-180px)] px-8 2xl:px-16 pt-4 2xl:pt-8">
             <div className="min-h-[300px] h-full max-h-full">
               <FullscreenTabs />
             </div>
           </div>
 
-          {/* Third Row */}
-          <div className="h-[150px] min-h-[150px] px-16 py-2">
+          {/* Second Row */}
+          <div className="h-[150px] min-h-[150px] px-8 2xl:px-16 py-2">
             <div className="flex items-center">
               <FullscreenPlayer />
             </div>
