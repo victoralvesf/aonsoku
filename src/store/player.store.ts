@@ -12,6 +12,7 @@ import { ISong } from '@/types/responses/song'
 import { areSongListsEqual } from '@/utils/compareSongLists'
 import { isDesktop } from '@/utils/desktop'
 import { discordRpc } from '@/utils/discordRpc'
+import { handleFullscreen } from '@/utils/handleFullscreen'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
 import { idbStorage } from './idb'
 
@@ -709,10 +710,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               })
             },
             toggleBigPlayerState: () => {
+              const currentState = !get().playerState.bigPlayerState
+              const { autoFullscreenEnabled } = get().settings.fullscreen
+
               set((state) => {
-                state.playerState.bigPlayerState =
-                  !state.playerState.bigPlayerState
+                state.playerState.bigPlayerState = currentState
               })
+
+              handleFullscreen(currentState, autoFullscreenEnabled)
             },
             setMainDrawerState: (status) => {
               set((state) => {

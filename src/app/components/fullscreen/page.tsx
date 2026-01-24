@@ -1,14 +1,7 @@
-import { memo, useEffect } from 'react'
+import { memo } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Drawer, DrawerContent, DrawerTitle } from '@/app/components/ui/drawer'
-import { useAppWindow } from '@/app/hooks/use-app-window'
-import {
-  useBigPlayerState,
-  useFullscreenPlayerSettings,
-} from '@/store/player.store'
-import { enterFullscreen, exitFullscreen } from '@/utils/browser'
-import { isDesktop } from '@/utils/desktop'
-import { setDesktopTitleBarColors } from '@/utils/theme'
+import { useBigPlayerState } from '@/store/player.store'
 import { FullscreenBackdrop } from './backdrop'
 import { FullscreenDragHandler } from './drag-handler'
 import { FullscreenPlayer } from './player'
@@ -17,44 +10,16 @@ import { FullscreenTabs } from './tabs'
 const MemoFullscreenBackdrop = memo(FullscreenBackdrop)
 
 export function FullscreenMode() {
-  const { enterFullscreenWindow, exitFullscreenWindow } = useAppWindow()
-  const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
   const { bigPlayerState, toggleBigPlayerState } = useBigPlayerState()
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: initial useEffect
-  useEffect(() => {
-    return () => {
-      if (isDesktop()) {
-        exitFullscreenWindow().then(() => {
-          setDesktopTitleBarColors(false)
-        })
-      } else {
-        exitFullscreen()
-      }
-    }
-  }, [])
-
-  useHotkeys('esc', () => toggleBigPlayerState(), { enabled: bigPlayerState })
-
-  async function handleFullscreen(open: boolean) {
-    // We set title bar colors to transparent,
-    // to not "unstyle" the big player appearance
-    if (isDesktop()) setDesktopTitleBarColors(open)
-
-    if (!autoFullscreenEnabled) return
-
-    if (isDesktop()) {
-      open ? await enterFullscreenWindow() : await exitFullscreenWindow()
-      return
-    }
-
-    open ? enterFullscreen() : exitFullscreen()
-  }
+  useHotkeys('esc', () => toggleBigPlayerState(), {
+    enabled: bigPlayerState,
+    preventDefault: true,
+  })
 
   return (
     <Drawer
       open={bigPlayerState}
-      onOpenChange={handleFullscreen}
       fixed={true}
       handleOnly={true}
       disablePreventScroll={true}
