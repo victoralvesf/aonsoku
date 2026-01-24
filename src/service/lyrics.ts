@@ -144,7 +144,7 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
     ? getLyricsData.artist.split(',')[0]
     : getLyricsData.artist
 
-  if (!lrcLibEnabled) {
+  if (!lrcLibEnabled || window.DISABLE_LRCLIB) {
     return {
       artist,
       title,
