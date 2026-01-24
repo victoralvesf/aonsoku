@@ -153,6 +153,12 @@ Below is a table describing the environment variables that can be used in this p
 | `APP_AUTH_TYPE`       | `token`    | Specifies the authentication method. </br> **Options:** `token` or `password`.                                    |                              |
 | `SERVER_TYPE`         | `subsonic` | Specifies the server name (important for some fixes). </br> **Options:** `subsonic`, `navidrome` or `lms`         |                              |
 | `HIDE_RADIOS_SECTION` | `false`    | Set to `true` to hide the radios page from the sidebar menu.                                                      |                              |
+| `APP_THEME`           | `dark`     | Specify the app theme. </br> **Possible values:** `light`, `dark`, `black`, `one-dark`, `night-owl-light`, `marmalade-beaver`, `noctis-lilac`, `material-theme`, `monokai-pro`, `github-dark`, `shades-of-purple`, `bearded-solarized`, `catppuccin-mocha`, `nuclear-dark`, `achiever`, `dracula`, `discord`, `tinacious-design`, `vue-dark`, `vim-dark-soft`. |                              |
+| `APP_HIDE_THEMES`     | `false`    | Set to `true` to hide the themes section so the user cannot change the theme.                                     |                              |
+| `IMAGE_CACHE_ENABLED` | `false`    | Set to `true` to enable the image cache.                                                                          |                              |
+| `DISABLE_IMAGE_CACHE_TOGGLE` | `false` | Set to `true` to prevent the user from changing the image cache setting.                                  |                              |
+| `DISABLE_DOWNLOADS`   | `false`    | Set to `true` to disable song downloads.                                                                          |                              |
+| `DISABLE_LRCLIB`      | `false`    | Set to `true` to disable downloading lyrics from LRCLIB.                                                          |                              |
 
 **Notes:**
 - **Automatic Login:** To enable automatic login across devices. This should only be used in secure local environments to avoid password compromise.
