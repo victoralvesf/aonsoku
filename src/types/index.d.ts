@@ -10,5 +10,6 @@ declare global {
     HIDE_RADIOS_SECTION: boolean | undefined
     SERVER_TYPE: string | undefined
     APP_THEME: string | undefined
+    APP_HIDE_THEMES: boolean | undefined
   }
 }
