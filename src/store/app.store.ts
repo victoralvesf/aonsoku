@@ -19,7 +19,16 @@ import {
   hasValidConfig,
 } from '@/utils/salt'
 
-const { SERVER_URL, HIDE_SERVER, HIDE_RADIOS_SECTION, SERVER_TYPE } = window
+const {
+  SERVER_URL,
+  HIDE_SERVER,
+  HIDE_RADIOS_SECTION,
+  SERVER_TYPE,
+  IMAGE_CACHE_ENABLED,
+} = window
+
+const enableImageCache =
+  IMAGE_CACHE_ENABLED !== undefined ? IMAGE_CACHE_ENABLED : false
 
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
@@ -109,7 +118,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.pages.artistsPageViewType = type
               })
             },
-            imagesCacheLayerEnabled: false,
+            imagesCacheLayerEnabled: enableImageCache,
             setImagesCacheLayerEnabled: (value) => {
               set((state) => {
                 state.pages.imagesCacheLayerEnabled = value
@@ -285,6 +294,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 },
                 pages: {
                   hideRadiosSection,
+                  imagesCacheLayerEnabled: enableImageCache,
                 },
               }
 
@@ -301,6 +311,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               },
               pages: {
                 hideRadiosSection,
+                imagesCacheLayerEnabled: enableImageCache,
               },
             }
 

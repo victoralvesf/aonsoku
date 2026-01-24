@@ -13,6 +13,8 @@ import {
 import { Switch } from '@/app/components/ui/switch'
 import { useAppImagesCacheLayer } from '@/store/app.store'
 
+const { DISABLE_IMAGE_CACHE_TOGGLE } = window
+
 export function ImagesContent() {
   const { t } = useTranslation()
   const { imagesCacheLayerEnabled, setImagesCacheLayerEnabled } =
@@ -35,6 +37,7 @@ export function ImagesContent() {
             <Switch
               checked={imagesCacheLayerEnabled}
               onCheckedChange={setImagesCacheLayerEnabled}
+              disabled={DISABLE_IMAGE_CACHE_TOGGLE}
             />
           </ContentItemForm>
         </ContentItem>
