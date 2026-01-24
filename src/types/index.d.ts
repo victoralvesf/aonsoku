@@ -9,5 +9,6 @@ declare global {
     APP_AUTH_TYPE: string | undefined
     HIDE_RADIOS_SECTION: boolean | undefined
     SERVER_TYPE: string | undefined
+    APP_THEME: string | undefined
   }
 }
