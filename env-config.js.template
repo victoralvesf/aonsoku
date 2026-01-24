@@ -10,3 +10,4 @@ window.APP_THEME="${APP_THEME}" || undefined;
 window.APP_HIDE_THEMES="${APP_HIDE_THEMES}" === "true";
 window.IMAGE_CACHE_ENABLED="${IMAGE_CACHE_ENABLED}" === "true";
 window.DISABLE_IMAGE_CACHE_TOGGLE="${DISABLE_IMAGE_CACHE_TOGGLE}" === "true";
+window.DISABLE_DOWNLOADS="${DISABLE_DOWNLOADS}" === "true";
