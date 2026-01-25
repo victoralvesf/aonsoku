@@ -1,7 +1,9 @@
 import { is } from '@electron-toolkit/utils'
 import { BrowserWindow, ipcMain } from 'electron'
-import { autoUpdater } from 'electron-updater'
+import electronUpdater from 'electron-updater'
 import { IpcChannels } from '../../preload/types'
+
+const { autoUpdater } = electronUpdater
 
 export function setupUpdater(window: BrowserWindow | null) {
   if (!window) return
