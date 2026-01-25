@@ -1,4 +1,5 @@
 import { OptionsButtons } from '@/app/components/options/buttons'
+import { DownloadOptionHandler } from '@/app/components/options/download-handler'
 import { AddToPlaylistSubMenu } from '@/app/components/song/add-to-playlist'
 import {
   DropdownMenuGroup,
@@ -58,10 +59,9 @@ export function AlbumOptions({ album }: AlbumOptionsProps) {
           addToPlaylistFn={handleAddToPlaylist}
         />
       </OptionsButtons.AddToPlaylistOption>
-      <DropdownMenuSeparator />
-      <DropdownMenuGroup>
+      <DownloadOptionHandler>
         <OptionsButtons.Download onClick={handleDownload} />
-      </DropdownMenuGroup>
+      </DownloadOptionHandler>
     </>
   )
 }

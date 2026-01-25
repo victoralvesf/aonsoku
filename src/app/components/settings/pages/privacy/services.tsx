@@ -13,6 +13,8 @@ import {
 import { Switch } from '@/app/components/ui/switch'
 import { usePrivacySettings } from '@/store/player.store'
 
+const { DISABLE_LRCLIB } = window
+
 export function Services() {
   const { t } = useTranslation()
   const { lrcLibEnabled, setLrcLibEnabled } = usePrivacySettings()
@@ -32,8 +34,9 @@ export function Services() {
           </ContentItemTitle>
           <ContentItemForm>
             <Switch
-              checked={lrcLibEnabled}
+              checked={DISABLE_LRCLIB ? false : lrcLibEnabled}
               onCheckedChange={setLrcLibEnabled}
+              disabled={DISABLE_LRCLIB}
             />
           </ContentItemForm>
         </ContentItem>

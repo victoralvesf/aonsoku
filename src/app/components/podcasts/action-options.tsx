@@ -1,4 +1,5 @@
 import { OptionsButtons } from '@/app/components/options/buttons'
+import { DownloadOptionHandler } from '@/app/components/options/download-handler'
 import { DropdownMenuSeparator } from '@/app/components/ui/dropdown-menu'
 import { usePodcastOptions } from '@/app/hooks/use-podcast-options'
 import { useEpisodeQueue } from '@/app/hooks/use-podcast-playing'
@@ -62,14 +63,15 @@ export function PodcastActionOptions({ episode, latest }: ActionOptionsProps) {
           />
         </>
       )}
-      <DropdownMenuSeparator />
-      <OptionsButtons.Download
-        variant="dropdown"
-        onClick={(e) => {
-          e.stopPropagation()
-          handleDownload()
-        }}
-      />
+      <DownloadOptionHandler group={false}>
+        <OptionsButtons.Download
+          variant="dropdown"
+          onClick={(e) => {
+            e.stopPropagation()
+            handleDownload()
+          }}
+        />
+      </DownloadOptionHandler>
     </>
   )
 }
