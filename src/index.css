@@ -175,7 +175,9 @@ img {
 }
 
 .yarl__slide_image {
-  @apply shadow-2xl -shadow-spread-2 shadow-y-[3px] rounded-lg;
+  --shadow-spread: -0.5rem;
+  --tw-shadow-y-offset: 3px;
+  @apply shadow-2xl rounded-lg;
 }
 
 .rfm-marquee {
