@@ -123,7 +123,7 @@
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "@types/react-lazy-load-image-component": "^1.6.4",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react": "^5.1.2",
     "autoprefixer": "^10.4.21",
     "cypress": "^13.17.0",
     "cypress-real-events": "^1.14.0",
@@ -138,7 +138,11 @@
     "vite": "^7.3.1"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["cypress", "electron", "esbuild"],
+    "onlyBuiltDependencies": [
+      "cypress",
+      "electron",
+      "esbuild"
+    ],
     "overrides": {
       "glob": "^11.0.0"
     }
