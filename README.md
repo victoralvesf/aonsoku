@@ -241,6 +241,25 @@ This project uses [Weblate](https://hosted.weblate.org/projects/aonsoku/) for tr
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Star History
+
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="https://api.star-history.com/svg?repos=victoralvesf/aonsoku&type=Date&theme=dark"
+  />
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="https://api.star-history.com/svg?repos=victoralvesf/aonsoku&type=Date"
+  />
+  <img
+    alt="Star History Chart"
+    src="https://api.star-history.com/svg?repos=victoralvesf/aonsoku&type=Date"
+  />
+</picture>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- LICENSE -->
 ## License
 
