@@ -23,8 +23,7 @@ import './commands'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { mount } from 'cypress/react'
-import type { MountOptions, MountReturn } from 'cypress/react'
-import { MemoryRouter, type MemoryRouterProps } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import { useAppStore } from '@/store/app.store'
 import { AuthType } from '@/types/serverConfig'
 import 'cypress-real-events'
@@ -32,21 +31,6 @@ import '@/index.css'
 import '@/themes.css'
 import '@/fonts.css'
 import '@/i18n'
-
-// Augment the Cypress namespace to include type definitions for
-// your custom command.
-// Alternatively, can be defined in cypress/support/component.d.ts
-// with a <reference path="./component" /> at the top of your spec.
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      mount(
-        component: React.ReactNode,
-        options?: MountOptions & { routerProps?: MemoryRouterProps }
-      ): Cypress.Chainable<MountReturn>
-    }
-  }
-}
 
 const queryClient = new QueryClient()
 
@@ -60,7 +44,7 @@ useAppStore.setState((state) => ({
   },
 }))
 
-Cypress.Commands.add('mount', (component, options: MountOptions & { routerProps?: MemoryRouterProps } = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   const { routerProps = { initialEntries: ['/'] }, ...mountOptions } = options
 
   const wrapped = (
