@@ -1,6 +1,6 @@
 appId: com.victoralvesf.aonsoku
 productName: Aonsoku
-copyright: Copyright © 2025 Victor Alves
+copyright: Copyright © 2026 Victor Alves
 icon: ./build/icon.ico
 artifactName: '${productName}-v${version}-${os}-${arch}.${ext}'
 
