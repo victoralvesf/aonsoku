@@ -83,7 +83,7 @@
     "idb-keyval": "^6.2.2",
     "immer": "^10.1.1",
     "linkify-it": "^5.0.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "lucide-react": "^0.555.0",
     "react": "^18.3.1",
     "react-country-flag": "^3.1.0",
