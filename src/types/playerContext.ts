@@ -82,9 +82,17 @@ interface ILyrics {
   setPreferSyncedLyrics: (value: boolean) => void
 }
 
+interface LrcLib {
+  enabled: boolean
+  setEnabled: (value: boolean) => void
+  customUrlEnabled: boolean
+  setCustomUrlEnabled: (value: boolean) => void
+  customUrl: string
+  setCustomUrl: (value: string) => void
+}
+
 export interface IPrivacySettings {
-  lrcLibEnabled: boolean
-  setLrcLibEnabled: (value: boolean) => void
+  lrclib: LrcLib
 }
 
 interface IBlurSettings {

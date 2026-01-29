@@ -95,6 +95,6 @@ export function ContentItemForm({
   )
 }
 
-export function ContentSeparator() {
-  return <Separator className="mt-4" />
+export function ContentSeparator({ className }: { className?: string }) {
+  return <Separator className={cn('mt-4', className)} />
 }

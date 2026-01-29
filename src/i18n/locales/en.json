@@ -667,7 +667,13 @@
         "description": "Manage the external services that Aonsoku can access.",
         "lrclib": {
           "info": "LRCLIB is used to find song lyrics.",
-          "label": "LRCLIB"
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Use a custom URL",
+            "info": "Use a custom URL for LRCLIB instead of the default one.",
+            "label": "URL",
+            "example": "Example: https://my-lrclib.com"
+          }
         }
       }
     },
