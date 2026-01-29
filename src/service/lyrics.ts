@@ -132,7 +132,7 @@ async function getLyrics(getLyricsData: GetLyricsData) {
 }
 
 async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
-  const { lrcLibEnabled } = usePlayerStore.getState().settings.privacy
+  const { lrclib } = usePlayerStore.getState().settings.privacy
   const { isLms } = checkServerType()
 
   const { title, album, duration } = getLyricsData
@@ -144,7 +144,7 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
     ? getLyricsData.artist.split(',')[0]
     : getLyricsData.artist
 
-  if (!lrcLibEnabled || window.DISABLE_LRCLIB) {
+  if (!lrclib.enabled || window.DISABLE_LRCLIB) {
     return {
       artist,
       title,
@@ -161,7 +161,13 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
     if (duration) params.append('duration', duration.toString())
     if (album) params.append('album_name', album)
 
-    const url = new URL('https://lrclib.net/api/get')
+    let defaultLrcLibUrl = 'https://lrclib.net/api/get'
+
+    if (lrclib.customUrlEnabled && lrclib.customUrl !== '') {
+      defaultLrcLibUrl = `${lrclib.customUrl}/api/get`
+    }
+
+    const url = new URL(defaultLrcLibUrl)
     url.search = params.toString()
 
     const request = await fetch(url.toString(), {
