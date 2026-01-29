@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import { ComponentPropsWithRef } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { getCoverArtUrl } from '@/api/httpClient'
 import { EqualizerBars } from '@/app/components/icons/equalizer-bars'
+import { ImageLoader } from '@/app/components/image-loader'
 import { ISong } from '@/types/responses/song'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
@@ -20,8 +20,6 @@ export function QueueItem({
   style,
   ...props
 }: QueueItemProps) {
-  const coverArtUrl = getCoverArtUrl(song.coverArt, 'song', '100')
-
   return (
     <div
       className={clsx([
@@ -51,11 +49,16 @@ export function QueueItem({
       </div>
       <div className="flex flex-1 items-center">
         <div className="w-10 h-10 bg-accent rounded mr-2">
-          <LazyLoadImage
-            src={coverArtUrl}
-            className="w-10 h-10 rounded text-transparent"
-            alt={`${song.title} - ${song.artist}`}
-          />
+          <ImageLoader id={song.coverArt} type="song" size={100}>
+            {(src) => (
+              <LazyLoadImage
+                src={src}
+                effect="opacity"
+                className="w-10 h-10 rounded text-transparent"
+                alt={`${song.title} - ${song.artist}`}
+              />
+            )}
+          </ImageLoader>
         </div>
         <div className="flex flex-col">
           <span className="font-semibold">{song.title}</span>

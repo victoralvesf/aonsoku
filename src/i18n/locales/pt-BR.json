@@ -13,6 +13,7 @@
     "artists": "Artistas",
     "songs": "Músicas",
     "albums": "Álbuns",
+    "favorites": "Favoritos",
     "playlists": "Playlists",
     "radios": "Rádios",
     "podcasts": "Podcasts",
@@ -190,6 +191,9 @@
     "table": {
       "discNumber": "Disco {{number}}"
     }
+  },
+  "favorites": {
+    "noSongList": "Você ainda não adicionou músicas nos favoritos!"
   },
   "artist": {
     "headline": "Artista",
@@ -677,7 +681,13 @@
         "description": "Gerencie os serviços externos que o Aonsoku pode acessar.",
         "lrclib": {
           "info": "O LRCLIB é usado para encontrar letras de músicas.",
-          "label": "LRCLIB"
+          "label": "LRCLIB",
+          "customUrl": {
+            "info": "Use uma URL personalizada para o LRCLIB no lugar da padrão.",
+            "toggle": "Use uma URL personalizada",
+            "label": "URL",
+            "example": "Exemplo: https://my-lrclib.com"
+          }
         }
       }
     },
@@ -703,6 +713,14 @@
           "error": "Nome de usuário e URL do servidor são obrigatórios.",
           "user": "Nome de Usuário",
           "url": "URL do Servidor"
+        }
+      },
+      "images": {
+        "group": "Imagens",
+        "description": "Personalize as configurações de imagens.",
+        "cacheLayer": {
+          "info": "Quando ativado, as imagens serão armazenadas localmente para melhorar o desempenho.",
+          "label": "Habilitar Cache de Imagens"
         }
       }
     },

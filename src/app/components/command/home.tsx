@@ -11,6 +11,8 @@ type HomeProps = CommandItemProps & {
   setPages: (value: CommandPages[]) => void
 }
 
+const appHideThemes = window.APP_HIDE_THEMES ?? false
+
 export function CommandHome({ pages, setPages, runCommand }: HomeProps) {
   const { t } = useTranslation()
   const { setPlaylistDialogState } = usePlaylists()
@@ -22,11 +24,13 @@ export function CommandHome({ pages, setPages, runCommand }: HomeProps) {
           {t('command.commands.pages')}
         </CustomCommandItem>
       </CommandItem>
-      <CommandItem onSelect={() => setPages([...pages, 'THEME'])}>
-        <CustomCommandItem variant="ChangeTheme">
-          {t('command.commands.theme')}
-        </CustomCommandItem>
-      </CommandItem>
+      {!appHideThemes && (
+        <CommandItem onSelect={() => setPages([...pages, 'THEME'])}>
+          <CustomCommandItem variant="ChangeTheme">
+            {t('command.commands.theme')}
+          </CustomCommandItem>
+        </CommandItem>
+      )}
       <CommandItem onSelect={() => setPages([...pages, 'PLAYLISTS'])}>
         <CustomCommandItem variant="Playlists">
           {t('sidebar.playlists')}

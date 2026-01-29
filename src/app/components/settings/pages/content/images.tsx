@@ -11,29 +11,33 @@ import {
   Root,
 } from '@/app/components/settings/section'
 import { Switch } from '@/app/components/ui/switch'
-import { usePrivacySettings } from '@/store/player.store'
+import { useAppImagesCacheLayer } from '@/store/app.store'
 
-export function Services() {
+const { DISABLE_IMAGE_CACHE_TOGGLE } = window
+
+export function ImagesContent() {
   const { t } = useTranslation()
-  const { lrcLibEnabled, setLrcLibEnabled } = usePrivacySettings()
+  const { imagesCacheLayerEnabled, setImagesCacheLayerEnabled } =
+    useAppImagesCacheLayer()
 
   return (
     <Root>
       <Header>
-        <HeaderTitle>{t('settings.privacy.services.group')}</HeaderTitle>
+        <HeaderTitle>{t('settings.content.images.group')}</HeaderTitle>
         <HeaderDescription>
-          {t('settings.privacy.services.description')}
+          {t('settings.content.images.description')}
         </HeaderDescription>
       </Header>
       <Content>
         <ContentItem>
-          <ContentItemTitle info={t('settings.privacy.services.lrclib.info')}>
-            {t('settings.privacy.services.lrclib.label')}
+          <ContentItemTitle info={t('settings.content.images.cacheLayer.info')}>
+            {t('settings.content.images.cacheLayer.label')}
           </ContentItemTitle>
           <ContentItemForm>
             <Switch
-              checked={lrcLibEnabled}
-              onCheckedChange={setLrcLibEnabled}
+              checked={imagesCacheLayerEnabled}
+              onCheckedChange={setImagesCacheLayerEnabled}
+              disabled={DISABLE_IMAGE_CACHE_TOGGLE}
             />
           </ContentItemForm>
         </ContentItem>

@@ -1,0 +1,62 @@
+{
+  "home": {
+    "recentlyPlayed": "Duela gutxi entzundakoak",
+    "mostPlayed": "Gehien entzundakoak",
+    "recentlyAdded": "Duela gutxi gehitutakoak",
+    "explore": "Arakatu"
+  },
+  "sidebar": {
+    "home": "Hasiera",
+    "search": "Bilatu…",
+    "miniSearch": "Bilatu",
+    "library": "Liburutegia",
+    "artists": "Artistak",
+    "songs": "Abestiak",
+    "albums": "Diskak",
+    "favorites": "Gogokoenak",
+    "playlists": "Zerrendak",
+    "radios": "Irratiak",
+    "podcasts": "Podcast-ak",
+    "emptyPlaylist": "Ez da oraindik zerrendarik sortu"
+  },
+  "menu": {
+    "language": "Hizkuntza",
+    "server": "Zerbitzaria",
+    "about": "Honi buruz",
+    "serverLogout": "Saioa itxi"
+  },
+  "generic": {
+    "seeMore": "Gehiago ikusi",
+    "showDetails": "Xehetasunak erakutsi",
+    "hideDetails": "Xehetasunak ezkutatu",
+    "viewAll": "Denak ikusi",
+    "loading": "Kargatzen…",
+    "viewMode": {
+      "label": "Ikusi Modua",
+      "modes": {
+        "list": "Zerrenda",
+        "poster": "Kartela"
+      }
+    },
+    "beta": "Beta"
+  },
+  "theme": {
+    "label": "Itxura",
+    "light": "Argia",
+    "dark": "Iluna",
+    "system": "Sistema",
+    "black": "Beltza eta txuria",
+    "one-dark": "One Beltza",
+    "night-owl-light": "Gaueko Hontz Argia",
+    "marmalade-beaver": "Erretximenta Kastorea",
+    "material-theme": "Material itxura",
+    "monokai-pro": "Monokai Pro",
+    "github-dark": "Github iluna"
+  },
+  "playlist": {
+    "songCount_one": "abesti {{count}}",
+    "songCount_other": "{{count}} abesti",
+    "duration": "{{duration}} inguru",
+    "refresh": "Zerrenda berritu"
+  }
+}

@@ -1,5 +1,6 @@
 import { httpClient } from '@/api/httpClient'
 import {
+  FavoritesResponse,
   GetSongResponse,
   RandomSongsResponse,
   TopSongsResponse,
@@ -30,6 +31,14 @@ async function getRandomSongs({
   })
 
   return response?.data.randomSongs.song
+}
+
+async function getFavoriteSongs() {
+  const response = await httpClient<FavoritesResponse>('/getStarred2', {
+    method: 'GET',
+  })
+
+  return response?.data.starred2
 }
 
 async function getTopSongs(artistName: string) {
@@ -68,6 +77,7 @@ async function getSong(id: string) {
 
 export const songs = {
   getAllSongs,
+  getFavoriteSongs,
   getRandomSongs,
   getTopSongs,
   getSong,

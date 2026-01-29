@@ -2,7 +2,8 @@ import clsx from 'clsx'
 import { useEffect, useMemo, useState } from 'react'
 import { isSafari } from 'react-device-detect'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { getCoverArtUrl } from '@/api/httpClient'
+import { getSimpleCoverArtUrl } from '@/api/httpClient'
+import { ImageLoader } from '@/app/components/image-loader'
 import { usePlayerCurrentSong, useSongColor } from '@/store/player.store'
 import { isChromeOrFirefox } from '@/utils/browser'
 import { hexToRgba } from '@/utils/getAverageColor'
@@ -27,7 +28,7 @@ export function ImageBackdrop() {
 
 function OtherBackdrop() {
   const { coverArt } = usePlayerCurrentSong()
-  const coverArtUrl = getCoverArtUrl(coverArt, 'song', '300')
+  const coverArtUrl = getSimpleCoverArtUrl(coverArt, 'song', '300')
   const [backgroundImage, setBackgroundImage] = useState(coverArtUrl)
   const { bigPlayerBlur } = useSongColor()
 
@@ -57,7 +58,6 @@ function OtherBackdrop() {
 
 function MacBackdrop() {
   const { coverArt, title } = usePlayerCurrentSong()
-  const coverArtUrl = getCoverArtUrl(coverArt, 'song', '300')
   const { bigPlayerBlur } = useSongColor()
   const { currentSongColor, currentSongColorIntensity } = useSongColor()
 
@@ -72,14 +72,18 @@ function MacBackdrop() {
       className="relative w-full h-full flex items-center transition-colors duration-1000"
       style={{ backgroundColor }}
     >
-      <LazyLoadImage
-        key={coverArt}
-        src={coverArtUrl}
-        alt={title}
-        effect="opacity"
-        width="100%"
-        className="w-full bg-contain"
-      />
+      <ImageLoader id={coverArt} type="song">
+        {(src) => (
+          <LazyLoadImage
+            key={coverArt}
+            src={src}
+            alt={title}
+            effect="opacity"
+            width="100%"
+            className="w-full bg-contain"
+          />
+        )}
+      </ImageLoader>
       <div
         className="absolute bg-background/50 inset-0 z-10"
         style={{

@@ -50,6 +50,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             currentDuration: 0,
             mediaType: 'song',
             audioPlayerRef: null,
+            bigPlayerState: false,
             mainDrawerState: false,
             queueState: false,
             lyricsState: false,
@@ -62,11 +63,25 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
           },
           settings: {
             privacy: {
-              lrcLibEnabled: true,
-              setLrcLibEnabled(value) {
-                set((state) => {
-                  state.settings.privacy.lrcLibEnabled = value
-                })
+              lrclib: {
+                enabled: true,
+                setEnabled(value) {
+                  set((state) => {
+                    state.settings.privacy.lrclib.enabled = value
+                  })
+                },
+                customUrlEnabled: false,
+                setCustomUrlEnabled(value) {
+                  set((state) => {
+                    state.settings.privacy.lrclib.customUrlEnabled = value
+                  })
+                },
+                customUrl: 'https://lrclib.net',
+                setCustomUrl(value) {
+                  set((state) => {
+                    state.settings.privacy.lrclib.customUrl = value
+                  })
+                },
               },
             },
             volume: {
@@ -707,6 +722,12 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.originalSongIndex = updatedOriginalIndex
               })
             },
+            toggleBigPlayerState: () => {
+              set((state) => {
+                state.playerState.bigPlayerState =
+                  !state.playerState.bigPlayerState
+              })
+            },
             setMainDrawerState: (status) => {
               set((state) => {
                 state.playerState.mainDrawerState = status
@@ -1058,8 +1079,8 @@ export const useReplayGainActions = () =>
 export const useFullscreenPlayerSettings = () =>
   usePlayerStore((state) => state.settings.fullscreen)
 
-export const usePrivacySettings = () =>
-  usePlayerStore((state) => state.settings.privacy)
+export const useLrcLibSettings = () =>
+  usePlayerStore((state) => state.settings.privacy.lrclib)
 
 export const useLyricsSettings = () =>
   usePlayerStore((state) => state.settings.lyrics)
@@ -1104,6 +1125,12 @@ export const usePlayerRef = () =>
   usePlayerStore((state) => state.playerState.audioPlayerRef)
 
 export const getVolume = () => usePlayerStore.getState().playerState.volume
+
+export const useBigPlayerState = () =>
+  usePlayerStore((state) => ({
+    bigPlayerState: state.playerState.bigPlayerState,
+    toggleBigPlayerState: state.actions.toggleBigPlayerState,
+  }))
 
 export const useMainDrawerState = () =>
   usePlayerStore((state) => ({

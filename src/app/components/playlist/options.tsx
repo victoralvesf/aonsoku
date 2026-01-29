@@ -1,4 +1,5 @@
 import { OptionsButtons } from '@/app/components/options/buttons'
+import { DownloadOptionHandler } from '@/app/components/options/download-handler'
 import { DropdownMenuSeparator } from '@/app/components/ui/dropdown-menu'
 import { useOptions } from '@/app/hooks/use-options'
 import { subsonic } from '@/service/subsonic'
@@ -113,15 +114,16 @@ export function PlaylistOptions({
           handlePlayLast()
         }}
       />
-      <DropdownMenuSeparator />
-      <OptionsButtons.Download
-        variant={variant}
-        disabled={disableDownload}
-        onClick={(e) => {
-          e.stopPropagation()
-          handleDownload()
-        }}
-      />
+      <DownloadOptionHandler group={false}>
+        <OptionsButtons.Download
+          variant={variant}
+          disabled={disableDownload}
+          onClick={(e) => {
+            e.stopPropagation()
+            handleDownload()
+          }}
+        />
+      </DownloadOptionHandler>
       <DropdownMenuSeparator />
       <OptionsButtons.EditPlaylist
         variant={variant}

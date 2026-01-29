@@ -19,7 +19,16 @@ import {
   hasValidConfig,
 } from '@/utils/salt'
 
-const { SERVER_URL, HIDE_SERVER, HIDE_RADIOS_SECTION, SERVER_TYPE } = window
+const {
+  SERVER_URL,
+  HIDE_SERVER,
+  HIDE_RADIOS_SECTION,
+  SERVER_TYPE,
+  IMAGE_CACHE_ENABLED,
+} = window
+
+const enableImageCache =
+  IMAGE_CACHE_ENABLED !== undefined ? IMAGE_CACHE_ENABLED : false
 
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
@@ -109,10 +118,16 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.pages.artistsPageViewType = type
               })
             },
+            imagesCacheLayerEnabled: enableImageCache,
+            setImagesCacheLayerEnabled: (value) => {
+              set((state) => {
+                state.pages.imagesCacheLayerEnabled = value
+              })
+            },
           },
           desktop: {
             data: {
-              minimizeToTray: true,
+              minimizeToTray: false,
             },
             actions: {
               setMinimizeToTray: (value) => {
@@ -205,6 +220,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                     state.data.protocolVersion = serverInfo.protocolVersion
                     state.data.serverType = serverInfo.serverType
                     state.data.isServerConfigured = true
+                    state.data.extensionsSupported =
+                      serverInfo.extensionsSupported
                   })
                   return true
                 }
@@ -225,6 +242,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.data.protocolVersion = '1.16.0'
                 state.data.serverType = 'subsonic'
                 state.data.songCount = null
+                state.data.extensionsSupported = {}
                 state.pages.showInfoPanel = true
                 state.pages.hideRadiosSection = HIDE_RADIOS_SECTION ?? false
                 state.pages.artistsPageViewType = 'table'
@@ -276,6 +294,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 },
                 pages: {
                   hideRadiosSection,
+                  imagesCacheLayerEnabled: enableImageCache,
                 },
               }
 
@@ -292,6 +311,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               },
               pages: {
                 hideRadiosSection,
+                imagesCacheLayerEnabled: enableImageCache,
               },
             }
 
@@ -377,3 +397,8 @@ export const useAppArtistsViewType = () =>
       isGridView,
     }
   })
+export const useAppImagesCacheLayer = () =>
+  useAppStore((state) => ({
+    imagesCacheLayerEnabled: state.pages.imagesCacheLayerEnabled,
+    setImagesCacheLayerEnabled: state.pages.setImagesCacheLayerEnabled,
+  }))

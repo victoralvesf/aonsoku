@@ -29,7 +29,17 @@
     "duration": "приблизно {{duration}}",
     "songCount_one": "{{count}} пісня",
     "songCount_few": "{{count}} пісні",
-    "songCount_many": "{{count}} пісень"
+    "songCount_many": "{{count}} пісень",
+    "form": {
+      "labels": {
+        "commentDescription": "Напишіть короткий опис цього плейлиста"
+      },
+      "create": {
+        "toast": {
+          "success": "Плейлист створений успішно!"
+        }
+      }
+    }
   },
   "sidebar": {
     "home": "Головна",
@@ -55,9 +65,21 @@
     "system": "Системна",
     "black": "Чорно-біла",
     "dark": "Темна",
-    "one-dark": "",
+    "one-dark": "Темна ніч",
     "light": "Світла",
     "vue-dark": "Vue Dark",
-    "vim-dark-soft": "Vim Dark Soft"
+    "vim-dark-soft": "Vim Dark Soft",
+    "night-owl-light": "Світло нічної сови",
+    "marmalade-beaver": "Повидловий бобер",
+    "noctis-lilac": "Сутінковий бузок",
+    "material-theme": "Тема Матеріал",
+    "monokai-pro": "Monokai Pro",
+    "github-dark": "Github Dark",
+    "shades-of-purple": "Пурпурові тіні",
+    "bearded-solarized": "Bearded Solarized",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "nuclear-dark": "Атомні сутінки",
+    "achiever": "Achiever",
+    "dracula": "Dracula"
   }
 }

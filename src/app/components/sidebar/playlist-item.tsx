@@ -32,7 +32,7 @@ export function SidebarPlaylistItem({ playlist }: { playlist: Playlist }) {
         <MainSidebarMenuButton
           asChild
           className={clsx(
-            isOnPlaylist(playlist.id) && 'cursor-default hover:bg-accent',
+            isOnPlaylist(playlist.id) && 'cursor-default bg-accent',
           )}
         >
           <Link

@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm'
 import {
   AlertDialog,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -83,6 +84,9 @@ export function UpdateObserver() {
   return (
     <AlertDialog open={openDialog}>
       <AlertDialogContent>
+        <AlertDialogDescription className="sr-only">
+          {t('update.dialog.title')}
+        </AlertDialogDescription>
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center gap-2">
             <RocketIcon className="w-6 h-6 text-primary fill-primary/60" />
@@ -95,9 +99,11 @@ export function UpdateObserver() {
           id="update-info-body"
           className="w-full min-h-16 max-h-80 overflow-auto text-muted-foreground bg-background-foreground p-4 border rounded-md"
         >
-          <Markdown className="space-y-2 text-sm" remarkPlugins={[remarkGfm]}>
-            {updateInfo.releaseNotes || ''}
-          </Markdown>
+          <div className="space-y-2 text-sm">
+            <Markdown remarkPlugins={[remarkGfm]}>
+              {updateInfo.releaseNotes || ''}
+            </Markdown>
+          </div>
         </div>
 
         <AlertDialogFooter>

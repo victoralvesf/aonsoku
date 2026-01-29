@@ -1,3 +1,4 @@
+import { EmptyPageContainer } from '@/app/components/empty-container'
 import ListWrapper from '@/app/components/list-wrapper'
 import { EmptyAlbumsInfo } from './empty-message'
 import { EmptyWrapper } from './empty-wrapper'
@@ -5,7 +6,7 @@ import { AlbumsHeader } from './header'
 
 export function EmptyAlbums() {
   return (
-    <div className="w-full h-content">
+    <EmptyPageContainer>
       <AlbumsHeader albumCount={0} />
 
       <ListWrapper className="h-full">
@@ -13,6 +14,6 @@ export function EmptyAlbums() {
           <EmptyAlbumsInfo />
         </EmptyWrapper>
       </ListWrapper>
-    </div>
+    </EmptyPageContainer>
   )
 }

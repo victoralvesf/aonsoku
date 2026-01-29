@@ -34,7 +34,8 @@
     "playlists": "재생목록",
     "radios": "라디오",
     "podcasts": "팟캐스트",
-    "emptyPlaylist": "생성된 재생목록 없음"
+    "emptyPlaylist": "생성된 재생목록 없음",
+    "favorites": "즐겨찾기"
   },
   "playlist": {
     "buttons": {
@@ -93,10 +94,10 @@
     "refresh": "재생목록 새로고침"
   },
   "about": {
-    "version": "버전:",
+    "version": "버전",
     "server": "서버",
-    "type": "유형:",
-    "apiVersion": "API 버전:",
+    "type": "유형",
+    "apiVersion": "API 버전",
     "toasts": {
       "copy": "링크가 클립보드에 복사되었습니다!"
     },
@@ -341,7 +342,9 @@
       "audio": "플레이어 및 오디오",
       "privacy": "개인정보 및 보안",
       "content": "내용",
-      "appearance": "외관"
+      "appearance": "외관",
+      "accounts": "계정",
+      "desktop": "데스크톱 앱"
     },
     "privacy": {
       "services": {
@@ -377,6 +380,25 @@
           "url": "팟캐스트 서비스 주소"
         }
       }
+    },
+    "accounts": {
+      "discord": {
+        "group": "디스코드 리치 프레즌스",
+        "description": "지금 재생 중인 노래를 디스코드에 공유하세요.",
+        "enabled": {
+          "label": "통합 활성화"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "일반",
+        "description": "데스크톱 앱을 설정합니다.",
+        "tray": {
+          "label": "작업 표시줄로 최소화",
+          "info": "이 기능을 활성화하면 앱 창을 닫았을 때 종료되지 않고 시스템 트레이 버튼으로 최소화됩니다."
+        }
+      }
     }
   },
   "time": {
@@ -405,6 +427,9 @@
     },
     "navigation": {
       "label": "살펴보기"
+    },
+    "sidebar": {
+      "toggle": "사이드바 여닫기"
     }
   },
   "album": {
@@ -514,6 +539,9 @@
     "playing": "지금 재생 중",
     "switchButton": "큰 플레이어로 전환"
   },
+  "favorites": {
+    "noSongList": "아직 즐겨찾기에 곡을 추가하지 않았습니다!"
+  },
   "artist": {
     "headline": "아티스트",
     "buttons": {
@@ -565,7 +593,8 @@
       },
       "search": "팟캐스트 검색…",
       "addButton": "팟캐스트 추가",
-      "latestEpisodes": "최신 에피소드"
+      "latestEpisodes": "최신 에피소드",
+      "all": "탐색"
     },
     "emptyPage": {
       "message": "추가된 팟캐스트 없음",

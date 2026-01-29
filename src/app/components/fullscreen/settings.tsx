@@ -1,5 +1,6 @@
+import clsx from 'clsx'
 import { SlidersHorizontal } from 'lucide-react'
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/app/components/ui/button'
 import {
@@ -12,39 +13,40 @@ import { Slider } from '@/app/components/ui/slider'
 import { Switch } from '@/app/components/ui/switch'
 import { cn } from '@/lib/utils'
 import { useSongColor } from '@/store/player.store'
+import { buttonsStyle } from './controls'
 
 export function FullscreenSettings() {
   const { useSongColorOnBigPlayer } = useSongColor()
 
   return (
-    <DynamicSettingsPopover>
-      <>
-        <DynamicColorOption showSeparator={false} />
-        {useSongColorOnBigPlayer && <ColorIntensityOption />}
-        {!useSongColorOnBigPlayer && <ImageBlurSizeOption />}
-      </>
-    </DynamicSettingsPopover>
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className={clsx(
+            buttonsStyle.secondary,
+            'data-[state=open]:scale-110',
+          )}
+          style={{ ...buttonsStyle.style }}
+        >
+          <SlidersHorizontal className={buttonsStyle.secondaryIcon} />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-80 p-0" align="start" side="top">
+        <div className="flex flex-col">
+          <DynamicColorOption showSeparator={false} />
+          {useSongColorOnBigPlayer && <ColorIntensityOption />}
+          {!useSongColorOnBigPlayer && <ImageBlurSizeOption />}
+        </div>
+      </PopoverContent>
+    </Popover>
   )
 }
 
 export function QueueSettings() {
   const { useSongColorOnQueue } = useSongColor()
 
-  return (
-    <DynamicSettingsPopover>
-      <>
-        <QueueDynamicColorOption showSeparator={false} />
-        {useSongColorOnQueue && <ColorIntensityOption />}
-      </>
-    </DynamicSettingsPopover>
-  )
-}
-
-interface PopoverProps {
-  children: ReactNode
-}
-
-function DynamicSettingsPopover({ children }: PopoverProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -56,8 +58,11 @@ function DynamicSettingsPopover({ children }: PopoverProps) {
           <SlidersHorizontal className="size-4" strokeWidth={2.5} />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-0" align="end">
-        <div className="flex flex-col">{children}</div>
+      <PopoverContent className="w-80 p-0" align="end" side="bottom">
+        <div className="flex flex-col">
+          <QueueDynamicColorOption showSeparator={false} />
+          {useSongColorOnQueue && <ColorIntensityOption />}
+        </div>
       </PopoverContent>
     </Popover>
   )

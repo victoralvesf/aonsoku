@@ -22,19 +22,15 @@ import './commands'
 // require('./commands')
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { mount } from 'cypress/react18'
+import { mount } from 'cypress/react'
 import { MemoryRouter } from 'react-router-dom'
 import { useAppStore } from '@/store/app.store'
 import { AuthType } from '@/types/serverConfig'
 import 'cypress-real-events'
 import '@/index.css'
+import '@/themes.css'
 import '@/fonts.css'
 import '@/i18n'
-
-// Augment the Cypress namespace to include type definitions for
-// your custom command.
-// Alternatively, can be defined in cypress/support/component.d.ts
-// with a <reference path="./component" /> at the top of your spec.
 
 const queryClient = new QueryClient()
 
@@ -42,7 +38,7 @@ useAppStore.setState((state) => ({
   ...state,
   data: {
     // fix cy.intercept that wasn't intercepting requests without a base URL
-    url: 'http://localhost:1420',
+    url: 'http://localhost:5173',
     // set a default authType to avoid errors
     authType: AuthType.TOKEN,
   },

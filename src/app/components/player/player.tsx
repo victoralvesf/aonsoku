@@ -23,6 +23,7 @@ import { ReplayGainParams } from '@/utils/replayGain'
 import { AudioPlayer } from './audio'
 import { PlayerClearQueueButton } from './clear-queue-button'
 import { PlayerControls } from './controls'
+import { PlayerExpandButton } from './expand-button'
 import { PlayerLikeButton } from './like-button'
 import { PlayerLyricsButton } from './lyrics-button'
 import { PodcastInfo } from './podcast-info'
@@ -40,6 +41,7 @@ const MemoPlayerLikeButton = memo(PlayerLikeButton)
 const MemoPlayerQueueButton = memo(PlayerQueueButton)
 const MemoPlayerClearQueueButton = memo(PlayerClearQueueButton)
 const MemoPlayerVolume = memo(PlayerVolume)
+const MemoPlayerExpandButton = memo(PlayerExpandButton)
 const MemoPodcastPlaybackRate = memo(PodcastPlaybackRate)
 const MemoLyricsButton = memo(PlayerLyricsButton)
 const MemoMiniPlayerButton = memo(MiniPlayerButton)
@@ -219,6 +221,7 @@ export function Player() {
               disabled={!song && !radio && !podcast}
             />
 
+            {isSong && <MemoPlayerExpandButton disabled={!song} />}
             {isSong && hasPiPSupport && <MemoMiniPlayerButton />}
           </div>
         </div>

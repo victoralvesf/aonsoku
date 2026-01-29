@@ -1,7 +1,9 @@
 import { is } from '@electron-toolkit/utils'
 import { BrowserWindow, ipcMain } from 'electron'
-import { autoUpdater } from 'electron-updater'
+import electronUpdater from 'electron-updater'
 import { IpcChannels } from '../../preload/types'
+
+const { autoUpdater } = electronUpdater
 
 export function setupUpdater(window: BrowserWindow | null) {
   if (!window) return
@@ -23,11 +25,11 @@ export function setupUpdater(window: BrowserWindow | null) {
             blockMapSize: 133143,
           },
         ],
-        version: '0.11.0',
+        version: '9.99.9',
         updateUrl: 'https://github.com/victoralvesf/aonsoku/releases',
         releaseDate: '2025-11-30T02:45:24.024Z',
         releaseNotes:
-          '## New version available\n\n- New feature 1\n- New feature 2',
+          '## New version available\n\n- New feature 1\n- New feature 2\n\n### Fixes\n\n- Fix 1\n- Fix 2',
       }
     }
 

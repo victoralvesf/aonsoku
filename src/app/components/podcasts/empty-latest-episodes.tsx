@@ -2,16 +2,17 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { ShadowHeader } from '@/app/components/album/shadow-header'
 import { EmptyWrapper } from '@/app/components/albums/empty-wrapper'
+import { EmptyPageContainer } from '@/app/components/empty-container'
 import { HeaderTitle } from '@/app/components/header-title'
 import ListWrapper from '@/app/components/list-wrapper'
+import { Button } from '@/app/components/ui/button'
 import { ROUTES } from '@/routes/routesList'
-import { Button } from '../ui/button'
 
 export function EmptyLatestEpisodesPage() {
   const { t } = useTranslation()
 
   return (
-    <div className="w-full h-content">
+    <EmptyPageContainer>
       <ShadowHeader>
         <HeaderTitle title={t('podcasts.form.latestEpisodes')} />
       </ShadowHeader>
@@ -36,6 +37,6 @@ export function EmptyLatestEpisodesPage() {
           </div>
         </EmptyWrapper>
       </ListWrapper>
-    </div>
+    </EmptyPageContainer>
   )
 }

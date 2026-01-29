@@ -1,5 +1,6 @@
 import { memo } from 'react'
 import { MainDrawerPage } from '@/app/components/drawer/page'
+import { FullscreenMode } from '@/app/components/fullscreen/page'
 import { Player } from '@/app/components/player/player'
 import { CreatePlaylistDialog } from '@/app/components/playlist/form-dialog'
 import { RemovePlaylistDialog } from '@/app/components/playlist/remove-dialog'
@@ -17,6 +18,7 @@ const MemoPlayer = memo(Player)
 const MemoSongInfoDialog = memo(SongInfoDialog)
 const MemoRemovePlaylistDialog = memo(RemovePlaylistDialog)
 const MemoMainDrawerPage = memo(MainDrawerPage)
+const MemoFullscreenMode = memo(FullscreenMode)
 
 export default function BaseLayout() {
   return (
@@ -33,6 +35,7 @@ export default function BaseLayout() {
       <MemoRemovePlaylistDialog />
       <MemoMainDrawerPage />
       <CreatePlaylistDialog />
+      <MemoFullscreenMode />
     </div>
   )
 }

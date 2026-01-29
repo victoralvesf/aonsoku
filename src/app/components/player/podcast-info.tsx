@@ -20,6 +20,7 @@ export function PodcastInfo({ podcast }: { podcast: EpisodeWithPodcast }) {
           src={imageError ? placeholderImageSrc : podcast.image_url}
           width="100%"
           height="100%"
+          effect="opacity"
           className="aspect-square object-cover w-full h-full text-transparent"
           data-testid="podcast-image"
           alt={podcast.title}

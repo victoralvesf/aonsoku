@@ -1,7 +1,7 @@
 import { Table } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
 import { OptionsButtons } from '@/app/components/options/buttons'
-
+import { DownloadOptionHandler } from '@/app/components/options/download-handler'
 import {
   ContextMenuItem,
   ContextMenuSeparator,
@@ -101,14 +101,15 @@ export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
       )}
       {isSingleSelected && (
         <>
-          <ContextMenuSeparator />
-          <OptionsButtons.Download
-            variant="context"
-            onClick={(e) => {
-              e.stopPropagation()
-              handleDownload()
-            }}
-          />
+          <DownloadOptionHandler context={true}>
+            <OptionsButtons.Download
+              variant="context"
+              onClick={(e) => {
+                e.stopPropagation()
+                handleDownload()
+              }}
+            />
+          </DownloadOptionHandler>
           <ContextMenuSeparator />
           <OptionsButtons.SongInfo
             variant="context"

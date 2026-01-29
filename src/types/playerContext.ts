@@ -30,6 +30,7 @@ export interface IPlayerState {
   mediaType: 'song' | 'radio' | 'podcast'
   currentPlaybackRate: number
   audioPlayerRef: HTMLAudioElement | null
+  bigPlayerState: boolean
   mainDrawerState: boolean
   queueState: boolean
   lyricsState: boolean
@@ -81,9 +82,17 @@ interface ILyrics {
   setPreferSyncedLyrics: (value: boolean) => void
 }
 
+interface LrcLib {
+  enabled: boolean
+  setEnabled: (value: boolean) => void
+  customUrlEnabled: boolean
+  setCustomUrlEnabled: (value: boolean) => void
+  customUrl: string
+  setCustomUrl: (value: string) => void
+}
+
 export interface IPrivacySettings {
-  lrcLibEnabled: boolean
-  setLrcLibEnabled: (value: boolean) => void
+  lrclib: LrcLib
 }
 
 interface IBlurSettings {
@@ -148,6 +157,7 @@ export interface IPlayerActions {
   setNextOnQueue: (songlist: ISong[]) => void
   setLastOnQueue: (songlist: ISong[]) => void
   removeSongFromQueue: (id: string) => void
+  toggleBigPlayerState: () => void
   setMainDrawerState: (state: boolean) => void
   setQueueState: (state: boolean) => void
   toggleQueueAction: () => void

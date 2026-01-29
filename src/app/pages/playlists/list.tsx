@@ -42,7 +42,7 @@ export default function PlaylistsPage() {
   const showTable = playlists.length > 0
 
   return (
-    <div className={clsx('w-full', showTable ? 'h-full' : 'h-content')}>
+    <div className={clsx('w-full', showTable ? 'h-full' : 'h-empty-content')}>
       <ShadowHeader>
         <div className="w-full flex items-center justify-between">
           <HeaderTitle
