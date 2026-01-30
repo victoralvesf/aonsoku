@@ -10,6 +10,7 @@ directories:
 files:
   - '!**/*'
   - 'out/**'
+  - '!out/renderer/screenshots{,/**}'
   - 'package.json'
 
 extraResources:
