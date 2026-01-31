@@ -127,7 +127,7 @@
     "autoprefixer": "^10.4.21",
     "cypress": "^15.9.0",
     "cypress-real-events": "^1.15.0",
-    "electron": "^40.0.0",
+    "electron": "^40.1.0",
     "electron-builder": "^26.4.0",
     "electron-vite": "^5.0.0",
     "husky": "^9.1.7",
@@ -140,8 +140,9 @@
   "pnpm": {
     "onlyBuiltDependencies": ["cypress", "electron", "esbuild"],
     "overrides": {
+      "brace-expansion": "^2.0.2",
       "glob": "^11.0.0",
-      "tar": "^7.5.4"
+      "tar": "^7.5.7"
     }
   },
   "electron": {
