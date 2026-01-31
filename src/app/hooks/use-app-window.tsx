@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
+import { useFullscreenPlayerSettings } from '@/store/player.store'
+import { enterFullscreen, exitFullscreen } from '@/utils/browser'
 import { isDesktop } from '@/utils/desktop'
+import { setDesktopTitleBarColors } from '@/utils/theme'
 
 interface AppWindowType {
   isFullscreen: boolean
@@ -9,11 +12,13 @@ interface AppWindowType {
   maximizeWindow: () => void
   minimizeWindow: () => void
   closeWindow: () => void
+  handleFullscreen: (playerStatus: boolean) => Promise<void>
 }
 
 export function useAppWindow(): AppWindowType {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isMaximized, setIsMaximized] = useState(false)
+  const { autoFullscreenEnabled } = useFullscreenPlayerSettings()
 
   useEffect(() => {
     if (!isDesktop()) return
@@ -87,6 +92,23 @@ export function useAppWindow(): AppWindowType {
     window.api.closeWindow()
   }
 
+  const handleFullscreen = async (playerStatus: boolean) => {
+    // We set title bar colors to transparent,
+    // to not "unstyle" the big player appearance
+    if (isDesktop()) setDesktopTitleBarColors(playerStatus)
+
+    if (!autoFullscreenEnabled) return
+
+    if (isDesktop()) {
+      playerStatus
+        ? await enterFullscreenWindow()
+        : await exitFullscreenWindow()
+      return
+    }
+
+    playerStatus ? enterFullscreen() : exitFullscreen()
+  }
+
   return {
     isFullscreen,
     isMaximized,
@@ -95,5 +117,6 @@ export function useAppWindow(): AppWindowType {
     maximizeWindow,
     minimizeWindow,
     closeWindow,
+    handleFullscreen,
   }
 }

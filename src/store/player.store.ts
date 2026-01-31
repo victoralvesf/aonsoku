@@ -50,7 +50,6 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             currentDuration: 0,
             mediaType: 'song',
             audioPlayerRef: null,
-            bigPlayerState: false,
             mainDrawerState: false,
             queueState: false,
             lyricsState: false,
@@ -722,12 +721,6 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.originalSongIndex = updatedOriginalIndex
               })
             },
-            toggleBigPlayerState: () => {
-              set((state) => {
-                state.playerState.bigPlayerState =
-                  !state.playerState.bigPlayerState
-              })
-            },
             setMainDrawerState: (status) => {
               set((state) => {
                 state.playerState.mainDrawerState = status
@@ -1125,12 +1118,6 @@ export const usePlayerRef = () =>
   usePlayerStore((state) => state.playerState.audioPlayerRef)
 
 export const getVolume = () => usePlayerStore.getState().playerState.volume
-
-export const useBigPlayerState = () =>
-  usePlayerStore((state) => ({
-    bigPlayerState: state.playerState.bigPlayerState,
-    toggleBigPlayerState: state.actions.toggleBigPlayerState,
-  }))
 
 export const useMainDrawerState = () =>
   usePlayerStore((state) => ({
