@@ -703,7 +703,13 @@
         "group": "Usługi Zewnętrzne",
         "lrclib": {
           "info": "LRCLIB jest używany do znajdowania tekstów piosenek.",
-          "label": "LRCLIB"
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Używaj niestandardowego adresu URL",
+            "info": "Używaj niestandardowego adresu URL dla LRCLIB zamiast domyślnego.",
+            "label": "URL",
+            "example": "Przykład: https://my-lrclib.com"
+          }
         },
         "description": "Zarządzaj usługami zewnętrznymi do których Aonsoku może uzyskać dostęp."
       }
