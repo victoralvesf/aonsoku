@@ -63,7 +63,9 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/fonts/poppins-latin-ext-400-normal.woff2") format("woff2");
+  src:
+    url("/fonts/poppins-latin-ext-400-normal.woff2") format("woff2"),
+    url("/fonts/poppins-latin-ext-400-normal.woff") format("woff");
 }
 
 @font-face {
