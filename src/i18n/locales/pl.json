@@ -127,7 +127,8 @@
       "toasts": {
         "success": "Podcast utworzony pomyślnie! Będzie dostępny do posłuchania za parę minut!",
         "error": "Nie udało się utworzyć podcastu!"
-      }
+      },
+      "all": "Przeglądaj"
     },
     "emptyPage": {
       "message": "Nie dodano podcastów",
@@ -205,7 +206,8 @@
     "miniSearch": "Wyszukiwanie",
     "artists": "Wykonawcy",
     "playlists": "Playlisty",
-    "emptyPlaylist": "Nie utworzono jeszcze playlist"
+    "emptyPlaylist": "Nie utworzono jeszcze playlist",
+    "favorites": "Ulubione"
   },
   "playlist": {
     "headline": "Playlista",
@@ -270,6 +272,9 @@
       }
     },
     "noSongList": "Ta playlista nie zawiera żadnych piosenek!"
+  },
+  "favorites": {
+    "noSongList": "Nie dodałeś jeszcze żadnych utworów do ulubionych!"
   },
   "artist": {
     "headline": "Wykonawca",
@@ -564,6 +569,9 @@
         "last": "aby przełączać ten modal."
       },
       "title": "Skróty Klawiszowe"
+    },
+    "sidebar": {
+      "toggle": "Przełącz pasek boczny"
     }
   },
   "songInfo": {
@@ -583,13 +591,13 @@
     }
   },
   "about": {
-    "apiVersion": "Wersja API:",
+    "apiVersion": "Wersja API",
     "toasts": {
       "copy": "Link skopiowany do schowka!"
     },
     "client": "Klient",
-    "version": "Wersja:",
-    "type": "Typ:",
+    "version": "Wersja",
+    "type": "Typ",
     "server": "Serwer"
   },
   "mobile": {
@@ -602,7 +610,9 @@
       "audio": "Odtwarzacz & Audio",
       "content": "Treści",
       "privacy": "Prywatność & Bezpieczeństwo",
-      "language": "Język & Region"
+      "language": "Język & Region",
+      "accounts": "Konta",
+      "desktop": "Aplikacja na komputer"
     },
     "audio": {
       "replayGain": {
@@ -656,6 +666,14 @@
         "enabled": {
           "label": "Włącz Integrację"
         }
+      },
+      "images": {
+        "group": "Obrazy",
+        "description": "Zmień ustawienia obrazów.",
+        "cacheLayer": {
+          "info": "Gdy włączone, obrazy będą zapisywane lokalnie w pamięci podręcznej aby poprawić wydajność.",
+          "label": "Włącz pamięć podręczną obrazów"
+        }
       }
     },
     "appearance": {
@@ -685,12 +703,37 @@
         "group": "Usługi Zewnętrzne",
         "lrclib": {
           "info": "LRCLIB jest używany do znajdowania tekstów piosenek.",
-          "label": "LRCLIB"
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Używaj niestandardowego adresu URL",
+            "info": "Używaj niestandardowego adresu URL dla LRCLIB zamiast domyślnego.",
+            "label": "URL",
+            "example": "Przykład: https://my-lrclib.com"
+          }
         },
         "description": "Zarządzaj usługami zewnętrznymi do których Aonsoku może uzyskać dostęp."
       }
     },
-    "label": "Ustawienia"
+    "label": "Ustawienia",
+    "accounts": {
+      "discord": {
+        "group": "Discord Rich Presence",
+        "description": "Udostępniaj aktualnie odtwarzaną piosenkę z znajomymi na Discordzie.",
+        "enabled": {
+          "label": "Włącz jntegrację"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Ogólne",
+        "description": "Zmień ustawienia dla aplikacji komputerowej.",
+        "tray": {
+          "label": "Zminimalizuj do zasobnika",
+          "info": "Gdy włączone, aplikacja będzie minimalizowana do zasobnika systemowego zamiast zamykać się po kliknięciu przycisku zamykania."
+        }
+      }
+    }
   },
   "dayjs": {
     "relativeTime": {

@@ -1,7 +1,13 @@
-import { electronApp, optimizer } from '@electron-toolkit/utils'
+import { electronApp, optimizer, platform } from '@electron-toolkit/utils'
 import { app, globalShortcut } from 'electron'
 import { createAppMenu } from './core/menu'
 import { createWindow, mainWindow } from './window'
+
+const currentDesktop = process.env.XDG_CURRENT_DESKTOP ?? ''
+
+if (platform.isLinux && currentDesktop.toLowerCase().includes('gnome')) {
+  process.env.XDG_CURRENT_DESKTOP = 'Unity'
+}
 
 const instanceLock = app.requestSingleInstanceLock()
 
@@ -13,7 +19,11 @@ if (!instanceLock) {
   app.on('second-instance', () => {
     if (!mainWindow || mainWindow.isDestroyed()) return
 
-    if (mainWindow.isMinimized()) mainWindow.restore()
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore()
+    } else if (!mainWindow.isVisible()) {
+      mainWindow.show()
+    }
 
     mainWindow.focus()
   })

@@ -11,6 +11,7 @@
     "library": "Knihovna",
     "songs": "Skladby",
     "albums": "Alba",
+    "favorites": "Oblíbené",
     "playlists": "Playlisty",
     "emptyPlaylist": "Zatím nebyly vytvořeny žádné playlisty",
     "podcasts": "Podcasty",
@@ -124,7 +125,8 @@
           "error_other": "Nepodařilo se smazat skladby!"
         }
       }
-    }
+    },
+    "duration": "přibližně {{duration}}"
   },
   "table": {
     "sort": {
@@ -381,6 +383,101 @@
     }
   },
   "album": {
-    "headline": "Album"
+    "headline": "Album",
+    "buttons": {
+      "like": "Olajkovat {{name}}",
+      "dislike": "Odebrat lajk z {{name}}"
+    },
+    "info": {
+      "about": "O {{name}}",
+      "lastfm": "Otevřít v Last.fm",
+      "musicbrainz": "Otevřít v MusicBrainz"
+    },
+    "more": {
+      "listTitle": "Více od tohoto umělce",
+      "discography": "Diskografie umělce",
+      "genreTitle": "Více z žánru {{genre}}"
+    },
+    "list": {
+      "header": {
+        "albumsByArtist": "Alba od {{artist}}"
+      },
+      "empty": {
+        "title": "Oops, žádná alba!",
+        "info": "Zadanému filtru neodpovídají žádná alba.",
+        "action": "Možná zkus upravit filtry"
+      },
+      "genre": {
+        "label": "Vyber žánr…",
+        "search": "Najdi žánr…",
+        "loading": "Načítám žánry…",
+        "notFound": "Žánr nebyl nalezen."
+      },
+      "filter": {
+        "artist": "Umělec",
+        "genre": "Žánr",
+        "favorites": "Oblíbené",
+        "mostPlayed": "Nejpřehrávanější",
+        "name": "Název",
+        "random": "Náhodně",
+        "recentlyAdded": "Nedávno přidané",
+        "recentlyPlayed": "Nedávno přehrané",
+        "releaseYear": "Rok vydání",
+        "discography": "Diskografie",
+        "search": "Hledat"
+      },
+      "search": {
+        "placeholder": "Prohledat alba…"
+      }
+    },
+    "table": {
+      "discNumber": "Disk {{number}}"
+    }
+  },
+  "favorites": {
+    "noSongList": "Ještě jsi do oblíbených nepřidal žádné skladby!"
+  },
+  "artist": {
+    "headline": "Umělec",
+    "buttons": {
+      "play": "Přehrát rádio {{artist}}",
+      "shuffle": "Přehrát rádio {{artist}} v náhodném pořadí",
+      "options": "Více možností pro {{artist}}"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} album",
+      "albumsCount_few": "{{count}} alba",
+      "albumsCount_other": "{{count}} alb"
+    },
+    "topSongs": "Populární",
+    "recentAlbums": "Nedávná alba",
+    "relatedArtists": "Podobní umělci"
+  },
+  "podcasts": {
+    "form": {
+      "all": "Prohlížet",
+      "latestEpisodes": "Nejnovější epizody",
+      "addButton": "Přidat podcast",
+      "search": "Prohledat podcasty…",
+      "dialog": {
+        "title": "Vytvořit podcast",
+        "feedUrl": "URL zdroje",
+        "message": "Můžete přidat více adres URL, jednu na každý řádek.",
+        "saveButton": "Uložit",
+        "validations": {
+          "url": "Zadej prosím platné URL adresy.",
+          "urlLength": "URL adresy musí mít minimálně 10 znaků",
+          "protocol": "URL adresy musí začínat http:// nebo https://",
+          "atLeastOneUrl": "Zadejte alespoň jednu URL."
+        }
+      },
+      "toasts": {
+        "success": "Podcast byl úspěšně vytvořen! Bude k poslechu za pár minut!",
+        "error": "Vytvoření podcastu selhalo!"
+      }
+    },
+    "emptyPage": {
+      "message": "Nebyly přidány žádné podcasty"
+    }
   }
 }

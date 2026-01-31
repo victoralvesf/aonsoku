@@ -21,6 +21,7 @@ import {
 } from '@/app/components/ui/tooltip'
 import { useIsMobile } from '@/app/hooks/use-mobile'
 import { cn } from '@/lib/utils'
+import { useMainDrawerState } from '@/store/player.store'
 
 const SIDEBAR_STORAGE_KEY = 'main_sidebar_state'
 const SIDEBAR_WIDTH = '17.5rem'
@@ -275,6 +276,7 @@ function MainSidebarTrigger({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleMainSidebar, state } = useMainSidebar()
+  const { mainDrawerState } = useMainDrawerState()
 
   return (
     <Button
@@ -283,6 +285,7 @@ function MainSidebarTrigger({
       variant="ghost"
       size="icon"
       className={cn('size-8', className)}
+      disabled={mainDrawerState}
       onClick={(event) => {
         onClick?.(event)
         toggleMainSidebar()

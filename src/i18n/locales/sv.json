@@ -6,6 +6,7 @@
     "search": "Sök…",
     "miniSearch": "Sök",
     "albums": "Album",
+    "favorites": "Favoriter",
     "playlists": "Spellista",
     "songs": "Sånger",
     "emptyPlaylist": "Inga spellistor skapat ännu",
@@ -176,6 +177,9 @@
       "discNumber": "Skiva {{number}}"
     },
     "headline": "Album"
+  },
+  "favorites": {
+    "noSongList": "Du har inte lagt till några låtar i favoriter än!"
   },
   "artist": {
     "buttons": {

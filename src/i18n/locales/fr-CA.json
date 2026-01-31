@@ -66,6 +66,9 @@
       "dislike": "Enlever {{name}} des favoris"
     }
   },
+  "favorites": {
+    "noSongList": "Vous n'avez pas encore ajouté de chansons aux favoris !"
+  },
   "artist": {
     "topSongs": "Populaire",
     "recentAlbums": "Albums récents",
@@ -382,13 +385,18 @@
         "description": "Partager la chanson que vous écoutez avec vos amis sur Discord.",
         "enabled": {
           "label": "Activer l'intégration"
-        }
+        },
+        "group": "Présence enrichie Discord"
       }
     },
     "desktop": {
       "general": {
         "group": "Général",
-        "description": "Personnaliser les préférences pour l'application de bureau."
+        "description": "Personnaliser les préférences pour l'application de bureau.",
+        "tray": {
+          "label": "Réduire dans la barre des applis",
+          "info": "Lorsque ceci est activé, l'application se réduira dans la barre des applis du système au lieu de se fermer lorsque vous cliquez sur le bouton de fermeture."
+        }
       }
     }
   },
@@ -410,14 +418,14 @@
     }
   },
   "about": {
-    "type": "Type :",
-    "apiVersion": "Version API :",
+    "type": "Type",
+    "apiVersion": "Version API",
     "server": "Serveur",
     "client": "Client",
     "toasts": {
       "copy": "Lien copié dans le presse-papier!"
     },
-    "version": "Version :"
+    "version": "Version"
   },
   "home": {
     "recentlyPlayed": "Joués récemment",
@@ -552,7 +560,8 @@
         "success": "Balado créé avec succès! Il sera disponible à l'écoute dans quelques minutes!"
       },
       "latestEpisodes": "Derniers épisodes",
-      "addButton": "Ajouter un balado"
+      "addButton": "Ajouter un balado",
+      "all": "Parcourir"
     },
     "emptyPage": {
       "description": "Il semble que vous n'ayez pas encore ajouté de balados. Ajoutez-en un ci-dessus!",
@@ -669,6 +678,9 @@
         "first": "Appuyer sur",
         "last": "pour afficher cette fenêtre."
       }
+    },
+    "sidebar": {
+      "toggle": "Ouvrir/fermer la barre latérale"
     }
   },
   "toast": {

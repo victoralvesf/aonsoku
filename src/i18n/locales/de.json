@@ -8,6 +8,7 @@
     "artists": "Künstler",
     "songs": "Lieder",
     "albums": "Alben",
+    "favorites": "Favoriten",
     "playlists": "Wiedergabelisten",
     "emptyPlaylist": "Noch keine Wiedergabelisten erstellt",
     "podcasts": "Podcasts"
@@ -344,6 +345,9 @@
       }
     }
   },
+  "favorites": {
+    "noSongList": "Du hast noch keine Lieder zu den Favoriten hinzugefügt!"
+  },
   "artist": {
     "headline": "Künstler",
     "buttons": {
@@ -556,7 +560,9 @@
       "language": "Sprache & Region",
       "audio": "Player & Audio",
       "content": "Inhalte",
-      "privacy": "Privatsphäre und Sicherheit"
+      "privacy": "Privatsphäre und Sicherheit",
+      "accounts": "Konten",
+      "desktop": "Computeranwendung"
     },
     "audio": {
       "replayGain": {
@@ -619,6 +625,24 @@
         },
         "service": {
           "url": "URL des Podcast-Dienstes"
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "description": "Teile das aktuell abgespielte Lied mit Freunden auf Discord.",
+        "enabled": {
+          "label": "Integration aktivieren"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Allgemein",
+        "description": "Anpassen der Einstellungen für die Computer-Anwendung.",
+        "tray": {
+          "label": "In die Taskleiste minimieren",
+          "info": "Wenn diese Option aktiviert ist, wird die Anwendung beim Klicken auf die Schaltfläche „Schließen“ nicht geschlossen, sondern in die Taskleiste minimiert."
         }
       }
     }
@@ -684,7 +708,8 @@
         "error": "Erstellen des Podcasts fehlgeschlagen!"
       },
       "addButton": "Podcast hinzufügen",
-      "search": "Durchsuche Podcasts …"
+      "search": "Durchsuche Podcasts …",
+      "all": "Durchsuchen"
     },
     "emptyResults": {
       "info": "Wir konnten keine Podcasts passend zu deiner Suche finden.",

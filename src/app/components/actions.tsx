@@ -23,7 +23,7 @@ function Container({ children, className, ...rest }: ActionsContainerProps) {
   return (
     <div
       {...rest}
-      className={cn('w-full my-6 flex items-center gap-1', className)}
+      className={cn('w-full mb-6 flex items-center gap-1', className)}
     >
       {children}
     </div>

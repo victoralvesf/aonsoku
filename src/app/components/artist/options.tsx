@@ -1,8 +1,6 @@
 import { OptionsButtons } from '@/app/components/options/buttons'
-import {
-  DropdownMenuGroup,
-  DropdownMenuSeparator,
-} from '@/app/components/ui/dropdown-menu'
+import { DownloadOptionHandler } from '@/app/components/options/download-handler'
+import { DropdownMenuGroup } from '@/app/components/ui/dropdown-menu'
 import { useOptions } from '@/app/hooks/use-options'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { IArtist } from '@/types/responses/artist'
@@ -40,8 +38,9 @@ export function ArtistOptions({ artist }: ArtistOptionsProps) {
       <DropdownMenuGroup>
         <OptionsButtons.PlayNext onClick={handlePlayNext} />
         <OptionsButtons.PlayLast onClick={handlePlayLast} />
-        <DropdownMenuSeparator />
-        <OptionsButtons.Download onClick={handleDownload} />
+        <DownloadOptionHandler group={false}>
+          <OptionsButtons.Download onClick={handleDownload} />
+        </DownloadOptionHandler>
       </DropdownMenuGroup>
     </>
   )

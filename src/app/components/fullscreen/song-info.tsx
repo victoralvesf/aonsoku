@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import { Dot } from '@/app/components/dot'
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
+import { SongQualityBadge } from '@/app/components/song/quality-badge'
 import { Badge } from '@/app/components/ui/badge'
 import { usePlayerStore } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
@@ -18,7 +19,7 @@ export function SongInfo() {
 
       <div className="flex flex-col w-[66%] max-w-full h-full max-h-[450px] 2xl:max-h-[550px] justify-end text-left overflow-hidden">
         <MarqueeTitle gap="mr-6">
-          <h2 className="scroll-m-20 text-4xl 2xl:text-5xl font-bold tracking-tight py-2 2xl:py-3 text-shadow-2xl">
+          <h2 className="scroll-m-20 text-4xl 2xl:text-5xl font-bold tracking-tight py-2 2xl:py-3 text-shadow-md">
             {currentSong.title}
           </h2>
         </MarqueeTitle>
@@ -36,6 +37,7 @@ export function SongInfo() {
           {currentSong.year && (
             <Badge variant="neutral">{currentSong.year}</Badge>
           )}
+          <SongQualityBadge song={currentSong} variant="neutral" />
         </div>
       </div>
     </div>

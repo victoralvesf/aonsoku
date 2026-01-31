@@ -1,4 +1,4 @@
-import { MountOptions, MountReturn } from 'cypress/react18'
+import { MountOptions, MountReturn } from 'cypress/react'
 import { MemoryRouterProps } from 'react-router-dom'
 
 declare global {

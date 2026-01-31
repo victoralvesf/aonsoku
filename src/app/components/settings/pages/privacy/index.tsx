@@ -1,4 +1,4 @@
-import { Services } from './services'
+import { Services } from './services/index'
 
 export function Privacy() {
   return (

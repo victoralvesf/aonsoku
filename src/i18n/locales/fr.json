@@ -131,6 +131,7 @@
     "home": "Accueil",
     "songs": "Titres",
     "albums": "Albums",
+    "favorites": "Favoris",
     "miniSearch": "Recherche",
     "library": "Bibliothèque",
     "artists": "Artistes",
@@ -254,6 +255,9 @@
       },
       "byArtist": "Titres de {{artist}}"
     }
+  },
+  "favorites": {
+    "noSongList": "Vous n'avez pas encore ajouté de chansons aux favoris !"
   },
   "artist": {
     "recentAlbums": "Albums récents",
@@ -484,7 +488,11 @@
     "desktop": {
       "general": {
         "description": "Personnaliser les préférences pour l'application de bureau.",
-        "group": "Général"
+        "group": "Général",
+        "tray": {
+          "label": "Réduire dans la barre des applis",
+          "info": "Lorsque ceci est activé, l'application se réduira dans la barre des applis du système au lieu de se fermer lorsque vous cliquez sur le bouton de fermeture."
+        }
       }
     },
     "accounts": {
@@ -492,7 +500,8 @@
         "enabled": {
           "label": "Activer l'intégration"
         },
-        "description": "Partagez la chanson que vous écoutez avec vos amis sur Discord."
+        "description": "Partagez la chanson que vous écoutez avec vos amis sur Discord.",
+        "group": "Présence enrichie Discord"
       }
     }
   },
@@ -596,6 +605,9 @@
     },
     "navigation": {
       "label": "Navigation"
+    },
+    "sidebar": {
+      "toggle": "Ouvrir/fermer la barre latérale"
     }
   },
   "queue": {
@@ -633,7 +645,8 @@
       "toasts": {
         "success": "Podcast créé avec succès ! Il sera disponible à l'écoute dans quelques minutes !",
         "error": "Échec de la création du podcast !"
-      }
+      },
+      "all": "Parcourir"
     },
     "filters": {
       "episodes": {

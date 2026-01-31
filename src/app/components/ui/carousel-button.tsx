@@ -17,7 +17,7 @@ const CarouselButton = React.forwardRef<HTMLButtonElement, CarouselButtonProps>(
         ref={ref}
         variant={variant}
         size={size}
-        className={cn('h-8 w-8 rounded-full shadow-sm', className)}
+        className={cn('h-8 w-8 rounded-md shadow-sm', className)}
         {...props}
       >
         {direction === 'prev' ? (

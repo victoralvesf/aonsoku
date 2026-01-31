@@ -130,7 +130,7 @@ export default function CommandMenu() {
       {sidebarOpen && (
         <Button
           variant="outline"
-          className="flex justify-start w-full px-2 gap-2 relative min-w-max"
+          className="flex justify-start w-full px-2 gap-2 relative min-w-max active:scale-[98%] transition hover:bg-background-foreground/80"
           onClick={() => setOpen(true)}
         >
           <SearchIcon className="h-4 w-4 text-muted-foreground" />

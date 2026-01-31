@@ -10,7 +10,9 @@ export function Keyboard({ modifier, text, className = '' }: KeyboardProps) {
   return (
     <kbd
       className={cn(
-        'pointer-events-none text-muted-foreground h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[12px] font-medium sm:flex',
+        'inline-flex pointer-events-none text-muted-foreground h-5 items-center gap-1 leading-[19px] -tracking-[0.003rem]',
+        'min-w-[22px] justify-center rounded border bg-background px-1 font-medium text-[0.8125rem] sm:flex select-none shadow-kbd',
+        'relative -top-[1px] whitespace-pre-wrap',
         className,
       )}
     >

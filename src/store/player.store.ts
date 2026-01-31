@@ -62,11 +62,25 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
           },
           settings: {
             privacy: {
-              lrcLibEnabled: true,
-              setLrcLibEnabled(value) {
-                set((state) => {
-                  state.settings.privacy.lrcLibEnabled = value
-                })
+              lrclib: {
+                enabled: true,
+                setEnabled(value) {
+                  set((state) => {
+                    state.settings.privacy.lrclib.enabled = value
+                  })
+                },
+                customUrlEnabled: false,
+                setCustomUrlEnabled(value) {
+                  set((state) => {
+                    state.settings.privacy.lrclib.customUrlEnabled = value
+                  })
+                },
+                customUrl: 'https://lrclib.net',
+                setCustomUrl(value) {
+                  set((state) => {
+                    state.settings.privacy.lrclib.customUrl = value
+                  })
+                },
               },
             },
             volume: {
@@ -1058,8 +1072,8 @@ export const useReplayGainActions = () =>
 export const useFullscreenPlayerSettings = () =>
   usePlayerStore((state) => state.settings.fullscreen)
 
-export const usePrivacySettings = () =>
-  usePlayerStore((state) => state.settings.privacy)
+export const useLrcLibSettings = () =>
+  usePlayerStore((state) => state.settings.privacy.lrclib)
 
 export const useLyricsSettings = () =>
   usePlayerStore((state) => state.settings.lyrics)

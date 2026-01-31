@@ -14,6 +14,7 @@
     "radios": "电台",
     "emptyPlaylist": "还没有创建播放列表",
     "albums": "专辑",
+    "favorites": "收藏夹",
     "search": "搜索…",
     "miniSearch": "搜索",
     "podcasts": "播客"
@@ -181,6 +182,9 @@
     "table": {
       "discNumber": "碟片 {{number}}"
     }
+  },
+  "favorites": {
+    "noSongList": "您还没有添加任何歌曲到收藏夹！"
   },
   "artist": {
     "headline": "艺术家",
@@ -453,6 +457,9 @@
     },
     "navigation": {
       "label": "导航"
+    },
+    "sidebar": {
+      "toggle": "切换侧边栏"
     }
   },
   "songInfo": {
@@ -524,7 +531,9 @@
       "audio": "播放器和音频",
       "content": "内容",
       "appearance": "外观",
-      "privacy": "隐私和安全"
+      "privacy": "隐私和安全",
+      "accounts": "账号",
+      "desktop": "桌面应用程序"
     },
     "appearance": {
       "general": {
@@ -612,6 +621,25 @@
         },
         "description": "管理 Aonsoku 可以访问的外部服务。"
       }
+    },
+    "accounts": {
+      "discord": {
+        "group": "Discord 丰富状态",
+        "description": "在 Discord 上和朋友分享你正在听的歌。",
+        "enabled": {
+          "label": "开启集成"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "通用",
+        "description": "自定义桌面应用程序的偏好设置。",
+        "tray": {
+          "label": "最小化到托盘",
+          "info": "启用后，点击关闭按钮时，应用程序将最小化到系统托盘，而不会关闭。"
+        }
+      }
     }
   },
   "podcasts": {
@@ -634,7 +662,8 @@
         "success": "播客创建成功！几分钟后即可收听！",
         "error": "创建播客失败！"
       },
-      "search": "搜索播客…"
+      "search": "搜索播客…",
+      "all": "浏览"
     },
     "emptyPage": {
       "message": "还没有添加播客",

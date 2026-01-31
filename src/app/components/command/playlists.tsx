@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { useNavigate } from 'react-router-dom'
-import { getCoverArtUrl } from '@/api/httpClient'
 import { Dot } from '@/app/components/dot'
+import { ImageLoader } from '@/app/components/image-loader'
 import { CommandGroup, CommandItem } from '@/app/components/ui/command'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
@@ -56,12 +56,16 @@ function PlaylistItem({ playlist }: { playlist: Playlist }) {
 
   return (
     <div className="truncate flex items-center gap-2">
-      <LazyLoadImage
-        effect="opacity"
-        src={getCoverArtUrl(playlist.coverArt, 'playlist', '300')}
-        alt={playlist.name}
-        className="bg-accent w-12 min-w-12 h-12 aspect-square rounded shadow-custom-5 text-transparent"
-      />
+      <ImageLoader id={playlist.coverArt} type="playlist">
+        {(src) => (
+          <LazyLoadImage
+            effect="opacity"
+            src={src}
+            alt={playlist.name}
+            className="bg-accent w-12 min-w-12 h-12 aspect-square rounded shadow-custom-5 text-transparent"
+          />
+        )}
+      </ImageLoader>
       <div className="truncate">
         <p className="truncate">{playlist.name}</p>
         <div className="flex items-center text-xs text-muted-foreground">

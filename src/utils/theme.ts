@@ -1,3 +1,4 @@
+import { Theme } from '@/types/themeContext'
 import { isDesktop } from './desktop'
 import { hslToHex, hslToHsla } from './getAverageColor'
 
@@ -25,4 +26,14 @@ export function setDesktopTitleBarColors(transparent = false) {
     symbol,
     bgColor,
   })
+}
+
+export function getValidThemeFromEnv(): Theme | null {
+  const { APP_THEME } = window
+
+  if (APP_THEME && Object.values(Theme).includes(APP_THEME as Theme)) {
+    return APP_THEME as Theme
+  }
+
+  return null
 }

@@ -38,6 +38,9 @@
     "dark": "Escuro",
     "system": "Sistema"
   },
+  "favorites": {
+    "noSongList": "Você ainda não adicionou músicas nos favoritos!"
+  },
   "artist": {
     "headline": "Artista",
     "buttons": {
@@ -492,6 +495,7 @@
     "artists": "Artistas",
     "songs": "Músicas",
     "albums": "Álbuns",
+    "favorites": "Favoritos",
     "playlists": "Playlists",
     "radios": "Rádios",
     "podcasts": "Podcasts",

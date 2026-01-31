@@ -1,4 +1,4 @@
-import { getCoverArtUrl } from '@/api/httpClient'
+import { getSimpleCoverArtUrl } from '@/api/httpClient'
 import { usePlayerStore } from '@/store/player.store'
 import { EpisodeWithPodcast } from '@/types/responses/podcasts'
 import { ISong } from '@/types/responses/song'
@@ -20,7 +20,7 @@ function setMediaSession(song: ISong) {
     album: song.album,
     artwork: artworkSizes.map((size): MediaImage => {
       return {
-        src: getCoverArtUrl(song.coverArt, 'song', size),
+        src: getSimpleCoverArtUrl(song.coverArt, 'song', size),
         sizes: [size, size].join('x'),
         type: 'image/jpeg',
       }

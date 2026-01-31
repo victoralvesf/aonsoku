@@ -1,6 +1,7 @@
 import { Podcast } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { EmptyWrapper } from '@/app/components/albums/empty-wrapper'
+import { EmptyPageContainer } from '@/app/components/empty-container'
 import ListWrapper from '@/app/components/list-wrapper'
 import { PodcastsHeader } from './header'
 
@@ -8,7 +9,7 @@ export function EmptyPodcastsPage() {
   const { t } = useTranslation()
 
   return (
-    <div className="w-full h-content">
+    <EmptyPageContainer>
       <PodcastsHeader />
 
       <ListWrapper className="h-full">
@@ -26,6 +27,6 @@ export function EmptyPodcastsPage() {
           </div>
         </EmptyWrapper>
       </ListWrapper>
-    </div>
+    </EmptyPageContainer>
   )
 }
