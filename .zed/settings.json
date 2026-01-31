@@ -1,0 +1,49 @@
+{
+  "project_name": "aonsoku",
+  "lsp": {
+    "biome": {
+      "binary": {
+        "path": "./node_modules/.bin/biome",
+        "arguments": ["lsp-proxy"]
+      },
+      "settings": {
+        "config_path": "biome.json",
+        "require_config_file": true
+      }
+    }
+  },
+  "languages": {
+    "TypeScript": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
+    },
+    "TSX": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
+    },
+    "JSON": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      }
+    },
+    "JSONC": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      }
+    },
+    "CSS": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      }
+    }
+  }
+}
