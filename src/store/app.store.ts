@@ -27,9 +27,6 @@ const {
   IMAGE_CACHE_ENABLED,
 } = window
 
-const enableImageCache =
-  IMAGE_CACHE_ENABLED !== undefined ? IMAGE_CACHE_ENABLED : false
-
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
     persist(
@@ -118,7 +115,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.pages.artistsPageViewType = type
               })
             },
-            imagesCacheLayerEnabled: enableImageCache,
+            imagesCacheLayerEnabled: IMAGE_CACHE_ENABLED ?? false,
             setImagesCacheLayerEnabled: (value) => {
               set((state) => {
                 state.pages.imagesCacheLayerEnabled = value
@@ -272,12 +269,18 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             const persisted = persistedState as Partial<IAppContext> | undefined
 
             let hideRadiosSection = false
+            let enableImageCache = false
 
-            if (persisted) {
-              hideRadiosSection = persisted.pages?.hideRadiosSection ?? false
+            if (persisted && persisted.pages) {
+              hideRadiosSection = persisted.pages.hideRadiosSection ?? false
+              enableImageCache =
+                persisted.pages.imagesCacheLayerEnabled ?? false
             }
             if (HIDE_RADIOS_SECTION !== undefined) {
               hideRadiosSection = HIDE_RADIOS_SECTION
+            }
+            if (IMAGE_CACHE_ENABLED !== undefined) {
+              enableImageCache = IMAGE_CACHE_ENABLED
             }
 
             if (hasValidConfig) {
