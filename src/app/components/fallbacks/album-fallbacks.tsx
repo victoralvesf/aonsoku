@@ -26,7 +26,7 @@ export function AlbumHeaderFallback() {
 
 export function PlayButtonsFallback() {
   return (
-    <div className="my-6 flex gap-1 items-center">
+    <div className="mb-6 flex gap-1 items-center">
       <Skeleton className="rounded-full w-14 h-14 mr-2" />
       <div className="flex items-center justify-center w-14 h-14">
         <Skeleton className="rounded-full w-7 h-7" />
