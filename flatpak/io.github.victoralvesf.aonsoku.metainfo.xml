@@ -47,17 +47,45 @@
   </screenshots>
 
   <releases>
+    <release version="0.11.0" date="2025-12-14">
+      <url type="details">https://github.com/victoralvesf/aonsoku/releases/tag/v0.10.2</url>
+      <description>
+        <p>New Features</p>
+        <ul>
+          <li>Subdirectory Deployment: Updated the Vite base URL to support deploying the application within subdirectories.</li>
+          <li>Favorite Songs: Added a "Favorite Songs" section to the Sidebar. </li>
+          <li>Open Subsonic Synced Lyrics: Added synced lyrics support for OpenSubsonic API-compatible servers.</li>
+          <li>Big Player Animation: Enhanced the fullscreen transition animation for the Big Player.</li>
+          <li>Big Player Trigger: Relocated the Big Player open button to the main player controls (previously on cover art hover).</li>
+          <li>Enhanced Song Info: Added detailed audio metadata to the quality badge in the songs table.</li>
+          <li>Shortcut Keys UI: Redesigned the keyboard shortcuts component for better readability.</li>
+          <li>Image Caching: Introduced an Image Caching option in Content Settings to improve loading times and overall performance.</li>
+          <li>Reduced App Minimum Size: Reduced the application's minimum window dimensions to better support vertical monitors and tiling window managers.</li>
+          <li>Localization: Added new languages and expanded coverage for existing translations.</li>
+          <li>Custom LRCLIB Instances: Added an option in Privacy Settings to configure custom self-hosted or private LRCLIB URLs.</li>
+          <li>Playlist Visibility Icons: Updated the icons used to distinguish between public and private playlists</li>
+        </ul>
+        <p>Fixes</p>
+        <ul>
+          <li>Empty State Layout: Fixed an issue where empty state spacing caused unnecessary page scrolling.</li>
+          <li>Sidebar Interaction: Disabled the sidebar toggle button when the Queue or Lyrics panels are open.</li>
+          <li>Security Updates: Updated project dependencies to address security vulnerabilities.</li>
+          <li>Playlist Management: Fixed an issue preventing users from clearing playlist comments/descriptions.</li>
+          <li>Sample Rate Display: Corrected the sample rate label display.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.10.2" date="2025-12-14">
       <url type="details">https://github.com/victoralvesf/aonsoku/releases/tag/v0.10.2</url>
       <description>
         <p>New Features</p>
         <ul>
-            <li>Dynamic Sidebar: Added a toggle to resize the sidebar width.</li>
-            <li>Discord Rich Presence: Added support to share the currently playing song via Discord Rich Presence.</li>
-            <li>Minimize to Tray: Added support for minimizing the app to the system tray with accessible player controls.</li>
-            <li>About Dialog: Improved the styling of the "About" information dialog.</li>
-            <li>New Languages: Added support for Canadian French, Italian, Korean, Malay, Polish, Turkish, and Ukrainian.</li>
-            <li>Sync Lyrics Cache: Implemented a persistent cache layer for synced lyrics to improve performance on subsequent requests.</li>
+          <li>Dynamic Sidebar: Added a toggle to resize the sidebar width.</li>
+          <li>Discord Rich Presence: Added support to share the currently playing song via Discord Rich Presence.</li>
+          <li>Minimize to Tray: Added support for minimizing the app to the system tray with accessible player controls.</li>
+          <li>About Dialog: Improved the styling of the "About" information dialog.</li>
+          <li>New Languages: Added support for Canadian French, Italian, Korean, Malay, Polish, Turkish, and Ukrainian.</li>
+          <li>Sync Lyrics Cache: Implemented a persistent cache layer for synced lyrics to improve performance on subsequent requests.</li>
         </ul>
         <p>Fixes</p>
         <ul>
@@ -67,5 +95,4 @@
       </description>
     </release>
   </releases>
-
 </component>
