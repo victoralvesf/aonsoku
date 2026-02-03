@@ -495,6 +495,9 @@
     },
     "navigation": {
       "label": "Navigation"
+    },
+    "sidebar": {
+      "toggle": "Seitenleiste umschalten"
     }
   },
   "songInfo": {
@@ -599,7 +602,10 @@
         "description": "Legt fest welche Dienste Aonsoku verwenden kann",
         "lrclib": {
           "info": "LRCLIB wird für Liedtexte verwendet.",
-          "label": "LRCLIB"
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Benutzerdefinierte URL verwenden"
+          }
         }
       }
     },
