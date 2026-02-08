@@ -1,3 +1,9 @@
+import {
+  type ProgressInfo,
+  type UpdateCheckResult,
+  type UpdateDownloadedEvent,
+  type UpdateInfo,
+} from 'electron-updater'
 import { RpcPayload } from '../main/core/discordRpc'
 import { IDownloadPayload } from '../main/core/downloads'
 import { ISettingPayload } from '../main/core/settings'
@@ -51,42 +57,6 @@ export type PlayerStateListenerActions =
   | 'toggleShuffle'
   | 'toggleRepeat'
 
-type UpdateFileInfo = {
-  url: string
-  size?: number
-  blockMapSize?: number
-  readonly sha512: string
-  readonly isAdminRightsRequired?: boolean
-}
-
-interface ReleaseNoteInfo {
-  readonly version: string
-  readonly note: string | null
-}
-
-type UpdateInfo = {
-  readonly version: string
-  readonly files: Array<UpdateFileInfo>
-  releaseName?: string | null
-  releaseNotes?: string | Array<ReleaseNoteInfo> | null
-  releaseDate: string
-  readonly stagingPercentage?: number
-  readonly minimumSystemVersion?: string
-}
-
-export type UpdateCheckResult = {
-  isUpdateAvailable: boolean
-  updateInfo: UpdateInfo
-}
-
-export type ProgressInfo = {
-  total: number
-  delta: number
-  transferred: number
-  percent: number
-  bytesPerSecond: number
-}
-
 export interface IAonsokuAPI {
   enterFullScreen: () => void
   exitFullScreen: () => void
@@ -114,9 +84,9 @@ export interface IAonsokuAPI {
   checkForUpdates: () => Promise<UpdateCheckResult | null>
   downloadUpdate: () => void
   quitAndInstall: () => void
-  onUpdateAvailable: (callback: (info: UpdateCheckResult) => void) => void
+  onUpdateAvailable: (callback: (info: UpdateInfo) => void) => void
   onUpdateNotAvailable: (callback: () => void) => void
   onUpdateError: (callback: (error: string) => void) => void
   onDownloadProgress: (callback: (progress: ProgressInfo) => void) => void
-  onUpdateDownloaded: (callback: (info: UpdateCheckResult) => void) => void
+  onUpdateDownloaded: (callback: (info: UpdateDownloadedEvent) => void) => void
 }
