@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Markdown from 'react-markdown'
 import { toast } from 'react-toastify'
+import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
 import {
   AlertDialog,
@@ -16,7 +17,9 @@ import {
 import { Badge } from '@/app/components/ui/badge'
 import { Button } from '@/app/components/ui/button'
 import { useAppUpdate } from '@/store/app.store'
-import { isProd } from '@/utils/env'
+import { getAppInfo } from '@/utils/appName'
+import { isMacOS } from '@/utils/desktop'
+import { sanitizeLinks } from '@/utils/parseTexts'
 import { queryKeys } from '@/utils/queryKeys'
 
 export function UpdateObserver() {
@@ -25,10 +28,10 @@ export function UpdateObserver() {
     useAppUpdate()
   const [updateHasStarted, setUpdateHasStarted] = useState(false)
 
-  const { data: updateInfo } = useQuery({
+  const { data: updateCheckResult } = useQuery({
     queryKey: [queryKeys.update.check],
     queryFn: async () => await window.api.checkForUpdates(),
-    enabled: !remindOnNextBoot && isProd,
+    enabled: !remindOnNextBoot,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     staleTime: Infinity,
@@ -36,10 +39,10 @@ export function UpdateObserver() {
   })
 
   useEffect(() => {
-    if (updateInfo?.files?.length) {
+    if (updateCheckResult?.isUpdateAvailable) {
       setOpenDialog(true)
     }
-  }, [setOpenDialog, updateInfo])
+  }, [setOpenDialog, updateCheckResult])
 
   useEffect(() => {
     window.api.onUpdateDownloaded(() => {
@@ -65,7 +68,7 @@ export function UpdateObserver() {
     })
   }, [t, setRemindOnNextBoot])
 
-  if (!updateInfo || !updateInfo.files?.length) return null
+  if (!updateCheckResult || !updateCheckResult.isUpdateAvailable) return null
 
   const handleUpdate = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -79,6 +82,18 @@ export function UpdateObserver() {
 
     setUpdateHasStarted(true)
     window.api.downloadUpdate()
+  }
+
+  const { updateInfo } = updateCheckResult
+
+  function getReleaseNotes() {
+    if (typeof updateInfo.releaseNotes === 'string') {
+      return updateInfo.releaseNotes
+    } else if (Array.isArray(updateInfo.releaseNotes)) {
+      return updateInfo.releaseNotes.map((note) => note.note).join('\n')
+    }
+
+    return updateInfo.version
   }
 
   return (
@@ -100,8 +115,8 @@ export function UpdateObserver() {
           className="w-full min-h-16 max-h-80 overflow-auto text-muted-foreground bg-background-foreground p-4 border rounded-md"
         >
           <div className="space-y-2 text-sm">
-            <Markdown remarkPlugins={[remarkGfm]}>
-              {updateInfo.releaseNotes || ''}
+            <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+              {sanitizeLinks(getReleaseNotes())}
             </Markdown>
           </div>
         </div>
@@ -119,13 +134,29 @@ export function UpdateObserver() {
             >
               {t('update.dialog.remindLater')}
             </Button>
-            <Button variant="default" disabled={updateHasStarted} type="submit">
-              {updateHasStarted ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                t('update.dialog.install')
-              )}
-            </Button>
+            {!isMacOS ? (
+              <Button
+                variant="default"
+                disabled={updateHasStarted}
+                type="submit"
+              >
+                {updateHasStarted ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  t('update.dialog.install')
+                )}
+              </Button>
+            ) : (
+              <Button variant="default" asChild>
+                <a
+                  href={getAppInfo().releaseUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t('update.dialog.macOS')}
+                </a>
+              </Button>
+            )}
           </form>
         </AlertDialogFooter>
       </AlertDialogContent>

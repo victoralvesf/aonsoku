@@ -7,6 +7,7 @@ export function getAppInfo() {
     name: appName,
     version,
     url: repository.url,
+    releaseUrl: `${repository.url}/releases/latest`,
   }
 }
 

@@ -223,8 +223,20 @@ img {
   @apply bg-accent;
 }
 
+#update-info-body strong {
+  @apply font-semibold;
+}
+
 #update-info-body ul {
-  @apply list-disc list-inside;
+  @apply list-disc list-inside space-y-1;
+}
+
+#update-info-body h1 {
+  @apply text-xl;
+}
+
+#update-info-body h2 {
+  @apply text-lg;
 }
 
 #update-info-body h1,
@@ -233,6 +245,10 @@ img {
 #update-info-body h4,
 #update-info-body h5 {
   @apply font-semibold text-foreground;
+}
+
+#update-info-body a {
+  @apply text-primary underline;
 }
 
 svg#bars {

@@ -88,7 +88,11 @@ export function sanitizeLinks(text: string) {
   // Remove all tags not in the whitelist
   doc.body.querySelectorAll('*').forEach((node) => {
     if (!tagWhiteList.includes(node.tagName.toLowerCase())) {
-      node.remove()
+      if (node.tagName.toLowerCase() === 'tt') {
+        node.replaceWith(...Array.from(node.childNodes))
+      } else {
+        node.remove()
+      }
     }
 
     // Strip attributes not in the whitelist

@@ -577,7 +577,8 @@
     "dialog": {
       "title": "New Version Available!",
       "remindLater": "Remind Me Later",
-      "install": "Install and Restart"
+      "install": "Install and Restart",
+      "macOS": "Download on GitHub"
     },
     "toasts": {
       "started": "The update process has started.",
