@@ -17,6 +17,8 @@ import {
 import { Badge } from '@/app/components/ui/badge'
 import { Button } from '@/app/components/ui/button'
 import { useAppUpdate } from '@/store/app.store'
+import { getAppInfo } from '@/utils/appName'
+import { isMacOS } from '@/utils/desktop'
 import { sanitizeLinks } from '@/utils/parseTexts'
 import { queryKeys } from '@/utils/queryKeys'
 
@@ -132,13 +134,29 @@ export function UpdateObserver() {
             >
               {t('update.dialog.remindLater')}
             </Button>
-            <Button variant="default" disabled={updateHasStarted} type="submit">
-              {updateHasStarted ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                t('update.dialog.install')
-              )}
-            </Button>
+            {!isMacOS ? (
+              <Button
+                variant="default"
+                disabled={updateHasStarted}
+                type="submit"
+              >
+                {updateHasStarted ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  t('update.dialog.install')
+                )}
+              </Button>
+            ) : (
+              <Button variant="default" asChild>
+                <a
+                  href={getAppInfo().releaseUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t('update.dialog.macOS')}
+                </a>
+              </Button>
+            )}
           </form>
         </AlertDialogFooter>
       </AlertDialogContent>

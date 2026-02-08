@@ -591,7 +591,8 @@
     "dialog": {
       "title": "Nova Versão Disponível!",
       "remindLater": "Lembrar-me Mais Tarde",
-      "install": "Instalar e Reiniciar"
+      "install": "Instalar e Reiniciar",
+      "macOS": "Baixar no GitHub"
     },
     "toasts": {
       "started": "O processo de atualização foi iniciado.",
