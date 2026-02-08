@@ -51,14 +51,32 @@ export type PlayerStateListenerActions =
   | 'toggleShuffle'
   | 'toggleRepeat'
 
-export type UpdateInfo = {
-  version: string
-  files: { url: string; sha512: string; size: number }[]
-  path: string
-  sha512: string
-  releaseName: string | null
-  releaseNotes: string | null
+type UpdateFileInfo = {
+  url: string
+  size?: number
+  blockMapSize?: number
+  readonly sha512: string
+  readonly isAdminRightsRequired?: boolean
+}
+
+interface ReleaseNoteInfo {
+  readonly version: string
+  readonly note: string | null
+}
+
+type UpdateInfo = {
+  readonly version: string
+  readonly files: Array<UpdateFileInfo>
+  releaseName?: string | null
+  releaseNotes?: string | Array<ReleaseNoteInfo> | null
   releaseDate: string
+  readonly stagingPercentage?: number
+  readonly minimumSystemVersion?: string
+}
+
+export type UpdateCheckResult = {
+  isUpdateAvailable: boolean
+  updateInfo: UpdateInfo
 }
 
 export type ProgressInfo = {
@@ -93,12 +111,12 @@ export interface IAonsokuAPI {
   setDiscordRpcActivity: (payload: RpcPayload) => void
   clearDiscordRpcActivity: () => void
   saveAppSettings: (payload: ISettingPayload) => void
-  checkForUpdates: () => Promise<UpdateInfo | null>
+  checkForUpdates: () => Promise<UpdateCheckResult | null>
   downloadUpdate: () => void
   quitAndInstall: () => void
-  onUpdateAvailable: (callback: (info: UpdateInfo) => void) => void
+  onUpdateAvailable: (callback: (info: UpdateCheckResult) => void) => void
   onUpdateNotAvailable: (callback: () => void) => void
   onUpdateError: (callback: (error: string) => void) => void
   onDownloadProgress: (callback: (progress: ProgressInfo) => void) => void
-  onUpdateDownloaded: (callback: (info: UpdateInfo) => void) => void
+  onUpdateDownloaded: (callback: (info: UpdateCheckResult) => void) => void
 }
