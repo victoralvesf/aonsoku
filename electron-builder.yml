@@ -38,7 +38,7 @@ mac:
   category: public.app-category.music
   entitlementsInherit: build/entitlements.mac.plist
   notarize: false
-  identity: -
+  identity: "-"
   icon: ./build/icon.icns
   target:
     - target: dmg
