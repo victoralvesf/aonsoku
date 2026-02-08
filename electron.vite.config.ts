@@ -32,7 +32,7 @@ export default defineConfig({
         },
       },
       externalizeDeps: {
-        exclude: ['@electron-toolkit/preload'],
+        exclude: ['@electron-toolkit/preload', 'electron-updater'],
       },
     },
   },
