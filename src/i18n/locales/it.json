@@ -676,7 +676,13 @@
         "description": "Gestisci i servizi esterni a cui Aonsoku può accedere.",
         "lrclib": {
           "info": "LRCLIB viene utilizzato per trovare i testi delle canzoni.",
-          "label": "LRCLIB"
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Usa un URL personalizzato",
+            "info": "Usa un URL personalizzato per LRCLIB invece di quello predefinito.",
+            "label": "URL",
+            "example": "Esempio: https://my-lrclib.com"
+          }
         }
       }
     },
@@ -703,6 +709,14 @@
           "user": "Nome Utente"
         },
         "group": "Podcast"
+      },
+      "images": {
+        "group": "Immagini",
+        "description": "Personalizza le impostazioni delle immagini.",
+        "cacheLayer": {
+          "info": "Quando abilitata, le immagini verranno memorizzate localmente per migliorare le prestazioni.",
+          "label": "Attiva Cache immagine"
+        }
       }
     },
     "accounts": {
