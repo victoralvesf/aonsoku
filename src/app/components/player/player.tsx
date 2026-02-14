@@ -171,11 +171,20 @@ export function Player() {
     }
 
     if (replayGainType === 'album') {
-      const { albumGain = defaultGain, albumPeak = 1 } = song.replayGain
+      let { albumGain, albumPeak = 1 } = song.replayGain
+
+      if (albumGain === 0) {
+        albumGain = defaultGain
+      }
+
       return { gain: albumGain, peak: albumPeak, preAmp }
     }
 
-    const { trackGain = defaultGain, trackPeak = 1 } = song.replayGain
+    let { trackGain, trackPeak = 1 } = song.replayGain
+
+    if (trackGain === 0) {
+      trackGain = defaultGain
+    }
     return { gain: trackGain, peak: trackPeak, preAmp }
   }
 
