@@ -4,9 +4,13 @@ import { IpcChannels } from '../../preload/types'
 
 const { autoUpdater } = electronUpdater
 
-export function setupUpdater(window: BrowserWindow | null) {
-  if (!window) return
+let updateWindow: BrowserWindow | null = null
 
+export function setUpdaterWindow(window: BrowserWindow | null) {
+  updateWindow = window
+}
+
+export function initAutoUpdater() {
   autoUpdater.autoDownload = false
   autoUpdater.autoInstallOnAppQuit = true
   autoUpdater.forceDevUpdateConfig = false
@@ -35,22 +39,22 @@ export function setupUpdater(window: BrowserWindow | null) {
   })
 
   autoUpdater.on('update-available', (info) => {
-    window.webContents.send(IpcChannels.UpdateAvailable, info)
+    updateWindow?.webContents.send(IpcChannels.UpdateAvailable, info)
   })
 
   autoUpdater.on('update-not-available', () => {
-    window.webContents.send(IpcChannels.UpdateNotAvailable)
+    updateWindow?.webContents.send(IpcChannels.UpdateNotAvailable)
   })
 
   autoUpdater.on('error', (err) => {
-    window.webContents.send(IpcChannels.UpdateError, err.message)
+    updateWindow?.webContents.send(IpcChannels.UpdateError, err.message)
   })
 
   autoUpdater.on('download-progress', (progressObj) => {
-    window.webContents.send(IpcChannels.DownloadProgress, progressObj)
+    updateWindow?.webContents.send(IpcChannels.DownloadProgress, progressObj)
   })
 
   autoUpdater.on('update-downloaded', (info) => {
-    window.webContents.send(IpcChannels.UpdateDownloaded, info)
+    updateWindow?.webContents.send(IpcChannels.UpdateDownloaded, info)
   })
 }

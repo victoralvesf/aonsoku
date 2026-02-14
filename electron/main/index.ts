@@ -1,6 +1,7 @@
 import { electronApp, optimizer, platform } from '@electron-toolkit/utils'
 import { app, globalShortcut } from 'electron'
 import { createAppMenu } from './core/menu'
+import { initAutoUpdater } from './core/updater'
 import { createWindow, mainWindow } from './window'
 
 export let isQuitting = false
@@ -33,6 +34,7 @@ if (!instanceLock) {
   app.whenReady().then(() => {
     electronApp.setAppUserModelId('com.victoralvesf.aonsoku')
 
+    initAutoUpdater()
     createWindow()
   })
 
