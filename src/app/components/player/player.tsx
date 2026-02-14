@@ -171,7 +171,7 @@ export function Player() {
     }
 
     if (replayGainType === 'album') {
-      let { albumGain, albumPeak = 1 } = song.replayGain
+      let { albumGain = defaultGain, albumPeak = 1 } = song.replayGain
 
       if (albumGain === 0) {
         albumGain = defaultGain
@@ -180,7 +180,7 @@ export function Player() {
       return { gain: albumGain, peak: albumPeak, preAmp }
     }
 
-    let { trackGain, trackPeak = 1 } = song.replayGain
+    let { trackGain = defaultGain, trackPeak = 1 } = song.replayGain
 
     if (trackGain === 0) {
       trackGain = defaultGain
