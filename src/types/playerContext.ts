@@ -128,6 +128,12 @@ export interface IPlayerSettings {
   colors: IColorsSettings
 }
 
+export interface IPlayerFullscreen {
+  isFullscreen: boolean
+  setIsFullscreen: (value: boolean) => void
+  reset: () => void
+}
+
 export interface IPlayerActions {
   playSong: (song: ISong) => void
   setSongList: (songlist: ISong[], index: number, shuffle?: boolean) => void
@@ -188,6 +194,7 @@ export interface IPlayerActions {
 export interface IPlayerContext {
   songlist: ISongList
   playerState: IPlayerState
+  fullscreen: IPlayerFullscreen
   playerProgress: IPlayerProgress
   settings: IPlayerSettings
   actions: IPlayerActions

@@ -57,6 +57,19 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             hasPrev: false,
             hasNext: false,
           },
+          fullscreen: {
+            isFullscreen: false,
+            setIsFullscreen: (value) => {
+              set((state) => {
+                state.fullscreen.isFullscreen = value
+              })
+            },
+            reset: () => {
+              set((state) => {
+                state.fullscreen.isFullscreen = false
+              })
+            },
+          },
           playerProgress: {
             progress: 0,
           },
@@ -924,7 +937,13 @@ usePlayerStore.subscribe(
     const { currentList } = playerStore.songlist
     const { progress } = playerStore.playerProgress
 
-    if (currentList.length === 0 && progress > 0) {
+    const isSonglistEmpty = currentList.length === 0
+
+    if (isSonglistEmpty) {
+      playerStore.fullscreen.reset()
+    }
+
+    if (isSonglistEmpty && progress > 0) {
       playerStore.actions.resetProgress()
     }
   },
@@ -1170,3 +1189,6 @@ export const useSongColor = () =>
 
 export const usePlayerCurrentList = () =>
   usePlayerStore((state) => state.songlist.currentList)
+
+export const usePlayerFullscreen = () =>
+  usePlayerStore((state) => state.fullscreen)

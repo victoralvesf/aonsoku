@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { AnimationEvent, useEffect, useState } from 'react'
 import { useFullscreenPlayerSettings } from '@/store/player.store'
 import { enterFullscreen, exitFullscreen } from '@/utils/browser'
 import { isDesktop } from '@/utils/desktop'
@@ -13,6 +13,7 @@ interface AppWindowType {
   minimizeWindow: () => void
   closeWindow: () => void
   handleFullscreen: (playerStatus: boolean) => Promise<void>
+  handleDrawerAnimationEnd: (event: AnimationEvent<HTMLDivElement>) => void
 }
 
 export function useAppWindow(): AppWindowType {
@@ -109,6 +110,15 @@ export function useAppWindow(): AppWindowType {
     playerStatus ? enterFullscreen() : exitFullscreen()
   }
 
+  const handleDrawerAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
+    if (event.target !== event.currentTarget) return
+
+    const state = event.currentTarget.getAttribute('data-state')
+    const isOpen = state === 'open'
+
+    handleFullscreen(isOpen)
+  }
+
   return {
     isFullscreen,
     isMaximized,
@@ -118,5 +128,6 @@ export function useAppWindow(): AppWindowType {
     minimizeWindow,
     closeWindow,
     handleFullscreen,
+    handleDrawerAnimationEnd,
   }
 }

@@ -1,11 +1,7 @@
 import { memo } from 'react'
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/app/components/ui/drawer'
+import { Drawer, DrawerContent, DrawerTitle } from '@/app/components/ui/drawer'
 import { useAppWindow } from '@/app/hooks/use-app-window'
+import { usePlayerFullscreen } from '@/store/player.store'
 import { FullscreenBackdrop } from './backdrop'
 import { FullscreenDragHandler } from './drag-handler'
 import { FullscreenPlayer } from './player'
@@ -13,25 +9,23 @@ import { FullscreenTabs } from './tabs'
 
 const MemoFullscreenBackdrop = memo(FullscreenBackdrop)
 
-type FullscreenModeProps = {
-  children: React.ReactNode
-}
-
-export function FullscreenMode({ children }: FullscreenModeProps) {
-  const { handleFullscreen } = useAppWindow()
+export function FullscreenMode() {
+  const { handleDrawerAnimationEnd } = useAppWindow()
+  const { isFullscreen, setIsFullscreen } = usePlayerFullscreen()
 
   return (
     <Drawer
-      onAnimationEnd={handleFullscreen}
+      open={isFullscreen}
+      onOpenChange={setIsFullscreen}
       fixed={true}
       handleOnly={true}
       disablePreventScroll={true}
       dismissible={true}
       modal={false}
     >
-      <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerTitle className="sr-only">Big Player</DrawerTitle>
       <DrawerContent
+        onAnimationEnd={handleDrawerAnimationEnd}
         className="h-screen w-screen rounded-t-none border-none select-none cursor-default mt-0"
         showHandle={false}
         aria-describedby={undefined}
