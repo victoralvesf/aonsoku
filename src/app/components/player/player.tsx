@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
 import { getSongStreamUrl } from '@/api/httpClient'
 import { getProxyURL } from '@/api/podcastClient'
 import { MiniPlayerButton } from '@/app/components/mini-player/button'
@@ -162,7 +162,7 @@ export function Player() {
       })
   }, [isPodcast, podcast])
 
-  function getTrackReplayGain(): ReplayGainParams {
+  const trackReplayGain = useMemo<ReplayGainParams>(() => {
     const preAmp = replayGainPreAmp
     const defaultGain = replayGainDefaultGain
 
@@ -186,7 +186,7 @@ export function Player() {
       trackGain = defaultGain
     }
     return { gain: trackGain, peak: trackPeak, preAmp }
-  }
+  }, [song, replayGainDefaultGain, replayGainPreAmp, replayGainType])
 
   return (
     <footer className="border-t h-[--player-height] w-full flex items-center fixed bottom-0 left-0 right-0 z-40 bg-background">
@@ -238,7 +238,7 @@ export function Player() {
 
       {isSong && song && (
         <MemoAudioPlayer
-          replayGain={getTrackReplayGain()}
+          replayGain={trackReplayGain}
           src={getSongStreamUrl(song.id)}
           autoPlay={isPlaying}
           audioRef={audioRef}
