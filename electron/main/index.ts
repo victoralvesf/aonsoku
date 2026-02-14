@@ -3,6 +3,8 @@ import { app, globalShortcut } from 'electron'
 import { createAppMenu } from './core/menu'
 import { createWindow, mainWindow } from './window'
 
+export let isQuitting = false
+
 const currentDesktop = process.env.XDG_CURRENT_DESKTOP ?? ''
 
 if (platform.isLinux && currentDesktop.toLowerCase().includes('gnome')) {
@@ -54,7 +56,13 @@ if (!instanceLock) {
     globalShortcut.register('F11', () => {})
   })
 
+  app.on('before-quit', () => {
+    isQuitting = true
+  })
+
   app.on('window-all-closed', () => {
-    app.quit()
+    if (!platform.isMacOS) {
+      app.quit()
+    }
   })
 }
