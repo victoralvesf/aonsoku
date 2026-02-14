@@ -23,6 +23,10 @@ export function SongQualityBadge({
 }: SongQualityBadgeProps) {
   const { t } = useTranslation()
 
+  if (!song?.suffix) {
+    return null
+  }
+
   const quality = song.suffix.toUpperCase()
   const bitrate = formatBitrate(song.bitRate)
   const samplingRate = formatSamplingRate(song.samplingRate)
