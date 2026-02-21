@@ -55,6 +55,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             queueState: false,
             lyricsState: false,
             hasSyncedTheCurrentTrack: false,
+            hasScrobbledTheCurrentTrack: false,
             currentPlaybackRate: 1,
             hasPrev: false,
             hasNext: false,
@@ -74,6 +75,9 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
           },
           playerProgress: {
             progress: 0,
+          },
+          listenTime: {
+            accumulated: 0,
           },
           settings: {
             privacy: {
@@ -178,6 +182,10 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               const listsAreEqual = areSongListsEqual(currentList, songlist)
               const songHasChanged = currentSongIndex !== index
 
+              get().actions.resetAccumulatedTime()
+              get().actions.setHasSyncedTheCurrentTrack(false)
+              get().actions.setHasScrobbledTheCurrentTrack(false)
+
               if (!listsAreEqual || (listsAreEqual && songHasChanged)) {
                 get().actions.resetProgress()
               }
@@ -237,6 +245,9 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 })
               } else {
                 get().actions.resetProgress()
+                get().actions.resetAccumulatedTime()
+                get().actions.setHasSyncedTheCurrentTrack(false)
+                get().actions.setHasScrobbledTheCurrentTrack(false)
                 set((state) => {
                   state.playerState.mediaType = 'song'
                   state.songlist.currentList = [song]
@@ -493,9 +504,13 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 resetProgress,
                 playFirstSongInQueue,
                 setHasSyncedTheCurrentTrack,
+                setHasScrobbledTheCurrentTrack,
+                resetAccumulatedTime,
               } = get().actions
 
+              resetAccumulatedTime()
               setHasSyncedTheCurrentTrack(false)
+              setHasScrobbledTheCurrentTrack(false)
 
               if (hasNextSong()) {
                 resetProgress()
@@ -508,8 +523,20 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               }
             },
             playPrevSong: () => {
-              if (get().actions.hasPrevSong()) {
-                get().actions.resetProgress()
+              const {
+                resetProgress,
+                resetAccumulatedTime,
+                setHasSyncedTheCurrentTrack,
+                setHasScrobbledTheCurrentTrack,
+              } = get().actions
+              const hasPrevSong = get().actions.hasPrevSong()
+
+              if (hasPrevSong) {
+                resetProgress()
+                resetAccumulatedTime()
+                setHasSyncedTheCurrentTrack(false)
+                setHasScrobbledTheCurrentTrack(false)
+
                 set((state) => {
                   state.songlist.currentSongIndex -= 1
                 })
@@ -534,9 +561,11 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.queueState = false
                 state.playerState.lyricsState = false
                 state.playerState.hasSyncedTheCurrentTrack = false
+                state.playerState.hasScrobbledTheCurrentTrack = false
                 state.playerState.currentDuration = 0
                 state.playerState.audioPlayerRef = null
                 state.settings.colors.currentSongColor = null
+                state.listenTime.accumulated = 0
               })
             },
             resetProgress: () => {
@@ -810,6 +839,21 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.hasSyncedTheCurrentTrack = value
               })
             },
+            setHasScrobbledTheCurrentTrack: (value) => {
+              set((state) => {
+                state.playerState.hasScrobbledTheCurrentTrack = value
+              })
+            },
+            incrementAccumulatedTime: (delta) => {
+              set((state) => {
+                state.listenTime.accumulated += delta
+              })
+            },
+            resetAccumulatedTime: () => {
+              set((state) => {
+                state.listenTime.accumulated = 0
+              })
+            },
             playFirstSongInQueue: () => {
               set((state) => {
                 state.songlist.currentSongIndex = 0
@@ -996,14 +1040,42 @@ usePlayerStore.subscribe(
 )
 
 usePlayerStore.subscribe((state, prevState) => {
-  const progressStarted = state.playerProgress.progress >= 1
-  const prevProgressIsBeginning = prevState.playerProgress.progress < 1
+  const currentSong = state.songlist.currentSong ?? null
+
+  if (!currentSong) return
+
+  const progress = state.playerProgress.progress
+  const prevProgress = prevState.playerProgress.progress
+  const duration = currentSong.duration
+  const isPlaying = state.playerState.isPlaying
+
   const hasSynced = state.playerState.hasSyncedTheCurrentTrack
 
-  if (progressStarted && prevProgressIsBeginning && !hasSynced) {
+  if (progress >= 1 && prevProgress < 1 && !hasSynced) {
     usePlayerStore.getState().actions.setHasSyncedTheCurrentTrack(true)
 
-    scrobble.send(state.songlist.currentSong.id, false)
+    scrobble.send(currentSong.id, false)
+  }
+
+  const timeDelta = progress - prevProgress
+
+  if (isPlaying && timeDelta > 0 && timeDelta <= 2) {
+    usePlayerStore.getState().actions.incrementAccumulatedTime(timeDelta)
+  }
+
+  const accumulatedTime = usePlayerStore.getState().listenTime.accumulated
+
+  const halfDuration = duration / 2
+  const fourMinutesInSeconds = 60 * 4
+  const targetTime = Math.min(halfDuration, fourMinutesInSeconds)
+
+  const hasScrobbled =
+    usePlayerStore.getState().playerState.hasScrobbledTheCurrentTrack
+
+  if (duration > 0 && accumulatedTime >= targetTime && !hasScrobbled) {
+    usePlayerStore.getState().actions.setHasScrobbledTheCurrentTrack(true)
+
+    scrobble.send(currentSong.id, true)
   }
 })
 
