@@ -45,7 +45,6 @@ const MemoPlayerExpandButton = memo(PlayerExpandButton)
 const MemoPodcastPlaybackRate = memo(PodcastPlaybackRate)
 const MemoLyricsButton = memo(PlayerLyricsButton)
 const MemoMiniPlayerButton = memo(MiniPlayerButton)
-const MemoAudioPlayer = memo(AudioPlayer)
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -237,7 +236,7 @@ export function Player() {
       </div>
 
       {isSong && song && (
-        <MemoAudioPlayer
+        <AudioPlayer
           replayGain={trackReplayGain}
           src={getSongStreamUrl(song.id)}
           autoPlay={isPlaying}
@@ -254,7 +253,7 @@ export function Player() {
       )}
 
       {isRadio && radio && (
-        <MemoAudioPlayer
+        <AudioPlayer
           src={radio.streamUrl}
           autoPlay={isPlaying}
           audioRef={radioRef}
@@ -266,7 +265,7 @@ export function Player() {
       )}
 
       {isPodcast && podcast && (
-        <MemoAudioPlayer
+        <AudioPlayer
           src={getProxyURL(podcast.audio_url)}
           autoPlay={isPlaying}
           audioRef={podcastRef}
