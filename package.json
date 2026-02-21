@@ -20,7 +20,7 @@
     "cy:open": "cypress open",
     "test": "cypress run --component",
     "electron:start": "electron-vite preview",
-    "electron:dev": "electron-vite dev",
+    "electron:dev": "electron-vite dev --watch",
     "electron:build": "electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "electron-builder --dir",
