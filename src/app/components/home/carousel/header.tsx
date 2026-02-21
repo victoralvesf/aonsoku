@@ -1,4 +1,5 @@
 import Autoplay from 'embla-carousel-autoplay'
+import { HeaderFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { HeaderItem } from '@/app/components/home/carousel/header-item'
 import {
   Carousel,
@@ -7,14 +8,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/app/components/ui/carousel'
-import { ISong } from '@/types/responses/song'
+import { useGetRandomSongs } from '@/app/hooks/use-home'
 
-interface HomeHeaderProps {
-  songs: ISong[]
-}
+export function HomeHeader() {
+  const { data: songs, isLoading, isFetching } = useGetRandomSongs()
 
-export default function HomeHeader({ songs }: HomeHeaderProps) {
-  if (songs.length === 0) return null
+  if (isLoading || isFetching) return <HeaderFallback />
+
+  if (!songs || songs.length === 0) return null
 
   return (
     <Carousel
