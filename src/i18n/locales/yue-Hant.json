@@ -1,1 +1,28 @@
-{}
+{
+  "home": {
+    "recentlyPlayed": "最近播放",
+    "mostPlayed": "最常播放",
+    "recentlyAdded": "最近新增",
+    "explore": "探索"
+  },
+  "sidebar": {
+    "home": "主頁",
+    "search": "搜尋",
+    "miniSearch": "搜尋",
+    "library": "媒體庫",
+    "artists": "演出者",
+    "songs": "歌曲",
+    "albums": "專輯",
+    "favorites": "我的收藏",
+    "playlists": "歌單",
+    "radios": "電台",
+    "podcasts": "播客節目",
+    "emptyPlaylist": "現時還沒有任何歌單"
+  },
+  "menu": {
+    "language": "語言",
+    "server": "伺服器",
+    "about": "關於Aonsoku",
+    "serverLogout": "登出"
+  }
+}
