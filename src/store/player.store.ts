@@ -6,6 +6,7 @@ import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
+import { scrobble } from '@/service/scrobble'
 import { subsonic } from '@/service/subsonic'
 import { IPlayerContext, ISongList, LoopState } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
@@ -53,6 +54,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             mainDrawerState: false,
             queueState: false,
             lyricsState: false,
+            hasSyncedTheCurrentTrack: false,
             currentPlaybackRate: 1,
             hasPrev: false,
             hasNext: false,
@@ -486,8 +488,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
             playNextSong: () => {
               const { loopState } = get().playerState
-              const { hasNextSong, resetProgress, playFirstSongInQueue } =
-                get().actions
+              const {
+                hasNextSong,
+                resetProgress,
+                playFirstSongInQueue,
+                setHasSyncedTheCurrentTrack,
+              } = get().actions
+
+              setHasSyncedTheCurrentTrack(false)
 
               if (hasNextSong()) {
                 resetProgress()
@@ -525,6 +533,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.mainDrawerState = false
                 state.playerState.queueState = false
                 state.playerState.lyricsState = false
+                state.playerState.hasSyncedTheCurrentTrack = false
                 state.playerState.currentDuration = 0
                 state.playerState.audioPlayerRef = null
                 state.settings.colors.currentSongColor = null
@@ -796,6 +805,11 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.lyricsState = false
               })
             },
+            setHasSyncedTheCurrentTrack: (value) => {
+              set((state) => {
+                state.playerState.hasSyncedTheCurrentTrack = value
+              })
+            },
             playFirstSongInQueue: () => {
               set((state) => {
                 state.songlist.currentSongIndex = 0
@@ -980,6 +994,18 @@ usePlayerStore.subscribe(
     equalityFn: shallow,
   },
 )
+
+usePlayerStore.subscribe((state, prevState) => {
+  const progressStarted = state.playerProgress.progress >= 1
+  const prevProgressIsBeginning = prevState.playerProgress.progress < 1
+  const hasSynced = state.playerState.hasSyncedTheCurrentTrack
+
+  if (progressStarted && prevProgressIsBeginning && !hasSynced) {
+    usePlayerStore.getState().actions.setHasSyncedTheCurrentTrack(true)
+
+    scrobble.send(state.songlist.currentSong.id, false)
+  }
+})
 
 function desktopStateListener() {
   if (!isDesktop()) return

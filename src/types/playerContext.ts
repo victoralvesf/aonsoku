@@ -33,6 +33,7 @@ export interface IPlayerState {
   mainDrawerState: boolean
   queueState: boolean
   lyricsState: boolean
+  hasSyncedTheCurrentTrack: boolean
   hasPrev: boolean
   hasNext: boolean
 }
@@ -169,6 +170,7 @@ export interface IPlayerActions {
   toggleLyricsAction: () => void
   toggleQueueAndLyrics: () => void
   closeDrawer: () => void
+  setHasSyncedTheCurrentTrack: (value: boolean) => void
   playFirstSongInQueue: () => void
   handleSongEnded: () => void
   getCurrentProgress: () => number
