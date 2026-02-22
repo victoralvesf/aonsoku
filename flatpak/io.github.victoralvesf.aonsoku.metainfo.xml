@@ -47,8 +47,27 @@
   </screenshots>
 
   <releases>
-    <release version="0.11.0" date="2025-12-14">
-      <url type="details">https://github.com/victoralvesf/aonsoku/releases/tag/v0.10.2</url>
+    <release version="0.12.0" date="2026-02-18">
+      <url type="details">https://github.com/victoralvesf/aonsoku/releases/tag/v0.12.0</url>
+      <description>
+        <p>New Features</p>
+        <ul>
+          <li>Home Carousel: Refreshed the visual style of the home carousel and implemented performance optimizations.</li>
+          <li>Translations: Updated translations for multiple languages.</li>
+        </ul>
+        <p>Fixes</p>
+        <ul>
+          <li>Docker Setup: Resolved Docker configuration issues when deploying to a subfolder.</li>
+          <li>Update Notification: Resolved new version notification dialog not being shown.</li>
+          <li>Replay Gain: Ensure default replay gain is correctly applied to tracks missing replay gain metadata.</li>
+          <li>Big Player: Fixed a crash occurring in the Big Player when the song queue ends.</li>
+          <li>macOS Termination: Resolved issues where the app failed to quit completely or partially on macOS.</li>
+          <li>Linux Shortcuts: Fixed global shortcut registration triggering system dialogs on Wayland sessions.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.11.0" date="2026-01-31">
+      <url type="details">https://github.com/victoralvesf/aonsoku/releases/tag/v0.11.0</url>
       <description>
         <p>New Features</p>
         <ul>
