@@ -33,12 +33,18 @@ export interface IPlayerState {
   mainDrawerState: boolean
   queueState: boolean
   lyricsState: boolean
+  hasSyncedTheCurrentTrack: boolean
+  hasScrobbledTheCurrentTrack: boolean
   hasPrev: boolean
   hasNext: boolean
 }
 
 export interface IPlayerProgress {
   progress: number
+}
+
+export interface IListenTime {
+  accumulated: number
 }
 
 export interface IVolumeSettings {
@@ -169,6 +175,10 @@ export interface IPlayerActions {
   toggleLyricsAction: () => void
   toggleQueueAndLyrics: () => void
   closeDrawer: () => void
+  setHasSyncedTheCurrentTrack: (value: boolean) => void
+  setHasScrobbledTheCurrentTrack: (value: boolean) => void
+  incrementAccumulatedTime: (delta: number) => void
+  resetAccumulatedTime: () => void
   playFirstSongInQueue: () => void
   handleSongEnded: () => void
   getCurrentProgress: () => number
@@ -196,6 +206,7 @@ export interface IPlayerContext {
   playerState: IPlayerState
   fullscreen: IPlayerFullscreen
   playerProgress: IPlayerProgress
+  listenTime: IListenTime
   settings: IPlayerSettings
   actions: IPlayerActions
 }
