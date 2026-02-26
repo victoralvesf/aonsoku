@@ -1,7 +1,7 @@
 {
   "name": "aonsoku",
   "private": true,
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "A modern desktop client for Navidrome/Subsonic servers.",
   "author": {
     "name": "Victor Alves"
@@ -20,7 +20,7 @@
     "cy:open": "cypress open",
     "test": "cypress run --component",
     "electron:start": "electron-vite preview",
-    "electron:dev": "electron-vite dev",
+    "electron:dev": "electron-vite dev --watch",
     "electron:build": "electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "electron-builder --dir",

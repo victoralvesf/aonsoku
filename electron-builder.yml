@@ -48,9 +48,15 @@ mac:
 
 linux:
   target:
-    - AppImage
+    - target: AppImage
+      arch:
+        - x64
+        - arm64
+    - target: tar.gz
+      arch:
+        - x64
+        - arm64
     - deb
-    - tar.gz
   maintainer: victoralvesf
   category: AudioVideo
   synopsis: 'A modern desktop music client for Navidrome and OpenSubsonic servers.'
