@@ -38,6 +38,9 @@
     "dark": "Escuro",
     "system": "Sistema"
   },
+  "favorites": {
+    "noSongList": "Você ainda não adicionou músicas nos favoritos!"
+  },
   "artist": {
     "headline": "Artista",
     "buttons": {
@@ -116,7 +119,8 @@
       "toasts": {
         "success": "Podcast criado com sucesso! Ele estará disponível para ouvir em alguns minutos!",
         "error": "Falha ao criar o podcast!"
-      }
+      },
+      "all": "Navegar"
     },
     "emptyPage": {
       "message": "Nenhum podcast adicionado",
@@ -261,7 +265,9 @@
       "appearance": "Aparência",
       "language": "Linguagem & Região",
       "audio": "Reprodutor & Áudio",
-      "content": "Conteúdo"
+      "content": "Conteúdo",
+      "accounts": "Contas",
+      "desktop": "Aplicação para o computador"
     },
     "appearance": {
       "colors": {
@@ -321,7 +327,12 @@
         "description": "Gira os serviços externos que o Aonsoku pode aceder.",
         "lrclib": {
           "info": "O LRCLIB é usado para encontrar letras de músicas.",
-          "label": "LRCLIB"
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Use uma URL personalizada",
+            "label": "URL",
+            "example": "Exemplo: https://minha-biblrc.pt"
+          }
         }
       }
     },
@@ -347,6 +358,32 @@
           "error": "Nome de utilizador e URL do servidor são obrigatórios.",
           "user": "Nome de Utilizador",
           "url": "URL do Servidor"
+        }
+      },
+      "images": {
+        "group": "Imagens",
+        "description": "Personalize as configurações de imagens.",
+        "cacheLayer": {
+          "info": "Quando ativado, as imagens serão armazenadas localmente para melhorar o desempenho.",
+          "label": "Ativar cache de imagens"
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "description": "Partilhe a música que está a ouvir com os seus amigos no Discord.",
+        "enabled": {
+          "label": "Ativar integração"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Geral",
+        "description": "Personalize as preferências da aplicação para o computador.",
+        "tray": {
+          "label": "Minimizar para a bandeja",
+          "info": "Quando ativado, a app será minimizada para a bandeja do sistema em vez de fechar ao clicar no botão de fechar."
         }
       }
     }
@@ -492,6 +529,7 @@
     "artists": "Artistas",
     "songs": "Músicas",
     "albums": "Álbuns",
+    "favorites": "Favoritos",
     "playlists": "Playlists",
     "radios": "Rádios",
     "podcasts": "Podcasts",
@@ -674,7 +712,8 @@
     "dialog": {
       "title": "Nova Versão Disponível!",
       "remindLater": "Lembrar-me mais tarde",
-      "install": "Instalar e Reiniciar"
+      "install": "Instalar e Reiniciar",
+      "macOS": "Descarregar do GitHub"
     },
     "toasts": {
       "started": "O processo de atualização foi iniciado.",

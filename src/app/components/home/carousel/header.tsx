@@ -1,4 +1,5 @@
 import Autoplay from 'embla-carousel-autoplay'
+import { HeaderFallback } from '@/app/components/fallbacks/home-fallbacks'
 import { HeaderItem } from '@/app/components/home/carousel/header-item'
 import {
   Carousel,
@@ -7,18 +8,18 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/app/components/ui/carousel'
-import { ISong } from '@/types/responses/song'
+import { useGetRandomSongs } from '@/app/hooks/use-home'
 
-interface HomeHeaderProps {
-  songs: ISong[]
-}
+export function HomeHeader() {
+  const { data: songs, isLoading, isFetching } = useGetRandomSongs()
 
-export default function HomeHeader({ songs }: HomeHeaderProps) {
-  if (songs.length === 0) return null
+  if (isLoading || isFetching) return <HeaderFallback />
+
+  if (!songs || songs.length === 0) return null
 
   return (
     <Carousel
-      className="w-full border rounded-lg overflow-hidden z-10"
+      className="w-full overflow-hidden z-10"
       opts={{
         loop: true,
       }}
@@ -29,21 +30,18 @@ export default function HomeHeader({ songs }: HomeHeaderProps) {
       ]}
       data-testid="header-carousel"
     >
-      <CarouselContent
-        className="ml-0 flex transform-gpu"
-        style={{ borderRadius: 'calc(var(--radius) - 2px)' }}
-      >
+      <CarouselContent className="ml-0 flex">
         {songs.map((song, index) => (
           <CarouselItem
             key={song.id}
-            className="pl-0 basis-full maskImage-carousel-item"
+            className="pl-0 basis-full maskImage-carousel-item transform-gpu"
             data-testid={`carousel-header-song-${index}`}
           >
             <HeaderItem song={song} />
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="absolute right-[4.5rem] bottom-10">
+      <div className="absolute right-[5rem] bottom-10">
         <CarouselPrevious
           data-testid="header-carousel-previous"
           className="-left-6 shadow-sm"

@@ -13,3 +13,16 @@ export function checkServerType() {
     isLms,
   }
 }
+
+export function getServerExtensions() {
+  const { extensionsSupported } = useAppStore.getState().data
+
+  const songLyricsEnabled =
+    extensionsSupported &&
+    extensionsSupported.songLyrics &&
+    extensionsSupported.songLyrics.length > 0
+
+  return {
+    songLyricsEnabled,
+  }
+}

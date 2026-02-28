@@ -57,19 +57,28 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
 
   const setupGain = useCallback(
     (gainValue: number, replayGain?: ReplayGainParams) => {
-      if (audioContextRef.current && gainNodeRef.current) {
-        const currentTime = audioContextRef.current.currentTime
+      setupAudioContext()
 
-        logger.info('Replay Gain Status', {
-          enabled: replayGainEnabled,
-          gainValue,
-          ...replayGain,
-        })
-
-        gainNodeRef.current.gain.setValueAtTime(gainValue, currentTime)
+      if (!audioContextRef.current || !gainNodeRef.current) {
+        return
       }
+
+      if (!gainValue || Number.isNaN(gainValue)) {
+        logger.error('Invalid gain value', { gainValue })
+        return
+      }
+
+      const currentTime = audioContextRef.current.currentTime
+
+      logger.info('Replay Gain Status', {
+        enabled: replayGainEnabled,
+        gainValue,
+        ...replayGain,
+      })
+
+      gainNodeRef.current.gain.setValueAtTime(gainValue, currentTime)
     },
-    [replayGainEnabled],
+    [replayGainEnabled, setupAudioContext],
   )
 
   const resetRefs = useCallback(() => {
@@ -95,10 +104,6 @@ export function useAudioContext(audio: HTMLAudioElement | null) {
   useEffect(() => {
     return () => resetRefs()
   }, [])
-
-  useEffect(() => {
-    if (audio) setupAudioContext()
-  }, [audio, setupAudioContext])
 
   return {
     audioContextRef,

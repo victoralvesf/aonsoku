@@ -6,6 +6,7 @@ import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
+import { scrobble } from '@/service/scrobble'
 import { subsonic } from '@/service/subsonic'
 import { IPlayerContext, ISongList, LoopState } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
@@ -53,20 +54,52 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             mainDrawerState: false,
             queueState: false,
             lyricsState: false,
+            hasSyncedTheCurrentTrack: false,
+            hasScrobbledTheCurrentTrack: false,
             currentPlaybackRate: 1,
             hasPrev: false,
             hasNext: false,
           },
+          fullscreen: {
+            isFullscreen: false,
+            setIsFullscreen: (value) => {
+              set((state) => {
+                state.fullscreen.isFullscreen = value
+              })
+            },
+            reset: () => {
+              set((state) => {
+                state.fullscreen.isFullscreen = false
+              })
+            },
+          },
           playerProgress: {
             progress: 0,
           },
+          listenTime: {
+            accumulated: 0,
+          },
           settings: {
             privacy: {
-              lrcLibEnabled: true,
-              setLrcLibEnabled(value) {
-                set((state) => {
-                  state.settings.privacy.lrcLibEnabled = value
-                })
+              lrclib: {
+                enabled: true,
+                setEnabled(value) {
+                  set((state) => {
+                    state.settings.privacy.lrclib.enabled = value
+                  })
+                },
+                customUrlEnabled: false,
+                setCustomUrlEnabled(value) {
+                  set((state) => {
+                    state.settings.privacy.lrclib.customUrlEnabled = value
+                  })
+                },
+                customUrl: 'https://lrclib.net',
+                setCustomUrl(value) {
+                  set((state) => {
+                    state.settings.privacy.lrclib.customUrl = value
+                  })
+                },
               },
             },
             volume: {
@@ -149,6 +182,10 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               const listsAreEqual = areSongListsEqual(currentList, songlist)
               const songHasChanged = currentSongIndex !== index
 
+              get().actions.resetAccumulatedTime()
+              get().actions.setHasSyncedTheCurrentTrack(false)
+              get().actions.setHasScrobbledTheCurrentTrack(false)
+
               if (!listsAreEqual || (listsAreEqual && songHasChanged)) {
                 get().actions.resetProgress()
               }
@@ -208,6 +245,9 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 })
               } else {
                 get().actions.resetProgress()
+                get().actions.resetAccumulatedTime()
+                get().actions.setHasSyncedTheCurrentTrack(false)
+                get().actions.setHasScrobbledTheCurrentTrack(false)
                 set((state) => {
                   state.playerState.mediaType = 'song'
                   state.songlist.currentList = [song]
@@ -459,8 +499,18 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
             playNextSong: () => {
               const { loopState } = get().playerState
-              const { hasNextSong, resetProgress, playFirstSongInQueue } =
-                get().actions
+              const {
+                hasNextSong,
+                resetProgress,
+                playFirstSongInQueue,
+                setHasSyncedTheCurrentTrack,
+                setHasScrobbledTheCurrentTrack,
+                resetAccumulatedTime,
+              } = get().actions
+
+              resetAccumulatedTime()
+              setHasSyncedTheCurrentTrack(false)
+              setHasScrobbledTheCurrentTrack(false)
 
               if (hasNextSong()) {
                 resetProgress()
@@ -473,8 +523,20 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               }
             },
             playPrevSong: () => {
-              if (get().actions.hasPrevSong()) {
-                get().actions.resetProgress()
+              const {
+                resetProgress,
+                resetAccumulatedTime,
+                setHasSyncedTheCurrentTrack,
+                setHasScrobbledTheCurrentTrack,
+              } = get().actions
+              const hasPrevSong = get().actions.hasPrevSong()
+
+              if (hasPrevSong) {
+                resetProgress()
+                resetAccumulatedTime()
+                setHasSyncedTheCurrentTrack(false)
+                setHasScrobbledTheCurrentTrack(false)
+
                 set((state) => {
                   state.songlist.currentSongIndex -= 1
                 })
@@ -498,9 +560,12 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.mainDrawerState = false
                 state.playerState.queueState = false
                 state.playerState.lyricsState = false
+                state.playerState.hasSyncedTheCurrentTrack = false
+                state.playerState.hasScrobbledTheCurrentTrack = false
                 state.playerState.currentDuration = 0
                 state.playerState.audioPlayerRef = null
                 state.settings.colors.currentSongColor = null
+                state.listenTime.accumulated = 0
               })
             },
             resetProgress: () => {
@@ -769,6 +834,26 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.lyricsState = false
               })
             },
+            setHasSyncedTheCurrentTrack: (value) => {
+              set((state) => {
+                state.playerState.hasSyncedTheCurrentTrack = value
+              })
+            },
+            setHasScrobbledTheCurrentTrack: (value) => {
+              set((state) => {
+                state.playerState.hasScrobbledTheCurrentTrack = value
+              })
+            },
+            incrementAccumulatedTime: (delta) => {
+              set((state) => {
+                state.listenTime.accumulated += delta
+              })
+            },
+            resetAccumulatedTime: () => {
+              set((state) => {
+                state.listenTime.accumulated = 0
+              })
+            },
             playFirstSongInQueue: () => {
               set((state) => {
                 state.songlist.currentSongIndex = 0
@@ -910,7 +995,13 @@ usePlayerStore.subscribe(
     const { currentList } = playerStore.songlist
     const { progress } = playerStore.playerProgress
 
-    if (currentList.length === 0 && progress > 0) {
+    const isSonglistEmpty = currentList.length === 0
+
+    if (isSonglistEmpty) {
+      playerStore.fullscreen.reset()
+    }
+
+    if (isSonglistEmpty && progress > 0) {
       playerStore.actions.resetProgress()
     }
   },
@@ -947,6 +1038,46 @@ usePlayerStore.subscribe(
     equalityFn: shallow,
   },
 )
+
+usePlayerStore.subscribe((state, prevState) => {
+  const currentSong = state.songlist.currentSong ?? null
+
+  if (!currentSong) return
+
+  const progress = state.playerProgress.progress
+  const prevProgress = prevState.playerProgress.progress
+  const duration = currentSong.duration
+  const isPlaying = state.playerState.isPlaying
+
+  const hasSynced = state.playerState.hasSyncedTheCurrentTrack
+
+  if (progress >= 1 && prevProgress < 1 && !hasSynced) {
+    usePlayerStore.getState().actions.setHasSyncedTheCurrentTrack(true)
+
+    scrobble.send(currentSong.id, false)
+  }
+
+  const timeDelta = progress - prevProgress
+
+  if (isPlaying && timeDelta > 0 && timeDelta <= 2) {
+    usePlayerStore.getState().actions.incrementAccumulatedTime(timeDelta)
+  }
+
+  const accumulatedTime = usePlayerStore.getState().listenTime.accumulated
+
+  const halfDuration = duration / 2
+  const fourMinutesInSeconds = 60 * 4
+  const targetTime = Math.min(halfDuration, fourMinutesInSeconds)
+
+  const hasScrobbled =
+    usePlayerStore.getState().playerState.hasScrobbledTheCurrentTrack
+
+  if (duration > 0 && accumulatedTime >= targetTime && !hasScrobbled) {
+    usePlayerStore.getState().actions.setHasScrobbledTheCurrentTrack(true)
+
+    scrobble.send(currentSong.id, true)
+  }
+})
 
 function desktopStateListener() {
   if (!isDesktop()) return
@@ -1058,8 +1189,8 @@ export const useReplayGainActions = () =>
 export const useFullscreenPlayerSettings = () =>
   usePlayerStore((state) => state.settings.fullscreen)
 
-export const usePrivacySettings = () =>
-  usePlayerStore((state) => state.settings.privacy)
+export const useLrcLibSettings = () =>
+  usePlayerStore((state) => state.settings.privacy.lrclib)
 
 export const useLyricsSettings = () =>
   usePlayerStore((state) => state.settings.lyrics)
@@ -1156,3 +1287,6 @@ export const useSongColor = () =>
 
 export const usePlayerCurrentList = () =>
   usePlayerStore((state) => state.songlist.currentList)
+
+export const usePlayerFullscreen = () =>
+  usePlayerStore((state) => state.fullscreen)

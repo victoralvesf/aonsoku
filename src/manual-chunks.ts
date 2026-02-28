@@ -23,7 +23,8 @@ export function createManualChunks(id: string) {
     if (includes('lodash')) return 'lodash'
     if (includes('tanstack')) return 'tanstack'
     if (includes('radix')) return 'radix'
-    if (includes('markdown') || includes('remark')) return 'markdown'
+    if (includes('markdown') || includes('remark') || includes('rehype'))
+      return 'markdown'
     if (includes('react-hook-form') || includes('zod')) return 'forms'
     if (vendor.some((name) => scopedPackageName.startsWith(name))) {
       return 'vendor-dom'

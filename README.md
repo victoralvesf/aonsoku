@@ -20,7 +20,7 @@
 
   [![React][React.js]][React-url] [![Electron][Electron]][Electron-url]
 
-  [![Download][Release-badge]][Release-url]
+  [![Download][Download-badge]][Download-url] [![Flathub][Flathub-badge]][Flathub-url]
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -153,6 +153,12 @@ Below is a table describing the environment variables that can be used in this p
 | `APP_AUTH_TYPE`       | `token`    | Specifies the authentication method. </br> **Options:** `token` or `password`.                                    |                              |
 | `SERVER_TYPE`         | `subsonic` | Specifies the server name (important for some fixes). </br> **Options:** `subsonic`, `navidrome` or `lms`         |                              |
 | `HIDE_RADIOS_SECTION` | `false`    | Set to `true` to hide the radios page from the sidebar menu.                                                      |                              |
+| `APP_THEME`           | `dark`     | Specify the app theme. </br> **Possible values:** `light`, `dark`, `black`, `one-dark`, `night-owl-light`, `marmalade-beaver`, `noctis-lilac`, `material-theme`, `monokai-pro`, `github-dark`, `shades-of-purple`, `bearded-solarized`, `catppuccin-mocha`, `nuclear-dark`, `achiever`, `dracula`, `discord`, `tinacious-design`, `vue-dark`, `vim-dark-soft`. |                              |
+| `APP_HIDE_THEMES`     | `false`    | Set to `true` to hide the themes section so the user cannot change the theme.                                     |                              |
+| `IMAGE_CACHE_ENABLED` | `false`    | Set to `true` to enable the image cache.                                                                          |                              |
+| `DISABLE_IMAGE_CACHE_TOGGLE` | `false` | Set to `true` to prevent the user from changing the image cache setting.                                  |                              |
+| `DISABLE_DOWNLOADS`   | `false`    | Set to `true` to disable song downloads.                                                                          |                              |
+| `DISABLE_LRCLIB`      | `false`    | Set to `true` to disable downloading lyrics from LRCLIB.                                                          |                              |
 
 **Notes:**
 - **Automatic Login:** To enable automatic login across devices. This should only be used in secure local environments to avoid password compromise.
@@ -235,6 +241,25 @@ This project uses [Weblate](https://hosted.weblate.org/projects/aonsoku/) for tr
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Star History
+
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="https://api.star-history.com/svg?repos=victoralvesf/aonsoku&type=Date&theme=dark"
+  />
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="https://api.star-history.com/svg?repos=victoralvesf/aonsoku&type=Date"
+  />
+  <img
+    alt="Star History Chart"
+    src="https://api.star-history.com/svg?repos=victoralvesf/aonsoku&type=Date"
+  />
+</picture>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- LICENSE -->
 ## License
 
@@ -248,5 +273,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [React-url]: https://reactjs.org/
 [Electron]: https://img.shields.io/badge/Electron-000000?style=for-the-badge&logo=electron&logoColor=9FEAF9
 [Electron-url]: https://www.electronjs.org/
-[Release-badge]: https://img.shields.io/github/v/release/victoralvesf/aonsoku?display_name=release&style=for-the-badge&label=Download&labelColor=%23000&color=%2310B77F&logo=rocket&logoColor=%2310B77F&logoSize=auto
-[Release-url]: https://github.com/victoralvesf/aonsoku/releases/latest
+[Download-badge]: ./.github/assets/github.svg
+[Download-url]: https://github.com/victoralvesf/aonsoku/releases/latest
+[Flathub-badge]: ./.github/assets/flathub.svg
+[Flathub-url]: https://flathub.org/apps/io.github.victoralvesf.aonsoku

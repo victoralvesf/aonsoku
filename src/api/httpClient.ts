@@ -1,4 +1,5 @@
 import omit from 'lodash/omit'
+import { getCachedImage } from '@/cache/image'
 import { useAppStore } from '@/store/app.store'
 import { CoverArt } from '@/types/coverArtType'
 import { AuthType } from '@/types/serverConfig'
@@ -105,20 +106,38 @@ export async function httpClient<T>(
   }
 }
 
-export function getCoverArtUrl(
+export function getSimpleCoverArtUrl(
   id?: string,
   type: CoverArt = 'album',
   size = '300',
 ): string {
   if (!id) {
     // everything except artists uses the same default cover art
-    type = type === 'artist' ? 'artist' : 'album'
-    return `/default_${type}_art.png`
+    const resolvedType = type === 'artist' ? 'artist' : 'album'
+    return `/default_${resolvedType}_art.png`
   }
-  return getUrl('getCoverArt', {
-    id,
-    size,
-  })
+
+  return getUrl('getCoverArt', { id, size })
+}
+
+export async function getCoverArtUrl(
+  id?: string,
+  type: CoverArt = 'album',
+  size = '300',
+): Promise<string> {
+  const url = getSimpleCoverArtUrl(id, type, size)
+
+  if (!id) {
+    return url
+  }
+
+  const { imagesCacheLayerEnabled } = useAppStore.getState().pages
+
+  if (!imagesCacheLayerEnabled) {
+    return url
+  }
+
+  return getCachedImage(url)
 }
 
 export function getSongStreamUrl(

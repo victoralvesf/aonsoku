@@ -13,6 +13,7 @@
     "artists": "Artistas",
     "songs": "Canciones",
     "albums": "Álbumes",
+    "favorites": "Favoritos",
     "playlists": "Listas de reproducción",
     "radios": "Radios",
     "emptyPlaylist": "Aún no se han creado listas de reproducción",
@@ -191,6 +192,9 @@
     "table": {
       "discNumber": "Disco {{number}}"
     }
+  },
+  "favorites": {
+    "noSongList": "¡Aún no has añadido canciones a favoritos!"
   },
   "artist": {
     "headline": "Artista",

@@ -14,6 +14,7 @@
     "lovedsongs": "Любимые треки",
     "songs": "Songs",
     "albums": "Albums",
+    "favorites": "Favorites",
     "playlists": "Playlists",
     "radios": "Radios",
     "podcasts": "Podcasts",
@@ -186,6 +187,9 @@
     "table": {
       "discNumber": "Disc {{number}}"
     }
+  },
+  "favorites": {
+    "noSongList": "You haven't added any songs to favorites yet!"
   },
   "artist": {
     "headline": "Artist",
@@ -606,7 +610,8 @@
     "dialog": {
       "title": "New Version Available!",
       "remindLater": "Remind Me Later",
-      "install": "Install and Restart"
+      "install": "Install and Restart",
+      "macOS": "Download on GitHub"
     },
     "toasts": {
       "started": "The update process has started.",
@@ -699,7 +704,13 @@
         "description": "Manage the external services that Aonsoku can access.",
         "lrclib": {
           "info": "LRCLIB is used to find song lyrics.",
-          "label": "LRCLIB"
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Use a custom URL",
+            "info": "Use a custom URL for LRCLIB instead of the default one.",
+            "label": "URL",
+            "example": "Example: https://my-lrclib.com"
+          }
         }
       }
     },
@@ -725,6 +736,14 @@
           "error": "Username and Server URL are required.",
           "user": "Username",
           "url": "Server URL"
+        }
+      },
+      "images": {
+        "group": "Images",
+        "description": "Customize images settings.",
+        "cacheLayer": {
+          "info": "When enabled, images will be cached locally to improve performance.",
+          "label": "Enable Image Cache"
         }
       }
     },

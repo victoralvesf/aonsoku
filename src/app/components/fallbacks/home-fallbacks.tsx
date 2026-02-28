@@ -2,7 +2,7 @@ import { Skeleton } from '@/app/components/ui/skeleton'
 
 export function HeaderFallback() {
   return (
-    <div className="flex w-full rounded-lg bg-skeleton h-[250px] 2xl:h-[300px] p-4 2xl:p-6 gap-4 border border-border">
+    <div className="flex w-full bg-skeleton h-[250px] 2xl:h-[300px] px-8 py-6 gap-4">
       <Skeleton className="bg-background/50 h-full aspect-square rounded-lg" />
       <div className="flex flex-col gap-3 w-full h-full justify-end">
         <Skeleton className="w-96 h-10 bg-background/50" />
@@ -24,13 +24,15 @@ export function HeaderFallback() {
 
 export function HomeFallback() {
   return (
-    <div className="w-full px-8 py-6">
+    <div className="w-full">
       <HeaderFallback />
 
-      <PreviewListFallback />
-      <PreviewListFallback />
-      <PreviewListFallback />
-      <PreviewListFallback />
+      <div className="px-8 pb-6">
+        <PreviewListFallback />
+        <PreviewListFallback />
+        <PreviewListFallback />
+        <PreviewListFallback />
+      </div>
     </div>
   )
 }

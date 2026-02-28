@@ -3,21 +3,22 @@ import { memo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { ArtistLink, ArtistsLinks } from '@/app/components/song/artist-link'
+import { SongQualityBadge } from '@/app/components/song/quality-badge'
 import PlaySongButton from '@/app/components/table/play-button'
 import { SongTableActions } from '@/app/components/table/song-actions'
 import { TableSongTitle } from '@/app/components/table/song-title'
-import { Badge } from '@/app/components/ui/badge'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import i18n from '@/i18n'
 import { ROUTES } from '@/routes/routesList'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISong } from '@/types/responses/song'
+import { formatBitrate } from '@/utils/audioInfo'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 
 const MemoSimpleTooltip = memo(SimpleTooltip)
-const MemoBadge = memo(Badge)
+const MemoSongQualityBadge = memo(SongQualityBadge)
 const MemoPlaySongButton = memo(PlaySongButton)
 const MemoTableSongTitle = memo(TableSongTitle)
 const MemoLink = memo(Link)
@@ -197,7 +198,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
           {i18n.t('table.columns.plays')}
         </MemoDataTableColumnHeader>
       ),
-      cell: ({ row }) => row.original.playCount ?? 0,
+      cell: ({ row }) => row.original.playCount ?? '',
     },
     {
       id: 'played',
@@ -238,7 +239,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       },
       className: 'hidden 2xl:flex',
       cell: ({ row }) => {
-        return `${row.original.bitRate} kbps`
+        return formatBitrate(row.original.bitRate)
       },
     },
     {
@@ -251,9 +252,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       },
       className: 'hidden 2xl:flex',
       cell: ({ row }) => {
-        const { suffix } = row.original
-
-        return <MemoBadge>{suffix.toUpperCase()}</MemoBadge>
+        return <MemoSongQualityBadge song={row.original} />
       },
     },
     {

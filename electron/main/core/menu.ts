@@ -1,12 +1,22 @@
-import { platform } from '@electron-toolkit/utils'
-import { app, Menu, shell } from 'electron'
+import { is, platform } from '@electron-toolkit/utils'
+import {
+  app,
+  Menu,
+  MenuItem,
+  MenuItemConstructorOptions,
+  shell,
+} from 'electron'
 import { repository } from '../../../package.json'
 import { aboutDialog } from './about'
 
 export function createAppMenu() {
   if (!platform.isMacOS) return
 
-  const template = [
+  const toggleDevTools = {
+    role: 'toggleDevTools',
+  } as const
+
+  const template: (MenuItemConstructorOptions | MenuItem)[] = [
     {
       label: app.name,
       submenu: [
@@ -51,7 +61,7 @@ export function createAppMenu() {
       submenu: [
         { role: 'reload' },
         { role: 'forceReload' },
-        { role: 'toggleDevTools' },
+        ...(is.dev ? [toggleDevTools] : []),
         { type: 'separator' },
         { role: 'resetZoom' },
         { role: 'zoomIn' },
@@ -84,7 +94,6 @@ export function createAppMenu() {
     },
   ]
 
-  // @ts-expect-error set only roles for menu
   const menu = Menu.buildFromTemplate(template)
 
   Menu.setApplicationMenu(menu)

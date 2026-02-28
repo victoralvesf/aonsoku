@@ -33,12 +33,18 @@ export interface IPlayerState {
   mainDrawerState: boolean
   queueState: boolean
   lyricsState: boolean
+  hasSyncedTheCurrentTrack: boolean
+  hasScrobbledTheCurrentTrack: boolean
   hasPrev: boolean
   hasNext: boolean
 }
 
 export interface IPlayerProgress {
   progress: number
+}
+
+export interface IListenTime {
+  accumulated: number
 }
 
 export interface IVolumeSettings {
@@ -81,9 +87,17 @@ interface ILyrics {
   setPreferSyncedLyrics: (value: boolean) => void
 }
 
+interface LrcLib {
+  enabled: boolean
+  setEnabled: (value: boolean) => void
+  customUrlEnabled: boolean
+  setCustomUrlEnabled: (value: boolean) => void
+  customUrl: string
+  setCustomUrl: (value: string) => void
+}
+
 export interface IPrivacySettings {
-  lrcLibEnabled: boolean
-  setLrcLibEnabled: (value: boolean) => void
+  lrclib: LrcLib
 }
 
 interface IBlurSettings {
@@ -118,6 +132,12 @@ export interface IPlayerSettings {
   replayGain: IReplayGain
   privacy: IPrivacySettings
   colors: IColorsSettings
+}
+
+export interface IPlayerFullscreen {
+  isFullscreen: boolean
+  setIsFullscreen: (value: boolean) => void
+  reset: () => void
 }
 
 export interface IPlayerActions {
@@ -155,6 +175,10 @@ export interface IPlayerActions {
   toggleLyricsAction: () => void
   toggleQueueAndLyrics: () => void
   closeDrawer: () => void
+  setHasSyncedTheCurrentTrack: (value: boolean) => void
+  setHasScrobbledTheCurrentTrack: (value: boolean) => void
+  incrementAccumulatedTime: (delta: number) => void
+  resetAccumulatedTime: () => void
   playFirstSongInQueue: () => void
   handleSongEnded: () => void
   getCurrentProgress: () => number
@@ -180,7 +204,9 @@ export interface IPlayerActions {
 export interface IPlayerContext {
   songlist: ISongList
   playerState: IPlayerState
+  fullscreen: IPlayerFullscreen
   playerProgress: IPlayerProgress
+  listenTime: IListenTime
   settings: IPlayerSettings
   actions: IPlayerActions
 }

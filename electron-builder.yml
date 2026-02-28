@@ -10,6 +10,7 @@ directories:
 files:
   - '!**/*'
   - 'out/**'
+  - '!out/renderer/screenshots{,/**}'
   - 'package.json'
 
 extraResources:
@@ -37,6 +38,7 @@ mac:
   category: public.app-category.music
   entitlementsInherit: build/entitlements.mac.plist
   notarize: false
+  identity: "-"
   icon: ./build/icon.icns
   target:
     - target: dmg
@@ -46,7 +48,14 @@ mac:
 
 linux:
   target:
-    - AppImage
+    - target: AppImage
+      arch:
+        - x64
+        - arm64
+    - target: tar.gz
+      arch:
+        - x64
+        - arm64
     - deb
     - tar.gz
   maintainer: npc-riddlah

@@ -1,4 +1,5 @@
 import { OptionsButtons } from '@/app/components/options/buttons'
+import { DownloadOptionHandler } from '@/app/components/options/download-handler'
 import { ContextMenuSeparator } from '@/app/components/ui/context-menu'
 import { useOptions } from '@/app/hooks/use-options'
 import { ISong } from '@/types/responses/song'

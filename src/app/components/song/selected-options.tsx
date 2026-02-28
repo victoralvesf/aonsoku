@@ -1,7 +1,7 @@
 import { Table } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
 import { OptionsButtons } from '@/app/components/options/buttons'
-
+import { DownloadOptionHandler } from '@/app/components/options/download-handler'
 import {
   ContextMenuItem,
   ContextMenuSeparator,

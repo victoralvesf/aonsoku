@@ -3,6 +3,7 @@ import { Heart } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/app/components/ui/button'
+import { useRefreshFavorites } from '@/app/hooks/use-refresh-favorites'
 import { subsonic } from '@/service/subsonic'
 import {
   usePlayerActions,
@@ -27,6 +28,7 @@ export function TableLikeButton({
   const isSongStarred = usePlayerSongStarred()
   const { isRadio, isSong } = usePlayerMediaType()
   const { starCurrentSong, starSongInQueue } = usePlayerActions()
+  const { refreshFavorites } = useRefreshFavorites()
 
   useEffect(() => {
     if (type === 'artist') return
@@ -50,6 +52,8 @@ export function TableLikeButton({
       const isSongPlaying = currentSong.id === entityId
       isSongPlaying ? starCurrentSong() : starSongInQueue(entityId)
     }
+
+    refreshFavorites()
   }
 
   return (

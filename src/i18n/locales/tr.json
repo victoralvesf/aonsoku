@@ -186,6 +186,9 @@
       "discNumber": "Disk {{number}}"
     }
   },
+  "favorites": {
+    "noSongList": "Henüz favorilere müzik eklemediniz!"
+  },
   "artist": {
     "headline": "Sanatçı",
     "buttons": {

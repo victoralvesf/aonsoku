@@ -7,6 +7,7 @@ const LIBRARY = {
   LOVEDSONGS: '/library/lovedsongs',
   SONGS: '/library/songs',
   ALBUMS: '/library/albums',
+  FAVORITES: '/library/favorites',
   PLAYLISTS: '/library/playlists',
   PODCASTS: '/library/podcasts',
   EPISODES: '/library/episodes',
@@ -53,6 +54,10 @@ const SONGS = {
     `${LIBRARY.SONGS}?artistId=${id}&artistName=${encodeURIComponent(name)}`,
 }
 
+const FAVORITES = {
+  PAGE: LIBRARY.FAVORITES,
+}
+
 const PLAYLIST = {
   PAGE: (playlistId: string) => `${LIBRARY.PLAYLISTS}/${playlistId}`,
   PATH: `${LIBRARY.PLAYLISTS}/:playlistId`,
@@ -78,6 +83,7 @@ export const ROUTES = {
   ALBUMS,
   LOVEDSONGS,
   SONGS,
+  FAVORITES,
   PLAYLIST,
   PODCASTS,
   EPISODES,

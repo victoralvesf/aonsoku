@@ -6,9 +6,15 @@ import { appThemes } from '@/app/observers/theme-observer'
 import { useTheme } from '@/store/theme.store'
 import { Theme } from '@/types/themeContext'
 
+const { APP_HIDE_THEMES } = window
+
 export function ThemeSettingsPicker() {
   const { t } = useTranslation()
   const { theme: currentTheme, setTheme } = useTheme()
+
+  if (APP_HIDE_THEMES) {
+    return null
+  }
 
   return (
     <div className="h-full space-y-4">

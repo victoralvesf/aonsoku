@@ -18,7 +18,7 @@ export function LikeButton() {
     >
       <Heart
         className={clsx(
-          'w-6 h-6 drop-shadow-lg',
+          buttonsStyle.secondaryIcon,
           isSongStarred && 'text-red-500 fill-red-500',
         )}
       />

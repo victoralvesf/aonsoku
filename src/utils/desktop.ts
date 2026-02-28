@@ -1,7 +1,11 @@
 import { isElectron, osName } from 'react-device-detect'
 
+function isCypress(): boolean {
+  return (window as { Cypress?: unknown }).Cypress !== undefined
+}
+
 export function isDesktop(): boolean {
-  return isElectron
+  return isElectron && !isCypress()
 }
 
 export const isDeviceLinux = osName === 'Linux'

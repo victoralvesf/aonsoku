@@ -16,6 +16,7 @@ import { ScrollArea } from '@/app/components/ui/scroll-area'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
 import { useSongInfo } from '@/store/ui.store'
+import { formatBitrate, formatSamplingRate } from '@/utils/audioInfo'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import dateTime from '@/utils/dateTime'
 import { formatBytes } from '@/utils/formatBytes'
@@ -218,7 +219,7 @@ export function SongInfoDialog() {
                       key={genre}
                       onClick={handleLinkClick}
                     >
-                      <Badge variant="neutral">{genre}</Badge>
+                      <Badge variant="secondary">{genre}</Badge>
                     </Link>
                   ))}
                 </InfoGridItem>
@@ -231,9 +232,11 @@ export function SongInfoDialog() {
                 {formatBytes(song.size ?? 0)}
               </InfoGridItem>
               <InfoGridItem title="bpm">{song.bpm ?? 0}</InfoGridItem>
-              <InfoGridItem title="bitrate">{song.bitRate} kbps</InfoGridItem>
+              <InfoGridItem title="bitrate">
+                {formatBitrate(song.bitRate)}
+              </InfoGridItem>
               <InfoGridItem title="codec">
-                <Badge>{song.suffix.toUpperCase()}</Badge>
+                <Badge variant="secondary">{song.suffix.toUpperCase()}</Badge>
               </InfoGridItem>
 
               <InfoGridItem title="plays">{song.playCount ?? 0}</InfoGridItem>
@@ -277,7 +280,7 @@ export function SongInfoDialog() {
 
               {song.samplingRate && (
                 <InfoGridItem title="samplingRate">
-                  {song.samplingRate / 1000} Hz
+                  {formatSamplingRate(song.samplingRate)}
                 </InfoGridItem>
               )}
 

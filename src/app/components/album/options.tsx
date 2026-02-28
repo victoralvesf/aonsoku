@@ -1,4 +1,5 @@
 import { OptionsButtons } from '@/app/components/options/buttons'
+import { DownloadOptionHandler } from '@/app/components/options/download-handler'
 import { AddToPlaylistSubMenu } from '@/app/components/song/add-to-playlist'
 import {
   DropdownMenuGroup,
