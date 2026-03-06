@@ -433,6 +433,14 @@
         },
         "group": "Barre latérale",
         "description": "Gérer la visibilité et l'organisation des sections affichées dans la barre latérale."
+      },
+      "images": {
+        "group": "Images",
+        "description": "Personnaliser les paramètres des images.",
+        "cacheLayer": {
+          "info": "Lorsque cette option est activée, les images seront mises en cache localement afin d'améliorer les performances.",
+          "label": "Activer le cache d'images"
+        }
       }
     },
     "label": "Paramètres",
@@ -480,7 +488,13 @@
         "group": "Services externes",
         "lrclib": {
           "label": "LRCLIB",
-          "info": "LRCLIB est utilisé pour trouver les paroles."
+          "info": "LRCLIB est utilisé pour trouver les paroles.",
+          "customUrl": {
+            "toggle": "Utiliser une URL personnalisée",
+            "info": "Utilisez une URL personnalisée pour LRCLIB au lieu de celle par défaut.",
+            "label": "URL",
+            "example": "Exemple : https://my-lrclib.com"
+          }
         },
         "description": "Gérer les services externes auxquels Aonsoku peut accéder."
       }
@@ -742,7 +756,8 @@
     "dialog": {
       "title": "Nouvelle version disponible !",
       "remindLater": "Me rappeler plus tard",
-      "install": "Installer et redémarrer"
+      "install": "Installer et redémarrer",
+      "macOS": "Télécharger sur GitHub"
     },
     "toasts": {
       "success": "La mise à jour a été installée ! L'application va redémarrer.",

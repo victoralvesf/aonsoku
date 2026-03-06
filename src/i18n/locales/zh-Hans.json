@@ -475,7 +475,8 @@
     "dialog": {
       "title": "发现了一个新版本！",
       "remindLater": "稍候提醒我",
-      "install": "安装并重启"
+      "install": "安装并重启",
+      "macOS": "从 GitHub 下载"
     }
   },
   "about": {
@@ -609,6 +610,14 @@
         "service": {
           "url": "播客服务 URL"
         }
+      },
+      "images": {
+        "group": "图片",
+        "description": "自定义图片设置。",
+        "cacheLayer": {
+          "info": "开启后，图片将缓存在本地以提升性能。",
+          "label": "开启图片缓存"
+        }
       }
     },
     "label": "设置",
@@ -617,7 +626,13 @@
         "group": "外部服务",
         "lrclib": {
           "label": "LRCLIB",
-          "info": "LRCLIB 用于查找歌词。"
+          "info": "LRCLIB 用于查找歌词。",
+          "customUrl": {
+            "toggle": "使用自定义 URL",
+            "info": "使用自定义 URL 替代默认的 LRCLIB 地址。",
+            "label": "URL",
+            "example": "示例：https://my-lrclib.com"
+          }
         },
         "description": "管理 Aonsoku 可以访问的外部服务。"
       }
