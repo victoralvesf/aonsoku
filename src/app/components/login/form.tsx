@@ -51,11 +51,9 @@ const loginSchema = z.object({
       message: 'login.form.validations.protocol',
     }),
   username: z
-    .string({ required_error: 'login.form.validations.username' })
-    .min(2, { message: 'login.form.validations.usernameLength' }),
+    .string({ required_error: 'login.form.validations.username' }),
   password: z
-    .string({ required_error: 'login.form.validations.password' })
-    .min(2, { message: 'login.form.validations.passwordLength' }),
+    .string({ required_error: 'login.form.validations.password' }),
 })
 
 type FormData = z.infer<typeof loginSchema>
