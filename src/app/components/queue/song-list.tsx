@@ -8,17 +8,32 @@ import { Separator } from '@/app/components/ui/separator'
 import { queueColumns } from '@/app/tables/queue-columns'
 import {
   usePlayerActions,
+  usePlayerContext,
   usePlayerCurrentList,
   usePlayerCurrentSongIndex,
 } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
+import { PlaybackSource } from '@/types/playerContext'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
+
+function getSourceLabel(source: PlaybackSource | null): string | null {
+  if (
+    source?.type === 'album' ||
+    source?.type === 'playlist' ||
+    source?.type === 'artist' ||
+    source?.type === 'favourite'
+  ) {
+    return `: ${source.name}`
+  }
+  return null
+}
 
 export function QueueSongList() {
   const { t } = useTranslation()
   const currentList = usePlayerCurrentList()
   const currentSongIndex = usePlayerCurrentSongIndex()
   const { clearPlayerState, setSongList } = usePlayerActions()
+  const { source } = usePlayerContext()
 
   const columns = useMemo(() => queueColumns(), [])
   const trackListCount = useMemo(() => currentList.length, [currentList])
@@ -39,12 +54,17 @@ export function QueueSongList() {
     'remove',
   ]
 
+  const sourceLabel = getSourceLabel(source)
+
   return (
     <div className="flex flex-1 flex-col h-full min-w-[300px]">
       <DialogTitle className="sr-only">{t('queue.title')}</DialogTitle>
       <div className="flex items-center justify-between h-8 mb-2">
         <div className="flex gap-2 h-6 items-center text-foreground/70">
-          <p className="text-foreground">{t('queue.title')}</p>
+          <p className="text-foreground">
+            {t('queue.title')}
+            {sourceLabel}
+          </p>
           <p>{'•'}</p>
           <p className="text-sm">
             {t('playlist.songCount', { count: trackListCount })}

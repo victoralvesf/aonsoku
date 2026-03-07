@@ -1,5 +1,6 @@
-import { Play } from 'lucide-react'
-import { ComponentPropsWithoutRef } from 'react'
+import clsx from 'clsx'
+import { Pause, Play } from 'lucide-react'
+import React, { ComponentPropsWithoutRef } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import { Button } from '@/app/components/ui/button'
@@ -56,26 +57,65 @@ function Image({ src, alt }: ImageProps) {
   )
 }
 
-interface PlayButtonProps {
+interface ButtonWrapProps extends React.PropsWithChildren {
   onClick: () => void
+  dataTestId: string
+  isActive: boolean
 }
 
-function PlayButton({ onClick }: PlayButtonProps) {
+function ButtonWrap({
+  onClick,
+  dataTestId,
+  children,
+  isActive,
+}: ButtonWrapProps) {
   return (
     <div className="w-full h-full flex items-center justify-center rounded bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 absolute inset-0 z-10">
       <Button
-        className="opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-full w-12 h-12 z-20"
+        className={clsx(
+          'transition-all duration-300 rounded-full w-12 h-12 z-20',
+          !isActive && 'opacity-0 group-hover:opacity-100',
+        )}
         variant="outline"
         onClick={(e) => {
           e.stopPropagation()
           e.preventDefault()
           onClick()
         }}
-        data-testid="card-play-button"
+        data-testid={dataTestId}
       >
-        <Play className="fill-foreground" />
+        {children}
       </Button>
     </div>
+  )
+}
+
+interface PlayPauseButtonProps {
+  onClick: () => void
+  isActive: boolean
+}
+
+function PlayButton({ onClick, isActive }: PlayPauseButtonProps) {
+  return (
+    <ButtonWrap
+      dataTestId="card-play-button"
+      onClick={onClick}
+      isActive={isActive}
+    >
+      <Play className="fill-foreground" />
+    </ButtonWrap>
+  )
+}
+
+function PauseButton({ onClick, isActive }: PlayPauseButtonProps) {
+  return (
+    <ButtonWrap
+      dataTestId="card-pause-button"
+      onClick={onClick}
+      isActive={isActive}
+    >
+      <Pause className="fill-foreground" />
+    </ButtonWrap>
   )
 }
 
@@ -157,4 +197,5 @@ export const PreviewCard = {
   InfoWrapper,
   Title,
   Subtitle,
+  PauseButton,
 }

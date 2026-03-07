@@ -34,6 +34,7 @@ interface ActionsMainButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   tooltip?: string
   buttonStyle?: 'primary' | 'secondary'
+  isActive?: boolean
 }
 
 function Button({
@@ -41,6 +42,7 @@ function Button({
   tooltip,
   buttonStyle = 'secondary',
   className,
+  isActive = false,
   ...props
 }: ActionsMainButtonProps) {
   const button = (
@@ -52,6 +54,7 @@ function Button({
           ? 'hover:scale-105 mr-2'
           : 'hover:bg-foreground/20',
         className,
+        isActive && 'pointer-events-none text-primary',
       )}
       variant={buttonStyle === 'primary' ? 'default' : 'ghost'}
       {...props}

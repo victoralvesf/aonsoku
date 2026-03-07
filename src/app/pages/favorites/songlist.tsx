@@ -24,7 +24,13 @@ export default function SongList() {
   const songCount = data.songs.length
 
   function handlePlaySong(index: number) {
-    if (songlist) setSongList(songlist, index)
+    if (songlist) {
+      setSongList(songlist, index, false, {
+        type: 'favourite',
+        id: 'favourite',
+        name: t('sidebar.favorites'),
+      })
+    }
   }
 
   const columnsToShow: ColumnFilter[] = [

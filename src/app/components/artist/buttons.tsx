@@ -4,7 +4,11 @@ import { Actions } from '@/app/components/actions'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { subsonic } from '@/service/subsonic'
 import { useAppPages } from '@/store/app.store'
-import { usePlayerActions } from '@/store/player.store'
+import {
+  usePlayerActions,
+  usePlayerContext,
+  usePlayerStore,
+} from '@/store/player.store'
 import { IArtist } from '@/types/responses/artist'
 import { queryKeys } from '@/utils/queryKeys'
 import { ArtistOptions } from './options'
@@ -21,10 +25,14 @@ export function ArtistButtons({
   isArtistEmpty,
 }: ArtistButtonsProps) {
   const { t } = useTranslation()
-  const { setSongList } = usePlayerActions()
+  const { setSongList, togglePlayPause } = usePlayerActions()
   const { showInfoPanel, toggleShowInfoPanel } = useAppPages()
   const { getArtistAllSongs } = useSongList()
-
+  const { source } = usePlayerContext()
+  const isPlaying = usePlayerStore((state) => state.playerState.isPlaying)
+  const isShuffleActive = usePlayerStore(
+    (state) => state.playerState.isShuffleActive,
+  )
   const isArtistStarred = artist.starred !== undefined
 
   const queryClient = useQueryClient()
@@ -50,7 +58,11 @@ export function ArtistButtons({
     const songList = await getArtistAllSongs(artist?.name || '')
 
     if (songList) {
-      setSongList(songList, 0, shuffle)
+      setSongList(songList, 0, shuffle, {
+        id: artist.id,
+        name: artist.name,
+        type: 'artist',
+      })
     }
   }
 
@@ -72,19 +84,35 @@ export function ArtistButtons({
     return <div className="h-8 w-full" />
   }
 
+  const isCurrentArtistActive =
+    source?.type === 'artist' && source.id === artist.id
+  const isArtistPlaying = isPlaying && isCurrentArtistActive
+
   return (
     <Actions.Container>
-      <Actions.Button
-        tooltip={buttonsTooltips.play}
-        buttonStyle="primary"
-        onClick={() => handlePlayArtistRadio()}
-      >
-        <Actions.PlayIcon />
-      </Actions.Button>
+      {!isArtistPlaying && (
+        <Actions.Button
+          tooltip={buttonsTooltips.play}
+          buttonStyle="primary"
+          onClick={() => handlePlayArtistRadio()}
+        >
+          <Actions.PlayIcon />
+        </Actions.Button>
+      )}
+      {isArtistPlaying && (
+        <Actions.Button
+          tooltip={buttonsTooltips.play}
+          buttonStyle="primary"
+          onClick={togglePlayPause}
+        >
+          <Actions.PauseIcon />
+        </Actions.Button>
+      )}
 
       <Actions.Button
         tooltip={buttonsTooltips.shuffle}
         onClick={() => handlePlayArtistRadio(true)}
+        isActive={isArtistPlaying && isShuffleActive}
       >
         <Actions.ShuffleIcon />
       </Actions.Button>

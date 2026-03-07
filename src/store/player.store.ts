@@ -59,6 +59,10 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             currentPlaybackRate: 1,
             hasPrev: false,
             hasNext: false,
+            playbackContext: {
+              isSourceModified: false,
+              source: null,
+            },
           },
           fullscreen: {
             isFullscreen: false,
@@ -176,7 +180,12 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             },
           },
           actions: {
-            setSongList: (songlist, index, shuffle = false) => {
+            setSongList: (
+              songlist,
+              index,
+              shuffle = false,
+              playbackSource = null,
+            ) => {
               const { currentList, currentSongIndex } = get().songlist
 
               const listsAreEqual = areSongListsEqual(currentList, songlist)
@@ -185,6 +194,10 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               get().actions.resetAccumulatedTime()
               get().actions.setHasSyncedTheCurrentTrack(false)
               get().actions.setHasScrobbledTheCurrentTrack(false)
+
+              set((state) => {
+                state.playerState.playbackContext.source = playbackSource
+              })
 
               if (!listsAreEqual || (listsAreEqual && songHasChanged)) {
                 get().actions.resetProgress()
@@ -566,6 +579,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.audioPlayerRef = null
                 state.settings.colors.currentSongColor = null
                 state.listenTime.accumulated = 0
+                state.playerState.playbackContext.source = null
               })
             },
             resetProgress: () => {
@@ -1290,3 +1304,6 @@ export const usePlayerCurrentList = () =>
 
 export const usePlayerFullscreen = () =>
   usePlayerStore((state) => state.fullscreen)
+
+export const usePlayerContext = () =>
+  usePlayerStore((state) => state.playerState.playbackContext)

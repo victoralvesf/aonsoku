@@ -11,11 +11,18 @@ import {
 import { useRouteIsActive } from '@/app/hooks/use-route-is-active'
 import { ROUTES } from '@/routes/routesList'
 import { Playlist } from '@/types/responses/playlist'
+import { EqualizerBars } from '../icons/equalizer-bars'
 
 const MemoContextMenuProvider = memo(ContextMenuProvider)
 const MemoPlaylistOptions = memo(PlaylistOptions)
 
-export function SidebarPlaylistItem({ playlist }: { playlist: Playlist }) {
+export function SidebarPlaylistItem({
+  playlist,
+  isPlaying,
+}: {
+  playlist: Playlist
+  isPlaying: boolean
+}) {
   const { isOnPlaylist } = useRouteIsActive()
 
   return (
@@ -32,7 +39,9 @@ export function SidebarPlaylistItem({ playlist }: { playlist: Playlist }) {
         <MainSidebarMenuButton
           asChild
           className={clsx(
-            isOnPlaylist(playlist.id) && 'cursor-default bg-accent',
+            isOnPlaylist(playlist.id) && 'cursor-default',
+            isOnPlaylist(playlist.id) && !isPlaying && 'bg-accent',
+            isPlaying && 'text-primary',
           )}
         >
           <Link
@@ -43,7 +52,11 @@ export function SidebarPlaylistItem({ playlist }: { playlist: Playlist }) {
               }
             }}
           >
-            <ListMusic />
+            {isPlaying ? (
+              <EqualizerBars className="text-primary" />
+            ) : (
+              <ListMusic />
+            )}
             <span className="truncate">{playlist.name}</span>
           </Link>
         </MainSidebarMenuButton>

@@ -20,6 +20,17 @@ export interface ISongList {
   podcastListProgresses: number[]
 }
 
+export type PlaybackSource =
+  | { type: 'playlist'; id: string; name: string }
+  | { type: 'album'; id: string; name: string }
+  | { type: 'artist'; id: string; name: string }
+  | { type: 'favourite'; id: string; name: string }
+
+export interface IPlaybackContext {
+  source: PlaybackSource | null
+  isSourceModified: boolean
+}
+
 export interface IPlayerState {
   isPlaying: boolean
   loopState: LoopState
@@ -37,6 +48,7 @@ export interface IPlayerState {
   hasScrobbledTheCurrentTrack: boolean
   hasPrev: boolean
   hasNext: boolean
+  playbackContext: IPlaybackContext
 }
 
 export interface IPlayerProgress {
@@ -142,7 +154,12 @@ export interface IPlayerFullscreen {
 
 export interface IPlayerActions {
   playSong: (song: ISong) => void
-  setSongList: (songlist: ISong[], index: number, shuffle?: boolean) => void
+  setSongList: (
+    songlist: ISong[],
+    index: number,
+    shuffle?: boolean,
+    playbackSource?: PlaybackSource | null,
+  ) => void
   setCurrentSong: () => void
   checkIsSongStarred: () => void
   starSongInQueue: (id: string) => void

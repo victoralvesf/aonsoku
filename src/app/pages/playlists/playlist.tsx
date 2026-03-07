@@ -85,7 +85,9 @@ export default function Playlist() {
         <DataTable
           columns={columns}
           data={playlist.entry ?? []}
-          handlePlaySong={(row) => setSongList(playlist.entry, row.index)}
+          handlePlaySong={(row) => {
+            setSongList(playlist.entry, row.index)
+          }}
           columnFilter={columnsToShow}
           noRowsMessage={t('playlist.noSongList')}
           variant="modern"
