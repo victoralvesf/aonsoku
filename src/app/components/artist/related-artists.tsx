@@ -10,7 +10,11 @@ import {
 import { CarouselButton } from '@/app/components/ui/carousel-button'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
-import { usePlayerActions } from '@/store/player.store'
+import {
+  usePlayerActions,
+  usePlayerContext,
+  usePlayerStore,
+} from '@/store/player.store'
 import { ISimilarArtist } from '@/types/responses/artist'
 
 interface RelatedArtistsListProps {
@@ -27,7 +31,9 @@ export default function RelatedArtistsList({
   const [api, setApi] = useState<CarouselApi>()
   const [canScrollPrev, setCanScrollPrev] = useState<boolean>()
   const [canScrollNext, setCanScrollNext] = useState<boolean>()
-  const { setSongList } = usePlayerActions()
+  const { setSongList, togglePlayPause } = usePlayerActions()
+  const { source } = usePlayerContext()
+  const isPlaying = usePlayerStore((state) => state.playerState.isPlaying)
 
   if (similarArtists.length > 16) {
     similarArtists = similarArtists.slice(0, 16)
@@ -35,7 +41,13 @@ export default function RelatedArtistsList({
 
   async function handlePlayArtistRadio(artist: ISimilarArtist) {
     const songList = await getArtistAllSongs(artist.name)
-    if (songList) setSongList(songList, 0)
+    if (songList) {
+      setSongList(songList, 0, false, {
+        id: artist.id,
+        name: artist.name,
+        type: 'artist',
+      })
+    }
   }
 
   useEffect(() => {
@@ -81,32 +93,49 @@ export default function RelatedArtistsList({
           setApi={setApi}
         >
           <CarouselContent>
-            {similarArtists.map((artist) => (
-              <CarouselItem key={artist.id} className="basis-1/6 2xl:basis-1/8">
-                <PreviewCard.Root>
-                  <PreviewCard.ImageWrapper
-                    link={ROUTES.ARTIST.PAGE(artist.id)}
-                  >
-                    <ImageLoader id={artist.coverArt} type="artist">
-                      {(src) => (
-                        <PreviewCard.Image src={src} alt={artist.name} />
-                      )}
-                    </ImageLoader>
-                    <PreviewCard.PlayButton
-                      onClick={() => handlePlayArtistRadio(artist)}
-                    />
-                  </PreviewCard.ImageWrapper>
-                  <PreviewCard.InfoWrapper>
-                    <PreviewCard.Subtitle
+            {similarArtists.map((artist) => {
+              const isRelatedArtistActive =
+                source?.type === 'artist' && source.id === artist.id
+              const isArtistPlaying = isRelatedArtistActive && isPlaying
+              return (
+                <CarouselItem
+                  key={artist.id}
+                  className="basis-1/6 2xl:basis-1/8"
+                >
+                  <PreviewCard.Root>
+                    <PreviewCard.ImageWrapper
                       link={ROUTES.ARTIST.PAGE(artist.id)}
-                      className="mt-2"
                     >
-                      {artist.name}
-                    </PreviewCard.Subtitle>
-                  </PreviewCard.InfoWrapper>
-                </PreviewCard.Root>
-              </CarouselItem>
-            ))}
+                      <ImageLoader id={artist.coverArt} type="artist">
+                        {(src) => (
+                          <PreviewCard.Image src={src} alt={artist.name} />
+                        )}
+                      </ImageLoader>
+                      {!isArtistPlaying && (
+                        <PreviewCard.PlayButton
+                          onClick={() => handlePlayArtistRadio(artist)}
+                          isActive={isRelatedArtistActive}
+                        />
+                      )}
+                      {isArtistPlaying && (
+                        <PreviewCard.PauseButton
+                          isActive={isRelatedArtistActive}
+                          onClick={togglePlayPause}
+                        />
+                      )}
+                    </PreviewCard.ImageWrapper>
+                    <PreviewCard.InfoWrapper>
+                      <PreviewCard.Subtitle
+                        link={ROUTES.ARTIST.PAGE(artist.id)}
+                        className="mt-2"
+                      >
+                        {artist.name}
+                      </PreviewCard.Subtitle>
+                    </PreviewCard.InfoWrapper>
+                  </PreviewCard.Root>
+                </CarouselItem>
+              )
+            })}
           </CarouselContent>
         </Carousel>
       </div>

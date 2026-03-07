@@ -54,7 +54,7 @@ describe('PreviewCard Component', () => {
                   />
                 )}
               </ImageLoader>
-              <PreviewCard.PlayButton onClick={onClickSpy} />
+              <PreviewCard.PlayButton onClick={onClickSpy} isActive={false} />
             </PreviewCard.ImageWrapper>
           </PreviewCard.Root>
         </Wrapper>,

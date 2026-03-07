@@ -4,7 +4,11 @@ import { ImageLoader } from '@/app/components/image-loader'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { ROUTES } from '@/routes/routesList'
-import { usePlayerActions } from '@/store/player.store'
+import {
+  usePlayerActions,
+  usePlayerContext,
+  usePlayerStore,
+} from '@/store/player.store'
 import { ISimilarArtist } from '@/types/responses/artist'
 
 type ArtistCardProps = {
@@ -14,15 +18,25 @@ type ArtistCardProps = {
 function ArtistCard({ artist }: ArtistCardProps) {
   const { t } = useTranslation()
   const { getArtistAllSongs } = useSongList()
-  const { setSongList } = usePlayerActions()
+  const { setSongList, togglePlayPause } = usePlayerActions()
+  const { source } = usePlayerContext()
+  const isPlaying = usePlayerStore((state) => state.playerState.isPlaying)
 
   const handlePlayArtistRadio = useCallback(async () => {
     const songList = await getArtistAllSongs(artist.name)
 
     if (songList) {
-      setSongList(songList, 0)
+      setSongList(songList, 0, false, {
+        id: artist.id,
+        name: artist.name,
+        type: 'artist',
+      })
     }
-  }, [artist.name, getArtistAllSongs, setSongList])
+  }, [artist, getArtistAllSongs, setSongList])
+
+  const isCurrentArtistActive =
+    source?.type === 'artist' && source.id === artist.id
+  const isArtistPlaying = isPlaying && isCurrentArtistActive
 
   return (
     <PreviewCard.Root className="flex flex-col w-full h-full">
@@ -30,7 +44,17 @@ function ArtistCard({ artist }: ArtistCardProps) {
         <ImageLoader id={artist.coverArt} type="artist" size={300}>
           {(src) => <PreviewCard.Image src={src} alt={artist.name} />}
         </ImageLoader>
-        <PreviewCard.PlayButton onClick={handlePlayArtistRadio} />
+        {isArtistPlaying ? (
+          <PreviewCard.PauseButton
+            isActive={isCurrentArtistActive}
+            onClick={togglePlayPause}
+          />
+        ) : (
+          <PreviewCard.PlayButton
+            onClick={handlePlayArtistRadio}
+            isActive={isCurrentArtistActive}
+          />
+        )}
       </PreviewCard.ImageWrapper>
       <PreviewCard.InfoWrapper>
         <PreviewCard.Title link={ROUTES.ARTIST.PAGE(artist.id)}>
