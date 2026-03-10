@@ -7,6 +7,7 @@ const album = {
   all: 'get-all-albums',
   single: 'get-album',
   info: 'get-album-info',
+  animatedArtwork: 'get-animated-album-artwork',
   moreAlbums: 'get-artist-albums',
   genreAlbums: 'get-genre-random-albums',
   recentlyAdded: 'get-recently-added-albums',

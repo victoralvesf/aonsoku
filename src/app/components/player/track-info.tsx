@@ -7,6 +7,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 
 import { MarqueeTitle } from '@/app/components/fullscreen/marquee-title'
+import { AnimatedCoverVideo } from '@/app/components/album/animated-cover-video'
 import { ImageLoader } from '@/app/components/image-loader'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
@@ -72,23 +73,31 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
   return (
     <Fragment>
       <div className="group relative">
-        <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md">
+        <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md relative">
           <ImageLoader id={song.coverArt} type="song" size={400}>
             {(src) => (
-              <LazyLoadImage
-                key={song.id}
-                id="track-song-image"
-                src={src}
-                width="100%"
-                height="100%"
-                crossOrigin="anonymous"
-                effect="opacity"
-                className="aspect-square object-cover w-full h-full bg-skeleton text-transparent"
-                data-testid="track-image"
-                alt={`${song.artist} - ${song.title}`}
-                onLoad={getImageColor}
-                onError={handleError}
-              />
+              <>
+                <LazyLoadImage
+                  key={song.id}
+                  id="track-song-image"
+                  src={src}
+                  width="100%"
+                  height="100%"
+                  crossOrigin="anonymous"
+                  effect="opacity"
+                  className="aspect-square object-cover w-full h-full bg-skeleton text-transparent"
+                  data-testid="track-image"
+                  alt={`${song.artist} - ${song.title}`}
+                  onLoad={getImageColor}
+                  onError={handleError}
+                />
+
+                <AnimatedCoverVideo
+                  artist={song.artist}
+                  album={song.album}
+                  screen="playerBar"
+                />
+              </>
             )}
           </ImageLoader>
         </div>

@@ -1,10 +1,11 @@
 import clsx from 'clsx'
+import { AnimatedCoverVideo } from '@/app/components/album/animated-cover-video'
 import { ImageLoader } from '@/app/components/image-loader'
 import { AspectRatio } from '@/app/components/ui/aspect-ratio'
 import { usePlayerStore } from '@/store/player.store'
 
 export function FullscreenSongImage() {
-  const { coverArt, artist, title } = usePlayerStore(({ songlist }) => {
+  const { coverArt, artist, title, album } = usePlayerStore(({ songlist }) => {
     return songlist.currentSong
   })
 
@@ -14,21 +15,29 @@ export function FullscreenSongImage() {
         ratio={1 / 1}
         className="rounded-lg 2xl:rounded-2xl overflow-hidden bg-accent/60"
       >
-        <ImageLoader id={coverArt} type="song" size={800}>
-          {(src, isLoading) => (
-            <img
-              src={src}
-              alt={`${artist} - ${title}`}
-              className={clsx(
-                'aspect-square object-cover shadow-custom-5 transition-opacity duration-300 opacity-0',
-                'relative after:absolute after:block after:inset-0 after:bg-accent after:text-transparent',
-                !isLoading && 'opacity-100',
-              )}
-              width="100%"
-              height="100%"
-            />
-          )}
-        </ImageLoader>
+        <div className="relative w-full h-full">
+          <ImageLoader id={coverArt} type="song" size={800}>
+            {(src, isLoading) => (
+              <img
+                src={src}
+                alt={`${artist} - ${title}`}
+                className={clsx(
+                  'aspect-square object-cover shadow-custom-5 transition-opacity duration-300 opacity-0',
+                  'relative after:absolute after:block after:inset-0 after:bg-accent after:text-transparent',
+                  !isLoading && 'opacity-100',
+                )}
+                width="100%"
+                height="100%"
+              />
+            )}
+          </ImageLoader>
+
+          <AnimatedCoverVideo
+            artist={artist}
+            album={album}
+            screen="fullscreen"
+          />
+        </div>
       </AspectRatio>
     </div>
   )

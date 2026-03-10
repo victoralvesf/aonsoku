@@ -66,6 +66,25 @@ interface IAppSettings {
   setCurrentPage: (page: SettingsOptions) => void
 }
 
+interface IAppArtworkScreens {
+  album: boolean
+  setAlbum: (value: boolean) => void
+  fullscreen: boolean
+  setFullscreen: (value: boolean) => void
+  playerBar: boolean
+  setPlayerBar: (value: boolean) => void
+}
+
+interface IAppArtwork {
+  enabled: boolean
+  setEnabled: (value: boolean) => void
+  customUrlEnabled: boolean
+  setCustomUrlEnabled: (value: boolean) => void
+  baseUrl: string
+  setBaseUrl: (value: string) => void
+  screens: IAppArtworkScreens
+}
+
 interface IPodcasts {
   active: boolean
   setActive: (value: boolean) => void
@@ -104,6 +123,7 @@ export interface IAppContext {
   data: IAppData
   accounts: IAccounts
   podcasts: IPodcasts
+  artwork: IAppArtwork
   pages: IAppPages
   desktop: IDesktop
   command: IAppCommand

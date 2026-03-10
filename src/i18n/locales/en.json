@@ -675,6 +675,32 @@
             "label": "URL",
             "example": "Example: https://my-lrclib.com"
           }
+        },
+        "animatedCover": {
+          "enabled": {
+            "label": "Enable Animated Covers",
+            "info": "When enabled, animated covers will be loaded from an external service when available."
+          },
+          "customUrl": {
+            "toggle": "Use a custom URL",
+            "info": "Use a custom URL for animated artwork API instead of the default one.",
+            "label": "URL",
+            "example": "Default: https://artwork.m8tec.top"
+          },
+          "screens": {
+            "album": {
+              "label": "Album Page",
+              "info": "Enable animated covers in album header view."
+            },
+            "fullscreen": {
+              "label": "Fullscreen Player",
+              "info": "Enable animated covers in fullscreen player cover."
+            },
+            "playerBar": {
+              "label": "Bottom Player Bar",
+              "info": "Enable animated covers for the current-song cover in the bottom player bar."
+            }
+          }
         }
       }
     },
