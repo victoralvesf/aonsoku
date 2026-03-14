@@ -630,6 +630,10 @@
             "playerBar": {
               "label": "Untere Player-Leiste",
               "info": "Animierte Cover für das aktuelle Song-Cover in der unteren Player-Leiste aktivieren."
+            },
+            "drawer": {
+              "label": "Queue/Lyrics Drawer",
+              "info": "Animierte Cover für das aktuelle Song-Cover im Queue/Lyrics-Drawer aktivieren."
             }
           }
         }

@@ -73,6 +73,8 @@ interface IAppArtworkScreens {
   setFullscreen: (value: boolean) => void
   playerBar: boolean
   setPlayerBar: (value: boolean) => void
+  drawer: boolean
+  setDrawer: (value: boolean) => void
 }
 
 interface IAppArtwork {

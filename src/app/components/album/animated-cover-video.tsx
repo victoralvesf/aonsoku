@@ -3,7 +3,7 @@ import { useAnimatedAlbumArtwork } from '@/app/hooks/use-animated-album-artwork'
 import { cn } from '@/lib/utils'
 import { useAppAnimatedCovers } from '@/store/app.store'
 
-type AnimatedCoverScreen = 'album' | 'fullscreen' | 'playerBar'
+type AnimatedCoverScreen = 'album' | 'fullscreen' | 'playerBar' | 'drawer'
 
 interface AnimatedCoverVideoProps {
   artist?: string
@@ -21,12 +21,21 @@ export function AnimatedCoverVideo({
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const [hasVideoError, setHasVideoError] = useState(false)
   const { enabled: globalEnabled, screens } = useAppAnimatedCovers()
-  const isScreenEnabled =
-    screen === 'fullscreen'
-      ? screens.fullscreen
-      : screen === 'playerBar'
-        ? screens.playerBar
-        : screens.album
+
+  const isScreenEnabled = (() => {
+    switch (screen) {
+      case 'fullscreen':
+        return screens.fullscreen
+      case 'playerBar':
+        return screens.playerBar
+      case 'drawer':
+        return screens.drawer
+      case 'album':
+      default:
+        return screens.album
+    }
+  })()
+
   const effectiveEnabled = globalEnabled && isScreenEnabled
   const { data: streamUrl } = useAnimatedAlbumArtwork(
     artist,

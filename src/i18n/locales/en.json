@@ -699,6 +699,10 @@
             "playerBar": {
               "label": "Bottom Player Bar",
               "info": "Enable animated covers for the current-song cover in the bottom player bar."
+            },
+            "drawer": {
+              "label": "Queue/Lyrics Drawer",
+              "info": "Enable animated covers for the current-song cover in the queue/lyrics drawer."
             }
           }
         }

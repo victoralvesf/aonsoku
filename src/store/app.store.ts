@@ -134,6 +134,12 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                   state.artwork.screens.playerBar = value
                 })
               },
+              drawer: true,
+              setDrawer: (value) => {
+                set((state) => {
+                  state.artwork.screens.drawer = value
+                })
+              },
             },
           },
           pages: {
