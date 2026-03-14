@@ -76,30 +76,28 @@ export function TrackInfo({ song }: { song: ISong | undefined }) {
         <div className="min-w-[70px] max-w-[70px] aspect-square bg-cover bg-center bg-skeleton rounded overflow-hidden shadow-md relative">
           <ImageLoader id={song.coverArt} type="song" size={400}>
             {(src) => (
-              <>
-                <LazyLoadImage
-                  key={song.id}
-                  id="track-song-image"
-                  src={src}
-                  width="100%"
-                  height="100%"
-                  crossOrigin="anonymous"
-                  effect="opacity"
-                  className="aspect-square object-cover w-full h-full bg-skeleton text-transparent"
-                  data-testid="track-image"
-                  alt={`${song.artist} - ${song.title}`}
-                  onLoad={getImageColor}
-                  onError={handleError}
-                />
-
-                <AnimatedCoverVideo
-                  artist={song.artist}
-                  album={song.album}
-                  screen="playerBar"
-                />
-              </>
+              <LazyLoadImage
+                key={song.id}
+                id="track-song-image"
+                src={src}
+                width="100%"
+                height="100%"
+                crossOrigin="anonymous"
+                effect="opacity"
+                className="aspect-square object-cover w-full h-full bg-skeleton text-transparent"
+                data-testid="track-image"
+                alt={`${song.artist} - ${song.title}`}
+                onLoad={getImageColor}
+                onError={handleError}
+              />
             )}
           </ImageLoader>
+
+          <AnimatedCoverVideo
+            artist={song.artist}
+            album={song.album}
+            screen="playerBar"
+          />
         </div>
       </div>
       <div className="flex flex-col justify-center w-full overflow-hidden">

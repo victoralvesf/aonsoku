@@ -23,26 +23,24 @@ export function CurrentSongInfo() {
         <div className="relative w-full h-full">
           <ImageLoader id={currentSong.coverArt} type="song" size={900}>
             {(src) => (
-              <>
-                <LazyLoadImage
-                  id="song-info-image"
-                  src={src}
-                  effect="opacity"
-                  alt={`${currentSong.artist} - ${currentSong.title}`}
-                  className="rounded-md aspect-square object-cover text-transparent"
-                  width="100%"
-                  height="100%"
-                />
-
-                <AnimatedCoverVideo
-                  artist={currentSong.artist}
-                  album={currentSong.album}
-                  screen="drawer"
-                  className="rounded-md"
-                />
-              </>
+              <LazyLoadImage
+                id="song-info-image"
+                src={src}
+                effect="opacity"
+                alt={`${currentSong.artist} - ${currentSong.title}`}
+                className="rounded-md aspect-square object-cover text-transparent"
+                width="100%"
+                height="100%"
+              />
             )}
           </ImageLoader>
+
+          <AnimatedCoverVideo
+            artist={currentSong.artist}
+            album={currentSong.album}
+            screen="drawer"
+            className="rounded-md"
+          />
         </div>
       </AspectRatio>
 
