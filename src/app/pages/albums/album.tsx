@@ -137,7 +137,13 @@ export default function Album() {
         <DataTable
           columns={columns}
           data={album.song}
-          handlePlaySong={(row) => setSongList(album.song, row.index)}
+          handlePlaySong={(row) =>
+            setSongList(album.song, row.index, false, {
+              id: album.id,
+              name: album.name,
+              type: 'album',
+            })
+          }
           columnFilter={columnsToShow}
           showDiscNumber={true}
           variant="modern"

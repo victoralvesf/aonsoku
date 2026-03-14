@@ -12,7 +12,11 @@ import {
 import { CarouselButton } from '@/app/components/ui/carousel-button'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
-import { usePlayerActions } from '@/store/player.store'
+import {
+  usePlayerActions,
+  usePlayerContext,
+  usePlayerStore,
+} from '@/store/player.store'
 import { Albums } from '@/types/responses/album'
 
 interface PreviewListProps {
@@ -33,8 +37,10 @@ export default function PreviewList({
   const [api, setApi] = useState<CarouselApi>()
   const [canScrollPrev, setCanScrollPrev] = useState<boolean>()
   const [canScrollNext, setCanScrollNext] = useState<boolean>()
-  const { setSongList } = usePlayerActions()
+  const { setSongList, togglePlayPause } = usePlayerActions()
   const { t } = useTranslation()
+  const { source } = usePlayerContext()
+  const isPlaying = usePlayerStore((state) => state.playerState.isPlaying)
 
   moreTitle = moreTitle || t('generic.seeMore')
 
@@ -46,7 +52,11 @@ export default function PreviewList({
     const response = await subsonic.albums.getOne(album.id)
 
     if (response) {
-      setSongList(response.song, 0)
+      setSongList(response.song, 0, false, {
+        id: album.id,
+        name: album.name,
+        type: 'album',
+      })
     }
   }
 
@@ -108,37 +118,53 @@ export default function PreviewList({
           data-testid="preview-list-carousel"
         >
           <CarouselContent>
-            {list.map((album, index) => (
-              <CarouselItem
-                key={album.id}
-                className="basis-1/6 2xl:basis-1/8"
-                data-testid={`preview-list-carousel-item-${index}`}
-              >
-                <PreviewCard.Root>
-                  <PreviewCard.ImageWrapper link={ROUTES.ALBUM.PAGE(album.id)}>
-                    <ImageLoader id={album.coverArt} type="album">
-                      {(src) => (
-                        <PreviewCard.Image src={src} alt={album.name} />
-                      )}
-                    </ImageLoader>
-                    <PreviewCard.PlayButton
-                      onClick={() => handlePlayAlbum(album)}
-                    />
-                  </PreviewCard.ImageWrapper>
-                  <PreviewCard.InfoWrapper>
-                    <PreviewCard.Title link={ROUTES.ALBUM.PAGE(album.id)}>
-                      {album.name}
-                    </PreviewCard.Title>
-                    <PreviewCard.Subtitle
-                      enableLink={album.artistId !== undefined}
-                      link={ROUTES.ARTIST.PAGE(album.artistId ?? '')}
+            {list.map((album, index) => {
+              const isAlbumActive =
+                source?.type === 'album' && source.id === album.id
+              const isAlbumPlaying = isAlbumActive && isPlaying
+              return (
+                <CarouselItem
+                  key={album.id}
+                  className="basis-1/6 2xl:basis-1/8"
+                  data-testid={`preview-list-carousel-item-${index}`}
+                >
+                  <PreviewCard.Root>
+                    <PreviewCard.ImageWrapper
+                      link={ROUTES.ALBUM.PAGE(album.id)}
                     >
-                      {album.artist}
-                    </PreviewCard.Subtitle>
-                  </PreviewCard.InfoWrapper>
-                </PreviewCard.Root>
-              </CarouselItem>
-            ))}
+                      <ImageLoader id={album.coverArt} type="album">
+                        {(src) => (
+                          <PreviewCard.Image src={src} alt={album.name} />
+                        )}
+                      </ImageLoader>
+                      {!isAlbumPlaying && (
+                        <PreviewCard.PlayButton
+                          onClick={() => handlePlayAlbum(album)}
+                          isActive={isAlbumActive}
+                        />
+                      )}
+                      {isAlbumPlaying && (
+                        <PreviewCard.PauseButton
+                          isActive={isAlbumActive}
+                          onClick={togglePlayPause}
+                        />
+                      )}
+                    </PreviewCard.ImageWrapper>
+                    <PreviewCard.InfoWrapper>
+                      <PreviewCard.Title link={ROUTES.ALBUM.PAGE(album.id)}>
+                        {album.name}
+                      </PreviewCard.Title>
+                      <PreviewCard.Subtitle
+                        enableLink={album.artistId !== undefined}
+                        link={ROUTES.ARTIST.PAGE(album.artistId ?? '')}
+                      >
+                        {album.artist}
+                      </PreviewCard.Subtitle>
+                    </PreviewCard.InfoWrapper>
+                  </PreviewCard.Root>
+                </CarouselItem>
+              )
+            })}
           </CarouselContent>
         </Carousel>
       </div>

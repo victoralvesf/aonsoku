@@ -32,7 +32,11 @@ export default function PlaylistsPage() {
     const playlist = await subsonic.playlists.getOne(playlistId)
 
     if (playlist && playlist.entry.length > 0) {
-      setSongList(playlist.entry, 0)
+      setSongList(playlist.entry, 0, false, {
+        id: playlist.id,
+        name: playlist.name,
+        type: 'playlist',
+      })
     }
   }
 

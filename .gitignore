@@ -32,3 +32,5 @@ env-config.js
 .env
 
 out
+
+.pnpm-store/*

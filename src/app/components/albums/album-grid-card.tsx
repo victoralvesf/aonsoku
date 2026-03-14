@@ -1,9 +1,14 @@
+import clsx from 'clsx'
 import { memo } from 'react'
 import { ImageLoader } from '@/app/components/image-loader'
 import { PreviewCard } from '@/app/components/preview-card/card'
 import { ROUTES } from '@/routes/routesList'
 import { subsonic } from '@/service/subsonic'
-import { usePlayerActions } from '@/store/player.store'
+import {
+  usePlayerActions,
+  usePlayerContext,
+  usePlayerStore,
+} from '@/store/player.store'
 import { Albums } from '@/types/responses/album'
 
 type AlbumCardProps = {
@@ -11,23 +16,43 @@ type AlbumCardProps = {
 }
 
 function AlbumCard({ album }: AlbumCardProps) {
-  const { setSongList } = usePlayerActions()
+  const { setSongList, togglePlayPause } = usePlayerActions()
+  const { source } = usePlayerContext()
+  const isPlaying = usePlayerStore((state) => state.playerState.isPlaying)
 
   async function handlePlayAlbum() {
     const response = await subsonic.albums.getOne(album.id)
 
     if (response) {
-      setSongList(response.song, 0)
+      setSongList(response.song, 0, false, {
+        id: response.id,
+        name: response.name,
+        type: 'album',
+      })
     }
   }
 
+  const isCurrentAlbumActive =
+    source?.type === 'album' && source.id === album.id
+  const isAlbumPlayingNow = isPlaying && isCurrentAlbumActive
+
   return (
-    <PreviewCard.Root>
+    <PreviewCard.Root className={clsx(isAlbumPlayingNow && 'border-primary')}>
       <PreviewCard.ImageWrapper link={ROUTES.ALBUM.PAGE(album.id)}>
         <ImageLoader id={album.coverArt} type="album" size={300}>
           {(src) => <PreviewCard.Image src={src} alt={album.name} />}
         </ImageLoader>
-        <PreviewCard.PlayButton onClick={handlePlayAlbum} />
+        {isAlbumPlayingNow ? (
+          <PreviewCard.PauseButton
+            isActive={isCurrentAlbumActive}
+            onClick={togglePlayPause}
+          />
+        ) : (
+          <PreviewCard.PlayButton
+            isActive={isCurrentAlbumActive}
+            onClick={handlePlayAlbum}
+          />
+        )}
       </PreviewCard.ImageWrapper>
       <PreviewCard.InfoWrapper>
         <PreviewCard.Title link={ROUTES.ALBUM.PAGE(album.id)}>
