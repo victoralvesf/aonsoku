@@ -6,6 +6,7 @@ import {
   AlbumArtistInfo,
   AlbumMultipleArtistsInfo,
 } from '@/app/components/album/artists'
+import { AnimatedCoverVideo } from '@/app/components/album/animated-cover-video'
 import { ImageHeaderEffect } from '@/app/components/album/header-effect'
 import { AlbumHeaderFallback } from '@/app/components/fallbacks/album-fallbacks'
 import { BadgesData, HeaderInfoGenerator } from '@/app/components/header-info'
@@ -27,6 +28,8 @@ interface ImageHeaderProps {
   coverArtType: CoverArt
   coverArtSize: string
   coverArtAlt: string
+  animatedArtworkArtist?: string
+  animatedArtworkAlbum?: string
   badges: BadgesData
   isPlaylist?: boolean
 }
@@ -41,6 +44,8 @@ export default function ImageHeader({
   coverArtType,
   coverArtSize,
   coverArtAlt,
+  animatedArtworkArtist,
+  animatedArtworkAlbum,
   badges,
   isPlaylist = false,
 }: ImageHeaderProps) {
@@ -101,7 +106,7 @@ export default function ImageHeader({
                 'w-[200px] h-[200px] min-w-[200px] min-h-[200px]',
                 '2xl:w-[250px] 2xl:h-[250px] 2xl:min-w-[250px] 2xl:min-h-[250px]',
                 'bg-skeleton aspect-square bg-cover bg-center rounded',
-                'shadow-header-image overflow-hidden',
+                'shadow-header-image overflow-hidden relative',
                 'hover:scale-[1.02] ease-linear duration-100',
               )}
             >
@@ -118,6 +123,12 @@ export default function ImageHeader({
                 onLoad={handleLoadImage}
                 onError={handleError}
                 onClick={() => setOpen(true)}
+              />
+
+              <AnimatedCoverVideo
+                artist={animatedArtworkArtist}
+                album={animatedArtworkAlbum}
+                screen="album"
               />
             </div>
 

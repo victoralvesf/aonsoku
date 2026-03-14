@@ -7,6 +7,7 @@ import {
   HeaderTitle,
   Root,
 } from '@/app/components/settings/section'
+import { AnimatedCoversSettings } from './animated-covers'
 import { LrcLib } from './lrclib'
 
 export function Services() {
@@ -22,6 +23,7 @@ export function Services() {
       </Header>
       <ContentSeparator className="mb-2" />
       <Content>
+        <AnimatedCoversSettings />
         <LrcLib />
       </Content>
     </Root>

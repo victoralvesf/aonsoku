@@ -1,5 +1,6 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
+import { AnimatedCoverVideo } from '@/app/components/album/animated-cover-video'
 import { ImageLoader } from '@/app/components/image-loader'
 import { LinkWithoutTo } from '@/app/components/song/artist-link'
 import { AspectRatio } from '@/app/components/ui/aspect-ratio'
@@ -19,19 +20,28 @@ export function CurrentSongInfo() {
         ratio={1 / 1}
         className="shadow-header-image rounded-md overflow-hidden bg-accent"
       >
-        <ImageLoader id={currentSong.coverArt} type="song" size={900}>
-          {(src) => (
-            <LazyLoadImage
-              id="song-info-image"
-              src={src}
-              effect="opacity"
-              alt={`${currentSong.artist} - ${currentSong.title}`}
-              className="rounded-md aspect-square object-cover text-transparent"
-              width="100%"
-              height="100%"
-            />
-          )}
-        </ImageLoader>
+        <div className="relative w-full h-full">
+          <ImageLoader id={currentSong.coverArt} type="song" size={900}>
+            {(src) => (
+              <LazyLoadImage
+                id="song-info-image"
+                src={src}
+                effect="opacity"
+                alt={`${currentSong.artist} - ${currentSong.title}`}
+                className="rounded-md aspect-square object-cover text-transparent"
+                width="100%"
+                height="100%"
+              />
+            )}
+          </ImageLoader>
+
+          <AnimatedCoverVideo
+            artist={currentSong.artist}
+            album={currentSong.album}
+            screen="drawer"
+            className="rounded-md"
+          />
+        </div>
       </AspectRatio>
 
       <div className="flex flex-col items-center justify-center mt-6 px-1">

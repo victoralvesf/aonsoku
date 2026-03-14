@@ -606,6 +606,36 @@
           "customUrl": {
             "toggle": "Benutzerdefinierte URL verwenden"
           }
+        },
+        "animatedCover": {
+          "enabled": {
+            "label": "Animierte Cover aktivieren",
+            "info": "Wenn aktiviert, werden animierte Cover von einem externen Dienst geladen, falls verfügbar."
+          },
+          "customUrl": {
+            "toggle": "Benutzerdefinierte URL verwenden",
+            "info": "Verwende eine benutzerdefinierte URL für die API animierter Cover statt der Standard-URL.",
+            "label": "URL",
+            "example": "Standard: https://artwork.m8tec.top"
+          },
+          "screens": {
+            "album": {
+              "label": "Albumansicht",
+              "info": "Animierte Cover in der Album-Header-Ansicht aktivieren."
+            },
+            "fullscreen": {
+              "label": "Vollbild-Player",
+              "info": "Animierte Cover im Vollbild-Player aktivieren."
+            },
+            "playerBar": {
+              "label": "Untere Player-Leiste",
+              "info": "Animierte Cover für das aktuelle Song-Cover in der unteren Player-Leiste aktivieren."
+            },
+            "drawer": {
+              "label": "Queue/Lyrics Drawer",
+              "info": "Animierte Cover für das aktuelle Song-Cover im Queue/Lyrics-Drawer aktivieren."
+            }
+          }
         }
       }
     },

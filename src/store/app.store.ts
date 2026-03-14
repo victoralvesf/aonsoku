@@ -27,6 +27,8 @@ const {
   IMAGE_CACHE_ENABLED,
 } = window
 
+const defaultArtworkServiceUrl = 'https://artwork.m8tec.top'
+
 export const useAppStore = createWithEqualityFn<IAppContext>()(
   subscribeWithSelector(
     persist(
@@ -92,6 +94,52 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               set((state) => {
                 state.podcasts.collapsibleState = value
               })
+            },
+          },
+          artwork: {
+            enabled: false,
+            setEnabled: (value) => {
+              set((state) => {
+                state.artwork.enabled = value
+              })
+            },
+            customUrlEnabled: false,
+            setCustomUrlEnabled: (value) => {
+              set((state) => {
+                state.artwork.customUrlEnabled = value
+              })
+            },
+            baseUrl: defaultArtworkServiceUrl,
+            setBaseUrl: (value) => {
+              set((state) => {
+                state.artwork.baseUrl = value
+              })
+            },
+            screens: {
+              album: true,
+              setAlbum: (value) => {
+                set((state) => {
+                  state.artwork.screens.album = value
+                })
+              },
+              fullscreen: true,
+              setFullscreen: (value) => {
+                set((state) => {
+                  state.artwork.screens.fullscreen = value
+                })
+              },
+              playerBar: true,
+              setPlayerBar: (value) => {
+                set((state) => {
+                  state.artwork.screens.playerBar = value
+                })
+              },
+              drawer: true,
+              setDrawer: (value) => {
+                set((state) => {
+                  state.artwork.screens.drawer = value
+                })
+              },
             },
           },
           pages: {
@@ -373,6 +421,7 @@ useAppStore.subscribe(
 export const useAppData = () => useAppStore((state) => state.data)
 export const useAppAccounts = () => useAppStore((state) => state.accounts)
 export const useAppPodcasts = () => useAppStore((state) => state.podcasts)
+export const useAppAnimatedCovers = () => useAppStore((state) => state.artwork)
 export const useAppPodcastCollapsibleState = () =>
   useAppStore((state) => ({
     collapsibleState: state.podcasts.collapsibleState,
