@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useAnimatedAlbumArtwork } from '@/app/hooks/use-animated-album-artwork'
 import { cn } from '@/lib/utils'
 import { useAppAnimatedCovers } from '@/store/app.store'
+import { isDesktop } from '@/utils/desktop'
 
 type AnimatedCoverScreen = 'album' | 'fullscreen' | 'playerBar' | 'drawer'
 
@@ -60,7 +61,7 @@ export function AnimatedCoverVideo({
     let hlsInstance: { destroy: () => void } | null = null
     let cancelled = false
 
-    if (canPlayNativeHls) {
+    if (canPlayNativeHls && !isDesktop()) {
       video.src = streamUrl
       video.play().catch(() => {
         setHasVideoError(true)
@@ -146,7 +147,10 @@ export function AnimatedCoverVideo({
   return (
     <video
       ref={videoRef}
-      className={cn('absolute inset-0 w-full h-full object-cover pointer-events-none', className)}
+      className={cn(
+        'absolute inset-0 w-full h-full object-cover pointer-events-none',
+        className,
+      )}
       muted
       loop
       autoPlay
