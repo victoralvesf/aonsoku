@@ -1,1 +1,733 @@
-{}
+{
+  "home": {
+    "recentlyPlayed": "Zletscht gspilt",
+    "mostPlayed": "Am hüfigste gspilt",
+    "recentlyAdded": "Zletscht hinzuegfüegt",
+    "explore": "Entdecke"
+  },
+  "sidebar": {
+    "home": "Startsiite",
+    "search": "Sueche…",
+    "miniSearch": "Sueche",
+    "library": "Bibliothek",
+    "artists": "Künstler",
+    "songs": "Lieder",
+    "albums": "Albe",
+    "favorites": "Favorite",
+    "playlists": "Playlischte",
+    "radios": "Radios",
+    "podcasts": "Podcasts",
+    "genres": "Genres",
+    "emptyPlaylist": "No kei Playlischte erstellt"
+  },
+  "menu": {
+    "language": "Sproch",
+    "server": "Server",
+    "about": "Über",
+    "serverLogout": "Uslogge"
+  },
+  "generic": {
+    "seeMore": "Meeh aaluege",
+    "showDetails": "Details ahzeige",
+    "hideDetails": "Details usblände",
+    "viewAll": "Alles ahzeige",
+    "loading": "Lade…",
+    "viewMode": {
+      "label": "Modus ahzeige",
+      "modes": {
+        "list": "Ufliste",
+        "poster": "Poschter"
+      }
+    },
+    "beta": "Beta"
+  },
+  "theme": {
+    "label": "Thema",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "Sischtem",
+    "black": "Schwarz und Wiss",
+    "one-dark": "One Dark",
+    "night-owl-light": "Nachtüle Hell",
+    "marmalade-beaver": "Konfi Biber",
+    "github-dark": "Github Dunkel",
+    "nuclear-dark": "Nuklear Dunkel",
+    "discord": "Discord"
+  },
+  "playlist": {
+    "headline": "Playlischt",
+    "songCount_one": "{{count}} Lied",
+    "songCount_other": "{{count}} Lieder",
+    "duration": "ca. {{duration}}",
+    "refresh": "Playlischt aktualisiere",
+    "buttons": {
+      "play": "{{name}} Abspilä",
+      "pause": "{{name}} Pausierä",
+      "shuffle": "{{name}} Zufällig abspilä",
+      "options": "Meh Optione für {{name}}"
+    },
+    "noSongList": "Die Playlischt hät kei Lieder!",
+    "form": {
+      "labels": {
+        "name": "Namä",
+        "comment": "Kommentierä",
+        "commentDescription": "Schrib e churzi Beschribig für die Playlischt",
+        "isPublic": "Öffentlich",
+        "isPublicDescription": "Wähl die Option, zum d’Playlischte öffentlich z’mache. So chönd si anderi Nutzer ahluege und druf zuegrife."
+      },
+      "create": {
+        "title": "Playlisch erstelle",
+        "button": "Erstelle",
+        "toast": {
+          "success": "Plalisch erfolgrich erschtellt!",
+          "error": "Playlischte cha nöd erstellt werde!"
+        }
+      },
+      "edit": {
+        "title": "Playlischt bearbeite",
+        "button": "Aktualisiere",
+        "toast": {
+          "success": "Playlischt erfolgriich aktualisiert!",
+          "error": "Playlischt aktualisiere fählgschlage!"
+        }
+      },
+      "delete": {
+        "title": "Bisch dir sicher das die Playlischt löschte wetsch?",
+        "description": "Die Aktion cha nöd rückgängig gmacht werde.",
+        "toast": {
+          "success": "Playlischt erfolgrich entfernt!",
+          "error": "Playlischt entferne fählgschlage!"
+        }
+      },
+      "validations": {
+        "nameLength": "Playlischt-Name mues mindestens 2 zeiche ha."
+      },
+      "removeSong": {
+        "title_one": "Bisch sicher, das du s'usgwählt Lied lösche wotsch?",
+        "title_other": "Bisch sicher, das du die usgwählte Lieder lösche wotsch?",
+        "description": "Die Aktion cha nöd rückgängig gmacht werde.",
+        "toast": {
+          "success_one": "Lied erfolgrich entfernt!",
+          "success_other": "Lieder erfolgrich entfernt!",
+          "error_one": "Lied entferne fählgschlage!",
+          "error_other": "Lieder entferne fählgschlage!"
+        }
+      }
+    }
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Lieder sueche…"
+      },
+      "byArtist": "Lieder noch {{artist}}",
+      "filter": {
+        "clear": "Filter lösche"
+      }
+    }
+  },
+  "album": {
+    "headline": "Album",
+    "buttons": {
+      "play": "{{name}} Abspile",
+      "pause": "{{name}} Pausiere",
+      "shuffle": "{{name}} zuefällig abspile",
+      "like": "{{name}} Like",
+      "dislike": "Like vo {{name}} enferne"
+    },
+    "info": {
+      "about": "Über {{name}}",
+      "lastfm": "I Last.fm ufmache",
+      "musicbrainz": "I MusicBrainz ufmache"
+    },
+    "more": {
+      "listTitle": "Meh vo dem Künstler",
+      "discography": "Künstler Diskografie",
+      "genreTitle": "Meh vo {{genre}}"
+    },
+    "list": {
+      "header": {
+        "albumsByArtist": "Albe vo {{artist}}"
+      },
+      "empty": {
+        "title": "Ups, do hets kei Albe!",
+        "info": "Gsehts us als hets kei Albe mitem akutelle Filter.",
+        "action": "Versuech villicht d’Filter es bitzli ahzpasse?"
+      },
+      "genre": {
+        "label": "Wähl es Genre…",
+        "search": "Es Genre finde…",
+        "loading": "Genres werdet glade…",
+        "notFound": "Kei Genres gfunde."
+      },
+      "filter": {
+        "artist": "Künstler",
+        "genre": "Genre",
+        "favorites": "Favorite",
+        "mostPlayed": "Am meiste Abgspillt",
+        "name": "Name",
+        "random": "Zuefällig",
+        "recentlyAdded": "Zlescht hinzuefüegt",
+        "recentlyPlayed": "Zlescht gspillt",
+        "releaseYear": "Erschinigsjohr",
+        "discography": "Diskografie",
+        "search": "Sueche"
+      },
+      "search": {
+        "placeholder": "Album sueche…"
+      }
+    },
+    "table": {
+      "discNumber": "Platte {{number}}"
+    }
+  },
+  "genre": {
+    "headline": "Genre"
+  },
+  "genres": {
+    "albumCount_one": "{{count}} Album",
+    "albumCount_other": "{{count}} Albe",
+    "buttons": {
+      "shuffleTracks": "Lieder mische",
+      "shuffleAlbums": "Albe mische"
+    }
+  },
+  "favorites": {
+    "noSongList": "Du hesch no kei Lieder zu de Favorite hinzuegfüegt!"
+  },
+  "artist": {
+    "headline": "Künstler",
+    "buttons": {
+      "play": "{{artist}} Radio abspile",
+      "shuffle": "{{artist}} Radio zuefällig abspile",
+      "options": "Meh Optione für {{artist}}"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} Album",
+      "albumsCount_other": "{{count}} Albe"
+    },
+    "topSongs": "Beliebt",
+    "recentAlbums": "Neui Albe",
+    "relatedArtists": "Ähnlichi Künstler"
+  },
+  "podcasts": {
+    "form": {
+      "all": "Stöbere",
+      "latestEpisodes": "Neuschti Episodä",
+      "addButton": "Podcast hinzuefüege",
+      "search": "Podcast suechä…",
+      "dialog": {
+        "title": "Podcast erstellä",
+        "feedUrl": "Feed URL",
+        "message": "Du chasch mehreri URL's hinzuefüge, eini pro zeilä.",
+        "saveButton": "Speicherä",
+        "validations": {
+          "url": "Bitte gültigi URL's igäh.",
+          "urlLength": "URLs müend mindestens 10 zeichä ha",
+          "protocol": "URLs müend mit http:// oder https:// startä",
+          "atLeastOneUrl": "Bitte mindeschtens ei URL igäh."
+        }
+      },
+      "toasts": {
+        "success": "Podcast erfolgrich erschtellt! Es isch i paar Minute parat zum losä!",
+        "error": "Podcast erfolgriich erstellt!"
+      }
+    },
+    "emptyPage": {
+      "message": "Kei Podcasts hinzuefüegt",
+      "description": "Es gseht us als hets no kei Podcasts bis jetzt. Füeg oberhalb eine dezue!"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "Kei Epsiode verfüegbar",
+        "description": "Versuech, meh Podcasts hizuezfüege.",
+        "goToPodcasts": "Zu de Podcasts goh"
+      }
+    },
+    "emptyResults": {
+      "title": "Kei Resultat gfunde.",
+      "info": "Mir hend kei Podcasts gfunde, wo zu dim Suechbegriff passet.",
+      "action": "Bitte überprüef dini Rächtschriibig oder probier anderi Suechbegriff."
+    },
+    "filters": {
+      "episodes": {
+        "search": "Episodä Suechä…",
+        "orderBy": {
+          "publishDate": "Veröffentlichungsdatum",
+          "title": "Titel",
+          "duration": "Längi"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Titel",
+          "episodeCount": "Ahzahl Episode"
+        }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} Episod",
+      "episodeCount_other": "{{count}} Episode",
+      "feed": "Feed",
+      "website": "Offizielli Webitä",
+      "unfollow": {
+        "tooltip": "{{title}} Nöme Folge",
+        "dialog": {
+          "title": "Bisch dir sicher das dem Podcast nöme wotsch folge?",
+          "description": "Zum de Podcast ide Zuefunkt nomol zlose, muesch en wider erstelle."
+        },
+        "toasts": {
+          "success": "Du bisch dem Podcast erfogrich entfolgt!",
+          "error": "Bim Versuech, dem Podcast nömme zfolge, isch en Fähler passiert. Bitte versuechs nomol."
+        }
+      }
+    },
+    "list": {
+      "episodes": "Epsiode",
+      "notFoundMessage": "Dä Podcast het no kei Episode!",
+      "progress": {
+        "remainingTime": "No {{time}}",
+        "completed": "Fertig"
+      }
+    }
+  },
+  "table": {
+    "columns": {
+      "title": "Titel",
+      "albumArtist": "Album Künstler",
+      "artist": "Künstler",
+      "contributors": "Mitwürkendi",
+      "album": "Album",
+      "year": "Johr",
+      "duration": "Längi",
+      "plays": "Ahzahl Widergobe",
+      "lastPlayed": "Zletscht gspillt",
+      "bpm": "BPM",
+      "bitrate": "Bitrote",
+      "quality": "Qualität",
+      "name": "Name",
+      "albumCount": "Ahzahl Able",
+      "songCount": "Ahzahl Lieder",
+      "comment": "Kommentar",
+      "public": "Öffentlich",
+      "track": "Titel",
+      "genres": "Genres",
+      "size": "Grössi",
+      "codec": "Codec",
+      "path": "Pfad",
+      "favorite": "Favorite",
+      "recordLabel": "Plattefirma",
+      "discNumber": "Plattenummere",
+      "trackGain": "Track gain",
+      "albumGain": "Album gain",
+      "channelCount": "Ahzahl Kanäl",
+      "samplingRate": "Abtastrate"
+    },
+    "buttons": {
+      "play": "{{title}} vo {{artist}} abspile",
+      "pause": "{{title}} vo {{artist}} pausiere"
+    },
+    "lastPlayed": "vor {{date}}",
+    "pagination": {
+      "rowsPerPage": "Zeile pro Siite",
+      "currentPage": "Sitte {{currentPage}} vo {{totalPages}}",
+      "screenReader": {
+        "firstPage": "Goh zu de erschte siite",
+        "previousPage": "Goh zu de vorherige siite",
+        "nextPage": "Goh zu de nögschte siite",
+        "lastPage": "Goh zu de letschte siite"
+      }
+    },
+    "sort": {
+      "asc": "Ufstiigend",
+      "desc": "Abstiigend",
+      "reset": "Zruggsetze"
+    },
+    "menu": {
+      "selectedCount_one": "{{count}} usgwählt",
+      "selectedCount_other": "{{count}} usgwählt"
+    }
+  },
+  "fullscreen": {
+    "noLyrics": "Kei Liedtext gfunde",
+    "loadingLyrics": "Sueche noch Liedtext…",
+    "queue": "Warteschlange",
+    "playing": "Jetzt lauft",
+    "lyrics": "Liedtext",
+    "switchButton": "Zum grosse Player wechsle"
+  },
+  "logout": {
+    "dialog": {
+      "title": "Bisch parat, für jetzt tschüss z’säge?",
+      "description": "Uslogge bestätige.",
+      "cancel": "Abbräche",
+      "confirm": "Wiitermache"
+    }
+  },
+  "login": {
+    "form": {
+      "server": "Server",
+      "description": "Mit dim Subsonic Server verbinde.",
+      "url": "URL",
+      "urlDescription": "Das isch dini Server URL",
+      "username": "Benutzername",
+      "usernamePlaceholder": "Din Benutzername",
+      "password": "Passwort",
+      "connect": "Verbinde",
+      "connecting": "Am Verbinde…",
+      "validations": {
+        "url": "Bitte e gültigi URL iigeh.",
+        "protocol": "d'URL mues mit http:// oder https:// ahfange",
+        "username": "Bitte en Benutzername ahgeh",
+        "usernameLength": "De Benutzername mues mindestens 2 Zeiche ha.",
+        "password": "Bitte es Passwort iigeh",
+        "passwordLength": "s'Passwort mues mindestens 2 Zeiche ha."
+      }
+    }
+  },
+  "toast": {
+    "server": {
+      "success": "Server erfolgrich gspeicheret!",
+      "error": "Server Kommunikation fehlgschlage!"
+    }
+  },
+  "command": {
+    "inputPlaceholder": "Es Album, en Künstler oder es Lied sueche",
+    "noResults": "Nüt gfunde.",
+    "commands": {
+      "heading": "Kommandos",
+      "pages": "Goh zu de Siite",
+      "theme": "Design ändere"
+    },
+    "pages": "Siite"
+  },
+  "player": {
+    "noSongPlaying": "Es wird keis Lied abgspillt",
+    "noRadioPlaying": "Es wird keis Radio abgspillt",
+    "tooltips": {
+      "shuffle": {
+        "enable": "Zuefallswidergob aktiviere",
+        "disable": "Zuefallswidergob deaktiviere"
+      },
+      "rewind": "{{amount}} Sekunde zruggspuele",
+      "previous": "Zrugg",
+      "play": "Abspile",
+      "pause": "Pause",
+      "forward": "{{amount}} Sekunde füre",
+      "next": "Füre",
+      "repeat": {
+        "enable": "Widerhole aktiviere",
+        "enableOne": "Eimol widerhole aktiviere",
+        "disable": "Widerhole deaktiviere"
+      },
+      "like": "{{song}} vo {{artist}} gfallt mir",
+      "dislike": "Gfallt mir bi {{song}} vo {{artist}} entferne",
+      "miniPlayer": {
+        "open": "Miniplayer ufmache",
+        "close": "Miniplayer zuemache"
+      },
+      "volume": {
+        "mute": "Stummschalte",
+        "unmute": "Ton aktiviere"
+      }
+    }
+  },
+  "options": {
+    "play": "Abspile",
+    "playNext": "Als nöchschts abspile",
+    "addLast": "Als letschts abspile",
+    "download": "Abeladde",
+    "playlist": {
+      "add": "Zunnere Widergabelischte hinzuegfüege",
+      "edit": "Wiedergabelischte Bearbeite",
+      "delete": "Wiedergabelischte lösche",
+      "search": "Widergabelischte finde",
+      "create": "Neui Widergabelischte",
+      "notFound": "Kei Widergabelischte gfunde",
+      "removeSong": "Us de Widergabelischte entferne"
+    },
+    "info": "Infos ahzeige",
+    "markAsPlayed": "Als abgspillt markiere",
+    "goto": {
+      "episode": "Zu de Episode goh",
+      "podcast": "Zum Podcast goh"
+    }
+  },
+  "radios": {
+    "label": "Radio",
+    "addRadio": "Radio hinzuefüege",
+    "table": {
+      "name": "Name",
+      "homepage": "Startsiite URL",
+      "stream": "Stream URL",
+      "actions": {
+        "edit": "Radio bearbeite",
+        "delete": "Radio lösche"
+      },
+      "playTooltip": "{{name}} Radio abspille",
+      "pauseTooltip": "{{name}} Radio pausiere"
+    },
+    "empty": {
+      "title": "Du hesch kei Radios!",
+      "info": "Klicke zum dis erschte Radio hinzuezfüege."
+    },
+    "error": "s'Radio chan nöd abgspillt werde, überprüef d'Stream URL!",
+    "form": {
+      "create": {
+        "title": "Radio hinzuefüege",
+        "button": "Speichere",
+        "toast": {
+          "success": "Radio erfolgriich hinzuefüegt!",
+          "error": "Radio erstelle fehlgschlage!"
+        }
+      },
+      "edit": {
+        "title": "Radio bearbeite",
+        "button": "Aktualisiere",
+        "toast": {
+          "success": "Radio erfolgriich aktualisiert!",
+          "error": "Radio aktualisiere fehlgschlage!"
+        }
+      },
+      "delete": {
+        "title": "Bisch dir sicher das die Radiostation wotsch lösche?",
+        "description": "Die Aktion chan nöd rückgängig gmacht werde.",
+        "toast": {
+          "success": "Radio erfolgrich entfernt!",
+          "error": "Entferne vom Radio fehlgschlage!"
+        }
+      },
+      "validations": {
+        "name": "De Name vom Radio muess mindestens 3 Zeiche ha.",
+        "url": "Bitte e gültigi URL igeh.",
+        "homepageUrlLength": "Startsiite URL mues mindestens 10 Zeiche ha",
+        "streamUrlLength": "d'Stream URL mues mindestens 10 Zeiche ha"
+      }
+    }
+  },
+  "time": {
+    "days_one": "{{days}} Tag",
+    "days_other": "{{days}} Täg",
+    "hour": "{{hour}} Stund",
+    "minutes": "{{minutes}} Minute",
+    "seconds": "{{seconds}} Sekunde"
+  },
+  "server": {
+    "songCount_one": "{{count}} Lied",
+    "songCount_other": "{{count}} Lieder",
+    "folderCount_one": "{{count}} Ordner",
+    "folderCount_other": "{{count}} Ordner",
+    "lastScan": "Letscht Scan: {{date}}",
+    "status": "Status",
+    "management": "Server Verwaltig",
+    "incompatible": {
+      "title": "Server Inkompatibel",
+      "description": "Dä Server benutzt e älteri Version vom Subsonic-Protokoll, wo nöd voll unterstützt wird. Bitte vorsichtig si, es chönd Problem ufträte.",
+      "skip": "Trotzdem fortfahre"
+    },
+    "buttons": {
+      "refresh": "Status aktualisiere",
+      "startScan": "Schnelle Scan"
+    }
+  },
+  "downloads": {
+    "started": "Abelade gschtartet.",
+    "failed": "Bim abelda vo dinere Datei isch en Fehler uftrette.",
+    "completed": "Dini Datei isch ageglade worde."
+  },
+  "queue": {
+    "title": "Warteschlange",
+    "clear": "Warteschlange leere",
+    "close": "Warteschlange zuemache",
+    "open": "Warteschlange ufmache"
+  },
+  "shortcuts": {
+    "modal": {
+      "title": "Tastatur Churzbefehl",
+      "description": {
+        "first": "Drucke",
+        "last": "zum das Modul umzschalte."
+      }
+    },
+    "playback": {
+      "label": "Widergob",
+      "play": "Abspile / Pause",
+      "shuffle": "Mische",
+      "repeat": "Wiederhole",
+      "previous": "Gang zum vorherige",
+      "next": "Gang zum nögschte",
+      "raiseVolume": "Luter mache",
+      "lowerVolume": "Liisliger mache"
+    },
+    "navigation": {
+      "label": "Navigation"
+    },
+    "sidebar": {
+      "toggle": "Siiteleischte umschalte"
+    }
+  },
+  "songInfo": {
+    "title": "Lied Details",
+    "error": "Lied-Informatione chönd nöd abgruefe werde. Bitte versuechs spöter nomol."
+  },
+  "warnings": {
+    "reload": "Es wird es lied abgspilt!\nBisch sicher das die Siite wotsch neu lade?",
+    "songError": "Song chan nöd abgspillt werde, überprüef dä Server!"
+  },
+  "update": {
+    "dialog": {
+      "title": "Neui Version verfüegbar!",
+      "remindLater": "Spöter erinnere",
+      "install": "Installiere und neustarte",
+      "macOS": "Uf GitHub abelade"
+    },
+    "toasts": {
+      "started": "Dä Update-Prozess het ahgfange.",
+      "success": "s'Update isch installiert! d'App startet jetzt neu.",
+      "error": "S'installiere vom Update isch fehlgschlage, Bitte versuechs direkt vo GitHub abezlade."
+    }
+  },
+  "about": {
+    "client": "Client",
+    "server": "Server",
+    "version": "Version",
+    "type": "Typ",
+    "apiVersion": "API Version",
+    "toasts": {
+      "copy": "Link id Zwüscheablag kopiert!"
+    }
+  },
+  "mobile": {
+    "unsupported_message": "{{app_name}} isch nöd miteme Natel kompatibel.",
+    "access_recommendation": "Bitte griif über en Computer oder es Tablet druf zue."
+  },
+  "settings": {
+    "label": "Ihstellige",
+    "options": {
+      "appearance": "Erschiinigsbild",
+      "language": "Sproch & Region",
+      "audio": "Player & Audio",
+      "content": "Inhalt",
+      "accounts": "Konte",
+      "desktop": "Desktop Applikation",
+      "privacy": "Prvatsphäre & Sicherheit"
+    },
+    "appearance": {
+      "general": {
+        "group": "Allgemein",
+        "description": "s'Usehe und s'Ahzeigeverhalte vo de Ahwendig ahpasse.",
+        "fullscreen": {
+          "label": "Automische Vollbildmodus aktivere",
+          "info": "Wenn aktiviert, wird bim Öffne vom grosse Player automatisch in Vollbildmodus gwechslet."
+        }
+      },
+      "colors": {
+        "group": "Dynamischi Farbe",
+        "description": "Uswähle, öb d'App die dominanti Farb vom aktuelle Albumcover als Hintergrund verwände söll.",
+        "queue": {
+          "label": "Warteschlange und Liedtext",
+          "intensity": "Farbintensivitätslevel"
+        },
+        "bigPlayer": {
+          "label": "Grossi Player",
+          "blurSize": "Grössi vo de Bildunschärfi"
+        }
+      }
+    },
+    "audio": {
+      "replayGain": {
+        "group": "ReplayGain",
+        "description": "Für es konstanz Hörerlebnis d'Wiedergabelutstärchi automatisch ahgliche.",
+        "enabled": "Aktiviert",
+        "error": {
+          "message": "Bim Abspile vom Titels mit Replay Gain isch en Fähler uftrete.",
+          "button": "Versuechs nomol"
+        },
+        "mode": {
+          "label": "Modus",
+          "track": "Track-Verstärchig",
+          "album": "Album-Verstärchig"
+        },
+        "preAmp": "Vorverstärchig (dB)",
+        "defaultGain": {
+          "label": "Standardverstärchig (dB)",
+          "info": "Dä Verstärchigspegel wird auf Lieder ahgwendet, wo kei ReplayGain-Metadaten enthaltet, zum ä gliichblibendi Lustärchi z'gwährleiste. Dä empfohleni Bereich für d'Verstärchig liit zwüschet -10 dB und -1 dB."
+        }
+      },
+      "lyrics": {
+        "group": "Liedtext",
+        "description": "Liedtext Ihstellige bearbeite.",
+        "preferSynced": {
+          "label": "Synchronisierti Liedtext bevorzuge",
+          "info": "Wenn aktivert, werdet synchronisierti Liedtext gegenüber unsynchronisierte bevorzugt."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Externi Dienst",
+        "description": "Leit fest weli Dienst Aonsoku verwende chan.",
+        "lrclib": {
+          "info": "LRCLIB wird brucht zum Liedtext z'finde.",
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Benutzerdefinierti URL verwende",
+            "info": "Benutzerdefinierti URL verwende für LRCLIB anstatt de Standart.",
+            "label": "URL",
+            "example": "Bispiil: https://my-lrclib.com"
+          }
+        },
+        "animatedCover": {
+          "enabled": {
+            "label": "Animierti Cover aktiviere",
+            "info": "Wenn aktiviert, werdet animierti Cover vomene Externe Service glade wenn verfüegbar."
+          },
+          "customUrl": {
+            "toggle": "Benutzerdefinierti URL verwende",
+            "info": "Benutzerdefinierti URL verwende für d'API vo animierte Cover statt dä Standard-URL.",
+            "label": "URL",
+            "example": "Standart: https://artwork.m8tec.top"
+          },
+          "screens": {
+            "album": {
+              "label": "Album Siite",
+              "info": "Animierti Cover i dä Album-Header-Ahsicht aktiviere."
+            },
+            "fullscreen": {
+              "label": "Grossi Player",
+              "info": "Aktivier animierti Cover für s'aktuelle Song-Cover im grosse Player."
+            },
+            "playerBar": {
+              "label": "Unteri Player-Leischte",
+              "info": "Animierti Cover für s'aktuelle Songcover in dä undere Player-Leischte aktiviere."
+            },
+            "drawer": {
+              "label": "Warteschlange und Liedtext",
+              "info": "Aktivier animierti Cover für s'aktuelle Song-Cover i dä Warteschlange und im Liedtext-Drawer."
+            }
+          }
+        }
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Siiteleischte",
+        "description": "Abschnitt ide Siiteleischte ih- oder usblende."
+      },
+      "podcast": {
+        "group": "Podcasts",
+        "description": "Aktivier d'Integration mitem Aonsoku Podcasts Dienst.",
+        "enabled": {
+          "label": "Integration aktiviere"
+        },
+        "service": {
+          "url": "Podcast Dienst URL"
+        },
+        "credentials": {
+          "label": "Nutz de ihgloggt Benutzer und d'Server URL",
+          "error": "Benutzername und d'Server URL sind erforderlich."
+        }
+      }
+    }
+  }
+}
