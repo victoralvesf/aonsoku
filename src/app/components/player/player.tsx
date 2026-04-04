@@ -128,6 +128,8 @@ export function Player() {
   }, [
     getAudioRef,
     isPodcast,
+    isSong,
+    song?.duration,
     podcast,
     setCurrentDuration,
     getCurrentPodcastProgress,
