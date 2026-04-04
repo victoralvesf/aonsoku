@@ -104,6 +104,8 @@ export function Player() {
 
     if (!infinityDuration) {
       setCurrentDuration(audioDuration)
+    } else if (isSong && song?.duration) {
+      setCurrentDuration(song.duration)
     }
 
     if (isPodcast && infinityDuration && podcast) {
@@ -238,7 +240,11 @@ export function Player() {
       {isSong && song && (
         <AudioPlayer
           replayGain={trackReplayGain}
-          src={getSongStreamUrl(song.id)}
+          src={getSongStreamUrl(
+              song.id,
+              undefined,
+              song.suffix === 'm4a' ? 'opus' : undefined,
+            )}
           autoPlay={isPlaying}
           audioRef={audioRef}
           loop={loopState === LoopState.One}
