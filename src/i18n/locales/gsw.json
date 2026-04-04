@@ -52,7 +52,18 @@
     "marmalade-beaver": "Konfi Biber",
     "github-dark": "Github Dunkel",
     "nuclear-dark": "Nuklear Dunkel",
-    "discord": "Discord"
+    "discord": "Discord",
+    "noctis-lilac": "Noctis Lilac",
+    "material-theme": "Material Theme",
+    "monokai-pro": "Monokai Pro",
+    "shades-of-purple": "Shades Of Purple",
+    "bearded-solarized": "Bearded Solarized",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "achiever": "Achiever",
+    "dracula": "Drakula",
+    "tinacious-design": "Tinacious Design",
+    "vue-dark": "Vue Dark",
+    "vim-dark-soft": "Vim Dark Soft"
   },
   "playlist": {
     "headline": "Playlischt",
@@ -321,7 +332,10 @@
       "trackGain": "Track gain",
       "albumGain": "Album gain",
       "channelCount": "Ahzahl Kanäl",
-      "samplingRate": "Abtastrate"
+      "samplingRate": "Abtastrate",
+      "trackPeak": "Track peak",
+      "albumPeak": "Album-Spitzewert",
+      "bitDepth": "Bit-Tüfi"
     },
     "buttons": {
       "play": "{{title}} vo {{artist}} abspile",
@@ -725,9 +739,55 @@
         },
         "credentials": {
           "label": "Nutz de ihgloggt Benutzer und d'Server URL",
-          "error": "Benutzername und d'Server URL sind erforderlich."
+          "error": "Benutzername und d'Server URL sind erforderlich.",
+          "url": "Server URL",
+          "user": "Benutzername"
+        }
+      },
+      "images": {
+        "group": "Bilder",
+        "description": "Bilder igestellige bearbeite.",
+        "cacheLayer": {
+          "info": "Wenn aktivert, werdet Bilder lokal cached zum d'leistig z'verbessere.",
+          "label": "Bilder cache aktiviere"
         }
       }
+    },
+    "accounts": {
+      "discord": {
+        "group": "Discord Rich Presence",
+        "description": "Teil dis aktuell abgspillte Lied mit dine Fründe uf Discord.",
+        "enabled": {
+          "label": "Integration aktiviere"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Allgemein",
+        "description": "Ihstellige ahpasse für d'desktop applikation.",
+        "tray": {
+          "label": "I de Taskleiste minimiere",
+          "info": "Wenn aktiviert, wird d’App bim Klick uf de Schlüss-Button nöd ganz gschlosse, sondern i d'Taskleiste minimiert."
+        }
+      }
+    }
+  },
+  "dayjs": {
+    "relativeTime": {
+      "future": "in &sekunde",
+      "past": "Vor %sekunde",
+      "s": "es paar minute",
+      "m": "1 Minute",
+      "mm": "%d Minute",
+      "h": "1 Stund",
+      "hh": "%d Stund",
+      "d": "1 Tag",
+      "dd": "%d Täg",
+      "M": "1 Monet",
+      "MM": "%d Mönet",
+      "y": "1 Johr",
+      "yy": "%d Johr"
     }
   }
 }
