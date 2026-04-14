@@ -62,7 +62,7 @@
     "songCount_other": "{{count}} titres",
     "headline": "Liste de lecture",
     "refresh": "Actualiser les listes de lecture",
-    "noSongList": "Cette liste de lecture n'a pas de piste !"
+    "noSongList": "Cette liste de lecture n'a pas de titre !"
   },
   "table": {
     "columns": {
@@ -72,7 +72,7 @@
       "name": "Nom",
       "genres": "Genres",
       "albumCount": "Nombre d'albums",
-      "songCount": "Nombre de pistes",
+      "songCount": "Nombre de titres",
       "track": "Piste",
       "favorite": "En favori",
       "comment": "Commentaire",
@@ -263,7 +263,7 @@
     }
   },
   "favorites": {
-    "noSongList": "Vous n'avez pas encore ajouté de piste aux favoris !"
+    "noSongList": "Vous n'avez pas encore ajouté de titre aux favoris !"
   },
   "artist": {
     "recentAlbums": "Albums récents",
