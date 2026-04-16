@@ -39,6 +39,11 @@
     "@chriscodesthings/random-css-hex-color": "^1.1.0",
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
+    "@fontsource/noto-sans-hk": "^5.2.9",
+    "@fontsource/noto-sans-jp": "^5.2.9",
+    "@fontsource/noto-sans-kr": "^5.2.9",
+    "@fontsource/noto-sans-sc": "^5.2.9",
+    "@fontsource/poppins": "^5.2.7",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-aspect-ratio": "^1.1.8",
@@ -83,6 +88,7 @@
     "i18next-browser-languagedetector": "^8.0.4",
     "idb-keyval": "^6.2.2",
     "immer": "^10.1.1",
+    "iso-639-2": "^3.0.2",
     "linkify-it": "^5.0.0",
     "lodash": "^4.17.23",
     "lucide-react": "^0.563.0",
@@ -140,7 +146,11 @@
     "vite": "^7.3.1"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["cypress", "electron", "esbuild"],
+    "onlyBuiltDependencies": [
+      "cypress",
+      "electron",
+      "esbuild"
+    ],
     "overrides": {
       "brace-expansion": "^2.0.2",
       "glob": "^11.0.0",

@@ -9,8 +9,19 @@ import {
   scrollAreaViewportSelector,
 } from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
+import { useLang } from '@/store/lang.store'
 import { usePlayerRef, usePlayerSonglist } from '@/store/player.store'
 import { ILyric } from '@/types/responses/song'
+
+// disambiguates chinese language code to the user's locale if set
+function resolveLyricsLang(
+  lyricsLang: string | undefined,
+  appLocale: string,
+): string | undefined {
+  if (!lyricsLang || lyricsLang !== 'zh') return lyricsLang
+  if (appLocale === 'yue-Hant') return 'zh-Hant'
+  return 'zh-Hans'
+}
 
 interface LyricProps {
   lyrics: ILyric
@@ -51,7 +62,9 @@ export function LyricsTab() {
 
 function SyncedLyrics({ lyrics }: LyricProps) {
   const playerRef = usePlayerRef()
+  const { langCode } = useLang()
   const [progress, setProgress] = useState(0)
+  const resolvedLang = resolveLyricsLang(lyrics.lang, langCode)
 
   setTimeout(() => {
     let newProgress = (playerRef?.currentTime || 0) * 1000
@@ -86,6 +99,7 @@ function SyncedLyrics({ lyrics }: LyricProps) {
               'transition-[opacity,transform] motion-reduce:transition-none',
               active ? 'opacity-100 scale-125' : 'opacity-50',
             )}
+            lang={resolvedLang}
           >
             {line.content}
           </p>
@@ -97,7 +111,9 @@ function SyncedLyrics({ lyrics }: LyricProps) {
 
 function UnsyncedLyrics({ lyrics }: LyricProps) {
   const { currentSong } = usePlayerSonglist()
+  const { langCode } = useLang()
   const lyricsBoxRef = useRef<HTMLDivElement>(null)
+  const resolvedLang = resolveLyricsLang(lyrics.lang, langCode)
 
   const lines = lyrics.value!.split('\n')
 
@@ -130,6 +146,7 @@ function UnsyncedLyrics({ lyrics }: LyricProps) {
             index === 0 && 'mt-4',
             index === lines.length - 1 && 'mb-16',
           )}
+          lang={resolvedLang}
         >
           {line}
         </p>

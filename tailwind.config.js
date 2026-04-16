@@ -18,7 +18,12 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
+        sans: [
+          'Poppins',
+          'Noto Sans SC', 'Noto Sans HK',
+          'Noto Sans JP', 'Noto Sans KR',
+          'sans-serif',
+        ],
       },
       spacing: {
         header: 'var(--header-height)',

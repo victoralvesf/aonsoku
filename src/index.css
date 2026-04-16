@@ -15,6 +15,19 @@
   body.mac {
     @apply subpixel-antialiased;
   }
+  :lang(ja) {
+    font-family: "Noto Sans JP", "Poppins", sans-serif;
+  }
+  :lang(ko) {
+    font-family: "Noto Sans KR", "Poppins", sans-serif;
+  }
+  :lang(zh) {
+    font-family: "Noto Sans SC", "Noto Sans HK", "Poppins", sans-serif;
+  }
+  :lang(zh-Hant),
+  :lang(yue-Hant) {
+    font-family: "Noto Sans HK", "Noto Sans SC", "Poppins", sans-serif;
+  }
   :root {
     --header-height: 44px;
     --player-height: 96px;
