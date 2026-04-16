@@ -723,6 +723,10 @@
           "info": "Cuando esté habilitado, las imágenes serán cacheadas localmente para mejorar el rendimiento.",
           "label": "Habilitar Caché de Imagen"
         }
+      },
+      "features": {
+        "group": "Características",
+        "description": "Habilita o inhabilita características de cliente"
       }
     },
     "privacy": {
