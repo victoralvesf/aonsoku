@@ -16,17 +16,17 @@
     @apply subpixel-antialiased;
   }
   :lang(ja) {
-    font-family: "Noto Sans JP", "Poppins", sans-serif;
+    font-family: "Poppins", "Noto Sans JP", sans-serif;
   }
   :lang(ko) {
-    font-family: "Noto Sans KR", "Poppins", sans-serif;
+    font-family: "Poppins", "Noto Sans KR", sans-serif;
   }
   :lang(zh) {
-    font-family: "Noto Sans SC", "Noto Sans HK", "Poppins", sans-serif;
+    font-family: "Poppins", "Noto Sans SC", "Noto Sans HK", sans-serif;
   }
   :lang(zh-Hant),
   :lang(yue-Hant) {
-    font-family: "Noto Sans HK", "Noto Sans SC", "Poppins", sans-serif;
+    font-family: "Poppins", "Noto Sans HK", "Noto Sans SC", sans-serif;
   }
   :root {
     --header-height: 44px;
