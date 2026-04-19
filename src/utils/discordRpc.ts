@@ -4,25 +4,62 @@ import { usePlayerStore } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 import { isDesktop } from './desktop'
 
-async function fetchPublicArtwork(song: ISong): Promise<string | null> {
-  try {
-    // Use only the primary artist for better search accuracy
-    const primaryArtist = song.artists?.[0]?.name || song.artist
-    const query = encodeURIComponent(`${primaryArtist} ${song.title}`)
-    const response = await fetch(`https://itunes.apple.com/search?term=${query}&entity=musicTrack&limit=5`)
-    const data = await response.json()
-    
-    if (data.results && data.results.length > 0) {
-      // Try to find a result that matches the album name
-      const bestMatch = data.results.find((r: any) => 
-        r.collectionName?.toLowerCase().includes(song.album?.toLowerCase()) ||
-        song.album?.toLowerCase().includes(r.collectionName?.toLowerCase())
-      ) || data.results[0]
+function cleanSearchTerm(str: string): string {
+  return str
+    .replace(/\(feat\..*?\)/gi, '')
+    .replace(/\[.*?\]/gi, '')
+    .replace(/\(.*?\) /gi, '')
+    .trim()
+}
 
-      return bestMatch.artworkUrl100.replace('100x100bb', '512x512bb')
+async function fetchPublicArtwork(song: ISong): Promise<string | null> {
+  const primaryArtist = song.artists?.[0]?.name || song.artist
+  const cleanedTitle = cleanSearchTerm(song.title)
+  const cleanedAlbum = cleanSearchTerm(song.album)
+  const cleanedArtist = cleanSearchTerm(primaryArtist)
+
+  // Try different search queries in order of specificity
+  const queries = [
+    `${cleanedArtist} ${cleanedAlbum} ${cleanedTitle}`,
+    `${cleanedArtist} ${cleanedTitle}`,
+    `${cleanedArtist} ${cleanedAlbum}`,
+  ]
+
+  for (const query of queries) {
+    try {
+      const response = await fetch(
+        `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=musicTrack&limit=10`
+      )
+      const data = await response.json()
+
+      if (data.results && data.results.length > 0) {
+        // Score results to find the best match
+        const scoredResults = data.results.map((result: any) => {
+          let score = 0
+          const resultArtist = result.artistName?.toLowerCase() || ''
+          const resultAlbum = result.collectionName?.toLowerCase() || ''
+          const resultTitle = result.trackName?.toLowerCase() || ''
+
+          if (resultArtist.includes(cleanedArtist.toLowerCase())) score += 3
+          if (resultAlbum.includes(cleanedAlbum.toLowerCase())) score += 5
+          if (resultTitle.includes(cleanedTitle.toLowerCase())) score += 4
+          
+          // Bonus for exact matches
+          if (resultArtist === cleanedArtist.toLowerCase()) score += 2
+          if (resultAlbum === cleanedAlbum.toLowerCase()) score += 3
+
+          return { url: result.artworkUrl100, score }
+        })
+
+        const bestMatch = scoredResults.sort((a: any, b: any) => b.score - a.score)[0]
+
+        if (bestMatch && bestMatch.score > 5) {
+          return bestMatch.url.replace('100x100bb', '512x512bb')
+        }
+      }
+    } catch (e) {
+      console.warn('Discord RPC: Search attempt failed', e)
     }
-  } catch (e) {
-    console.warn('Discord RPC: Failed to fetch public artwork', e)
   }
   return null
 }
