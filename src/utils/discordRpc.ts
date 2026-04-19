@@ -4,13 +4,22 @@ import { usePlayerStore } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 import { isDesktop } from './desktop'
 
-async function fetchPublicArtwork(artist: string, album: string): Promise<string | null> {
+async function fetchPublicArtwork(song: ISong): Promise<string | null> {
   try {
-    const query = encodeURIComponent(`${artist} ${album}`)
-    const response = await fetch(`https://itunes.apple.com/search?term=${query}&entity=album&limit=1`)
+    // Use only the primary artist for better search accuracy
+    const primaryArtist = song.artists?.[0]?.name || song.artist
+    const query = encodeURIComponent(`${primaryArtist} ${song.title}`)
+    const response = await fetch(`https://itunes.apple.com/search?term=${query}&entity=musicTrack&limit=5`)
     const data = await response.json()
-    if (data.results && data.results[0]) {
-      return data.results[0].artworkUrl100.replace('100x100bb', '512x512bb')
+    
+    if (data.results && data.results.length > 0) {
+      // Try to find a result that matches the album name
+      const bestMatch = data.results.find((r: any) => 
+        r.collectionName?.toLowerCase().includes(song.album?.toLowerCase()) ||
+        song.album?.toLowerCase().includes(r.collectionName?.toLowerCase())
+      ) || data.results[0]
+
+      return bestMatch.artworkUrl100.replace('100x100bb', '512x512bb')
     }
   } catch (e) {
     console.warn('Discord RPC: Failed to fetch public artwork', e)
@@ -35,7 +44,7 @@ async function send(song: ISong, currentTime = 0, duration = 0) {
   const endTime = Math.floor(Date.now() - currentTimeInMs + durationInMs)
 
   // Try to get a public URL for Discord to proxy/cache
-  const publicImageUrl = await fetchPublicArtwork(artist, song.album)
+  const publicImageUrl = await fetchPublicArtwork(song)
   const imageUrl = publicImageUrl || getSimpleCoverArtUrl(song.coverArt, 'song', '512')
 
   window.api.setDiscordRpcActivity({
