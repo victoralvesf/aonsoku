@@ -727,6 +727,26 @@
       "features": {
         "group": "Características",
         "description": "Habilita o inhabilita características de cliente"
+      },
+      "caches": {
+        "group": "Cachés",
+        "description": "Controla qué archivos almacena la aplicación en caché localmente.",
+        "images": {
+          "label": "Habilitar caché de imágenes",
+          "info": "Cuando está habilitada, las imágenes se almacenarán en caché localmente para mejorar el rendimiento."
+        },
+        "lyrics": {
+          "label": "Habilitar caché de letras",
+          "info": "Cuando está habilitada, la letra de las canciones se almacena localmente para que se cargue instantáneamente en las siguientes visualizaciones."
+        },
+        "media": {
+          "label": "Habilitar caché de medios"
+        },
+        "clearAll": {
+          "button": "Vaciar Todo",
+          "success": "Cachés vaciadas correctamente.",
+          "error": "Ha fallado al vaciar algunas cachés."
+        }
       }
     },
     "privacy": {
