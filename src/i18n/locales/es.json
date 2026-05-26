@@ -732,7 +732,7 @@
         "group": "Cachés",
         "description": "Controla qué archivos almacena la aplicación en caché localmente.",
         "images": {
-          "label": "Habilitar caché de imágenes",
+          "label": "Habilitar caché de imagen",
           "info": "Cuando está habilitada, las imágenes se almacenarán en caché localmente para mejorar el rendimiento."
         },
         "lyrics": {
@@ -740,12 +740,15 @@
           "info": "Cuando está habilitada, la letra de las canciones se almacena localmente para que se cargue instantáneamente en las siguientes visualizaciones."
         },
         "media": {
-          "label": "Habilitar caché de medios"
+          "label": "Habilitar caché de medios",
+          "info": "Cuando habilitado, el navegador puede cachear sonido por stream. Inutiliza para forzar el navegador a obtener medios cada vez."
         },
         "clearAll": {
-          "button": "Vaciar Todo",
-          "success": "Cachés vaciadas correctamente.",
-          "error": "Ha fallado al vaciar algunas cachés."
+          "button": "Purgar Todo",
+          "success": "Caché vaciada correctamente.",
+          "error": "Ha fallado al purgar algunas cachés.",
+          "label": "Purgar Caché",
+          "info": "Elimina las letras caché localmente, el arte del álbum y las URL de artes gráficos animados."
         }
       }
     },
