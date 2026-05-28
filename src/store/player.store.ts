@@ -132,6 +132,12 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                   state.settings.lyrics.preferSyncedLyrics = value
                 })
               },
+              preferWordLevelLyrics: false,
+              setPreferWordLevelLyrics: (value) => {
+                set((state) => {
+                  state.settings.lyrics.preferWordLevelLyrics = value
+                })
+              },
             },
             replayGain: {
               values: {
@@ -918,6 +924,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.settings.colors.currentSongColorIntensity = 0.65
                 state.settings.fullscreen.autoFullscreenEnabled = false
                 state.settings.lyrics.preferSyncedLyrics = false
+                state.settings.lyrics.preferWordLevelLyrics = false
                 state.settings.replayGain.values = {
                   enabled: false,
                   type: 'track',

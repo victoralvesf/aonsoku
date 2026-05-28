@@ -22,7 +22,10 @@ export function getServerExtensions() {
     extensionsSupported.songLyrics &&
     extensionsSupported.songLyrics.length > 0
 
+  const songLyricsV2Enabled = !!extensionsSupported?.songLyrics?.includes(2)
+
   return {
     songLyricsEnabled,
+    songLyricsV2Enabled,
   }
 }

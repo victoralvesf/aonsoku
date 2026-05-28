@@ -104,6 +104,8 @@ interface IFullscreen {
 interface ILyrics {
   preferSyncedLyrics: boolean
   setPreferSyncedLyrics: (value: boolean) => void
+  preferWordLevelLyrics: boolean
+  setPreferWordLevelLyrics: (value: boolean) => void
 }
 
 interface LrcLib {

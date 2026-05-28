@@ -678,6 +678,10 @@
         "preferSynced": {
           "label": "Prefer synced lyrics",
           "info": "When enabled, synced lyrics will be prioritized over unsynced lyrics."
+        },
+        "preferWordLevel": {
+          "label": "Prefer word-level synced lyrics",
+          "info": "When enabled, word-by-word highlighting is used when the server supports providing word-level timing data."
         }
       }
     },

@@ -12,6 +12,11 @@ import {
 } from '@/types/responses/song'
 import { lrclibClient } from '@/utils/appName'
 import { checkServerType, getServerExtensions } from '@/utils/servers'
+import { pickPrimaryStructuredLyric } from '@/utils/wordTiming'
+
+type LyricsResult = ILyric & {
+  structuredLyric?: IStructuredLyric
+}
 
 // normalizes the ISO 639 code returned by the server to the BCP 47 language tag recognized by the html lang selector
 function normalizeLangCode(lang: string | undefined): string | undefined {
@@ -45,15 +50,20 @@ interface LRCLibResponse {
   syncedLyrics: string
 }
 
-async function getLyrics(getLyricsData: GetLyricsData) {
-  const { preferSyncedLyrics } = usePlayerStore.getState().settings.lyrics
-  const { songLyricsEnabled } = getServerExtensions()
+async function getLyrics(
+  getLyricsData: GetLyricsData,
+): Promise<LyricsResult | undefined> {
+  const { preferSyncedLyrics, preferWordLevelLyrics } =
+    usePlayerStore.getState().settings.lyrics
+  const { songLyricsEnabled, songLyricsV2Enabled } = getServerExtensions()
   const cacheEnabled = useAppStore.getState().pages.lyricsCacheEnabled
+  const useWordLevel = songLyricsV2Enabled && preferWordLevelLyrics
 
   const cacheKey = getLyricsCacheKey(
     getLyricsData,
     preferSyncedLyrics,
     songLyricsEnabled,
+    useWordLevel,
   )
 
   const readCache = cacheEnabled
@@ -83,6 +93,7 @@ async function getLyrics(getLyricsData: GetLyricsData) {
         method: 'GET',
         query: {
           id: getLyricsData.id,
+          ...(useWordLevel ? { enhanced: 'true' } : {}),
         },
       },
     )
@@ -91,10 +102,16 @@ async function getLyrics(getLyricsData: GetLyricsData) {
       const { structuredLyrics } = response.data.lyricsList
 
       if (structuredLyrics && structuredLyrics.length > 0) {
-        const syncedLyrics = structuredLyrics.find((lyrics) => lyrics.synced)
+        const primary = pickPrimaryStructuredLyric(structuredLyrics)
+        const syncedLyrics = primary?.synced
+          ? primary
+          : structuredLyrics.find((l) => l.synced)
 
         if (syncedLyrics) {
-          const serverSyncedLyrics = osStructuredLyricsToILyric(syncedLyrics)
+          const serverSyncedLyrics: LyricsResult = {
+            ...osStructuredLyricsToILyric(syncedLyrics),
+            structuredLyric: syncedLyrics,
+          }
 
           writeCache(cacheKey, serverSyncedLyrics)
 
@@ -240,6 +257,7 @@ function getLyricsCacheKey(
   getLyricsData: GetLyricsData,
   preferSyncedLyrics: boolean,
   songLyricsEnabled?: boolean,
+  songLyricsV2Enabled?: boolean,
 ) {
   const { artist, title } = getLyricsData
 
@@ -247,6 +265,7 @@ function getLyricsCacheKey(
   const serverExtension = songLyricsEnabled ? 'internal' : 'external'
 
   const keys = ['lyrics', artist, title, type, serverExtension]
+  if (songLyricsV2Enabled) keys.push('v2')
 
   return keys.join(':')
 }

@@ -1,0 +1,81 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "openSubsonic": true,
+    "lyricsList": {
+      "structuredLyrics": [
+        {
+          "lang": "kor",
+          "synced": true,
+          "kind": "main",
+          "line": [
+            {
+              "start": 2747,
+              "value": "눈을 뜬 순간"
+            }
+          ],
+          "cueLine": [
+            {
+              "index": 0,
+              "value": "눈을 뜬 순간",
+              "start": 2747,
+              "end": 6214,
+              "cue": [
+                {
+                  "start": 2747,
+                  "end": 3018,
+                  "value": "눈",
+                  "byteStart": 0,
+                  "byteEnd": 2
+                },
+                {
+                  "start": 3018,
+                  "end": 3179,
+                  "value": "을",
+                  "byteStart": 3,
+                  "byteEnd": 5
+                },
+                {
+                  "start": 3179,
+                  "end": 3582,
+                  "value": " ",
+                  "byteStart": 6,
+                  "byteEnd": 6
+                },
+                {
+                  "start": 3582,
+                  "end": 4100,
+                  "value": "뜬",
+                  "byteStart": 7,
+                  "byteEnd": 9
+                },
+                {
+                  "start": 4100,
+                  "end": 4500,
+                  "value": " ",
+                  "byteStart": 10,
+                  "byteEnd": 10
+                },
+                {
+                  "start": 4500,
+                  "end": 5200,
+                  "value": "순",
+                  "byteStart": 11,
+                  "byteEnd": 13
+                },
+                {
+                  "start": 5200,
+                  "end": 6214,
+                  "value": "간",
+                  "byteStart": 14,
+                  "byteEnd": 16
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

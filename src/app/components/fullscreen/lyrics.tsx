@@ -10,12 +10,17 @@ import {
 } from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
 import { useLang } from '@/store/lang.store'
-import { usePlayerRef, usePlayerSonglist } from '@/store/player.store'
+import {
+  useLyricsSettings,
+  usePlayerRef,
+  usePlayerSonglist,
+} from '@/store/player.store'
 import { ILyric } from '@/types/responses/song'
-import { queryKeys } from '@/utils/queryKeys'
+import { getServerExtensions } from '@/utils/servers'
+import { WordLevelLyricsContainer } from './word-level-lyrics'
 
 // disambiguates chinese language code to the user's locale if set
-function resolveLyricsLang(
+export function resolveLyricsLang(
   lyricsLang: string | undefined,
   appLocale: string,
 ): string | undefined {
@@ -31,11 +36,13 @@ interface LyricProps {
 export function LyricsTab() {
   const { currentSong } = usePlayerSonglist()
   const { t } = useTranslation()
+  const { songLyricsV2Enabled } = getServerExtensions()
+  const { preferWordLevelLyrics } = useLyricsSettings()
 
   const { id, artist, title, duration } = currentSong
 
   const { data: lyrics, isLoading } = useQuery({
-    queryKey: [queryKeys.song.lyrics, artist, title, duration],
+    queryKey: ['get-lyrics', id, artist, title, duration],
     queryFn: () =>
       subsonic.lyrics.getLyrics({
         id,
@@ -43,6 +50,7 @@ export function LyricsTab() {
         title,
         duration,
       }),
+    enabled: !!id,
   })
 
   const noLyricsFound = t('fullscreen.noLyrics')
@@ -51,10 +59,35 @@ export function LyricsTab() {
   if (isLoading) {
     return <CenteredMessage>{loadingLyrics}</CenteredMessage>
   } else if (lyrics && lyrics.value) {
+    const hasWordData =
+      songLyricsV2Enabled &&
+      preferWordLevelLyrics &&
+      !!lyrics.structuredLyric?.cueLine?.some((cl) =>
+        cl.cue.some((c) => c.start != null),
+      )
+    if (hasWordData && lyrics.structuredLyric) {
+      return (
+        <div
+          data-testid="lyrics-mode"
+          data-mode="word"
+          className="w-full h-full"
+        >
+          <WordLevelLyricsContainer structuredLyric={lyrics.structuredLyric} />
+        </div>
+      )
+    }
     return areLyricsSynced(lyrics) ? (
-      <SyncedLyrics lyrics={lyrics} />
+      <div data-testid="lyrics-mode" data-mode="line" className="w-full h-full">
+        <SyncedLyrics lyrics={lyrics} />
+      </div>
     ) : (
-      <UnsyncedLyrics lyrics={lyrics} />
+      <div
+        data-testid="lyrics-mode"
+        data-mode="plain"
+        className="w-full h-full"
+      >
+        <UnsyncedLyrics lyrics={lyrics} />
+      </div>
     )
   } else {
     return <CenteredMessage>{noLyricsFound}</CenteredMessage>

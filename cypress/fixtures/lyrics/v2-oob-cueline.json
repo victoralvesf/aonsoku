@@ -1,0 +1,47 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "openSubsonic": true,
+    "lyricsList": {
+      "structuredLyrics": [
+        {
+          "lang": "eng",
+          "synced": true,
+          "kind": "main",
+          "line": [
+            {
+              "start": 0,
+              "value": "Line one"
+            },
+            {
+              "start": 2000,
+              "value": "Line two"
+            },
+            {
+              "start": 4000,
+              "value": "Line three"
+            }
+          ],
+          "cueLine": [
+            {
+              "index": 99,
+              "value": "This should be ignored",
+              "start": 0,
+              "end": 1000,
+              "cue": [
+                {
+                  "start": 0,
+                  "end": 500,
+                  "value": "This",
+                  "byteStart": 0,
+                  "byteEnd": 3
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
