@@ -442,6 +442,10 @@
           "label": "Activer le cache d'images",
           "info": "Lorsque cette option est activée, les images seront mises en cache localement afin d'améliorer les performances."
         }
+      },
+      "features": {
+        "description": "Activer ou désactiver les fonctionnalités du client",
+        "group": "Fonctionnalités"
       }
     },
     "label": "Paramètres",
