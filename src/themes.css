@@ -396,6 +396,29 @@
     --ring: 226.73 58.43% 65.1%;
   }
 
+  .everforest-dark {
+    --background: 220 17% 18%;
+    --background-foreground: 220 17% 20%;
+    --foreground: 44 87% 94%;
+    --muted: 220 12% 24%;
+    --muted-foreground: 220 12% 64%;
+    --popover: 220 17% 17%;
+    --popover-foreground: 44 87% 94%;
+    --card: 220 17% 18%;
+    --card-foreground: 44 87% 90%;
+    --border: 220 10% 25%;
+    --input: 220 10% 28%;
+    --primary: 142 40% 68%;
+    --primary-foreground: 220 17% 18%;
+    --secondary: 142 15% 25%;
+    --secondary-foreground: 142 15% 85%;
+    --accent: 220 17% 30%;
+    --accent-foreground: 44 87% 94%;
+    --destructive: 0 52% 55%;
+    --destructive-foreground: 44 87% 94%;
+    --ring: 142 40% 68%;
+  }
+
   .tinacious-design {
     --background: 240 100% 99%;
     --background-foreground: 240 100% 98%;
