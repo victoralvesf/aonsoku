@@ -66,7 +66,7 @@ export function WordLevelLyricsView({
           data-testid={`word-line-${i}`}
           data-active={i === activeLineIdx ? 'true' : 'false'}
           className={clsx(
-            'drop-shadow-lg my-5 duration-500',
+            'drop-shadow-lg my-5 duration-500 w-fit m-auto max-w-[80%] text-balance',
             'transition-[transform] motion-reduce:transition-none',
             i === activeLineIdx && 'scale-125',
           )}
@@ -119,9 +119,9 @@ export function WordLevelLyricsView({
                       cueState === 'past' ||
                       (cueState === 'future' && i > activeLineIdx)
                     const cueClassName = clsx(
-                      'transition-[color,font-weight,opacity] duration-150 motion-reduce:transition-none',
+                      'transition-[color,font-weight,opacity,filter] duration-150 motion-reduce:transition-none',
                       !isWhitespaceOnly &&
-                        'cursor-pointer whitespace-nowrap hover:opacity-100',
+                        'cursor-pointer hover:opacity-100 [word-break:keep-all]',
                       isDim && 'opacity-50',
                       cueState === 'active' && 'text-primary font-semibold',
                       hueClass,
