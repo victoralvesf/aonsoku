@@ -119,7 +119,6 @@ export function WordLevelLyricsView({
                       cueState === 'past' ||
                       (cueState === 'future' && i > activeLineIdx)
                     const cueClassName = clsx(
-                      'transition-[color,font-weight,opacity,filter] duration-150 motion-reduce:transition-none',
                       !isWhitespaceOnly &&
                         'cursor-pointer hover:opacity-100 [word-break:keep-all]',
                       isDim && 'opacity-50',
