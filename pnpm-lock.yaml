@@ -22,21 +22,6 @@ importers:
       '@electron-toolkit/utils':
         specifier: ^4.0.0
         version: 4.0.0(electron@40.1.0)
-      '@fontsource/noto-sans-hk':
-        specifier: ^5.2.9
-        version: 5.2.9
-      '@fontsource/noto-sans-jp':
-        specifier: ^5.2.9
-        version: 5.2.9
-      '@fontsource/noto-sans-kr':
-        specifier: ^5.2.9
-        version: 5.2.9
-      '@fontsource/noto-sans-sc':
-        specifier: ^5.2.9
-        version: 5.2.9
-      '@fontsource/poppins':
-        specifier: ^5.2.7
-        version: 5.2.7
       '@hookform/resolvers':
         specifier: ^3.10.0
         version: 3.10.0(react-hook-form@7.55.0(react@18.3.1))
@@ -907,21 +892,6 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
-
-  '@fontsource/noto-sans-hk@5.2.9':
-    resolution: {integrity: sha512-ZZAfPCWxFIjvXwv6lHyo9IONzdQngcJgZU+7Q2t4DPHsS7WlRRKxhpZiHUHqKF/CvE7yJIRAxYWFAl8bLkeF0Q==}
-
-  '@fontsource/noto-sans-jp@5.2.9':
-    resolution: {integrity: sha512-6yVGiofnrnbiJjU8ch4JGSs2HqyozxMvsVyVmFwOnDH3u//qQKLqmKM4n0lqN0637uaJNzUW9nIJqbbMgHVQzw==}
-
-  '@fontsource/noto-sans-kr@5.2.9':
-    resolution: {integrity: sha512-pbF8F0rUzKkDmnk/KYGAbxjgW4TrIHdFKnV6OQ+kUC9ELCn5utrAURcEgMqq3J9SRX+FvjOz+aBCmfcC8/r7cw==}
-
-  '@fontsource/noto-sans-sc@5.2.9':
-    resolution: {integrity: sha512-bTUIWGBgJDpwi5qAr+x0/lcgv80IHTB9vl6s2f6EymZEa7qYV99yNRBZuKFT+SYDKVunZrjCEhWtpxqmbXWl5Q==}
-
-  '@fontsource/poppins@5.2.7':
-    resolution: {integrity: sha512-6uQyPmseo4FgI97WIhA4yWRlNaoLk4vSDK/PyRwdqqZb5zAEuc+Kunt8JTMcsHYUEGYBtN15SNkMajMdqUSUmg==}
 
   '@hookform/resolvers@3.10.0':
     resolution: {integrity: sha512-79Dv+3mDF7i+2ajj7SkypSKHhl1cbln1OGavqrsF7p6mbUv11xpqpacPsGDCTRvCSjEEIez2ef1NveSVL3b0Ag==}
@@ -5136,16 +5106,6 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
 
   '@floating-ui/utils@0.2.10': {}
-
-  '@fontsource/noto-sans-hk@5.2.9': {}
-
-  '@fontsource/noto-sans-jp@5.2.9': {}
-
-  '@fontsource/noto-sans-kr@5.2.9': {}
-
-  '@fontsource/noto-sans-sc@5.2.9': {}
-
-  '@fontsource/poppins@5.2.7': {}
 
   '@hookform/resolvers@3.10.0(react-hook-form@7.55.0(react@18.3.1))':
     dependencies:
