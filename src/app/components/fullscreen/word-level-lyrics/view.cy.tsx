@@ -60,7 +60,7 @@ describe('WordLevelLyricsView Component', () => {
   })
 
   // 3
-  it('active word has text-primary AND font-semibold', () => {
+  it('active word has karaoke-fill AND font-semibold', () => {
     loadAndNormalize('v2-with-cues.json', (data) => {
       cy.mount(
         <WordLevelLyricsView
@@ -72,7 +72,7 @@ describe('WordLevelLyricsView Component', () => {
         />,
       )
       cy.get('[data-testid="word-0-0:pos0-2"]')
-        .should('have.class', 'text-primary')
+        .should('have.class', 'karaoke-fill')
         .and('have.class', 'font-semibold')
     })
   })
@@ -101,7 +101,7 @@ describe('WordLevelLyricsView Component', () => {
   })
 
   // 5
-  it('future words on active line have neither opacity-50 nor text-primary', () => {
+  it('future words on active line have neither opacity-50 nor karaoke-fill', () => {
     // NOTE: line 0 of v2-with-cues only has 3 cues (indices 0..2). To get a
     // FUTURE cue on the active line we set the active cue to 0 — then cue 2
     // ("through") is in the future state and serves as the assertion target.
@@ -116,7 +116,7 @@ describe('WordLevelLyricsView Component', () => {
         />,
       )
       cy.get('[data-testid="word-0-0:pos0-2"]')
-        .should('not.have.class', 'text-primary')
+        .should('not.have.class', 'karaoke-fill')
         .and('not.have.class', 'opacity-50')
     })
   })
@@ -425,11 +425,11 @@ describe('WordLevelLyricsView Component', () => {
       )
       cy.get('[data-testid="word-0-0:lead-0"]').should(
         'have.class',
-        'text-primary',
+        'karaoke-fill',
       )
       cy.get('[data-testid="word-0-0:bg-0"]').should(
         'have.class',
-        'text-primary',
+        'karaoke-fill',
       )
     })
   })

@@ -178,7 +178,7 @@ describe('WordLevelLyricsContainer (T13)', () => {
       cy.wait(50)
       cy.get('[data-testid="word-0-0:pos0-0"]').should(
         'have.class',
-        'text-primary',
+        'karaoke-fill',
       )
     })
   })

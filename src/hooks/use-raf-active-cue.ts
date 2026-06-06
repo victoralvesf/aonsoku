@@ -1,5 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+export interface RafTickInfo {
+  /** Current playback time in ms (offset already applied upstream by the caller). */
+  t: number
+  /** -1 when no line is active. */
+  activeLineIdx: number
+  /** Map from NormalizedCueLine.key → active cue index. Empty when no line active. */
+  activeCueByKey: Readonly<Record<string, number>>
+}
+
 export interface UseRafActiveCueArgs {
   lines: ReadonlyArray<{
     start?: number
@@ -13,6 +22,17 @@ export interface UseRafActiveCueArgs {
   }>
   getCurrentTimeMs: () => number
   enabled?: boolean
+  /**
+   * Fired on EVERY animation frame (when the document is visible), AFTER the
+   * active-index binary searches but BEFORE any `setState` calls. This is the
+   * side-channel for sub-cue-resolution effects (e.g. karaoke wipe progress)
+   * that need a smooth 60fps signal without triggering React re-renders.
+   *
+   * The callback identity is stored in a ref so changing it on every render is
+   * cheap (no RAF restart). Implementations should treat it as fire-and-forget
+   * and avoid heavy work inside.
+   */
+  onTick?: (info: RafTickInfo) => void
 }
 
 export interface UseRafActiveCueResult {
@@ -79,6 +99,7 @@ export function useRafActiveCue({
   lines,
   getCurrentTimeMs,
   enabled = true,
+  onTick,
 }: UseRafActiveCueArgs): UseRafActiveCueResult {
   const [activeLineIdx, setActiveLineIdx] = useState(-1)
   const [activeCueByKey, setActiveCueByKey] = useState<Record<string, number>>(
@@ -92,6 +113,10 @@ export function useRafActiveCue({
   const lineIdxRef = useRef(-1)
   const cueByKeyRef = useRef<Record<string, number>>({})
   const lastVisitedRef = useRef<Record<string, number>>({})
+  const onTickRef = useRef(onTick)
+  useEffect(() => {
+    onTickRef.current = onTick
+  }, [onTick])
 
   // Pre-compute sorted arrays for binary search (memoized by line identity).
   const lineStarts = useMemo(() => lines.map((l) => l.start ?? 0), [lines])
@@ -147,6 +172,12 @@ export function useRafActiveCue({
           }
         }
       }
+
+      onTickRef.current?.({
+        t,
+        activeLineIdx: newLineIdx,
+        activeCueByKey: newCueByKey,
+      })
 
       // Only setState when the active line index actually changes.
       if (newLineIdx !== lineIdxRef.current) {

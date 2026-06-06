@@ -351,6 +351,28 @@ svg#bars .eq-bar--4 {
   @apply w-fit m-auto max-w-[80%] text-balance;
 }
 
+/*
+ * Karaoke wipe on the active word-level cue. Driven by --fill (a percentage)
+ * written each animation frame by container.tsx's handleTick. The gradient
+ * stops have a ±3% feather so the boundary reads as a soft edge rather than a
+ * hard line. `currentColor` for the unfilled half means the not-yet-sung
+ * portion blends with surrounding cue text. `-webkit-text-fill-color:
+ * transparent` makes the glyph see-through so background-clip:text reveals
+ * the gradient through the letterforms.
+ */
+.karaoke-fill {
+  background-image: linear-gradient(
+    90deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary)) calc(var(--fill, 0%) - 3%),
+    currentColor calc(var(--fill, 0%) + 3%),
+    currentColor 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .default-gradient {
   @apply bg-gradient-to-b from-background/10 to-background/40;
 }

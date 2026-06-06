@@ -34,6 +34,13 @@ export interface WordLevelLyricsViewProps {
   scrollContainerRef?: React.Ref<HTMLDivElement>
   /** Refs for each LINE CONTAINER <div> by line index — for scroll-into-view. */
   lineRefs?: React.MutableRefObject<(HTMLDivElement | null)[]>
+  /**
+   * Called on mount with the cue <span> element and on unmount with null, keyed
+   * by `${lineIdx}|${cueLine.key}|${cueIdx}`. The container uses this to drive
+   * the karaoke `--fill` CSS variable directly on each span via rAF, bypassing
+   * React state updates so the smooth fill animation doesn't cost re-renders.
+   */
+  registerWordRef?: (key: string, el: HTMLSpanElement | null) => void
 }
 
 export function WordLevelLyricsView({
@@ -45,6 +52,7 @@ export function WordLevelLyricsView({
   resolvedLang,
   scrollContainerRef,
   lineRefs,
+  registerWordRef,
 }: WordLevelLyricsViewProps) {
   return (
     <div
@@ -122,13 +130,18 @@ export function WordLevelLyricsView({
                       !isWhitespaceOnly &&
                         'cursor-pointer hover:opacity-100 [word-break:keep-all]',
                       isDim && 'opacity-50',
-                      cueState === 'active' && 'text-primary font-semibold',
+                      cueState === 'active' && 'font-semibold',
+                      cueState === 'active' &&
+                        !isWhitespaceOnly &&
+                        'karaoke-fill',
                       hueClass,
                     )
+                    const wordKey = `${i}|${cueLine.key}|${cueIdx}`
 
                     return (
                       <span
                         key={cueIdx}
+                        ref={(el) => registerWordRef?.(wordKey, el)}
                         data-testid={`word-${i}-${cueLine.key}-${cueIdx}`}
                         data-state={cueState}
                         aria-hidden={isWhitespaceOnly ? 'true' : undefined}

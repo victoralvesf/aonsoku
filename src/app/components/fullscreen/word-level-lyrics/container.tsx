@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { isSafari } from 'react-device-detect'
-import { useRafActiveCue } from '@/hooks/use-raf-active-cue'
+import { type RafTickInfo, useRafActiveCue } from '@/hooks/use-raf-active-cue'
 import { useWordSeek } from '@/hooks/use-word-seek'
 import { useLang } from '@/store/lang.store'
 import { usePlayerRef } from '@/store/player.store'
@@ -40,11 +40,49 @@ export function WordLevelLyricsContainer({
     [playerRef],
   )
 
+  // Per-cue <span> registry. Each rendered cue span registers/unregisters
+  // itself via `registerWordRef`. We use a Map so writes are O(1); the keys
+  // mirror view.tsx's `${i}|${cueLine.key}|${cueIdx}` format.
+  const wordRefs = useRef<Map<string, HTMLSpanElement>>(new Map())
+  const registerWordRef = useCallback(
+    (key: string, el: HTMLSpanElement | null) => {
+      if (el) wordRefs.current.set(key, el)
+      else wordRefs.current.delete(key)
+    },
+    [],
+  )
+
+  // Karaoke wipe progress channel. Fires every animation frame from
+  // useRafActiveCue. Writes `--fill` directly to the active cue's <span> DOM
+  // node — NOT via React state — so smooth 60fps fill costs zero re-renders.
+  // Only the active cue(s) get a write; past/future cues lack the
+  // `.karaoke-fill` class so their `--fill` value is inert.
+  const handleTick = useCallback(
+    ({ t, activeLineIdx: lineIdx, activeCueByKey: cueByKey }: RafTickInfo) => {
+      if (lineIdx < 0) return
+      const line = normalized.lines[lineIdx]
+      if (!line) return
+      for (const cueLine of line.cueLines) {
+        const cueIdx = cueByKey[cueLine.key]
+        if (cueIdx == null || cueIdx < 0) continue
+        const cue = cueLine.cues[cueIdx]
+        if (!cue) continue
+        const duration = Math.max(1, cue.end - cue.start)
+        const pct = Math.max(0, Math.min(1, (t - cue.start) / duration))
+        const el = wordRefs.current.get(`${lineIdx}|${cueLine.key}|${cueIdx}`)
+        if (el) el.style.setProperty('--fill', `${pct * 100}%`)
+      }
+    },
+    [normalized],
+  )
+
+  // 60fps active-index tracking + karaoke wipe tick.
   const { activeLineIdx, activeCueByKey, lastVisitedCueByKey } =
     useRafActiveCue({
       lines: normalized.lines,
       getCurrentTimeMs,
       enabled: enabled && normalized.hasWordTiming,
+      onTick: handleTick,
     })
 
   const onWordClick = useWordSeek()
@@ -122,6 +160,7 @@ export function WordLevelLyricsContainer({
       resolvedLang={resolvedLang}
       scrollContainerRef={scrollContainerRef}
       lineRefs={lineRefs}
+      registerWordRef={registerWordRef}
     />
   )
 }
