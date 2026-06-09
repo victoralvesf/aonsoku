@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { isSafari } from 'react-device-detect'
 import { type RafTickInfo, useRafActiveCue } from '@/hooks/use-raf-active-cue'
 import { useWordSeek } from '@/hooks/use-word-seek'
@@ -52,6 +52,30 @@ export function WordLevelLyricsContainer({
     [],
   )
 
+  // Per-dot <span> registry for instrumental break indicators. Same DOM-direct
+  // --fill pattern as wordRefs; keys match view.tsx's `${break.key}|${dotIdx}`.
+  const dotRefs = useRef<Map<string, HTMLSpanElement>>(new Map())
+  const registerDotRef = useCallback(
+    (key: string, el: HTMLSpanElement | null) => {
+      if (el) dotRefs.current.set(key, el)
+      else dotRefs.current.delete(key)
+    },
+    [],
+  )
+
+  // Tracks which break dot is currently active (if any). State changes only on
+  // dot transitions (~1Hz during a break), keeping React re-renders minimal.
+  // The ref shadow lets handleTick read the previous value without a closure
+  // over state, mirroring the lineIdxRef/cueByKeyRef pattern in useRafActiveCue.
+  const [activeBreakInfo, setActiveBreakInfo] = useState<{
+    breakKey: string
+    dotIdx: number
+  } | null>(null)
+  const activeBreakInfoRef = useRef<{
+    breakKey: string
+    dotIdx: number
+  } | null>(null)
+
   // Karaoke wipe progress channel. Fires every animation frame from
   // useRafActiveCue. Writes `--fill` directly to the active cue's <span> DOM
   // node — NOT via React state — so smooth 60fps fill costs zero re-renders.
@@ -59,18 +83,51 @@ export function WordLevelLyricsContainer({
   // `.karaoke-fill` class so their `--fill` value is inert.
   const handleTick = useCallback(
     ({ t, activeLineIdx: lineIdx, activeCueByKey: cueByKey }: RafTickInfo) => {
-      if (lineIdx < 0) return
-      const line = normalized.lines[lineIdx]
-      if (!line) return
-      for (const cueLine of line.cueLines) {
-        const cueIdx = cueByKey[cueLine.key]
-        if (cueIdx == null || cueIdx < 0) continue
-        const cue = cueLine.cues[cueIdx]
-        if (!cue) continue
-        const duration = Math.max(1, cue.end - cue.start)
-        const pct = Math.max(0, Math.min(1, (t - cue.start) / duration))
-        const el = wordRefs.current.get(`${lineIdx}|${cueLine.key}|${cueIdx}`)
+      if (lineIdx >= 0) {
+        const line = normalized.lines[lineIdx]
+        if (line) {
+          for (const cueLine of line.cueLines) {
+            const cueIdx = cueByKey[cueLine.key]
+            if (cueIdx == null || cueIdx < 0) continue
+            const cue = cueLine.cues[cueIdx]
+            if (!cue) continue
+            const duration = Math.max(1, cue.end - cue.start)
+            const pct = Math.max(0, Math.min(1, (t - cue.start) / duration))
+            const el = wordRefs.current.get(
+              `${lineIdx}|${cueLine.key}|${cueIdx}`,
+            )
+            if (el) el.style.setProperty('--fill', `${pct * 100}%`)
+          }
+        }
+      }
+
+      // Break dot --fill: linear scan over breaks is fine — N is small (one
+      // per gap >= 3s) and most songs have <10 breaks. Same DOM-direct write
+      // pattern as cues; only the active dot has .karaoke-fill applied so
+      // writes to other dots' --fill are inert.
+      let newBreakInfo: { breakKey: string; dotIdx: number } | null = null
+      for (const brk of normalized.breaks) {
+        if (t < brk.start || t >= brk.end) continue
+        const durationPerDot = (brk.end - brk.start) / brk.dotCount
+        const dotIdx = Math.min(
+          brk.dotCount - 1,
+          Math.max(0, Math.floor((t - brk.start) / durationPerDot)),
+        )
+        newBreakInfo = { breakKey: brk.key, dotIdx }
+        const dotStart = brk.start + dotIdx * durationPerDot
+        const pct = Math.max(0, Math.min(1, (t - dotStart) / durationPerDot))
+        const el = dotRefs.current.get(`${brk.key}|${dotIdx}`)
         if (el) el.style.setProperty('--fill', `${pct * 100}%`)
+        break
+      }
+
+      const prev = activeBreakInfoRef.current
+      if (
+        prev?.breakKey !== newBreakInfo?.breakKey ||
+        prev?.dotIdx !== newBreakInfo?.dotIdx
+      ) {
+        activeBreakInfoRef.current = newBreakInfo
+        setActiveBreakInfo(newBreakInfo)
       }
     },
     [normalized],
@@ -90,6 +147,7 @@ export function WordLevelLyricsContainer({
   // Refs for DOM nodes.
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const lineRefs = useRef<(HTMLDivElement | null)[]>([])
+  const breakContainerRefs = useRef<Map<string, HTMLDivElement>>(new Map())
 
   // Auto-scroll with recovery — mirrors react-lrc's recoverAutoScrollInterval={1500}.
   const userScrollGuardRef = useRef({ pausedUntilMs: 0 })
@@ -147,6 +205,39 @@ export function WordLevelLyricsContainer({
     return () => clearTimeout(handle)
   }, [activeLineIdx])
 
+  // Mirror of the line scroll effect for instrumental breaks. Keyed only on
+  // breakKey (not dotIdx) so we scroll on break entry, not every ~1s dot
+  // transition. When activeBreakInfo flips to null at break end, the next
+  // line's scroll effect picks up naturally.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: scroll on break entry only, not per-dot
+  useEffect(() => {
+    if (!activeBreakInfo) return
+    if (performance.now() < userScrollGuardRef.current.pausedUntilMs) return
+
+    const breakEl = breakContainerRefs.current.get(activeBreakInfo.breakKey)
+    const scrollEl = scrollContainerRef.current
+    if (!breakEl || !scrollEl) return
+
+    programmaticScrollRef.current = true
+    breakEl.scrollIntoView({
+      behavior: isSafari ? 'auto' : 'smooth',
+      block: 'center',
+    })
+
+    const clearFlag = () => {
+      programmaticScrollRef.current = false
+    }
+
+    if ('onscrollend' in scrollEl) {
+      scrollEl.addEventListener('scrollend', clearFlag, { once: true })
+      return () => {
+        scrollEl.removeEventListener('scrollend', clearFlag)
+      }
+    }
+    const handle = setTimeout(clearFlag, 700)
+    return () => clearTimeout(handle)
+  }, [activeBreakInfo?.breakKey])
+
   // Defensive: should never be mounted without word timing, but bail out safely.
   if (!normalized.hasWordTiming) return null
 
@@ -156,11 +247,14 @@ export function WordLevelLyricsContainer({
       activeLineIdx={activeLineIdx}
       activeCueByKey={activeCueByKey}
       lastVisitedCueByKey={lastVisitedCueByKey}
+      activeBreakInfo={activeBreakInfo}
       onWordClick={onWordClick}
       resolvedLang={resolvedLang}
       scrollContainerRef={scrollContainerRef}
       lineRefs={lineRefs}
+      breakContainerRefs={breakContainerRefs}
       registerWordRef={registerWordRef}
+      registerDotRef={registerDotRef}
     />
   )
 }

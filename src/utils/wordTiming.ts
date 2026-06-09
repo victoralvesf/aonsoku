@@ -33,6 +33,14 @@ export interface NormalizedLine {
   cueLines: NormalizedCueLine[] // zero or more, sorted by displayOrder
 }
 
+export interface NormalizedBreak {
+  beforeLineIndex: number // line index this break precedes; 0 = intro
+  start: number // ms, offset applied
+  end: number // ms, offset applied
+  dotCount: number
+  key: string // e.g. "brk:intro" or "brk:3"
+}
+
 export interface NormalizedStructuredLyric {
   lang?: string
   kind: string // defaults to 'main'
@@ -40,9 +48,13 @@ export interface NormalizedStructuredLyric {
   agents: NormalizedAgent[]
   lines: NormalizedLine[]
   hasWordTiming: boolean
+  breaks: NormalizedBreak[]
 }
 
 const DEFAULT_CUE_DURATION_MS = 500
+const INSTRUMENTAL_BREAK_THRESHOLD_MS = 3000 // gap >= this triggers an indicator
+const MAX_BREAK_DOTS = 60 // above this, dots redistribute (>1s per dot)
+
 const ROLE_PRIORITY: Record<string, number> = {
   main: 0,
   voice: 1,
@@ -124,15 +136,26 @@ export function normalizeStructuredLyric(
       if (allHaveEnd) {
         cueEnd = c.end! + offset
       } else {
-        // all-or-none: compute from next cue start
         const nextStart = rawCues[i + 1]?.start
         const clEnd = rawCl.end != null ? rawCl.end + offset : undefined
         const nextLineStart = lines[idx + 1]?.start
-        cueEnd =
-          (nextStart != null ? nextStart + offset : undefined) ??
-          clEnd ??
-          nextLineStart ??
-          cueStart + DEFAULT_CUE_DURATION_MS
+        const defaultEnd = cueStart + DEFAULT_CUE_DURATION_MS
+        // Last cue inflates to nextLineStart ONLY when the gap is below the
+        // break threshold; otherwise it ends naturally and the break indicator
+        // fills the gap. The two conditionals share INSTRUMENTAL_BREAK_THRESHOLD_MS
+        // so they cannot disagree.
+        if (nextStart != null) {
+          cueEnd = nextStart + offset
+        } else if (clEnd != null) {
+          cueEnd = clEnd
+        } else if (
+          nextLineStart != null &&
+          nextLineStart - defaultEnd < INSTRUMENTAL_BREAK_THRESHOLD_MS
+        ) {
+          cueEnd = nextLineStart
+        } else {
+          cueEnd = defaultEnd
+        }
       }
 
       // Defensive byte bounds check
@@ -202,6 +225,11 @@ export function normalizeStructuredLyric(
     (l) => l.cueLines.length > 0 && l.cueLines.some((cl) => cl.cues.length > 0),
   )
 
+  // 7. Detect instrumental breaks (≥3s gaps). Cue-end inflation above is
+  //    capped at the same threshold, so cues[last].end is the natural end
+  //    whenever a break should be reported.
+  const breaks = computeBreaks(lines)
+
   return {
     lang: raw.lang,
     kind: raw.kind ?? 'main',
@@ -209,5 +237,57 @@ export function normalizeStructuredLyric(
     agents,
     lines,
     hasWordTiming,
+    breaks,
   }
+}
+
+function computeBreaks(lines: NormalizedLine[]): NormalizedBreak[] {
+  const breaks: NormalizedBreak[] = []
+
+  const lineEnd = (line: NormalizedLine): number | undefined => {
+    let max: number | undefined
+    for (const cl of line.cueLines) {
+      const e = cl.cues[cl.cues.length - 1]?.end
+      if (e != null && (max == null || e > max)) max = e
+    }
+    return max
+  }
+
+  const pushIfBreak = (
+    beforeLineIndex: number,
+    start: number,
+    end: number,
+    keySuffix: string,
+  ) => {
+    const gap = end - start
+    if (gap < INSTRUMENTAL_BREAK_THRESHOLD_MS) return
+    const dotCount = Math.min(
+      MAX_BREAK_DOTS,
+      Math.max(1, Math.floor(gap / 1000)),
+    )
+    breaks.push({
+      beforeLineIndex,
+      start,
+      end,
+      dotCount,
+      key: `brk:${keySuffix}`,
+    })
+  }
+
+  // Intro: from t=0 to first line's start.
+  if (lines.length > 0 && lines[0].start != null) {
+    pushIfBreak(0, 0, lines[0].start, 'intro')
+  }
+
+  // Mid-song: between consecutive lines, using each line's natural last-cue end.
+  for (let i = 1; i < lines.length; i++) {
+    const prev = lines[i - 1]
+    const curr = lines[i]
+    if (curr.start == null) continue
+    const prevEnd = lineEnd(prev)
+    if (prevEnd == null) continue
+    pushIfBreak(i, prevEnd, curr.start, String(i))
+  }
+
+  return breaks
 }
