@@ -29,6 +29,8 @@ export interface NormalizedCueLine {
 
 export interface NormalizedLine {
   start?: number // ms, offset applied — canonical line clock
+  end?: number // ms, offset applied — max(cueLines[*].cues[last].end); enables overlap detection for concurrent voices
+
   value: string
   cueLines: NormalizedCueLine[] // zero or more, sorted by displayOrder
 }
@@ -213,11 +215,19 @@ export function normalizeStructuredLyric(
     line.cueLines.sort((a, b) => a.displayOrder - b.displayOrder)
   }
 
-  // 5. Promote main-agent start as canonical line clock
+  // 5. Promote main-agent start as canonical line clock; derive line end from max(cues[last].end) for overlap detection
   for (const line of lines) {
     if (line.start == null && line.cueLines.length > 0) {
       line.start = line.cueLines[0].start
     }
+    let maxEnd: number | undefined
+    for (const cl of line.cueLines) {
+      const lastCueEnd = cl.cues[cl.cues.length - 1]?.end
+      if (lastCueEnd != null && (maxEnd == null || lastCueEnd > maxEnd)) {
+        maxEnd = lastCueEnd
+      }
+    }
+    if (maxEnd != null) line.end = maxEnd
   }
 
   // 6. Compute hasWordTiming
@@ -243,15 +253,6 @@ export function normalizeStructuredLyric(
 
 function computeBreaks(lines: NormalizedLine[]): NormalizedBreak[] {
   const breaks: NormalizedBreak[] = []
-
-  const lineEnd = (line: NormalizedLine): number | undefined => {
-    let max: number | undefined
-    for (const cl of line.cueLines) {
-      const e = cl.cues[cl.cues.length - 1]?.end
-      if (e != null && (max == null || e > max)) max = e
-    }
-    return max
-  }
 
   const pushIfBreak = (
     beforeLineIndex: number,
@@ -279,14 +280,16 @@ function computeBreaks(lines: NormalizedLine[]): NormalizedBreak[] {
     pushIfBreak(0, 0, lines[0].start, 'intro')
   }
 
-  // Mid-song: between consecutive lines, using each line's natural last-cue end.
-  for (let i = 1; i < lines.length; i++) {
-    const prev = lines[i - 1]
-    const curr = lines[i]
-    if (curr.start == null) continue
-    const prevEnd = lineEnd(prev)
-    if (prevEnd == null) continue
-    pushIfBreak(i, prevEnd, curr.start, String(i))
+  // Cluster-aware: gap is measured from running-max of every earlier line's end, not just lines[i-1].end, so overlap clusters don't get false-positive breaks.
+  let runningMaxEnd: number | undefined
+  for (let i = 0; i < lines.length; i++) {
+    if (i > 0 && lines[i].start != null && runningMaxEnd != null) {
+      pushIfBreak(i, runningMaxEnd, lines[i].start as number, String(i))
+    }
+    const e = lines[i].end
+    if (e != null && (runningMaxEnd == null || e > runningMaxEnd)) {
+      runningMaxEnd = e
+    }
   }
 
   return breaks

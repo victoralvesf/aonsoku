@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Fragment } from 'react'
+import { Fragment, useMemo } from 'react'
 import { isSafari } from 'react-device-detect'
 import { byteSliceFallback } from '@/utils/byteSlice'
 import type {
@@ -19,9 +19,11 @@ const HUE_ROTATE_CLASSES = [
 
 export interface WordLevelLyricsViewProps {
   data: NormalizedStructuredLyric
-  /** -1 when no line is active. */
+  /** -1 when no line has started; else the rightmost-started line index (back-compat anchor for past/future boundary). */
   activeLineIdx: number
-  /** Map from NormalizedCueLine.key → active cue index. Empty Record when no line active. */
+  /** Asc-sorted indices of all currently-overlapping (cluster) lines. Optional; defaults to [activeLineIdx] when omitted, preserving single-line behaviour for existing callers. */
+  activeLineIndices?: ReadonlyArray<number>
+  /** Map from NormalizedCueLine.key → active cue index. Aggregated across every line in activeLineIndices. */
   activeCueByKey: Readonly<Record<string, number>>
   /**
    * Map from NormalizedCueLine.key → greatest cue index whose start time has
@@ -59,6 +61,7 @@ export interface WordLevelLyricsViewProps {
 export function WordLevelLyricsView({
   data,
   activeLineIdx,
+  activeLineIndices,
   activeCueByKey,
   lastVisitedCueByKey,
   activeBreakInfo = null,
@@ -75,6 +78,15 @@ export function WordLevelLyricsView({
     breaksByLine.set(brk.beforeLineIndex, brk)
   }
   const isBreakActive = activeBreakInfo !== null
+  // Cluster membership set: when activeLineIndices is provided and non-empty
+  // we use it directly; otherwise fall back to [activeLineIdx] so existing
+  // single-index callers (tests, single-track lyrics) keep working unchanged.
+  const activeIndicesSet = useMemo<ReadonlySet<number>>(() => {
+    if (activeLineIndices && activeLineIndices.length > 0) {
+      return new Set(activeLineIndices)
+    }
+    return activeLineIdx >= 0 ? new Set([activeLineIdx]) : new Set<number>()
+  }, [activeLineIndices, activeLineIdx])
 
   return (
     <div
@@ -111,11 +123,11 @@ export function WordLevelLyricsView({
                 if (lineRefs?.current) lineRefs.current[i] = el
               }}
               data-testid={`word-line-${i}`}
-              data-active={i === activeLineIdx ? 'true' : 'false'}
+              data-active={activeIndicesSet.has(i) ? 'true' : 'false'}
               className={clsx(
                 'drop-shadow-lg my-5 duration-500 w-fit m-auto max-w-[80%] text-balance',
                 'transition-[transform] motion-reduce:transition-none',
-                i === activeLineIdx && !isBreakActive && 'scale-125',
+                activeIndicesSet.has(i) && !isBreakActive && 'scale-125',
               )}
             >
               {line.cueLines.length === 0 ? (
@@ -146,9 +158,7 @@ export function WordLevelLyricsView({
                           renderedText.trim().length === 0
 
                         let cueState: 'past' | 'active' | 'future'
-                        if (i < activeLineIdx) {
-                          cueState = 'past'
-                        } else if (i === activeLineIdx) {
+                        if (activeIndicesSet.has(i)) {
                           if (cueIdx === activeCueIdxForThisCueLine) {
                             cueState = 'active'
                           } else if (
@@ -158,6 +168,8 @@ export function WordLevelLyricsView({
                           } else {
                             cueState = 'future'
                           }
+                        } else if (i < activeLineIdx) {
+                          cueState = 'past'
                         } else {
                           cueState = 'future'
                         }

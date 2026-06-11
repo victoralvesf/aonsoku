@@ -324,4 +324,65 @@ describe('WordLevelLyricsContainer (T13)', () => {
       )
     })
   })
+
+  // 15
+  it('cluster: cross-index concurrent voices both go data-state=active when t sits in their overlap window', () => {
+    loadStructuredLyric('v2-multi-agent-overlapping-indices').then((lyric) => {
+      cy.mount(<WordLevelLyricsContainer structuredLyric={lyric} />)
+      // Line 0 (lead): 1000-2200. Line 1 (echo): 1500-3000.
+      // 1.7 s sits inside both lines AND inside lead cue 2 (1700-2200) AND echo cue 0 (1500-1900).
+      cy.then(() => {
+        fakeAudio.currentTime = 1.7
+      })
+      cy.wait(50)
+      cy.get('[data-testid="word-line-0"]').should(
+        'have.attr',
+        'data-active',
+        'true',
+      )
+      cy.get('[data-testid="word-line-1"]').should(
+        'have.attr',
+        'data-active',
+        'true',
+      )
+      cy.get('[data-testid="word-0-0:lead-2"]').should(
+        'have.attr',
+        'data-state',
+        'active',
+      )
+      cy.get('[data-testid="word-1-1:echo-0"]').should(
+        'have.attr',
+        'data-state',
+        'active',
+      )
+    })
+  })
+
+  // 16
+  it('cluster anchor shift: when first cluster line ends and a later one starts, data-active set updates without stranding the previous concurrent voice', () => {
+    loadStructuredLyric('v2-multi-agent-overlapping-indices').then((lyric) => {
+      cy.mount(<WordLevelLyricsContainer structuredLyric={lyric} />)
+      // 2.7 s: line 0 (lead) has ended (end=2200), line 1 (echo, 1500-3000)
+      // and line 2 (choir, 2500-4000) both still active.
+      cy.then(() => {
+        fakeAudio.currentTime = 2.7
+      })
+      cy.wait(50)
+      cy.get('[data-testid="word-line-0"]').should(
+        'have.attr',
+        'data-active',
+        'false',
+      )
+      cy.get('[data-testid="word-line-1"]').should(
+        'have.attr',
+        'data-active',
+        'true',
+      )
+      cy.get('[data-testid="word-line-2"]').should(
+        'have.attr',
+        'data-active',
+        'true',
+      )
+    })
+  })
 })

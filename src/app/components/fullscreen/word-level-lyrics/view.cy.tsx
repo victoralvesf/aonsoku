@@ -477,4 +477,146 @@ describe('WordLevelLyricsView Component', () => {
       )
     })
   })
+
+  // 23
+  it('cluster: cross-index concurrent lines all flip data-active=true simultaneously when activeLineIndices is multi-element', () => {
+    loadAndNormalize('v2-multi-agent-overlapping-indices.json', (data) => {
+      cy.mount(
+        <WordLevelLyricsView
+          data={data}
+          activeLineIdx={2}
+          activeLineIndices={[0, 1, 2]}
+          activeCueByKey={{}}
+          lastVisitedCueByKey={{}}
+          onWordClick={cy.stub()}
+          resolvedLang="en"
+        />,
+      )
+      cy.get('[data-testid="word-line-0"]').should(
+        'have.attr',
+        'data-active',
+        'true',
+      )
+      cy.get('[data-testid="word-line-1"]').should(
+        'have.attr',
+        'data-active',
+        'true',
+      )
+      cy.get('[data-testid="word-line-2"]').should(
+        'have.attr',
+        'data-active',
+        'true',
+      )
+    })
+  })
+
+  // 24
+  it('cluster: scale-125 applies to every line in activeLineIndices', () => {
+    loadAndNormalize('v2-multi-agent-overlapping-indices.json', (data) => {
+      cy.mount(
+        <WordLevelLyricsView
+          data={data}
+          activeLineIdx={2}
+          activeLineIndices={[0, 1, 2]}
+          activeCueByKey={{}}
+          lastVisitedCueByKey={{}}
+          onWordClick={cy.stub()}
+          resolvedLang="en"
+        />,
+      )
+      cy.get('[data-testid="word-line-0"]').should('have.class', 'scale-125')
+      cy.get('[data-testid="word-line-1"]').should('have.class', 'scale-125')
+      cy.get('[data-testid="word-line-2"]').should('have.class', 'scale-125')
+    })
+  })
+
+  // 25
+  it('cluster: each active line carries its own karaoke-fill cue (per-line independent highlighting)', () => {
+    loadAndNormalize('v2-multi-agent-overlapping-indices.json', (data) => {
+      cy.mount(
+        <WordLevelLyricsView
+          data={data}
+          activeLineIdx={2}
+          activeLineIndices={[0, 1, 2]}
+          activeCueByKey={{
+            '0:lead': 2,
+            '1:echo': 0,
+            '2:choir': 0,
+          }}
+          lastVisitedCueByKey={{
+            '0:lead': 2,
+            '1:echo': 0,
+            '2:choir': 0,
+          }}
+          onWordClick={cy.stub()}
+          resolvedLang="en"
+        />,
+      )
+      cy.get('[data-testid="word-0-0:lead-2"]').should(
+        'have.class',
+        'karaoke-fill',
+      )
+      cy.get('[data-testid="word-1-1:echo-0"]').should(
+        'have.class',
+        'karaoke-fill',
+      )
+      cy.get('[data-testid="word-2-2:choir-0"]').should(
+        'have.class',
+        'karaoke-fill',
+      )
+    })
+  })
+
+  // 26
+  it('cluster back-compat: activeLineIndices omitted falls back to [activeLineIdx] (existing single-index tests keep working)', () => {
+    loadAndNormalize('v2-multi-agent-overlapping-indices.json', (data) => {
+      cy.mount(
+        <WordLevelLyricsView
+          data={data}
+          activeLineIdx={1}
+          activeCueByKey={{}}
+          lastVisitedCueByKey={{}}
+          onWordClick={cy.stub()}
+          resolvedLang="en"
+        />,
+      )
+      cy.get('[data-testid="word-line-1"]').should(
+        'have.attr',
+        'data-active',
+        'true',
+      )
+      cy.get('[data-testid="word-line-0"]').should(
+        'have.attr',
+        'data-active',
+        'false',
+      )
+      cy.get('[data-testid="word-line-2"]').should(
+        'have.attr',
+        'data-active',
+        'false',
+      )
+    })
+  })
+
+  // 27
+  it('cluster: line OUTSIDE the cluster but before its anchor renders cues as past (i < activeLineIdx fallback)', () => {
+    loadAndNormalize('v2-multi-agent-overlapping-indices.json', (data) => {
+      cy.mount(
+        <WordLevelLyricsView
+          data={data}
+          activeLineIdx={2}
+          activeLineIndices={[1, 2]}
+          activeCueByKey={{ '1:echo': 0, '2:choir': 0 }}
+          lastVisitedCueByKey={{ '1:echo': 0, '2:choir': 0 }}
+          onWordClick={cy.stub()}
+          resolvedLang="en"
+        />,
+      )
+      cy.get('[data-testid="word-0-0:lead-0"]').should(
+        'have.attr',
+        'data-state',
+        'past',
+      )
+    })
+  })
 })

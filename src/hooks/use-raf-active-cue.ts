@@ -3,9 +3,11 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 export interface RafTickInfo {
   /** Current playback time in ms (offset already applied upstream by the caller). */
   t: number
-  /** -1 when no line is active. */
+  /** -1 when no line has started; else the rightmost-started line index (boundary for past/future). */
   activeLineIdx: number
-  /** Map from NormalizedCueLine.key → active cue index. Empty when no line active. */
+  /** Asc-sorted indices of all currently-overlapping lines; falls back to [activeLineIdx] in inter-line gaps; empty before first line. */
+  activeLineIndices: ReadonlyArray<number>
+  /** Map from NormalizedCueLine.key → active cue index. Aggregated across every line in activeLineIndices. */
   activeCueByKey: Readonly<Record<string, number>>
 }
 
@@ -37,6 +39,8 @@ export interface UseRafActiveCueArgs {
 
 export interface UseRafActiveCueResult {
   activeLineIdx: number
+  /** All currently-active line indices in ascending order. See RafTickInfo for semantics. */
+  activeLineIndices: ReadonlyArray<number>
   activeCueByKey: Readonly<Record<string, number>>
   lastVisitedCueByKey: Readonly<Record<string, number>>
 }
@@ -87,6 +91,39 @@ export function findCueIdx(
 }
 
 /**
+ * Returns asc-sorted indices of every line whose [start, end) range contains t
+ * (the cluster of concurrent voices currently sounding). When the playhead sits
+ * in an inter-line gap, falls back to `[rightmost]` so a single line stays
+ * visually active until the next starts — preserves pre-cluster behaviour for
+ * non-overlapping lyrics. Returns `[]` only before the very first line.
+ *
+ * Uses `prefixMaxEnd` (running max of lineEnds) to bound the backward scan: any
+ * `j` with `prefixMaxEnd[j] <= t` proves no line at `j` or earlier can still
+ * overlap, terminating the scan early. Per-frame cost is O(cluster size),
+ * typically ≤ ~5 even on dense duet sections.
+ */
+export function findActiveLineIndices(
+  lineStarts: number[],
+  lineEnds: number[],
+  prefixMaxEnd: number[],
+  t: number,
+): number[] {
+  if (lineStarts.length === 0) return []
+  const rightmost = findLineIdx(lineStarts, t)
+  if (rightmost < 0) return []
+  const overlapping: number[] = []
+  for (let j = rightmost; j >= 0; j--) {
+    if (prefixMaxEnd[j] <= t) break
+    if (t < lineEnds[j]) overlapping.push(j)
+  }
+  if (overlapping.length === 0) return [rightmost]
+  overlapping.reverse()
+  return overlapping
+}
+
+const EMPTY_ACTIVE_INDICES: ReadonlyArray<number> = Object.freeze([])
+
+/**
  * Tracks the currently-active lyric line and the active cue (per agent key)
  * by polling `getCurrentTimeMs()` once per animation frame.
  *
@@ -102,6 +139,8 @@ export function useRafActiveCue({
   onTick,
 }: UseRafActiveCueArgs): UseRafActiveCueResult {
   const [activeLineIdx, setActiveLineIdx] = useState(-1)
+  const [activeLineIndices, setActiveLineIndices] =
+    useState<ReadonlyArray<number>>(EMPTY_ACTIVE_INDICES)
   const [activeCueByKey, setActiveCueByKey] = useState<Record<string, number>>(
     {},
   )
@@ -111,6 +150,8 @@ export function useRafActiveCue({
   const rafIdRef = useRef<number | null>(null)
   const mountedRef = useRef(true)
   const lineIdxRef = useRef(-1)
+  const activeIndicesRef =
+    useRef<ReadonlyArray<number>>(EMPTY_ACTIVE_INDICES)
   const cueByKeyRef = useRef<Record<string, number>>({})
   const lastVisitedRef = useRef<Record<string, number>>({})
   const onTickRef = useRef(onTick)
@@ -119,7 +160,24 @@ export function useRafActiveCue({
   }, [onTick])
 
   // Pre-compute sorted arrays for binary search (memoized by line identity).
+  // lineEnds uses -Infinity for lines lacking an end (cueLine-less placeholder
+  // lines): `t < -Infinity` is always false, so such lines are never reported
+  // as overlapping. prefixMaxEnd is the running max of lineEnds, used by
+  // findActiveLineIndices to bound the backward overlap scan.
   const lineStarts = useMemo(() => lines.map((l) => l.start ?? 0), [lines])
+  const lineEnds = useMemo(
+    () => lines.map((l) => l.end ?? Number.NEGATIVE_INFINITY),
+    [lines],
+  )
+  const prefixMaxEnd = useMemo(() => {
+    const out = new Array<number>(lineEnds.length)
+    let max = Number.NEGATIVE_INFINITY
+    for (let i = 0; i < lineEnds.length; i++) {
+      if (lineEnds[i] > max) max = lineEnds[i]
+      out[i] = max
+    }
+    return out
+  }, [lineEnds])
   const cueDataByLine = useMemo(
     () =>
       lines.map((l) =>
@@ -137,9 +195,11 @@ export function useRafActiveCue({
 
     if (!enabled || lines.length === 0) {
       setActiveLineIdx(-1)
+      setActiveLineIndices(EMPTY_ACTIVE_INDICES)
       setActiveCueByKey({})
       setLastVisitedCueByKey({})
       lineIdxRef.current = -1
+      activeIndicesRef.current = EMPTY_ACTIVE_INDICES
       cueByKeyRef.current = {}
       lastVisitedRef.current = {}
       return
@@ -155,27 +215,37 @@ export function useRafActiveCue({
       }
 
       const t = getCurrentTimeMs()
+      // Rightmost-started line: stable back-compat anchor and past/future boundary
+      // for the view. activeLineIndices is the cluster overlap set (may equal
+      // [activeLineIdx] in gaps, may be multi-element across concurrent voices).
       const newLineIdx = findLineIdx(lineStarts, t)
+      const newActiveIndices = findActiveLineIndices(
+        lineStarts,
+        lineEnds,
+        prefixMaxEnd,
+        t,
+      )
       const newCueByKey: Record<string, number> = {}
       const newLastVisited: Record<string, number> = {}
 
-      if (newLineIdx >= 0) {
-        const cueLines = cueDataByLine[newLineIdx]
+      // Aggregate cue maps across EVERY active line. Keys are globally unique
+      // (line index baked into NormalizedCueLine.key) so collisions are
+      // impossible and concurrent voices each keep their own active-cue index.
+      for (const lineIdx of newActiveIndices) {
+        const cueLines = cueDataByLine[lineIdx]
+        if (!cueLines) continue
         for (const cl of cueLines) {
           const cueIdx = findCueIdx(cl.starts, cl.ends, t)
-          if (cueIdx >= 0) {
-            newCueByKey[cl.key] = cueIdx
-          }
+          if (cueIdx >= 0) newCueByKey[cl.key] = cueIdx
           const visitedIdx = findLineIdx(cl.starts, t)
-          if (visitedIdx >= 0) {
-            newLastVisited[cl.key] = visitedIdx
-          }
+          if (visitedIdx >= 0) newLastVisited[cl.key] = visitedIdx
         }
       }
 
       onTickRef.current?.({
         t,
         activeLineIdx: newLineIdx,
+        activeLineIndices: newActiveIndices,
         activeCueByKey: newCueByKey,
       })
 
@@ -183,6 +253,16 @@ export function useRafActiveCue({
       if (newLineIdx !== lineIdxRef.current) {
         lineIdxRef.current = newLineIdx
         if (mountedRef.current) setActiveLineIdx(newLineIdx)
+      }
+
+      // activeLineIndices change detection — same-length, same-elements check.
+      const prevIndices = activeIndicesRef.current
+      const indicesChanged =
+        prevIndices.length !== newActiveIndices.length ||
+        prevIndices.some((v, i) => v !== newActiveIndices[i])
+      if (indicesChanged) {
+        activeIndicesRef.current = newActiveIndices
+        if (mountedRef.current) setActiveLineIndices(newActiveIndices)
       }
 
       const prevKeys = Object.keys(cueByKeyRef.current)
@@ -217,7 +297,20 @@ export function useRafActiveCue({
         rafIdRef.current = null
       }
     }
-  }, [lines, lineStarts, cueDataByLine, getCurrentTimeMs, enabled])
+  }, [
+    lines,
+    lineStarts,
+    lineEnds,
+    prefixMaxEnd,
+    cueDataByLine,
+    getCurrentTimeMs,
+    enabled,
+  ])
 
-  return { activeLineIdx, activeCueByKey, lastVisitedCueByKey }
+  return {
+    activeLineIdx,
+    activeLineIndices,
+    activeCueByKey,
+    lastVisitedCueByKey,
+  }
 }

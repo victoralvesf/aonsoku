@@ -77,27 +77,32 @@ export function WordLevelLyricsContainer({
   } | null>(null)
 
   // Karaoke wipe progress channel. Fires every animation frame from
-  // useRafActiveCue. Writes `--fill` directly to the active cue's <span> DOM
+  // useRafActiveCue. Writes `--fill` directly to each active cue's <span> DOM
   // node — NOT via React state — so smooth 60fps fill costs zero re-renders.
+  // Iterates the entire cluster (activeLineIndices) so concurrent voices on
+  // different line indices each get their own karaoke wipe simultaneously.
   // Only the active cue(s) get a write; past/future cues lack the
   // `.karaoke-fill` class so their `--fill` value is inert.
   const handleTick = useCallback(
-    ({ t, activeLineIdx: lineIdx, activeCueByKey: cueByKey }: RafTickInfo) => {
-      if (lineIdx >= 0) {
+    ({
+      t,
+      activeLineIndices: lineIndices,
+      activeCueByKey: cueByKey,
+    }: RafTickInfo) => {
+      for (const lineIdx of lineIndices) {
         const line = normalized.lines[lineIdx]
-        if (line) {
-          for (const cueLine of line.cueLines) {
-            const cueIdx = cueByKey[cueLine.key]
-            if (cueIdx == null || cueIdx < 0) continue
-            const cue = cueLine.cues[cueIdx]
-            if (!cue) continue
-            const duration = Math.max(1, cue.end - cue.start)
-            const pct = Math.max(0, Math.min(1, (t - cue.start) / duration))
-            const el = wordRefs.current.get(
-              `${lineIdx}|${cueLine.key}|${cueIdx}`,
-            )
-            if (el) el.style.setProperty('--fill', `${pct * 100}%`)
-          }
+        if (!line) continue
+        for (const cueLine of line.cueLines) {
+          const cueIdx = cueByKey[cueLine.key]
+          if (cueIdx == null || cueIdx < 0) continue
+          const cue = cueLine.cues[cueIdx]
+          if (!cue) continue
+          const duration = Math.max(1, cue.end - cue.start)
+          const pct = Math.max(0, Math.min(1, (t - cue.start) / duration))
+          const el = wordRefs.current.get(
+            `${lineIdx}|${cueLine.key}|${cueIdx}`,
+          )
+          if (el) el.style.setProperty('--fill', `${pct * 100}%`)
         }
       }
 
@@ -134,13 +139,22 @@ export function WordLevelLyricsContainer({
   )
 
   // 60fps active-index tracking + karaoke wipe tick.
-  const { activeLineIdx, activeCueByKey, lastVisitedCueByKey } =
-    useRafActiveCue({
-      lines: normalized.lines,
-      getCurrentTimeMs,
-      enabled: enabled && normalized.hasWordTiming,
-      onTick: handleTick,
-    })
+  const {
+    activeLineIdx,
+    activeLineIndices,
+    activeCueByKey,
+    lastVisitedCueByKey,
+  } = useRafActiveCue({
+    lines: normalized.lines,
+    getCurrentTimeMs,
+    enabled: enabled && normalized.hasWordTiming,
+    onTick: handleTick,
+  })
+
+  // Cluster anchor (earliest currently-active line index). The scroll effect
+  // keys off this value so joiners arriving mid-cluster do NOT re-fire scroll;
+  // the first line of the cluster stays anchored per the concurrent-voice spec.
+  const scrollAnchorIdx = activeLineIndices[0] ?? -1
 
   const onWordClick = useWordSeek()
 
@@ -167,13 +181,14 @@ export function WordLevelLyricsContainer({
     return () => el.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Scroll active line into view when it changes. Fires once per activeLineIdx
-  // change — never per rAF tick — because the effect depends on activeLineIdx.
+  // Scroll cluster anchor (first active line) into view when the anchor
+  // changes. Fires once per anchor change — never per rAF tick, never on
+  // mid-cluster joiners — because the effect depends only on scrollAnchorIdx.
   useEffect(() => {
-    if (activeLineIdx < 0) return
+    if (scrollAnchorIdx < 0) return
     if (performance.now() < userScrollGuardRef.current.pausedUntilMs) return
 
-    const lineEl = lineRefs.current[activeLineIdx]
+    const lineEl = lineRefs.current[scrollAnchorIdx]
     const scrollEl = scrollContainerRef.current
     if (!lineEl || !scrollEl) return
 
@@ -203,7 +218,7 @@ export function WordLevelLyricsContainer({
     }
     const handle = setTimeout(clearFlag, 700)
     return () => clearTimeout(handle)
-  }, [activeLineIdx])
+  }, [scrollAnchorIdx])
 
   // Mirror of the line scroll effect for instrumental breaks. Keyed only on
   // breakKey (not dotIdx) so we scroll on break entry, not every ~1s dot
@@ -245,6 +260,7 @@ export function WordLevelLyricsContainer({
     <WordLevelLyricsView
       data={normalized}
       activeLineIdx={activeLineIdx}
+      activeLineIndices={activeLineIndices}
       activeCueByKey={activeCueByKey}
       lastVisitedCueByKey={lastVisitedCueByKey}
       activeBreakInfo={activeBreakInfo}
