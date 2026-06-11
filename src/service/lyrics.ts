@@ -12,7 +12,7 @@ import {
 } from '@/types/responses/song'
 import { lrclibClient } from '@/utils/appName'
 import { checkServerType, getServerExtensions } from '@/utils/servers'
-import { pickPrimaryStructuredLyric } from '@/utils/wordTiming'
+import { pickPrimarySyncedStructuredLyric } from '@/utils/wordTiming'
 
 type LyricsResult = ILyric & {
   structuredLyric?: IStructuredLyric
@@ -102,10 +102,7 @@ async function getLyrics(
       const { structuredLyrics } = response.data.lyricsList
 
       if (structuredLyrics && structuredLyrics.length > 0) {
-        const primary = pickPrimaryStructuredLyric(structuredLyrics)
-        const syncedLyrics = primary?.synced
-          ? primary
-          : structuredLyrics.find((l) => l.synced)
+        const syncedLyrics = pickPrimarySyncedStructuredLyric(structuredLyrics)
 
         if (syncedLyrics) {
           const serverSyncedLyrics: LyricsResult = {

@@ -64,11 +64,17 @@ const ROLE_PRIORITY: Record<string, number> = {
   group: 3,
 }
 
-export function pickPrimaryStructuredLyric(
+export function pickPrimarySyncedStructuredLyric(
   list: IStructuredLyric[] | undefined,
 ): IStructuredLyric | undefined {
   if (!list || list.length === 0) return undefined
-  return list.find((l) => l.kind === 'main') ?? list[0]
+  let firstSynced: IStructuredLyric | undefined
+  for (const l of list) {
+    if (!l.synced) continue
+    if (l.kind === 'main') return l
+    if (firstSynced === undefined) firstSynced = l
+  }
+  return firstSynced
 }
 
 export function normalizeStructuredLyric(

@@ -11,6 +11,47 @@ import { WordLevelLyricsView } from './view'
 
 const SCROLL_RECOVERY_MS = 1500
 
+function useScrollToElementWithRecovery(
+  trigger: unknown,
+  scrollContainerRef: React.RefObject<HTMLDivElement>,
+  programmaticScrollRef: React.MutableRefObject<boolean>,
+  userScrollGuardRef: React.MutableRefObject<{ pausedUntilMs: number }>,
+  resolveTarget: () => HTMLElement | null,
+) {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: trigger is the explicit driver; resolveTarget reads stable refs
+  useEffect(() => {
+    if (trigger == null) return
+    if (performance.now() < userScrollGuardRef.current.pausedUntilMs) return
+
+    const targetEl = resolveTarget()
+    const scrollEl = scrollContainerRef.current
+    if (!targetEl || !scrollEl) return
+
+    programmaticScrollRef.current = true
+    targetEl.scrollIntoView({
+      behavior: isSafari ? 'auto' : 'smooth',
+      block: 'center',
+    })
+
+    const clearFlag = () => {
+      programmaticScrollRef.current = false
+    }
+
+    // Smooth scrollIntoView dispatches async `scroll` events for ~300-500ms;
+    // hold the programmatic flag until the real end, otherwise the scroll
+    // listener treats them as a user scroll and pauses auto-scroll. Prefer
+    // `scrollend` over a timer.
+    if ('onscrollend' in scrollEl) {
+      scrollEl.addEventListener('scrollend', clearFlag, { once: true })
+      return () => {
+        scrollEl.removeEventListener('scrollend', clearFlag)
+      }
+    }
+    const handle = setTimeout(clearFlag, 700)
+    return () => clearTimeout(handle)
+  }, [trigger])
+}
+
 export interface WordLevelLyricsContainerProps {
   structuredLyric: IStructuredLyric
   /** When false, disables rAF polling (e.g. component not visible). Defaults to true. */
@@ -99,9 +140,7 @@ export function WordLevelLyricsContainer({
           if (!cue) continue
           const duration = Math.max(1, cue.end - cue.start)
           const pct = Math.max(0, Math.min(1, (t - cue.start) / duration))
-          const el = wordRefs.current.get(
-            `${lineIdx}|${cueLine.key}|${cueIdx}`,
-          )
+          const el = wordRefs.current.get(`${lineIdx}|${cueLine.key}|${cueIdx}`)
           if (el) el.style.setProperty('--fill', `${pct * 100}%`)
         }
       }
@@ -181,77 +220,30 @@ export function WordLevelLyricsContainer({
     return () => el.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Scroll cluster anchor (first active line) into view when the anchor
-  // changes. Fires once per anchor change — never per rAF tick, never on
-  // mid-cluster joiners — because the effect depends only on scrollAnchorIdx.
-  useEffect(() => {
-    if (scrollAnchorIdx < 0) return
-    if (performance.now() < userScrollGuardRef.current.pausedUntilMs) return
+  // Scroll cluster anchor (first active line) into view when it changes.
+  // Joiners arriving mid-cluster don't re-fire scroll because the trigger is
+  // scrollAnchorIdx alone.
+  useScrollToElementWithRecovery(
+    scrollAnchorIdx >= 0 ? scrollAnchorIdx : null,
+    scrollContainerRef,
+    programmaticScrollRef,
+    userScrollGuardRef,
+    () => lineRefs.current[scrollAnchorIdx] ?? null,
+  )
 
-    const lineEl = lineRefs.current[scrollAnchorIdx]
-    const scrollEl = scrollContainerRef.current
-    if (!lineEl || !scrollEl) return
-
-    programmaticScrollRef.current = true
-    lineEl.scrollIntoView({
-      behavior: isSafari ? 'auto' : 'smooth',
-      block: 'center',
-    })
-
-    // A smooth scroll fires many `scroll` events asynchronously over ~300-500ms.
-    // We must keep `programmaticScrollRef.current` true until the scroll really
-    // finishes, otherwise the scroll-listener mistakes those events for a user
-    // scroll and pauses auto-scroll for SCROLL_RECOVERY_MS — causing the next
-    // line transition to be silently skipped.
-    const clearFlag = () => {
-      programmaticScrollRef.current = false
-    }
-
-    // Prefer the native `scrollend` event when available
-    // Otherwise fall back to a timeout long enough to
-    // cover typical smooth-scroll durations across browsers.
-    if ('onscrollend' in scrollEl) {
-      scrollEl.addEventListener('scrollend', clearFlag, { once: true })
-      return () => {
-        scrollEl.removeEventListener('scrollend', clearFlag)
-      }
-    }
-    const handle = setTimeout(clearFlag, 700)
-    return () => clearTimeout(handle)
-  }, [scrollAnchorIdx])
-
-  // Mirror of the line scroll effect for instrumental breaks. Keyed only on
-  // breakKey (not dotIdx) so we scroll on break entry, not every ~1s dot
-  // transition. When activeBreakInfo flips to null at break end, the next
-  // line's scroll effect picks up naturally.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: scroll on break entry only, not per-dot
-  useEffect(() => {
-    if (!activeBreakInfo) return
-    if (performance.now() < userScrollGuardRef.current.pausedUntilMs) return
-
-    const breakEl = breakContainerRefs.current.get(activeBreakInfo.breakKey)
-    const scrollEl = scrollContainerRef.current
-    if (!breakEl || !scrollEl) return
-
-    programmaticScrollRef.current = true
-    breakEl.scrollIntoView({
-      behavior: isSafari ? 'auto' : 'smooth',
-      block: 'center',
-    })
-
-    const clearFlag = () => {
-      programmaticScrollRef.current = false
-    }
-
-    if ('onscrollend' in scrollEl) {
-      scrollEl.addEventListener('scrollend', clearFlag, { once: true })
-      return () => {
-        scrollEl.removeEventListener('scrollend', clearFlag)
-      }
-    }
-    const handle = setTimeout(clearFlag, 700)
-    return () => clearTimeout(handle)
-  }, [activeBreakInfo?.breakKey])
+  // Scroll on break entry only — keyed on breakKey, not dotIdx, so we don't
+  // re-scroll on every ~1s dot transition. When activeBreakInfo flips to null
+  // at break end, the next line's scroll picks up naturally.
+  useScrollToElementWithRecovery(
+    activeBreakInfo?.breakKey ?? null,
+    scrollContainerRef,
+    programmaticScrollRef,
+    userScrollGuardRef,
+    () =>
+      activeBreakInfo
+        ? (breakContainerRefs.current.get(activeBreakInfo.breakKey) ?? null)
+        : null,
+  )
 
   // Defensive: should never be mounted without word timing, but bail out safely.
   if (!normalized.hasWordTiming) return null

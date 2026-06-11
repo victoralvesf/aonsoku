@@ -7,15 +7,7 @@ import type {
   NormalizedStructuredLyric,
 } from '@/utils/wordTiming'
 
-const HUE_ROTATE_CLASSES = [
-  '[filter:hue-rotate(180deg)]',
-  '[filter:hue-rotate(90deg)]',
-  '[filter:hue-rotate(270deg)]',
-  '[filter:hue-rotate(45deg)]',
-  '[filter:hue-rotate(135deg)]',
-  '[filter:hue-rotate(225deg)]',
-  '[filter:hue-rotate(315deg)]',
-] as const
+const SECONDARY_AGENT_HUE_ROTATIONS = [180, 90, 270, 45, 135, 225, 315] as const
 
 export interface WordLevelLyricsViewProps {
   data: NormalizedStructuredLyric
@@ -143,12 +135,10 @@ export function WordLevelLyricsView({
                       key={cueLine.key}
                       lang={resolvedLang}
                       dir="auto"
-                      role="text"
                       data-testid={`word-line-${i}-cueline-${cueLine.key}`}
                       data-agent-role={cueLine.agentRole ?? 'unknown'}
                       data-display-order={cueLine.displayOrder}
                     >
-                      {/* NOTE: screen-reader fragmentation is a known limitation; role="text" on p partially mitigates it */}
                       {cueLine.cues.map((cue, cueIdx) => {
                         const renderedText = byteSliceFallback(
                           cue,
@@ -175,11 +165,11 @@ export function WordLevelLyricsView({
                           cueState = 'future'
                         }
 
-                        const hueClass =
+                        const hueRotation =
                           cueState === 'active' && cueLine.displayOrder >= 1
-                            ? HUE_ROTATE_CLASSES[
+                            ? SECONDARY_AGENT_HUE_ROTATIONS[
                                 (cueLine.displayOrder - 1) %
-                                  HUE_ROTATE_CLASSES.length
+                                  SECONDARY_AGENT_HUE_ROTATIONS.length
                               ]
                             : undefined
                         const isDim =
@@ -193,7 +183,6 @@ export function WordLevelLyricsView({
                           cueState === 'active' &&
                             !isWhitespaceOnly &&
                             'karaoke-fill',
-                          hueClass,
                         )
                         const wordKey = `${i}|${cueLine.key}|${cueIdx}`
 
@@ -205,6 +194,11 @@ export function WordLevelLyricsView({
                             data-state={cueState}
                             aria-hidden={isWhitespaceOnly ? 'true' : undefined}
                             className={cueClassName}
+                            style={
+                              hueRotation !== undefined
+                                ? { filter: `hue-rotate(${hueRotation}deg)` }
+                                : undefined
+                            }
                             onClick={(e) => {
                               e.stopPropagation()
                               onWordClick(cue.start)

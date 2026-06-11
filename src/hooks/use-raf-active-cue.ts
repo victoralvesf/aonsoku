@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export interface RafTickInfo {
   /** Current playback time in ms (offset already applied upstream by the caller). */
@@ -123,13 +123,48 @@ export function findActiveLineIndices(
 
 const EMPTY_ACTIVE_INDICES: ReadonlyArray<number> = Object.freeze([])
 
+const indicesEqual = (
+  a: ReadonlyArray<number>,
+  b: ReadonlyArray<number>,
+): boolean => a.length === b.length && a.every((v, i) => v === b[i])
+
+const recordEqual = (
+  a: Record<string, number>,
+  b: Record<string, number>,
+): boolean => {
+  const ka = Object.keys(a)
+  const kb = Object.keys(b)
+  return ka.length === kb.length && ka.every((k) => a[k] === b[k])
+}
+
+/**
+ * `useState` + a ref shadow + caller-supplied equality. `commit(next)` only
+ * dispatches a setState (and updates the ref) when `next` differs from the
+ * previously-committed value. Lets the rAF tick call this every frame and
+ * cheaply skip work when nothing has changed.
+ */
+function useReactiveValue<T>(
+  initial: T,
+  equal: (a: T, b: T) => boolean = Object.is as (a: T, b: T) => boolean,
+): [T, (next: T) => void] {
+  const [state, setState] = useState<T>(initial)
+  const ref = useRef<T>(initial)
+  const commit = (next: T) => {
+    if (!equal(ref.current, next)) {
+      ref.current = next
+      setState(next)
+    }
+  }
+  return [state, commit]
+}
+
 /**
  * Tracks the currently-active lyric line and the active cue (per agent key)
  * by polling `getCurrentTimeMs()` once per animation frame.
  *
  * - Loop lives inside `useEffect`; cleanup calls `cancelAnimationFrame`.
  * - Skips work when `document.hidden` is true (background tab).
- * - Only calls `setState` when an active index actually changes.
+ * - Only re-renders when an active index actually changes.
  * - Uses binary search over pre-computed sorted start/end arrays.
  */
 export function useRafActiveCue({
@@ -138,86 +173,66 @@ export function useRafActiveCue({
   enabled = true,
   onTick,
 }: UseRafActiveCueArgs): UseRafActiveCueResult {
-  const [activeLineIdx, setActiveLineIdx] = useState(-1)
-  const [activeLineIndices, setActiveLineIndices] =
-    useState<ReadonlyArray<number>>(EMPTY_ACTIVE_INDICES)
-  const [activeCueByKey, setActiveCueByKey] = useState<Record<string, number>>(
-    {},
-  )
-  const [lastVisitedCueByKey, setLastVisitedCueByKey] = useState<
+  const [activeLineIdx, commitActiveLineIdx] = useReactiveValue<number>(-1)
+  const [activeLineIndices, commitActiveLineIndices] = useReactiveValue<
+    ReadonlyArray<number>
+  >(EMPTY_ACTIVE_INDICES, indicesEqual)
+  const [activeCueByKey, commitActiveCueByKey] = useReactiveValue<
     Record<string, number>
-  >({})
-  const rafIdRef = useRef<number | null>(null)
-  const mountedRef = useRef(true)
-  const lineIdxRef = useRef(-1)
-  const activeIndicesRef =
-    useRef<ReadonlyArray<number>>(EMPTY_ACTIVE_INDICES)
-  const cueByKeyRef = useRef<Record<string, number>>({})
-  const lastVisitedRef = useRef<Record<string, number>>({})
+  >({}, recordEqual)
+  const [lastVisitedCueByKey, commitLastVisitedCueByKey] = useReactiveValue<
+    Record<string, number>
+  >({}, recordEqual)
+
+  // Stable callback ref — lets the caller pass a fresh inline `onTick` each
+  // render without restarting the rAF loop.
   const onTickRef = useRef(onTick)
   useEffect(() => {
     onTickRef.current = onTick
   }, [onTick])
 
-  // Pre-compute sorted arrays for binary search (memoized by line identity).
-  // lineEnds uses -Infinity for lines lacking an end (cueLine-less placeholder
-  // lines): `t < -Infinity` is always false, so such lines are never reported
-  // as overlapping. prefixMaxEnd is the running max of lineEnds, used by
-  // findActiveLineIndices to bound the backward overlap scan.
-  const lineStarts = useMemo(() => lines.map((l) => l.start ?? 0), [lines])
-  const lineEnds = useMemo(
-    () => lines.map((l) => l.end ?? Number.NEGATIVE_INFINITY),
-    [lines],
-  )
-  const prefixMaxEnd = useMemo(() => {
-    const out = new Array<number>(lineEnds.length)
-    let max = Number.NEGATIVE_INFINITY
-    for (let i = 0; i < lineEnds.length; i++) {
-      if (lineEnds[i] > max) max = lineEnds[i]
-      out[i] = max
-    }
-    return out
-  }, [lineEnds])
-  const cueDataByLine = useMemo(
-    () =>
-      lines.map((l) =>
-        l.cueLines.map((cl) => ({
-          key: cl.key,
-          starts: cl.cues.map((c) => c.start),
-          ends: cl.cues.map((c) => c.end),
-        })),
-      ),
-    [lines],
-  )
-
+  // biome-ignore lint/correctness/useExhaustiveDependencies: commit fns close over stable refs/setStates and don't drive the loop
   useEffect(() => {
-    mountedRef.current = true
-
     if (!enabled || lines.length === 0) {
-      setActiveLineIdx(-1)
-      setActiveLineIndices(EMPTY_ACTIVE_INDICES)
-      setActiveCueByKey({})
-      setLastVisitedCueByKey({})
-      lineIdxRef.current = -1
-      activeIndicesRef.current = EMPTY_ACTIVE_INDICES
-      cueByKeyRef.current = {}
-      lastVisitedRef.current = {}
+      commitActiveLineIdx(-1)
+      commitActiveLineIndices(EMPTY_ACTIVE_INDICES)
+      commitActiveCueByKey({})
+      commitLastVisitedCueByKey({})
       return
     }
 
-    const tick = () => {
-      if (!mountedRef.current) return
+    // Pre-compute sorted arrays for binary search. lineEnds uses -Infinity for
+    // placeholder lines lacking an end so `t < -Infinity` is always false and
+    // those lines are never reported as overlapping. prefixMaxEnd (running max
+    // of lineEnds) bounds the backward overlap scan in findActiveLineIndices.
+    const lineStarts = lines.map((l) => l.start ?? 0)
+    const lineEnds = lines.map((l) => l.end ?? Number.NEGATIVE_INFINITY)
+    const prefixMaxEnd = new Array<number>(lineEnds.length)
+    {
+      let max = Number.NEGATIVE_INFINITY
+      for (let i = 0; i < lineEnds.length; i++) {
+        if (lineEnds[i] > max) max = lineEnds[i]
+        prefixMaxEnd[i] = max
+      }
+    }
+    const cueDataByLine = lines.map((l) =>
+      l.cueLines.map((cl) => ({
+        key: cl.key,
+        starts: cl.cues.map((c) => c.start),
+        ends: cl.cues.map((c) => c.end),
+      })),
+    )
 
+    let rafId = requestAnimationFrame(tick)
+
+    function tick() {
       // Skip all work in background tabs to avoid wasted CPU.
       if (document.hidden) {
-        rafIdRef.current = requestAnimationFrame(tick)
+        rafId = requestAnimationFrame(tick)
         return
       }
 
       const t = getCurrentTimeMs()
-      // Rightmost-started line: stable back-compat anchor and past/future boundary
-      // for the view. activeLineIndices is the cluster overlap set (may equal
-      // [activeLineIdx] in gaps, may be multi-element across concurrent voices).
       const newLineIdx = findLineIdx(lineStarts, t)
       const newActiveIndices = findActiveLineIndices(
         lineStarts,
@@ -249,63 +264,18 @@ export function useRafActiveCue({
         activeCueByKey: newCueByKey,
       })
 
-      // Only setState when the active line index actually changes.
-      if (newLineIdx !== lineIdxRef.current) {
-        lineIdxRef.current = newLineIdx
-        if (mountedRef.current) setActiveLineIdx(newLineIdx)
-      }
+      commitActiveLineIdx(newLineIdx)
+      commitActiveLineIndices(newActiveIndices)
+      commitActiveCueByKey(newCueByKey)
+      commitLastVisitedCueByKey(newLastVisited)
 
-      // activeLineIndices change detection — same-length, same-elements check.
-      const prevIndices = activeIndicesRef.current
-      const indicesChanged =
-        prevIndices.length !== newActiveIndices.length ||
-        prevIndices.some((v, i) => v !== newActiveIndices[i])
-      if (indicesChanged) {
-        activeIndicesRef.current = newActiveIndices
-        if (mountedRef.current) setActiveLineIndices(newActiveIndices)
-      }
-
-      const prevKeys = Object.keys(cueByKeyRef.current)
-      const newKeys = Object.keys(newCueByKey)
-      const cueChanged =
-        prevKeys.length !== newKeys.length ||
-        newKeys.some((k) => cueByKeyRef.current[k] !== newCueByKey[k])
-      if (cueChanged) {
-        cueByKeyRef.current = newCueByKey
-        if (mountedRef.current) setActiveCueByKey(newCueByKey)
-      }
-
-      const prevVisKeys = Object.keys(lastVisitedRef.current)
-      const newVisKeys = Object.keys(newLastVisited)
-      const visChanged =
-        prevVisKeys.length !== newVisKeys.length ||
-        newVisKeys.some((k) => lastVisitedRef.current[k] !== newLastVisited[k])
-      if (visChanged) {
-        lastVisitedRef.current = newLastVisited
-        if (mountedRef.current) setLastVisitedCueByKey(newLastVisited)
-      }
-
-      rafIdRef.current = requestAnimationFrame(tick)
+      rafId = requestAnimationFrame(tick)
     }
-
-    rafIdRef.current = requestAnimationFrame(tick)
 
     return () => {
-      mountedRef.current = false
-      if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current)
-        rafIdRef.current = null
-      }
+      cancelAnimationFrame(rafId)
     }
-  }, [
-    lines,
-    lineStarts,
-    lineEnds,
-    prefixMaxEnd,
-    cueDataByLine,
-    getCurrentTimeMs,
-    enabled,
-  ])
+  }, [lines, getCurrentTimeMs, enabled])
 
   return {
     activeLineIdx,
