@@ -168,7 +168,8 @@ export function WordLevelLyricsView({
                           } else {
                             cueState = 'future'
                           }
-                        } else if (i < activeLineIdx) {
+                        } else if (i <= activeLineIdx) {
+                          // `<=`, not `<`: catches the rightmost-started line when it has ended while an earlier concurrent line keeps going (i === activeLineIdx AND not in active set).
                           cueState = 'past'
                         } else {
                           cueState = 'future'

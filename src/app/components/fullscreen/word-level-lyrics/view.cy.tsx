@@ -619,4 +619,46 @@ describe('WordLevelLyricsView Component', () => {
       )
     })
   })
+
+  // 28
+  it('cluster: rightmost-started line that has ENDED while an earlier concurrent line keeps going renders past, not future (regression for i === activeLineIdx outside set)', () => {
+    // Simulates: Line 0 still active, Line 1 ended (its end < t < Line 2's start).
+    // Hook would emit activeLineIdx=1, activeLineIndices=[0]. The strict `<`
+    // boundary regressed before; this test guards the `<=` fix.
+    loadAndNormalize('v2-multi-agent-overlapping-indices.json', (data) => {
+      cy.mount(
+        <WordLevelLyricsView
+          data={data}
+          activeLineIdx={1}
+          activeLineIndices={[0]}
+          activeCueByKey={{ '0:lead': 2 }}
+          lastVisitedCueByKey={{
+            '0:lead': 2,
+            '1:echo': 2,
+          }}
+          onWordClick={cy.stub()}
+          resolvedLang="en"
+        />,
+      )
+      cy.get('[data-testid="word-1-1:echo-0"]').should(
+        'have.attr',
+        'data-state',
+        'past',
+      )
+      cy.get('[data-testid="word-1-1:echo-2"]').should(
+        'have.attr',
+        'data-state',
+        'past',
+      )
+      cy.get('[data-testid="word-1-1:echo-0"]').should(
+        'have.class',
+        'opacity-50',
+      )
+      cy.get('[data-testid="word-2-2:choir-0"]').should(
+        'have.attr',
+        'data-state',
+        'future',
+      )
+    })
+  })
 })
