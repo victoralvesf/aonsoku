@@ -661,4 +661,53 @@ describe('WordLevelLyricsView Component', () => {
       )
     })
   })
+
+  // 29
+  it('empty-text line is hidden when a break covers its time slot', () => {
+    // Fixture: line 0 ends at 2000, empty line at 2000, next real line at 7000
+    // (5s gap). A break with [start=2000, end=7000] is generated; the empty
+    // line falls inside it and should NOT render.
+    loadAndNormalize('v2-with-empty-lines.json', (data) => {
+      expect(data.breaks.length, 'one break detected').to.equal(1)
+      cy.mount(
+        <WordLevelLyricsView
+          data={data}
+          activeLineIdx={-1}
+          activeCueByKey={{}}
+          lastVisitedCueByKey={{}}
+          onWordClick={cy.stub()}
+          resolvedLang="en"
+        />,
+      )
+      cy.get('[data-testid="word-line-0"]').should('exist')
+      cy.get('[data-testid="word-line-1"]').should('not.exist')
+      cy.get('[data-testid="word-line-2"]').should('exist')
+      cy.get('[data-testid="instrumental-break-brk:2"]').should('exist')
+    })
+  })
+
+  // 30
+  it('empty-text line stays visible when the gap is sub-threshold (no break to replace it)', () => {
+    // Fixture: line 0 ends at 2000, empty line at 2000, next real line at 4000
+    // (2s gap, below the 3s break threshold). No break is generated, so the
+    // empty line must remain visible as the only "clear display" signal.
+    loadAndNormalize('v2-empty-line-short-gap.json', (data) => {
+      expect(data.breaks.length, 'no break generated').to.equal(0)
+      cy.mount(
+        <WordLevelLyricsView
+          data={data}
+          activeLineIdx={-1}
+          activeCueByKey={{}}
+          lastVisitedCueByKey={{}}
+          onWordClick={cy.stub()}
+          resolvedLang="en"
+        />,
+      )
+      cy.get('[data-testid="word-line-0"]').should('exist')
+      cy.get('[data-testid="word-line-1"]').should('exist')
+      cy.get('[data-testid="word-line-1"]').find('p').should('have.text', '')
+      cy.get('[data-testid="word-line-2"]').should('exist')
+      cy.get('[data-testid^="instrumental-break-"]').should('not.exist')
+    })
+  })
 })
