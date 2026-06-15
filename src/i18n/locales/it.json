@@ -202,6 +202,7 @@
   },
   "genres": {
     "albumCount_one": "{{count}} album",
+    "albumCount_many": "",
     "albumCount_other": "{{count}} album",
     "buttons": {
       "shuffleTracks": "Tracce casuali",
@@ -603,7 +604,8 @@
     "dialog": {
       "title": "Nuova versione disponibile!",
       "remindLater": "Ricordamelo dopo",
-      "install": "Installa e riavvia"
+      "install": "Installa e riavvia",
+      "macOS": "Scarica da GitHub"
     },
     "toasts": {
       "started": "L'aggiornamento è stato avviato.",
@@ -700,6 +702,23 @@
             "label": "URL",
             "example": "Esempio: https://my-lrclib.com"
           }
+        },
+        "animatedCover": {
+          "customUrl": {
+            "label": "URL",
+            "toggle": "Usa un URL personalizzato",
+            "info": "Usa un URL personalizzato per le cover animate invece di quello predefinito."
+          },
+          "screens": {
+            "playerBar": {
+              "label": "Barra di riproduzione inferiore",
+              "info": "Abilita le animazioni per la cover attuale sulla barra di riproduzione."
+            },
+            "drawer": {
+              "label": "Coda e testi",
+              "info": "Abilita le animazioni per la cover corrente nel pannello Code e Testi."
+            }
+          }
         }
       }
     },
@@ -728,7 +747,12 @@
         "images": {
           "label": "Attiva Cache immagine",
           "info": "Quando abilitata, le immagini verranno memorizzate localmente per migliorare le prestazioni."
-        }
+        },
+        "group": "Caches"
+      },
+      "features": {
+        "group": "Funzionalità",
+        "description": "Attivare o disattivare funzionalità client"
       }
     },
     "accounts": {
