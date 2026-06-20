@@ -1,1 +1,813 @@
-{}
+{
+  "home": {
+    "recentlyPlayed": "Nemrég lejátszott",
+    "mostPlayed": "Leggyakrabban lejátszott",
+    "recentlyAdded": "Nemrég hozzáadott",
+    "explore": "Felfedezés"
+  },
+  "sidebar": {
+    "home": "Kezdőlap",
+    "search": "Keresés…",
+    "miniSearch": "Keresés",
+    "library": "Könyvtár",
+    "artists": "Előadók",
+    "songs": "Dalok",
+    "albums": "Albumok",
+    "favorites": "Kedvencek",
+    "playlists": "Lejátszási listák",
+    "radios": "Rádiók",
+    "podcasts": "Podcastok",
+    "genres": "Műfajok",
+    "emptyPlaylist": "Még nincsenek lejátszási listák"
+  },
+  "menu": {
+    "language": "Nyelv",
+    "server": "Szerver",
+    "about": "Névjegy",
+    "serverLogout": "Kijelentkezés"
+  },
+  "generic": {
+    "seeMore": "Továbbiak",
+    "showDetails": "Részletek mutatása",
+    "hideDetails": "Részletek elrejtése",
+    "viewAll": "Összes megtekintése",
+    "loading": "Betöltés…",
+    "viewMode": {
+      "label": "Megtekintési mód",
+      "modes": {
+        "list": "Lista",
+        "poster": "Borítókép"
+      }
+    },
+    "beta": "Béta"
+  },
+  "theme": {
+    "label": "Téma",
+    "light": "Világos",
+    "dark": "Sötét",
+    "system": "Rendszer",
+    "black": "Fekete és Fehér",
+    "one-dark": "One Dark",
+    "night-owl-light": "Night Owl Világos",
+    "marmalade-beaver": "Marmalade Beaver",
+    "noctis-lilac": "Noctis Lilac",
+    "material-theme": "Material Téma",
+    "monokai-pro": "Monokai Pro",
+    "github-dark": "GitHub Sötét",
+    "shades-of-purple": "Lila árnyalatai",
+    "bearded-solarized": "Bearded Solarized",
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "nuclear-dark": "Nuclear Sötét",
+    "achiever": "Achiever",
+    "dracula": "Dracula",
+    "discord": "Discord",
+    "everforest-dark": "Everforest Sötét",
+    "tinacious-design": "Tinacious Dizájn",
+    "vue-dark": "Vue sötét",
+    "vim-dark-soft": "Vim Sötét Soft"
+  },
+  "playlist": {
+    "headline": "Lejátszási lista",
+    "songCount_one": "{{count}} dal",
+    "songCount_other": "{{count}} dal",
+    "duration": "kb. {{duration}}",
+    "refresh": "Lejátszási listák frissítése",
+    "buttons": {
+      "play": "{{name}} lejátszása",
+      "pause": "{{name}} szüneteltetése",
+      "shuffle": "{{name}} lejátszása véletlenszerű sorrendben",
+      "options": "{{name}} további lehetőségei"
+    },
+    "noSongList": "Ez a lejátszási lista üres!",
+    "form": {
+      "labels": {
+        "name": "Név",
+        "comment": "Megjegyzés",
+        "commentDescription": "Adj rövid leírást a lejátszási listához",
+        "isPublic": "Nyilvános",
+        "isPublicDescription": "Válaszd ezt az opciót, hogy a lejátszási lista nyilvános legyen. Ez lehetővé teszi, hogy más felhasználók megtekintsék és elérjék a lejátszási listádat."
+      },
+      "create": {
+        "title": "Lejátszási lista létrehozása",
+        "button": "Létrehozás",
+        "toast": {
+          "success": "Lejátszási lista sikeresen létrehozva!",
+          "error": "Lejátszási lista létrehozása sikertelen!"
+        }
+      },
+      "edit": {
+        "title": "Lejátszási lista szerkesztése",
+        "button": "Frissítés",
+        "toast": {
+          "success": "Lejátszási lista sikeresen frissítve!",
+          "error": "Lejátszási lista frissítése sikertelen!"
+        }
+      },
+      "delete": {
+        "title": "Biztosan törölni szeretnéd ezt a lejátszási listát?",
+        "description": "Ez a művelet nem vonható vissza.",
+        "toast": {
+          "success": "Lejátszási lista sikeresen eltávolítva!",
+          "error": "Lejátszási lista eltávolítása sikertelen!"
+        }
+      },
+      "validations": {
+        "nameLength": "A lejátszási lista neve legalább 2 karakter hosszú kell legyen."
+      },
+      "removeSong": {
+        "title_one": "Biztos vagy benne, hogy el akarod távolítani a kiválasztott dalt?",
+        "title_other": "Biztos vagy benne, hogy el akarod távolítani a kiválasztott dalokat?",
+        "description": "Ez a művelet nem vonható vissza.",
+        "toast": {
+          "success_one": "Dal sikeresen eltávolítva!",
+          "success_other": "Dalok sikeresen eltávolítva!",
+          "error_one": "Dal eltávolítása sikertelen!",
+          "error_other": "Dalok eltávolítása sikertelen!"
+        }
+      }
+    }
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Dalok keresése…"
+      },
+      "byArtist": "Dalok tőle: {{artist}}",
+      "filter": {
+        "clear": "Szűrők eltávolítása"
+      }
+    }
+  },
+  "album": {
+    "headline": "Album",
+    "buttons": {
+      "play": "{{name}} lejátszása",
+      "pause": "{{name}} szüneteltetése",
+      "shuffle": "{{name}} lejátszása véletlenszerű sorrendben",
+      "like": "{{name}} kedvelése",
+      "dislike": "{{name}} kedvelésének visszavonása"
+    },
+    "info": {
+      "about": "{{name}} névjegye",
+      "lastfm": "Megnyitás Last.fm-ben",
+      "musicbrainz": "Megnyitás MusicBrainz-ben"
+    },
+    "more": {
+      "listTitle": "Több ettől az előadótól",
+      "discography": "Előadó diszkográfiája",
+      "genreTitle": "Még több {{genre}}"
+    },
+    "list": {
+      "header": {
+        "albumsByArtist": "Albumok tőle: {{artist}}"
+      },
+      "empty": {
+        "title": "Hoppá, itt nincsenek albumok!",
+        "info": "Úgy tűnik, a jelenlegi szűrővel nincsenek albumok.",
+        "action": "Talán próbáld megváltoztatni a szűrőket"
+      },
+      "genre": {
+        "label": "Műfaj kiválasztása…",
+        "search": "Műfaj keresése…",
+        "loading": "Műfajok betöltése…",
+        "notFound": "Nincsenek műfajok."
+      },
+      "filter": {
+        "artist": "Előadó",
+        "genre": "Műfaj",
+        "favorites": "Kedvencek",
+        "mostPlayed": "Leggyakrabban lejátszott",
+        "name": "Név",
+        "random": "Véletlenszerű",
+        "recentlyAdded": "Nemrég hozzáadott",
+        "recentlyPlayed": "Nemrég lejátszott",
+        "releaseYear": "Megjelenési év",
+        "discography": "Diszkográfia",
+        "search": "Keresés"
+      },
+      "search": {
+        "placeholder": "Albumok keresése…"
+      }
+    },
+    "table": {
+      "discNumber": "{{number}}. lemez"
+    }
+  },
+  "genre": {
+    "headline": "Műfaj"
+  },
+  "genres": {
+    "albumCount_one": "{{count}} album",
+    "albumCount_other": "{{count}} album",
+    "buttons": {
+      "shuffleTracks": "Dalok keverése",
+      "shuffleAlbums": "Albumok keverése"
+    }
+  },
+  "favorites": {
+    "noSongList": "Még nem adtál dalokat a kedvencekhez!"
+  },
+  "artist": {
+    "headline": "Előadó",
+    "buttons": {
+      "play": "{{artist}} rádió lejátszása",
+      "shuffle": "{{artist}} rádió lejátszása véletlen sorrendben",
+      "options": "Több opció az előadóhoz: {{artist}}"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} album",
+      "albumsCount_other": "{{count}} album"
+    },
+    "topSongs": "Népszerű",
+    "recentAlbums": "Legutóbbi albumok",
+    "relatedArtists": "Hasonló előadók"
+  },
+  "podcasts": {
+    "form": {
+      "all": "Böngészés",
+      "latestEpisodes": "Legutóbbi epizódok",
+      "addButton": "Podcast hozzáadása",
+      "search": "Podcastok keresése…",
+      "dialog": {
+        "title": "Podcast létrehozása",
+        "feedUrl": "Hírfolyam URL-je",
+        "message": "Több URL-t is megadhatsz, soronként egyet.",
+        "saveButton": "Mentés",
+        "validations": {
+          "url": "Kérlek adj meg helyes URL-t.",
+          "urlLength": "Az URL-ek minimum 10 karakteresek",
+          "protocol": "Az URL-ek http://, vagy https://-rel kezdődnek",
+          "atLeastOneUrl": "Kérlek adj meg legalább 1 URL-t."
+        }
+      },
+      "toasts": {
+        "success": "Podcast sikeresen létrehozva! Hamarosan hallgatható is lesz!",
+        "error": "Podcast létrehozása sikertelen!"
+      }
+    },
+    "emptyPage": {
+      "message": "Nincs podcast hozzáadva",
+      "description": "Úgy tűnik, még nem adtál hozzá egy podcastot sem. Adj hozzá egyet!"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "Nem elérhető egy epizód sem",
+        "description": "Próbálj még több podcastot hozzáadni.",
+        "goToPodcasts": "Podcastek-hez"
+      }
+    },
+    "emptyResults": {
+      "title": "Nincs találat.",
+      "info": "Nem találtunk egyetlen podcastet sem ezzel a keresési kifejezéssel.",
+      "action": "Ellenőrizd a helyesírást, vagy próbálj más kulcsszavakat."
+    },
+    "filters": {
+      "episodes": {
+        "search": "Epizódok keresése…",
+        "orderBy": {
+          "publishDate": "Közzététel dátuma",
+          "title": "Cím",
+          "duration": "Időtartam"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Cím",
+          "episodeCount": "Epizódok száma"
+        }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} epizód",
+      "episodeCount_other": "{{count}} epizód",
+      "feed": "Hírfolyam",
+      "website": "Eredeti weboldal",
+      "unfollow": {
+        "tooltip": "{{title}} kikövetése",
+        "dialog": {
+          "title": "Biztos, hogy ki akarod követni ezt a podcastet?",
+          "description": "Hogy hallgathasd ezt a podcastet a jövőben, újra létre kell hoznod."
+        },
+        "toasts": {
+          "success": "Sikeresen kikövetted ezt a podcastet!",
+          "error": "Hiba történt a podcast kikövetése során, kérlek próbáld újra!"
+        }
+      }
+    },
+    "list": {
+      "episodes": "Epizódok",
+      "notFoundMessage": "Ennek a podcastnek még nincsenek epizódjai!",
+      "progress": {
+        "remainingTime": "{{time}} van hátra",
+        "completed": "Befejezve"
+      }
+    }
+  },
+  "table": {
+    "columns": {
+      "title": "Cím",
+      "albumArtist": "Album előadó",
+      "artist": "Előadó",
+      "contributors": "Hozzájárulók",
+      "album": "Album",
+      "year": "Év",
+      "duration": "Időtartam",
+      "plays": "Lejátszások",
+      "lastPlayed": "Legutóbb lejátszott",
+      "bpm": "BPM",
+      "bitrate": "Bitráta",
+      "quality": "Minőség",
+      "name": "Név",
+      "albumCount": "Album szám",
+      "songCount": "Dal szám",
+      "comment": "Megjegyzés",
+      "public": "Nyilvános",
+      "track": "Dal",
+      "genres": "Műfajok",
+      "size": "Méret",
+      "codec": "Kodek",
+      "path": "Útvonal",
+      "favorite": "Kedvenc",
+      "recordLabel": "Rekord kiadó",
+      "discNumber": "Lemez szám",
+      "trackGain": "Dal erősítése",
+      "trackPeak": "Dal csúcsértéke",
+      "albumGain": "Album erősítése",
+      "albumPeak": "Album csúcsértéke",
+      "channelCount": "Csatorna szám",
+      "samplingRate": "Mintavételi frekvencia",
+      "bitDepth": "Bitmélység"
+    },
+    "buttons": {
+      "play": "{{title}} lejátszása tőle: {{artist}}",
+      "pause": "{{title}} szüneteltetése tőle: {{artist}}"
+    },
+    "lastPlayed": "{{date}} ezelőtt",
+    "pagination": {
+      "rowsPerPage": "Sorok oldalanként",
+      "currentPage": "{{currentPage}}. oldal / {{totalPages}}",
+      "screenReader": {
+        "firstPage": "Az első oldalhoz",
+        "previousPage": "Az előző oldalhoz",
+        "nextPage": "A következő oldalhoz",
+        "lastPage": "Az utoló oldalhoz"
+      }
+    },
+    "sort": {
+      "asc": "Növekvő",
+      "desc": "Csökkenő",
+      "reset": "Visszaállítás"
+    },
+    "menu": {
+      "selectedCount_one": "{{count}} kiválasztva",
+      "selectedCount_other": "{{count}} kiválasztva"
+    }
+  },
+  "fullscreen": {
+    "noLyrics": "Nem található dalszöveg",
+    "loadingLyrics": "Dalszöveg keresése…",
+    "queue": "Lejátszási sor",
+    "playing": "Most lejátszott",
+    "lyrics": "Dalszöveg",
+    "switchButton": "Nagy lejátszóra váltás"
+  },
+  "logout": {
+    "dialog": {
+      "title": "Készen állsz a kilépésre?",
+      "description": "Erősítsd meg, hogy kijelentkezel.",
+      "cancel": "Mégsem",
+      "confirm": "Folytatás"
+    }
+  },
+  "login": {
+    "form": {
+      "server": "Szerver",
+      "description": "Csatlakozz a Subsonic szerveredhez.",
+      "url": "URL",
+      "urlDescription": "Ez a szervered URL-je",
+      "username": "Felhasználónév",
+      "usernamePlaceholder": "A felhasználóneved",
+      "password": "Jelszó",
+      "connect": "Csatlakozás",
+      "connecting": "Csatlakozás…",
+      "validations": {
+        "url": "Kérlek adj meg egy helyes URL-t.",
+        "protocol": "Az URL-nek http://, vagy https://-rel kell kezdődnie",
+        "username": "Kérlek adj meg felhasználónevet",
+        "usernameLength": "A felhasználónév legalább 2 karakteres.",
+        "password": "Kérlek adj meg jelszót",
+        "passwordLength": "A jelszó legalább 2 karakteres."
+      }
+    }
+  },
+  "toast": {
+    "server": {
+      "success": "A szerver sikeresen elmentve!",
+      "error": "A szerverrel nem sikerült kommunikálni!"
+    }
+  },
+  "command": {
+    "inputPlaceholder": "Keress egy albumot, előadót, vagy dalt",
+    "noResults": "Nincs találat.",
+    "commands": {
+      "heading": "Parancsok",
+      "pages": "Ugrás az oldalra",
+      "theme": "Téma megváltoztatása"
+    },
+    "pages": "Oldalak"
+  },
+  "player": {
+    "noSongPlaying": "Most nem szól semmi",
+    "noRadioPlaying": "Most nem szól rádió",
+    "tooltips": {
+      "shuffle": {
+        "enable": "Keverés bekapcsolása",
+        "disable": "Keverés kikapcsolása"
+      },
+      "rewind": "{{amount}} másodperc visszatekerése",
+      "previous": "Előző",
+      "play": "Lejátszás",
+      "pause": "Szüneteltetés",
+      "forward": "Előre {{amount}} másodpercet",
+      "next": "Következő",
+      "repeat": {
+        "enable": "Ismétlés bekapcsolása",
+        "enableOne": "Ismétlés egyszer",
+        "disable": "Ismétlés kikapcsolása"
+      },
+      "like": "{{song}} kedvelése tőle: {{artist}}",
+      "dislike": "{{song}} kedvelésének visszavonása tőle: {{artist}}",
+      "miniPlayer": {
+        "open": "Minilejátszó megnyitása",
+        "close": "Minilejátszó bezárása"
+      },
+      "volume": {
+        "mute": "Némítás",
+        "unmute": "Némítás feloldása"
+      }
+    }
+  },
+  "options": {
+    "play": "Lejátszás",
+    "playNext": "Lejátszás következőként",
+    "addLast": "Hozzáadás utolsónak",
+    "download": "Letöltés",
+    "playlist": {
+      "add": "Hozzáadás lejátszási listához",
+      "edit": "Lejátszási lista szerkesztése",
+      "delete": "Lejátszási lista törlése",
+      "search": "Lejátszási lista keresése",
+      "create": "Új lejátszási lista",
+      "notFound": "Nincs lejátszási lista",
+      "removeSong": "Eltávolítás a lejátszási listáról"
+    },
+    "info": "Információk",
+    "markAsPlayed": "Lejátszottnak jelölés",
+    "goto": {
+      "episode": "Ugrás az epizódra",
+      "podcast": "Ugrás a podcasthez"
+    }
+  },
+  "radios": {
+    "label": "Rádió",
+    "addRadio": "Rádió hozzáadása",
+    "table": {
+      "name": "Név",
+      "homepage": "Kezdőoldal URL",
+      "stream": "Lejátszási URL",
+      "actions": {
+        "edit": "Rádió szerkesztése",
+        "delete": "Rádió törlése"
+      },
+      "playTooltip": "{{name}} rádió lejátszása",
+      "pauseTooltip": "{{name}} rádió szüneteltetése"
+    },
+    "empty": {
+      "title": "Nincsenek rádióid!",
+      "info": "Kattints, hogy hozzáadd az első rádióállomásod."
+    },
+    "error": "Nem lehet lejátszani a rádiót, nézd meg a lejátszási URL-t!",
+    "form": {
+      "create": {
+        "title": "Rádió hozzáadása",
+        "button": "Mentés",
+        "toast": {
+          "success": "Rádió sikeresen létrehozva!",
+          "error": "Rádió létrehozása sikertelen!"
+        }
+      },
+      "edit": {
+        "title": "Rádió szerkesztése",
+        "button": "Frissítés",
+        "toast": {
+          "success": "Rádió frissítése sikeres!",
+          "error": "A rádiót nem sikerült frissíteni!"
+        }
+      },
+      "delete": {
+        "title": "Biztos, hogy törölni akarod ezt a rádióállomást?",
+        "description": "Ezt a műveletet nem lehet visszavonni.",
+        "toast": {
+          "success": "Rádió sikeresen eltávolítva!",
+          "error": "A rádiót nem sikerült eltávolítani!"
+        }
+      },
+      "validations": {
+        "name": "A rádió neve legalább 3 karakter legyen.",
+        "url": "Kérlek adj meg helyes URL-t.",
+        "homepageUrlLength": "A kezdőoldal URL-je legalább 10 karakter legyen",
+        "streamUrlLength": "A lejátszási URL legalább 10 karakter kell, hogy legyen"
+      }
+    }
+  },
+  "time": {
+    "days_one": "{{days}} nap",
+    "days_other": "{{days}} nap",
+    "hour": "{{hour}} óra",
+    "minutes": "{{minutes}} perc",
+    "seconds": "{{seconds}} másodperc"
+  },
+  "server": {
+    "songCount_one": "{{count}} dal",
+    "songCount_other": "{{count}} dal",
+    "folderCount_one": "{{count}} mappa",
+    "folderCount_other": "{{count}} mappa",
+    "lastScan": "Utolsó ellenőrzés: {{date}}",
+    "status": "Állapot",
+    "management": "Szerver kezelés",
+    "incompatible": {
+      "title": "Nem kompatibilis szerver",
+      "description": "Ez a szerver a Subsonic protokoll egy régebbi verzióját használja, amely nem teljes mértékben támogatott. Kérjük, óvatosan folytasd, mert problémák léphetnek fel.",
+      "skip": "Folytatás mégis"
+    },
+    "buttons": {
+      "refresh": "Állapot frissítése",
+      "startScan": "Gyors ellenőrzés"
+    }
+  },
+  "downloads": {
+    "started": "A letöltés elkezdődött.",
+    "failed": "Hiba történt a fájl letöltése közben.",
+    "completed": "A fájl sikeresen le lett töltve."
+  },
+  "queue": {
+    "title": "Lejátszási sor",
+    "clear": "Lejátszási sor törlése",
+    "close": "Lejátszási sor bezárása",
+    "open": "Lejátszási sor megnyitása"
+  },
+  "shortcuts": {
+    "modal": {
+      "title": "Billentyűkombinációk",
+      "description": {
+        "first": "Megnyomás",
+        "last": "a párbeszédablak megnyitásához és bezárásához."
+      }
+    },
+    "playback": {
+      "label": "Lejátszás",
+      "play": "Lejátszás / Szüneteltetés",
+      "shuffle": "Keverés",
+      "repeat": "Ismétlés",
+      "previous": "Előző",
+      "next": "Következő",
+      "raiseVolume": "Hangerő növelése",
+      "lowerVolume": "Hangerő csökkentése"
+    },
+    "navigation": {
+      "label": "Navigáció"
+    },
+    "sidebar": {
+      "toggle": "Oldalsó panel"
+    }
+  },
+  "songInfo": {
+    "title": "Dal részletei",
+    "error": "Nem sikerült lekérni a dal adatait. Kérlek, próbáld újra később."
+  },
+  "warnings": {
+    "reload": "Egy dal éppen lejátszás alatt van!\nBiztosan újra szeretnéd tölteni az oldalt?",
+    "songError": "Nem lehet lejátszani a dalt, nézd meg a szervert!"
+  },
+  "update": {
+    "dialog": {
+      "title": "Új verzió elérhető!",
+      "remindLater": "Emlékeztess később",
+      "install": "Telepítés és újraindítás",
+      "macOS": "Letöltés GitHub-on"
+    },
+    "toasts": {
+      "started": "A frissítési folyamat elkezdődött.",
+      "success": "A frissítés telepítve lett! Az app most újra fog indulni.",
+      "error": "Sikertelen volt a frissítés. Kérlek próbáld letölteni GitHub-ról."
+    }
+  },
+  "about": {
+    "client": "Kliens",
+    "server": "Szerver",
+    "version": "Verzió",
+    "type": "Típus",
+    "apiVersion": "API verzió",
+    "toasts": {
+      "copy": "Link kimásolva a vágólapra!"
+    }
+  },
+  "mobile": {
+    "unsupported_message": "{{app_name}} nem kompatibilis mobiltelefonokkal.",
+    "access_recommendation": "Kérlek számítógéppel vagy tablettel használd."
+  },
+  "settings": {
+    "label": "Beállítások",
+    "options": {
+      "appearance": "Megjelenés",
+      "language": "Nyelv és régió",
+      "audio": "Lejátszó és hang",
+      "content": "Tartalom",
+      "accounts": "Fiókok",
+      "desktop": "Asztali applikáció",
+      "privacy": "Adatvédelem és biztonság"
+    },
+    "appearance": {
+      "general": {
+        "group": "Általános",
+        "description": "Változtasd meg az app kinézetét és viselkedését.",
+        "fullscreen": {
+          "label": "Automatikus teljes képernyő bekapcsolása",
+          "info": "Ha engedélyezve van, a nagy lejátszó megnyitásakor az alkalmazás automatikusan teljes képernyős módba vált."
+        }
+      },
+      "colors": {
+        "group": "Dinamikus színek",
+        "description": "Válaszd ki, hogy az alkalmazás a jelenleg lejátszott albumborítóból származó domináns színt használja-e háttérként.",
+        "queue": {
+          "label": "Lejátszási sor és dalszöveg",
+          "intensity": "Szín erősség szintje"
+        },
+        "bigPlayer": {
+          "label": "Nagy lejátszó",
+          "blurSize": "Kép elmosás mérete"
+        }
+      }
+    },
+    "audio": {
+      "replayGain": {
+        "group": "ReplayGain",
+        "description": "Automatikusan normalizálja a lejátszás hangerejét az egységes hallgatási élmény érdekében.",
+        "enabled": "Bekapcsolva",
+        "error": {
+          "message": "Nem sikerült lejátszani a számot ReplayGain használatával.",
+          "button": "Próbáld újra"
+        },
+        "mode": {
+          "label": "Mód",
+          "track": "Dal erősítése",
+          "album": "Album erősítése"
+        },
+        "preAmp": "Erősítés (dB)",
+        "defaultGain": {
+          "label": "Alapértelmezett erősítés (dB)",
+          "info": "Ez az erősítési szint azokra a dalokra alkalmazható, amelyek nem tartalmaznak ReplayGain metaadatot, biztosítva az egységes hangerőt. Az ajánlott tartomány -10 dB és -1 dB között van."
+        }
+      },
+      "lyrics": {
+        "group": "Dalszöveg",
+        "description": "Dalszöveg beállítások testreszabása.",
+        "preferSynced": {
+          "label": "Szinkronizált dalszöveget preferálja",
+          "info": "Ha engedélyezve van, a szinkronizált dalszövegek előnyt élveznek a nem szinkronizáltakkal szemben."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Külső szolgáltatások",
+        "description": "Kezeld azokat a külső szolgáltatásokat, amelyekhez az Aonsoku hozzáférhet.",
+        "lrclib": {
+          "info": "Az LRCLIB segít a dalszövegeket megtalálni.",
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Használj saját URL-t",
+            "info": "Használj egy saját URL-t az LRCLIB-hez az alap helyett.",
+            "label": "URL",
+            "example": "Példa: https://sajat-lrclib.com"
+          }
+        },
+        "animatedCover": {
+          "enabled": {
+            "label": "Animált borítók bekapcsolása",
+            "info": "Amikor be van kapcsolva, animált borítók lesznek betöltve külső forrásból, ha elérhetők."
+          },
+          "customUrl": {
+            "toggle": "Használj saját URL-t",
+            "info": "Használj saját URL-t az animált borító API-hoz az alap helyett.",
+            "label": "URL",
+            "example": "Alap: https://artwork.m8tec.top"
+          },
+          "screens": {
+            "album": {
+              "label": "Album oldal",
+              "info": "Engedélyezd az animált borítókat az album fejléc nézetben."
+            },
+            "fullscreen": {
+              "label": "Nagy lejátszó",
+              "info": "Engedélyezd az animált borítókat az aktuális dal borítóján a nagy lejátszóban."
+            },
+            "playerBar": {
+              "label": "Alsó lejátszó sáv",
+              "info": "Engedélyezd az animált borítókat az aktuális dal borítóján a lejátszósávban."
+            },
+            "drawer": {
+              "label": "Lejátszási sor és dalszöveg",
+              "info": "Engedélyezd az animált borítókat az aktuális dal borítóján a lejátszási sor és a dalszöveg panelben."
+            }
+          }
+        }
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Oldalsáv",
+        "description": "Az oldalsó sávban lévő szekciók megjelenítése vagy elrejtése."
+      },
+      "features": {
+        "group": "Funkciók",
+        "description": "Kliens funkciók ki- és bekapcsolása"
+      },
+      "podcast": {
+        "group": "Podcastek",
+        "description": "Engedélyezd az integrációt az Aonsoku Podcast szolgáltatással.",
+        "enabled": {
+          "label": "Integráció engedélyezése"
+        },
+        "service": {
+          "url": "Podcast szolgáltatás URL-je"
+        },
+        "credentials": {
+          "label": "Bejelentkezett felhasználó és szerver URL használata",
+          "error": "A felhasználónév és a szerver URL megadása kötelező.",
+          "user": "Felhasználónév",
+          "url": "Szerver URL"
+        }
+      },
+      "caches": {
+        "group": "Gyorsítótárak",
+        "description": "Kezeld mit gyorsítótáraz az app lokálisan.",
+        "images": {
+          "label": "Kép gyorsítótár bekapcsolása",
+          "info": "Ha be van kapcsolva, a képek lokálisan lesznek gyorsítótárazva a jobb teljesítmény érdekében."
+        },
+        "lyrics": {
+          "label": "Dalszöveg gyorsítótár engedélyezése",
+          "info": "Amikor be van kapcsolva, a letöltött dalszövegek lokálisan kerülnek tárolásra, így ismételt megtekintéskor azonnal betöltődnek."
+        },
+        "media": {
+          "label": "Média gyorsítótár bekapcsolása",
+          "info": "Ha be van kapcsolva, a böngésző gyorsítótárazhatja a streamelt hangot. Tiltsd le, hogy a böngésző minden alkalommal újra lekérje a médiát."
+        },
+        "clearAll": {
+          "label": "Gyorsítótárak kiürítése",
+          "info": "Eltávolítja a lokálisan gyorsítótárazott dalszövegeket, albumborítókat és animált borító URL-eket.",
+          "button": "Összes törlése",
+          "success": "A gyorsítótárak sikeresen kitörölve.",
+          "error": "Nem sikerült néhány gyorsítótárat kitörölni."
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "description": "Oszd meg a jelenleg lejátszott dalt a barátaiddal Discord-on.",
+        "enabled": {
+          "label": "Integráció bekapcsolása"
+        },
+        "group": "Discord Rich Presence"
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Általános",
+        "description": "Változtast meg a beállításokat az asztali apphoz.",
+        "tray": {
+          "label": "Minimalizálás tálcára",
+          "info": "Amikor be van kapcsolva, az app minimalizálva lesz a tárcára, ahelyett, hogy bezáródna, ha a bezárásra kattintasz."
+        }
+      }
+    }
+  },
+  "dayjs": {
+    "relativeTime": {
+      "future": "%s alatt",
+      "past": "%s ezelőtt",
+      "s": "néhány másodperce",
+      "m": "1 perc",
+      "mm": "%d perc",
+      "h": "1 óra",
+      "hh": "%d óra",
+      "d": "1 nap",
+      "dd": "%d nap",
+      "M": "1 hónap",
+      "MM": "%d hónap",
+      "y": "1 év",
+      "yy": "%d év"
+    }
+  }
+}
