@@ -266,7 +266,6 @@
     },
     "header": {
       "episodeCount_one": "{{count}} bölüm",
-      "episodeCount_many": "{{count}} bölüm",
       "episodeCount_other": "{{count}} bölüm",
       "feed": "Feed",
       "website": "Resmi Web Sitesi",
