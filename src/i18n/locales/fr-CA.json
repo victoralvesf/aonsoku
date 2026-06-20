@@ -749,6 +749,7 @@
   },
   "genres": {
     "albumCount_one": "{{count}} album",
+    "albumCount_many": "",
     "albumCount_other": "{{count}} albums",
     "buttons": {
       "shuffleTracks": "Pistes aléatoires",
