@@ -729,7 +729,6 @@
     "headline": "장르"
   },
   "genres": {
-    "albumCount_one": "앨범 {{count}}개",
     "albumCount_other": "앨범 {{count}}개",
     "buttons": {
       "shuffleTracks": "트랙 셔플",
