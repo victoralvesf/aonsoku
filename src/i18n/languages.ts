@@ -16,6 +16,7 @@ import pt from './locales/pt.json'
 import ptBr from './locales/pt-BR.json'
 import ru from './locales/ru.json'
 import sv from './locales/sv.json'
+import ta from './locales/ta.json'
 import tr from './locales/tr.json'
 import uk from './locales/uk.json'
 import yueHant from './locales/yue-Hant.json'
@@ -40,6 +41,7 @@ export const resources = {
   'pt-BR': { translation: ptBr },
   ru: { translation: ru },
   sv: { translation: sv },
+  ta: { translation: ta },
   tr: { translation: tr },
   uk: { translation: uk },
   'yue-Hant': { translation: yueHant },
@@ -154,6 +156,12 @@ export const languages = [
     langCode: 'sv',
     flag: 'SE',
     dayjsLocale: 'sv',
+  },
+  {
+    nativeName: 'தமிழ்',
+    langCode: 'ta',
+    flag: 'IN',
+    dayjsLocale: 'ta',
   },
   {
     nativeName: 'Türkçe',
