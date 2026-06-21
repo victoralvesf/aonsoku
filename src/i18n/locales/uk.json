@@ -54,7 +54,8 @@
     "radios": "Радіо",
     "podcasts": "Подкасти",
     "emptyPlaylist": "Ще не було створено жодного списку відтворення",
-    "genres": "Жанри"
+    "genres": "Жанри",
+    "favorites": "Улюблені"
   },
   "menu": {
     "server": "Сервер",
@@ -83,7 +84,8 @@
     "nuclear-dark": "Атомні сутінки",
     "everforest-dark": "Everforest Dark",
     "achiever": "Achiever",
-    "dracula": "Dracula"
+    "dracula": "Dracula",
+    "discord": "Discord"
   },
   "genre": {
     "headline": "Жанр"
@@ -92,7 +94,6 @@
     "albumCount_one": "{{count}} альбом",
     "albumCount_few": "{{count}} альбоми",
     "albumCount_many": "{{count}} альбомів",
-    "albumCount_other": "{{count}} альбомів",
     "buttons": {
       "shuffleTracks": "Перемішати треки",
       "shuffleAlbums": "Перемішати альбоми"

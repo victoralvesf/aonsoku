@@ -1,0 +1,793 @@
+{
+  "home": {
+    "recentlyPlayed": "Viimeksi toistettu",
+    "mostPlayed": "Eniten soitetut",
+    "recentlyAdded": "Viimeksi lisätty",
+    "explore": "Tutki"
+  },
+  "sidebar": {
+    "home": "Koti",
+    "search": "Etsi…",
+    "miniSearch": "Etsi",
+    "library": "Kirjasto",
+    "artists": "Esiintyjät",
+    "songs": "Kappaleet",
+    "albums": "Albumit",
+    "favorites": "Suosikit",
+    "playlists": "Soittolistat",
+    "radios": "Radiot",
+    "podcasts": "Podcastit",
+    "genres": "Tyylilajit",
+    "emptyPlaylist": "Soittolistoja ei ole vielä luotu"
+  },
+  "menu": {
+    "language": "Kieli",
+    "server": "Palvelin",
+    "about": "Tietoja",
+    "serverLogout": "Kirjaudu ulos"
+  },
+  "generic": {
+    "seeMore": "Näytä lisää",
+    "showDetails": "Näytä yksityiskohdat",
+    "hideDetails": "Piilota yksityiskohdat",
+    "viewAll": "Näytä kaikki",
+    "loading": "Ladataan…",
+    "viewMode": {
+      "label": "Näytä tila",
+      "modes": {
+        "list": "Lista",
+        "poster": "Juliste"
+      }
+    },
+    "beta": "Beta"
+  },
+  "theme": {
+    "label": "Teema",
+    "light": "Vaalea",
+    "dark": "Tumma",
+    "system": "Järjestelmä",
+    "black": "Mustavalkoinen",
+    "one-dark": "One Dark"
+  },
+  "playlist": {
+    "headline": "Soittolista",
+    "songCount_one": "{{count}} kappale",
+    "songCount_other": "{{count}} kappaletta",
+    "duration": "noin {{duration}}",
+    "refresh": "Virkistä soittolistat",
+    "buttons": {
+      "play": "Toista {{name}}",
+      "pause": "Tauota {{name}}",
+      "shuffle": "Toista {{name}} sekoitustilassa",
+      "options": "Enemmän valintoja kappaleelle {{name}}"
+    },
+    "noSongList": "Tällä soittolistalla ei ole yhtään kappaletta!",
+    "form": {
+      "labels": {
+        "name": "Nimi",
+        "comment": "Kommentti",
+        "commentDescription": "Kirjoita lyhyt kuvaus tästä soittolistasta",
+        "isPublic": "Julkinen",
+        "isPublicDescription": "Valitse tämä tehdäksesi soittolistasta julkisen. Tämä sallii muiden käyttäjien katsoa ja käyttää soittolistaasi."
+      },
+      "create": {
+        "title": "Luo soittolista",
+        "button": "Luo",
+        "toast": {
+          "success": "Soittolista luotu onnistuneesti!",
+          "error": "Soittolistan luonti epäonnistui!"
+        }
+      },
+      "edit": {
+        "title": "Muokkaa soittolistaa",
+        "button": "Päivitä",
+        "toast": {
+          "success": "Soittolista päivitetty onnistuneesti!",
+          "error": "Soittolistan päivitys epäonnistui!"
+        }
+      },
+      "delete": {
+        "title": "Haluatko varmasti poistaa tämän soittolistan?",
+        "description": "Tätä toimintoa ei voi perua.",
+        "toast": {
+          "success": "Soittolista poistettu onnistuneesti!",
+          "error": "Soittolistan poisto epäonnistui!"
+        }
+      },
+      "validations": {
+        "nameLength": "Soittolistan nimen on oltava vähintään 2 merkkiä pitkä."
+      },
+      "removeSong": {
+        "title_one": "Haluatko varmasti poistaa valitun kappaleen?",
+        "title_other": "Haluatko varmasti poistaa valitut kappaleet?",
+        "description": "Tätä toimintoa ei voi perua.",
+        "toast": {
+          "success_one": "Kappale poistettu onnistuneesti!",
+          "success_other": "Kappaleet poistettu onnistuneesti!",
+          "error_one": "Kappaleen poisto epäonnistui!",
+          "error_other": "Kappaleiden poisto epäonnistui!"
+        }
+      }
+    }
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "Etsi kappaleita…"
+      },
+      "byArtist": "Esiintyjän {{artist}} kappaleet",
+      "filter": {
+        "clear": "Tyhjennä suodatin"
+      }
+    }
+  },
+  "album": {
+    "headline": "Levy",
+    "buttons": {
+      "play": "Toista {{name}}",
+      "pause": "Tauota {{name}}",
+      "shuffle": "Toista {{name}} sekoitustilassa",
+      "like": "Tykkää kappaleesta {{name}}",
+      "dislike": "Poista tykkäys kappaleelta {{name}}"
+    },
+    "info": {
+      "about": "Tietoja levystä {{name}}",
+      "lastfm": "Avaa Last.fm -palvelussa",
+      "musicbrainz": "Avaa MusicBrainz -palvelussa"
+    },
+    "more": {
+      "listTitle": "Enemmän tältä esiintyjältä",
+      "discography": "Esiintyjän diskografia",
+      "genreTitle": "Enemmän tyylilajista {{genre}}"
+    },
+    "list": {
+      "header": {
+        "albumsByArtist": "Esiintyjän {{artist}} levyt"
+      },
+      "empty": {
+        "title": "Hups, ei levyjä!",
+        "info": "Näyttää ettei nykyisellä suodattimella löydy levyjä.",
+        "action": "Kokeile säätää suodattimia?"
+      },
+      "genre": {
+        "label": "Valitse tyylilaji…",
+        "search": "Etsi tyylilajia…",
+        "loading": "Ladataan tyylilajeja…",
+        "notFound": "Tyylilajia ei löytynyt."
+      },
+      "filter": {
+        "artist": "Esiintyjä",
+        "genre": "Tyylilaji",
+        "favorites": "Suosikit",
+        "mostPlayed": "Eniten toistettu",
+        "name": "Nimi",
+        "random": "Satunnainen",
+        "recentlyAdded": "Viimeksi lisätty",
+        "recentlyPlayed": "Viimeksi toistettu",
+        "releaseYear": "Julkaisuvuosi",
+        "discography": "Diskografia",
+        "search": "Etsi"
+      },
+      "search": {
+        "placeholder": "Etsi levyjä…"
+      }
+    },
+    "table": {
+      "discNumber": "Levy {{number}}"
+    }
+  },
+  "genre": {
+    "headline": "Tyylilaji"
+  },
+  "genres": {
+    "albumCount_one": "{{count}} levy",
+    "albumCount_other": "{{count}} levyä",
+    "buttons": {
+      "shuffleTracks": "Sekoita kappaleet",
+      "shuffleAlbums": "Sekoita levyt"
+    }
+  },
+  "favorites": {
+    "noSongList": "Et ole lisännyt yhtään kappaletta suosikiksi!"
+  },
+  "artist": {
+    "headline": "Esiintyjä",
+    "buttons": {
+      "play": "Toista esiintyjän {{artist}} radio",
+      "shuffle": "Toista esiintyjän {{artist}} radio sekoitustilassa",
+      "options": "Enemmän valintoja esiintyjästä {{artist}}"
+    },
+    "info": {
+      "albumsCount_one": "{{count}} levy",
+      "albumsCount_other": "{{count}} levyä"
+    },
+    "topSongs": "Suosittu",
+    "recentAlbums": "Viimeaikaiset levyt",
+    "relatedArtists": "Liittyvät esiintyjät"
+  },
+  "podcasts": {
+    "form": {
+      "all": "Selaa",
+      "latestEpisodes": "Viimeisimmät jaksot",
+      "addButton": "Lisää podcast",
+      "search": "Etsi podcasteja…",
+      "dialog": {
+        "title": "Luo podcast",
+        "feedUrl": "Syötteen URL",
+        "message": "Voit lisätä useamman URL-osoitteen, yksi per rivi.",
+        "saveButton": "Tallenna",
+        "validations": {
+          "url": "Syötä kelvolliset URL-osoitteet.",
+          "urlLength": "URL-osoitteiden on oltava vähintään 10 merkkiä pitkiä",
+          "protocol": "URL-osoitteiden alussa on oltava joko http:// tai https://",
+          "atLeastOneUrl": "Syötä vähintään yksi URL-osoite."
+        }
+      },
+      "toasts": {
+        "success": "Podcast luotu onnistuneesti! Se on kuunneltavissa muutamassa minuutissa!",
+        "error": "Podcastin luonti epäonnistui!"
+      }
+    },
+    "emptyPage": {
+      "message": "Ei lisättyjä podcasteja",
+      "description": "Näyttää ettet ole vielä lisännyt yhtään podcastia. Lisää yksi yläpuolelta!"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "Ei jaksoja saatavilla",
+        "description": "Kokeile lisätä lisää podcasteja.",
+        "goToPodcasts": "Mene podcasteihin"
+      }
+    },
+    "emptyResults": {
+      "title": "Ei tuloksia.",
+      "info": "Emme löytäneet yhtään hakuasi vastaavaa podcastia.",
+      "action": "Tarkista oikeinkirjoitus tai kokeile muita hakusanoja."
+    },
+    "filters": {
+      "episodes": {
+        "search": "Etsi jaksoja…",
+        "orderBy": {
+          "publishDate": "Julkaisupäivä",
+          "title": "Otsikko",
+          "duration": "Kesto"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Otsikko",
+          "episodeCount": "Jaksojen lukumäärä"
+        }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} jakso",
+      "episodeCount_other": "{{count}} jaksoa",
+      "feed": "Syöte",
+      "website": "Virallinen kotisivu",
+      "unfollow": {
+        "tooltip": "Lopeta podcastin {{title}} seuraaminen",
+        "dialog": {
+          "title": "Oletko varma ettet halua enää seurata tätä podcastia?",
+          "description": "Kuunnellaksesi tätä podcastia jatkossa, sinun on luotava se uudelleen."
+        },
+        "toasts": {
+          "success": "Olet onnistuneesti lopettanut podcastin seuraamisen!",
+          "error": "Podcastin seuraamisen lopettamisessa tapahtui virhe. Ole hyvä ja yritä uudelleen."
+        }
+      }
+    },
+    "list": {
+      "episodes": "Jaksot",
+      "notFoundMessage": "Tällä podcastilla ei ole vielä jaksoja!",
+      "progress": {
+        "remainingTime": "{{time}} aikaa jäljellä",
+        "completed": "Valmis"
+      }
+    }
+  },
+  "table": {
+    "columns": {
+      "title": "Otsikko",
+      "albumArtist": "Levyn esiintyjä",
+      "artist": "Esiintyjä",
+      "contributors": "Avustajat",
+      "album": "Levy",
+      "year": "Vuosi",
+      "duration": "Kesto",
+      "plays": "Toistokertoja",
+      "lastPlayed": "Viimeksi toistettu",
+      "bitrate": "Bittinopeus",
+      "quality": "Laatu",
+      "name": "Nimi",
+      "albumCount": "Levyjen lukumäärä",
+      "songCount": "Kappaleiden lukumäärä",
+      "comment": "Kommentti",
+      "public": "Julkinen",
+      "track": "Kappale",
+      "genres": "Tyylilajit",
+      "size": "Koko",
+      "codec": "Koodekki",
+      "path": "Polku",
+      "favorite": "Suosikki",
+      "recordLabel": "Levy-yhtiö",
+      "discNumber": "Levyn numero",
+      "trackGain": "Raidan vahvistus",
+      "trackPeak": "Raidan huippu",
+      "albumGain": "Levyn vahvistus",
+      "albumPeak": "Levyn huippu",
+      "channelCount": "Kanavien lukumäärä",
+      "samplingRate": "Näytteenottotaajuus",
+      "bitDepth": "Bittisyvyys"
+    },
+    "buttons": {
+      "play": "Toista esiintyjän {{artist}} kappale {{title}}",
+      "pause": "Tauota esiintyjän {{artist}} kappale {{title}}"
+    },
+    "lastPlayed": "{{date}} päivää sitten",
+    "pagination": {
+      "rowsPerPage": "Rivejä per sivu",
+      "currentPage": "Sivu {{currentPage}} yhteensä {{totalPages}} sivusta",
+      "screenReader": {
+        "firstPage": "Mene ensimmäiselle sivulle",
+        "previousPage": "Mene edelliselle sivulle",
+        "nextPage": "Mene seuraavalle sivulle",
+        "lastPage": "Mene viimeiselle sivulle"
+      }
+    },
+    "sort": {
+      "asc": "Nouseva",
+      "desc": "Laskeva",
+      "reset": "Nollaa"
+    },
+    "menu": {
+      "selectedCount_one": "{{count}} valittu",
+      "selectedCount_other": "{{count}} valittu"
+    }
+  },
+  "fullscreen": {
+    "noLyrics": "Sanoituksia ei löytynyt",
+    "loadingLyrics": "Etsitään sanoituksia…",
+    "queue": "Jono",
+    "playing": "Toistetaan nyt",
+    "lyrics": "Sanoitukset",
+    "switchButton": "Vaihda suureen soittimeen"
+  },
+  "logout": {
+    "dialog": {
+      "title": "Valmis sanomaan näkemiin toistaiseksi?",
+      "description": "Vahvista kirjautuaksesi ulos.",
+      "cancel": "Peru",
+      "confirm": "Jatka"
+    }
+  },
+  "login": {
+    "form": {
+      "server": "Palvelin",
+      "description": "Yhdistä Subsonic-palvelimeesi.",
+      "url": "URL-osoite",
+      "urlDescription": "Tämä on palvelimesi URL-osoite",
+      "username": "Käyttäjänimi",
+      "usernamePlaceholder": "Käyttäjänimesi",
+      "password": "Salasana",
+      "connect": "Yhdistä",
+      "connecting": "Yhdistetään…",
+      "validations": {
+        "url": "Syötä kelvollinen URL-osoite.",
+        "protocol": "URL-osoitteen alussa on oltava joko http:// tai https://",
+        "username": "Syötä käyttäjänimi",
+        "usernameLength": "Käyttäjänimen on oltava vähintään 2 merkkiä pitkä.",
+        "password": "Syötä salasana",
+        "passwordLength": "Salasanan on oltava vähintään 2 merkkiä pitkä."
+      }
+    }
+  },
+  "toast": {
+    "server": {
+      "success": "Palvelin tallennettu onnistuneesti!",
+      "error": "Yhteys palvelimeen epäonnistui!"
+    }
+  },
+  "command": {
+    "inputPlaceholder": "Etsi levyä, esiintyjää tai kappaletta",
+    "noResults": "Ei tuloksia.",
+    "commands": {
+      "heading": "Komennot",
+      "pages": "Mene sivulle",
+      "theme": "Vaihda teema"
+    },
+    "pages": "Sivut"
+  },
+  "player": {
+    "noSongPlaying": "Ei kappaleita toistossa",
+    "noRadioPlaying": "Ei radiota toistossa",
+    "tooltips": {
+      "shuffle": {
+        "enable": "Kytke sekoitustila päälle",
+        "disable": "Poista sekoitustila käytöstä"
+      },
+      "rewind": "Kelaa taaksepäin {{amount}} sekuntia",
+      "previous": "Edellinen",
+      "play": "Toista",
+      "pause": "Tauota",
+      "forward": "Kelaa eteenpäin {{amount}} sekuntia",
+      "next": "Seuraava",
+      "repeat": {
+        "enable": "Kytke päälle toistotila",
+        "enableOne": "Kytke päälle yhden toisto",
+        "disable": "Poista toistotila käytöstä"
+      },
+      "like": "Tykkää esiintyjän {{artist}} kappaleesta {{song}}",
+      "dislike": "Poista esiintyjän {{artist}} kappaleen {{song}} tykkäys",
+      "miniPlayer": {
+        "open": "Avaa pienoissoitin",
+        "close": "Sulje pienoissoitin"
+      },
+      "volume": {
+        "mute": "Mykistä",
+        "unmute": "Poista mykistys"
+      }
+    }
+  },
+  "options": {
+    "play": "Toista",
+    "playNext": "Toista seuraava",
+    "addLast": "Lisää viimeiseksi",
+    "download": "Lataa",
+    "playlist": {
+      "add": "Lisää soittolistalle",
+      "edit": "Muokkaa soittolistaa",
+      "delete": "Poista soittolista",
+      "search": "Etsi soittolista",
+      "create": "Uusi soittolista",
+      "notFound": "Soittolistoja ei löytynyt",
+      "removeSong": "Poista soittolistalta"
+    },
+    "info": "Hae tietoja",
+    "markAsPlayed": "Merkitse toistetuksi",
+    "goto": {
+      "episode": "Mene jaksoon",
+      "podcast": "Mene podcastiin"
+    }
+  },
+  "radios": {
+    "label": "Radio",
+    "addRadio": "Lisää radio",
+    "table": {
+      "name": "Nimi",
+      "homepage": "Kotisivun URL-osoite",
+      "stream": "Suoratoiston URL-osoite",
+      "actions": {
+        "edit": "Muokkaa radiota",
+        "delete": "Poista radio"
+      },
+      "playTooltip": "Toista radio {{name}}",
+      "pauseTooltip": "Tauota radio {{name}}"
+    },
+    "empty": {
+      "title": "Sinulla ei ole radioita!",
+      "info": "Lisää ensimmäinen radioasemasi."
+    },
+    "error": "Radion soittaminen ei onnistu, tarkista suoratoiston URL-osoite!",
+    "form": {
+      "create": {
+        "title": "Lisää radio",
+        "button": "Tallenna",
+        "toast": {
+          "success": "Radio luotu onnistuneesti!",
+          "error": "Radion luonti epäonnistui!"
+        }
+      },
+      "edit": {
+        "title": "Muokkaa radiota",
+        "button": "Päivitä",
+        "toast": {
+          "success": "Radio päivitetty onnistuneesti!",
+          "error": "Radion päivitys epäonnistui!"
+        }
+      },
+      "delete": {
+        "title": "Haluatko varmasti poistaa tämän radioaseman?",
+        "description": "Tätä toimintoa ei voi perua.",
+        "toast": {
+          "success": "Radio poistettu onnistuneesti!",
+          "error": "Radion poistaminen epäonnistui!"
+        }
+      },
+      "validations": {
+        "name": "Radion nimen on oltava vähintään 3 merkkiä pitkä.",
+        "url": "Syötä kelvollinen URL-osoite.",
+        "homepageUrlLength": "Kotisivun osoitteen on oltava vähintään 10 merkkiä pitkä",
+        "streamUrlLength": "Suoratoiston osoitteen on oltava vähintään 10 merkkiä pitkä"
+      }
+    }
+  },
+  "time": {
+    "days_one": "{{days}} päivä",
+    "days_other": "{{days}} päivää",
+    "hour": "{{hour}} tunti",
+    "minutes": "{{minutes}} minuuttia",
+    "seconds": "{{seconds}} sekuntia"
+  },
+  "server": {
+    "songCount_one": "{{count}} kappale",
+    "songCount_other": "{{count}} kappaletta",
+    "folderCount_one": "{{count}} kansio",
+    "folderCount_other": "{{count}} kansiota",
+    "lastScan": "Viimeisin haku: {{date}}",
+    "status": "Tila",
+    "management": "Palvelimen hallinta",
+    "incompatible": {
+      "title": "Yhteensopimaton palvelin",
+      "description": "Tämä palvelin käyttää vanhempaa Subsonicin protokollaa joka ei ole täysin tuettu. Jatka varoen koska siitä voi seurata ongelmia.",
+      "skip": "Jatka joka tapauksessa"
+    },
+    "buttons": {
+      "refresh": "Virkistyksen tila",
+      "startScan": "Pikahaku"
+    }
+  },
+  "downloads": {
+    "started": "Lataus aloitettu.",
+    "failed": "Tiedostosi latauksessa tapahtui virhe.",
+    "completed": "Tiedostosi on ladattu."
+  },
+  "queue": {
+    "title": "Jono",
+    "clear": "Tyhjennä jono",
+    "close": "Sulje jono",
+    "open": "Avaa jono"
+  },
+  "shortcuts": {
+    "modal": {
+      "title": "Näppäinoikotiet",
+      "description": {
+        "first": "Paina"
+      }
+    },
+    "playback": {
+      "label": "Toisto",
+      "play": "Toista / Tauota",
+      "shuffle": "Sekoita",
+      "repeat": "Toista uudelleen",
+      "previous": "Siirry edelliseen",
+      "next": "Siirry seuraavaan",
+      "raiseVolume": "Nosta äänenvoimakkuutta",
+      "lowerVolume": "Laske äänenvoimakkuutta"
+    },
+    "navigation": {
+      "label": "Suunnistus"
+    },
+    "sidebar": {
+      "toggle": "Kytke sivupalkki"
+    }
+  },
+  "songInfo": {
+    "title": "Kappaleen yksityiskohdat",
+    "error": "Kappaleen tietojen haku epäonnistui. Ole hyvä ja yritä uudelleen."
+  },
+  "warnings": {
+    "reload": "Kappaleen toisto on käynnissä!\nHaluatko varmasti ladata sivun uudelleen?",
+    "songError": "Kappaleen toisto epäonnistui, tarkista palvelin!"
+  },
+  "update": {
+    "dialog": {
+      "title": "Uusi versio saatavilla!",
+      "remindLater": "Muistuta myöhemmin",
+      "install": "Asenna ja käynnistä uudelleen",
+      "macOS": "Lataa GitHub -palvelussa"
+    },
+    "toasts": {
+      "started": "Päivitysprosessi on alkanut.",
+      "success": "Päivitys on asennettu! Sovellus käynnistyy nyt uudelleen.",
+      "error": "Päivityksen asennus epäonnistui. Yritä lataamista suoraan GitHub -palvelusta."
+    }
+  },
+  "about": {
+    "client": "Asiakas",
+    "server": "Palvelin",
+    "version": "Versio",
+    "type": "Tyyppi",
+    "apiVersion": "API-versio",
+    "toasts": {
+      "copy": "Linkki kopioitu leikepöydälle!"
+    }
+  },
+  "mobile": {
+    "unsupported_message": "{{app_name}} ei ole yhteensopiva mobiililaitteiden kanssa.",
+    "access_recommendation": "Käytä sitä tietokoneelta tai tabletilta."
+  },
+  "settings": {
+    "label": "Asetukset",
+    "options": {
+      "appearance": "Ulkonäkö",
+      "language": "Kieli ja alue",
+      "audio": "Soitin ja ääni",
+      "content": "Sisältö",
+      "accounts": "Tilit",
+      "desktop": "Työpöytäsovellus",
+      "privacy": "Yksityisyys ja turvallisuus"
+    },
+    "appearance": {
+      "general": {
+        "group": "Yleinen",
+        "description": "Mukauta sovelluksen ulkonäköä.",
+        "fullscreen": {
+          "label": "Ota käyttöön automaattinen koko ruudun tila",
+          "info": "Jos käytössä, niin käyttäessäsi suurta soitinta sovellus menee automaattisesti koko ruudun tilaan."
+        }
+      },
+      "colors": {
+        "group": "Dynaamiset värit",
+        "description": "Valitse käyttääkö sovellus sillä hetkellä soivan levyn vallitsevaa väriä taustavärinä.",
+        "queue": {
+          "label": "Jono ja sanoitukset",
+          "intensity": "Värin voimakkuus"
+        },
+        "bigPlayer": {
+          "label": "Suuri soitin",
+          "blurSize": "Kuvan sumennuksen koko"
+        }
+      }
+    },
+    "audio": {
+      "replayGain": {
+        "group": "Toiston vahvistus",
+        "description": "Tasoita toiston äänenvoimakkuus yhtenäisen kuuntelukokemuksen takaamiseksi.",
+        "enabled": "Käytössä",
+        "error": {
+          "message": "Kappaleen toistossa toiston vahvistuksen kanssa tapahtui virhe.",
+          "button": "Yritä uudelleen"
+        },
+        "mode": {
+          "label": "Tila",
+          "track": "Raidan vahvistus",
+          "album": "Levyn vahvistus"
+        },
+        "preAmp": "Etukäteisvahvistus (dB)",
+        "defaultGain": {
+          "label": "Oletusvahvistus (dB)",
+          "info": "Tätä vahvistuksen tasoa käytetään kappaleissa joissa ei ole vahvistuksen metadataa, takaamaan yhtenäinen äänenvoimakkuuden taso. Suositeltu vaihteluväli on väliltä -10 dB ja -1 dB."
+        }
+      },
+      "lyrics": {
+        "group": "Sanoitukset",
+        "description": "Mukauta sanoitusten asetuksia.",
+        "preferSynced": {
+          "label": "Suosi tahdistettuja sanoituksia",
+          "info": "Kun käytössä, tahdistettuja sanoituksia suositaan."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Ulkoiset palvelut",
+        "description": "Hallinnoi ulkoisia palveluita joita Aonsoku voi käyttää.",
+        "lrclib": {
+          "info": "LRCLIB -palvelua käytetään sanoitusten hakuun.",
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Käytä mukautettua URL-osoitetta",
+            "info": "Käytä mukautettua URL-osoitetta LRCLIB -palvelulle oletuksen sijasta.",
+            "label": "URL-osoite",
+            "example": "Esimerkki: https://my-lrclib.com"
+          }
+        },
+        "animatedCover": {
+          "enabled": {
+            "label": "Ota käyttöön animoidut levynkannet",
+            "info": "Kun käytössä, animoidut levynkannet ladataan ulkoisesta palvelusta kun saatavilla."
+          },
+          "customUrl": {
+            "toggle": "Käytä mukautettua URL-osoitetta",
+            "info": "Käytä mukautettua URL-osoitetta animoidun kuvamateriaalin API:lle oletuksen sijasta.",
+            "label": "URL-osoite",
+            "example": "Oletus: https://artwork.m8tec.top"
+          },
+          "screens": {
+            "album": {
+              "label": "Levyn sivu",
+              "info": "Ota käyttöön animoidut levynkannet levyn otsikkonäkymässä."
+            },
+            "fullscreen": {
+              "label": "Suuri soitin",
+              "info": "Ota käyttöön animoidut levynkannet nykyistä kappaletta varten suuressa soittimessa."
+            },
+            "playerBar": {
+              "label": "Alaosan soitinpalkki",
+              "info": "Ota käyttöön animoidut levynkannet nykyiselle kappaleelle soitinpalkissa."
+            },
+            "drawer": {
+              "label": "Jono ja sanoitukset",
+              "info": "Ota käyttöön animoidut levynkannet nykyiselle kappaleelle jono ja sanoitukset -vetovalikossa."
+            }
+          }
+        }
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Sivupalkki",
+        "description": "Näytä tai piilota osioita sivupalkissa."
+      },
+      "features": {
+        "group": "Ominaisuudet",
+        "description": "Ota käyttöön tai poista käytöstä asiakkaan ominaisuuksia"
+      },
+      "podcast": {
+        "group": "Podcastit",
+        "description": "Ota käyttöön Aonsoku Podcasts -palvelun integrointi.",
+        "enabled": {
+          "label": "Ota integrointi käyttöön"
+        },
+        "service": {
+          "url": "Podcast palvelun URL-osoite"
+        },
+        "credentials": {
+          "label": "Käytä kirjautunutta käyttäjätunnusta ja palvelimen URL-osoitetta",
+          "error": "Käyttäjätunnus ja palvelimen URL-osoite ovat vaadittuja.",
+          "user": "Käyttäjätunnus",
+          "url": "Palvelimen URL-osoite"
+        }
+      },
+      "caches": {
+        "group": "Välimuistit",
+        "description": "Hallinnoi mitä sovellus tallentaa välimuistiin.",
+        "images": {
+          "label": "Ota käyttöön kuvavälimuisti",
+          "info": "Kun käytössä, kuvat tallennetaan paikallisesti suorituskyvyn lisäämiseksi."
+        },
+        "lyrics": {
+          "label": "Ota käyttöön sanoitusvälimuisti",
+          "info": "Kun käytössä, haetut sanoitukset tallennetaan paikallisesti, jotta ne latautuvat seuraavilla kerroilla välittömästi."
+        },
+        "media": {
+          "label": "Ota käyttöön mediavälimuisti",
+          "info": "Kun käytössä, selain voi tallentaa suoratoistettua ääntä välimuistiin. Poista käytöstä pakottaaksesi selaimen hakemaan media uudelleen joka kerta."
+        },
+        "clearAll": {
+          "label": "Tyhjennä välimuistit",
+          "info": "Poistaa paikallisesti tallennetut sanoitukset, levyjen taiteen ja animoidun kuvamateriaalin URL-osoitteet.",
+          "button": "Tyhjennä kaikki",
+          "success": "Välimuistit tyhjennetty onnistuneesti.",
+          "error": "Joiden välimuistien tyhjennys epäonnistui."
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "description": "Jaa tieto sillä hetkellä toistettavasta kappaleesta ystävien kanssa Discordissa.",
+        "enabled": {
+          "label": "Ota käyttöön integrointi"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Yleinen",
+        "description": "Mukauta työpöytäsovelluksen määrityksiä.",
+        "tray": {
+          "label": "Pienennä ilmoitusalueelle",
+          "info": "Kun käytössä, sovellus pienennetään ilmoitusalueelle sulkemisen sijaan kun painat sulkemispainiketta."
+        }
+      }
+    }
+  },
+  "dayjs": {
+    "relativeTime": {
+      "future": "%s päästä",
+      "past": "%s sitten",
+      "s": "muutama sekunti",
+      "m": "1 minuutti",
+      "mm": "%d minuuttia",
+      "h": "1 tunti",
+      "hh": "%d tuntia",
+      "d": "1 päivä",
+      "dd": "%d päivää",
+      "M": "1 kuukausi",
+      "MM": "%d kuukautta",
+      "y": "1 vuosi",
+      "yy": "%d vuotta"
+    }
+  }
+}

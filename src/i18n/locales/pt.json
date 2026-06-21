@@ -332,7 +332,38 @@
           "customUrl": {
             "toggle": "Use uma URL personalizada",
             "label": "URL",
-            "example": "Exemplo: https://minha-biblrc.pt"
+            "example": "Exemplo: https://minha-biblrc.pt",
+            "info": "Use uma URL personalizada para o LRCLIB no lugar da padrão."
+          }
+        },
+        "animatedCover": {
+          "enabled": {
+            "label": "Ativar Capas Animadas",
+            "info": "Quando ativado, as capas animadas serão carregadas de um serviço externo quando disponível."
+          },
+          "customUrl": {
+            "toggle": "Use uma URL personalizada",
+            "info": "Use uma URL personalizada para a API de capas animadas no lugar da padrão.",
+            "label": "URL",
+            "example": "Padrão: https://artwork.m8tec.top"
+          },
+          "screens": {
+            "album": {
+              "label": "Página do Álbum",
+              "info": "Ativa as capas animadas no cabeçalho da página do álbum."
+            },
+            "fullscreen": {
+              "label": "Player Grande",
+              "info": "Ativa as capas animadas para a música atual no Player Grande."
+            },
+            "playerBar": {
+              "label": "Player Principal",
+              "info": "Ativa as capas animadas para a música atual no player principal."
+            },
+            "drawer": {
+              "label": "Fila de Reprodução e Letras",
+              "info": "Ativa as capas animadas para a música atual na gaveta da Fila de Reprodução e Letras."
+            }
           }
         }
       }
@@ -362,7 +393,28 @@
         "images": {
           "label": "Ativar cache de imagens",
           "info": "Quando ativado, as imagens serão armazenadas localmente para melhorar o desempenho."
+        },
+        "group": "Caches",
+        "description": "Controlo o que a app grava localmente no cache.",
+        "lyrics": {
+          "label": "Ativar Cache de Letras",
+          "info": "Quando ativado, as letras são gravadas localmente para carregarem de forma instantânea no futuro."
+        },
+        "media": {
+          "label": "Ativar Cache De Média",
+          "info": "Quando ativada, esta opção pode armazenar em cache o áudio transmitido. Desative para forçar o navegador a buscar a média a cada reprodução."
+        },
+        "clearAll": {
+          "label": "Limpar Caches",
+          "info": "Remove letras de músicas, capas de álbuns e capas animadas armazenadas no cache local.",
+          "button": "Limpar Tudo",
+          "success": "Cache limpo com sucesso.",
+          "error": "Falha ao limpar alguns caches."
         }
+      },
+      "features": {
+        "group": "Funcionalidades",
+        "description": "Ativar ou desativar funcionalidades do cliente"
       }
     },
     "accounts": {
@@ -370,7 +422,8 @@
         "description": "Partilhe a música que está a ouvir com os seus amigos no Discord.",
         "enabled": {
           "label": "Ativar integração"
-        }
+        },
+        "group": "Discord Rich Presence"
       }
     },
     "desktop": {
@@ -699,6 +752,9 @@
     },
     "navigation": {
       "label": "Navegação"
+    },
+    "sidebar": {
+      "toggle": "Alternar barra lateral"
     }
   },
   "songInfo": {
@@ -758,6 +814,7 @@
   },
   "genres": {
     "albumCount_one": "{{count}} álbum",
+    "albumCount_many": "",
     "albumCount_other": "{{count}} álbuns",
     "buttons": {
       "shuffleTracks": "Faixas aleatórias",

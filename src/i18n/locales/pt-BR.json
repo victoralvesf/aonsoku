@@ -748,7 +748,28 @@
         "images": {
           "label": "Habilitar Cache de Imagens",
           "info": "Quando ativado, as imagens serão armazenadas localmente para melhorar o desempenho."
+        },
+        "group": "Caches",
+        "description": "Controle o que o app salva localmente em cache.",
+        "lyrics": {
+          "label": "Habilitar Cache de Letras",
+          "info": "Quando habilitado, as letras são salvas localmente para carregarem de forma instantânea no futuro."
+        },
+        "media": {
+          "label": "Habilitar Cache De Mídia",
+          "info": "Quando ativada, essa opção pode armazenar em cache o áudio transmitido. Desative para forçar o navegador a buscar a mídia a cada reprodução."
+        },
+        "clearAll": {
+          "label": "Limpar Caches",
+          "info": "Remove letras de músicas, capas de álbuns e capas animadas armazenadas no cache local.",
+          "button": "Limpar Tudo",
+          "success": "Cache limpo com sucesso.",
+          "error": "Falha ao limpar alguns caches."
         }
+      },
+      "features": {
+        "group": "Funcionalidades",
+        "description": "Habilitar ou desabilitar funcionalidades do cliente"
       }
     },
     "accounts": {
