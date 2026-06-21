@@ -487,4 +487,27 @@
     --destructive-foreground: 0 0% 100%;
     --ring: 43 59% 81%;
   }
+
+  .vesper {
+    --background: 0 0% 6%;
+    --background-foreground: 0 0% 8%;
+    --foreground: 255 40% 98%;
+    --muted: 0 0% 11%;
+    --muted-foreground: 0 0% 63%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 260 60% 99%;
+    --card: 0 0% 6%;
+    --card-foreground: 260 60% 99%;
+    --border: 0 0% 16%;
+    --input: 0 0% 11%;
+    --primary: 27 100% 80%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 27 30% 20%;
+    --secondary-foreground: 27 100% 80%;
+    --accent: 0 0% 19%;
+    --accent-foreground: 255 40% 98%;
+    --destructive: 0 21% 12%;
+    --destructive-foreground: 0 100% 75%;
+    --ring: 27 100% 80%;
+  }
 }

@@ -20,6 +20,7 @@ export enum Theme {
   TinaciousDesign = 'tinacious-design',
   VueDark = 'vue-dark',
   VimDarkSoft = 'vim-dark-soft',
+  Vesper = 'vesper',
 }
 
 export interface IThemeContext {
