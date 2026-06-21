@@ -3,8 +3,11 @@ import de from './locales/de.json'
 import en from './locales/en.json'
 import es from './locales/es.json'
 import eu from './locales/eu.json'
+import fi from './locales/fi.json'
 import fr from './locales/fr.json'
 import frCa from './locales/fr-CA.json'
+import gsw from './locales/gsw.json'
+import hu from './locales/hu.json'
 import it from './locales/it.json'
 import ko from './locales/ko.json'
 import ml from './locales/ml.json'
@@ -13,6 +16,7 @@ import pt from './locales/pt.json'
 import ptBr from './locales/pt-BR.json'
 import ru from './locales/ru.json'
 import sv from './locales/sv.json'
+import ta from './locales/ta.json'
 import tr from './locales/tr.json'
 import uk from './locales/uk.json'
 import yueHant from './locales/yue-Hant.json'
@@ -25,7 +29,10 @@ export const resources = {
   'es-ES': { translation: es },
   eu: { translation: eu },
   'fr-CA': { translation: frCa },
+  fi: { translation: fi },
   fr: { translation: fr },
+  gsw: { translation: gsw },
+  hu: { translation: hu },
   it: { translation: it },
   ko: { translation: ko },
   ml: { translation: ml },
@@ -34,6 +41,7 @@ export const resources = {
   'pt-BR': { translation: ptBr },
   ru: { translation: ru },
   sv: { translation: sv },
+  ta: { translation: ta },
   tr: { translation: tr },
   uk: { translation: uk },
   'yue-Hant': { translation: yueHant },
@@ -78,10 +86,28 @@ export const languages = [
     dayjsLocale: 'fr-ca',
   },
   {
+    nativeName: 'Suomi',
+    langCode: 'fi',
+    flag: 'FI',
+    dayjsLocale: 'fi',
+  },
+  {
     nativeName: 'Français',
     langCode: 'fr',
     flag: 'FR',
     dayjsLocale: 'fr',
+  },
+  {
+    nativeName: 'Schweizersisch',
+    langCode: 'gsw',
+    flag: 'CH',
+    dayjsLocale: 'de-ch',
+  },
+  {
+    nativeName: 'Magyar',
+    langCode: 'hu',
+    flag: 'HU',
+    dayjsLocale: 'hu',
   },
   {
     nativeName: 'Italiano',
@@ -130,6 +156,12 @@ export const languages = [
     langCode: 'sv',
     flag: 'SE',
     dayjsLocale: 'sv',
+  },
+  {
+    nativeName: 'தமிழ்',
+    langCode: 'ta',
+    flag: 'IN',
+    dayjsLocale: 'ta',
   },
   {
     nativeName: 'Türkçe',
