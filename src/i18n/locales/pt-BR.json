@@ -63,8 +63,11 @@
     "vue-dark": "Vue Dark",
     "vim-dark-soft": "Vim Dark Soft",
     "dracula": "Dracula",
-    "everforest-dark": "Everforest dark",
-    "tinacious-design": "Tinacious Design"
+    "everforest-dark": "Everforest Dark",
+    "tinacious-design": "Tinacious Design",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "playlist": {
     "headline": "Playlist",
