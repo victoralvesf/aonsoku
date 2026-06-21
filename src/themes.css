@@ -533,4 +533,27 @@
     --destructive-foreground: 0 0% 100%;
     --ring: 39 100% 71%;
   }
+
+  .arduino-light {
+    --background: 0 0% 100%;
+    --background-foreground: 0 0% 98%;
+    --foreground: 53 8% 21%;
+    --muted: 0 14% 90%;
+    --muted-foreground: 0 12% 30%;
+    --popover: 0 0% 97%;
+    --popover-foreground: 60 7% 11%;
+    --card: 0 0% 98%;
+    --card-foreground: 50 7% 16%;
+    --border: 0 0% 95%;
+    --input: 0 0% 92%;
+    --primary: 180 51% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 180 30% 75%;
+    --secondary-foreground: 180 30% 15%;
+    --accent: 0 0% 85%;
+    --accent-foreground: 0 0% 25%;
+    --destructive: 3 85% 29%;
+    --destructive-foreground: 3 86% 89%;
+    --ring: 180 51% 40%;
+  }
 }

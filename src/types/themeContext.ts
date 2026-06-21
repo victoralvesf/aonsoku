@@ -22,6 +22,7 @@ export enum Theme {
   VimDarkSoft = 'vim-dark-soft',
   Vesper = 'vesper',
   Mirage = 'mirage',
+  ArduinoLight = 'arduino-light',
 }
 
 export interface IThemeContext {
