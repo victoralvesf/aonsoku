@@ -5,7 +5,11 @@ function isCypress(): boolean {
 }
 
 function checkKDE(): boolean {
-  return window.envVars.XDG_CURRENT_DESKTOP.split(':').some((desktop: string) => desktop === 'KDE')
+  if (!window.envVars.XDG_CURRENT_DESKTOP) return false
+
+  return window.envVars.XDG_CURRENT_DESKTOP.split(':').some(
+    (desktop: string) => desktop === 'KDE',
+  )
 }
 
 export function isDesktop(): boolean {

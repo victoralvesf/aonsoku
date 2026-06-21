@@ -56,7 +56,9 @@ async function getLyrics(getLyricsData: GetLyricsData) {
     songLyricsEnabled,
   )
 
-  const readCache = cacheEnabled ? (key: string) => get(key) : async () => undefined
+  const readCache = cacheEnabled
+    ? (key: string) => get(key)
+    : async () => undefined
   const writeCache = cacheEnabled
     ? (key: string, value: unknown) => set(key, value)
     : () => undefined

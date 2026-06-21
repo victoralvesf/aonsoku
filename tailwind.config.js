@@ -20,8 +20,10 @@ module.exports = {
       fontFamily: {
         sans: [
           'Poppins',
-          'Noto Sans SC', 'Noto Sans HK',
-          'Noto Sans JP', 'Noto Sans KR',
+          'Noto Sans SC',
+          'Noto Sans HK',
+          'Noto Sans JP',
+          'Noto Sans KR',
           'sans-serif',
         ],
       },

@@ -3,7 +3,7 @@ import { useAppWindow } from '@/app/hooks/use-app-window'
 import { cn } from '@/lib/utils'
 import { ControlButton } from './button'
 import { Icons } from './icons'
-import { isKDE } from "@/utils/desktop.ts";
+import { isKDE } from '@/utils/desktop.ts'
 
 type LinuxProps = ComponentPropsWithoutRef<'div'>
 
@@ -47,12 +47,10 @@ export function Linux({ className, ...props }: LinuxProps) {
           ) : (
             <Icons.maximizeLinux className="text-foreground size-3" />
           )
+        ) : isKDE ? (
+          <Icons.maximizeRestoreLinuxKDE className="text-foreground size-3" />
         ) : (
-          isKDE ? (
-            <Icons.maximizeRestoreLinuxKDE className="text-foreground size-3" />
-          ) : (
-            <Icons.maximizeRestoreLinux className="text-foreground size-3" />
-          )
+          <Icons.maximizeRestoreLinux className="text-foreground size-3" />
         )}
       </ControlButton>
       <ControlButton
