@@ -6,6 +6,7 @@ import eu from './locales/eu.json'
 import fi from './locales/fi.json'
 import fr from './locales/fr.json'
 import frCa from './locales/fr-CA.json'
+import gsw from './locales/gsw.json'
 import it from './locales/it.json'
 import ko from './locales/ko.json'
 import ml from './locales/ml.json'
@@ -28,6 +29,7 @@ export const resources = {
   'fr-CA': { translation: frCa },
   fi: { translation: fi },
   fr: { translation: fr },
+  gsw: { translation: gsw },
   it: { translation: it },
   ko: { translation: ko },
   ml: { translation: ml },
@@ -90,6 +92,12 @@ export const languages = [
     langCode: 'fr',
     flag: 'FR',
     dayjsLocale: 'fr',
+  },
+  {
+    nativeName: 'Schweizersisch',
+    langCode: 'gsw',
+    flag: 'CH',
+    dayjsLocale: 'de-ch',
   },
   {
     nativeName: 'Italiano',
