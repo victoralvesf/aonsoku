@@ -510,4 +510,27 @@
     --destructive-foreground: 0 100% 75%;
     --ring: 27 100% 80%;
   }
+
+  .mirage {
+    --background: 214 41% 16%;
+    --background-foreground: 214 41% 18%;
+    --foreground: 0 0% 100%;
+    --muted: 215 12% 20%;
+    --muted-foreground: 213 12% 70%;
+    --popover: 216 40% 13%;
+    --popover-foreground: 0 0% 100%;
+    --card: 213 41% 14%;
+    --card-foreground: 0 0% 100%;
+    --border: 215 31% 21%;
+    --input: 213 31% 24%;
+    --primary: 39 100% 71%;
+    --primary-foreground: 39 100% 11%;
+    --secondary: 38 30% 25%;
+    --secondary-foreground: 39 30% 85%;
+    --accent: 213 39% 24%;
+    --accent-foreground: 213 39% 88%;
+    --destructive: 6 82% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 39 100% 71%;
+  }
 }

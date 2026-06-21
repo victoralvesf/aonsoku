@@ -21,6 +21,7 @@ export enum Theme {
   VueDark = 'vue-dark',
   VimDarkSoft = 'vim-dark-soft',
   Vesper = 'vesper',
+  Mirage = 'mirage',
 }
 
 export interface IThemeContext {
