@@ -84,9 +84,14 @@ export function Player() {
     if (!songId) return ''
 
     const cacheBustToken = mediaCacheEnabled ? undefined : Date.now().toString()
-    
-    return getSongStreamUrl(songId, undefined, ensureSupportForAlac(song.suffix), cacheBustToken)
-  }, [songId, mediaCacheEnabled])
+
+    return getSongStreamUrl(
+      songId,
+      undefined,
+      ensureSupportForAlac(song.suffix),
+      cacheBustToken,
+    )
+  }, [songId, song, mediaCacheEnabled])
 
   const getAudioRef = useCallback(() => {
     if (isRadio) return radioRef
