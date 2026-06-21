@@ -3,6 +3,7 @@ import de from './locales/de.json'
 import en from './locales/en.json'
 import es from './locales/es.json'
 import eu from './locales/eu.json'
+import fi from './locales/fi.json'
 import fr from './locales/fr.json'
 import frCa from './locales/fr-CA.json'
 import it from './locales/it.json'
@@ -25,6 +26,7 @@ export const resources = {
   'es-ES': { translation: es },
   eu: { translation: eu },
   'fr-CA': { translation: frCa },
+  fi: { translation: fi },
   fr: { translation: fr },
   it: { translation: it },
   ko: { translation: ko },
@@ -76,6 +78,12 @@ export const languages = [
     langCode: 'fr-CA',
     flag: 'CA',
     dayjsLocale: 'fr-ca',
+  },
+  {
+    nativeName: 'Suomi',
+    langCode: 'fi',
+    flag: 'FI',
+    dayjsLocale: 'fi',
   },
   {
     nativeName: 'Français',
