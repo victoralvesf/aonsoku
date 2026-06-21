@@ -84,6 +84,7 @@
     "icecast-metadata-stats": "^0.1.12",
     "idb-keyval": "^6.2.2",
     "immer": "^10.1.1",
+    "iso-639-2": "^3.0.2",
     "linkify-it": "^5.0.0",
     "lodash": "^4.17.23",
     "lucide-react": "^0.563.0",
@@ -141,7 +142,11 @@
     "vite": "^7.3.1"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["cypress", "electron", "esbuild"],
+    "onlyBuiltDependencies": [
+      "cypress",
+      "electron",
+      "esbuild"
+    ],
     "overrides": {
       "brace-expansion": "^2.0.2",
       "glob": "^11.0.0",
