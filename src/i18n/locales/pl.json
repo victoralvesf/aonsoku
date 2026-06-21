@@ -109,7 +109,10 @@
     "label": "Motyw",
     "black": "Czarno-Biały",
     "light": "Jasny",
-    "tinacious-design": "Tinacious Design"
+    "tinacious-design": "Tinacious Design",
+    "vesper": "Vesper",
+    "mirage": "Miraż",
+    "arduino-light": "Arduino Jasny"
   },
   "podcasts": {
     "form": {
