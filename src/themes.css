@@ -487,4 +487,73 @@
     --destructive-foreground: 0 0% 100%;
     --ring: 43 59% 81%;
   }
+
+  .vesper {
+    --background: 0 0% 6%;
+    --background-foreground: 0 0% 8%;
+    --foreground: 255 40% 98%;
+    --muted: 0 0% 11%;
+    --muted-foreground: 0 0% 63%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 260 60% 99%;
+    --card: 0 0% 6%;
+    --card-foreground: 260 60% 99%;
+    --border: 0 0% 16%;
+    --input: 0 0% 11%;
+    --primary: 27 100% 80%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 27 30% 20%;
+    --secondary-foreground: 27 100% 80%;
+    --accent: 0 0% 19%;
+    --accent-foreground: 255 40% 98%;
+    --destructive: 0 21% 12%;
+    --destructive-foreground: 0 100% 75%;
+    --ring: 27 100% 80%;
+  }
+
+  .mirage {
+    --background: 214 41% 16%;
+    --background-foreground: 214 41% 18%;
+    --foreground: 0 0% 100%;
+    --muted: 215 12% 20%;
+    --muted-foreground: 213 12% 70%;
+    --popover: 216 40% 13%;
+    --popover-foreground: 0 0% 100%;
+    --card: 213 41% 14%;
+    --card-foreground: 0 0% 100%;
+    --border: 215 31% 21%;
+    --input: 213 31% 24%;
+    --primary: 39 100% 71%;
+    --primary-foreground: 39 100% 11%;
+    --secondary: 38 30% 25%;
+    --secondary-foreground: 39 30% 85%;
+    --accent: 213 39% 24%;
+    --accent-foreground: 213 39% 88%;
+    --destructive: 6 82% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 39 100% 71%;
+  }
+
+  .arduino-light {
+    --background: 0 0% 100%;
+    --background-foreground: 0 0% 98%;
+    --foreground: 53 8% 21%;
+    --muted: 0 14% 90%;
+    --muted-foreground: 0 12% 30%;
+    --popover: 0 0% 97%;
+    --popover-foreground: 60 7% 11%;
+    --card: 0 0% 98%;
+    --card-foreground: 50 7% 16%;
+    --border: 0 0% 95%;
+    --input: 0 0% 92%;
+    --primary: 180 51% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 180 30% 75%;
+    --secondary-foreground: 180 30% 15%;
+    --accent: 0 0% 85%;
+    --accent-foreground: 0 0% 25%;
+    --destructive: 3 85% 29%;
+    --destructive-foreground: 3 86% 89%;
+    --ring: 180 51% 40%;
+  }
 }
