@@ -57,14 +57,17 @@
     "catppuccin-mocha": "Catppuccin Mocha",
     "dracula": "Dracula",
     "discord": "Discord",
-    "everforest-dark": "everforest dark",
+    "everforest-dark": "Everforest Dark",
     "tinacious-design": "Tinacious Design",
     "vim-dark-soft": "Vim Dark Soft",
     "nuclear-dark": "Nuclear Dark",
     "bearded-solarized": "Bearded Solarized",
     "vue-dark": "Vue Dark",
     "noctis-lilac": "Noctis Lilac",
-    "achiever": "Achiever"
+    "achiever": "Achiever",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "playlist": {
     "headline": "Playlist",
