@@ -81,7 +81,7 @@
       "shuffle": "Přehrát {{name}} v náhodném pořadí",
       "options": "Více možností pro {{name}}"
     },
-    "noSongList": "Tento playlist neobsahuje žádné písně!",
+    "noSongList": "Tento playlist neobsahuje žádné skladby!",
     "form": {
       "labels": {
         "name": "Název",
