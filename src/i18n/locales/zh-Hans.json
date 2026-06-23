@@ -64,7 +64,10 @@
     "vue-dark": "Vue Dark",
     "vim-dark-soft": "Vim Dark Soft",
     "dracula": "Dracula",
-    "tinacious-design": "Tinacious Design"
+    "tinacious-design": "Tinacious Design",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "playlist": {
     "headline": "播放列表",
@@ -618,6 +621,10 @@
         "images": {
           "label": "开启图片缓存",
           "info": "开启后，图片将缓存在本地以提升性能。"
+        },
+        "group": "缓存",
+        "lyrics": {
+          "label": "启用歌词缓存"
         }
       },
       "features": {
