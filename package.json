@@ -141,14 +141,7 @@
     "typescript": "^5.8.2",
     "vite": "^7.3.1"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": ["cypress", "electron", "esbuild"],
-    "overrides": {
-      "brace-expansion": "^2.0.2",
-      "glob": "^11.0.0",
-      "tar": "^7.5.7"
-    }
-  },
+  "packageManager": "pnpm@11.9.0",
   "electron": {
     "window": {
       "defaultWidth": 960,

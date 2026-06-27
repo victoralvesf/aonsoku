@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 env:
   REGISTRY: ghcr.io
@@ -32,7 +32,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "24"
 
       - name: Get version from package.json
         id: app_version
@@ -49,13 +49,13 @@ jobs:
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/') }}
             type=raw,value=${{ steps.app_version.outputs.version }}
             type=raw,value=${{ github.sha }}
-      
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v3
-      
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:

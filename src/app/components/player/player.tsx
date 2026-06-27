@@ -5,8 +5,7 @@ import { MiniPlayerButton } from '@/app/components/mini-player/button'
 import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
 import { podcasts } from '@/service/podcasts'
-import { useAppMediaCache } from '@/store/app.store'
-import { useAppStore } from '@/store/app.store'
+import { useAppMediaCache, useAppStore } from '@/store/app.store'
 import {
   getVolume,
   usePlayerActions,
