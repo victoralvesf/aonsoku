@@ -30,14 +30,17 @@
     "achiever": "Achiever",
     "dracula": "Dracula",
     "discord": "Discord",
-    "everforest-dark": "Everforest dark",
+    "everforest-dark": "Everforest Dark",
     "tinacious-design": "Tinacious Design",
     "vue-dark": "Vue Dark",
     "vim-dark-soft": "Vim Dark Soft",
     "label": "Tema",
     "light": "Claro",
     "dark": "Escuro",
-    "system": "Sistema"
+    "system": "Sistema",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "favorites": {
     "noSongList": "Você ainda não adicionou músicas nos favoritos!"

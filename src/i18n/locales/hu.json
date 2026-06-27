@@ -64,7 +64,10 @@
     "everforest-dark": "Everforest Sötét",
     "tinacious-design": "Tinacious Dizájn",
     "vue-dark": "Vue sötét",
-    "vim-dark-soft": "Vim Sötét Soft"
+    "vim-dark-soft": "Vim Sötét Soft",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Világos"
   },
   "playlist": {
     "headline": "Lejátszási lista",
