@@ -61,12 +61,15 @@
     "achiever": "Triunfador",
     "cool": "Cool",
     "discord": "Discord",
-    "everforest-dark": "Everforest oscuro",
+    "everforest-dark": "Bosque perenne oscuro",
     "huacat-pink": "Huacat Pink",
     "vue-dark": "Vue oscuro",
     "vim-dark-soft": "Vim oscuro claro",
     "dracula": "Drácula",
-    "tinacious-design": "Tinacious Design"
+    "tinacious-design": "Tinacious Design",
+    "vesper": "Víspera",
+    "mirage": "Espejismo",
+    "arduino-light": "Luz Arduino"
   },
   "playlist": {
     "headline": "Lista de reproducción",
