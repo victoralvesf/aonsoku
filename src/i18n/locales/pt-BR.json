@@ -773,6 +773,18 @@
       "features": {
         "group": "Funcionalidades",
         "description": "Habilitar ou desabilitar funcionalidades do cliente"
+      },
+      "home": {
+        "group": "Início",
+        "description": "Personalize o conteúdo da página inicial.",
+        "autoScroll": {
+          "label": "Ativar Rolagem Automática do Carrossel",
+          "info": "Quando ativado, o carrossel da página inicial rolará automaticamente após 10 segundos."
+        },
+        "loop": {
+          "label": "Ativar Loop do Carrossel",
+          "info": "Quando ativado, o carrossel da página inicial voltará para a primeira música ao chegar ao fim."
+        }
       }
     },
     "accounts": {
