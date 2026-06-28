@@ -38,7 +38,6 @@ export default function Playlist() {
   const columnsToShow: ColumnFilter[] = [
     'index',
     'title',
-    // 'artist',
     'album',
     'duration',
     'playCount',
