@@ -246,6 +246,18 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 !isPodcastsActive
               )
             },
+            homeAutoScrollEnabled: true,
+            setHomeAutoScrollEnabled: (value) => {
+              set((state) => {
+                state.pages.homeAutoScrollEnabled = value
+              })
+            },
+            homeLoopEnabled: true,
+            setHomeLoopEnabled: (value) => {
+              set((state) => {
+                state.pages.homeLoopEnabled = value
+              })
+            },
           },
           desktop: {
             data: {
@@ -375,6 +387,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                   HIDE_PLAYLISTS_SECTION ?? false
                 state.pages.hideRadiosSection = HIDE_RADIOS_SECTION ?? false
                 state.pages.artistsPageViewType = 'table'
+                state.pages.homeAutoScrollEnabled = true
+                state.pages.homeLoopEnabled = true
                 state.podcasts.active = false
                 state.podcasts.serviceUrl = ''
                 state.podcasts.useDefaultUser = true

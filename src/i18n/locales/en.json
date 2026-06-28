@@ -774,6 +774,18 @@
           "success": "Caches cleared successfully.",
           "error": "Failed to clear some caches."
         }
+      },
+      "home": {
+        "group": "Home",
+        "description": "Customize the home page content.",
+        "autoScroll": {
+          "label": "Enable Carousel Auto Scroll",
+          "info": "When enabled, the home page carousel will automatically scroll after 10 seconds."
+        },
+        "loop": {
+          "label": "Enable Carousel Loop",
+          "info": "When enabled, the home page carousel will loop back to the first song after reaching the end."
+        }
       }
     },
     "accounts": {

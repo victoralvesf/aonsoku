@@ -42,6 +42,10 @@ interface IAppPages {
   mediaCacheEnabled: boolean
   setMediaCacheEnabled: (value: boolean) => void
   isAllSectionsHidden: () => boolean
+  homeAutoScrollEnabled: boolean
+  setHomeAutoScrollEnabled: (value: boolean) => void
+  homeLoopEnabled: boolean
+  setHomeLoopEnabled: (value: boolean) => void
 }
 
 export interface IAppData extends IServerConfig {
