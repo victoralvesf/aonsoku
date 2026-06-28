@@ -9,6 +9,8 @@ import { appIcon } from './core/icon'
 import { titleBarOverlay } from './core/titleBarOverlay'
 import { setUpdaterWindow } from './core/updater'
 import { StatefulBrowserWindow } from './core/windowPosition'
+import { updateDockMenu } from './core/dockMenu'
+import { playerState } from './core/playerState'
 import { createTray } from './tray'
 
 export let mainWindow: BrowserWindow | null = null
@@ -40,7 +42,11 @@ export function createWindow(): void {
     },
   })
 
+  // set initial state
+  playerState.setAll({ isPlaying: false, hasSonglist: false, hasPrevious: false, hasNext: false })
+
   createTray()
+  updateDockMenu()
   setupEvents(mainWindow)
   setupIpcEvents(mainWindow)
   setupDownloads(mainWindow)
