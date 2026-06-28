@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { CoverImage } from '@/app/components/table/cover-image'
+import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { cn } from '@/lib/utils'
 import { ROUTES } from '@/routes/routesList'
 import { useMainDrawerState } from '@/store/player.store'
@@ -14,7 +15,11 @@ export function TableSongTitle({ song }: { song: ISong }) {
         altText={song.title}
       />
       <div className="flex flex-col w-full justify-center truncate">
-        <span className="font-medium truncate">{song.title}</span>
+        <SimpleTooltip text={song.title} delay={1000}>
+          <span className="block w-fit max-w-full font-medium truncate">
+            {song.title}
+          </span>
+        </SimpleTooltip>
         <div className="flex items-center truncate">
           <TableArtists song={song} />
         </div>
@@ -36,7 +41,9 @@ export function TableArtists({ song }: ArtistsLinksProps) {
 
   if (!artistId) {
     return (
-      <span className="text-xs text-foreground/70 text-nowrap">{artist}</span>
+      <SimpleTooltip text={artist} delay={1000}>
+        <span className="text-xs text-foreground/70 text-nowrap">{artist}</span>
+      </SimpleTooltip>
     )
   }
 
@@ -47,14 +54,20 @@ function ArtistsLinks({ song }: ArtistsLinksProps) {
   const { artists, artistId, artist } = song
 
   if (artists && artists.length > 1) {
+    const artistNames = artists.map(({ name }) => name).join(', ')
+
     return (
-      <div className="flex items-center gap-1 text-xs text-foreground/70 w-full maskImage-marquee-fade-finished">
-        {artists.map(({ id, name }, index) => (
-          <div key={id} className="flex items-center">
-            <ArtistLink id={id} name={name} />
-            {index < artists.length - 1 && ','}
+      <div className="flex items-center w-full maskImage-marquee-fade-finished">
+        <SimpleTooltip text={artistNames} delay={1000}>
+          <div className="flex items-center gap-1 max-w-full text-xs text-foreground/70">
+            {artists.map(({ id, name }, index) => (
+              <div key={id} className="flex items-center">
+                <ArtistLink id={id} name={name} disableTooltip />
+                {index < artists.length - 1 && ','}
+              </div>
+            ))}
           </div>
-        ))}
+        </SimpleTooltip>
       </div>
     )
   }
@@ -65,9 +78,10 @@ function ArtistsLinks({ song }: ArtistsLinksProps) {
 type ArtistLinkProps = {
   id?: string
   name: string
+  disableTooltip?: boolean
 }
 
-function ArtistLink({ id, name }: ArtistLinkProps) {
+function ArtistLink({ id, name, disableTooltip = false }: ArtistLinkProps) {
   const { mainDrawerState, closeDrawer } = useMainDrawerState()
 
   return (
@@ -79,14 +93,16 @@ function ArtistLink({ id, name }: ArtistLinkProps) {
         if (mainDrawerState) closeDrawer()
       }}
     >
-      <span
-        className={cn(
-          'text-xs text-foreground/70 text-nowrap',
-          id && 'hover:underline hover:text-foreground',
-        )}
-      >
-        {name}
-      </span>
+      <SimpleTooltip text={name} delay={1000} disabled={disableTooltip}>
+        <span
+          className={cn(
+            'text-xs text-foreground/70 text-nowrap',
+            id && 'hover:underline hover:text-foreground',
+          )}
+        >
+          {name}
+        </span>
+      </SimpleTooltip>
     </Link>
   )
 }
