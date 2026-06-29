@@ -700,6 +700,18 @@
       "features": {
         "group": "Funkcje",
         "description": "Włącz lub wyłącz funkcje klienta"
+      },
+      "home": {
+        "description": "Dostosuj zawartość strony głównej.",
+        "group": "Strona główna",
+        "autoScroll": {
+          "label": "Włącz automatyczne przesuwanie się karuzeli",
+          "info": "Gdy włączone, karuzela na stronie głównej automatycznie się przesunie po 10 sekundach."
+        },
+        "loop": {
+          "label": "Włącz zapętlenie karuzeli",
+          "info": "Gdy włączone, karuzela na stronie głównej wróci do pierwszej piosenki po dojściu do końca."
+        }
       }
     },
     "appearance": {
