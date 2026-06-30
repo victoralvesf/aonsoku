@@ -11,7 +11,6 @@ import {
 } from 'lucide-react'
 import {
   ComponentPropsWithoutRef,
-  RefObject,
   useCallback,
   useEffect,
 } from 'react'
@@ -20,6 +19,7 @@ import RepeatOne from '@/app/components/icons/repeat-one'
 import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { usePlayerHotkeys } from '@/app/hooks/use-audio-hotkeys'
+import { useActiveAudioBackend } from '@/lib/audio/audio-backend-context'
 import { cn } from '@/lib/utils'
 import {
   usePlayerActions,
@@ -39,14 +39,12 @@ interface PlayerControlsProps {
   song: ISong
   radio: Radio
   podcast: EpisodeWithPodcast
-  audioRef: RefObject<HTMLAudioElement>
 }
 
 export function PlayerControls({
   song,
   radio,
   podcast,
-  audioRef,
 }: PlayerControlsProps) {
   const { t } = useTranslation()
   const { isSong, isPodcast } = usePlayerMediaType()
@@ -63,6 +61,7 @@ export function PlayerControls({
     playNextSong,
   } = usePlayerActions()
   const { useAudioHotkeys } = usePlayerHotkeys()
+  const backend = useActiveAudioBackend()
 
   useAudioHotkeys('space', togglePlayPause)
   useAudioHotkeys('mod+left', playPrevSong)
@@ -72,12 +71,9 @@ export function PlayerControls({
 
   const handleSeekAction = useCallback(
     (value: number) => {
-      const audio = audioRef.current
-      if (!audio) return
-
-      audio.currentTime += value
+      backend.seek(backend.getCurrentTime() + value)
     },
-    [audioRef],
+    [backend],
   )
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: isPlaying needed to trigger

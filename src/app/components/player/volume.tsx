@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import {
   ComponentPropsWithoutRef,
-  RefObject,
   useEffect,
   useRef,
   WheelEvent,
@@ -12,28 +11,27 @@ import { Button } from '@/app/components/ui/button'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import { Slider } from '@/app/components/ui/slider'
 import { usePlayerHotkeys } from '@/app/hooks/use-audio-hotkeys'
+import { useActiveAudioBackend } from '@/lib/audio/audio-backend-context'
 import { cn } from '@/lib/utils'
 import { usePlayerVolume, useVolumeSettings } from '@/store/player.store'
 import { PopoverVolume } from './popover-volume'
 
 interface PlayerVolumeProps {
   disabled: boolean
-  audioRef: RefObject<HTMLAudioElement>
 }
 
-export function PlayerVolume({ disabled, audioRef }: PlayerVolumeProps) {
+export function PlayerVolume({ disabled }: PlayerVolumeProps) {
   const { t } = useTranslation()
   const { volume, handleVolumeWheel } = usePlayerVolume()
   const { useAudioHotkeys } = usePlayerHotkeys()
+  const backend = useActiveAudioBackend()
 
   useAudioHotkeys('mod+up', () => handleVolumeWheel(false))
   useAudioHotkeys('mod+down', () => handleVolumeWheel(true))
 
   useEffect(() => {
-    if (!audioRef.current) return
-
-    audioRef.current.volume = volume / 100
-  }, [audioRef, volume])
+    backend.setVolume(volume / 100)
+  }, [backend, volume])
 
   const tooltipText =
     volume === 0
