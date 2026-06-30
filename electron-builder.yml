@@ -40,6 +40,9 @@ mac:
   notarize: false
   identity: "-"
   icon: ./build/icon.icns
+  extraResources:
+    - from: native/avplayer-helper
+      to: avplayer-helper
   target:
     - target: dmg
       arch:

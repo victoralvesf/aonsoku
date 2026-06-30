@@ -19,9 +19,12 @@ import {
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
 import { ensureSupportForAlac } from '@/utils/alac'
+import { isMacOS } from '@/utils/desktop'
 import { logger } from '@/utils/logger'
 import { calculateReplayGain, ReplayGainParams } from '@/utils/replayGain'
 import { AudioBackendContext } from './audio-backend-context'
+import { AVPlayerBackend } from './avplayer-backend'
+import { AudioBackend } from './backend'
 import { HTMLAudioBackend } from './html-audio-backend'
 
 export function AudioBackendProvider({ children }: { children: ReactNode }) {
@@ -55,6 +58,7 @@ export function AudioBackendProvider({ children }: { children: ReactNode }) {
   const radio = radioList[currentSongIndex]
   const podcast = podcastList[currentSongIndex]
   const songId = song?.id
+  const songDuration = song?.duration
 
   const songStreamUrl = useMemo(() => {
     if (!songId) return ''
@@ -64,10 +68,15 @@ export function AudioBackendProvider({ children }: { children: ReactNode }) {
     return getSongStreamUrl(
       songId,
       undefined,
-      ensureSupportForAlac(song.suffix),
+      ensureSupportForAlac(song?.suffix ?? ''),
       cacheBustToken,
     )
-  }, [songId, song, mediaCacheEnabled])
+    // song?.suffix is the only property used; using `song` (full object) as a dep
+    // causes the memo to recompute on every Zustand re-render where the song object
+    // gets a new reference, generating a new Date.now() token and re-triggering the
+    // load effect while the song is still playing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [songId, song?.suffix, mediaCacheEnabled])
 
   const trackReplayGain = useMemo<ReplayGainParams>(() => {
     const preAmp = replayGainPreAmp
@@ -105,36 +114,53 @@ export function AudioBackendProvider({ children }: { children: ReactNode }) {
     handleRadioError: () => {},
   })
 
-  const songBackend = useRef<HTMLAudioBackend | null>(null)
-  const radioBackend = useRef<HTMLAudioBackend | null>(null)
-  const podcastBackend = useRef<HTMLAudioBackend | null>(null)
+  const songBackend = useRef<AudioBackend | null>(null)
+  const radioBackend = useRef<AudioBackend | null>(null)
+  const podcastBackend = useRef<AudioBackend | null>(null)
 
   if (!songBackend.current) {
-    songBackend.current = new HTMLAudioBackend(
-      {
-        onPlay: () => setPlayingState(true),
-        onPause: () => setPlayingState(false),
-        onLoadedMetadata: () => handlersRef.current.setupDuration(),
-        onTimeUpdate: () => handlersRef.current.setupProgress(),
-        onEnded: () => handlersRef.current.handleSongEnded(),
-        onLoadStart: () => handlersRef.current.setupInitialVolume(),
-        onError: () => handlersRef.current.handleSongError(),
+    const songCallbacks = {
+      onPlay: () => setPlayingState(true),
+      onPause: () => setPlayingState(false),
+      onLoadedMetadata: () => handlersRef.current.setupDuration(),
+      onTimeUpdate: () => handlersRef.current.setupProgress(),
+      onEnded: () => {
+        // LoopState.One: seek back to the start and replay. HTMLAudioBackend
+        // handles this natively via <audio>.loop so onEnded never fires there.
+        const backend = songBackend.current!
+        if (backend.loop) {
+          backend.seek(0)
+          backend
+            .play()
+            .catch((e) =>
+              logger.error('[AudioBackendProvider] loop replay failed', e),
+            )
+        } else {
+          handlersRef.current.handleSongEnded()
+        }
       },
-      !replayGainError,
-    )
+      onLoadStart: () => handlersRef.current.setupInitialVolume(),
+      onError: () => handlersRef.current.handleSongError(),
+    }
+    songBackend.current = isMacOS
+      ? new AVPlayerBackend('song', songCallbacks)
+      : new HTMLAudioBackend(songCallbacks, !replayGainError)
   }
 
   if (!radioBackend.current) {
-    radioBackend.current = new HTMLAudioBackend({
+    const radioCallbacks = {
       onPlay: () => setPlayingState(true),
       onPause: () => setPlayingState(false),
       onLoadStart: () => handlersRef.current.setupInitialVolume(),
       onError: () => handlersRef.current.handleRadioError(),
-    })
+    }
+    radioBackend.current = isMacOS
+      ? new AVPlayerBackend('radio', radioCallbacks)
+      : new HTMLAudioBackend(radioCallbacks)
   }
 
   if (!podcastBackend.current) {
-    podcastBackend.current = new HTMLAudioBackend({
+    const podcastCallbacks = {
       onPlay: () => setPlayingState(true),
       onPause: () => setPlayingState(false),
       onLoadedMetadata: () => handlersRef.current.setupDuration(),
@@ -144,19 +170,33 @@ export function AudioBackendProvider({ children }: { children: ReactNode }) {
         handlersRef.current.handleSongEnded()
       },
       onLoadStart: () => handlersRef.current.setupInitialVolume(),
-    })
-    podcastBackend.current.preload = 'auto'
+    }
+    if (isMacOS) {
+      podcastBackend.current = new AVPlayerBackend('podcast', podcastCallbacks)
+    } else {
+      const htmlBackend = new HTMLAudioBackend(podcastCallbacks)
+      htmlBackend.preload = 'auto'
+      podcastBackend.current = htmlBackend
+    }
   }
 
+  // Keep IPC listeners alive across React Strict Mode's simulated
+  // unmount+remount. Strict Mode runs cleanup then immediately re-runs setup.
+  // detachListener() removes only the IPC listener (not the helper player),
+  // and reconnect() re-registers it on the next setup. The helper player
+  // survives because load() always calls teardown() before creating a new one.
   useEffect(() => {
+    for (const ref of [songBackend, radioBackend, podcastBackend]) {
+      if (ref.current instanceof AVPlayerBackend) ref.current.reconnect()
+    }
     return () => {
-      songBackend.current?.destroy()
-      radioBackend.current?.destroy()
-      podcastBackend.current?.destroy()
+      for (const ref of [songBackend, radioBackend, podcastBackend]) {
+        if (ref.current instanceof AVPlayerBackend) ref.current.detachListener()
+      }
     }
   }, [])
 
-  const getActiveBackend = useCallback((): HTMLAudioBackend => {
+  const getActiveBackend = useCallback((): AudioBackend => {
     if (isRadio) return radioBackend.current!
     if (isPodcast) return podcastBackend.current!
     return songBackend.current!
@@ -169,8 +209,8 @@ export function AudioBackendProvider({ children }: { children: ReactNode }) {
 
     if (!infinityDuration) {
       setCurrentDuration(audioDuration)
-    } else if (isSong && song?.duration) {
-      setCurrentDuration(song.duration)
+    } else if (isSong && songDuration) {
+      setCurrentDuration(songDuration)
     }
 
     if (isPodcast && infinityDuration && podcast) {
@@ -194,7 +234,7 @@ export function AudioBackendProvider({ children }: { children: ReactNode }) {
     getActiveBackend,
     isPodcast,
     isSong,
-    song,
+    songDuration,
     podcast,
     setCurrentDuration,
     getCurrentPodcastProgress,
@@ -301,9 +341,9 @@ export function AudioBackendProvider({ children }: { children: ReactNode }) {
     podcastBackend.current!.playbackRate = currentPlaybackRate
   }, [currentPlaybackRate, isPodcast])
 
-  // Reset Web Audio nodes when replayGain errors
+  // Reset Web Audio nodes when replayGain errors (no-op for non-Web Audio backends)
   useEffect(() => {
-    if (replayGainError) songBackend.current?.resetWebAudio()
+    if (replayGainError) songBackend.current?.resetWebAudio?.()
   }, [replayGainError])
 
   // Apply ReplayGain
@@ -330,7 +370,7 @@ export function AudioBackendProvider({ children }: { children: ReactNode }) {
     if (isSong) handle()
   }, [isPlaying, isSong, songStreamUrl])
 
-  // Play/pause — radio (reloads stream each play for fresh connection)
+  // Play/pause — radio reloads the stream on every play for a fresh connection
   useEffect(() => {
     async function handle() {
       const backend = radioBackend.current!

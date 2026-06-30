@@ -19,5 +19,8 @@ export interface AudioBackend {
   getDuration(): number
   setVolume(value: number): void
   setGain?(linearGain: number, replayGain?: ReplayGainParams): void
+  loop: boolean
+  playbackRate: number
+  resetWebAudio?(): void
   destroy(): void
 }
