@@ -8,6 +8,8 @@ import {
   usePlayerSonglist,
 } from '@/store/player.store'
 import { hasPiPSupport } from '@/utils/browser'
+import { isMacOS } from '@/utils/desktop'
+import { AirPlayButton } from './airplay-button'
 import { PlayerClearQueueButton } from './clear-queue-button'
 import { PlayerControls } from './controls'
 import { PlayerExpandButton } from './expand-button'
@@ -32,6 +34,7 @@ const MemoPlayerExpandButton = memo(PlayerExpandButton)
 const MemoPodcastPlaybackRate = memo(PodcastPlaybackRate)
 const MemoLyricsButton = memo(PlayerLyricsButton)
 const MemoMiniPlayerButton = memo(MiniPlayerButton)
+const MemoAirPlayButton = memo(AirPlayButton)
 
 export function Player() {
   const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
@@ -82,6 +85,10 @@ export function Player() {
             )}
 
             <MemoPlayerVolume disabled={!song && !radio && !podcast} />
+
+            {isMacOS && (
+              <MemoAirPlayButton disabled={!song && !radio && !podcast} />
+            )}
 
             {isSong && <MemoPlayerExpandButton disabled={!song} />}
             {isSong && hasPiPSupport && <MemoMiniPlayerButton />}

@@ -1,4 +1,6 @@
 import AVFoundation
+import AVKit
+import AppKit
 import Foundation
 
 // ─── Per-backend player state ─────────────────────────────────────────────────
@@ -12,12 +14,60 @@ final class PlayerState {
   var timeControlObservation: NSKeyValueObservation?
   var endEmitted = false
 
-  init(player: AVPlayer) {
-    self.player = player
-  }
+  init(player: AVPlayer) { self.player = player }
 }
 
 var states: [String: PlayerState] = [:]
+
+// ─── AirPlay picker ───────────────────────────────────────────────────────────
+
+var airplayPicker: AVRoutePickerView?
+var airplayPanel: NSPanel?
+var airplayPickerIsOpen = false
+var airplayLastDismissed: Date = .distantPast
+
+func clickPickerButton() {
+  guard let picker = airplayPicker else { return }
+  func click(_ v: NSView) {
+    if let btn = v as? NSButton { btn.performClick(nil); return }
+    v.subviews.forEach { click($0) }
+  }
+  click(picker)
+}
+
+class RoutePickerDelegate: NSObject, AVRoutePickerViewDelegate {
+  func routePickerViewDidEndPresentingRoutes(_ routePickerView: AVRoutePickerView) {
+    airplayPickerIsOpen = false
+    airplayLastDismissed = Date()
+  }
+}
+
+var routePickerDelegate: RoutePickerDelegate?
+
+func setupAirPlayPicker() {
+  let size: CGFloat = 44
+  let picker = AVRoutePickerView(frame: NSRect(x: 0, y: 0, width: size, height: size))
+  let delegate = RoutePickerDelegate()
+  routePickerDelegate = delegate
+  picker.delegate = delegate
+
+  let panel = NSPanel(
+    contentRect: NSRect(x: -size * 2, y: -size * 2, width: size, height: size),
+    styleMask: [.nonactivatingPanel],
+    backing: .buffered,
+    defer: false
+  )
+  panel.isOpaque = false
+  panel.backgroundColor = .clear
+  panel.alphaValue = 0
+  panel.level = .popUpMenu
+  panel.ignoresMouseEvents = true
+  panel.contentView = picker
+  panel.orderFrontRegardless()
+
+  airplayPicker = picker
+  airplayPanel = panel
+}
 
 // ─── stdout event emission ────────────────────────────────────────────────────
 
@@ -55,8 +105,45 @@ func teardown(id: String) {
 // ─── Command dispatch ─────────────────────────────────────────────────────────
 
 func handle(_ cmd: [String: Any]) {
-  guard let type = cmd["type"] as? String, let id = cmd["id"] as? String else {
-    log("ignoring command with missing type/id: \(cmd)")
+  guard let type = cmd["type"] as? String else {
+    log("ignoring command with missing type: \(cmd)")
+    return
+  }
+
+  // showAirPlay is not tied to a player instance — handle before the id guard.
+  if type == "showAirPlay" {
+    guard let x = cmd["x"] as? Double,
+          let y = cmd["y"] as? Double,
+          let height = cmd["height"] as? Double,
+          let screen = NSScreen.main,
+          let panel = airplayPanel else { return }
+
+    if airplayPickerIsOpen {
+      // Toggle: click again to dismiss the open popover.
+      clickPickerButton()
+      return
+    }
+
+    // The popover dismisses on mouse-down when the user clicks the button while
+    // it's open. The React onClick fires on mouse-up, arriving here shortly after.
+    // Ignore that trailing click so we don't immediately reopen the picker.
+    if Date().timeIntervalSince(airplayLastDismissed) < 0.3 { return }
+
+    let size: CGFloat = 44
+    let panelX = CGFloat(x) - size / 2
+    let panelY = screen.frame.height - CGFloat(y) - CGFloat(height) / 2 - size / 2
+    panel.setFrameOrigin(NSPoint(x: panelX, y: panelY))
+    airplayPickerIsOpen = true
+
+    // Brief delay so the panel finishes repositioning before the click.
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+      clickPickerButton()
+    }
+    return
+  }
+
+  guard let id = cmd["id"] as? String else {
+    log("ignoring command with missing id: \(cmd)")
     return
   }
 
@@ -79,6 +166,7 @@ func handle(_ cmd: [String: Any]) {
 
     let item = AVPlayerItem(url: url)
     let player = AVPlayer(playerItem: item)
+    player.allowsExternalPlayback = true
     let state = PlayerState(player: player)
 
     emit(["type": "loadstart", "id": id])
@@ -177,6 +265,10 @@ func handle(_ cmd: [String: Any]) {
 
 var inputBuffer = Data()
 
+// Initialize NSApplication so AppKit (AVRoutePickerView, NSPanel) works.
+// .accessory = no Dock icon, no menu bar entry.
+NSApplication.shared.setActivationPolicy(.accessory)
+
 // Close all file descriptors inherited from the parent (Electron/Chromium opens
 // many IPC sockets and Mach ports that can interfere with AVFoundation's own
 // XPC/networking channels). Keep only stdin(0), stdout(1), stderr(2).
@@ -195,6 +287,8 @@ do {
 
 log("avplayer-helper started")
 
+setupAirPlayPicker()
+
 FileHandle.standardInput.readabilityHandler = { fh in
   let chunk = fh.availableData
   guard !chunk.isEmpty else {
@@ -204,7 +298,7 @@ FileHandle.standardInput.readabilityHandler = { fh in
   }
 
   // Dispatch to main so AVPlayer is created/used on the main thread, where
-  // dispatchMain() is active and AVFoundation callbacks can be delivered.
+  // NSApplication.run() is active and AVFoundation callbacks can be delivered.
   DispatchQueue.main.async {
     inputBuffer.append(chunk)
 
@@ -221,4 +315,4 @@ FileHandle.standardInput.readabilityHandler = { fh in
   }
 }
 
-dispatchMain()
+NSApplication.shared.run()

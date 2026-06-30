@@ -17,6 +17,7 @@ export type AvPlayerCommandPayload =
   | { type: 'setLoop'; id: string; loop: boolean }
   | { type: 'setRate'; id: string; rate: number }
   | { type: 'destroy'; id: string }
+  | { type: 'showAirPlay'; x: number; y: number; height: number }
 
 export type AvPlayerEventPayload = {
   id: string
