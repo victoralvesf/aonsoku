@@ -215,7 +215,11 @@
     "buttons": {
       "play": "Play {{artist}} radio",
       "shuffle": "Play {{artist}} radio in shuffle mode",
+      "radio": "Start radio based on {{artist}}",
       "options": "More options for {{artist}}"
+    },
+    "radio": {
+      "empty": "No similar tracks found to start a radio."
     },
     "info": {
       "albumsCount_one": "{{count}} album",
@@ -454,8 +458,6 @@
     "play": "Play",
     "playNext": "Play next",
     "addLast": "Add last",
-    "startRadio": "Start radio",
-    "startRadioEmpty": "No similar tracks found to start a radio.",
     "download": "Download",
     "playlist": {
       "add": "Add to playlist",

@@ -208,7 +208,11 @@
     "buttons": {
       "play": "Tocar a rádio de {{artist}}",
       "shuffle": "Tocar a rádio de {{artist}} no modo aleatório",
+      "radio": "Iniciar rádio baseada em {{artist}}",
       "options": "Mais opções para {{artist}}"
+    },
+    "radio": {
+      "empty": "Nenhuma faixa semelhante encontrada para iniciar uma rádio."
     },
     "info": {
       "albumsCount_one": "{{count}} álbum",
@@ -450,8 +454,6 @@
     "play": "Reproduzir",
     "playNext": "Tocar a seguir",
     "addLast": "Adicionar ao final",
-    "startRadio": "Iniciar rádio",
-    "startRadioEmpty": "Nenhuma faixa semelhante encontrada para iniciar uma rádio.",
     "download": "Download",
     "playlist": {
       "add": "Adicionar à playlist",

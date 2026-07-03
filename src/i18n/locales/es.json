@@ -207,7 +207,11 @@
     "buttons": {
       "options": "Más opciones para {{artist}}",
       "shuffle": "Reproducir radio de {{artist}} en modo aleatorio",
-      "play": "Reproducir radio de {{artist}}"
+      "play": "Reproducir radio de {{artist}}",
+      "radio": "Iniciar radio basada en {{artist}}"
+    },
+    "radio": {
+      "empty": "No se encontraron canciones similares para iniciar una radio."
     },
     "info": {
       "albumsCount_one": "{{count}} álbum",
@@ -366,8 +370,6 @@
   "options": {
     "play": "Reproducir",
     "addLast": "Añadir al final",
-    "startRadio": "Iniciar radio",
-    "startRadioEmpty": "No se encontraron canciones similares para iniciar una radio.",
     "download": "Descargar",
     "playlist": {
       "add": "Añadir a lista de reproducción",

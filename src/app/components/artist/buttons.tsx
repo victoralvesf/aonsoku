@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Actions } from '@/app/components/actions'
+import { useArtistRadio } from '@/app/hooks/use-artist-radio'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { subsonic } from '@/service/subsonic'
 import { useAppPages, useAppStore } from '@/store/app.store'
@@ -32,6 +33,7 @@ export function ArtistButtons({
   const isShuffleActive = usePlayerStore(
     (state) => state.playerState.isShuffleActive,
   )
+  const { sonicSimilarityEnabled, startRadio } = useArtistRadio(artist)
   const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
   const isArtistStarred = artist.starred !== undefined
 
@@ -88,6 +90,7 @@ export function ArtistButtons({
       : t('playlist.buttons.play', { name: artist.name }),
     shuffle: t('playlist.buttons.shuffle', { name: artist.name }),
     options: t('playlist.buttons.options', { name: artist.name }),
+    radio: t('artist.buttons.radio', { artist: artist.name }),
     like: isArtistStarred
       ? t('album.buttons.dislike', { name: artist.name })
       : t('album.buttons.like', { name: artist.name }),
@@ -115,6 +118,12 @@ export function ArtistButtons({
       >
         <Actions.ShuffleIcon />
       </Actions.Button>
+
+      {sonicSimilarityEnabled && (
+        <Actions.Button tooltip={buttonsTooltips.radio} onClick={startRadio}>
+          <Actions.RadioIcon />
+        </Actions.Button>
+      )}
 
       {!hideFavoritesSection && (
         <>
