@@ -98,6 +98,14 @@ export interface RandomSongsResponse
 export interface TopSongsResponse
   extends SubsonicResponse<{ topSongs: SongList }> {}
 
+export interface ISonicMatch {
+  entry: ISong
+  similarity: number
+}
+
+export interface SonicSimilarTracksResponse
+  extends SubsonicResponse<{ sonicMatch?: ISonicMatch[] }> {}
+
 export interface FavoritesResponse
   extends SubsonicResponse<{ starred2: SongList }> {}
 

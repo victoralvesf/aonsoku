@@ -454,6 +454,8 @@
     "play": "Play",
     "playNext": "Play next",
     "addLast": "Add last",
+    "startRadio": "Start radio",
+    "startRadioEmpty": "No similar tracks found to start a radio.",
     "download": "Download",
     "playlist": {
       "add": "Add to playlist",

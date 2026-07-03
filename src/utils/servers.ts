@@ -22,7 +22,13 @@ export function getServerExtensions() {
     extensionsSupported.songLyrics &&
     extensionsSupported.songLyrics.length > 0
 
+  const sonicSimilarityEnabled =
+    extensionsSupported &&
+    extensionsSupported.sonicSimilarity &&
+    extensionsSupported.sonicSimilarity.length > 0
+
   return {
     songLyricsEnabled,
+    sonicSimilarityEnabled,
   }
 }

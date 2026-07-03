@@ -450,6 +450,8 @@
     "play": "Reproduzir",
     "playNext": "Tocar a seguir",
     "addLast": "Adicionar ao final",
+    "startRadio": "Iniciar rádio",
+    "startRadioEmpty": "Nenhuma faixa semelhante encontrada para iniciar uma rádio.",
     "download": "Download",
     "playlist": {
       "add": "Adicionar à playlist",
