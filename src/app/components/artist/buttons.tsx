@@ -33,7 +33,7 @@ export function ArtistButtons({
   const isShuffleActive = usePlayerStore(
     (state) => state.playerState.isShuffleActive,
   )
-  const { sonicSimilarityEnabled, startRadio } = useArtistRadio(artist)
+  const { isRadioAvailable, startRadio } = useArtistRadio(artist)
   const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
   const isArtistStarred = artist.starred !== undefined
 
@@ -119,7 +119,7 @@ export function ArtistButtons({
         <Actions.ShuffleIcon />
       </Actions.Button>
 
-      {sonicSimilarityEnabled && (
+      {isRadioAvailable && (
         <Actions.Button tooltip={buttonsTooltips.radio} onClick={startRadio}>
           <Actions.RadioIcon />
         </Actions.Button>

@@ -106,6 +106,9 @@ export interface ISonicMatch {
 export interface SonicSimilarTracksResponse
   extends SubsonicResponse<{ sonicMatch?: ISonicMatch[] }> {}
 
+export interface SimilarSongsResponse
+  extends SubsonicResponse<{ similarSongs2?: { song?: ISong[] } }> {}
+
 export interface FavoritesResponse
   extends SubsonicResponse<{ starred2: SongList }> {}
 

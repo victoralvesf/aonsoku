@@ -3,6 +3,7 @@ import {
   FavoritesResponse,
   GetSongResponse,
   RandomSongsResponse,
+  SimilarSongsResponse,
   SonicSimilarTracksResponse,
   TopSongsResponse,
 } from '@/types/responses/song'
@@ -70,6 +71,18 @@ async function getSonicSimilarTracks(id: string, count = 100) {
   return matches.map((match) => match.entry)
 }
 
+async function getSimilarSongs2(id: string, count = 100) {
+  const response = await httpClient<SimilarSongsResponse>('/getSimilarSongs2', {
+    method: 'GET',
+    query: {
+      id,
+      count,
+    },
+  })
+
+  return response?.data.similarSongs2?.song ?? []
+}
+
 async function getAllSongs(songCount: number) {
   const response = await search.get({
     query: '',
@@ -97,6 +110,7 @@ export const songs = {
   getAllSongs,
   getFavoriteSongs,
   getRandomSongs,
+  getSimilarSongs2,
   getSonicSimilarTracks,
   getTopSongs,
   getSong,
