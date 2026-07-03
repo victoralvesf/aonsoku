@@ -63,7 +63,11 @@
     "vue-dark": "Vue Dark",
     "vim-dark-soft": "Vim Dark Soft",
     "dracula": "Dracula",
-    "tinacious-design": "Tinacious Design"
+    "everforest-dark": "Everforest Dark",
+    "tinacious-design": "Tinacious Design",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "playlist": {
     "headline": "Playlist",
@@ -743,12 +747,43 @@
           "url": "URL do Servidor"
         }
       },
-      "images": {
-        "group": "Imagens",
-        "description": "Personalize as configurações de imagens.",
-        "cacheLayer": {
-          "info": "Quando ativado, as imagens serão armazenadas localmente para melhorar o desempenho.",
-          "label": "Habilitar Cache de Imagens"
+      "caches": {
+        "images": {
+          "label": "Habilitar Cache de Imagens",
+          "info": "Quando ativado, as imagens serão armazenadas localmente para melhorar o desempenho."
+        },
+        "group": "Caches",
+        "description": "Controle o que o app salva localmente em cache.",
+        "lyrics": {
+          "label": "Habilitar Cache de Letras",
+          "info": "Quando habilitado, as letras são salvas localmente para carregarem de forma instantânea no futuro."
+        },
+        "media": {
+          "label": "Habilitar Cache De Mídia",
+          "info": "Quando ativada, essa opção pode armazenar em cache o áudio transmitido. Desative para forçar o navegador a buscar a mídia a cada reprodução."
+        },
+        "clearAll": {
+          "label": "Limpar Caches",
+          "info": "Remove letras de músicas, capas de álbuns e capas animadas armazenadas no cache local.",
+          "button": "Limpar Tudo",
+          "success": "Cache limpo com sucesso.",
+          "error": "Falha ao limpar alguns caches."
+        }
+      },
+      "features": {
+        "group": "Funcionalidades",
+        "description": "Habilitar ou desabilitar funcionalidades do cliente"
+      },
+      "home": {
+        "group": "Início",
+        "description": "Personalize o conteúdo da página inicial.",
+        "autoScroll": {
+          "label": "Ativar Rolagem Automática do Carrossel",
+          "info": "Quando ativado, o carrossel da página inicial rolará automaticamente após 10 segundos."
+        },
+        "loop": {
+          "label": "Ativar Loop do Carrossel",
+          "info": "Quando ativado, o carrossel da página inicial voltará para a primeira música ao chegar ao fim."
         }
       }
     },

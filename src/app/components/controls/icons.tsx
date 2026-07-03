@@ -204,4 +204,88 @@ export const Icons = {
       </g>
     </svg>
   ),
+  closeLinuxKDE: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <g>
+        <polyline
+          points="3.2806700000000006,3.2806700000000006 20.71939,20.71939"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
+        <polyline
+          points="20.71939,3.2806700000000006 3.2806700000000006,20.71939"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
+      </g>
+    </svg>
+  ),
+  maximizeLinuxKDE: (
+    props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
+  ) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <g>
+        <polyline
+          points="1.1008300000000002,16.35971 12.000029999999999,5.460509999999999 22.89923,16.35971"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
+      </g>
+    </svg>
+  ),
+  maximizeRestoreLinuxKDE: (
+    props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
+  ) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <g>
+        <path
+          d="M 1.1008216,12 12.000045,1.1007761 22.899269,12 12.000045,22.899224 1.1008216,12"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
+      </g>
+    </svg>
+  ),
+  minimizeLinuxKDE: (
+    props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
+  ) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <g>
+        <polyline
+          points="1.1008300000000002,7.64035 12.000029999999999,18.53955 22.89923,7.64035"
+          stroke="currentColor"
+          strokeWidth="2"
+          id="polyline1"
+        />
+      </g>
+    </svg>
+  ),
 }

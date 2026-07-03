@@ -1,16 +1,16 @@
 import { ClockIcon, HeartIcon } from 'lucide-react'
 import { memo } from 'react'
-import { Link } from 'react-router-dom'
 
 import { ArtistLink, ArtistsLinks } from '@/app/components/song/artist-link'
 import { SongQualityBadge } from '@/app/components/song/quality-badge'
+import { TableAlbumName } from '@/app/components/table/album-name'
 import PlaySongButton from '@/app/components/table/play-button'
 import { SongTableActions } from '@/app/components/table/song-actions'
 import { TableSongTitle } from '@/app/components/table/song-title'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
 import { SimpleTooltip } from '@/app/components/ui/simple-tooltip'
 import i18n from '@/i18n'
-import { ROUTES } from '@/routes/routesList'
+import { useAppStore } from '@/store/app.store'
 import { ColumnDefType } from '@/types/react-table/columnDef'
 import { ISong } from '@/types/responses/song'
 import { formatBitrate } from '@/utils/audioInfo'
@@ -21,7 +21,6 @@ const MemoSimpleTooltip = memo(SimpleTooltip)
 const MemoSongQualityBadge = memo(SongQualityBadge)
 const MemoPlaySongButton = memo(PlaySongButton)
 const MemoTableSongTitle = memo(TableSongTitle)
-const MemoLink = memo(Link)
 const MemoSongTableActions = memo(SongTableActions)
 const MemoDataTableColumnHeader = memo(
   DataTableColumnHeader,
@@ -133,20 +132,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
           {i18n.t('table.columns.album')}
         </MemoDataTableColumnHeader>
       ),
-      cell: ({ row }) => {
-        return (
-          <MemoLink
-            to={ROUTES.ALBUM.PAGE(row.original.albumId)}
-            className="hover:underline truncate text-foreground/70 hover:text-foreground"
-            onContextMenu={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-            }}
-          >
-            {row.original.album}
-          </MemoLink>
-        )
-      },
+      cell: ({ row }) => <TableAlbumName song={row.original} />,
     },
     {
       id: 'year',
@@ -262,11 +248,15 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         maxWidth: 120,
         justifyContent: 'end',
       },
-      header: () => (
-        <MemoSimpleTooltip text={i18n.t('table.columns.favorite')}>
-          <HeartIcon className="w-4 h-4 mr-2" />
-        </MemoSimpleTooltip>
-      ),
+      header: () => {
+        const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
+        if (hideFavoritesSection) return null
+        return (
+          <MemoSimpleTooltip text={i18n.t('table.columns.favorite')}>
+            <HeartIcon className="w-4 h-4 mr-2" />
+          </MemoSimpleTooltip>
+        )
+      },
       cell: ({ row }) => <MemoSongTableActions row={row} />,
     },
   ]

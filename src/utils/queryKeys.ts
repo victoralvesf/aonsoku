@@ -32,6 +32,7 @@ const song = {
   random: 'get-random-songs',
   info: 'get-song-info',
   count: 'get-song-count',
+  lyrics: 'get-lyrics',
 }
 
 const radio = {

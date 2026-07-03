@@ -2,6 +2,7 @@ import { OptionsButtons } from '@/app/components/options/buttons'
 import { DownloadOptionHandler } from '@/app/components/options/download-handler'
 import { ContextMenuSeparator } from '@/app/components/ui/context-menu'
 import { useOptions } from '@/app/hooks/use-options'
+import { useAppStore } from '@/store/app.store'
 import { ISong } from '@/types/responses/song'
 import { AddToPlaylistSubMenu } from './add-to-playlist'
 
@@ -26,6 +27,7 @@ export function SongMenuOptions({
     openSongInfo,
     isOnPlaylistPage,
   } = useOptions()
+  const hidePlaylistsSection = useAppStore().pages.hidePlaylistsSection
   const songIndexes = [index.toString()]
 
   return (
@@ -44,14 +46,18 @@ export function SongMenuOptions({
           playLast([song])
         }}
       />
-      <ContextMenuSeparator />
-      <OptionsButtons.AddToPlaylistOption variant={variant}>
-        <AddToPlaylistSubMenu
-          type={variant}
-          newPlaylistFn={() => createNewPlaylist(song.title, song.id)}
-          addToPlaylistFn={(id) => addToPlaylist(id, song.id)}
-        />
-      </OptionsButtons.AddToPlaylistOption>
+      {!hidePlaylistsSection && (
+        <>
+          <ContextMenuSeparator />
+          <OptionsButtons.AddToPlaylistOption variant={variant}>
+            <AddToPlaylistSubMenu
+              type={variant}
+              newPlaylistFn={() => createNewPlaylist(song.title, song.id)}
+              addToPlaylistFn={(id) => addToPlaylist(id, song.id)}
+            />
+          </OptionsButtons.AddToPlaylistOption>
+        </>
+      )}
       {isOnPlaylistPage && (
         <OptionsButtons.RemoveFromPlaylist
           variant={variant}

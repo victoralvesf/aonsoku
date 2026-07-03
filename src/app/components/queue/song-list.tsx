@@ -36,7 +36,6 @@ export function QueueSongList() {
   const columnsToShow: ColumnFilter[] = [
     'index',
     'title',
-    // 'artist',
     'album',
     'duration',
     'remove',

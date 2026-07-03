@@ -37,7 +37,15 @@ interface IAppPages {
   setArtistsPageViewType: (type: PageViewType) => void
   imagesCacheLayerEnabled: boolean
   setImagesCacheLayerEnabled: (value: boolean) => void
+  lyricsCacheEnabled: boolean
+  setLyricsCacheEnabled: (value: boolean) => void
+  mediaCacheEnabled: boolean
+  setMediaCacheEnabled: (value: boolean) => void
   isAllSectionsHidden: () => boolean
+  homeAutoScrollEnabled: boolean
+  setHomeAutoScrollEnabled: (value: boolean) => void
+  homeLoopEnabled: boolean
+  setHomeLoopEnabled: (value: boolean) => void
 }
 
 export interface IAppData extends IServerConfig {

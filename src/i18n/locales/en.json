@@ -61,9 +61,13 @@
     "achiever": "Achiever",
     "dracula": "Dracula",
     "discord": "Discord",
+    "everforest-dark": "Everforest Dark",
     "tinacious-design": "Tinacious Design",
     "vue-dark": "Vue Dark",
-    "vim-dark-soft": "Vim Dark Soft"
+    "vim-dark-soft": "Vim Dark Soft",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "playlist": {
     "headline": "Playlist",
@@ -736,6 +740,10 @@
         "group": "Sidebar",
         "description": "Show or hide sections in the sidebar."
       },
+      "features": {
+        "group": "Features",
+        "description": "Enable or disable client features"
+      },
       "podcast": {
         "group": "Podcasts",
         "description": "Enable integration with the Aonsoku Podcasts service.",
@@ -752,12 +760,39 @@
           "url": "Server URL"
         }
       },
-      "images": {
-        "group": "Images",
-        "description": "Customize images settings.",
-        "cacheLayer": {
-          "info": "When enabled, images will be cached locally to improve performance.",
-          "label": "Enable Image Cache"
+      "caches": {
+        "group": "Caches",
+        "description": "Control what the app caches locally.",
+        "images": {
+          "label": "Enable Image Cache",
+          "info": "When enabled, images will be cached locally to improve performance."
+        },
+        "lyrics": {
+          "label": "Enable Lyrics Cache",
+          "info": "When enabled, fetched lyrics are stored locally so they load instantly on repeat views."
+        },
+        "media": {
+          "label": "Enable Media Cache",
+          "info": "When enabled, the browser may cache streamed audio. Disable to force the browser to fetch media each time."
+        },
+        "clearAll": {
+          "label": "Clear Caches",
+          "info": "Removes locally cached lyrics, album art, and animated artwork URLs.",
+          "button": "Clear All",
+          "success": "Caches cleared successfully.",
+          "error": "Failed to clear some caches."
+        }
+      },
+      "home": {
+        "group": "Home",
+        "description": "Customize the home page content.",
+        "autoScroll": {
+          "label": "Enable Carousel Auto Scroll",
+          "info": "When enabled, the home page carousel will automatically scroll after 10 seconds."
+        },
+        "loop": {
+          "label": "Enable Carousel Loop",
+          "info": "When enabled, the home page carousel will loop back to the first song after reaching the end."
         }
       }
     },

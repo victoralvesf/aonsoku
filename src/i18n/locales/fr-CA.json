@@ -471,6 +471,7 @@
     "shades-of-purple": "Nuances de violet",
     "catppuccin-mocha": "Catpuccin Mocha",
     "discord": "Discord",
+    "everforest-dark": "Everforest sombre",
     "tinacious-design": "Tinacious Design",
     "vue-dark": "Vue sombre",
     "vim-dark-soft": "Vim Sombre Doux",
@@ -748,6 +749,7 @@
   },
   "genres": {
     "albumCount_one": "{{count}} album",
+    "albumCount_many": "",
     "albumCount_other": "{{count}} albums",
     "buttons": {
       "shuffleTracks": "Pistes aléatoires",

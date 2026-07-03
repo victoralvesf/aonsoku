@@ -79,7 +79,6 @@ export default function Album() {
   const columnsToShow: ColumnFilter[] = [
     'trackNumber',
     'title',
-    // 'artist',
     'duration',
     'playCount',
     'played',

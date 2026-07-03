@@ -5,6 +5,7 @@ import { MiniPlayerButton } from '@/app/components/mini-player/button'
 import { RadioInfo } from '@/app/components/player/radio-info'
 import { TrackInfo } from '@/app/components/player/track-info'
 import { podcasts } from '@/service/podcasts'
+import { useAppMediaCache, useAppStore } from '@/store/app.store'
 import {
   getVolume,
   usePlaybackSettings,
@@ -18,6 +19,7 @@ import {
   useReplayGainState,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
+import { ensureSupportForAlac } from '@/utils/alac'
 import { hasPiPSupport } from '@/utils/browser'
 import { logger } from '@/utils/logger'
 import { ReplayGainParams, resolveReplayGainParams } from '@/utils/replayGain'
@@ -49,6 +51,7 @@ const MemoLyricsButton = memo(PlayerLyricsButton)
 const MemoMiniPlayerButton = memo(MiniPlayerButton)
 
 export function Player() {
+  const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
   const audioRef = useRef<HTMLAudioElement>(null)
   const radioRef = useRef<HTMLAudioElement>(null)
   const podcastRef = useRef<HTMLAudioElement>(null)
@@ -75,6 +78,22 @@ export function Player() {
   const song = currentList[currentSongIndex]
   const radio = radioList[currentSongIndex]
   const podcast = podcastList[currentSongIndex]
+
+  const mediaCacheEnabled = useAppMediaCache()
+  const songId = song?.id
+
+  const songStreamUrl = useMemo(() => {
+    if (!songId) return ''
+
+    const cacheBustToken = mediaCacheEnabled ? undefined : Date.now().toString()
+
+    return getSongStreamUrl(
+      songId,
+      undefined,
+      ensureSupportForAlac(song.suffix),
+      cacheBustToken,
+    )
+  }, [songId, song, mediaCacheEnabled])
 
   const getAudioRef = useCallback(() => {
     if (isRadio) return radioRef
@@ -107,6 +126,8 @@ export function Player() {
 
     if (!infinityDuration) {
       setCurrentDuration(audioDuration)
+    } else if (isSong && song?.duration) {
+      setCurrentDuration(song.duration)
     }
 
     if (isPodcast && infinityDuration && podcast) {
@@ -129,6 +150,8 @@ export function Player() {
   }, [
     getAudioRef,
     isPodcast,
+    isSong,
+    song,
     podcast,
     setCurrentDuration,
     getCurrentPodcastProgress,
@@ -201,9 +224,13 @@ export function Player() {
         {/* Remain Controls and Volume */}
         <div className="flex items-center w-full justify-end">
           <div className="flex items-center gap-1">
-            {isSong && (
+            {isSong && !hideFavoritesSection && (
               <>
                 <MemoPlayerLikeButton disabled={!song} />
+              </>
+            )}
+            {isSong && (
+              <>
                 <MemoLyricsButton disabled={!song} />
                 <MemoPlayerQueueButton disabled={!song} />
               </>
@@ -229,7 +256,7 @@ export function Player() {
         (transitionMode === 'none' ? (
           <AudioPlayer
             replayGain={trackReplayGain}
-            src={getSongStreamUrl(song.id)}
+            src={songStreamUrl}
             autoPlay={isPlaying}
             audioRef={audioRef}
             loop={loopState === LoopState.One}

@@ -9,23 +9,26 @@ import {
   CarouselPrevious,
 } from '@/app/components/ui/carousel'
 import { useGetRandomSongs } from '@/app/hooks/use-home'
+import { useAppStore } from '@/store/app.store'
 
 export function HomeHeader() {
   const { data: songs, isLoading, isFetching } = useGetRandomSongs()
+  const autoScrollEnabled = useAppStore().pages.homeAutoScrollEnabled
+  const loopEnabled = useAppStore().pages.homeLoopEnabled
 
   if (isLoading || isFetching) return <HeaderFallback />
-
   if (!songs || songs.length === 0) return null
 
   return (
     <Carousel
       className="w-full overflow-hidden z-10"
       opts={{
-        loop: true,
+        loop: loopEnabled,
       }}
       plugins={[
         Autoplay({
           delay: 10000,
+          active: autoScrollEnabled,
         }),
       ]}
       data-testid="header-carousel"
@@ -41,14 +44,14 @@ export function HomeHeader() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="absolute right-[5rem] bottom-10">
+      <div className="absolute right-8 bottom-6 flex items-center gap-2">
         <CarouselPrevious
           data-testid="header-carousel-previous"
-          className="-left-6 shadow-sm"
+          className="relative inset-0 translate-x-0 translate-y-0 shadow-sm"
         />
         <CarouselNext
           data-testid="header-carousel-next"
-          className="shadow-sm"
+          className="relative inset-0 translate-x-0 translate-y-0 shadow-sm"
         />
       </div>
     </Carousel>

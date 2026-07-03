@@ -48,7 +48,7 @@
     "light": "Světlý",
     "black": "Černo-bílý",
     "one-dark": "One Dark",
-    "night-owl-light": "Night Owl Světlý",
+    "night-owl-light": "Night Owl Light",
     "marmalade-beaver": "Marmalade Beaver",
     "material-theme": "Material Theme",
     "monokai-pro": "Monokai Pro",
@@ -57,13 +57,17 @@
     "catppuccin-mocha": "Catppuccin Mocha",
     "dracula": "Dracula",
     "discord": "Discord",
+    "everforest-dark": "Everforest Dark",
     "tinacious-design": "Tinacious Design",
     "vim-dark-soft": "Vim Dark Soft",
     "nuclear-dark": "Nuclear Dark",
     "bearded-solarized": "Bearded Solarized",
     "vue-dark": "Vue Dark",
     "noctis-lilac": "Noctis Lilac",
-    "achiever": "Achiever"
+    "achiever": "Achiever",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "playlist": {
     "headline": "Playlist",
@@ -77,13 +81,13 @@
       "shuffle": "Přehrát {{name}} v náhodném pořadí",
       "options": "Více možností pro {{name}}"
     },
-    "noSongList": "Tento playlist neobsahuje žádné písně!",
+    "noSongList": "Tento playlist neobsahuje žádné skladby!",
     "form": {
       "labels": {
         "name": "Název",
         "comment": "Komentář",
-        "commentDescription": "Napište krátký popis tohoto playlistu",
-        "isPublic": "Veřejné",
+        "commentDescription": "Napište krátký popis k tomuto playlistu",
+        "isPublic": "Veřejný",
         "isPublicDescription": "Vyberte tuto možnost pro zveřejnění playlistu. Umožníte tím ostatním uživatelům zobrazení a přístup k vašemu playlistu."
       },
       "create": {
@@ -119,9 +123,9 @@
         "title_other": "Opravdu chcete smazat vybrané skladby?",
         "description": "Tato akce je nevratná.",
         "toast": {
-          "success_one": "Skladba byla úspěšně smazána.",
-          "success_few": "Skladby byly úspěšně smazány.",
-          "success_other": "Skladby byly úspěšně smazány.",
+          "success_one": "Skladba byla úspěšně smazána!",
+          "success_few": "Skladby byly úspěšně smazány!",
+          "success_other": "Skladby byly úspěšně smazány!",
           "error_one": "Nepodařilo se smazat skladbu!",
           "error_few": "Nepodařilo se smazat skladby!",
           "error_other": "Nepodařilo se smazat skladby!"
@@ -143,14 +147,53 @@
         "nextPage": "Přejít na další stránku",
         "firstPage": "Přejít na první stránku"
       },
-      "rowsPerPage": "Řádky na stránce",
+      "rowsPerPage": "Záznamů na stránce",
       "currentPage": "Stránka {{currentPage}} z {{totalPages}}"
     },
     "menu": {
       "selectedCount_one": "{{count}} vybrán",
       "selectedCount_few": "{{count}} vybrány",
       "selectedCount_other": "{{count}} vybráno"
-    }
+    },
+    "columns": {
+      "title": "Název",
+      "albumArtist": "Interpret alba",
+      "artist": "Interpret",
+      "contributors": "Přispěvatelé",
+      "album": "Album",
+      "year": "Rok",
+      "duration": "Délka",
+      "plays": "Přehrání",
+      "lastPlayed": "Naposledy přehráno",
+      "bpm": "BPM",
+      "bitrate": "Přenosová rychlost",
+      "quality": "Kvalita",
+      "name": "Název",
+      "albumCount": "Počet alb",
+      "songCount": "Počet skladeb",
+      "comment": "Komentář",
+      "public": "Veřejný",
+      "track": "Skladba",
+      "genres": "Žánry",
+      "size": "Velikost",
+      "codec": "Kodek",
+      "path": "Umístění",
+      "favorite": "Oblíbený",
+      "recordLabel": "Nahrávací společnost",
+      "discNumber": "Číslo disku",
+      "trackGain": "Zesílení stopy",
+      "trackPeak": "Vrchol stopy",
+      "albumGain": "Zesílení alba",
+      "albumPeak": "Vrchol alba",
+      "channelCount": "Počet kanálů",
+      "samplingRate": "Vzorkovací frekvence",
+      "bitDepth": "Bitová hloubka"
+    },
+    "buttons": {
+      "play": "Přehrát {{title}} od {{artist}}",
+      "pause": "Pozastavit {{title}} od {{artist}}"
+    },
+    "lastPlayed": "před {{date}}"
   },
   "login": {
     "form": {
@@ -163,7 +206,7 @@
         "username": "Prosím zadej uživatelské jméno"
       },
       "connect": "Připojit",
-      "connecting": "Připojuji…",
+      "connecting": "Připojuju se…",
       "usernamePlaceholder": "Tvé uživatelské jméno",
       "password": "Heslo",
       "server": "Server",
@@ -292,7 +335,7 @@
     "loadingLyrics": "Hledám texty…",
     "queue": "Fronta",
     "playing": "Nyní hraje",
-    "lyrics": "Texty",
+    "lyrics": "Text písně",
     "switchButton": "Přepnout na velký přehrávač"
   },
   "logout": {
@@ -362,6 +405,9 @@
     },
     "navigation": {
       "label": "Navigace"
+    },
+    "sidebar": {
+      "toggle": "Přepnout postranní lištu"
     }
   },
   "queue": {
@@ -371,7 +417,8 @@
     "open": "Otevřít frontu"
   },
   "songInfo": {
-    "title": "Detaily skladby"
+    "title": "Detaily skladby",
+    "error": "Nepodačilo se načíst informace o skladbě. Zkus to prosím později."
   },
   "songs": {
     "list": {
@@ -387,8 +434,8 @@
   "album": {
     "headline": "Album",
     "buttons": {
-      "like": "Olajkovat {{name}}",
-      "dislike": "Odebrat lajk z {{name}}",
+      "like": "Přidat {{name}} do oblíbených",
+      "dislike": "Odebrat {{name}} z oblíbených",
       "play": "Přehrát {{name}}",
       "pause": "Pozastavit {{name}}",
       "shuffle": "Přehrát {{name}} v náhodném pořadí"
@@ -401,22 +448,22 @@
     "more": {
       "listTitle": "Více od tohoto umělce",
       "discography": "Diskografie umělce",
-      "genreTitle": "Více z žánru {{genre}}"
+      "genreTitle": "Více z {{genre}}"
     },
     "list": {
       "header": {
         "albumsByArtist": "Alba od {{artist}}"
       },
       "empty": {
-        "title": "Oops, žádná alba!",
+        "title": "Jejda, nejsou tu žádná alba!",
         "info": "Zadanému filtru neodpovídají žádná alba.",
-        "action": "Možná zkus upravit filtry"
+        "action": "Možná zkuste upravit filtry?"
       },
       "genre": {
-        "label": "Vyber žánr…",
-        "search": "Najdi žánr…",
+        "label": "Vyberte žánr…",
+        "search": "Najděte žánr…",
         "loading": "Načítám žánry…",
-        "notFound": "Žánr nebyl nalezen."
+        "notFound": "Nebyly nalezeny žádné žánry."
       },
       "filter": {
         "artist": "Umělec",
@@ -429,10 +476,10 @@
         "recentlyPlayed": "Nedávno přehrané",
         "releaseYear": "Rok vydání",
         "discography": "Diskografie",
-        "search": "Hledat"
+        "search": "Vyhledat"
       },
       "search": {
-        "placeholder": "Prohledat alba…"
+        "placeholder": "Vyhledat alba…"
       }
     },
     "table": {
@@ -460,7 +507,7 @@
   },
   "podcasts": {
     "form": {
-      "all": "Prohlížet",
+      "all": "Procházet",
       "latestEpisodes": "Nejnovější epizody",
       "addButton": "Přidat podcast",
       "search": "Prohledat podcasty…",
@@ -482,7 +529,62 @@
       }
     },
     "emptyPage": {
-      "message": "Nebyly přidány žádné podcasty"
+      "message": "Nebyly přidány žádné podcasty",
+      "description": "Zdá se, že jsi zatím nepřidal žádný podcast. Přidej jej výše!"
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "Žádné epizody",
+        "description": "Zkus přidat více podcastů.",
+        "goToPodcasts": "Přejít na podcasty"
+      }
+    },
+    "emptyResults": {
+      "title": "Nenalezeny žádné výsledky.",
+      "info": "Nemohli jsme najít žádné podcasty odpovídající tvému vyhledávanému výrazu.",
+      "action": "Zkontroluj prosím pravopis nebo zkust zadat jiná klíčová slova."
+    },
+    "filters": {
+      "episodes": {
+        "search": "Prohledat epizody…",
+        "orderBy": {
+          "publishDate": "Datum zveřejnění",
+          "title": "Název",
+          "duration": "Délka"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Název",
+          "episodeCount": "Počet epizod"
+        }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} epizoda",
+      "episodeCount_few": "{{count}} epizody",
+      "episodeCount_other": "{{count}} epizod",
+      "feed": "Novinky",
+      "website": "Oficiální web",
+      "unfollow": {
+        "tooltip": "Přestat sledovat {{title}}",
+        "dialog": {
+          "title": "Opravdu chceš přestat sledovat tento podcast?",
+          "description": "Chcete-li si tento podcast v budoucnu znovu poslechnout, budete si ho muset znovu vytvořit."
+        },
+        "toasts": {
+          "success": "Úspěšně jsi se odhlásili z odběru podcastu!",
+          "error": "Při pokusu o zrušení odběru podcastu došlo k chybě. Zkus to prosím znovu."
+        }
+      }
+    },
+    "list": {
+      "episodes": "Epizody",
+      "notFoundMessage": "Tento podcast zatím nemá žádné epizody!",
+      "progress": {
+        "remainingTime": "zbývá {{time}}",
+        "completed": "Dokončen"
+      }
     }
   },
   "genre": {
@@ -491,11 +593,235 @@
   "genres": {
     "albumCount_one": "{{count}} album",
     "albumCount_few": "{{count}} alba",
-    "albumCount_many": "{{count}} alb",
     "albumCount_other": "{{count}} alba",
     "buttons": {
       "shuffleTracks": "Náhodné skladby",
       "shuffleAlbums": "Náhodná alba"
+    }
+  },
+  "warnings": {
+    "reload": "Přehrává se skladba!\nOpravdu chceš stránku znovu načíst?",
+    "songError": "Skladbu nelze přehrát, koukni na server!"
+  },
+  "update": {
+    "dialog": {
+      "title": "Je dostupná nová verze!",
+      "remindLater": "Připomenout později",
+      "install": "Nainstalovat a restartovat",
+      "macOS": "Stahnout z GitHub"
+    },
+    "toasts": {
+      "started": "Aktualizace byla zahájena.",
+      "success": "Aktualizace byla nainstalována! Aplikace se nyní restartuje.",
+      "error": "Aktualizaci se nepodařilo nainstalovat. Zkus ji stáhnout přímo z GitHubu."
+    }
+  },
+  "about": {
+    "client": "Klient",
+    "server": "Server",
+    "version": "Verze",
+    "type": "Typ",
+    "apiVersion": "Verze API",
+    "toasts": {
+      "copy": "Odkaz byl zkopírován do schránky!"
+    }
+  },
+  "mobile": {
+    "unsupported_message": "{{app_name}} není kompatibilní s mobilními telefony.",
+    "access_recommendation": "Otevřete jej prosím na počítači nebo tabletu."
+  },
+  "settings": {
+    "label": "Nastavení",
+    "options": {
+      "appearance": "Vzhled",
+      "language": "Jazyk a oblast",
+      "audio": "Přehrávač a zvuk",
+      "content": "Obsah",
+      "accounts": "Účty",
+      "desktop": "Desktopová aplikace",
+      "privacy": "Soukromí a zabezpečení"
+    },
+    "appearance": {
+      "general": {
+        "group": "Obecné",
+        "description": "Přizpůsob si vzhled a chování aplikace.",
+        "fullscreen": {
+          "label": "Zapnout automatický režim celé obrazovky",
+          "info": "Je-li tato funkce zapnutá, aplikace při spuštění přehrávače Big Player automaticky přejde do režimu celé obrazovky."
+        }
+      },
+      "colors": {
+        "group": "Dynamické barvy",
+        "description": "Vyber, zda má aplikace jako pozadí použít dominantní barvu z přebalu aktuálně přehrávaného alba.",
+        "queue": {
+          "label": "Fronta a texty",
+          "intensity": "Úroveň intenzity barev"
+        },
+        "bigPlayer": {
+          "label": "Velký přehrávač",
+          "blurSize": "Míra rozostření obrazu"
+        }
+      }
+    },
+    "audio": {
+      "replayGain": {
+        "group": "Zesílení přehrávání",
+        "description": "Automaticky vyrovnávat hlasitost přehrávaného zvuku, pro dosažení konzistentního poslechového požitku.",
+        "enabled": "Zapnuto",
+        "error": {
+          "message": "Při přehrávání skladby se zesílením došlo k chybě.",
+          "button": "Zkusit znovu"
+        },
+        "mode": {
+          "label": "Režim",
+          "track": "Zesílení skladby",
+          "album": "Zesílení alba"
+        },
+        "preAmp": "Předzesilovač (dB)",
+        "defaultGain": {
+          "label": "Výchozí zesílení (dB)",
+          "info": "Tato úroveň zesílení se použije u skladeb, které neobsahují metadata ReplayGain, čímž se zajistí jednotná hlasitost zvuku. Doporučený rozsah zesílení je mezi -10 dB a -1 dB."
+        }
+      },
+      "lyrics": {
+        "group": "Text písně",
+        "description": "Upravit nastavení textů písní.",
+        "preferSynced": {
+          "label": "Preferovat synchronizované texty písní",
+          "info": "Pokud je tato funkce zapnutá, budou synchronizované texty písní upřednostněny před nesynchronizovanými."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Externí služby",
+        "description": "Spravujte externí služby, ke kterým má Aonsoku přístup.",
+        "lrclib": {
+          "info": "K vyhledávání textů písní je použito LRCLIB.",
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Použít vlastní URL",
+            "info": "Použít vlastní URL k LRCLIB namísto výchozí.",
+            "label": "URL",
+            "example": "Příklad: https://my-lrclib.com"
+          }
+        },
+        "animatedCover": {
+          "enabled": {
+            "label": "Zapnout animované přebaly",
+            "info": "Pokud je tato funkce zapnutá, budou se animované obálky načítat z externí služby, pokud budou k dispozici."
+          },
+          "customUrl": {
+            "toggle": "Použít vlastní URL",
+            "info": "Použít vlastní URL pro API animovaných přebalů namísto výchozí.",
+            "label": "URL",
+            "example": "Výchozí: https://artwork.m8tec.top"
+          },
+          "screens": {
+            "album": {
+              "label": "Stránka s alby",
+              "info": "Zapnout animované přebaly v záhlaví alba."
+            },
+            "fullscreen": {
+              "label": "Velký přehrávač",
+              "info": "Zapnout animované přebaly pro aktuální skladbu ve velkém přehrávači."
+            },
+            "playerBar": {
+              "label": "Spodní lišta přehrávače",
+              "info": "Zapnout animované přebaly pro aktuální skladbu v přehrávači ve spodní liště."
+            },
+            "drawer": {
+              "label": "Fronta a texty písní",
+              "info": "Zapnout animované přebaly u aktuální skladby ve frontě a v panelu s textem písně."
+            }
+          }
+        }
+      }
+    },
+    "content": {
+      "sidebar": {
+        "group": "Postranní panel",
+        "description": "Zobrazovat nebo skrýt sekce v postranním panelu."
+      },
+      "features": {
+        "group": "Funkce",
+        "description": "Zapnout nebo vypnout funkce klienta"
+      },
+      "podcast": {
+        "group": "Podcasty",
+        "description": "Povolit integraci se službou Aonsoku Podcasts.",
+        "enabled": {
+          "label": "Povolit integraci"
+        },
+        "service": {
+          "url": "URL služby podcastu"
+        },
+        "credentials": {
+          "label": "Použít přihlášeného uživatele a adresu URL serveru",
+          "error": "Uživatelské jméno a adresa URL serveru jsou povinné.",
+          "user": "Uživatelské jméno",
+          "url": "URL serveru"
+        }
+      },
+      "caches": {
+        "group": "Mezipaměť",
+        "description": "Nastavte, co si aplikace ukládá do lokální mezipaměti.",
+        "images": {
+          "label": "Ukládat obrázky do mezipaměti",
+          "info": "Pokud je tato funkce zapnutá, budou se obrázky ukládat do lokální mezipaměti pro zlepšení výkonu."
+        },
+        "lyrics": {
+          "label": "Zapnout mezipaměť textů písní",
+          "info": "Je-li tato funkce zapnutá, stažené texty písní se ukládají lokálně, takže se při opakovaném zobrazení načtou okamžitě."
+        },
+        "media": {
+          "label": "Zapnout mezipaměť médií",
+          "info": "Je-li tato funkce zapnutá, prohlížeč může ukládat streamovaný zvuk do mezipaměti. Vypnutím této funkce donutíte prohlížeč, aby média načítal pokaždé znovu."
+        },
+        "clearAll": {
+          "label": "Vyčistit mezipaměť",
+          "info": "Odstraní lokálně uložené texty písní, přebaly a adresy URL animovaných přebalů.",
+          "button": "Vyčistit vše",
+          "success": "Mezipaměť byla úspěšně vyčištěna.",
+          "error": "Nepodařilo se vymazat některé mezipaměti."
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "group": "Discord Rich Presence",
+        "description": "Sdílej právě přehrávanou skladbu s přáteli na Discordu.",
+        "enabled": {
+          "label": "Povolit integraci"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Obecné",
+        "description": "Uprav nastavení desktopové aplikace.",
+        "tray": {
+          "label": "Minimalizovat do lišty",
+          "info": "Je-li tato funkce zapnutá, aplikace se po kliknutí na tlačítko zavření neukončí, ale minimalizuje se do lišty."
+        }
+      }
+    }
+  },
+  "dayjs": {
+    "relativeTime": {
+      "future": "za %s",
+      "past": "před %s",
+      "s": "pár vteřin",
+      "m": "1 minuta",
+      "mm": "%d minut",
+      "h": "1 hodina",
+      "hh": "%d hodin",
+      "d": "1 den",
+      "dd": "%d dní",
+      "M": "1 měsíc",
+      "MM": "%d měsíců",
+      "y": "1 rok",
+      "yy": "%d let"
     }
   }
 }

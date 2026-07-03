@@ -60,10 +60,14 @@
     "nuclear-dark": "Nuclear Dark",
     "achiever": "Achiever",
     "discord": "Discord",
+    "everforest-dark": "Everforest Dark",
     "vue-dark": "Vue Dark",
     "vim-dark-soft": "Vim Dark Soft",
     "dracula": "Dracula",
-    "tinacious-design": "Tinacious Design"
+    "tinacious-design": "Tinacious Design",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "playlist": {
     "headline": "播放列表",
@@ -613,13 +617,19 @@
           "url": "播客服务 URL"
         }
       },
-      "images": {
-        "group": "图片",
-        "description": "自定义图片设置。",
-        "cacheLayer": {
-          "info": "开启后，图片将缓存在本地以提升性能。",
-          "label": "开启图片缓存"
+      "caches": {
+        "images": {
+          "label": "开启图片缓存",
+          "info": "开启后，图片将缓存在本地以提升性能。"
+        },
+        "group": "缓存",
+        "lyrics": {
+          "label": "启用歌词缓存"
         }
+      },
+      "features": {
+        "group": "特性",
+        "description": "启用或禁用客户特性"
       }
     },
     "label": "设置",
