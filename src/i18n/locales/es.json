@@ -753,6 +753,18 @@
           "label": "Purgar Caché",
           "info": "Elimina las letras caché localmente, el arte del álbum y las URL de artes gráficos animados."
         }
+      },
+      "home": {
+        "group": "Inicio",
+        "description": "Personaliza el contenido de la página inicial.",
+        "autoScroll": {
+          "label": "Habilitar el desplazamiento automático del carrusel",
+          "info": "Cuando está activada, el carrusel de la página de inicio se desplazará automáticamente después de 10 segundos."
+        },
+        "loop": {
+          "label": "Habilitar bucle de carrusel",
+          "info": "Cuando está activada, el carrusel de la página de inicio volverá a la primera canción tras llegar al final."
+        }
       }
     },
     "privacy": {
