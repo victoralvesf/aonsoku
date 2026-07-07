@@ -39,7 +39,10 @@ export default function Activity() {
 
       <ListWrapper>
         {!hasData ? (
-          <ActivityEmptyState />
+          <div className="space-y-8">
+            <ActivityEmptyState />
+            <TopAlbums />
+          </div>
         ) : (
           <div className="space-y-6">
             <SummaryCards summary={summary} />
