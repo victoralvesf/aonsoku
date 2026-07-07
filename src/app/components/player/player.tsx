@@ -30,6 +30,7 @@ import { PlayerExpandButton } from './expand-button'
 import { GaplessSongPlayer } from './gapless-song-player'
 import { PlayerLikeButton } from './like-button'
 import { PlayerLyricsButton } from './lyrics-button'
+import { MediaSessionKeepAlive } from './media-session-keep-alive'
 import { PodcastInfo } from './podcast-info'
 import { PodcastPlaybackRate } from './podcast-playback-rate'
 import { PlayerProgress } from './progress'
@@ -269,7 +270,10 @@ export function Player() {
             data-testid="player-song-audio"
           />
         ) : (
-          <GaplessSongPlayer audioRef={audioRef} />
+          <>
+            <GaplessSongPlayer audioRef={audioRef} />
+            <MediaSessionKeepAlive />
+          </>
         ))}
 
       {isRadio && radio && (

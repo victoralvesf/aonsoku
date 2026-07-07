@@ -26,6 +26,7 @@ import {
 import { LoopState } from '@/types/playerContext'
 import { ISong } from '@/types/responses/song'
 import { logger } from '@/utils/logger'
+import { playbackClock } from '@/utils/playbackClock'
 import { selectStandbySong } from '@/utils/playbackTransition'
 import {
   calculateReplayGain,
@@ -145,6 +146,7 @@ export function GaplessSongPlayer({ audioRef }: GaplessSongPlayerProps) {
 
   const lastSeekTargetRef = useRef<number | null>(null)
   const lastWrittenProgressRef = useRef(-1) // last progress we wrote (seek detect)
+  const lastPositionStateDurationRef = useRef(-1) // duration last sent to setPositionState
 
   const { currentList, currentSongIndex } = usePlayerSonglist()
   const isPlaying = usePlayerIsPlaying()
@@ -474,6 +476,10 @@ export function GaplessSongPlayer({ audioRef }: GaplessSongPlayerProps) {
 
       activeSourceRef.current = 'element'
       currentPlayingIdRef.current = song.id
+
+      // Seed the shared clock at the start offset; handleTimeUpdate keeps it fresh while streaming,
+      // the rAF loop takes over once on the buffer.
+      playbackClock.setPositionMs(offset * 1000)
 
       const ctx = ensureContext()
       ensureElementGraph()
@@ -910,9 +916,22 @@ export function GaplessSongPlayer({ audioRef }: GaplessSongPlayerProps) {
           position = stored
         }
         const flooredPosition = Math.floor(position)
+
+        // Send position state only when the reported second or the duration
+        // actually changes (~1 Hz + immediately on seeks/track changes), never
+        // per frame.
+        const positionStateStale =
+          flooredPosition !== lastWrittenProgressRef.current ||
+          lastPositionStateDurationRef.current !== buffer.duration
         setProgress(flooredPosition)
         lastWrittenProgressRef.current = flooredPosition
-        manageMediaSession.setPositionState(buffer.duration, position)
+        // Publish to the shared clock: the element is paused during buffer
+        // playback so its currentTime can't be read (synced lyrics poll this).
+        playbackClock.setPositionMs(position * 1000)
+        if (positionStateStale) {
+          manageMediaSession.setPositionState(buffer.duration, position)
+          lastPositionStateDurationRef.current = buffer.duration
+        }
 
         if (
           lastSeekTargetRef.current !== null &&
@@ -999,6 +1018,7 @@ export function GaplessSongPlayer({ audioRef }: GaplessSongPlayerProps) {
     if (!el || activeSourceRef.current !== 'element') return
     const position = el.currentTime
     writeProgress(position)
+    playbackClock.setPositionMs(position * 1000)
     if (Number.isFinite(el.duration)) {
       manageMediaSession.setPositionState(el.duration, position)
     }
@@ -1161,7 +1181,6 @@ export function GaplessSongPlayer({ audioRef }: GaplessSongPlayerProps) {
       onTimeUpdate={handleTimeUpdate}
       onEnded={handleEnded}
       onSeeking={handleSeek}
-      onSeeked={handleSeek}
       onError={handleError}
       data-testid="gapless-ui-surface"
     />
