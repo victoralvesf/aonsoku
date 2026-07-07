@@ -19,6 +19,7 @@ import { areSongListsEqual } from '@/utils/compareSongLists'
 import { isDesktop } from '@/utils/desktop'
 import { discordRpc } from '@/utils/discordRpc'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
+import { recordPlayEvent } from './activity-store'
 import { idbStorage } from './idb'
 
 const miniStores = {
@@ -1107,6 +1108,19 @@ usePlayerStore.subscribe((state, prevState) => {
     usePlayerStore.getState().actions.setHasScrobbledTheCurrentTrack(true)
 
     scrobble.send(currentSong.id, true)
+
+    // Keep a local record of the play for the activity/stats page.
+    recordPlayEvent({
+      songId: currentSong.id,
+      title: currentSong.title,
+      artist: currentSong.artist,
+      artistId: currentSong.artistId,
+      album: currentSong.album,
+      albumId: currentSong.albumId,
+      genre: currentSong.genre,
+      duration: currentSong.duration,
+      playedAt: Date.now(),
+    })
   }
 })
 

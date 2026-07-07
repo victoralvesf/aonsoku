@@ -16,6 +16,7 @@
     "favorites": "Favoritos",
     "playlists": "Listas de reproducción",
     "radios": "Radios",
+    "activity": "Actividad",
     "emptyPlaylist": "Aún no se han creado listas de reproducción",
     "podcasts": "Podcasts",
     "genres": "Géneros"
@@ -201,6 +202,40 @@
   },
   "favorites": {
     "noSongList": "¡Aún no has añadido canciones a favoritos!"
+  },
+  "activity": {
+    "plays": "Reproducciones",
+    "dailyActivity": "Actividad diaria",
+    "listeningHours": "Horas de escucha",
+    "peak": "Pico",
+    "history": "Historial de escucha",
+    "less": "Menos",
+    "more": "Más",
+    "recentPlays": "Reproducciones recientes",
+    "topAlbums": "Álbumes principales",
+    "range": {
+      "7d": "7D",
+      "30d": "30D",
+      "90d": "90D",
+      "all": "Todo"
+    },
+    "summary": {
+      "totalPlays": "Reproducciones totales",
+      "listeningTime": "Tiempo de escucha",
+      "uniqueArtists": "Artistas únicos",
+      "streak": "Racha",
+      "streakValue": "{{count}}d",
+      "streakBest": "Mejor {{count}}d"
+    },
+    "genres": {
+      "title": "Géneros",
+      "unknown": "Desconocido",
+      "others": "Otros"
+    },
+    "empty": {
+      "title": "Aún no hay actividad",
+      "description": "Reproduce música y tus estadísticas de escucha aparecerán aquí."
+    }
   },
   "artist": {
     "headline": "Artista",
