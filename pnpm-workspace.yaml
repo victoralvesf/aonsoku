@@ -3,6 +3,8 @@ overrides:
   glob: ^11.0.0
   tar: ^7.5.7
 
+blockExoticSubdeps: false
+
 allowBuilds:
   bufferutil: true
   cypress: true
