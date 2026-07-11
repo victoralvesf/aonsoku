@@ -4,6 +4,7 @@ overrides:
   tar: ^7.5.7
   "@babel/core": ^7.29.1
   "@isaacs/brace-expansion": ^5.0.1
+  minimatch: ^10.2.1
 
 blockExoticSubdeps: false
 
