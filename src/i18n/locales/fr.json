@@ -190,7 +190,10 @@
     "vue-dark": "Vue sombre",
     "vim-dark-soft": "Vim Sombre Doux",
     "dracula": "Dracula",
-    "tinacious-design": "Tinacious Design"
+    "tinacious-design": "Tinacious Design",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "album": {
     "info": {
@@ -441,11 +444,40 @@
         "images": {
           "label": "Activer le cache d'images",
           "info": "Lorsque cette option est activée, les images seront mises en cache localement afin d'améliorer les performances."
+        },
+        "group": "Caches",
+        "description": "Contrôler ce que l'appli met en cache localement.",
+        "lyrics": {
+          "label": "Acriver le cache des paroles",
+          "info": "Lorsque ceci est activé, les paroles récupérées sont stockées localement afin qu'elles se chargent instantanément sur des vues répétées."
+        },
+        "media": {
+          "label": "Activer le cache des médias",
+          "info": "Lorsque ceci est activé, le navigateur peut mettre en cache l'audio. Désactiver pour forcer le navigateur à récupérer des médias à chaque fois."
+        },
+        "clearAll": {
+          "label": "Effacer les caches",
+          "info": "Retire les paroles localement en cache, la pochette d'album et les URL d'œuvre animées.",
+          "button": "Tout effacer",
+          "success": "Caches effacés avec succès.",
+          "error": "Échec de l'effacement de certains caches."
         }
       },
       "features": {
         "description": "Activer ou désactiver les fonctionnalités du client",
         "group": "Fonctionnalités"
+      },
+      "home": {
+        "group": "Accueil",
+        "description": "Personnaliser le contenu de la page d'accueil.",
+        "autoScroll": {
+          "label": "Activer le défilement automatique du carrousel",
+          "info": "Lorsque ceci est activé, le carrousel de page d'accueil défile automatiquement après 10 secondes."
+        },
+        "loop": {
+          "label": "Activer la boucle du carrousel",
+          "info": "Lorsque ceci est activé, le carrousel de la page d'accueil retournera à la première chanson après avoir atteint la fin."
+        }
       }
     },
     "label": "Paramètres",
@@ -527,8 +559,8 @@
               "info": "Activer les animations pour la pochette du morceau en cours dans la barre de lecture."
             },
             "drawer": {
-              "label": "File d'attente et Paroles",
-              "info": "Activer les pochettes d'album animées pour la piste en cours dans le panneau File d'attente et Paroles."
+              "label": "File d'attente et paroles",
+              "info": "Activer les pochettes d'album animées pour la piste en cours dans le panneau File d'attente et paroles."
             }
           }
         }

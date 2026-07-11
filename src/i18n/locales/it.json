@@ -717,6 +717,14 @@
             "drawer": {
               "label": "Coda e testi",
               "info": "Abilita le animazioni per la cover corrente nel pannello Code e Testi."
+            },
+            "album": {
+              "label": "Pagina album",
+              "info": "Abilita le copertine animate nella vista intestazione album."
+            },
+            "fullscreen": {
+              "label": "Player grande",
+              "info": "Abilita le copertine animate per l'attuale cover del brano nel player grande."
             }
           }
         }
@@ -748,11 +756,21 @@
           "label": "Attiva Cache immagine",
           "info": "Quando abilitata, le immagini verranno memorizzate localmente per migliorare le prestazioni."
         },
-        "group": "Caches"
+        "group": "Caches",
+        "description": "Controlla ciò che l'applicazione mette in cache localmente.",
+        "clearAll": {
+          "button": "Cancella tutto",
+          "success": "Cache cancellati con successo.",
+          "error": "Impossibile cancellare alcune cache."
+        }
       },
       "features": {
         "group": "Funzionalità",
         "description": "Attivare o disattivare funzionalità client"
+      },
+      "home": {
+        "group": "Pagina principale",
+        "description": "Personalizza il contenuto della pagina principale."
       }
     },
     "accounts": {

@@ -7,7 +7,7 @@
   },
   "sidebar": {
     "home": "主頁",
-    "search": "搜尋",
+    "search": "搜尋...…",
     "miniSearch": "搜尋",
     "library": "媒體庫",
     "artists": "演出者",
@@ -17,12 +17,217 @@
     "playlists": "歌單",
     "radios": "電台",
     "podcasts": "播客節目",
-    "emptyPlaylist": "現時還沒有任何歌單"
+    "emptyPlaylist": "現時還沒有任何歌單",
+    "genres": "音樂類型"
   },
   "menu": {
     "language": "語言",
     "server": "伺服器",
     "about": "關於Aonsoku",
     "serverLogout": "登出"
+  },
+  "generic": {
+    "seeMore": "查看更多",
+    "showDetails": "顯示詳情",
+    "hideDetails": "隱藏詳情",
+    "viewAll": "顯示所有",
+    "loading": "正在載入...…",
+    "viewMode": {
+      "label": "顯示方式",
+      "modes": {
+        "list": "列表",
+        "poster": "海報"
+      }
+    },
+    "beta": "Beta版本"
+  },
+  "theme": {
+    "label": "主題",
+    "light": "淺色",
+    "dark": "深色",
+    "system": "系統",
+    "black": "黑白主題",
+    "one-dark": "One Dark主題",
+    "night-owl-light": "Night Owl Light主題",
+    "marmalade-beaver": "Marmalade Beaver主題",
+    "noctis-lilac": "Noctis Lilac主題",
+    "material-theme": "Material主題",
+    "monokai-pro": "Monokai Pro主題",
+    "github-dark": "Github Dark主題",
+    "shades-of-purple": "Shades Of Purple主題",
+    "bearded-solarized": "Bearded Solarized主題",
+    "catppuccin-mocha": "Catppuccin Mocha主題",
+    "nuclear-dark": "Nuclear Dark主題",
+    "achiever": "Achiever主題",
+    "dracula": "Dracula主題",
+    "discord": "Discord主題",
+    "everforest-dark": "Everforest Dark主題",
+    "tinacious-design": "Tinacious Design主題",
+    "vue-dark": "Vue Dark主題",
+    "vim-dark-soft": "Vim Dark Soft主題",
+    "vesper": "Vesper主題",
+    "mirage": "Mirage主題",
+    "arduino-light": "Arduino Light主題"
+  },
+  "playlist": {
+    "headline": "播放清單",
+    "songCount_other": "共有{{count}} 首歌曲",
+    "duration": "總播放時間約{{duration}}",
+    "refresh": "重新整理播放清單",
+    "buttons": {
+      "play": "播放{{name}}",
+      "pause": "暫停播放{{name}}",
+      "shuffle": "隨機播放{{name}}",
+      "options": "顯示{{name}}的其他設定"
+    },
+    "noSongList": "此播放清單還沒有任何歌曲！",
+    "form": {
+      "labels": {
+        "name": "名稱",
+        "comment": "註釋",
+        "commentDescription": "請簡短描述此播放清單",
+        "isPublic": "公開",
+        "isPublicDescription": "若把此播放清單設定為「公開」，則可讓其他用戶查看及播放其內容。"
+      },
+      "create": {
+        "title": "建立播放清單",
+        "button": "建立",
+        "toast": {
+          "success": "成功建立播放清單！",
+          "error": "建立播放清單失敗！"
+        }
+      },
+      "edit": {
+        "title": "編輯播放清單",
+        "button": "更新",
+        "toast": {
+          "success": "成功更新播清單！",
+          "error": "播放清單更新失敗！"
+        }
+      },
+      "delete": {
+        "title": "你確定要刪除此播放清單嗎？",
+        "description": "確定刪除後將無法還原此播放清單。",
+        "toast": {
+          "success": "成功刪除播放清單！",
+          "error": "播放清單刪除失敗！"
+        }
+      },
+      "validations": {
+        "nameLength": "播放清單名稱必需最少有2個字符。"
+      },
+      "removeSong": {
+        "title_other": "你確定要從播放清單中移除已選的歌曲嗎？",
+        "description": "歌曲從播放清單移除後將無法還原。",
+        "toast": {
+          "success_other": "移除歌曲成功！",
+          "error_other": "移除歌曲失敗！"
+        }
+      }
+    }
+  },
+  "songs": {
+    "list": {
+      "search": {
+        "placeholder": "搜尋歌曲...…"
+      },
+      "byArtist": "{{artist}}的歌曲",
+      "filter": {
+        "clear": "清空篩選條件"
+      }
+    }
+  },
+  "album": {
+    "headline": "專輯",
+    "buttons": {
+      "play": "播放{{name}}",
+      "pause": "暫停播放{{name}}",
+      "shuffle": "隨機播放{{name}}",
+      "like": "喜歡{{name}}"
+    },
+    "info": {
+      "about": "有關{{name}}",
+      "lastfm": "開啟載於Last.fm的頁面",
+      "musicbrainz": "開啓載於MusicBrainz的頁面"
+    },
+    "more": {
+      "listTitle": "更多來自這位演出者的作品"
+    }
+  },
+  "podcasts": {
+    "header": {
+      "unfollow": {
+        "dialog": {
+          "title": "你確定要取消追蹤此Podcast嗎？",
+          "description": "取消追蹤後，你需要重新輸入有關設定方可再次收聽此Podcast。"
+        },
+        "toasts": {
+          "success": "你已成功取消追蹤此Podcast！",
+          "error": "取消追蹤的過程中出現了錯誤，請再次嘗試。"
+        }
+      }
+    },
+    "list": {
+      "episodes": "集數",
+      "notFoundMessage": "此Podcast暫時還沒有任何內容！",
+      "progress": {
+        "remainingTime": "剩餘{{time}}",
+        "completed": "己收聽"
+      }
+    }
+  },
+  "table": {
+    "columns": {
+      "title": "標題",
+      "albumArtist": "專輯演出者",
+      "artist": "演出者",
+      "contributors": "貢獻者",
+      "album": "專輯",
+      "year": "年份",
+      "duration": "時間長度",
+      "plays": "播放次數",
+      "lastPlayed": "上次播放",
+      "bpm": "BPM",
+      "bitrate": "位元率",
+      "quality": "質素",
+      "name": "名稱",
+      "albumCount": "專輯數量",
+      "songCount": "歌曲數量",
+      "comment": "註釋",
+      "public": "公開",
+      "track": "曲目",
+      "genres": "音樂類型",
+      "size": "檔案大小",
+      "codec": "編碼",
+      "path": "檔案路徑",
+      "favorite": "收藏",
+      "recordLabel": "唱片公司",
+      "discNumber": "碟號",
+      "trackGain": "歌曲音量增益",
+      "trackPeak": "歌曲音量𡶶值",
+      "albumGain": "專輯音量增益",
+      "albumPeak": "專輯音量𡶶值",
+      "channelCount": "聲道數量",
+      "samplingRate": "取樣率",
+      "bitDepth": "位元度"
+    },
+    "buttons": {
+      "play": "播放{{artist}}的{{title}}",
+      "pause": "暫停播放{{artist}}的{{title}}"
+    },
+    "lastPlayed": "{{date}}之前",
+    "pagination": {
+      "rowsPerPage": "每頁顯示的行數",
+      "currentPage": "第{{currentPage}}/{{totalPages}}頁",
+      "screenReader": {
+        "firstPage": "第一頁",
+        "previousPage": "上一頁",
+        "nextPage": "下一頁",
+        "lastPage": "最後一頁"
+      }
+    },
+    "sort": {
+      "asc": "順序"
+    }
   }
 }
