@@ -127,7 +127,7 @@
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "@types/react-lazy-load-image-component": "^1.6.4",
-    "@vitejs/plugin-react": "^5.1.2",
+    "@vitejs/plugin-react": "^5.2.0",
     "autoprefixer": "^10.4.21",
     "cypress": "^15.9.0",
     "cypress-real-events": "^1.15.0",
