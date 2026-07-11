@@ -625,6 +625,12 @@
         "group": "缓存",
         "lyrics": {
           "label": "启用歌词缓存"
+        },
+        "clearAll": {
+          "label": "清除缓存",
+          "info": "移除本地存储的歌词，专辑封面和动画艺术作品URL。",
+          "button": "清除所有",
+          "success": "成功清除缓存。"
         }
       },
       "features": {

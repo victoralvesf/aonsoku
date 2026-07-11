@@ -61,12 +61,15 @@
     "achiever": "Triunfador",
     "cool": "Cool",
     "discord": "Discord",
-    "everforest-dark": "Everforest oscuro",
+    "everforest-dark": "Bosque perenne oscuro",
     "huacat-pink": "Huacat Pink",
     "vue-dark": "Vue oscuro",
     "vim-dark-soft": "Vim oscuro claro",
     "dracula": "Drácula",
-    "tinacious-design": "Tinacious Design"
+    "tinacious-design": "Tinacious Design",
+    "vesper": "Víspera",
+    "mirage": "Espejismo",
+    "arduino-light": "Luz Arduino"
   },
   "playlist": {
     "headline": "Lista de reproducción",
@@ -749,6 +752,18 @@
           "error": "Ha fallado al purgar algunas cachés.",
           "label": "Purgar Caché",
           "info": "Elimina las letras caché localmente, el arte del álbum y las URL de artes gráficos animados."
+        }
+      },
+      "home": {
+        "group": "Inicio",
+        "description": "Personaliza el contenido de la página inicial.",
+        "autoScroll": {
+          "label": "Habilitar el desplazamiento automático del carrusel",
+          "info": "Cuando está activada, el carrusel de la página de inicio se desplazará automáticamente después de 10 segundos."
+        },
+        "loop": {
+          "label": "Habilitar bucle de carrusel",
+          "info": "Cuando está activada, el carrusel de la página de inicio volverá a la primera canción tras llegar al final."
         }
       }
     },
