@@ -85,7 +85,7 @@
     "idb-keyval": "^6.2.2",
     "immer": "^10.1.1",
     "iso-639-2": "^3.0.2",
-    "linkify-it": "^5.0.0",
+    "linkify-it": "^5.0.2",
     "lodash": "^4.17.23",
     "lucide-react": "^0.563.0",
     "react": "^18.3.1",
