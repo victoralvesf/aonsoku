@@ -129,7 +129,7 @@
     "@types/react-lazy-load-image-component": "^1.6.4",
     "@vitejs/plugin-react": "^5.2.0",
     "autoprefixer": "^10.4.21",
-    "cypress": "^15.9.0",
+    "cypress": "^15.18.1",
     "cypress-real-events": "^1.15.0",
     "electron": "^42.6.1",
     "electron-builder": "^26.4.0",
