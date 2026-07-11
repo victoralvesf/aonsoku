@@ -99,7 +99,7 @@
     "react-lazy-load-image-component": "^1.6.3",
     "react-lrc": "^3.2.1",
     "react-markdown": "^10.1.0",
-    "react-router-dom": "^6.30.3",
+    "react-router-dom": "^6.30.4",
     "react-toastify": "^10.0.6",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
