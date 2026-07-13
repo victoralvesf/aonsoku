@@ -43,7 +43,7 @@ jobs:
           else
             if [[ "${{ matrix.os }}" == "macos-latest" && "${{ inputs.run_mac }}" == "true" ]]; then SHOULD_RUN="true"; fi
             if [[ "${{ matrix.os }}" == "ubuntu-latest" && "${{ inputs.run_linux }}" == "true" ]]; then SHOULD_RUN="true"; fi
-            if [[ "${{ matrix.os }}" == "windows-latest" && "${{ inputs.run_win }}" == "true" ]]; then SHOULD_RUN="true"; fi
+            if [[ "${{ matrix.os }}" == "windows-2022" && "${{ inputs.run_win }}" == "true" ]]; then SHOULD_RUN="true"; fi
           fi
 
           echo "SHOULD_RUN=$SHOULD_RUN" >> $GITHUB_ENV
