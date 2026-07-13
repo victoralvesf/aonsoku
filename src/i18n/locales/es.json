@@ -61,11 +61,15 @@
     "achiever": "Triunfador",
     "cool": "Cool",
     "discord": "Discord",
+    "everforest-dark": "Bosque perenne oscuro",
     "huacat-pink": "Huacat Pink",
     "vue-dark": "Vue oscuro",
     "vim-dark-soft": "Vim oscuro claro",
     "dracula": "Drácula",
-    "tinacious-design": "Tinacious Design"
+    "tinacious-design": "Tinacious Design",
+    "vesper": "Víspera",
+    "mirage": "Espejismo",
+    "arduino-light": "Luz Arduino"
   },
   "playlist": {
     "headline": "Lista de reproducción",
@@ -368,7 +372,7 @@
     "download": "Descargar",
     "playlist": {
       "add": "Añadir a lista de reproducción",
-      "edit": "Editar Lista de Reproducción",
+      "edit": "Editar lista de reproducción",
       "delete": "Eliminar lista de reproducción",
       "search": "Encontrar una lista de reproducción",
       "create": "Nueva lista de reproducción",
@@ -494,6 +498,9 @@
     },
     "navigation": {
       "label": "Navegación"
+    },
+    "sidebar": {
+      "toggle": "Conmutar barra lateral"
     }
   },
   "songInfo": {
@@ -508,7 +515,8 @@
     "dialog": {
       "title": "¡Nueva Versión Disponible!",
       "remindLater": "Recordarme Más Tarde",
-      "install": "Instalar y Reiniciar"
+      "install": "Instalar y Reiniciar",
+      "macOS": "Descarga en GitHub"
     },
     "toasts": {
       "started": "El proceso de actualización ha comenzado.",
@@ -567,7 +575,8 @@
         "success": "Podcast creado correctamente! Estará disponible para escuchar en unos pocos minutos!"
       },
       "addButton": "Añadir Podcast",
-      "latestEpisodes": "Últimos Episodios"
+      "latestEpisodes": "Últimos Episodios",
+      "all": "Examinar"
     },
     "emptyPage": {
       "message": "No se agregaron podcasts",
@@ -634,7 +643,9 @@
       "content": "Contenido",
       "appearance": "Apariencia",
       "language": "Lenguaje & Región",
-      "privacy": "Privacidad & Seguridad"
+      "privacy": "Privacidad & Seguridad",
+      "accounts": "Cuentas",
+      "desktop": "Aplicación de Escritorio"
     },
     "appearance": {
       "general": {
@@ -707,6 +718,53 @@
       "sidebar": {
         "group": "Barra lateral",
         "description": "Mostrar u ocultar secciones en la barra lateral."
+      },
+      "images": {
+        "group": "Imágenes",
+        "description": "Personaliza ajustes de imágenes.",
+        "cacheLayer": {
+          "info": "Cuando esté habilitado, las imágenes serán cacheadas localmente para mejorar el rendimiento.",
+          "label": "Habilitar Caché de Imagen"
+        }
+      },
+      "features": {
+        "group": "Características",
+        "description": "Habilita o inhabilita características de cliente"
+      },
+      "caches": {
+        "group": "Cachés",
+        "description": "Controla qué archivos almacena la aplicación en caché localmente.",
+        "images": {
+          "label": "Habilitar caché de imagen",
+          "info": "Cuando está habilitada, las imágenes se almacenarán en caché localmente para mejorar el rendimiento."
+        },
+        "lyrics": {
+          "label": "Habilitar caché de letras",
+          "info": "Cuando está habilitada, la letra de las canciones se almacena localmente para que se cargue instantáneamente en las siguientes visualizaciones."
+        },
+        "media": {
+          "label": "Habilitar caché de medios",
+          "info": "Cuando habilitado, el navegador puede cachear sonido por stream. Inutiliza para forzar el navegador a obtener medios cada vez."
+        },
+        "clearAll": {
+          "button": "Purgar Todo",
+          "success": "Caché vaciada correctamente.",
+          "error": "Ha fallado al purgar algunas cachés.",
+          "label": "Purgar Caché",
+          "info": "Elimina las letras caché localmente, el arte del álbum y las URL de artes gráficos animados."
+        }
+      },
+      "home": {
+        "group": "Inicio",
+        "description": "Personaliza el contenido de la página inicial.",
+        "autoScroll": {
+          "label": "Habilitar el desplazamiento automático del carrusel",
+          "info": "Cuando está activada, el carrusel de la página de inicio se desplazará automáticamente después de 10 segundos."
+        },
+        "loop": {
+          "label": "Habilitar bucle de carrusel",
+          "info": "Cuando está activada, el carrusel de la página de inicio volverá a la primera canción tras llegar al final."
+        }
       }
     },
     "privacy": {
@@ -714,18 +772,74 @@
         "group": "Servicios Externos",
         "lrclib": {
           "info": "LRCLIB es usado para encontrar letras de canciones.",
-          "label": "LRCLIB"
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Utilizar una URL personalizada",
+            "info": "Utiliza una URL personalizada para LRCLIB en lugar de la predeterminada.",
+            "label": "URL",
+            "example": "Ejemplo: https://my-lrclib.com"
+          }
         },
-        "description": "Organiza los servicios externos a los que Aonsoku puede acceder."
+        "description": "Organiza los servicios externos a los que Aonsoku puede acceder.",
+        "animatedCover": {
+          "enabled": {
+            "label": "Habilita coberturas animadas",
+            "info": "Cuando está habilitado, las coberturas animadas serán cargadas desde un servicio externo cuando esté disponible."
+          },
+          "customUrl": {
+            "toggle": "Utiliza una URL personalizada",
+            "info": "Utiliza una URL personalizada para el API de artes gráficas animadas de una por defecto.",
+            "label": "URL",
+            "example": "Predet.: https://artwork.m8tec.top"
+          },
+          "screens": {
+            "album": {
+              "label": "Página de álbum",
+              "info": "Habilita coberturas animadas dentro de la vista de cabecera del álbum."
+            },
+            "fullscreen": {
+              "label": "Reproductor Grande",
+              "info": "Habilita coberturas animadas para la cubierta de la canción actual en el Reproductor Grande."
+            },
+            "playerBar": {
+              "label": "Barra Inferior de Reproductor",
+              "info": "Habilita coberturas animadas para la cubierta de la canción actual dentro de la barra del reproductor."
+            },
+            "drawer": {
+              "label": "Cola y Líricas",
+              "info": "Habilita coberturas animadas para la cubierta de la canción actual en la Cola y el cajón de Líricas."
+            }
+          }
+        }
       }
     },
-    "label": "Configuración"
+    "label": "Configuración",
+    "accounts": {
+      "discord": {
+        "group": "Discord Rich Presence",
+        "description": "Comparte la canción que reproduciéndose con amigos en Discord.",
+        "enabled": {
+          "label": "Habilitar integración"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "General",
+        "description": "Personaliza preferencias para la aplicación de escritorio.",
+        "tray": {
+          "label": "Minimizar a bandeja",
+          "info": "Cuando está habilitada, la aplicación se minimizará a la bandeja del sistema en lugar de cerrarse al pulsar en el botón de cerrar."
+        }
+      }
+    }
   },
   "genre": {
     "headline": "Género"
   },
   "genres": {
     "albumCount_one": "{{count}} álbum",
+    "albumCount_many": "{{count}} álbumes",
     "albumCount_other": "{{count}} álbumes",
     "buttons": {
       "shuffleTracks": "Canciones aleatorias",

@@ -1,11 +1,11 @@
 # Build stage
-FROM node:20-alpine AS build
+FROM node:24-alpine AS build
 
 WORKDIR /app
 
-RUN npm install -g pnpm
-COPY package.json ./
-COPY pnpm-lock.yaml ./
+RUN corepack enable
+COPY package.json pnpm-lock.yaml ./
+RUN corepack install
 RUN pnpm install --ignore-scripts
 COPY . .
 RUN pnpm run build

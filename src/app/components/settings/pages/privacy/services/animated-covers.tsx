@@ -127,7 +127,9 @@ export function AnimatedCoversSettings() {
             'settings.privacy.services.animatedCover.screens.fullscreen.info',
           )}
         >
-          {t('settings.privacy.services.animatedCover.screens.fullscreen.label')}
+          {t(
+            'settings.privacy.services.animatedCover.screens.fullscreen.label',
+          )}
         </ContentItemTitle>
         <ContentItemForm>
           <Switch
@@ -155,12 +157,17 @@ export function AnimatedCoversSettings() {
 
       <ContentItem>
         <ContentItemTitle
-          info={t('settings.privacy.services.animatedCover.screens.drawer.info')}
+          info={t(
+            'settings.privacy.services.animatedCover.screens.drawer.info',
+          )}
         >
           {t('settings.privacy.services.animatedCover.screens.drawer.label')}
         </ContentItemTitle>
         <ContentItemForm>
-          <Switch checked={screens.drawer} onCheckedChange={screens.setDrawer} />
+          <Switch
+            checked={screens.drawer}
+            onCheckedChange={screens.setDrawer}
+          />
         </ContentItemForm>
       </ContentItem>
 

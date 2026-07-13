@@ -2,6 +2,7 @@ import { Row } from '@tanstack/react-table'
 import { SongMenuOptions } from '@/app/components/song/menu-options'
 import { TableActionButton } from '@/app/components/table/action-button'
 import { TableLikeButton } from '@/app/components/table/like-button'
+import { useAppStore } from '@/store/app.store'
 import { ISong } from '@/types/responses/song'
 
 interface SongTableActionsProps {
@@ -9,6 +10,8 @@ interface SongTableActionsProps {
 }
 
 export function SongTableActions({ row }: SongTableActionsProps) {
+  const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
+
   return (
     <div className="flex gap-1 items-center">
       <TableActionButton
@@ -20,11 +23,13 @@ export function SongTableActions({ row }: SongTableActionsProps) {
           />
         }
       />
-      <TableLikeButton
-        type="song"
-        entityId={row.original.id}
-        starred={typeof row.original.starred === 'string'}
-      />
+      {!hideFavoritesSection && (
+        <TableLikeButton
+          type="song"
+          entityId={row.original.id}
+          starred={typeof row.original.starred === 'string'}
+        />
+      )}
     </div>
   )
 }

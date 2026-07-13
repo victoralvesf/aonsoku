@@ -3,23 +3,23 @@ name: Release Desktop
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
     inputs:
       target_tag:
-        description: 'Release tag'
+        description: Release tag
         required: true
-        default: 'v0.x.x'
+        default: v0.x.x
       run_linux:
-        description: 'Build for Linux?'
+        description: Build for Linux?
         type: boolean
         default: true
       run_mac:
-        description: 'Build for macOS?'
+        description: Build for macOS?
         type: boolean
         default: true
       run_win:
-        description: 'Build for Windows?'
+        description: Build for Windows?
         type: boolean
         default: true
 
@@ -45,7 +45,7 @@ jobs:
             if [[ "${{ matrix.os }}" == "ubuntu-latest" && "${{ inputs.run_linux }}" == "true" ]]; then SHOULD_RUN="true"; fi
             if [[ "${{ matrix.os }}" == "windows-latest" && "${{ inputs.run_win }}" == "true" ]]; then SHOULD_RUN="true"; fi
           fi
-          
+
           echo "SHOULD_RUN=$SHOULD_RUN" >> $GITHUB_ENV
           echo "Decision for ${{ matrix.os }}: $SHOULD_RUN"
 
@@ -62,13 +62,13 @@ jobs:
         if: env.SHOULD_RUN == 'true'
         uses: pnpm/action-setup@v3
         with:
-          version: 9.15.2
+          version: 11.9.0
 
       - name: Setup Node.js and cache
         if: env.SHOULD_RUN == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: "pnpm"
 
       - name: Install dependencies

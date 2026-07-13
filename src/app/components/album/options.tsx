@@ -6,6 +6,7 @@ import {
   DropdownMenuSeparator,
 } from '@/app/components/ui/dropdown-menu'
 import { useOptions } from '@/app/hooks/use-options'
+import { useAppStore } from '@/store/app.store'
 import { SingleAlbum } from '@/types/responses/album'
 
 interface AlbumOptionsProps {
@@ -13,6 +14,7 @@ interface AlbumOptionsProps {
 }
 
 export function AlbumOptions({ album }: AlbumOptionsProps) {
+  const hidePlaylistsSection = useAppStore().pages.hidePlaylistsSection
   const {
     playNext,
     playLast,
@@ -51,14 +53,18 @@ export function AlbumOptions({ album }: AlbumOptionsProps) {
         <OptionsButtons.PlayNext onClick={handlePlayNext} />
         <OptionsButtons.PlayLast onClick={handlePlayLast} />
       </DropdownMenuGroup>
-      <DropdownMenuSeparator />
-      <OptionsButtons.AddToPlaylistOption variant="dropdown">
-        <AddToPlaylistSubMenu
-          type="dropdown"
-          newPlaylistFn={handleCreateNewPlaylist}
-          addToPlaylistFn={handleAddToPlaylist}
-        />
-      </OptionsButtons.AddToPlaylistOption>
+      {!hidePlaylistsSection && (
+        <>
+          <DropdownMenuSeparator />
+          <OptionsButtons.AddToPlaylistOption variant="dropdown">
+            <AddToPlaylistSubMenu
+              type="dropdown"
+              newPlaylistFn={handleCreateNewPlaylist}
+              addToPlaylistFn={handleAddToPlaylist}
+            />
+          </OptionsButtons.AddToPlaylistOption>
+        </>
+      )}
       <DownloadOptionHandler>
         <OptionsButtons.Download onClick={handleDownload} />
       </DownloadOptionHandler>

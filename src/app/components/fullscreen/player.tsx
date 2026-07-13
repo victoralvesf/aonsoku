@@ -1,3 +1,4 @@
+import { useAppStore } from '@/store/app.store'
 import { CloseFullscreenButton } from './buttons'
 import { FullscreenControls } from './controls'
 import { LikeButton } from './like-button'
@@ -6,6 +7,7 @@ import { FullscreenSettings } from './settings'
 import { VolumeContainer } from './volume-container'
 
 export function FullscreenPlayer() {
+  const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
   return (
     <div className="w-full">
       <FullscreenProgress />
@@ -21,7 +23,7 @@ export function FullscreenPlayer() {
         </div>
 
         <div className="w-[200px] flex items-center gap-4 justify-end">
-          <LikeButton />
+          {!hideFavoritesSection && <LikeButton />}
           <VolumeContainer />
         </div>
       </div>

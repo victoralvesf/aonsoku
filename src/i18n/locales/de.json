@@ -34,6 +34,7 @@
     "bearded-solarized": "Bearded Solarized",
     "catppuccin-mocha": "Catppuccin Mocha",
     "discord": "Discord",
+    "everforest-dark": "Everforest dark",
     "tinacious-design": "Tinacious Design",
     "vue-dark": "Vue Dark",
     "vim-dark-soft": "Vim Dark Soft"
@@ -517,7 +518,8 @@
     "dialog": {
       "title": "Neue Version verfügbar!",
       "remindLater": "Später erinnern",
-      "install": "Installieren und neu starten"
+      "install": "Installieren und neu starten",
+      "macOS": "Von Github herunterladen"
     },
     "toasts": {
       "started": "Der Aktualisierungsprozess wurde gestartet.",
@@ -609,7 +611,10 @@
           "info": "LRCLIB wird für Liedtexte verwendet.",
           "label": "LRCLIB",
           "customUrl": {
-            "toggle": "Benutzerdefinierte URL verwenden"
+            "toggle": "Benutzerdefinierte URL verwenden",
+            "info": "Verwende eine benutzerdefinierte URL für LRCLIB anstelle der Standard-URL.",
+            "label": "URL",
+            "example": "Beispiel: https://my-lrclib.com"
           }
         },
         "animatedCover": {
@@ -629,16 +634,16 @@
               "info": "Animierte Cover in der Album-Header-Ansicht aktivieren."
             },
             "fullscreen": {
-              "label": "Vollbild-Player",
-              "info": "Animierte Cover im Vollbild-Player aktivieren."
+              "label": "Großer Player",
+              "info": "Aktiviere animierte Cover für das aktuelle Song-Cover im Big Player."
             },
             "playerBar": {
               "label": "Untere Player-Leiste",
-              "info": "Animierte Cover für das aktuelle Song-Cover in der unteren Player-Leiste aktivieren."
+              "info": "Animierte Cover für das aktuelle Songcover in der unteren Player-Leiste aktivieren."
             },
             "drawer": {
-              "label": "Queue/Lyrics Drawer",
-              "info": "Animierte Cover für das aktuelle Song-Cover im Queue/Lyrics-Drawer aktivieren."
+              "label": "Warteschlange und Songtexte",
+              "info": "Aktiviere animierte Cover für das aktuelle Song-Cover in der Warteschlange und im Songtext-Drawer"
             }
           }
         }
@@ -664,6 +669,24 @@
         "service": {
           "url": "URL des Podcast-Dienstes"
         }
+      },
+      "images": {
+        "group": "Bilder",
+        "description": "Bildeinstellungen anpassen.",
+        "cacheLayer": {
+          "info": "Wenn diese Option aktiviert ist, werden Bilder lokal zwischengespeichert, um die Leistung zu verbessern.",
+          "label": "Bild-Cache aktivieren"
+        }
+      },
+      "home": {
+        "group": "Startseite",
+        "description": "Passen Sie den Inhalt der Startseite an."
+      },
+      "caches": {
+        "clearAll": {
+          "button": "Alles löschen",
+          "success": "Caches wurde erfolgreich gelöscht."
+        }
       }
     },
     "accounts": {
@@ -671,7 +694,8 @@
         "description": "Teile das aktuell abgespielte Lied mit Freunden auf Discord.",
         "enabled": {
           "label": "Integration aktivieren"
-        }
+        },
+        "group": "Discord Rich Presence"
       }
     },
     "desktop": {

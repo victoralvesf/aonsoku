@@ -211,6 +211,18 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.pages.imagesCacheLayerEnabled = value
               })
             },
+            lyricsCacheEnabled: true,
+            setLyricsCacheEnabled: (value) => {
+              set((state) => {
+                state.pages.lyricsCacheEnabled = value
+              })
+            },
+            mediaCacheEnabled: true,
+            setMediaCacheEnabled: (value) => {
+              set((state) => {
+                state.pages.mediaCacheEnabled = value
+              })
+            },
             isAllSectionsHidden: () => {
               const {
                 hideArtistsSection,
@@ -233,6 +245,18 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 hideRadiosSection &&
                 !isPodcastsActive
               )
+            },
+            homeAutoScrollEnabled: true,
+            setHomeAutoScrollEnabled: (value) => {
+              set((state) => {
+                state.pages.homeAutoScrollEnabled = value
+              })
+            },
+            homeLoopEnabled: true,
+            setHomeLoopEnabled: (value) => {
+              set((state) => {
+                state.pages.homeLoopEnabled = value
+              })
             },
           },
           desktop: {
@@ -363,6 +387,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                   HIDE_PLAYLISTS_SECTION ?? false
                 state.pages.hideRadiosSection = HIDE_RADIOS_SECTION ?? false
                 state.pages.artistsPageViewType = 'table'
+                state.pages.homeAutoScrollEnabled = true
+                state.pages.homeLoopEnabled = true
                 state.podcasts.active = false
                 state.podcasts.serviceUrl = ''
                 state.podcasts.useDefaultUser = true
@@ -395,6 +421,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             let hidePlaylistsSection = false
             let hideRadiosSection = false
             let enableImageCache = false
+            let enableLyricsCache = true
+            let enableMediaCache = true
 
             if (persisted && persisted.pages) {
               hideArtistsSection = persisted.pages.hideArtistsSection ?? false
@@ -407,6 +435,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
               hideRadiosSection = persisted.pages.hideRadiosSection ?? false
               enableImageCache =
                 persisted.pages.imagesCacheLayerEnabled ?? false
+              enableLyricsCache = persisted.pages.lyricsCacheEnabled ?? true
+              enableMediaCache = persisted.pages.mediaCacheEnabled ?? true
             }
             if (HIDE_ARTISTS_SECTION !== undefined) {
               hideArtistsSection = HIDE_ARTISTS_SECTION
@@ -446,6 +476,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                   hidePlaylistsSection,
                   hideRadiosSection,
                   imagesCacheLayerEnabled: enableImageCache,
+                  lyricsCacheEnabled: enableLyricsCache,
+                  mediaCacheEnabled: enableMediaCache,
                 },
               }
 
@@ -468,6 +500,8 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 hidePlaylistsSection,
                 hideRadiosSection,
                 imagesCacheLayerEnabled: enableImageCache,
+                lyricsCacheEnabled: enableLyricsCache,
+                mediaCacheEnabled: enableMediaCache,
               },
             }
 
@@ -559,3 +593,16 @@ export const useAppImagesCacheLayer = () =>
     imagesCacheLayerEnabled: state.pages.imagesCacheLayerEnabled,
     setImagesCacheLayerEnabled: state.pages.setImagesCacheLayerEnabled,
   }))
+
+export const useAppCaches = () =>
+  useAppStore((state) => ({
+    imagesCacheLayerEnabled: state.pages.imagesCacheLayerEnabled,
+    setImagesCacheLayerEnabled: state.pages.setImagesCacheLayerEnabled,
+    lyricsCacheEnabled: state.pages.lyricsCacheEnabled,
+    setLyricsCacheEnabled: state.pages.setLyricsCacheEnabled,
+    mediaCacheEnabled: state.pages.mediaCacheEnabled,
+    setMediaCacheEnabled: state.pages.setMediaCacheEnabled,
+  }))
+
+export const useAppMediaCache = () =>
+  useAppStore((state) => state.pages.mediaCacheEnabled)

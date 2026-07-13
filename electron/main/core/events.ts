@@ -7,6 +7,7 @@ import {
 } from '../../preload/types'
 import { isQuitting } from '../index'
 import { tray, updateTray } from '../tray'
+import { updateDockMenu } from './dockMenu'
 import { colorsState } from './colors'
 import {
   clearDiscordRpcActivity,
@@ -28,6 +29,7 @@ export function setupEvents(window: BrowserWindow | null) {
   window.on('show', () => {
     setTaskbarButtons()
     updateTray()
+    updateDockMenu()
   })
 
   window.on('hide', () => {
@@ -161,6 +163,7 @@ export function setupIpcEvents(window: BrowserWindow | null) {
       setTimeout(() => {
         setTaskbarButtons()
         updateTray()
+        updateDockMenu()
       }, 150)
     },
   )

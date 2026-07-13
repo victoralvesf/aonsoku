@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Actions } from '@/app/components/actions'
 import { useSongList } from '@/app/hooks/use-song-list'
 import { subsonic } from '@/service/subsonic'
-import { useAppPages } from '@/store/app.store'
+import { useAppPages, useAppStore } from '@/store/app.store'
 import {
   useIsArtistPlaying,
   usePlayerActions,
@@ -32,6 +32,7 @@ export function ArtistButtons({
   const isShuffleActive = usePlayerStore(
     (state) => state.playerState.isShuffleActive,
   )
+  const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
   const isArtistStarred = artist.starred !== undefined
 
   const queryClient = useQueryClient()
@@ -115,10 +116,16 @@ export function ArtistButtons({
         <Actions.ShuffleIcon />
       </Actions.Button>
 
-      <Actions.Button tooltip={buttonsTooltips.like} onClick={handleLikeButton}>
-        <Actions.LikeIcon isStarred={isArtistStarred} />
-      </Actions.Button>
-
+      {!hideFavoritesSection && (
+        <>
+          <Actions.Button
+            tooltip={buttonsTooltips.like}
+            onClick={handleLikeButton}
+          >
+            <Actions.LikeIcon isStarred={isArtistStarred} />
+          </Actions.Button>
+        </>
+      )}
       {showInfoButton && (
         <Actions.Button
           tooltip={buttonsTooltips.info}

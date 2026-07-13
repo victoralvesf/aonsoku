@@ -59,6 +59,7 @@
     "catppuccin-mocha": "Catppuccin Mocha",
     "dracula": "Dracula",
     "discord": "Discord",
+    "everforest-dark": "Everforest dark",
     "tinacious-design": "Tinacious Design",
     "vue-dark": "Vue Dark",
     "vim-dark-soft": "Vim Dark Soft",
@@ -751,7 +752,6 @@
     "albumCount_one": "{{count}} альбом",
     "albumCount_few": "{{count}} альбома",
     "albumCount_many": "{{count}} альбомов",
-    "albumCount_other": "{{count}} альбомов",
     "buttons": {
       "shuffleTracks": "Перемешать треки",
       "shuffleAlbums": "Перемешать альбомы"

@@ -1061,6 +1061,15 @@ usePlayerStore.subscribe(
   },
 )
 
+usePlayerStore.subscribe(
+  (state) => state.playerProgress.progress,
+  (progress, prevProgress) => {
+    if (Math.abs(progress - prevProgress) > 0.02) {
+      discordRpc.sendCurrentSong()
+    }
+  },
+)
+
 usePlayerStore.subscribe((state, prevState) => {
   const currentSong = state.songlist.currentSong ?? null
 

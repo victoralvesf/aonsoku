@@ -7,5 +7,8 @@ declare global {
   interface Window {
     electron: ElectronAPI
     api: IAonsokuAPI
+    envVars: {
+      XDG_CURRENT_DESKTOP: string | undefined
+    }
   }
 }

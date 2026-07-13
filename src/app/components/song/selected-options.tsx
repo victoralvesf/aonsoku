@@ -7,6 +7,7 @@ import {
   ContextMenuSeparator,
 } from '@/app/components/ui/context-menu'
 import { useOptions } from '@/app/hooks/use-options'
+import { useAppStore } from '@/store/app.store'
 import { ISong } from '@/types/responses/song'
 import { AddToPlaylistSubMenu } from './add-to-playlist'
 
@@ -17,6 +18,7 @@ interface SelectedSongsProps {
 export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
   const { t } = useTranslation()
   const songOptions = useOptions()
+  const hidePlaylistsSection = useAppStore().pages.hidePlaylistsSection
 
   const { rows } = table.getFilteredSelectedRowModel()
   const isSingleSelected = rows.length === 1
@@ -82,14 +84,18 @@ export function SelectedSongsMenuOptions({ table }: SelectedSongsProps) {
           handlePlayLast()
         }}
       />
-      <ContextMenuSeparator />
-      <OptionsButtons.AddToPlaylistOption variant="context">
-        <AddToPlaylistSubMenu
-          type="context"
-          newPlaylistFn={handleCreateNewPlaylist}
-          addToPlaylistFn={handleAddToPlaylist}
-        />
-      </OptionsButtons.AddToPlaylistOption>
+      {!hidePlaylistsSection && (
+        <>
+          <ContextMenuSeparator />
+          <OptionsButtons.AddToPlaylistOption variant="context">
+            <AddToPlaylistSubMenu
+              type="context"
+              newPlaylistFn={handleCreateNewPlaylist}
+              addToPlaylistFn={handleAddToPlaylist}
+            />
+          </OptionsButtons.AddToPlaylistOption>
+        </>
+      )}
       {songOptions.isOnPlaylistPage && (
         <OptionsButtons.RemoveFromPlaylist
           variant="context"

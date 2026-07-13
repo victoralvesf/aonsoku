@@ -8,6 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
+import { useAppStore } from '@/store/app.store'
 import { AlbumListType } from '@/types/responses/album'
 import {
   AlbumsFilters,
@@ -18,12 +19,17 @@ import {
 import { scrollPageToTop } from '@/utils/scrollPageToTop'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
-const hiddenFilters = [AlbumsFilters.ByDiscography, AlbumsFilters.Search]
-
 export function AlbumsMainFilter() {
+  const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const { getSearchParam } = new SearchParamsHandler(searchParams)
+
+  const hiddenFilters = [
+    AlbumsFilters.ByDiscography,
+    AlbumsFilters.Search,
+    ...(hideFavoritesSection ? [AlbumsFilters.Starred] : []),
+  ]
 
   const currentFilter = getSearchParam<AlbumListType>(
     AlbumsSearchParams.MainFilter,

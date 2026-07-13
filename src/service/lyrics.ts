@@ -1,5 +1,7 @@
 import { get, set } from 'idb-keyval'
+import { iso6392BTo1, iso6392TTo1 } from 'iso-639-2'
 import { httpClient } from '@/api/httpClient'
+import { useAppStore } from '@/store/app.store'
 import { usePlayerStore } from '@/store/player.store'
 import {
   ILyric,
@@ -10,6 +12,22 @@ import {
 } from '@/types/responses/song'
 import { lrclibClient } from '@/utils/appName'
 import { checkServerType, getServerExtensions } from '@/utils/servers'
+
+// normalizes the ISO 639 code returned by the server to the BCP 47 language tag recognized by the html lang selector
+function normalizeLangCode(lang: string | undefined): string | undefined {
+  if (!lang) return lang
+
+  const parts = lang.split('-')
+  const primary = parts[0].toLowerCase()
+
+  const mapped = iso6392BTo1[primary] ?? iso6392TTo1[primary]
+  if (mapped) {
+    parts[0] = mapped
+    return parts.join('-')
+  }
+
+  return lang
+}
 
 interface GetLyricsData {
   id: string
@@ -30,6 +48,7 @@ interface LRCLibResponse {
 async function getLyrics(getLyricsData: GetLyricsData) {
   const { preferSyncedLyrics } = usePlayerStore.getState().settings.lyrics
   const { songLyricsEnabled } = getServerExtensions()
+  const cacheEnabled = useAppStore.getState().pages.lyricsCacheEnabled
 
   const cacheKey = getLyricsCacheKey(
     getLyricsData,
@@ -37,7 +56,14 @@ async function getLyrics(getLyricsData: GetLyricsData) {
     songLyricsEnabled,
   )
 
-  const cachedLyrics = await get(cacheKey)
+  const readCache = cacheEnabled
+    ? (key: string) => get(key)
+    : async () => undefined
+  const writeCache = cacheEnabled
+    ? (key: string, value: unknown) => set(key, value)
+    : () => undefined
+
+  const cachedLyrics = await readCache(cacheKey)
 
   if (cachedLyrics) {
     return cachedLyrics
@@ -70,7 +96,7 @@ async function getLyrics(getLyricsData: GetLyricsData) {
         if (syncedLyrics) {
           const serverSyncedLyrics = osStructuredLyricsToILyric(syncedLyrics)
 
-          set(cacheKey, serverSyncedLyrics)
+          writeCache(cacheKey, serverSyncedLyrics)
 
           return serverSyncedLyrics
         }
@@ -85,7 +111,7 @@ async function getLyrics(getLyricsData: GetLyricsData) {
     const lyrics = await getLyricsFromLRCLib(getLyricsData)
 
     if (lyrics.value !== '') {
-      set(cacheKey, lyrics)
+      writeCache(cacheKey, lyrics)
 
       return lyrics
     }
@@ -94,7 +120,7 @@ async function getLyrics(getLyricsData: GetLyricsData) {
   // if the server supported the songLyrics extension and lrc did not have lyrics, we don't need to query the server and lrc again.
   // so return the plain lyrics if we found them
   if (osUnsyncedLyricsFound) {
-    set(cacheKey, osUnsyncedLyricsFound)
+    writeCache(cacheKey, osUnsyncedLyricsFound)
 
     return osUnsyncedLyricsFound
   }
@@ -118,14 +144,14 @@ async function getLyrics(getLyricsData: GetLyricsData) {
     const lyrics = await getLyricsFromLRCLib(getLyricsData)
 
     if (lyrics.value !== '') {
-      set(cacheKey, lyrics)
+      writeCache(cacheKey, lyrics)
     }
 
     return lyrics
   }
 
   if (response?.data.lyrics) {
-    set(cacheKey, response.data.lyrics)
+    writeCache(cacheKey, response.data.lyrics)
   }
 
   return response?.data.lyrics
@@ -149,6 +175,7 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
       artist,
       title,
       value: '',
+      lang: 'xxx',
     }
   }
 
@@ -192,6 +219,7 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
         artist,
         title,
         value: formatLyrics(finalLyric),
+        lang: 'xxx',
       }
     }
   } catch {}
@@ -200,6 +228,7 @@ async function getLyricsFromLRCLib(getLyricsData: GetLyricsData) {
     artist,
     title,
     value: '',
+    lang: 'xxx',
   }
 }
 
@@ -226,6 +255,7 @@ function osStructuredLyricsToILyric(lyrics: IStructuredLyric): ILyric {
   return {
     artist: lyrics.displayArtist,
     title: lyrics.displayTitle,
+    lang: normalizeLangCode(lyrics.lang),
     value: formatLyrics(lyrics.line.map(osLineToILyricLine).join('\n')),
   }
 }

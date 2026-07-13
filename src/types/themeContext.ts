@@ -16,9 +16,13 @@ export enum Theme {
   Achiever = 'achiever',
   Dracula = 'dracula',
   Discord = 'discord',
+  EverforstDark = 'everforest-dark',
   TinaciousDesign = 'tinacious-design',
   VueDark = 'vue-dark',
   VimDarkSoft = 'vim-dark-soft',
+  Vesper = 'vesper',
+  Mirage = 'mirage',
+  ArduinoLight = 'arduino-light',
 }
 
 export interface IThemeContext {

@@ -105,10 +105,14 @@
     "discord": "Discord",
     "vue-dark": "Vue Dark",
     "vim-dark-soft": "Vim Dark Soft",
+    "everforest-dark": "Everforest Dark",
     "label": "Motyw",
     "black": "Czarno-Biały",
     "light": "Jasny",
-    "tinacious-design": "Tinacious Design"
+    "tinacious-design": "Tinacious Design",
+    "vesper": "Vesper",
+    "mirage": "Miraż",
+    "arduino-light": "Arduino Jasny"
   },
   "podcasts": {
     "form": {
@@ -670,12 +674,43 @@
           "label": "Włącz Integrację"
         }
       },
-      "images": {
-        "group": "Obrazy",
-        "description": "Zmień ustawienia obrazów.",
-        "cacheLayer": {
-          "info": "Gdy włączone, obrazy będą zapisywane lokalnie w pamięci podręcznej aby poprawić wydajność.",
-          "label": "Włącz pamięć podręczną obrazów"
+      "caches": {
+        "images": {
+          "label": "Włącz pamięć podręczną obrazów",
+          "info": "Gdy włączone, obrazy będą zapisywane lokalnie w pamięci podręcznej aby poprawić wydajność."
+        },
+        "group": "Pamięci podręczne",
+        "description": "Kontroluj co aplikacja zapisuje lokalnie w pamięci podręcznej.",
+        "lyrics": {
+          "label": "Włącz pamięć podręczną tekstów",
+          "info": "Gdy włączone, pobrane teksty piosenek są zapisywane lokalnie aby załadować się od razu przy ponownych wyświetleniach."
+        },
+        "media": {
+          "label": "Włącz pamięć podręczną mediów",
+          "info": "Gdy włączone, przeglądarka może zapisywać w pamięci podręcznej strumieniowane audio, Wyłącz to aby wymusić pobieranie mediów od nowa za każdym razem przez przeglądarkę."
+        },
+        "clearAll": {
+          "label": "Wyczyść pamięci podręczne",
+          "info": "Usuwa lokalnie zapisane teksty, okładki, i adresy URL animowanych okładek.",
+          "button": "Wyczyść wszystko",
+          "success": "Pamięci podręczne wyczyszczone pomyślnie.",
+          "error": "Nie udało się wyczyścić niektórych pamięci podręcznych."
+        }
+      },
+      "features": {
+        "group": "Funkcje",
+        "description": "Włącz lub wyłącz funkcje klienta"
+      },
+      "home": {
+        "description": "Dostosuj zawartość strony głównej.",
+        "group": "Strona główna",
+        "autoScroll": {
+          "label": "Włącz automatyczne przesuwanie się karuzeli",
+          "info": "Gdy włączone, karuzela na stronie głównej automatycznie się przesunie po 10 sekundach."
+        },
+        "loop": {
+          "label": "Włącz zapętlenie karuzeli",
+          "info": "Gdy włączone, karuzela na stronie głównej wróci do pierwszej piosenki po dojściu do końca."
         }
       }
     },
@@ -753,7 +788,7 @@
         "group": "Discord Rich Presence",
         "description": "Udostępniaj aktualnie odtwarzaną piosenkę z znajomymi na Discordzie.",
         "enabled": {
-          "label": "Włącz jntegrację"
+          "label": "Włącz integrację"
         }
       }
     },
@@ -796,7 +831,6 @@
     "albumCount_one": "{{count}} album",
     "albumCount_few": "{{count}} albumy",
     "albumCount_many": "{{count}} albumów",
-    "albumCount_other": "{{count}} albumów",
     "buttons": {
       "shuffleTracks": "Losowe utwory",
       "shuffleAlbums": "Losowe albumy"
