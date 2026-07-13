@@ -6,6 +6,7 @@ WORKDIR /app
 RUN corepack enable
 COPY package.json pnpm-lock.yaml ./
 RUN corepack install
+ENV PNPM_CONFIG_IGNORE_SCRIPTS=true
 RUN pnpm install --ignore-scripts
 COPY . .
 RUN pnpm run build
