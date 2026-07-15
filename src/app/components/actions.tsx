@@ -54,7 +54,7 @@ function Button({
           ? 'hover:scale-105 mr-2'
           : 'hover:bg-foreground/20',
         className,
-        isActive && 'pointer-events-none text-primary action-button-active',
+        isActive && 'text-primary action-button-active',
       )}
       variant={buttonStyle === 'primary' ? 'default' : 'ghost'}
       {...props}
