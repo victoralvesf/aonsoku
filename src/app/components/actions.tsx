@@ -5,6 +5,7 @@ import {
   Info,
   Pause,
   Play,
+  Radio,
   Shuffle,
 } from 'lucide-react'
 import { ButtonHTMLAttributes, ComponentPropsWithoutRef } from 'react'
@@ -137,6 +138,10 @@ function InfoIcon() {
   return <Info className="w-5 h-5 drop-shadow-md" strokeWidth={2} />
 }
 
+function RadioIcon() {
+  return <Radio className="w-5 h-5 drop-shadow-md" strokeWidth={2} />
+}
+
 function EllipsisIcon() {
   return <EllipsisVertical className="w-5 h-5 drop-shadow-md" strokeWidth={2} />
 }
@@ -149,6 +154,7 @@ export const Actions = {
   ShuffleIcon,
   LikeIcon,
   InfoIcon,
+  RadioIcon,
   EllipsisIcon,
   Dropdown,
 }
