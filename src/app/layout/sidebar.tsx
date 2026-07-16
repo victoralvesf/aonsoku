@@ -1,4 +1,5 @@
 import {
+  BarChart3Icon,
   HeartIcon,
   HomeIcon,
   LibraryIcon,
@@ -21,6 +22,7 @@ const Library = memo(LibraryIcon)
 const Podcast = memo(PodcastIcon)
 const Heart = memo(HeartIcon)
 const Tags = memo(TagsIcon)
+const BarChart = memo(BarChart3Icon)
 
 export interface ISidebarItem {
   id: string
@@ -39,6 +41,7 @@ export enum SidebarItems {
   Playlists = 'playlists',
   Podcasts = 'podcasts',
   Radios = 'radios',
+  Activity = 'activity',
   PodcastAll = 'podcast-all',
   PodcastLatest = 'podcast-latest',
 }
@@ -100,6 +103,12 @@ export const libraryItems = [
     title: 'sidebar.radios',
     route: ROUTES.LIBRARY.RADIOS,
     icon: Radio,
+  },
+  {
+    id: SidebarItems.Activity,
+    title: 'sidebar.activity',
+    route: ROUTES.LIBRARY.ACTIVITY,
+    icon: BarChart,
   },
 ]
 

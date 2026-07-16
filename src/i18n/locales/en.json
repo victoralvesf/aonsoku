@@ -16,6 +16,7 @@
     "favorites": "Favorites",
     "playlists": "Playlists",
     "radios": "Radios",
+    "activity": "Activity",
     "podcasts": "Podcasts",
     "genres": "Genres",
     "emptyPlaylist": "No playlists created yet"
@@ -209,6 +210,40 @@
   },
   "favorites": {
     "noSongList": "You haven't added any songs to favorites yet!"
+  },
+  "activity": {
+    "plays": "Plays",
+    "dailyActivity": "Daily activity",
+    "listeningHours": "Listening hours",
+    "peak": "Peak",
+    "history": "Listening history",
+    "less": "Less",
+    "more": "More",
+    "recentPlays": "Recent plays",
+    "topAlbums": "Top albums",
+    "range": {
+      "7d": "7D",
+      "30d": "30D",
+      "90d": "90D",
+      "all": "All"
+    },
+    "summary": {
+      "totalPlays": "Total plays",
+      "listeningTime": "Listening time",
+      "uniqueArtists": "Unique artists",
+      "streak": "Streak",
+      "streakValue": "{{count}}d",
+      "streakBest": "Best {{count}}d"
+    },
+    "genres": {
+      "title": "Genres",
+      "unknown": "Unknown",
+      "others": "Others"
+    },
+    "empty": {
+      "title": "No activity yet",
+      "description": "Play some music and your listening stats will show up here."
+    }
   },
   "artist": {
     "headline": "Artist",
