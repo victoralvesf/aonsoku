@@ -653,6 +653,14 @@
       }
     },
     "audio": {
+      "playback": {
+        "group": "Playback",
+        "description": "Control how tracks transition into each other.",
+        "gapless": {
+          "label": "Gapless playback (experimental)",
+          "info": "Plays consecutive tracks of the same album with no gap between them (playlists and shuffled queues are unaffected). Each track is decoded in memory, so it works best on a fast or local connection."
+        }
+      },
       "replayGain": {
         "group": "ReplayGain",
         "description": "Automatically normalize audio playback levels for a consistent listening experience.",

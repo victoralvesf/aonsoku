@@ -8,6 +8,7 @@ import { podcasts } from '@/service/podcasts'
 import { useAppMediaCache, useAppStore } from '@/store/app.store'
 import {
   getVolume,
+  usePlaybackSettings,
   usePlayerActions,
   usePlayerIsPlaying,
   usePlayerLoop,
@@ -21,13 +22,15 @@ import { LoopState } from '@/types/playerContext'
 import { ensureSupportForAlac } from '@/utils/alac'
 import { hasPiPSupport } from '@/utils/browser'
 import { logger } from '@/utils/logger'
-import { ReplayGainParams } from '@/utils/replayGain'
+import { ReplayGainParams, resolveReplayGainParams } from '@/utils/replayGain'
 import { AudioPlayer } from './audio'
 import { PlayerClearQueueButton } from './clear-queue-button'
 import { PlayerControls } from './controls'
 import { PlayerExpandButton } from './expand-button'
+import { GaplessSongPlayer } from './gapless-song-player'
 import { PlayerLikeButton } from './like-button'
 import { PlayerLyricsButton } from './lyrics-button'
+import { MediaSessionKeepAlive } from './media-session-keep-alive'
 import { PodcastInfo } from './podcast-info'
 import { PodcastPlaybackRate } from './podcast-playback-rate'
 import { PlayerProgress } from './progress'
@@ -71,6 +74,7 @@ export function Player() {
   const currentPlaybackRate = usePlayerStore().playerState.currentPlaybackRate
   const { replayGainType, replayGainPreAmp, replayGainDefaultGain } =
     useReplayGainState()
+  const { transitionMode } = usePlaybackSettings()
 
   const song = currentList[currentSongIndex]
   const radio = radioList[currentSongIndex]
@@ -184,31 +188,17 @@ export function Player() {
       })
   }, [isPodcast, podcast])
 
-  const trackReplayGain = useMemo<ReplayGainParams>(() => {
-    const preAmp = replayGainPreAmp
-    const defaultGain = replayGainDefaultGain
-
-    if (!song || !song.replayGain) {
-      return { gain: defaultGain, peak: 1, preAmp }
-    }
-
-    if (replayGainType === 'album') {
-      let { albumGain = defaultGain, albumPeak = 1 } = song.replayGain
-
-      if (albumGain === 0) {
-        albumGain = defaultGain
-      }
-
-      return { gain: albumGain, peak: albumPeak, preAmp }
-    }
-
-    let { trackGain = defaultGain, trackPeak = 1 } = song.replayGain
-
-    if (trackGain === 0) {
-      trackGain = defaultGain
-    }
-    return { gain: trackGain, peak: trackPeak, preAmp }
-  }, [song, replayGainDefaultGain, replayGainPreAmp, replayGainType])
+  // Shared with the gapless engine; see resolveReplayGainParams. Both players
+  // must derive the same gain from the same tags; only the wiring differs.
+  const trackReplayGain = useMemo<ReplayGainParams>(
+    () =>
+      resolveReplayGainParams(song, {
+        type: replayGainType,
+        preAmp: replayGainPreAmp,
+        defaultGain: replayGainDefaultGain,
+      }),
+    [song, replayGainDefaultGain, replayGainPreAmp, replayGainType],
+  )
 
   return (
     <footer className="border-t h-[--player-height] w-full flex items-center fixed bottom-0 left-0 right-0 z-40 bg-background">
@@ -262,22 +252,29 @@ export function Player() {
         </div>
       </div>
 
-      {isSong && song && (
-        <AudioPlayer
-          replayGain={trackReplayGain}
-          src={songStreamUrl}
-          autoPlay={isPlaying}
-          audioRef={audioRef}
-          loop={loopState === LoopState.One}
-          onPlay={() => setPlayingState(true)}
-          onPause={() => setPlayingState(false)}
-          onLoadedMetadata={setupDuration}
-          onTimeUpdate={setupProgress}
-          onEnded={handleSongEnded}
-          onLoadStart={setupInitialVolume}
-          data-testid="player-song-audio"
-        />
-      )}
+      {isSong &&
+        song &&
+        (transitionMode === 'none' ? (
+          <AudioPlayer
+            replayGain={trackReplayGain}
+            src={songStreamUrl}
+            autoPlay={isPlaying}
+            audioRef={audioRef}
+            loop={loopState === LoopState.One}
+            onPlay={() => setPlayingState(true)}
+            onPause={() => setPlayingState(false)}
+            onLoadedMetadata={setupDuration}
+            onTimeUpdate={setupProgress}
+            onEnded={handleSongEnded}
+            onLoadStart={setupInitialVolume}
+            data-testid="player-song-audio"
+          />
+        ) : (
+          <>
+            <GaplessSongPlayer audioRef={audioRef} />
+            <MediaSessionKeepAlive />
+          </>
+        ))}
 
       {isRadio && radio && (
         <AudioPlayer

@@ -49,6 +49,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
           },
           playerState: {
             isPlaying: false,
+            playbackNonce: 0,
             loopState: LoopState.Off,
             isShuffleActive: false,
             isSongStarred: false,
@@ -169,6 +170,14 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 },
               },
             },
+            playback: {
+              transitionMode: 'none',
+              setTransitionMode: (value) => {
+                set((state) => {
+                  state.settings.playback.transitionMode = value
+                })
+              },
+            },
             colors: {
               currentSongColor: null,
               currentSongColorIntensity: 0.65,
@@ -206,6 +215,11 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
 
               if (!listsAreEqual || (listsAreEqual && songHasChanged)) {
                 get().actions.resetProgress()
+                // Signal a fresh play so the gapless engine restarts audio even
+                // when the re-selected song shares its id with the current one.
+                set((state) => {
+                  state.playerState.playbackNonce += 1
+                })
               }
 
               if (listsAreEqual && songHasChanged && !shuffle) {
@@ -272,6 +286,7 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                   state.songlist.currentSongIndex = 0
                   state.playerState.isShuffleActive = false
                   state.playerState.isPlaying = true
+                  state.playerState.playbackNonce += 1
                   state.songlist.radioList = []
                   state.songlist.podcastList = []
                   state.playerState.playbackContext.source = null
@@ -1229,6 +1244,9 @@ export const useLrcLibSettings = () =>
 
 export const useLyricsSettings = () =>
   usePlayerStore((state) => state.settings.lyrics)
+
+export const usePlaybackSettings = () =>
+  usePlayerStore((state) => state.settings.playback)
 
 export const usePlayerSettings = () => usePlayerStore((state) => state.settings)
 
