@@ -1,4 +1,3 @@
-import { produce } from 'immer'
 import clamp from 'lodash/clamp'
 import merge from 'lodash/merge'
 import omit from 'lodash/omit'
@@ -55,7 +54,6 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             volume: 100,
             currentDuration: 0,
             mediaType: 'song',
-            audioPlayerRef: null,
             mainDrawerState: false,
             queueState: false,
             lyricsState: false,
@@ -588,7 +586,6 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.playerState.hasSyncedTheCurrentTrack = false
                 state.playerState.hasScrobbledTheCurrentTrack = false
                 state.playerState.currentDuration = 0
-                state.playerState.audioPlayerRef = null
                 state.settings.colors.currentSongColor = null
                 state.listenTime.accumulated = 0
                 state.playerState.playbackContext.source = null
@@ -730,13 +727,6 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               set((state) => {
                 state.playerState.currentPlaybackRate = value
               })
-            },
-            setAudioPlayerRef: (audioPlayer) => {
-              set(
-                produce((state: IPlayerContext) => {
-                  state.playerState.audioPlayerRef = audioPlayer
-                }),
-              )
             },
             removeSongFromQueue: (id) => {
               const {
@@ -983,7 +973,6 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
             'songlist',
             'actions',
             'playerState.isPlaying',
-            'playerState.audioPlayerRef',
             'playerState.mainDrawerState',
             'playerState.queueState',
             'playerState.lyricsState',
@@ -1265,9 +1254,6 @@ export const usePlayerPrevAndNext = () =>
     hasPrev: state.playerState.hasPrev,
     hasNext: state.playerState.hasNext,
   }))
-
-export const usePlayerRef = () =>
-  usePlayerStore((state) => state.playerState.audioPlayerRef)
 
 export const getVolume = () => usePlayerStore.getState().playerState.volume
 

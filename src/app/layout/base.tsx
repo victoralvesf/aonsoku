@@ -10,6 +10,7 @@ import {
   MainSidebarInset,
   MainSidebarProvider,
 } from '@/app/components/ui/main-sidebar'
+import { AudioBackendProvider } from '@/lib/audio/audio-backend-provider'
 import { Header } from '@/app/layout/header'
 import { MainRoutes } from './main'
 
@@ -22,20 +23,22 @@ const MemoFullscreenMode = memo(FullscreenMode)
 
 export default function BaseLayout() {
   return (
-    <div className="h-screen w-screen overflow-hidden">
-      <MainSidebarProvider>
-        <MemoHeader />
-        <AppSidebar />
-        <MainSidebarInset>
-          <MainRoutes />
-        </MainSidebarInset>
-        <MemoPlayer />
-      </MainSidebarProvider>
-      <MemoSongInfoDialog />
-      <MemoRemovePlaylistDialog />
-      <MemoMainDrawerPage />
-      <CreatePlaylistDialog />
-      <MemoFullscreenMode />
-    </div>
+    <AudioBackendProvider>
+      <div className="h-screen w-screen overflow-hidden">
+        <MainSidebarProvider>
+          <MemoHeader />
+          <AppSidebar />
+          <MainSidebarInset>
+            <MainRoutes />
+          </MainSidebarInset>
+          <MemoPlayer />
+        </MainSidebarProvider>
+        <MemoSongInfoDialog />
+        <MemoRemovePlaylistDialog />
+        <MemoMainDrawerPage />
+        <CreatePlaylistDialog />
+        <MemoFullscreenMode />
+      </div>
+    </AudioBackendProvider>
   )
 }

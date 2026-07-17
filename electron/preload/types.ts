@@ -8,6 +8,32 @@ import { RpcPayload } from '../main/core/discordRpc'
 import { IDownloadPayload } from '../main/core/downloads'
 import { ISettingPayload } from '../main/core/settings'
 
+export type AvPlayerCommandPayload =
+  | { type: 'load'; id: string; url: string }
+  | { type: 'play'; id: string }
+  | { type: 'pause'; id: string }
+  | { type: 'seek'; id: string; seconds: number }
+  | { type: 'setVolume'; id: string; value: number }
+  | { type: 'setLoop'; id: string; loop: boolean }
+  | { type: 'setRate'; id: string; rate: number }
+  | { type: 'destroy'; id: string }
+  | { type: 'showAirPlay'; x: number; y: number; height: number }
+
+export type AvPlayerEventPayload = {
+  id: string
+  type:
+    | 'play'
+    | 'pause'
+    | 'timeupdate'
+    | 'loadedmetadata'
+    | 'ended'
+    | 'loadstart'
+    | 'error'
+  time?: number
+  duration?: number
+  message?: string
+}
+
 export enum IpcChannels {
   FullscreenStatus = 'fullscreen-status',
   ToggleFullscreen = 'toggle-fullscreen',
@@ -35,6 +61,8 @@ export enum IpcChannels {
   UpdateError = 'update-error',
   DownloadProgress = 'download-progress',
   UpdateDownloaded = 'update-downloaded',
+  AvPlayerCommand = 'avplayer-command',
+  AvPlayerEvent = 'avplayer-event',
 }
 
 export type OverlayColors = {
@@ -89,4 +117,8 @@ export interface IAonsokuAPI {
   onUpdateError: (callback: (error: string) => void) => void
   onDownloadProgress: (callback: (progress: ProgressInfo) => void) => void
   onUpdateDownloaded: (callback: (info: UpdateDownloadedEvent) => void) => void
+  avPlayer: {
+    command: (payload: AvPlayerCommandPayload) => void
+    onEvent: (callback: (event: AvPlayerEventPayload) => void) => () => void
+  }
 }

@@ -10,7 +10,8 @@ import {
 } from '@/app/components/ui/scroll-area'
 import { subsonic } from '@/service/subsonic'
 import { useLang } from '@/store/lang.store'
-import { usePlayerRef, usePlayerSonglist } from '@/store/player.store'
+import { useAudioBackend } from '@/lib/audio/audio-backend-context'
+import { usePlayerSonglist } from '@/store/player.store'
 import { ILyric } from '@/types/responses/song'
 import { queryKeys } from '@/utils/queryKeys'
 
@@ -62,13 +63,13 @@ export function LyricsTab() {
 }
 
 function SyncedLyrics({ lyrics }: LyricProps) {
-  const playerRef = usePlayerRef()
+  const { songBackend } = useAudioBackend()
   const { langCode } = useLang()
   const [progress, setProgress] = useState(0)
   const resolvedLang = resolveLyricsLang(lyrics.lang, langCode)
 
   setTimeout(() => {
-    let newProgress = (playerRef?.currentTime || 0) * 1000
+    let newProgress = songBackend.getCurrentTime() * 1000
 
     if (newProgress === progress) {
       newProgress += 1 // Prevents the lyrics from getting stuck when the audio is still loading
@@ -78,9 +79,7 @@ function SyncedLyrics({ lyrics }: LyricProps) {
   }, 50)
 
   const skipToTime = (timeMs: number) => {
-    if (playerRef) {
-      playerRef!.currentTime = timeMs / 1000
-    }
+    songBackend.seek(timeMs / 1000)
   }
 
   return (

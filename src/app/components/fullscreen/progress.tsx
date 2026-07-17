@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react'
 import { ProgressSlider } from '@/app/components/ui/slider'
+import { useAudioBackend } from '@/lib/audio/audio-backend-context'
 import {
   usePlayerActions,
   usePlayerDuration,
   usePlayerProgress,
-  usePlayerRef,
 } from '@/store/player.store'
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 
@@ -13,18 +13,16 @@ let isSeeking = false
 export function FullscreenProgress() {
   const progress = usePlayerProgress()
   const [localProgress, setLocalProgress] = useState(progress)
-  const audioPlayerRef = usePlayerRef()
+  const { songBackend } = useAudioBackend()
   const currentDuration = usePlayerDuration()
   const { setProgress } = usePlayerActions()
 
   const updateAudioCurrentTime = useCallback(
     (value: number) => {
       isSeeking = false
-      if (audioPlayerRef) {
-        audioPlayerRef.currentTime = value
-      }
+      songBackend.seek(value)
     },
-    [audioPlayerRef],
+    [songBackend],
   )
 
   const handleSeeking = useCallback((amount: number) => {

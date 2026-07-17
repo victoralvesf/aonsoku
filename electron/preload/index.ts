@@ -1,6 +1,12 @@
 import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge, ipcRenderer } from 'electron'
-import { IAonsokuAPI, IpcChannels, PlayerStateListenerActions } from './types'
+import {
+  AvPlayerCommandPayload,
+  AvPlayerEventPayload,
+  IAonsokuAPI,
+  IpcChannels,
+  PlayerStateListenerActions,
+} from './types'
 
 // Custom APIs for renderer
 const api: IAonsokuAPI = {
@@ -81,6 +87,17 @@ const api: IAonsokuAPI = {
   },
   onUpdateDownloaded: (callback) => {
     ipcRenderer.on(IpcChannels.UpdateDownloaded, (_, info) => callback(info))
+  },
+  avPlayer: {
+    command: (payload: AvPlayerCommandPayload) => {
+      ipcRenderer.send(IpcChannels.AvPlayerCommand, payload)
+    },
+    onEvent: (callback: (event: AvPlayerEventPayload) => void) => {
+      const listener = (_: Electron.IpcRendererEvent, event: AvPlayerEventPayload) =>
+        callback(event)
+      ipcRenderer.on(IpcChannels.AvPlayerEvent, listener)
+      return () => ipcRenderer.removeListener(IpcChannels.AvPlayerEvent, listener)
+    },
   },
 }
 

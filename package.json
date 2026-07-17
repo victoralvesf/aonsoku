@@ -22,6 +22,7 @@
     "electron:start": "electron-vite preview",
     "electron:dev": "electron-vite dev --watch",
     "electron:build": "electron-vite build",
+    "build:native:mac": "swiftc native/avplayer-helper.swift -o native/avplayer-helper -framework Foundation -framework AVFoundation -framework AVKit -framework AppKit -framework CoreMedia -O",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "electron-builder --dir",
     "build:win": "electron-builder --win",

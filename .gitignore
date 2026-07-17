@@ -34,3 +34,6 @@ env-config.js
 out
 
 .pnpm-store/*
+
+# Compiled native binary (built from native/avplayer-helper.swift via pnpm build:native:mac)
+native/avplayer-helper

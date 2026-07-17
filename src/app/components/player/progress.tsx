@@ -1,6 +1,7 @@
 import clsx from 'clsx'
-import { RefObject, useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ProgressSlider } from '@/app/components/ui/slider'
+import { useActiveAudioBackend } from '@/lib/audio/audio-backend-context'
 import { podcasts } from '@/service/podcasts'
 import {
   usePlayerActions,
@@ -12,13 +13,9 @@ import {
 import { convertSecondsToTime } from '@/utils/convertSecondsToTime'
 import { logger } from '@/utils/logger'
 
-interface PlayerProgressProps {
-  audioRef: RefObject<HTMLAudioElement>
-}
-
 let isSeeking = false
 
-export function PlayerProgress({ audioRef }: PlayerProgressProps) {
+export function PlayerProgress() {
   const progress = usePlayerProgress()
   const [localProgress, setLocalProgress] = useState(progress)
   const currentDuration = usePlayerDuration()
@@ -26,17 +23,16 @@ export function PlayerProgress({ audioRef }: PlayerProgressProps) {
   const { isSong, isPodcast } = usePlayerMediaType()
   const { setProgress, setUpdatePodcastProgress, getCurrentPodcastProgress } =
     usePlayerActions()
+  const backend = useActiveAudioBackend()
 
   const isEmpty = isSong && currentList.length === 0
 
   const updateAudioCurrentTime = useCallback(
     (value: number) => {
       isSeeking = false
-      if (audioRef.current) {
-        audioRef.current.currentTime = value
-      }
+      backend.seek(value)
     },
-    [audioRef],
+    [backend],
   )
 
   const handleSeeking = useCallback((amount: number) => {

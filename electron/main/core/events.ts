@@ -7,13 +7,14 @@ import {
 } from '../../preload/types'
 import { isQuitting } from '../index'
 import { tray, updateTray } from '../tray'
-import { updateDockMenu } from './dockMenu'
+import { destroyAvPlayerBridge, initAvPlayerBridge } from './avPlayerBridge'
 import { colorsState } from './colors'
 import {
   clearDiscordRpcActivity,
   RpcPayload,
   setDiscordRpcActivity,
 } from './discordRpc'
+import { updateDockMenu } from './dockMenu'
 import { playerState } from './playerState'
 import { getAppSetting, ISettingPayload, saveAppSettings } from './settings'
 import { setTaskbarButtons } from './taskbar'
@@ -104,6 +105,10 @@ export function setupIpcEvents(window: BrowserWindow | null) {
   if (!window) return
 
   resetIpcEvents()
+  destroyAvPlayerBridge()
+  initAvPlayerBridge(window).catch((err) =>
+    console.error('[AVPlayerBridge] init failed:', err),
+  )
 
   ipcMain.on(IpcChannels.ToggleFullscreen, (_, isFullscreen: boolean) => {
     window.setFullScreen(isFullscreen)
