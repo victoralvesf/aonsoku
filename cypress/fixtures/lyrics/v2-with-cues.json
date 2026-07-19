@@ -1,0 +1,163 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "openSubsonic": true,
+    "lyricsList": {
+      "structuredLyrics": [
+        {
+          "lang": "eng",
+          "synced": true,
+          "kind": "main",
+          "displayArtist": "Test Artist",
+          "displayTitle": "Test Song",
+          "line": [
+            {
+              "start": 1000,
+              "value": "Sunlight through"
+            },
+            {
+              "start": 5000,
+              "value": "Echo in the valley"
+            },
+            {
+              "start": 9000,
+              "value": "Morning breaks again"
+            }
+          ],
+          "cueLine": [
+            {
+              "index": 0,
+              "value": "Sunlight through",
+              "start": 1000,
+              "end": 4999,
+              "cue": [
+                {
+                  "start": 1000,
+                  "end": 1800,
+                  "value": "Sunlight",
+                  "byteStart": 0,
+                  "byteEnd": 7
+                },
+                {
+                  "start": 1800,
+                  "end": 2200,
+                  "value": " ",
+                  "byteStart": 8,
+                  "byteEnd": 8
+                },
+                {
+                  "start": 2200,
+                  "end": 4999,
+                  "value": "through",
+                  "byteStart": 9,
+                  "byteEnd": 15
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "value": "Echo in the valley",
+              "start": 5000,
+              "end": 8999,
+              "cue": [
+                {
+                  "start": 5000,
+                  "end": 5500,
+                  "value": "Echo",
+                  "byteStart": 0,
+                  "byteEnd": 3
+                },
+                {
+                  "start": 5500,
+                  "end": 5800,
+                  "value": " ",
+                  "byteStart": 4,
+                  "byteEnd": 4
+                },
+                {
+                  "start": 5800,
+                  "end": 6100,
+                  "value": "in",
+                  "byteStart": 5,
+                  "byteEnd": 6
+                },
+                {
+                  "start": 6100,
+                  "end": 6400,
+                  "value": " ",
+                  "byteStart": 7,
+                  "byteEnd": 7
+                },
+                {
+                  "start": 6400,
+                  "end": 6700,
+                  "value": "the",
+                  "byteStart": 8,
+                  "byteEnd": 10
+                },
+                {
+                  "start": 6700,
+                  "end": 6900,
+                  "value": " ",
+                  "byteStart": 11,
+                  "byteEnd": 11
+                },
+                {
+                  "start": 6900,
+                  "end": 8999,
+                  "value": "valley",
+                  "byteStart": 12,
+                  "byteEnd": 17
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "value": "Morning breaks again",
+              "start": 9000,
+              "end": 12000,
+              "cue": [
+                {
+                  "start": 9000,
+                  "end": 9800,
+                  "value": "Morning",
+                  "byteStart": 0,
+                  "byteEnd": 6
+                },
+                {
+                  "start": 9800,
+                  "end": 10200,
+                  "value": " ",
+                  "byteStart": 7,
+                  "byteEnd": 7
+                },
+                {
+                  "start": 10200,
+                  "end": 11000,
+                  "value": "breaks",
+                  "byteStart": 8,
+                  "byteEnd": 13
+                },
+                {
+                  "start": 11000,
+                  "end": 11300,
+                  "value": " ",
+                  "byteStart": 14,
+                  "byteEnd": 14
+                },
+                {
+                  "start": 11300,
+                  "end": 12000,
+                  "value": "again",
+                  "byteStart": 15,
+                  "byteEnd": 19
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

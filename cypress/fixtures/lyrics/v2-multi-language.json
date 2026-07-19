@@ -1,0 +1,41 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "openSubsonic": true,
+    "lyricsList": {
+      "structuredLyrics": [
+        {
+          "lang": "eng",
+          "synced": true,
+          "kind": "translation",
+          "line": [
+            {
+              "start": 2747,
+              "value": "The moment I opened my eyes"
+            },
+            {
+              "start": 6214,
+              "value": "Everything had changed"
+            }
+          ]
+        },
+        {
+          "lang": "kor",
+          "synced": true,
+          "kind": "main",
+          "line": [
+            {
+              "start": 2747,
+              "value": "눈을 뜬 순간"
+            },
+            {
+              "start": 6214,
+              "value": "모든 게 달라졌어"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
