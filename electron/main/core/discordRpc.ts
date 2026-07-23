@@ -7,21 +7,28 @@ export type RpcPayload = {
   startTime: number
   endTime: number
   duration: number
+  imageUrl?: string
+}
+
+function truncate(str: string, max = 128) {
+  return str.length > max ? `${str.slice(0, max - 3)}...` : str
 }
 
 export async function setDiscordRpcActivity(payload: RpcPayload) {
   try {
     RPC.init()
     RPC.set({
-      details: payload.trackName,
-      state: `${payload.artist} • ${payload.albumName}`,
+      details: truncate(payload.trackName),
+      state: truncate(`${payload.artist} • ${payload.albumName}`),
       timestamps: {
         start: payload.startTime,
         end: payload.endTime,
       },
       assets: {
-        large_image: DEFAULT_LARGE_IMAGE,
+        large_image: payload.imageUrl || DEFAULT_LARGE_IMAGE,
+        large_text: truncate(payload.albumName),
         small_image: DEFAULT_SMALL_IMAGE,
+        small_text: truncate(payload.trackName),
       },
     })
   } catch {}
