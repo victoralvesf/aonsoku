@@ -44,6 +44,10 @@ const playbackShortcuts: IShortcut[] = [
     label: 'shortcuts.playback.lowerVolume',
     shortcuts: [META_KEY, '↓'],
   },
+  {
+    label: 'shortcuts.playback.toggleFullscreen',
+    shortcuts: ['Q'],
+  },
 ]
 
 const navigationShortcuts: IShortcut[] = [
