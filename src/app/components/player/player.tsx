@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { getSongStreamUrl } from '@/api/httpClient'
 import { getProxyURL } from '@/api/podcastClient'
 import { MiniPlayerButton } from '@/app/components/mini-player/button'
@@ -9,6 +10,7 @@ import { useAppMediaCache, useAppStore } from '@/store/app.store'
 import {
   getVolume,
   usePlayerActions,
+  usePlayerFullscreen,
   usePlayerIsPlaying,
   usePlayerLoop,
   usePlayerMediaType,
@@ -66,6 +68,7 @@ export function Player() {
     usePlayerSonglist()
   const isPlaying = usePlayerIsPlaying()
   const { isSong, isRadio, isPodcast } = usePlayerMediaType()
+  const { toggleFullscreen } = usePlayerFullscreen()
   const loopState = usePlayerLoop()
   const audioPlayerRef = usePlayerRef()
   const currentPlaybackRate = usePlayerStore().playerState.currentPlaybackRate
@@ -75,6 +78,17 @@ export function Player() {
   const song = currentList[currentSongIndex]
   const radio = radioList[currentSongIndex]
   const podcast = podcastList[currentSongIndex]
+
+  useHotkeys(
+    'q',
+    () => {
+      if (isSong && song) toggleFullscreen()
+    },
+    {
+      enableOnFormTags: false,
+    },
+    [isSong, song, toggleFullscreen],
+  )
 
   const mediaCacheEnabled = useAppMediaCache()
   const songId = song?.id
