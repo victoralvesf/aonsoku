@@ -76,6 +76,11 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.fullscreen.isFullscreen = value
               })
             },
+            toggleFullscreen: () => {
+              set((state) => {
+                state.fullscreen.isFullscreen = !state.fullscreen.isFullscreen
+              })
+            },
             reset: () => {
               set((state) => {
                 state.fullscreen.isFullscreen = false

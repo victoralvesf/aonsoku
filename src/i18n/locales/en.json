@@ -575,7 +575,8 @@
       "previous": "Skip to previous",
       "next": "Skip to next",
       "raiseVolume": "Raise volume",
-      "lowerVolume": "Lower volume"
+      "lowerVolume": "Lower volume",
+      "toggleFullscreen": "Toggle fullscreen"
     },
     "navigation": {
       "label": "Navigation"
