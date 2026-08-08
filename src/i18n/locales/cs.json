@@ -289,7 +289,7 @@
       "playTooltip": "Přehrát rádio {{name}}",
       "pauseTooltip": "Pozastavit rádio {{name}}",
       "name": "Název",
-      "homepage": "URL domovské stránky"
+      "homepage": "URL úvodní stránky"
     },
     "empty": {
       "title": "Nemáš tu žádné rádiové stanice!",
@@ -324,7 +324,7 @@
       "validations": {
         "name": "Název rádia musí obsahovat alespoň 3 znaky.",
         "url": "Zadej prosím platnou URL.",
-        "homepageUrlLength": "URL domovské stránky musí obsahovat alespoň 10 znaků",
+        "homepageUrlLength": "URL úvodní stránky musí obsahovat alespoň 10 znaků",
         "streamUrlLength": "URL streamu musí obsahovat alespoň 10 znaků"
       }
     },
@@ -784,6 +784,18 @@
           "button": "Vyčistit vše",
           "success": "Mezipaměť byla úspěšně vyčištěna.",
           "error": "Nepodařilo se vymazat některé mezipaměti."
+        }
+      },
+      "home": {
+        "group": "Úvodní stránka",
+        "description": "Přizpůsobte si obsah úvodní stránky.",
+        "loop": {
+          "label": "Zapnout opakované přehrávání karuselu",
+          "info": "Je-li tato funkce zapnutá, karusel na úvodní stránce se po dosažení konce vrátí zpět k první skladbě."
+        },
+        "autoScroll": {
+          "label": "Zapnout automatické posouvání karuselu",
+          "info": "Je-li tato funkce zapnutá, karusel na úvodní stránce se po 10 sekundách automaticky posune."
         }
       }
     },
