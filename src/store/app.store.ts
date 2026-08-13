@@ -10,7 +10,6 @@ import { AuthType, IAppContext, IServerConfig } from '@/types/serverConfig'
 import { isDesktop } from '@/utils/desktop'
 import { discordRpc } from '@/utils/discordRpc'
 import { logger } from '@/utils/logger'
-import { applyZoomLevel, defaultZoomLevel } from '@/utils/zoom'
 import {
   genEncodedPassword,
   genPassword,
@@ -19,6 +18,7 @@ import {
   getAuthType,
   hasValidConfig,
 } from '@/utils/salt'
+import { applyZoomLevel, defaultZoomLevel } from '@/utils/zoom'
 
 const {
   SERVER_URL,

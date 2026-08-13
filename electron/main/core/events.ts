@@ -7,13 +7,13 @@ import {
 } from '../../preload/types'
 import { isQuitting } from '../index'
 import { tray, updateTray } from '../tray'
-import { updateDockMenu } from './dockMenu'
 import { colorsState } from './colors'
 import {
   clearDiscordRpcActivity,
   RpcPayload,
   setDiscordRpcActivity,
 } from './discordRpc'
+import { updateDockMenu } from './dockMenu'
 import { playerState } from './playerState'
 import { getAppSetting, ISettingPayload, saveAppSettings } from './settings'
 import { setTaskbarButtons } from './taskbar'

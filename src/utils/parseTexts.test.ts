@@ -237,10 +237,12 @@ describe('call site: updater release notes', () => {
   it('leaves markdown syntax untouched for react-markdown to parse', () => {
     const result = sanitizeLinks(notes)
 
-    expect(result).toContain("# Release Notes")
+    expect(result).toContain('# Release Notes')
     expect(result).toContain('## New Features')
     expect(result).toContain('- **Player:** added support for lyrics.')
-    expect(result).toContain('- **Radio:** added support for <strong>lyrics</strong>.')
+    expect(result).toContain(
+      '- **Radio:** added support for <strong>lyrics</strong>.',
+    )
     expect(result).toContain('## Fixes')
     expect(result).toContain('- Some fixes. (thanks to @someuser).')
     expect(result).toContain('- Fixed the **player** crash (#123).')

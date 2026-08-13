@@ -24,8 +24,7 @@ export function createManualChunks(id: string) {
     if (includes('lodash')) return 'lodash'
     if (includes('tanstack')) return 'tanstack'
     if (includes('radix')) return 'radix'
-    if (includesAny(['markdown', 'remark', 'rehype']))
-      return 'markdown'
+    if (includesAny(['markdown', 'remark', 'rehype'])) return 'markdown'
     if (includesAny(['react-hook-form', 'zod'])) return 'forms'
     if (includes('dompurify')) return 'sanitizer'
     if (includesAny(['zustand', 'immer', 'use-sync-external-store']))
