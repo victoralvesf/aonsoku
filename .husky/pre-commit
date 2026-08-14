@@ -1,1 +1,13 @@
-pnpm lint
+set -e
+
+# Nothing staged (e.g. empty commit or only deletions) - skip linting.
+if ! git diff --cached --name-only --diff-filter=ACMR | grep -q .; then
+  exit 0
+fi
+
+# Formats, applies safe fixes, and organizes imports in staged files.
+# If Biome fails to fix something, `set -e` aborts the commit.
+pnpm biome check --write --staged --no-errors-on-unmatched
+
+# Re-stage the files that Biome wrote so they enter the commit being created.
+git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 git add
