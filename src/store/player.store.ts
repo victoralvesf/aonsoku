@@ -18,6 +18,7 @@ import { ISong } from '@/types/responses/song'
 import { areSongListsEqual } from '@/utils/compareSongLists'
 import { isDesktop } from '@/utils/desktop'
 import { discordRpc } from '@/utils/discordRpc'
+import { obsWidget } from '@/utils/obsWidget'
 import { addNextSongList, shuffleSongList } from '@/utils/songListFunctions'
 import { idbStorage } from './idb'
 
@@ -1067,6 +1068,7 @@ usePlayerStore.subscribe(
   ],
   () => {
     discordRpc.sendCurrentSong()
+    obsWidget.sendCurrentSong()
   },
   {
     equalityFn: shallow,
@@ -1078,6 +1080,7 @@ usePlayerStore.subscribe(
   (progress, prevProgress) => {
     if (Math.abs(progress - prevProgress) > 0.02) {
       discordRpc.sendCurrentSong()
+      obsWidget.sendCurrentSong()
     }
   },
 )
