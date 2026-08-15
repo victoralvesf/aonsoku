@@ -7,6 +7,11 @@ import {
 import { RpcPayload } from '../main/core/discordRpc'
 import { IDownloadPayload } from '../main/core/downloads'
 import { ISettingPayload } from '../main/core/settings'
+import {
+  WidgetNowPlayingPayload,
+  WidgetServerStatus,
+  WidgetSettingsPayload,
+} from '../main/core/widgetTypes'
 
 export enum IpcChannels {
   FullscreenStatus = 'fullscreen-status',
@@ -37,6 +42,9 @@ export enum IpcChannels {
   UpdateDownloaded = 'update-downloaded',
   ZoomAction = 'zoom-action',
   SetZoomFactor = 'set-zoom-factor',
+  UpdateWidgetNowPlaying = 'update-widget-now-playing',
+  SaveWidgetSettings = 'save-widget-settings',
+  WidgetServerStatus = 'widget-server-status',
 }
 
 export type ZoomAction = 'in' | 'out' | 'reset'
@@ -96,4 +104,10 @@ export interface IAonsokuAPI {
   setZoomFactor: (factor: number) => void
   zoomActionListener: (func: (action: ZoomAction) => void) => void
   removeZoomActionListener: () => void
+  updateWidgetNowPlaying: (payload: WidgetNowPlayingPayload) => void
+  saveWidgetSettings: (payload: WidgetSettingsPayload) => void
+  widgetServerStatusListener: (
+    func: (status: WidgetServerStatus) => void,
+  ) => void
+  removeWidgetServerStatusListener: () => void
 }
