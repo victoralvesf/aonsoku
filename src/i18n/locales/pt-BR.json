@@ -634,6 +634,7 @@
       "content": "Conteúdo",
       "accounts": "Contas",
       "desktop": "Aplicativo para Computador",
+      "widget": "Widget para OBS",
       "privacy": "Privacidade & Segurança",
       "accessibility": "Acessibilidade"
     },
@@ -822,6 +823,83 @@
           "label": "Minimizar para a Bandeja",
           "info": "Quando ativado, o aplicativo será minimizado para a bandeja do sistema em vez de fechar ao clicar no botão de fechar."
         }
+      }
+    },
+    "widget": {
+      "server": {
+        "group": "Servidor do Widget",
+        "description": "Disponibiliza uma página com a música atual neste computador, para adicionar no OBS como Fonte de Navegador.",
+        "enabled": {
+          "label": "Ativar servidor do widget",
+          "info": "O servidor escuta apenas em 127.0.0.1, então o widget só pode ser acessado por este computador."
+        },
+        "port": {
+          "label": "Porta",
+          "info": "Porta em que o servidor do widget escuta. Alterá-la muda todas as URLs, então será preciso atualizar as Fontes de Navegador.",
+          "errors": {
+            "invalid": "Digite um número de porta válido.",
+            "range": "Escolha uma porta entre {{min}} e {{max}}.",
+            "blocked": "A porta {{blocked}} é bloqueada pelo navegador que o OBS usa e resultaria em uma fonte em branco."
+          }
+        },
+        "status": {
+          "stopped": "Servidor parado.",
+          "starting": "Iniciando o servidor…",
+          "running": "Servidor rodando em http://127.0.0.1:{{port}}",
+          "portInUse": "A porta {{port}} já está em uso. Escolha outra.",
+          "unknown": "Não foi possível iniciar o servidor: {{message}}"
+        },
+        "security": "As capas são carregadas direto do seu servidor de música, então a URL da imagem carrega suas credenciais. Evite deixar essas URLs visíveis durante a transmissão."
+      },
+      "profiles": {
+        "group": "Perfis",
+        "description": "Cada perfil tem sua própria aparência e URL, permitindo widgets diferentes em cenas diferentes do OBS. Até {{max}} perfis.",
+        "add": "Adicionar perfil",
+        "limit": "Você atingiu o limite de {{max}} perfis.",
+        "empty": "Nenhum perfil ainda. Adicione um para obter uma URL.",
+        "defaultName": "Padrão",
+        "newName": "Perfil {{number}}"
+      },
+      "profile": {
+        "name": "Nome do perfil",
+        "remove": "Excluir perfil",
+        "preview": {
+          "title": "Título da música",
+          "artist": "Nome do artista",
+          "album": "Nome do álbum"
+        },
+        "theme": {
+          "label": "Tema",
+          "light": "Claro",
+          "dark": "Escuro",
+          "transparent": "Transparente"
+        },
+        "idle": {
+          "label": "Quando inativo",
+          "hide": "Ocultar widget",
+          "empty": "Mostrar estado vazio"
+        },
+        "compact": {
+          "label": "Layout compacto",
+          "info": "Um layout menor, de uma linha, ideal para overlays estreitos."
+        },
+        "showCoverArt": "Mostrar capa",
+        "showArtist": "Mostrar artista",
+        "showAlbum": "Mostrar álbum",
+        "showProgressBar": "Mostrar barra de progresso",
+        "transition": {
+          "label": "Animar troca de música",
+          "info": "Aplica um fade no widget sempre que a música muda."
+        },
+        "url": {
+          "label": "URL da Fonte de Navegador",
+          "show": "Mostrar URL",
+          "hide": "Ocultar URL",
+          "copy": "Copiar URL",
+          "copied": "Copiado"
+        },
+        "size": "Tamanho recomendado da Fonte de Navegador: {{width}} × {{height}} px.",
+        "refreshHint": "Se este perfil já estiver adicionado no OBS, clique com o botão direito na fonte e escolha Atualizar para aplicar as mudanças."
       }
     }
   },

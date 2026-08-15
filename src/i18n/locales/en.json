@@ -635,6 +635,7 @@
       "content": "Content",
       "accounts": "Accounts",
       "desktop": "Desktop Application",
+      "widget": "OBS Widget",
       "privacy": "Privacy & Security",
       "accessibility": "Accessibility"
     },
@@ -823,6 +824,83 @@
           "label": "Minimize to Tray",
           "info": "When enabled, the app will minimize to the system tray instead of closing when you click the close button."
         }
+      }
+    },
+    "widget": {
+      "server": {
+        "group": "Widget Server",
+        "description": "Serve a live \"now playing\" page on this computer so you can add it to OBS as a Browser Source.",
+        "enabled": {
+          "label": "Enable widget server",
+          "info": "The server only listens on 127.0.0.1, so the widget is reachable from this computer only."
+        },
+        "port": {
+          "label": "Port",
+          "info": "The port the widget server listens on. Changing it changes every widget URL, so you will need to update your Browser Sources.",
+          "errors": {
+            "invalid": "Type a valid port number.",
+            "range": "Choose a port between {{min}} and {{max}}.",
+            "blocked": "Port {{blocked}} is blocked by the browser OBS uses and would show a blank source."
+          }
+        },
+        "status": {
+          "stopped": "Server stopped.",
+          "starting": "Starting the server…",
+          "running": "Server running at http://127.0.0.1:{{port}}",
+          "portInUse": "Port {{port}} is already in use. Pick a different one.",
+          "unknown": "The server could not start: {{message}}"
+        },
+        "security": "Cover art is loaded straight from your music server, so the widget URL carries your credentials in the image address. Keep these URLs off screen while streaming."
+      },
+      "profiles": {
+        "group": "Profiles",
+        "description": "Each profile has its own look and its own URL, so you can use different widgets across OBS scenes. Up to {{max}} profiles.",
+        "add": "Add profile",
+        "limit": "You reached the limit of {{max}} profiles.",
+        "empty": "No profiles yet. Add one to get a widget URL.",
+        "defaultName": "Default",
+        "newName": "Profile {{number}}"
+      },
+      "profile": {
+        "name": "Profile name",
+        "remove": "Delete profile",
+        "preview": {
+          "title": "Song title",
+          "artist": "Artist name",
+          "album": "Album name"
+        },
+        "theme": {
+          "label": "Theme",
+          "light": "Light",
+          "dark": "Dark",
+          "transparent": "Transparent"
+        },
+        "idle": {
+          "label": "When idle",
+          "hide": "Hide widget",
+          "empty": "Show empty state"
+        },
+        "compact": {
+          "label": "Compact layout",
+          "info": "A smaller, single-line layout that fits thin overlays."
+        },
+        "showCoverArt": "Show cover art",
+        "showArtist": "Show artist",
+        "showAlbum": "Show album",
+        "showProgressBar": "Show progress bar",
+        "transition": {
+          "label": "Animate track changes",
+          "info": "Fades the widget in whenever the song changes."
+        },
+        "url": {
+          "label": "Browser Source URL",
+          "show": "Show URL",
+          "hide": "Hide URL",
+          "copy": "Copy URL",
+          "copied": "Copied"
+        },
+        "size": "Recommended Browser Source size: {{width}} × {{height}} px.",
+        "refreshHint": "If this profile is already added in OBS, right-click the source and choose Refresh to apply your changes."
       }
     }
   },
