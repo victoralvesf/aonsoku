@@ -1,0 +1,53 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "openSubsonic": true,
+    "lyricsList": {
+      "structuredLyrics": [
+        {
+          "lang": "ara",
+          "synced": true,
+          "kind": "main",
+          "line": [
+            {
+              "start": 1000,
+              "value": "السلام"
+            }
+          ],
+          "cueLine": [
+            {
+              "index": 0,
+              "value": "السلام",
+              "start": 1000,
+              "end": 3000,
+              "cue": [
+                {
+                  "start": 1000,
+                  "end": 1400,
+                  "value": "ال",
+                  "byteStart": 0,
+                  "byteEnd": 3
+                },
+                {
+                  "start": 1400,
+                  "end": 1800,
+                  "value": "سل",
+                  "byteStart": 4,
+                  "byteEnd": 7
+                },
+                {
+                  "start": 1800,
+                  "end": 3000,
+                  "value": "ام",
+                  "byteStart": 8,
+                  "byteEnd": 11
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

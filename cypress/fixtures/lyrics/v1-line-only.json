@@ -1,0 +1,11 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.13.0",
+    "lyrics": {
+      "artist": "Test Artist",
+      "title": "Test Song",
+      "value": "[00:01.00] Sunlight through the trees\n[00:05.00] Echo in the valley\n[00:09.00] Morning breaks again"
+    }
+  }
+}

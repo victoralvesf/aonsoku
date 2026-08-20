@@ -1,0 +1,53 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "openSubsonic": true,
+    "lyricsList": {
+      "structuredLyrics": [
+        {
+          "lang": "eng",
+          "synced": true,
+          "kind": "main",
+          "line": [
+            { "start": 1000, "value": "First line" },
+            { "start": 2000, "value": "" },
+            { "start": 4000, "value": "After short pause" }
+          ],
+          "cueLine": [
+            {
+              "index": 0,
+              "value": "First line",
+              "start": 1000,
+              "end": 2000,
+              "cue": [
+                {
+                  "start": 1000,
+                  "end": 2000,
+                  "value": "First line",
+                  "byteStart": 0,
+                  "byteEnd": 9
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "value": "After short pause",
+              "start": 4000,
+              "end": 6000,
+              "cue": [
+                {
+                  "start": 4000,
+                  "end": 6000,
+                  "value": "After short pause",
+                  "byteStart": 0,
+                  "byteEnd": 16
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "openSubsonic": true,
+    "lyricsList": {
+      "structuredLyrics": [
+        {
+          "lang": "eng",
+          "synced": true,
+          "kind": "main",
+          "line": [
+            {
+              "start": 0,
+              "value": "Rivers run to sea"
+            }
+          ],
+          "cueLine": [
+            {
+              "index": 0,
+              "value": "Rivers run to sea",
+              "start": 0,
+              "end": 2000,
+              "cue": [
+                {
+                  "start": 0,
+                  "value": "Rivers",
+                  "byteStart": 0,
+                  "byteEnd": 5
+                },
+                {
+                  "start": 500,
+                  "value": " ",
+                  "byteStart": 6,
+                  "byteEnd": 6
+                },
+                {
+                  "start": 700,
+                  "value": "run",
+                  "byteStart": 7,
+                  "byteEnd": 9
+                },
+                {
+                  "start": 1000,
+                  "value": " ",
+                  "byteStart": 10,
+                  "byteEnd": 10
+                },
+                {
+                  "start": 1100,
+                  "value": "to",
+                  "byteStart": 11,
+                  "byteEnd": 12
+                },
+                {
+                  "start": 1400,
+                  "value": " ",
+                  "byteStart": 13,
+                  "byteEnd": 13
+                },
+                {
+                  "start": 1500,
+                  "value": "sea",
+                  "byteStart": 14,
+                  "byteEnd": 16
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

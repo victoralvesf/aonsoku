@@ -1,0 +1,152 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "openSubsonic": true,
+    "lyricsList": {
+      "structuredLyrics": [
+        {
+          "lang": "eng",
+          "synced": true,
+          "kind": "main",
+          "agents": [
+            {
+              "id": "lead",
+              "role": "main",
+              "name": "Lead Vocal"
+            },
+            {
+              "id": "bg",
+              "role": "bg",
+              "name": "Background"
+            }
+          ],
+          "line": [
+            {
+              "start": 1000,
+              "value": "Don't worry bout a thing"
+            }
+          ],
+          "cueLine": [
+            {
+              "index": 0,
+              "agentId": "lead",
+              "value": "Don't worry bout a thing",
+              "start": 1000,
+              "end": 5000,
+              "cue": [
+                {
+                  "start": 1000,
+                  "end": 1600,
+                  "value": "Don't",
+                  "byteStart": 0,
+                  "byteEnd": 4
+                },
+                {
+                  "start": 1600,
+                  "end": 1900,
+                  "value": " ",
+                  "byteStart": 5,
+                  "byteEnd": 5
+                },
+                {
+                  "start": 1900,
+                  "end": 2600,
+                  "value": "worry",
+                  "byteStart": 6,
+                  "byteEnd": 10
+                },
+                {
+                  "start": 2600,
+                  "end": 2900,
+                  "value": " ",
+                  "byteStart": 11,
+                  "byteEnd": 11
+                },
+                {
+                  "start": 2900,
+                  "end": 3400,
+                  "value": "bout",
+                  "byteStart": 12,
+                  "byteEnd": 15
+                },
+                {
+                  "start": 3400,
+                  "end": 3700,
+                  "value": " ",
+                  "byteStart": 16,
+                  "byteEnd": 16
+                },
+                {
+                  "start": 3700,
+                  "end": 3900,
+                  "value": "a",
+                  "byteStart": 17,
+                  "byteEnd": 17
+                },
+                {
+                  "start": 3900,
+                  "end": 4200,
+                  "value": " ",
+                  "byteStart": 18,
+                  "byteEnd": 18
+                },
+                {
+                  "start": 4200,
+                  "end": 5000,
+                  "value": "thing",
+                  "byteStart": 19,
+                  "byteEnd": 23
+                }
+              ]
+            },
+            {
+              "index": 0,
+              "agentId": "bg",
+              "value": "Oh oh oh",
+              "start": 1200,
+              "end": 5000,
+              "cue": [
+                {
+                  "start": 1200,
+                  "end": 2000,
+                  "value": "Oh",
+                  "byteStart": 0,
+                  "byteEnd": 1
+                },
+                {
+                  "start": 2000,
+                  "end": 2300,
+                  "value": " ",
+                  "byteStart": 2,
+                  "byteEnd": 2
+                },
+                {
+                  "start": 2300,
+                  "end": 3200,
+                  "value": "oh",
+                  "byteStart": 3,
+                  "byteEnd": 4
+                },
+                {
+                  "start": 3200,
+                  "end": 3500,
+                  "value": " ",
+                  "byteStart": 5,
+                  "byteEnd": 5
+                },
+                {
+                  "start": 3500,
+                  "end": 5000,
+                  "value": "oh",
+                  "byteStart": 6,
+                  "byteEnd": 7
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "openSubsonic": true,
+    "lyricsList": {
+      "structuredLyrics": [
+        {
+          "lang": "eng",
+          "synced": true,
+          "kind": "main",
+          "agents": [
+            {
+              "id": "lead",
+              "role": "main",
+              "name": "Lead Vocal"
+            },
+            {
+              "id": "bg",
+              "role": "bg",
+              "name": "Background"
+            }
+          ],
+          "line": [
+            {
+              "start": 1000,
+              "value": "Together we stand"
+            }
+          ],
+          "cueLine": [
+            {
+              "index": 0,
+              "agentId": "lead",
+              "value": "Together we stand",
+              "start": 1000,
+              "end": 4000,
+              "cue": [
+                {
+                  "start": 1000,
+                  "end": 1800,
+                  "value": "Together",
+                  "byteStart": 0,
+                  "byteEnd": 7
+                },
+                {
+                  "start": 1800,
+                  "end": 2100,
+                  "value": " ",
+                  "byteStart": 8,
+                  "byteEnd": 8
+                },
+                {
+                  "start": 2100,
+                  "end": 2500,
+                  "value": "we",
+                  "byteStart": 9,
+                  "byteEnd": 10
+                },
+                {
+                  "start": 2500,
+                  "end": 2800,
+                  "value": " ",
+                  "byteStart": 11,
+                  "byteEnd": 11
+                },
+                {
+                  "start": 2800,
+                  "end": 4000,
+                  "value": "stand",
+                  "byteStart": 12,
+                  "byteEnd": 16
+                }
+              ]
+            },
+            {
+              "index": 0,
+              "agentId": "bg",
+              "value": "Together we stand",
+              "start": 1000,
+              "end": 4000,
+              "cue": [
+                {
+                  "start": 1000,
+                  "end": 1800,
+                  "value": "Together",
+                  "byteStart": 0,
+                  "byteEnd": 7
+                },
+                {
+                  "start": 1800,
+                  "end": 2100,
+                  "value": " ",
+                  "byteStart": 8,
+                  "byteEnd": 8
+                },
+                {
+                  "start": 2100,
+                  "end": 2500,
+                  "value": "we",
+                  "byteStart": 9,
+                  "byteEnd": 10
+                },
+                {
+                  "start": 2500,
+                  "end": 2800,
+                  "value": " ",
+                  "byteStart": 11,
+                  "byteEnd": 11
+                },
+                {
+                  "start": 2800,
+                  "end": 4000,
+                  "value": "stand",
+                  "byteStart": 12,
+                  "byteEnd": 16
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

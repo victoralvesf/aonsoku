@@ -15,7 +15,17 @@ import { useLyricsSettings } from '@/store/player.store'
 
 export function LyricsSettings() {
   const { t } = useTranslation()
-  const { preferSyncedLyrics, setPreferSyncedLyrics } = useLyricsSettings()
+  const {
+    preferSyncedLyrics,
+    setPreferSyncedLyrics,
+    preferWordLevelLyrics,
+    setPreferWordLevelLyrics,
+  } = useLyricsSettings()
+
+  const handleWordLevelToggle = (value: boolean) => {
+    setPreferWordLevelLyrics(value)
+    if (value) setPreferSyncedLyrics(true)
+  }
 
   return (
     <Root>
@@ -34,6 +44,20 @@ export function LyricsSettings() {
             <Switch
               checked={preferSyncedLyrics}
               onCheckedChange={setPreferSyncedLyrics}
+              disabled={preferWordLevelLyrics}
+            />
+          </ContentItemForm>
+        </ContentItem>
+        <ContentItem>
+          <ContentItemTitle
+            info={t('settings.audio.lyrics.preferWordLevel.info')}
+          >
+            {t('settings.audio.lyrics.preferWordLevel.label')}
+          </ContentItemTitle>
+          <ContentItemForm>
+            <Switch
+              checked={preferWordLevelLyrics}
+              onCheckedChange={handleWordLevelToggle}
             />
           </ContentItemForm>
         </ContentItem>

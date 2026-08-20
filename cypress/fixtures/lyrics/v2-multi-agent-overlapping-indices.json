@@ -1,0 +1,118 @@
+{
+  "subsonic-response": {
+    "status": "ok",
+    "version": "1.16.1",
+    "openSubsonic": true,
+    "lyricsList": {
+      "structuredLyrics": [
+        {
+          "lang": "eng",
+          "synced": true,
+          "kind": "main",
+          "agents": [
+            { "id": "lead", "role": "main", "name": "Lead" },
+            { "id": "echo", "role": "voice", "name": "Echo" },
+            { "id": "choir", "role": "bg", "name": "Choir" }
+          ],
+          "line": [
+            { "start": 1000, "value": "First line" },
+            { "start": 1500, "value": "Echo over" },
+            { "start": 2500, "value": "Choir joins" }
+          ],
+          "cueLine": [
+            {
+              "index": 0,
+              "agentId": "lead",
+              "start": 1000,
+              "end": 2200,
+              "value": "First line",
+              "cue": [
+                {
+                  "start": 1000,
+                  "end": 1500,
+                  "value": "First",
+                  "byteStart": 0,
+                  "byteEnd": 4
+                },
+                {
+                  "start": 1500,
+                  "end": 1700,
+                  "value": " ",
+                  "byteStart": 5,
+                  "byteEnd": 5
+                },
+                {
+                  "start": 1700,
+                  "end": 2200,
+                  "value": "line",
+                  "byteStart": 6,
+                  "byteEnd": 9
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "agentId": "echo",
+              "start": 1500,
+              "end": 3000,
+              "value": "Echo over",
+              "cue": [
+                {
+                  "start": 1500,
+                  "end": 1900,
+                  "value": "Echo",
+                  "byteStart": 0,
+                  "byteEnd": 3
+                },
+                {
+                  "start": 1900,
+                  "end": 2100,
+                  "value": " ",
+                  "byteStart": 4,
+                  "byteEnd": 4
+                },
+                {
+                  "start": 2100,
+                  "end": 3000,
+                  "value": "over",
+                  "byteStart": 5,
+                  "byteEnd": 8
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "agentId": "choir",
+              "start": 2500,
+              "end": 4000,
+              "value": "Choir joins",
+              "cue": [
+                {
+                  "start": 2500,
+                  "end": 2900,
+                  "value": "Choir",
+                  "byteStart": 0,
+                  "byteEnd": 4
+                },
+                {
+                  "start": 2900,
+                  "end": 3100,
+                  "value": " ",
+                  "byteStart": 5,
+                  "byteEnd": 5
+                },
+                {
+                  "start": 3100,
+                  "end": 4000,
+                  "value": "joins",
+                  "byteStart": 6,
+                  "byteEnd": 10
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

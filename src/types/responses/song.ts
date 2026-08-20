@@ -24,17 +24,54 @@ export interface ILyricsList {
 }
 
 export interface IStructuredLyric {
-  displayArtist: string
-  displayTitle: string
+  displayArtist?: string
+  displayTitle?: string
   lang?: string
   offset?: number
   synced: boolean
   line: IStructuredLine[]
+  kind?: 'main' | 'translation' | 'pronunciation' | (string & {})
+  cueLine?: ICueLine[]
+  agents?: IAgent[]
 }
 
 export interface IStructuredLine {
   start?: number
   value: string
+}
+
+// OpenSubsonic v2 word-level lyric types
+
+export interface IWord {
+  start?: number
+  end?: number
+  byteStart?: number
+  byteEnd?: number
+  value: string
+}
+
+export interface ICue {
+  start?: number
+  end?: number
+  byteStart?: number
+  byteEnd?: number
+  value?: string
+  word?: IWord[]
+}
+
+export interface ICueLine {
+  index: number
+  agentId?: string
+  start?: number
+  end?: number
+  value: string
+  cue: ICue[]
+}
+
+export interface IAgent {
+  id: string
+  role: 'main' | 'voice' | 'bg' | 'group' | (string & {})
+  name?: string
 }
 
 export interface IContributor {
