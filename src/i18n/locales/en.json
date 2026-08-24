@@ -557,7 +557,8 @@
     "title": "Queue",
     "clear": "Clear queue",
     "close": "Close queue",
-    "open": "Open queue"
+    "open": "Open queue",
+    "removeSong": "Remove from queue"
   },
   "shortcuts": {
     "modal": {
