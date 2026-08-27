@@ -1,5 +1,6 @@
 import { SettingsOptions } from '@/app/components/settings/options'
 import { useAppSettings } from '@/store/app.store'
+import { Accessibility } from './accessibility'
 import { Accounts } from './accounts'
 import { Appearance } from './appearance'
 import { Audio } from './audio'
@@ -15,6 +16,7 @@ const pages: Record<SettingsOptions, JSX.Element> = {
   content: <Content />,
   accounts: <Accounts />,
   desktop: <Desktop />,
+  accessibility: <Accessibility />,
   privacy: <Privacy />,
 }
 

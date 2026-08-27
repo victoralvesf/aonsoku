@@ -47,6 +47,32 @@
   </screenshots>
 
   <releases>
+    <release version="0.15.0" date="2026-07-12">
+      <url type="details">https://github.com/victoralvesf/aonsoku/releases/tag/v0.15.0</url>
+      <description>
+        <p>New Features</p>
+        <ul>
+          <li>Tables: Added tooltips showing song title, artist, and album name.</li>
+          <li>New Settings: Added an option to enable/disable home page carousel auto-scroll.</li>
+          <li>Automatic CJK Script Detection: Lyrics in Chinese, Japanese, or Korean now render with Noto Sans for improved readability.</li>
+          <li>Hide Features: Added new options in content settings to hide specific features across the whole app.</li>
+          <li>KDE Window Controls: Added new window control icons for KDE.</li>
+          <li>Local Cache Control: Added cache controls and a clear button to app content settings.</li>
+          <li>Radio Metadata: Added Icecast radio metadata support.</li>
+          <li>Localization: Added support for Finnish, Swiss German, Hungarian, and Tamil. Also improved support for existing languages.</li>
+          <li>New Themes: Added Everforest Dark, Vesper, Mirage, and Arduino Light themes.</li>
+          <li>NixOS Support: Upgraded pnpm from v9 to v11, since pnpm 9 has reached end-of-life and was slated for removal from nixpkgs.</li>
+          <li>macOS Dock: Added dock support with play, pause, next, and previous buttons.</li>
+          <li>macOS Trackpad: Added support for back/forward navigation via trackpad gestures.</li>
+        </ul>
+        <p>Fixes</p>
+        <ul>
+          <li>ALAC Support: Enforced ALAC playback when needed, using transcoding.</li>
+          <li>Discord RPC: Fixed RPC not updating activity when seeking or when loop mode was enabled.</li>
+          <li>Docker Variables: Ensured Docker environment variables are always applied.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.14.0" date="2026-04-02">
       <url type="details">https://github.com/victoralvesf/aonsoku/releases/tag/v0.14.0</url>
       <description>

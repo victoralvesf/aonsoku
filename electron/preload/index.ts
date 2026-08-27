@@ -1,6 +1,11 @@
 import { electronAPI } from '@electron-toolkit/preload'
-import { contextBridge, ipcRenderer } from 'electron'
-import { IAonsokuAPI, IpcChannels, PlayerStateListenerActions } from './types'
+import { contextBridge, ipcRenderer, webFrame } from 'electron'
+import {
+  IAonsokuAPI,
+  IpcChannels,
+  PlayerStateListenerActions,
+  ZoomAction,
+} from './types'
 
 // Custom APIs for renderer
 const api: IAonsokuAPI = {
@@ -81,6 +86,18 @@ const api: IAonsokuAPI = {
   },
   onUpdateDownloaded: (callback) => {
     ipcRenderer.on(IpcChannels.UpdateDownloaded, (_, info) => callback(info))
+  },
+  setZoomFactor: (factor) => {
+    webFrame.setZoomFactor(factor)
+    ipcRenderer.send(IpcChannels.SetZoomFactor, factor)
+  },
+  zoomActionListener: (func) => {
+    ipcRenderer.on(IpcChannels.ZoomAction, (_, action: ZoomAction) =>
+      func(action),
+    )
+  },
+  removeZoomActionListener: () => {
+    ipcRenderer.removeAllListeners(IpcChannels.ZoomAction)
   },
 }
 

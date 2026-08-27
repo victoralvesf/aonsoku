@@ -123,6 +123,11 @@ interface IPodcasts {
   setCollapsibleState: (value: boolean) => void
 }
 
+interface IAccessibility {
+  zoomLevel: number
+  setZoomLevel: (value: number) => void
+}
+
 interface IAccounts {
   discord: {
     rpcEnabled: boolean
@@ -147,6 +152,7 @@ export interface IAppContext {
   accounts: IAccounts
   podcasts: IPodcasts
   artwork: IAppArtwork
+  accessibility: IAccessibility
   pages: IAppPages
   desktop: IDesktop
   command: IAppCommand

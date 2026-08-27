@@ -567,7 +567,8 @@
       "repeat": "Powtarzanie",
       "next": "Następny utwór",
       "previous": "Poprzedni utwór",
-      "label": "Odtwarzanie"
+      "label": "Odtwarzanie",
+      "toggleFullscreen": "Przełącz pełny ekran"
     },
     "navigation": {
       "label": "Nawigowanie"
@@ -581,6 +582,12 @@
     },
     "sidebar": {
       "toggle": "Przełącz pasek boczny"
+    },
+    "zoom": {
+      "label": "Przybliżenie",
+      "in": "Powiększ",
+      "out": "Zmniejsz",
+      "reset": "Zresetuj przybliżenie"
     }
   },
   "songInfo": {
@@ -622,7 +629,8 @@
       "privacy": "Prywatność & Bezpieczeństwo",
       "language": "Język & Region",
       "accounts": "Konta",
-      "desktop": "Aplikacja na komputer"
+      "desktop": "Aplikacja na komputer",
+      "accessibility": "Dostępność"
     },
     "audio": {
       "replayGain": {
@@ -799,6 +807,16 @@
         "tray": {
           "label": "Zminimalizuj do zasobnika",
           "info": "Gdy włączone, aplikacja będzie minimalizowana do zasobnika systemowego zamiast zamykać się po kliknięciu przycisku zamykania."
+        }
+      }
+    },
+    "accessibility": {
+      "visual": {
+        "group": "Wizualne",
+        "description": "Steruj tym jak duże są elementy interfejsu oraz jakie maja odstępy od siebie.",
+        "zoom": {
+          "label": "Poziom przybliżenia",
+          "info": "Zmienia rozmiar interfejsu. Może to też zmienić klawiszami {{key}} +/-."
         }
       }
     }

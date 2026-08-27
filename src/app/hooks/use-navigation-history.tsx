@@ -3,8 +3,8 @@ import { useNavigate, useNavigationType } from 'react-router-dom'
 import { MouseButton } from '@/utils/browser'
 import { isMacOS } from '@/utils/desktop'
 
-const SWIPE_THRESHOLD = 60  // minimum deltaX to count as a navigation gesture
-const SWIPE_COOLDOWN = 500  // ms before another swipe can fire
+const SWIPE_THRESHOLD = 60 // minimum deltaX to count as a navigation gesture
+const SWIPE_COOLDOWN = 500 // ms before another swipe can fire
 
 const useNavigationHistory = () => {
   const navigationType = useNavigationType()
@@ -78,7 +78,8 @@ const useNavigationHistory = () => {
       lastFired = now
 
       if (e.deltaX < 0 && window.history.state?.idx > 0) navigate(-1)
-      if (e.deltaX > 0 && window.history.state?.idx < window.history.length - 1) navigate(1)
+      if (e.deltaX > 0 && window.history.state?.idx < window.history.length - 1)
+        navigate(1)
     }
 
     window.addEventListener('wheel', handleWheel, { passive: true })

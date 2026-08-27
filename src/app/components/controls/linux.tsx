@@ -1,9 +1,9 @@
 import { ComponentPropsWithoutRef } from 'react'
 import { useAppWindow } from '@/app/hooks/use-app-window'
 import { cn } from '@/lib/utils'
+import { isKDE } from '@/utils/desktop.ts'
 import { ControlButton } from './button'
 import { Icons } from './icons'
-import { isKDE } from '@/utils/desktop.ts'
 
 type LinuxProps = ComponentPropsWithoutRef<'div'>
 
