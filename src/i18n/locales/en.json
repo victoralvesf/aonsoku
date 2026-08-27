@@ -579,13 +579,20 @@
       "previous": "Skip to previous",
       "next": "Skip to next",
       "raiseVolume": "Raise volume",
-      "lowerVolume": "Lower volume"
+      "lowerVolume": "Lower volume",
+      "toggleFullscreen": "Toggle fullscreen"
     },
     "navigation": {
       "label": "Navigation"
     },
     "sidebar": {
       "toggle": "Toggle sidebar"
+    },
+    "zoom": {
+      "label": "Zoom",
+      "in": "Zoom in",
+      "out": "Zoom out",
+      "reset": "Reset zoom"
     }
   },
   "songInfo": {
@@ -632,7 +639,18 @@
       "content": "Content",
       "accounts": "Accounts",
       "desktop": "Desktop Application",
-      "privacy": "Privacy & Security"
+      "privacy": "Privacy & Security",
+      "accessibility": "Accessibility"
+    },
+    "accessibility": {
+      "visual": {
+        "group": "Visual",
+        "description": "Control how large and spaced out the interface appears.",
+        "zoom": {
+          "label": "Zoom level",
+          "info": "Adjust the size of the interface. You can also change this with {{key}} +/-."
+        }
+      }
     },
     "appearance": {
       "general": {

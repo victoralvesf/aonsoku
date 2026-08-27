@@ -27,6 +27,24 @@ module.exports = {
           'sans-serif',
         ],
       },
+      height: {
+        screen: 'var(--app-height)',
+      },
+      minHeight: {
+        screen: 'var(--app-height)',
+      },
+      maxHeight: {
+        screen: 'var(--app-height)',
+      },
+      width: {
+        screen: 'var(--app-width)',
+      },
+      minWidth: {
+        screen: 'var(--app-width)',
+      },
+      maxWidth: {
+        screen: 'var(--app-width)',
+      },
       spacing: {
         header: 'var(--header-height)',
         player: 'var(--player-height)',

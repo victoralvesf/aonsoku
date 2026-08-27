@@ -677,6 +677,16 @@
           "info": "Wenn diese Option aktiviert ist, werden Bilder lokal zwischengespeichert, um die Leistung zu verbessern.",
           "label": "Bild-Cache aktivieren"
         }
+      },
+      "home": {
+        "group": "Startseite",
+        "description": "Passen Sie den Inhalt der Startseite an."
+      },
+      "caches": {
+        "clearAll": {
+          "button": "Alles löschen",
+          "success": "Caches wurde erfolgreich gelöscht."
+        }
       }
     },
     "accounts": {

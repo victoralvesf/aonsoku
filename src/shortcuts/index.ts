@@ -4,9 +4,18 @@ import { IShortcut } from '@/types/shortcuts'
 const JOIN_SHORTCUTS_KEY = !isMacOs ? '+' : ''
 
 const META_KEY = isMacOs ? '⌘' : 'Ctrl'
+const META_TEXT = isMacOs ? 'cmd' : 'ctrl'
 const CTRL_KEY = isMacOs ? '⌃' : 'Ctrl'
 const SHIFT_KEY = isMacOs ? '⇧' : 'Shift'
-// const ALT_KEY = isMacOs ? '⌥' : 'Alt'
+const ALT_KEY = isMacOs ? '⌥' : 'Alt'
+
+export const shortcutKeys = {
+  META_KEY,
+  META_TEXT,
+  CTRL_KEY,
+  SHIFT_KEY,
+  ALT_KEY,
+}
 
 export const shortcutDialogKeys = [META_KEY, '/']
 export const logoutKeys = [SHIFT_KEY, CTRL_KEY, 'Q']
@@ -44,6 +53,10 @@ const playbackShortcuts: IShortcut[] = [
     label: 'shortcuts.playback.lowerVolume',
     shortcuts: [META_KEY, '↓'],
   },
+  {
+    label: 'shortcuts.playback.toggleFullscreen',
+    shortcuts: ['Q'],
+  },
 ]
 
 const navigationShortcuts: IShortcut[] = [
@@ -57,6 +70,21 @@ const navigationShortcuts: IShortcut[] = [
   },
 ]
 
+const zoomShortcuts: IShortcut[] = [
+  {
+    label: 'shortcuts.zoom.in',
+    shortcuts: [META_KEY, '+'],
+  },
+  {
+    label: 'shortcuts.zoom.out',
+    shortcuts: [META_KEY, '-'],
+  },
+  {
+    label: 'shortcuts.zoom.reset',
+    shortcuts: [META_KEY, '0'],
+  },
+]
+
 export const allShortcuts = [
   {
     id: 'playback',
@@ -67,5 +95,10 @@ export const allShortcuts = [
     id: 'navigation',
     label: 'shortcuts.navigation.label',
     shortcuts: navigationShortcuts,
+  },
+  {
+    id: 'zoom',
+    label: 'shortcuts.zoom.label',
+    shortcuts: zoomShortcuts,
   },
 ]

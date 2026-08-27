@@ -29,7 +29,7 @@ jobs:
       contents: write
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [macos-latest, ubuntu-latest, windows-2022]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check execution logic
@@ -43,7 +43,7 @@ jobs:
           else
             if [[ "${{ matrix.os }}" == "macos-latest" && "${{ inputs.run_mac }}" == "true" ]]; then SHOULD_RUN="true"; fi
             if [[ "${{ matrix.os }}" == "ubuntu-latest" && "${{ inputs.run_linux }}" == "true" ]]; then SHOULD_RUN="true"; fi
-            if [[ "${{ matrix.os }}" == "windows-latest" && "${{ inputs.run_win }}" == "true" ]]; then SHOULD_RUN="true"; fi
+            if [[ "${{ matrix.os }}" == "windows-2022" && "${{ inputs.run_win }}" == "true" ]]; then SHOULD_RUN="true"; fi
           fi
 
           echo "SHOULD_RUN=$SHOULD_RUN" >> $GITHUB_ENV
@@ -88,7 +88,7 @@ jobs:
         run: pnpm ci:build:mac
 
       - name: Build and Release (Windows)
-        if: env.SHOULD_RUN == 'true' && matrix.os == 'windows-latest'
+        if: env.SHOULD_RUN == 'true' && matrix.os == 'windows-2022'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm ci:build:win

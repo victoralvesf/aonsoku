@@ -1,6 +1,6 @@
+import IcecastMetadataStats from 'icecast-metadata-stats'
 import { useEffect, useState } from 'react'
 import { Radio } from '@/types/responses/radios'
-import IcecastMetadataStats from 'icecast-metadata-stats'
 
 export const useRadioMetadata = (radio: Radio | undefined) => {
   const streamUrl = radio?.streamUrl

@@ -168,6 +168,16 @@
           }
         }
       }
+    },
+    {
+      "includes": ["src/index.css"],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noUnknownAtRule": "off"
+          }
+        }
+      }
     }
   ],
   "assist": {

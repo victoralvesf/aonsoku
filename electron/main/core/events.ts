@@ -7,17 +7,18 @@ import {
 } from '../../preload/types'
 import { isQuitting } from '../index'
 import { tray, updateTray } from '../tray'
-import { updateDockMenu } from './dockMenu'
 import { colorsState } from './colors'
 import {
   clearDiscordRpcActivity,
   RpcPayload,
   setDiscordRpcActivity,
 } from './discordRpc'
+import { updateDockMenu } from './dockMenu'
 import { playerState } from './playerState'
 import { getAppSetting, ISettingPayload, saveAppSettings } from './settings'
 import { setTaskbarButtons } from './taskbar'
 import { DEFAULT_TITLE_BAR_HEIGHT } from './titleBarOverlay'
+import { setTrafficLightPosition } from './trafficLight'
 
 export function setupEvents(window: BrowserWindow | null) {
   if (!window) return
@@ -95,6 +96,7 @@ function resetIpcEvents() {
     IpcChannels.SetDiscordRpcActivity,
     IpcChannels.ClearDiscordRpcActivity,
     IpcChannels.SaveAppSettings,
+    IpcChannels.SetZoomFactor,
   ]
 
   eventsToReset.forEach((event) => ipcMain.removeAllListeners(event))
@@ -178,5 +180,9 @@ export function setupIpcEvents(window: BrowserWindow | null) {
 
   ipcMain.on(IpcChannels.SaveAppSettings, (_, payload: ISettingPayload) => {
     saveAppSettings(payload)
+  })
+
+  ipcMain.on(IpcChannels.SetZoomFactor, (_, factor: number) => {
+    setTrafficLightPosition(window, factor)
   })
 }

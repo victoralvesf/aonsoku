@@ -7,16 +7,71 @@ import {
   shell,
 } from 'electron'
 import { repository } from '../../../package.json'
+import { IpcChannels, ZoomAction } from '../../preload/types'
+import { mainWindow } from '../window'
 import { aboutDialog } from './about'
 
-export function createAppMenu() {
-  if (!platform.isMacOS) return
+function sendZoomAction(action: ZoomAction) {
+  if (!mainWindow) return
 
-  const toggleDevTools = {
-    role: 'toggleDevTools',
-  } as const
+  mainWindow.webContents.send(IpcChannels.ZoomAction, action)
+}
 
-  const template: (MenuItemConstructorOptions | MenuItem)[] = [
+// The native zoom roles are replaced by these items, so the zoom level is
+// handled by the renderer and kept in sync with the app settings.
+// See src/utils/zoom.ts
+const zoomMenuItems: MenuItemConstructorOptions[] = [
+  {
+    label: 'Actual Size',
+    accelerator: 'CmdOrCtrl+0',
+    click: () => sendZoomAction('reset'),
+  },
+  {
+    label: 'Zoom In',
+    accelerator: 'CmdOrCtrl+Plus',
+    click: () => sendZoomAction('in'),
+  },
+  {
+    label: 'Zoom Out',
+    accelerator: 'CmdOrCtrl+-',
+    click: () => sendZoomAction('out'),
+  },
+]
+
+const toggleDevTools = {
+  role: 'toggleDevTools',
+} as const
+
+const toggleFullscreen = [
+  { type: 'separator' },
+  { role: 'togglefullscreen' },
+] as const
+
+const viewMenu: MenuItemConstructorOptions = {
+  label: 'View',
+  submenu: [
+    { role: 'reload' },
+    ...(is.dev ? [toggleDevTools] : []),
+    { type: 'separator' },
+    ...zoomMenuItems,
+    ...toggleFullscreen,
+  ],
+}
+
+const helpMenu: MenuItemConstructorOptions = {
+  role: 'help',
+  submenu: [
+    {
+      label: 'Github',
+      click: async () => {
+        await shell.openExternal(repository.url)
+      },
+    },
+  ],
+}
+
+function macTemplate(): (MenuItemConstructorOptions | MenuItem)[] {
+  return [
     {
       label: app.name,
       submenu: [
@@ -33,10 +88,6 @@ export function createAppMenu() {
         { type: 'separator' },
         { role: 'quit' },
       ],
-    },
-    {
-      label: 'File',
-      submenu: [{ role: 'close' }],
     },
     {
       label: 'Edit',
@@ -56,20 +107,7 @@ export function createAppMenu() {
         },
       ],
     },
-    {
-      label: 'View',
-      submenu: [
-        { role: 'reload' },
-        { role: 'forceReload' },
-        ...(is.dev ? [toggleDevTools] : []),
-        { type: 'separator' },
-        { role: 'resetZoom' },
-        { role: 'zoomIn' },
-        { role: 'zoomOut' },
-        { type: 'separator' },
-        { role: 'togglefullscreen' },
-      ],
-    },
+    viewMenu,
     {
       label: 'Window',
       submenu: [
@@ -81,18 +119,43 @@ export function createAppMenu() {
         { role: 'window' },
       ],
     },
+    helpMenu,
+  ]
+}
+
+// Windows and Linux don't show a menu bar, but the menu is still registered
+// to replace the default one from Electron, which zooms without telling
+// the renderer about it.
+function defaultTemplate(): (MenuItemConstructorOptions | MenuItem)[] {
+  return [
     {
-      role: 'help',
+      label: 'File',
+      submenu: [{ role: 'quit' }],
+    },
+    {
+      label: 'Edit',
       submenu: [
-        {
-          label: 'Github',
-          click: async () => {
-            await shell.openExternal(repository.url)
-          },
-        },
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'delete' },
+        { role: 'selectAll' },
       ],
     },
+    viewMenu,
+    {
+      label: 'Window',
+      submenu: [{ role: 'minimize' }, { role: 'close' }],
+    },
+    helpMenu,
   ]
+}
+
+export function createAppMenu() {
+  const template = platform.isMacOS ? macTemplate() : defaultTemplate()
 
   const menu = Menu.buildFromTemplate(template)
 

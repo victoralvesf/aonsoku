@@ -3,14 +3,15 @@ import { BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electron } from '../../package.json'
 import { colorsState } from './core/colors'
+import { updateDockMenu } from './core/dockMenu'
 import { setupDownloads } from './core/downloads'
 import { setupEvents, setupIpcEvents } from './core/events'
 import { appIcon } from './core/icon'
+import { playerState } from './core/playerState'
 import { titleBarOverlay } from './core/titleBarOverlay'
+import { defaultTrafficLightPosition } from './core/trafficLight'
 import { setUpdaterWindow } from './core/updater'
 import { StatefulBrowserWindow } from './core/windowPosition'
-import { updateDockMenu } from './core/dockMenu'
-import { playerState } from './core/playerState'
 import { createTray } from './tray'
 
 export let mainWindow: BrowserWindow | null = null
@@ -34,7 +35,7 @@ export function createWindow(): void {
     roundedCorners: true,
     frame: false,
     ...(platform.isWindows ? { titleBarOverlay } : {}),
-    trafficLightPosition: { x: 15, y: 14 },
+    trafficLightPosition: defaultTrafficLightPosition,
     icon: appIcon(),
     webPreferences: {
       preload: join(__dirname, '../preload/index.mjs'),
@@ -43,7 +44,12 @@ export function createWindow(): void {
   })
 
   // set initial state
-  playerState.setAll({ isPlaying: false, hasSonglist: false, hasPrevious: false, hasNext: false })
+  playerState.setAll({
+    isPlaying: false,
+    hasSonglist: false,
+    hasPrevious: false,
+    hasNext: false,
+  })
 
   createTray()
   updateDockMenu()

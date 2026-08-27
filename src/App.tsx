@@ -7,6 +7,7 @@ import { MediaSessionObserver } from '@/app/observers/media-session-observer'
 import { ThemeObserver } from '@/app/observers/theme-observer'
 import { ToastContainer } from '@/app/observers/toast-container'
 import { UpdateObserver } from '@/app/observers/update-observer'
+import { ZoomObserver } from '@/app/observers/zoom-observer'
 import { Mobile } from '@/app/pages/mobile'
 import { router } from '@/routes/router'
 import { isDesktop as isElectron, isLinux } from '@/utils/desktop'
@@ -20,6 +21,7 @@ function App() {
       <MediaSessionObserver />
       <LangObserver />
       <ThemeObserver />
+      <ZoomObserver />
       <SettingsDialog />
       <RouterProvider router={router} />
       <ToastContainer />

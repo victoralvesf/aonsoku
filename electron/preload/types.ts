@@ -35,7 +35,11 @@ export enum IpcChannels {
   UpdateError = 'update-error',
   DownloadProgress = 'download-progress',
   UpdateDownloaded = 'update-downloaded',
+  ZoomAction = 'zoom-action',
+  SetZoomFactor = 'set-zoom-factor',
 }
+
+export type ZoomAction = 'in' | 'out' | 'reset'
 
 export type OverlayColors = {
   color: string
@@ -89,4 +93,7 @@ export interface IAonsokuAPI {
   onUpdateError: (callback: (error: string) => void) => void
   onDownloadProgress: (callback: (progress: ProgressInfo) => void) => void
   onUpdateDownloaded: (callback: (info: UpdateDownloadedEvent) => void) => void
+  setZoomFactor: (factor: number) => void
+  zoomActionListener: (func: (action: ZoomAction) => void) => void
+  removeZoomActionListener: () => void
 }

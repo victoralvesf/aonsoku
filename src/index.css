@@ -29,15 +29,27 @@
     font-family: "Poppins", "Noto Sans HK", "Noto Sans SC", sans-serif;
   }
   :root {
+    /* Zoom level, applied via CSS on the web only. See utils/zoom.ts */
+    --app-zoom: 1;
+    zoom: var(--app-zoom);
+
+    /* Window size on the zoomed coordinate space. Kept in sync by utils/zoom.ts */
+    --app-height: 100vh;
+    --app-width: 100vw;
+
     --header-height: 44px;
     --player-height: 96px;
-    --content-height: calc(100vh - var(--header-height) - var(--player-height));
+    --content-height: calc(
+      var(--app-height) -
+      var(--header-height) -
+      var(--player-height)
+    );
 
     --shadow-header-height: 80px;
     --shadow-header-distance: calc(var(--shadow-header-height) + 1.5rem);
 
     --empty-content-height: calc(
-      100vh -
+      var(--app-height) -
       var(--header-height) -
       var(--shadow-header-height) -
       var(--player-height)
