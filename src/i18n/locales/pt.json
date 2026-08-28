@@ -50,7 +50,11 @@
     "buttons": {
       "shuffle": "Tocar a rádio de {{artist}} no modo aleatório",
       "options": "Mais opções para {{artist}}",
-      "play": "Tocar a rádio de {{artist}}"
+      "play": "Tocar a rádio de {{artist}}",
+      "radio": "Iniciar rádio baseada em {{artist}}"
+    },
+    "radio": {
+      "empty": "Não foram encontradas faixas semelhantes para iniciar uma rádio."
     },
     "info": {
       "albumsCount_one": "{{count}} álbum",
