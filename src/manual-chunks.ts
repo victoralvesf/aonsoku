@@ -27,8 +27,12 @@ export function createManualChunks(id: string) {
     if (includesAny(['markdown', 'remark', 'rehype'])) return 'markdown'
     if (includesAny(['react-hook-form', 'zod'])) return 'forms'
     if (includes('dompurify')) return 'sanitizer'
-    if (includesAny(['zustand', 'immer', 'use-sync-external-store']))
-      return 'state'
+    // Keep the React shims next to React itself. Any react-* package lands in
+    // 'vendor' below, so leaving the shims in another chunk makes 'vendor'
+    // depend on that chunk while it already depends on React, and the cycle
+    // leaves React uninitialized at boot.
+    if (includes('use-sync-external-store')) return 'vendor'
+    if (includesAny(['zustand', 'immer'])) return 'state'
     if (includesAny(['fast-average-color', 'idb-keyval', 'iso-639-2']))
       return 'misc'
     if (vendor.some((name) => scopedPackageName.startsWith(name))) {

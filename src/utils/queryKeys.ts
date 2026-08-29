@@ -62,6 +62,10 @@ const episode = {
   latest: 'get-latest-episodes',
 }
 
+const activity = {
+  events: 'get-activity-events',
+}
+
 export const queryKeys = {
   album,
   artist,
@@ -74,4 +78,5 @@ export const queryKeys = {
   update,
   podcast,
   episode,
+  activity,
 }
