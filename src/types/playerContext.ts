@@ -40,6 +40,10 @@ export interface IPlaybackContext {
 
 export interface IPlayerState {
   isPlaying: boolean
+  // Bumps on every fresh play/replay intent (setSongList / playSong restart).
+  // The gapless engine watches it to restart audio when the user re-selects the
+  // SAME song id from another list, which resets progress but not the song id.
+  playbackNonce: number
   loopState: LoopState
   isShuffleActive: boolean
   isSongStarred: boolean
@@ -96,6 +100,13 @@ interface IReplayGain {
   actions: IReplayGainActions
 }
 
+export type TransitionMode = 'none' | 'gapless'
+
+interface IPlaybackSettings {
+  transitionMode: TransitionMode
+  setTransitionMode: (value: TransitionMode) => void
+}
+
 interface IFullscreen {
   autoFullscreenEnabled: boolean
   setAutoFullscreenEnabled: (value: boolean) => void
@@ -149,6 +160,7 @@ export interface IPlayerSettings {
   fullscreen: IFullscreen
   lyrics: ILyrics
   replayGain: IReplayGain
+  playback: IPlaybackSettings
   privacy: IPrivacySettings
   colors: IColorsSettings
 }
@@ -188,7 +200,7 @@ export interface IPlayerActions {
   handleVolumeWheel: (isScrollingDown: boolean) => void
   setCurrentDuration: (duration: number) => void
   setPlayRadio: (list: Radio[], index: number) => void
-  setAudioPlayerRef: (ref: HTMLAudioElement) => void
+  setAudioPlayerRef: (ref: HTMLAudioElement | null) => void
   setNextOnQueue: (songlist: ISong[]) => void
   setLastOnQueue: (songlist: ISong[]) => void
   removeSongFromQueue: (id: string) => void

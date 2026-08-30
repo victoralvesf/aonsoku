@@ -18,6 +18,7 @@ import {
   useReplayGainState,
 } from '@/store/player.store'
 import { logger } from '@/utils/logger'
+import { playbackClock } from '@/utils/playbackClock'
 import { calculateReplayGain, ReplayGainParams } from '@/utils/replayGain'
 
 type AudioPlayerProps = ComponentPropsWithoutRef<'audio'> & {
@@ -132,6 +133,21 @@ export function AudioPlayer({
     }
     if (isRadio) handleRadio()
   }, [audioRef, isPlaying, isRadio])
+
+  // Publish a high-resolution playback position to the shared clock for consumers that poll it (synced lyrics).
+  useEffect(() => {
+    if (!isSong || !isPlaying) return
+
+    let raf = 0
+    const tick = () => {
+      const audio = audioRef.current
+      if (audio) playbackClock.setPositionMs(audio.currentTime * 1000)
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+
+    return () => cancelAnimationFrame(raf)
+  }, [audioRef, isSong, isPlaying])
 
   const handleError = useMemo(() => {
     if (isSong) return handleSongError
