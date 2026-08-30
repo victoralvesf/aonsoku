@@ -1,5 +1,6 @@
 import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge, ipcRenderer, webFrame } from 'electron'
+import { WidgetServerStatus } from '../main/core/widgetTypes'
 import {
   IAonsokuAPI,
   IpcChannels,
@@ -98,6 +99,21 @@ const api: IAonsokuAPI = {
   },
   removeZoomActionListener: () => {
     ipcRenderer.removeAllListeners(IpcChannels.ZoomAction)
+  },
+  updateWidgetNowPlaying: (payload) => {
+    ipcRenderer.send(IpcChannels.UpdateWidgetNowPlaying, payload)
+  },
+  saveWidgetSettings: (payload) => {
+    ipcRenderer.send(IpcChannels.SaveWidgetSettings, payload)
+  },
+  widgetServerStatusListener: (func) => {
+    ipcRenderer.on(
+      IpcChannels.WidgetServerStatus,
+      (_, status: WidgetServerStatus) => func(status),
+    )
+  },
+  removeWidgetServerStatusListener: () => {
+    ipcRenderer.removeAllListeners(IpcChannels.WidgetServerStatus)
   },
 }
 

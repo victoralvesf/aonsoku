@@ -1,4 +1,10 @@
 export function createManualChunks(id: string) {
+  // Style-only modules must stay attached to the entry that imports them.
+  // Bucketing them into a shared vendor chunk leaks the app's CSS into the
+  // OBS widget page, which ships its own stylesheet and must not inherit
+  // rules like `body { padding: 6px }` from react-toastify.
+  if (/\.(css|scss|sass|less)(\?.*)?$/.test(id)) return undefined
+
   const vendor = ['react-dom', 'react-router-dom']
 
   if (id.includes('node_modules')) {

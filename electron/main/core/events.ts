@@ -19,6 +19,8 @@ import { getAppSetting, ISettingPayload, saveAppSettings } from './settings'
 import { setTaskbarButtons } from './taskbar'
 import { DEFAULT_TITLE_BAR_HEIGHT } from './titleBarOverlay'
 import { setTrafficLightPosition } from './trafficLight'
+import { saveWidgetSettings, updateWidgetNowPlaying } from './widgetSettings'
+import { WidgetNowPlayingPayload, WidgetSettingsPayload } from './widgetTypes'
 
 export function setupEvents(window: BrowserWindow | null) {
   if (!window) return
@@ -97,6 +99,8 @@ function resetIpcEvents() {
     IpcChannels.ClearDiscordRpcActivity,
     IpcChannels.SaveAppSettings,
     IpcChannels.SetZoomFactor,
+    IpcChannels.UpdateWidgetNowPlaying,
+    IpcChannels.SaveWidgetSettings,
   ]
 
   eventsToReset.forEach((event) => ipcMain.removeAllListeners(event))
@@ -185,4 +189,20 @@ export function setupIpcEvents(window: BrowserWindow | null) {
   ipcMain.on(IpcChannels.SetZoomFactor, (_, factor: number) => {
     setTrafficLightPosition(window, factor)
   })
+
+  ipcMain.on(
+    IpcChannels.UpdateWidgetNowPlaying,
+    (_, payload: WidgetNowPlayingPayload) => {
+      updateWidgetNowPlaying(payload)
+    },
+  )
+
+  ipcMain.on(
+    IpcChannels.SaveWidgetSettings,
+    (_, payload: WidgetSettingsPayload) => {
+      saveWidgetSettings(payload).catch((error) => {
+        console.error('[Widget] Unable to apply the widget settings.', error)
+      })
+    },
+  )
 }
