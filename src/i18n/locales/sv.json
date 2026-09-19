@@ -12,7 +12,8 @@
     "emptyPlaylist": "Inga spellistor skapat ännu",
     "library": "Bibliotek",
     "genres": "Genrer",
-    "podcasts": "Poddar"
+    "podcasts": "Poddar",
+    "activity": "Aktivitet"
   },
   "home": {
     "recentlyAdded": "Nyligen tillagd",
@@ -64,7 +65,10 @@
     "everforest-dark": "Everforest Mörk",
     "tinacious-design": "Tinacious Design",
     "marmalade-beaver": "Marmalade Beaver",
-    "vim-dark-soft": "Vim Mörk Mjuk"
+    "vim-dark-soft": "Vim Mörk Mjuk",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "playlist": {
     "form": {
@@ -480,13 +484,20 @@
       "previous": "Hoppa till föregående",
       "next": "Hoppa till nästa",
       "raiseVolume": "Höj volymen",
-      "lowerVolume": "Sänk volymen"
+      "lowerVolume": "Sänk volymen",
+      "toggleFullscreen": "Växla helskärm"
     },
     "navigation": {
       "label": "Navigering"
     },
     "sidebar": {
       "toggle": "Växla sidofält"
+    },
+    "zoom": {
+      "label": "Zoom",
+      "in": "Zooma in",
+      "out": "Zooma ut",
+      "reset": "Återställ zoom"
     }
   },
   "songInfo": {
@@ -533,7 +544,8 @@
       "content": "Innehåll",
       "privacy": "Integritet och säkerhet",
       "accounts": "Konton",
-      "desktop": "Skrivbordsprogram"
+      "desktop": "Skrivbordsprogram",
+      "accessibility": "Tillgänglighet"
     },
     "appearance": {
       "general": {
@@ -606,6 +618,45 @@
           "user": "Användarnamn",
           "url": "Server-URL"
         }
+      },
+      "features": {
+        "group": "Funktioner",
+        "description": "Aktivera eller inaktivera klientfunktioner"
+      },
+      "caches": {
+        "group": "Cachar",
+        "description": "Styr vad appen cachar lokalt.",
+        "images": {
+          "label": "Aktivera bildcache",
+          "info": "När alternativet är aktiverat cachas bilder lokalt för bättre prestanda."
+        },
+        "lyrics": {
+          "label": "Aktivera cache för sångtexter",
+          "info": "När alternativet är aktiverat lagras hämtade sångtexter lokalt så att de visas direkt när de öppnas igen."
+        },
+        "media": {
+          "label": "Aktivera mediecache",
+          "info": "När alternativet är aktiverat kan webbläsaren cacha strömmat ljud. Inaktivera det för att tvinga webbläsaren att hämta mediet varje gång."
+        },
+        "clearAll": {
+          "label": "Rensa cachar",
+          "info": "Tar bort lokalt cachade sångtexter, albumomslag och URL:er till animerade omslagsbilder.",
+          "button": "Rensa alla",
+          "success": "Cacharna rensades.",
+          "error": "Det gick inte att rensa vissa cachar."
+        }
+      },
+      "home": {
+        "group": "Start",
+        "description": "Anpassa innehållet på startsidan.",
+        "autoScroll": {
+          "label": "Aktivera automatisk rullning i karusellen",
+          "info": "När alternativet är aktiverat rullar karusellen på startsidan automatiskt efter 10 sekunder."
+        },
+        "loop": {
+          "label": "Aktivera upprepning i karusellen",
+          "info": "När alternativet är aktiverat återgår karusellen på startsidan till första låten efter sista."
+        }
       }
     },
     "privacy": {
@@ -670,6 +721,16 @@
         "tray": {
           "label": "Minimera till systemfältet",
           "info": "När alternativet är aktiverat minimeras appen till systemfältet i stället för att stängas när du klickar på stängningsknappen."
+        }
+      }
+    },
+    "accessibility": {
+      "visual": {
+        "group": "Visuellt",
+        "description": "Styr hur stort gränssnittet visas och hur stort avståndet är mellan dess delar.",
+        "zoom": {
+          "label": "Zoomnivå",
+          "info": "Justera gränssnittets storlek. Du kan också ändra den med {{key}} +/−."
         }
       }
     }
