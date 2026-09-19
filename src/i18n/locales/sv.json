@@ -33,8 +33,13 @@
     "viewAll": "Visa allt",
     "loading": "Laddar…",
     "viewMode": {
-      "label": "Vyläge"
-    }
+      "label": "Vyläge",
+      "modes": {
+        "list": "Lista",
+        "poster": "Affisch"
+      }
+    },
+    "beta": "Beta"
   },
   "theme": {
     "label": "Tema",
@@ -479,6 +484,9 @@
     },
     "navigation": {
       "label": "Navigering"
+    },
+    "sidebar": {
+      "toggle": "Växla sidofält"
     }
   },
   "songInfo": {
@@ -493,7 +501,8 @@
     "dialog": {
       "title": "Ny version tillgänglig!",
       "remindLater": "Påminn mig senare",
-      "install": "Installera och starta om"
+      "install": "Installera och starta om",
+      "macOS": "Ladda ner på GitHub"
     },
     "toasts": {
       "success": "Uppdateringen har installerats! Appen kommer nu att starta om.",
@@ -522,7 +531,9 @@
       "language": "Språk och region",
       "audio": "Spelare & ljud",
       "content": "Innehåll",
-      "privacy": "Integritet och säkerhet"
+      "privacy": "Integritet och säkerhet",
+      "accounts": "Konton",
+      "desktop": "Skrivbordsprogram"
     },
     "appearance": {
       "general": {
@@ -537,10 +548,12 @@
         "group": "Dynamiska färger",
         "description": "Välj om appen ska använda den dominerande färgen i omslaget till albumet som spelas som bakgrund.",
         "queue": {
-          "label": "Kö och sångtexter"
+          "label": "Kö och sångtexter",
+          "intensity": "Färgintensitetsnivå"
         },
         "bigPlayer": {
-          "label": "Stor spelare"
+          "label": "Stor spelare",
+          "blurSize": "Storlek på bildoskärpa"
         }
       }
     },
@@ -601,7 +614,62 @@
         "description": "Hantera externa tjänster som Aonsoku får åtkomst till.",
         "lrclib": {
           "info": "LRCLIB används för att hitta sångtexter.",
-          "label": "LRCLIB"
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Använd en egen URL",
+            "info": "Använd en egen URL för LRCLIB i stället för standardadressen.",
+            "label": "URL",
+            "example": "Exempel: https://my-lrclib.com"
+          }
+        },
+        "animatedCover": {
+          "enabled": {
+            "label": "Aktivera animerade omslag",
+            "info": "När alternativet är aktiverat läses animerade omslag in från en extern tjänst när de finns tillgängliga."
+          },
+          "customUrl": {
+            "toggle": "Använd en egen URL",
+            "info": "Använd en egen URL för API:t för animerade omslagsbilder i stället för standardadressen.",
+            "label": "URL",
+            "example": "Standard: https://artwork.m8tec.top"
+          },
+          "screens": {
+            "album": {
+              "label": "Albumsida",
+              "info": "Aktivera animerade omslag i albumhuvudets vy."
+            },
+            "fullscreen": {
+              "label": "Stor spelare",
+              "info": "Aktivera animerade omslag för den aktuella låtens omslag i den stora spelaren."
+            },
+            "playerBar": {
+              "label": "Nedre spelarfält",
+              "info": "Aktivera animerade omslag för den aktuella låtens omslag i spelarfältet."
+            },
+            "drawer": {
+              "label": "Kö och sångtexter",
+              "info": "Aktivera animerade omslag för den aktuella låtens omslag i sidopanelen Kö och sångtexter."
+            }
+          }
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "group": "Discord Rich Presence",
+        "description": "Dela låten du spelar just nu med vänner på Discord.",
+        "enabled": {
+          "label": "Aktivera integration"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Allmänt",
+        "description": "Anpassa inställningarna för skrivbordsprogrammet.",
+        "tray": {
+          "label": "Minimera till systemfältet",
+          "info": "När alternativet är aktiverat minimeras appen till systemfältet i stället för att stängas när du klickar på stängningsknappen."
         }
       }
     }
@@ -654,7 +722,8 @@
       "toasts": {
         "success": "Podden har skapats! Den går att lyssna på om några minuter!",
         "error": "Det gick inte att skapa podden!"
-      }
+      },
+      "all": "Bläddra"
     },
     "emptyPage": {
       "message": "Inga poddar har lagts till",
