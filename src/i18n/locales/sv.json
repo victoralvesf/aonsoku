@@ -31,7 +31,10 @@
     "showDetails": "Visa detaljer",
     "hideDetails": "Göm detaljer",
     "viewAll": "Visa allt",
-    "loading": "Laddar…"
+    "loading": "Laddar…",
+    "viewMode": {
+      "label": "Vyläge"
+    }
   },
   "theme": {
     "label": "Tema",
@@ -230,7 +233,13 @@
       "name": "Namn",
       "public": "Publik",
       "albumGain": "Albumförstärkning",
-      "albumPeak": "Albumtopp"
+      "albumPeak": "Albumtopp",
+      "albumArtist": "Albumartist",
+      "contributors": "Medverkande",
+      "recordLabel": "Skivbolag",
+      "channelCount": "Antal kanaler",
+      "samplingRate": "Samplingsfrekvens",
+      "bitDepth": "Bitdjup"
     },
     "buttons": {
       "play": "Spela {{title}} av {{artist}}",
@@ -330,7 +339,15 @@
       "like": "Gilla {{song}} från {{artist}}",
       "dislike": "Ta bort like från {{song}} av {{artist}}",
       "rewind": "Spola tillbaka {{amount}} sekunder",
-      "forward": "Spola framåt {{amount}} sekunder"
+      "forward": "Spola framåt {{amount}} sekunder",
+      "miniPlayer": {
+        "open": "Öppna minispelaren",
+        "close": "Stäng minispelaren"
+      },
+      "volume": {
+        "mute": "Stäng av ljudet",
+        "unmute": "Sätt på ljudet"
+      }
     }
   },
   "options": {
@@ -438,7 +455,9 @@
   },
   "queue": {
     "title": "Kö",
-    "clear": "Rensa kö"
+    "clear": "Rensa kö",
+    "close": "Stäng kön",
+    "open": "Öppna kön"
   },
   "shortcuts": {
     "modal": {
@@ -454,7 +473,12 @@
       "shuffle": "Shuffle-läge",
       "repeat": "Upprepa",
       "previous": "Hoppa till föregående",
-      "next": "Hoppa till nästa"
+      "next": "Hoppa till nästa",
+      "raiseVolume": "Höj volymen",
+      "lowerVolume": "Sänk volymen"
+    },
+    "navigation": {
+      "label": "Navigering"
     }
   },
   "songInfo": {
@@ -497,7 +521,8 @@
       "appearance": "Utseende",
       "language": "Språk och region",
       "audio": "Spelare & ljud",
-      "content": "Innehåll"
+      "content": "Innehåll",
+      "privacy": "Integritet och säkerhet"
     },
     "appearance": {
       "general": {
@@ -506,6 +531,16 @@
         "fullscreen": {
           "label": "Aktivera automatisk helskärm",
           "info": "Om den är aktiverad kommer appen automatiskt att gå in i helskärmsläge när du öppnar den stora spelaren."
+        }
+      },
+      "colors": {
+        "group": "Dynamiska färger",
+        "description": "Välj om appen ska använda den dominerande färgen i omslaget till albumet som spelas som bakgrund.",
+        "queue": {
+          "label": "Kö och sångtexter"
+        },
+        "bigPlayer": {
+          "label": "Stor spelare"
         }
       }
     },
@@ -523,6 +558,10 @@
         "defaultGain": {
           "label": "Standard Förstärkning (dB)",
           "info": "Denna förstärkningsnivå tillämpas på låtar som inte innehåller ReplayGain-metadata, vilket säkerställer en konsekvent ljudvolym. Det rekommenderade intervallet för förstärkning är mellan -10 dB och -1 dB."
+        },
+        "error": {
+          "message": "Det gick inte att spela upp spåret med Replay Gain.",
+          "button": "Försök igen"
         }
       },
       "lyrics": {
@@ -553,6 +592,16 @@
           "error": "Användarnamn och server-URL krävs.",
           "user": "Användarnamn",
           "url": "Server-URL"
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Externa tjänster",
+        "description": "Hantera externa tjänster som Aonsoku får åtkomst till.",
+        "lrclib": {
+          "info": "LRCLIB används för att hitta sångtexter.",
+          "label": "LRCLIB"
         }
       }
     }
@@ -655,6 +704,13 @@
       "progress": {
         "remainingTime": "{{time}} återstår",
         "completed": "Slutförd"
+      }
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "Inga avsnitt tillgängliga",
+        "description": "Prova att lägga till fler poddar.",
+        "goToPodcasts": "Gå till poddar"
       }
     }
   }
