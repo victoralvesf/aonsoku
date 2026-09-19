@@ -84,7 +84,7 @@
         "button": "Skapa",
         "toast": {
           "error": "Misslyckades med att skapa spellistan!",
-          "success": "Spellista skapad framgångsrikt!"
+          "success": "Spellistan har skapats!"
         }
       },
       "edit": {
@@ -204,7 +204,8 @@
     "buttons": {
       "play": "Spela {{artist}} radio",
       "options": "Mer inställningar för {{artist}}",
-      "shuffle": "Spela {{artist}} radio i shuffle-läge"
+      "shuffle": "Spela {{artist}} radio i shuffle-läge",
+      "radio": "Starta radio baserad på {{artist}}"
     },
     "info": {
       "albumsCount_one": "{{count}} album",
@@ -213,7 +214,10 @@
     "topSongs": "Populär",
     "recentAlbums": "Senaste albumen",
     "relatedArtists": "Relaterade artister",
-    "headline": "Artist"
+    "headline": "Artist",
+    "radio": {
+      "empty": "Inga liknande spår hittades att starta en radio från."
+    }
   },
   "table": {
     "columns": {
@@ -228,10 +232,10 @@
       "albumCount": "Antal album",
       "songCount": "Antal låtar",
       "comment": "Kommentar",
-      "track": "Track",
+      "track": "Spår",
       "size": "Storlek",
       "codec": "Codec",
-      "path": "Spår",
+      "path": "Sökväg",
       "discNumber": "Skivnummer",
       "trackGain": "Spårförstärkning",
       "trackPeak": "Spårtopp",
@@ -540,7 +544,7 @@
     "options": {
       "appearance": "Utseende",
       "language": "Språk och region",
-      "audio": "Spelare & ljud",
+      "audio": "Spelare och ljud",
       "content": "Innehåll",
       "privacy": "Integritet och säkerhet",
       "accounts": "Konton",
@@ -842,6 +846,40 @@
         "description": "Prova att lägga till fler poddar.",
         "goToPodcasts": "Gå till poddar"
       }
+    }
+  },
+  "activity": {
+    "plays": "Uppspelningar",
+    "dailyActivity": "Daglig aktivitet",
+    "listeningHours": "Lyssningstimmar",
+    "peak": "Topp",
+    "history": "Lyssningshistorik",
+    "less": "Mindre",
+    "more": "Mer",
+    "recentPlays": "Senaste uppspelningarna",
+    "topAlbums": "Mest spelade album",
+    "range": {
+      "7d": "7 d",
+      "30d": "30 d",
+      "90d": "90 d",
+      "all": "Alla"
+    },
+    "summary": {
+      "totalPlays": "Totalt antal uppspelningar",
+      "listeningTime": "Lyssningstid",
+      "uniqueArtists": "Unika artister",
+      "streak": "Svit",
+      "streakValue": "{{count}} d",
+      "streakBest": "Längsta svit: {{count}} d"
+    },
+    "genres": {
+      "title": "Genrer",
+      "unknown": "Okänd",
+      "others": "Övriga"
+    },
+    "empty": {
+      "title": "Ingen aktivitet ännu",
+      "description": "Spela musik så visas din lyssningsstatistik här."
     }
   }
 }
