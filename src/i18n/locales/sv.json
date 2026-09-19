@@ -328,7 +328,9 @@
         "disable": "Inaktivera repetition"
       },
       "like": "Gilla {{song}} från {{artist}}",
-      "dislike": "Ta bort like från {{song}} av {{artist}}"
+      "dislike": "Ta bort like från {{song}} av {{artist}}",
+      "rewind": "Spola tillbaka {{amount}} sekunder",
+      "forward": "Spola framåt {{amount}} sekunder"
     }
   },
   "options": {
@@ -345,7 +347,12 @@
       "notFound": "Ingen spellista hittades",
       "removeSong": "Ta bort från spellista"
     },
-    "info": "Få info"
+    "info": "Få info",
+    "markAsPlayed": "Markera som spelad",
+    "goto": {
+      "episode": "Gå till avsnitt",
+      "podcast": "Gå till podd"
+    }
   },
   "radios": {
     "label": "Radio",
@@ -531,6 +538,22 @@
       "sidebar": {
         "group": "Sidofält",
         "description": "Visa eller dölj sektioner i sidofältet."
+      },
+      "podcast": {
+        "group": "Poddar",
+        "description": "Aktivera integration med tjänsten Aonsoku Podcasts.",
+        "enabled": {
+          "label": "Aktivera integration"
+        },
+        "service": {
+          "url": "URL till poddtjänsten"
+        },
+        "credentials": {
+          "label": "Använd inloggad användare och server-URL",
+          "error": "Användarnamn och server-URL krävs.",
+          "user": "Användarnamn",
+          "url": "Server-URL"
+        }
       }
     }
   },
@@ -607,6 +630,31 @@
           "title": "Titel",
           "episodeCount": "Antal avsnitt"
         }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} avsnitt",
+      "episodeCount_other": "{{count}} avsnitt",
+      "feed": "Flöde",
+      "website": "Officiell webbplats",
+      "unfollow": {
+        "tooltip": "Sluta följa {{title}}",
+        "dialog": {
+          "title": "Vill du sluta följa den här podden?",
+          "description": "För att kunna lyssna på den här podden igen senare måste du skapa den på nytt."
+        },
+        "toasts": {
+          "success": "Du följer inte längre podden!",
+          "error": "Ett fel uppstod när du skulle sluta följa podden. Försök igen."
+        }
+      }
+    },
+    "list": {
+      "episodes": "Avsnitt",
+      "notFoundMessage": "Den här podden har inga avsnitt ännu!",
+      "progress": {
+        "remainingTime": "{{time}} återstår",
+        "completed": "Slutförd"
       }
     }
   }
