@@ -11,7 +11,8 @@
     "songs": "Sånger",
     "emptyPlaylist": "Inga spellistor skapat ännu",
     "library": "Bibliotek",
-    "genres": "Genrer"
+    "genres": "Genrer",
+    "podcasts": "Poddar"
   },
   "home": {
     "recentlyAdded": "Nyligen tillagd",
@@ -559,6 +560,54 @@
     "buttons": {
       "shuffleTracks": "Blanda spår",
       "shuffleAlbums": "Blanda album"
+    }
+  },
+  "podcasts": {
+    "form": {
+      "latestEpisodes": "Senaste avsnitten",
+      "addButton": "Lägg till podd",
+      "search": "Sök efter poddar…",
+      "dialog": {
+        "title": "Skapa podd",
+        "feedUrl": "Flödets URL",
+        "message": "Du kan lägga till flera URL:er, en per rad.",
+        "saveButton": "Spara",
+        "validations": {
+          "url": "Ange giltiga URL:er.",
+          "urlLength": "URL:erna måste vara minst 10 tecken långa",
+          "protocol": "URL:erna måste börja med http:// eller https://",
+          "atLeastOneUrl": "Ange minst en URL."
+        }
+      },
+      "toasts": {
+        "success": "Podden har skapats! Den går att lyssna på om några minuter!",
+        "error": "Det gick inte att skapa podden!"
+      }
+    },
+    "emptyPage": {
+      "message": "Inga poddar har lagts till",
+      "description": "Det verkar som att du inte har lagt till några poddar ännu. Lägg till en ovan!"
+    },
+    "emptyResults": {
+      "title": "Inga resultat hittades.",
+      "info": "Vi hittade inga poddar som matchar din sökterm.",
+      "action": "Kontrollera stavningen eller prova andra sökord."
+    },
+    "filters": {
+      "episodes": {
+        "search": "Sök efter avsnitt…",
+        "orderBy": {
+          "publishDate": "Publiceringsdatum",
+          "title": "Titel",
+          "duration": "Längd"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Titel",
+          "episodeCount": "Antal avsnitt"
+        }
+      }
     }
   }
 }
