@@ -104,7 +104,7 @@ export function Player() {
       ensureSupportForAlac(song.suffix),
       cacheBustToken,
     )
-  }, [songId, song, mediaCacheEnabled])
+  }, [songId, song?.suffix, mediaCacheEnabled])
 
   const getAudioRef = useCallback(() => {
     if (isRadio) return radioRef

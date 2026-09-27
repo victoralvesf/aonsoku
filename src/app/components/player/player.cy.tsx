@@ -1,3 +1,4 @@
+import { useAppStore } from '@/store/app.store'
 import { usePlayerStore } from '@/store/player.store'
 import { ISong } from '@/types/responses/song'
 import { Player } from './player'
@@ -242,6 +243,37 @@ describe('Player Component', () => {
         .should('be.visible')
         .and('have.class', 'text-red-500')
         .and('have.class', 'fill-red-500')
+    })
+  })
+
+  it('should keep the stream url when favoriting the current song', () => {
+    cy.intercept('/rest/star**', { statusCode: 200 }).as('starRequest')
+
+    cy.fixture('songs/random').then((songs: ISong[]) => {
+      useAppStore.setState((state) => ({
+        ...state,
+        pages: { ...state.pages, mediaCacheEnabled: false },
+      }))
+
+      usePlayerStore.getState().actions.setSongList(songs, 0)
+      usePlayerStore.getState().actions.setPlayingState(false)
+
+      cy.mount(<Player />)
+
+      cy.getByTestId<HTMLAudioElement>('player-song-audio').then(($audio) => {
+        cy.wrap($audio[0].src).as('streamUrl')
+      })
+
+      cy.getByTestId('player-like-button').click()
+      cy.wait('@starRequest')
+
+      cy.get<string>('@streamUrl').then((streamUrl) => {
+        cy.getByTestId<HTMLAudioElement>('player-song-audio').should(
+          ($audio) => {
+            expect($audio[0].src, 'stream url').to.equal(streamUrl)
+          },
+        )
+      })
     })
   })
 })
