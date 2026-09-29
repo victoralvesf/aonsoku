@@ -11,33 +11,73 @@ import { WordLevelLyricsView } from './view'
 
 const SCROLL_RECOVERY_MS = 1500
 
-function useScrollToElementWithRecovery(
+// The part of the lyrics box left fully opaque by the
+// `maskImage-big-player-lyrics` gradient (tailwind.config.js): 25%–75%.
+const CLEAR_BAND_TOP = 0.25
+const CLEAR_BAND_BOTTOM = 0.75
+
+// Layout offsets (the scroll box is `relative`, so it is every line's
+// offsetParent) — unlike getBoundingClientRect they ignore `scale-125`.
+function centeredScrollTop(scrollEl: HTMLElement, el: HTMLElement): number {
+  return el.offsetTop + el.offsetHeight / 2 - scrollEl.clientHeight / 2
+}
+
+/**
+ * scrollTop for the active cluster: center the newest line, but if that pushes
+ * the earliest still-sounding line's top above the clear band, scroll less —
+ * only as far as keeps the newest line's bottom inside the band (the newest
+ * line wins when both can't fit). A single line (first === newest) is centered.
+ */
+function clusterScrollTop(
+  scrollEl: HTMLElement,
+  firstEl: HTMLElement,
+  newestEl: HTMLElement,
+): number {
+  const height = scrollEl.clientHeight
+  const keepFirstInBand = firstEl.offsetTop - height * CLEAR_BAND_TOP
+  const keepNewestInBand =
+    newestEl.offsetTop + newestEl.offsetHeight - height * CLEAR_BAND_BOTTOM
+  return Math.min(
+    centeredScrollTop(scrollEl, newestEl),
+    Math.max(keepFirstInBand, keepNewestInBand),
+  )
+}
+
+// A trigger skipped during the user-scroll pause isn't retried; the next
+// line's trigger scrolls again.
+function useAutoScroll(
   trigger: unknown,
   scrollContainerRef: React.RefObject<HTMLDivElement>,
   programmaticScrollRef: React.MutableRefObject<boolean>,
   userScrollGuardRef: React.MutableRefObject<{ pausedUntilMs: number }>,
-  resolveTarget: () => HTMLElement | null,
+  resolveTop: (scrollEl: HTMLDivElement) => number | null,
 ) {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: trigger is the explicit driver; resolveTarget reads stable refs
+  // biome-ignore lint/correctness/useExhaustiveDependencies: trigger is the explicit driver; it encodes every non-ref value resolveTop reads
   useEffect(() => {
     if (trigger == null) return
     if (performance.now() < userScrollGuardRef.current.pausedUntilMs) return
 
-    const targetEl = resolveTarget()
     const scrollEl = scrollContainerRef.current
-    if (!targetEl || !scrollEl) return
+    if (!scrollEl) return
+    const target = resolveTop(scrollEl)
+    if (target == null) return
+    const maxTop = scrollEl.scrollHeight - scrollEl.clientHeight
+    const top = Math.max(0, Math.min(target, maxTop))
+
+    // Already there, e.g. the cluster's earliest line ended while the newest
+    // was centered. A zero-distance scroll fires no `scrollend`, which would
+    // leave the programmatic flag stuck and swallow the user's next scroll.
+    // (1px tolerance: scrollTop can be fractional on scaled displays.)
+    if (Math.abs(top - scrollEl.scrollTop) < 1) return
 
     programmaticScrollRef.current = true
-    targetEl.scrollIntoView({
-      behavior: isSafari ? 'auto' : 'smooth',
-      block: 'center',
-    })
+    scrollEl.scrollTo({ top, behavior: isSafari ? 'auto' : 'smooth' })
 
     const clearFlag = () => {
       programmaticScrollRef.current = false
     }
 
-    // Smooth scrollIntoView dispatches async `scroll` events for ~300-500ms;
+    // Smooth scrollTo dispatches async `scroll` events for ~300-500ms;
     // hold the programmatic flag until the real end, otherwise the scroll
     // listener treats them as a user scroll and pauses auto-scroll. Prefer
     // `scrollend` over a timer.
@@ -190,10 +230,13 @@ export function WordLevelLyricsContainer({
     onTick: handleTick,
   })
 
-  // Cluster anchor (earliest currently-active line index). The scroll effect
-  // keys off this value so joiners arriving mid-cluster do NOT re-fire scroll;
-  // the first line of the cluster stays anchored per the concurrent-voice spec.
-  const scrollAnchorIdx = activeLineIndices[0] ?? -1
+  // Keyed on the cluster's earliest still-sounding line AND the newest started
+  // line: a voice joining mid-cluster re-fires the scroll, as does the earliest
+  // line ending. The newest line ending while an earlier one continues changes
+  // neither, so the view never scrolls back up.
+  const firstActiveIdx = activeLineIndices[0] ?? -1
+  const lineScrollKey =
+    firstActiveIdx >= 0 ? `${firstActiveIdx}|${activeLineIdx}` : null
 
   const onWordClick = useWordSeek()
 
@@ -211,7 +254,7 @@ export function WordLevelLyricsContainer({
     const el = scrollContainerRef.current
     if (!el) return
     const onScroll = () => {
-      // Ignore scroll events caused by our own programmatic scrollIntoView.
+      // Ignore scroll events caused by our own programmatic scrollTo.
       if (programmaticScrollRef.current) return
       userScrollGuardRef.current.pausedUntilMs =
         performance.now() + SCROLL_RECOVERY_MS
@@ -220,29 +263,37 @@ export function WordLevelLyricsContainer({
     return () => el.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Scroll cluster anchor (first active line) into view when it changes.
-  // Joiners arriving mid-cluster don't re-fire scroll because the trigger is
-  // scrollAnchorIdx alone.
-  useScrollToElementWithRecovery(
-    scrollAnchorIdx >= 0 ? scrollAnchorIdx : null,
+  useAutoScroll(
+    lineScrollKey,
     scrollContainerRef,
     programmaticScrollRef,
     userScrollGuardRef,
-    () => lineRefs.current[scrollAnchorIdx] ?? null,
+    (scrollEl) => {
+      const firstEl = lineRefs.current[firstActiveIdx] ?? null
+      const newestEl = lineRefs.current[activeLineIdx] ?? null
+      // A line hidden behind a break has no element; center the other one.
+      if (!firstEl || !newestEl) {
+        const el = firstEl ?? newestEl
+        return el ? centeredScrollTop(scrollEl, el) : null
+      }
+      return clusterScrollTop(scrollEl, firstEl, newestEl)
+    },
   )
 
   // Scroll on break entry only — keyed on breakKey, not dotIdx, so we don't
   // re-scroll on every ~1s dot transition. When activeBreakInfo flips to null
   // at break end, the next line's scroll picks up naturally.
-  useScrollToElementWithRecovery(
+  useAutoScroll(
     activeBreakInfo?.breakKey ?? null,
     scrollContainerRef,
     programmaticScrollRef,
     userScrollGuardRef,
-    () =>
-      activeBreakInfo
-        ? (breakContainerRefs.current.get(activeBreakInfo.breakKey) ?? null)
-        : null,
+    (scrollEl) => {
+      const el = activeBreakInfo
+        ? breakContainerRefs.current.get(activeBreakInfo.breakKey)
+        : undefined
+      return el ? centeredScrollTop(scrollEl, el) : null
+    },
   )
 
   // Defensive: should never be mounted without word timing, but bail out safely.
