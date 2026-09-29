@@ -108,7 +108,8 @@ export function WordLevelLyricsView({
       ref={scrollContainerRef}
       data-testid="word-sync-lyrics-box"
       className={clsx(
-        'w-full h-full text-center font-semibold text-2xl 2xl:text-3xl px-2 overflow-y-auto',
+        // `relative`: lines' offsetTop is measured from this box (container.tsx scroll math).
+        'relative w-full h-full text-center font-semibold text-2xl 2xl:text-3xl px-2 overflow-y-auto',
         !isSafari && 'scroll-smooth',
         'lrc-box maskImage-big-player-lyrics',
       )}
