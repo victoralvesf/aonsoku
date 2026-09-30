@@ -11,7 +11,9 @@
     "songs": "Sånger",
     "emptyPlaylist": "Inga spellistor skapat ännu",
     "library": "Bibliotek",
-    "genres": "Genrer"
+    "genres": "Genrer",
+    "podcasts": "Poddar",
+    "activity": "Aktivitet"
   },
   "home": {
     "recentlyAdded": "Nyligen tillagd",
@@ -30,7 +32,15 @@
     "showDetails": "Visa detaljer",
     "hideDetails": "Göm detaljer",
     "viewAll": "Visa allt",
-    "loading": "Laddar…"
+    "loading": "Laddar…",
+    "viewMode": {
+      "label": "Vyläge",
+      "modes": {
+        "list": "Lista",
+        "poster": "Affisch"
+      }
+    },
+    "beta": "Beta"
   },
   "theme": {
     "label": "Tema",
@@ -55,7 +65,10 @@
     "everforest-dark": "Everforest Mörk",
     "tinacious-design": "Tinacious Design",
     "marmalade-beaver": "Marmalade Beaver",
-    "vim-dark-soft": "Vim Mörk Mjuk"
+    "vim-dark-soft": "Vim Mörk Mjuk",
+    "vesper": "Vesper",
+    "mirage": "Mirage",
+    "arduino-light": "Arduino Light"
   },
   "playlist": {
     "form": {
@@ -71,7 +84,7 @@
         "button": "Skapa",
         "toast": {
           "error": "Misslyckades med att skapa spellistan!",
-          "success": "Spellista skapad framgångsrikt!"
+          "success": "Spellistan har skapats!"
         }
       },
       "edit": {
@@ -191,7 +204,8 @@
     "buttons": {
       "play": "Spela {{artist}} radio",
       "options": "Mer inställningar för {{artist}}",
-      "shuffle": "Spela {{artist}} radio i shuffle-läge"
+      "shuffle": "Spela {{artist}} radio i shuffle-läge",
+      "radio": "Starta radio baserad på {{artist}}"
     },
     "info": {
       "albumsCount_one": "{{count}} album",
@@ -200,7 +214,10 @@
     "topSongs": "Populär",
     "recentAlbums": "Senaste albumen",
     "relatedArtists": "Relaterade artister",
-    "headline": "Artist"
+    "headline": "Artist",
+    "radio": {
+      "empty": "Inga liknande spår hittades att starta en radio från."
+    }
   },
   "table": {
     "columns": {
@@ -215,10 +232,10 @@
       "albumCount": "Antal album",
       "songCount": "Antal låtar",
       "comment": "Kommentar",
-      "track": "Track",
+      "track": "Spår",
       "size": "Storlek",
       "codec": "Codec",
-      "path": "Spår",
+      "path": "Sökväg",
       "discNumber": "Skivnummer",
       "trackGain": "Spårförstärkning",
       "trackPeak": "Spårtopp",
@@ -229,7 +246,13 @@
       "name": "Namn",
       "public": "Publik",
       "albumGain": "Albumförstärkning",
-      "albumPeak": "Albumtopp"
+      "albumPeak": "Albumtopp",
+      "albumArtist": "Albumartist",
+      "contributors": "Medverkande",
+      "recordLabel": "Skivbolag",
+      "channelCount": "Antal kanaler",
+      "samplingRate": "Samplingsfrekvens",
+      "bitDepth": "Bitdjup"
     },
     "buttons": {
       "play": "Spela {{title}} av {{artist}}",
@@ -327,7 +350,17 @@
         "disable": "Inaktivera repetition"
       },
       "like": "Gilla {{song}} från {{artist}}",
-      "dislike": "Ta bort like från {{song}} av {{artist}}"
+      "dislike": "Ta bort like från {{song}} av {{artist}}",
+      "rewind": "Spola tillbaka {{amount}} sekunder",
+      "forward": "Spola framåt {{amount}} sekunder",
+      "miniPlayer": {
+        "open": "Öppna minispelaren",
+        "close": "Stäng minispelaren"
+      },
+      "volume": {
+        "mute": "Stäng av ljudet",
+        "unmute": "Sätt på ljudet"
+      }
     }
   },
   "options": {
@@ -344,7 +377,12 @@
       "notFound": "Ingen spellista hittades",
       "removeSong": "Ta bort från spellista"
     },
-    "info": "Få info"
+    "info": "Få info",
+    "markAsPlayed": "Markera som spelad",
+    "goto": {
+      "episode": "Gå till avsnitt",
+      "podcast": "Gå till podd"
+    }
   },
   "radios": {
     "label": "Radio",
@@ -430,7 +468,9 @@
   },
   "queue": {
     "title": "Kö",
-    "clear": "Rensa kö"
+    "clear": "Rensa kö",
+    "close": "Stäng kön",
+    "open": "Öppna kön"
   },
   "shortcuts": {
     "modal": {
@@ -446,7 +486,22 @@
       "shuffle": "Shuffle-läge",
       "repeat": "Upprepa",
       "previous": "Hoppa till föregående",
-      "next": "Hoppa till nästa"
+      "next": "Hoppa till nästa",
+      "raiseVolume": "Höj volymen",
+      "lowerVolume": "Sänk volymen",
+      "toggleFullscreen": "Växla helskärm"
+    },
+    "navigation": {
+      "label": "Navigering"
+    },
+    "sidebar": {
+      "toggle": "Växla sidofält"
+    },
+    "zoom": {
+      "label": "Zoom",
+      "in": "Zooma in",
+      "out": "Zooma ut",
+      "reset": "Återställ zoom"
     }
   },
   "songInfo": {
@@ -461,7 +516,8 @@
     "dialog": {
       "title": "Ny version tillgänglig!",
       "remindLater": "Påminn mig senare",
-      "install": "Installera och starta om"
+      "install": "Installera och starta om",
+      "macOS": "Ladda ner på GitHub"
     },
     "toasts": {
       "success": "Uppdateringen har installerats! Appen kommer nu att starta om.",
@@ -488,8 +544,12 @@
     "options": {
       "appearance": "Utseende",
       "language": "Språk och region",
-      "audio": "Spelare & ljud",
-      "content": "Innehåll"
+      "audio": "Spelare och ljud",
+      "content": "Innehåll",
+      "privacy": "Integritet och säkerhet",
+      "accounts": "Konton",
+      "desktop": "Skrivbordsprogram",
+      "accessibility": "Tillgänglighet"
     },
     "appearance": {
       "general": {
@@ -498,6 +558,18 @@
         "fullscreen": {
           "label": "Aktivera automatisk helskärm",
           "info": "Om den är aktiverad kommer appen automatiskt att gå in i helskärmsläge när du öppnar den stora spelaren."
+        }
+      },
+      "colors": {
+        "group": "Dynamiska färger",
+        "description": "Välj om appen ska använda den dominerande färgen i omslaget till albumet som spelas som bakgrund.",
+        "queue": {
+          "label": "Kö och sångtexter",
+          "intensity": "Färgintensitetsnivå"
+        },
+        "bigPlayer": {
+          "label": "Stor spelare",
+          "blurSize": "Storlek på bildoskärpa"
         }
       }
     },
@@ -515,6 +587,10 @@
         "defaultGain": {
           "label": "Standard Förstärkning (dB)",
           "info": "Denna förstärkningsnivå tillämpas på låtar som inte innehåller ReplayGain-metadata, vilket säkerställer en konsekvent ljudvolym. Det rekommenderade intervallet för förstärkning är mellan -10 dB och -1 dB."
+        },
+        "error": {
+          "message": "Det gick inte att spela upp spåret med Replay Gain.",
+          "button": "Försök igen"
         }
       },
       "lyrics": {
@@ -530,6 +606,136 @@
       "sidebar": {
         "group": "Sidofält",
         "description": "Visa eller dölj sektioner i sidofältet."
+      },
+      "podcast": {
+        "group": "Poddar",
+        "description": "Aktivera integration med tjänsten Aonsoku Podcasts.",
+        "enabled": {
+          "label": "Aktivera integration"
+        },
+        "service": {
+          "url": "URL till poddtjänsten"
+        },
+        "credentials": {
+          "label": "Använd inloggad användare och server-URL",
+          "error": "Användarnamn och server-URL krävs.",
+          "user": "Användarnamn",
+          "url": "Server-URL"
+        }
+      },
+      "features": {
+        "group": "Funktioner",
+        "description": "Aktivera eller inaktivera klientfunktioner"
+      },
+      "caches": {
+        "group": "Cachar",
+        "description": "Styr vad appen cachar lokalt.",
+        "images": {
+          "label": "Aktivera bildcache",
+          "info": "När alternativet är aktiverat cachas bilder lokalt för bättre prestanda."
+        },
+        "lyrics": {
+          "label": "Aktivera cache för sångtexter",
+          "info": "När alternativet är aktiverat lagras hämtade sångtexter lokalt så att de visas direkt när de öppnas igen."
+        },
+        "media": {
+          "label": "Aktivera mediecache",
+          "info": "När alternativet är aktiverat kan webbläsaren cacha strömmat ljud. Inaktivera det för att tvinga webbläsaren att hämta mediet varje gång."
+        },
+        "clearAll": {
+          "label": "Rensa cachar",
+          "info": "Tar bort lokalt cachade sångtexter, albumomslag och URL:er till animerade omslagsbilder.",
+          "button": "Rensa alla",
+          "success": "Cacharna rensades.",
+          "error": "Det gick inte att rensa vissa cachar."
+        }
+      },
+      "home": {
+        "group": "Start",
+        "description": "Anpassa innehållet på startsidan.",
+        "autoScroll": {
+          "label": "Aktivera automatisk rullning i karusellen",
+          "info": "När alternativet är aktiverat rullar karusellen på startsidan automatiskt efter 10 sekunder."
+        },
+        "loop": {
+          "label": "Aktivera upprepning i karusellen",
+          "info": "När alternativet är aktiverat återgår karusellen på startsidan till första låten efter sista."
+        }
+      }
+    },
+    "privacy": {
+      "services": {
+        "group": "Externa tjänster",
+        "description": "Hantera externa tjänster som Aonsoku får åtkomst till.",
+        "lrclib": {
+          "info": "LRCLIB används för att hitta sångtexter.",
+          "label": "LRCLIB",
+          "customUrl": {
+            "toggle": "Använd en egen URL",
+            "info": "Använd en egen URL för LRCLIB i stället för standardadressen.",
+            "label": "URL",
+            "example": "Exempel: https://my-lrclib.com"
+          }
+        },
+        "animatedCover": {
+          "enabled": {
+            "label": "Aktivera animerade omslag",
+            "info": "När alternativet är aktiverat läses animerade omslag in från en extern tjänst när de finns tillgängliga."
+          },
+          "customUrl": {
+            "toggle": "Använd en egen URL",
+            "info": "Använd en egen URL för API:t för animerade omslagsbilder i stället för standardadressen.",
+            "label": "URL",
+            "example": "Standard: https://artwork.m8tec.top"
+          },
+          "screens": {
+            "album": {
+              "label": "Albumsida",
+              "info": "Aktivera animerade omslag i albumhuvudets vy."
+            },
+            "fullscreen": {
+              "label": "Stor spelare",
+              "info": "Aktivera animerade omslag för den aktuella låtens omslag i den stora spelaren."
+            },
+            "playerBar": {
+              "label": "Nedre spelarfält",
+              "info": "Aktivera animerade omslag för den aktuella låtens omslag i spelarfältet."
+            },
+            "drawer": {
+              "label": "Kö och sångtexter",
+              "info": "Aktivera animerade omslag för den aktuella låtens omslag i sidopanelen Kö och sångtexter."
+            }
+          }
+        }
+      }
+    },
+    "accounts": {
+      "discord": {
+        "group": "Discord Rich Presence",
+        "description": "Dela låten du spelar just nu med vänner på Discord.",
+        "enabled": {
+          "label": "Aktivera integration"
+        }
+      }
+    },
+    "desktop": {
+      "general": {
+        "group": "Allmänt",
+        "description": "Anpassa inställningarna för skrivbordsprogrammet.",
+        "tray": {
+          "label": "Minimera till systemfältet",
+          "info": "När alternativet är aktiverat minimeras appen till systemfältet i stället för att stängas när du klickar på stängningsknappen."
+        }
+      }
+    },
+    "accessibility": {
+      "visual": {
+        "group": "Visuellt",
+        "description": "Styr hur stort gränssnittet visas och hur stort avståndet är mellan dess delar.",
+        "zoom": {
+          "label": "Zoomnivå",
+          "info": "Justera gränssnittets storlek. Du kan också ändra den med {{key}} +/−."
+        }
       }
     }
   },
@@ -559,6 +765,121 @@
     "buttons": {
       "shuffleTracks": "Blanda spår",
       "shuffleAlbums": "Blanda album"
+    }
+  },
+  "podcasts": {
+    "form": {
+      "latestEpisodes": "Senaste avsnitten",
+      "addButton": "Lägg till podd",
+      "search": "Sök efter poddar…",
+      "dialog": {
+        "title": "Skapa podd",
+        "feedUrl": "Flödets URL",
+        "message": "Du kan lägga till flera URL:er, en per rad.",
+        "saveButton": "Spara",
+        "validations": {
+          "url": "Ange giltiga URL:er.",
+          "urlLength": "URL:erna måste vara minst 10 tecken långa",
+          "protocol": "URL:erna måste börja med http:// eller https://",
+          "atLeastOneUrl": "Ange minst en URL."
+        }
+      },
+      "toasts": {
+        "success": "Podden har skapats! Den går att lyssna på om några minuter!",
+        "error": "Det gick inte att skapa podden!"
+      },
+      "all": "Bläddra"
+    },
+    "emptyPage": {
+      "message": "Inga poddar har lagts till",
+      "description": "Det verkar som att du inte har lagt till några poddar ännu. Lägg till en ovan!"
+    },
+    "emptyResults": {
+      "title": "Inga resultat hittades.",
+      "info": "Vi hittade inga poddar som matchar din sökterm.",
+      "action": "Kontrollera stavningen eller prova andra sökord."
+    },
+    "filters": {
+      "episodes": {
+        "search": "Sök efter avsnitt…",
+        "orderBy": {
+          "publishDate": "Publiceringsdatum",
+          "title": "Titel",
+          "duration": "Längd"
+        }
+      },
+      "podcasts": {
+        "orderBy": {
+          "title": "Titel",
+          "episodeCount": "Antal avsnitt"
+        }
+      }
+    },
+    "header": {
+      "episodeCount_one": "{{count}} avsnitt",
+      "episodeCount_other": "{{count}} avsnitt",
+      "feed": "Flöde",
+      "website": "Officiell webbplats",
+      "unfollow": {
+        "tooltip": "Sluta följa {{title}}",
+        "dialog": {
+          "title": "Vill du sluta följa den här podden?",
+          "description": "För att kunna lyssna på den här podden igen senare måste du skapa den på nytt."
+        },
+        "toasts": {
+          "success": "Du följer inte längre podden!",
+          "error": "Ett fel uppstod när du skulle sluta följa podden. Försök igen."
+        }
+      }
+    },
+    "list": {
+      "episodes": "Avsnitt",
+      "notFoundMessage": "Den här podden har inga avsnitt ännu!",
+      "progress": {
+        "remainingTime": "{{time}} återstår",
+        "completed": "Slutförd"
+      }
+    },
+    "latestEpisodes": {
+      "emptyPage": {
+        "message": "Inga avsnitt tillgängliga",
+        "description": "Prova att lägga till fler poddar.",
+        "goToPodcasts": "Gå till poddar"
+      }
+    }
+  },
+  "activity": {
+    "plays": "Uppspelningar",
+    "dailyActivity": "Daglig aktivitet",
+    "listeningHours": "Lyssningstimmar",
+    "peak": "Topp",
+    "history": "Lyssningshistorik",
+    "less": "Mindre",
+    "more": "Mer",
+    "recentPlays": "Senaste uppspelningarna",
+    "topAlbums": "Mest spelade album",
+    "range": {
+      "7d": "7 d",
+      "30d": "30 d",
+      "90d": "90 d",
+      "all": "Alla"
+    },
+    "summary": {
+      "totalPlays": "Totalt antal uppspelningar",
+      "listeningTime": "Lyssningstid",
+      "uniqueArtists": "Unika artister",
+      "streak": "Svit",
+      "streakValue": "{{count}} d",
+      "streakBest": "Längsta svit: {{count}} d"
+    },
+    "genres": {
+      "title": "Genrer",
+      "unknown": "Okänd",
+      "others": "Övriga"
+    },
+    "empty": {
+      "title": "Ingen aktivitet ännu",
+      "description": "Spela musik så visas din lyssningsstatistik här."
     }
   }
 }
