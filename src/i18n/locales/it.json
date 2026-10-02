@@ -128,7 +128,8 @@
       "dislike": "Rimuovi {{name}} dai preferiti",
       "play": "Riproduci {{name}}",
       "pause": "Pausa {{name}}",
-      "shuffle": "Riproduci {{name}} in modalità casuale"
+      "shuffle": "Riproduci {{name}} in modalità casuale",
+      "radio": "Avvia una radio basata su {{name}}"
     },
     "more": {
       "listTitle": "Altro da questo artista",
@@ -218,6 +219,9 @@
       "play": "Riproduci la radio di {{artist}}",
       "shuffle": "Riproduci la radio di {{artist}} casualmente",
       "options": "Più opzioni per {{artist}}"
+    },
+    "radio": {
+      "empty": "Nessun brano simile trovato per avviare una radio."
     },
     "info": {
       "albumsCount_one": "{{count}} album",
@@ -459,6 +463,7 @@
     "play": "Avvia riproduzione",
     "playNext": "Riproduci prossimo",
     "addLast": "Aggiungi alla fine",
+    "startRadio": "Avvia una radio",
     "download": "Scarica",
     "playlist": {
       "add": "Aggiungi a playlist",

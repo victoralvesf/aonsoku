@@ -244,7 +244,8 @@
       "dislike": "Enlever {{name}} des favoris",
       "play": "Lire {{name}}",
       "pause": "Mettre {{name}} en pause",
-      "shuffle": "Lire {{name}} en mode aléatoire"
+      "shuffle": "Lire {{name}} en mode aléatoire",
+      "radio": "Lancer une radio basée sur {{name}}"
     },
     "table": {
       "discNumber": "Disque {{number}}"
@@ -276,6 +277,9 @@
       "play": "Écouter la radio de {{artist}}",
       "shuffle": "Écouter la radio de {{artist}} en aléatoire",
       "options": "Plus d'options pour {{artist}}"
+    },
+    "radio": {
+      "empty": "Aucun titre similaire trouvé pour lancer une radio."
     },
     "info": {
       "albumsCount_one": "{{count}} album",
@@ -379,6 +383,7 @@
       "removeSong": "Supprimer de la liste de lecture"
     },
     "addLast": "Ajouter à la file",
+    "startRadio": "Lancer une radio",
     "download": "Télécharger",
     "play": "Lecture",
     "playNext": "Lecture suivante",

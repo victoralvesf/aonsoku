@@ -155,7 +155,8 @@
       "dislike": "Eliminar me gusta de {{name}}",
       "play": "Reproducir {{name}}",
       "pause": "Pausar {{name}}",
-      "shuffle": "Reproducir {{name}} en modo aleatorio"
+      "shuffle": "Reproducir {{name}} en modo aleatorio",
+      "radio": "Iniciar radio basada en {{name}}"
     },
     "info": {
       "about": "Sobre {{name}}",
@@ -408,6 +409,7 @@
   "options": {
     "play": "Reproducir",
     "addLast": "Añadir al final",
+    "startRadio": "Iniciar radio",
     "download": "Descargar",
     "playlist": {
       "add": "Añadir a lista de reproducción",

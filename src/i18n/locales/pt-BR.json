@@ -153,7 +153,8 @@
       "pause": "Pausar {{name}}",
       "shuffle": "Tocar {{name}} no modo aleatório",
       "like": "Curtir {{name}}",
-      "dislike": "Remover curtida de {{name}}"
+      "dislike": "Remover curtida de {{name}}",
+      "radio": "Iniciar rádio baseada em {{name}}"
     },
     "info": {
       "about": "Sobre {{name}}",
@@ -489,6 +490,7 @@
     "play": "Reproduzir",
     "playNext": "Tocar a seguir",
     "addLast": "Adicionar ao final",
+    "startRadio": "Iniciar rádio",
     "download": "Download",
     "playlist": {
       "add": "Adicionar à playlist",

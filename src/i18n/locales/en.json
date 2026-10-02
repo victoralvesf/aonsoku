@@ -149,7 +149,8 @@
       "pause": "Pause {{name}}",
       "shuffle": "Play {{name}} in shuffle mode",
       "like": "Like {{name}}",
-      "dislike": "Remove like from {{name}}"
+      "dislike": "Remove like from {{name}}",
+      "radio": "Start radio based on {{name}}"
     },
     "info": {
       "about": "About {{name}}",
@@ -493,6 +494,7 @@
     "play": "Play",
     "playNext": "Play next",
     "addLast": "Add last",
+    "startRadio": "Start radio",
     "download": "Download",
     "playlist": {
       "add": "Add to playlist",

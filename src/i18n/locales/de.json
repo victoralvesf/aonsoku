@@ -112,7 +112,8 @@
       "dislike": "Gefällt mir von {{name}} entfernen",
       "play": "{{name}} wiedergeben",
       "pause": "{{name}} pausieren",
-      "shuffle": "{{name}} zufällig wiedergeben"
+      "shuffle": "{{name}} zufällig wiedergeben",
+      "radio": "Radio basierend auf {{name}} starten"
     },
     "info": {
       "about": "Über {{name}}",
@@ -361,6 +362,9 @@
       "shuffle": "{{artist}} Radio im Zufallsmodus abspielen",
       "options": "Weitere Optionen für {{artist}}"
     },
+    "radio": {
+      "empty": "Keine ähnlichen Titel gefunden, um ein Radio zu starten."
+    },
     "info": {
       "albumsCount_one": "{{count}} Album",
       "albumsCount_other": "{{count}} Alben"
@@ -428,6 +432,7 @@
     "play": "Abspielen",
     "playNext": "Als nächstes abspielen",
     "addLast": "Als letztes spielen",
+    "startRadio": "Radio starten",
     "download": "Herunterladen",
     "playlist": {
       "add": "Zur Playlist hinzufügen",

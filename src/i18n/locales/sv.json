@@ -148,7 +148,8 @@
       "dislike": "Ta bort like från {{name}}",
       "play": "Spela {{name}}",
       "pause": "Pausa {{name}}",
-      "shuffle": "Spela {{name}} i blandat läge"
+      "shuffle": "Spela {{name}} i blandat läge",
+      "radio": "Starta radio baserad på {{name}}"
     },
     "info": {
       "lastfm": "Öppna i Last.fm",
