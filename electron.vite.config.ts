@@ -49,6 +49,7 @@ export default defineConfig({
       rollupOptions: {
         input: {
           index: resolve(__dirname, 'index.html'),
+          widget: resolve(__dirname, 'widget.html'),
         },
         output: {
           manualChunks: createManualChunks,

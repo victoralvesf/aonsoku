@@ -8,6 +8,7 @@ import { Content } from './content'
 import { Desktop } from './desktop'
 import { Language } from './language'
 import { Privacy } from './privacy'
+import { Widget } from './widget'
 
 const pages: Record<SettingsOptions, JSX.Element> = {
   appearance: <Appearance />,
@@ -16,6 +17,7 @@ const pages: Record<SettingsOptions, JSX.Element> = {
   content: <Content />,
   accounts: <Accounts />,
   desktop: <Desktop />,
+  widget: <Widget />,
   accessibility: <Accessibility />,
   privacy: <Privacy />,
 }
