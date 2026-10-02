@@ -66,7 +66,8 @@
       "dislike": "Enlever {{name}} des favoris",
       "play": "Faire jouer {{name}}",
       "pause": "Mettre {{name}} en pause",
-      "shuffle": "Faire jouer {{name}} en mode aléatoire"
+      "shuffle": "Faire jouer {{name}} en mode aléatoire",
+      "radio": "Lancer une radio basée sur {{name}}"
     }
   },
   "favorites": {
@@ -80,6 +81,9 @@
       "play": "Écouter la radio de {{artist}}",
       "shuffle": "Écouter la radio de {{artist}} en aléatoire",
       "options": "Plus d'options pour {{artist}}"
+    },
+    "radio": {
+      "empty": "Aucun titre similaire trouvé pour lancer une radio."
     },
     "relatedArtists": "Artistes similaires",
     "info": {
@@ -271,6 +275,7 @@
     "markAsPlayed": "Marquer comme joué",
     "play": "Lecture",
     "addLast": "Ajouter à la file",
+    "startRadio": "Lancer une radio",
     "playNext": "Lecture suivante",
     "download": "Télécharger"
   },

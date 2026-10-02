@@ -561,7 +561,8 @@
       "dislike": "Remover curtida de {{name}}",
       "play": "Reproduzir {{name}}",
       "pause": "Pausar {{name}}",
-      "shuffle": "Reproduzir {{name}} em modo aleatório"
+      "shuffle": "Reproduzir {{name}} em modo aleatório",
+      "radio": "Iniciar rádio baseada em {{name}}"
     },
     "info": {
       "about": "Sobre {{name}}",
@@ -694,6 +695,7 @@
     "play": "Reproduzir",
     "playNext": "Tocar a seguir",
     "addLast": "Adicionar ao final",
+    "startRadio": "Iniciar rádio",
     "download": "Descarregar",
     "playlist": {
       "add": "Adicionar à playlist",

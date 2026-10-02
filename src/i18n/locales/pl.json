@@ -80,7 +80,8 @@
       "dislike": "Usuń {{name}} z ulubionych",
       "play": "Odtwórz {{name}}",
       "pause": "Wstrzymaj {{name}}",
-      "shuffle": "Odtwórz {{name}} w trybie losowym"
+      "shuffle": "Odtwórz {{name}} w trybie losowym",
+      "radio": "Uruchom radio na podstawie {{name}}"
     },
     "table": {
       "discNumber": "Płyta {{number}}"

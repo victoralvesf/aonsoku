@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Actions } from '@/app/components/actions'
+import { useOptions } from '@/app/hooks/use-options'
 import { subsonic } from '@/service/subsonic'
 import { useAppPages, useAppStore } from '@/store/app.store'
 import {
@@ -11,6 +12,7 @@ import {
 import { PlaybackSource } from '@/types/playerContext'
 import { SingleAlbum } from '@/types/responses/album'
 import { queryKeys } from '@/utils/queryKeys'
+import { checkServerType } from '@/utils/servers'
 import { AlbumOptions } from './options'
 
 interface AlbumButtonsProps {
@@ -22,6 +24,8 @@ export function AlbumButtons({ album, showInfoButton }: AlbumButtonsProps) {
   const { t } = useTranslation()
   const { setSongList, togglePlayPause, toggleShuffle } = usePlayerActions()
   const { showInfoPanel, toggleShowInfoPanel } = useAppPages()
+  const { playRadio } = useOptions()
+  const { isNavidrome } = checkServerType()
   const { isAlbumActive, isAlbumPlaying } = useIsAlbumPlaying(album.id)
   const isShuffleActive = usePlayerStore(
     (state) => state.playerState.isShuffleActive,
@@ -55,6 +59,7 @@ export function AlbumButtons({ album, showInfoButton }: AlbumButtonsProps) {
       : t('album.buttons.play', { name: album.name }),
     shuffle: t('album.buttons.shuffle', { name: album.name }),
     options: t('playlist.buttons.options', { name: album.name }),
+    radio: t('album.buttons.radio', { name: album.name }),
     like: isAlbumStarred
       ? t('album.buttons.dislike', { name: album.name })
       : t('album.buttons.like', { name: album.name }),
@@ -100,6 +105,15 @@ export function AlbumButtons({ album, showInfoButton }: AlbumButtonsProps) {
           isActive={isAlbumActive && isShuffleActive}
         >
           <Actions.ShuffleIcon />
+        </Actions.Button>
+      )}
+
+      {isNavidrome && (
+        <Actions.Button
+          tooltip={buttonsTooltips.radio}
+          onClick={() => playRadio(album.id)}
+        >
+          <Actions.RadioIcon />
         </Actions.Button>
       )}
 
