@@ -292,28 +292,43 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 originalList,
               } = get().songlist
 
-              const currentListIds = new Set(currentList.map((song) => song.id))
-              const uniqueList = list.filter(
-                (song) => !currentListIds.has(song.id),
+              // Songs already in the queue are moved to play next instead of
+              // being duplicated. The song currently playing stays in place.
+              const currentSongId = currentList[currentSongIndex]?.id
+              const songsToAdd = list.filter(
+                (song) => song.id !== currentSongId,
               )
+              const songsToAddIds = new Set(songsToAdd.map((song) => song.id))
+
+              const remainingList = currentList.filter(
+                (song) => !songsToAddIds.has(song.id),
+              )
+              const movedBeforeCurrent = currentList
+                .slice(0, currentSongIndex)
+                .filter((song) => songsToAddIds.has(song.id)).length
+              const newCurrentSongIndex = currentSongIndex - movedBeforeCurrent
 
               const newCurrentList = addNextSongList(
-                currentSongIndex,
-                currentList,
-                uniqueList,
+                newCurrentSongIndex,
+                remainingList,
+                songsToAdd,
               )
 
-              const indexOnOriginalList = originalList.findIndex(
+              const remainingOriginalList = originalList.filter(
+                (song) => !songsToAddIds.has(song.id),
+              )
+              const indexOnOriginalList = remainingOriginalList.findIndex(
                 (song) => song.id === currentSong.id,
               )
               const newOriginalList = addNextSongList(
                 indexOnOriginalList,
-                originalList,
-                uniqueList,
+                remainingOriginalList,
+                songsToAdd,
               )
 
               set((state) => {
                 state.songlist.currentList = newCurrentList
+                state.songlist.currentSongIndex = newCurrentSongIndex
                 state.songlist.originalList = newOriginalList
                 state.playerState.playbackContext.source = null
               })
