@@ -25,6 +25,7 @@ import {
 import { isMacOs } from 'react-device-detect'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { SongMenuOptions } from '@/app/components/song/menu-options'
+import { QueueMenuOptions } from '@/app/components/queue/menu-options'
 import { SelectedSongsMenuOptions } from '@/app/components/song/selected-options'
 import { ColumnFilter } from '@/types/columnFilter'
 import { ColumnDefType } from '@/types/react-table/columnDef'
@@ -184,6 +185,10 @@ export function DataTableList<TData, TValue>({
     (row: Row<TData>) => {
       if (!showContextMenu) return undefined
 
+      if (pageType === 'queue') {
+        return <QueueMenuOptions song={row.original as ISong} />
+      }
+
       if (dataType === 'song') {
         if (table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()) {
           return (
@@ -204,7 +209,7 @@ export function DataTableList<TData, TValue>({
 
       return undefined
     },
-    [dataType, showContextMenu, table],
+    [dataType, showContextMenu, table, pageType],
   )
 
   const handleLeftClick = useCallback(
