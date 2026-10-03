@@ -10,7 +10,7 @@ import { ISidebarItem } from '@/app/layout/sidebar'
 
 export function SidebarMainSubItem({ item }: { item: ISidebarItem }) {
   const { t } = useTranslation()
-  const { isActive } = useRouteIsActive()
+  const { isActive, isExactRoute } = useRouteIsActive()
 
   return (
     <MainSidebarMenuSubItem>
@@ -20,7 +20,7 @@ export function SidebarMainSubItem({ item }: { item: ISidebarItem }) {
       >
         <Link
           to={item.route}
-          className={clsx(isActive(item.route) && 'pointer-events-none')}
+          className={clsx(isExactRoute(item.route) && 'pointer-events-none')}
         >
           {t(item.title)}
         </Link>

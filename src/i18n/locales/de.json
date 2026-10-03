@@ -353,7 +353,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Du hast noch keine Lieder zu den Favoriten hinzugefügt!"
+    "noSongList": "Du hast noch keine Lieder zu den Favoriten hinzugefügt!",
+    "inYourLibrary": "In deiner Bibliothek",
+    "byArtist": "Lieblingslieder von {{artist}}"
   },
   "artist": {
     "headline": "Künstler",

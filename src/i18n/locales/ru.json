@@ -268,7 +268,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Вы еще не добавили песни в избранное!"
+    "noSongList": "Вы еще не добавили песни в избранное!",
+    "inYourLibrary": "В вашей библиотеке",
+    "byArtist": "Избранные треки {{artist}}"
   },
   "artist": {
     "buttons": {

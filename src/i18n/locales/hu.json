@@ -208,7 +208,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Még nem adtál dalokat a kedvencekhez!"
+    "noSongList": "Még nem adtál dalokat a kedvencekhez!",
+    "inYourLibrary": "A könyvtáradban",
+    "byArtist": "{{artist}} kedvenc dalai"
   },
   "artist": {
     "headline": "Előadó",

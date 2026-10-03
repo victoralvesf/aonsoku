@@ -204,7 +204,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Du hesch no kei Lieder zu de Favorite hinzuegfüegt!"
+    "noSongList": "Du hesch no kei Lieder zu de Favorite hinzuegfüegt!",
+    "inYourLibrary": "I dinere Bibliothek",
+    "byArtist": "Lieblingslieder vo {{artist}}"
   },
   "artist": {
     "headline": "Künstler",

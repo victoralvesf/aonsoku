@@ -210,7 +210,9 @@
     }
   },
   "favorites": {
-    "noSongList": "You haven't added any songs to favorites yet!"
+    "noSongList": "You haven't added any songs to favorites yet!",
+    "inYourLibrary": "In your library",
+    "byArtist": "Liked tracks of {{artist}}"
   },
   "activity": {
     "plays": "Plays",

@@ -188,7 +188,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Et ole lisännyt yhtään kappaletta suosikiksi!"
+    "noSongList": "Et ole lisännyt yhtään kappaletta suosikiksi!",
+    "inYourLibrary": "Kirjastossasi",
+    "byArtist": "Suosikkikappaleet: {{artist}}"
   },
   "artist": {
     "headline": "Esiintyjä",

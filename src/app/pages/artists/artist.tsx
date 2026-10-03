@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
 import ArtistTopSongs from '@/app/components/artist/artist-top-songs'
+import { FavoritePlaylistCard } from '@/app/components/artist/favorite-playlist-card'
 import { ArtistInfo } from '@/app/components/artist/info'
 import RelatedArtistsList from '@/app/components/artist/related-artists'
 import { ArtistStickyHeader } from '@/app/components/artist/sticky-header'
@@ -16,6 +17,7 @@ import {
   useGetArtistInfo,
   useGetTopSongs,
 } from '@/app/hooks/use-artist'
+import { useFavoriteSongsByArtist } from '@/app/hooks/use-favorite-songs'
 import ErrorPage from '@/app/pages/error-page'
 import { ROUTES } from '@/routes/routesList'
 import { sortRecentAlbums } from '@/utils/album'
@@ -32,6 +34,10 @@ export default function Artist() {
   const { data: artistInfo, isLoading: artistInfoIsLoading } =
     useGetArtistInfo(artistId)
   const { data: topSongs, isLoading: topSongsIsLoading } = useGetTopSongs(
+    artist?.name,
+  )
+  const { data: favoriteSongs } = useFavoriteSongsByArtist(
+    artistId,
     artist?.name,
   )
 
@@ -97,6 +103,16 @@ export default function Artist() {
 
       <ListWrapper>
         <ArtistInfo artist={artist} />
+
+        {favoriteSongs && (
+          <FavoritePlaylistCard
+            songs={favoriteSongs}
+            artistId={artist.id}
+            artistName={artist.name}
+            artistCoverArtId={artist.coverArt}
+            className="mb-6"
+          />
+        )}
 
         {topSongsIsLoading && <TopSongsTableFallback />}
         {topSongs && !topSongsIsLoading && (

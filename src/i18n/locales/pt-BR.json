@@ -203,7 +203,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Você ainda não adicionou músicas nos favoritos!"
+    "noSongList": "Você ainda não adicionou músicas nos favoritos!",
+    "inYourLibrary": "Na sua biblioteca",
+    "byArtist": "Músicas favoritas de {{artist}}"
   },
   "activity": {
     "plays": "Reproduções",

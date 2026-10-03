@@ -193,7 +193,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Henüz favorilere müzik eklemediniz!"
+    "noSongList": "Henüz favorilere müzik eklemediniz!",
+    "inYourLibrary": "Kitaplığında",
+    "byArtist": "{{artist}} favori şarkıları"
   },
   "artist": {
     "headline": "Sanatçı",

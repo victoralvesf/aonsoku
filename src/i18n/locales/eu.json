@@ -71,5 +71,9 @@
       "shuffleTracks": "Abestiak ausaz",
       "shuffleAlbums": "Albumak ausaz"
     }
+  },
+  "favorites": {
+    "inYourLibrary": "Zure liburutegian",
+    "byArtist": "{{artist}}(r)en abesti gogokoenak"
   }
 }

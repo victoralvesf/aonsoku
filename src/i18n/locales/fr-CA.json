@@ -71,7 +71,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Vous n'avez pas encore ajouté de chansons aux favoris !"
+    "noSongList": "Vous n'avez pas encore ajouté de chansons aux favoris !",
+    "inYourLibrary": "Dans votre bibliothèque",
+    "byArtist": "Titres aimés de {{artist}}"
   },
   "artist": {
     "topSongs": "Populaire",

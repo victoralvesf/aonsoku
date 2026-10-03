@@ -98,5 +98,9 @@
       "shuffleTracks": "Перемішати треки",
       "shuffleAlbums": "Перемішати альбоми"
     }
+  },
+  "favorites": {
+    "inYourLibrary": "У вашій бібліотеці",
+    "byArtist": "Улюблені пісні {{artist}}"
   }
 }

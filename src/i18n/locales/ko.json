@@ -543,7 +543,9 @@
     "switchButton": "큰 플레이어로 전환"
   },
   "favorites": {
-    "noSongList": "아직 즐겨찾기에 곡을 추가하지 않았습니다!"
+    "noSongList": "아직 즐겨찾기에 곡을 추가하지 않았습니다!",
+    "inYourLibrary": "내 라이브러리에 있음",
+    "byArtist": "{{artist}}의 즐겨찾기 곡"
   },
   "artist": {
     "headline": "아티스트",
