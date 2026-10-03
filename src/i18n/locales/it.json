@@ -211,7 +211,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Non hai ancora aggiunto brani ai preferiti!"
+    "noSongList": "Non hai ancora aggiunto brani ai preferiti!",
+    "inYourLibrary": "Nella tua libreria",
+    "byArtist": "Brani preferiti di {{artist}}"
   },
   "artist": {
     "headline": "Artista",

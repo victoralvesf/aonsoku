@@ -193,7 +193,9 @@
     }
   },
   "favorites": {
-    "noSongList": "您还没有添加任何歌曲到收藏夹！"
+    "noSongList": "您还没有添加任何歌曲到收藏夹！",
+    "inYourLibrary": "在你的资料库中",
+    "byArtist": "{{artist}} 的收藏歌曲"
   },
   "artist": {
     "headline": "艺术家",

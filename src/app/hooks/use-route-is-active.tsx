@@ -12,6 +12,13 @@ export function useRouteIsActive() {
     [location.pathname],
   )
 
+  const isExactRoute = useCallback(
+    (route: string) => {
+      return location.pathname + location.search === route
+    },
+    [location.pathname, location.search],
+  )
+
   const isOnPlaylist = useCallback(
     (id: string) => {
       return location.pathname === ROUTES.PLAYLIST.PAGE(id)
@@ -21,6 +28,7 @@ export function useRouteIsActive() {
 
   return {
     isActive,
+    isExactRoute,
     isOnPlaylist,
   }
 }

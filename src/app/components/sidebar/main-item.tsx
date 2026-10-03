@@ -7,7 +7,7 @@ import { ISidebarItem } from '@/app/layout/sidebar'
 
 export function SidebarMainItem({ item }: { item: ISidebarItem }) {
   const { t } = useTranslation()
-  const { isActive } = useRouteIsActive()
+  const { isActive, isExactRoute } = useRouteIsActive()
 
   return (
     <MainSidebarMenuButton
@@ -17,7 +17,7 @@ export function SidebarMainItem({ item }: { item: ISidebarItem }) {
     >
       <Link
         to={item.route}
-        className={clsx(isActive(item.route) && 'pointer-events-none')}
+        className={clsx(isExactRoute(item.route) && 'pointer-events-none')}
       >
         <item.icon />
         {t(item.title)}

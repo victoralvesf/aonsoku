@@ -154,6 +154,10 @@
       "listTitle": "更多來自這位演出者的作品"
     }
   },
+  "favorites": {
+    "inYourLibrary": "喺你嘅媒體庫",
+    "byArtist": "{{artist}} 嘅收藏歌曲"
+  },
   "podcasts": {
     "header": {
       "unfollow": {

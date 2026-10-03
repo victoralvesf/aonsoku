@@ -487,7 +487,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Ještě jsi do oblíbených nepřidal žádné skladby!"
+    "noSongList": "Ještě jsi do oblíbených nepřidal žádné skladby!",
+    "inYourLibrary": "Ve tvé knihovně",
+    "byArtist": "Oblíbené skladby od {{artist}}"
   },
   "artist": {
     "headline": "Umělec",

@@ -285,7 +285,9 @@
     "noSongList": "Ta playlista nie zawiera żadnych piosenek!"
   },
   "favorites": {
-    "noSongList": "Nie dodałeś jeszcze żadnych utworów do ulubionych!"
+    "noSongList": "Nie dodałeś jeszcze żadnych utworów do ulubionych!",
+    "inYourLibrary": "W Twojej bibliotece",
+    "byArtist": "Ulubione utwory: {{artist}}"
   },
   "artist": {
     "headline": "Wykonawca",

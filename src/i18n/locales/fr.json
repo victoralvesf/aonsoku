@@ -267,7 +267,9 @@
     }
   },
   "favorites": {
-    "noSongList": "Vous n'avez pas encore ajouté de titre aux favoris !"
+    "noSongList": "Vous n'avez pas encore ajouté de titre aux favoris !",
+    "inYourLibrary": "Dans votre bibliothèque",
+    "byArtist": "Titres aimés de {{artist}}"
   },
   "artist": {
     "recentAlbums": "Albums récents",

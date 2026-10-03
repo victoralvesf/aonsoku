@@ -17,7 +17,7 @@ import { ISidebarItem, podcastItems } from '@/app/layout/sidebar'
 
 export function SidebarPodcastHoverItem({ item }: { item: ISidebarItem }) {
   const { t } = useTranslation()
-  const { isActive } = useRouteIsActive()
+  const { isActive, isExactRoute } = useRouteIsActive()
 
   return (
     <HoverCard openDelay={0} closeDelay={200}>
@@ -41,7 +41,8 @@ export function SidebarPodcastHoverItem({ item }: { item: ISidebarItem }) {
                 asChild
                 className={clsx(
                   'justify-start px-2 py-0 text-sm font-normal h-8 rounded-sm',
-                  isActive(item.route) && 'pointer-events-none bg-accent',
+                  isActive(item.route) && 'bg-accent',
+                  isExactRoute(item.route) && 'pointer-events-none',
                 )}
               >
                 <Link to={item.route}>{t(item.title)}</Link>
