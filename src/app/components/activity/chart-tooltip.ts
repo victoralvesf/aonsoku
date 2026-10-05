@@ -14,12 +14,21 @@ export const chartTooltipLabelStyle: CSSProperties = {
   fontWeight: 600,
 }
 
-export const GENRE_COLORS = [
+export const chartTooltipWrapperStyle: CSSProperties = {
+  zIndex: 50,
+}
+
+const GENRE_COLORS = [
   'hsl(var(--primary))',
   '#a78bfa',
   '#22d3ee',
   '#f472b6',
   '#fbbf24',
   '#34d399',
+  '#f54900',
   '#94a3b8',
 ]
+
+export function getGenreColor(index: number) {
+  return GENRE_COLORS[index % GENRE_COLORS.length]
+}

@@ -51,7 +51,7 @@ export default function Activity() {
                 data={hours.data}
                 peakHour={hours.peakHour}
               />
-              <GenresChart genres={genres} />
+              <GenresChart genres={genres} total={summary.totalPlays} />
             </div>
 
             <HistoryHeatmap grid={heatmap.grid} max={heatmap.max} />
