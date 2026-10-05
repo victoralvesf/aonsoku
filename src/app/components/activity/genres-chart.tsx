@@ -56,14 +56,14 @@ export function GenresChart({ genres, total }: GenresChartProps) {
       <CardContent className="flex flex-col 2xl:flex-row gap-4">
         <div className="relative w-full">
           <ResponsiveContainer width="100%" height={220}>
-            <PieChart>
+            <PieChart accessibilityLayer={false}>
               <Pie
                 data={data}
                 dataKey="plays"
                 nameKey="name"
                 innerRadius={70}
                 outerRadius={95}
-                paddingAngle={2}
+                paddingAngle={0}
                 strokeWidth={0}
               />
               <Tooltip
