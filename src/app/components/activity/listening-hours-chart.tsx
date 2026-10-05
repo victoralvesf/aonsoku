@@ -46,6 +46,7 @@ export function ListeningHoursChart({
               dataKey="label"
               interval={2}
               tickLine={false}
+              tickMargin={10}
               axisLine={false}
               tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}
             />
@@ -58,7 +59,7 @@ export function ListeningHoursChart({
               dataKey="plays"
               name={t('activity.plays')}
               fill="hsl(var(--primary))"
-              radius={[3, 3, 0, 0]}
+              radius={6}
             />
           </BarChart>
         </ResponsiveContainer>

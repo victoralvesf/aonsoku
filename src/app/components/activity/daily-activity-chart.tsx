@@ -36,6 +36,7 @@ export function DailyActivityChart({ data }: DailyActivityChartProps) {
               dataKey="label"
               interval={interval}
               tickLine={false}
+              tickMargin={10}
               axisLine={false}
               minTickGap={12}
               tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}
@@ -49,7 +50,7 @@ export function DailyActivityChart({ data }: DailyActivityChartProps) {
               dataKey="plays"
               name={t('activity.plays')}
               fill="hsl(var(--primary))"
-              radius={[3, 3, 0, 0]}
+              radius={6}
             />
           </BarChart>
         </ResponsiveContainer>
