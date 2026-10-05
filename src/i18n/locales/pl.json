@@ -865,7 +865,7 @@
     "dailyActivity": "Dzienna aktywność",
     "listeningHours": "Godziny słuchania",
     "peak": "Szczyt",
-    "history": "Historia słuchania",
+    "history": "Historia odtwarzania z ostatniego roku",
     "less": "Mniej",
     "more": "Więcej",
     "recentPlays": "Ostatnie odtworzenia",
@@ -881,8 +881,10 @@
       "listeningTime": "Czas słuchania",
       "uniqueArtists": "Unikalni wykonawcy",
       "streak": "Passa",
-      "streakValue": "{{count}} dni",
-      "streakBest": "Najlpesza {{count}} dni"
+      "streakValue_one": "{{count}} dzień",
+      "streakValue_other": "{{count}} dni",
+      "streakBest_one": "Najlepsza {{count}} dzień",
+      "streakBest_other": "Najlepsza {{count}} dni"
     },
     "genres": {
       "title": "Gatunki",

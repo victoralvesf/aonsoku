@@ -210,7 +210,7 @@
     "dailyActivity": "Atividade diária",
     "listeningHours": "Horas de escuta",
     "peak": "Pico",
-    "history": "Histórico de escuta",
+    "history": "Histórico de escuta do último ano",
     "less": "Menos",
     "more": "Mais",
     "recentPlays": "Reproduções recentes",
@@ -226,8 +226,10 @@
       "listeningTime": "Tempo de escuta",
       "uniqueArtists": "Artistas únicos",
       "streak": "Sequência",
-      "streakValue": "{{count}}d",
-      "streakBest": "Melhor {{count}}d"
+      "streakValue_one": "{{count}} dia",
+      "streakValue_other": "{{count}} dias",
+      "streakBest_one": "Melhor {{count}} dia",
+      "streakBest_other": "Melhor {{count}} dias"
     },
     "genres": {
       "title": "Gêneros",

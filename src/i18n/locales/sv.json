@@ -854,7 +854,7 @@
     "dailyActivity": "Daglig aktivitet",
     "listeningHours": "Lyssningstimmar",
     "peak": "Topp",
-    "history": "Lyssningshistorik",
+    "history": "Lyssningshistorik (i de senaste 12 månaderna)",
     "less": "Mindre",
     "more": "Mer",
     "recentPlays": "Senaste uppspelningarna",
@@ -870,8 +870,10 @@
       "listeningTime": "Lyssningstid",
       "uniqueArtists": "Unika artister",
       "streak": "Svit",
-      "streakValue": "{{count}} d",
-      "streakBest": "Längsta svit: {{count}} d"
+      "streakValue_one": "{{count}} dag",
+      "streakValue_other": "{{count}} dagar",
+      "streakBest_one": "Längsta svit: {{count}} dag",
+      "streakBest_other": "Längsta svit: {{count}} dagar"
     },
     "genres": {
       "title": "Genrer",
