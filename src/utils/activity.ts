@@ -218,6 +218,6 @@ export function getHeatmap(events: PlayEvent[], weeks = 52) {
   return { grid, max }
 }
 
-export function getRecentPlays(events: PlayEvent[], limit = 30): PlayEvent[] {
+export function getRecentPlays(events: PlayEvent[], limit = 20): PlayEvent[] {
   return [...events].sort((a, b) => b.playedAt - a.playedAt).slice(0, limit)
 }
