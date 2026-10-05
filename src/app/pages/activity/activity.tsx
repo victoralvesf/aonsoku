@@ -29,10 +29,7 @@ export default function Activity() {
     <div className="w-full">
       <ShadowHeader>
         <div className="flex w-full items-center justify-between gap-4">
-          <HeaderTitle
-            title={t('sidebar.activity')}
-            count={summary.totalPlays}
-          />
+          <HeaderTitle title={t('sidebar.activity')} />
           {hasData && <RangeTabs value={range} onChange={setRange} />}
         </div>
       </ShadowHeader>

@@ -26,7 +26,7 @@ export function ListeningHoursChart({
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-base font-medium uppercase tracking-wide text-muted-foreground">
+        <CardTitle className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
           {t('activity.listeningHours')}
         </CardTitle>
         {peakLabel && (

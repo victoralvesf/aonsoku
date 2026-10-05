@@ -41,7 +41,7 @@ export function GenresChart({ genres }: GenresChartProps) {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-medium uppercase tracking-wide text-muted-foreground">
+        <CardTitle className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
           {t('activity.genres.title')}
         </CardTitle>
       </CardHeader>
