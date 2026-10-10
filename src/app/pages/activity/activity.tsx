@@ -29,10 +29,7 @@ export default function Activity() {
     <div className="w-full">
       <ShadowHeader>
         <div className="flex w-full items-center justify-between gap-4">
-          <HeaderTitle
-            title={t('sidebar.activity')}
-            count={summary.totalPlays}
-          />
+          <HeaderTitle title={t('sidebar.activity')} />
           {hasData && <RangeTabs value={range} onChange={setRange} />}
         </div>
       </ShadowHeader>
@@ -54,7 +51,7 @@ export default function Activity() {
                 data={hours.data}
                 peakHour={hours.peakHour}
               />
-              <GenresChart genres={genres} />
+              <GenresChart genres={genres} total={summary.totalPlays} />
             </div>
 
             <HistoryHeatmap grid={heatmap.grid} max={heatmap.max} />

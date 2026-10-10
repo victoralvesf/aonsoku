@@ -189,7 +189,7 @@ export interface HeatmapDay {
   count: number
 }
 
-export function getHeatmap(events: PlayEvent[], weeks = 26) {
+export function getHeatmap(events: PlayEvent[], weeks = 52) {
   const counts = new Map<string, number>()
   events.forEach((event) => {
     const key = dayKey(event.playedAt)
@@ -197,8 +197,7 @@ export function getHeatmap(events: PlayEvent[], weeks = 26) {
   })
 
   const today = dateTime().startOf('day')
-  const mondayIndex = (today.day() + 6) % 7
-  const lastDay = today.add(6 - mondayIndex, 'day')
+  const lastDay = today.add(6 - today.day(), 'day')
   const totalDays = weeks * 7
   const startDay = lastDay.subtract(totalDays - 1, 'day')
 
@@ -219,6 +218,6 @@ export function getHeatmap(events: PlayEvent[], weeks = 26) {
   return { grid, max }
 }
 
-export function getRecentPlays(events: PlayEvent[], limit = 30): PlayEvent[] {
+export function getRecentPlays(events: PlayEvent[], limit = 20): PlayEvent[] {
   return [...events].sort((a, b) => b.playedAt - a.playedAt).slice(0, limit)
 }

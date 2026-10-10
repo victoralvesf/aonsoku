@@ -217,7 +217,7 @@
     "dailyActivity": "Daily activity",
     "listeningHours": "Listening hours",
     "peak": "Peak",
-    "history": "Listening history",
+    "history": "Listening history from the last year",
     "less": "Less",
     "more": "More",
     "recentPlays": "Recent plays",
@@ -233,8 +233,10 @@
       "listeningTime": "Listening time",
       "uniqueArtists": "Unique artists",
       "streak": "Streak",
-      "streakValue": "{{count}}d",
-      "streakBest": "Best {{count}}d"
+      "streakValue_one": "{{count}} day",
+      "streakValue_other": "{{count}} days",
+      "streakBest_one": "Best {{count}} day",
+      "streakBest_other": "Best {{count}} days"
     },
     "genres": {
       "title": "Genres",

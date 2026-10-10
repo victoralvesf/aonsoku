@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
+import { Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
 import {
   Card,
   CardContent,
@@ -7,15 +7,20 @@ import {
   CardTitle,
 } from '@/app/components/ui/card'
 import { GenrePoint } from '@/utils/activity'
-import { chartTooltipStyle, GENRE_COLORS } from './chart-tooltip'
+import {
+  chartTooltipStyle,
+  chartTooltipWrapperStyle,
+  getGenreColor,
+} from './chart-tooltip'
 
 interface GenresChartProps {
   genres: GenrePoint[]
+  total: number
 }
 
-const MAX_SLICES = 6
+const MAX_SLICES = 7
 
-export function GenresChart({ genres }: GenresChartProps) {
+export function GenresChart({ genres, total }: GenresChartProps) {
   const { t } = useTranslation()
 
   const named = genres.map((genre) => ({
@@ -23,7 +28,7 @@ export function GenresChart({ genres }: GenresChartProps) {
     plays: genre.plays,
   }))
 
-  const data =
+  const grouped =
     named.length > MAX_SLICES + 1
       ? [
           ...named.slice(0, MAX_SLICES),
@@ -36,36 +41,35 @@ export function GenresChart({ genres }: GenresChartProps) {
         ]
       : named
 
-  const total = data.reduce((acc, item) => acc + item.plays, 0)
+  const data = grouped.map((item, index) => ({
+    ...item,
+    fill: getGenreColor(index),
+  }))
 
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-medium uppercase tracking-wide text-muted-foreground">
+        <CardTitle className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
           {t('activity.genres.title')}
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="relative">
+      <CardContent className="flex flex-col 2xl:flex-row gap-4">
+        <div className="relative w-full">
           <ResponsiveContainer width="100%" height={220}>
-            <PieChart>
+            <PieChart accessibilityLayer={false}>
               <Pie
                 data={data}
                 dataKey="plays"
                 nameKey="name"
                 innerRadius={70}
                 outerRadius={95}
-                paddingAngle={2}
+                paddingAngle={0}
                 strokeWidth={0}
-              >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={entry.name}
-                    fill={GENRE_COLORS[index % GENRE_COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip contentStyle={chartTooltipStyle} />
+              />
+              <Tooltip
+                contentStyle={chartTooltipStyle}
+                wrapperStyle={chartTooltipWrapperStyle}
+              />
             </PieChart>
           </ResponsiveContainer>
 
@@ -77,8 +81,8 @@ export function GenresChart({ genres }: GenresChartProps) {
           </div>
         </div>
 
-        <ul className="mt-4 space-y-1.5">
-          {data.map((entry, index) => (
+        <ul className="space-y-1.5 w-full 2xl:w-1/2">
+          {data.map((entry) => (
             <li
               key={entry.name}
               className="flex items-center justify-between text-sm"
@@ -87,7 +91,7 @@ export function GenresChart({ genres }: GenresChartProps) {
                 <span
                   className="h-2.5 w-2.5 rounded-full"
                   style={{
-                    background: GENRE_COLORS[index % GENRE_COLORS.length],
+                    background: entry.fill,
                   }}
                 />
                 <span className="truncate">{entry.name}</span>

@@ -26,7 +26,7 @@ export function ListeningHoursChart({
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-base font-medium uppercase tracking-wide text-muted-foreground">
+        <CardTitle className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
           {t('activity.listeningHours')}
         </CardTitle>
         {peakLabel && (
@@ -40,11 +40,13 @@ export function ListeningHoursChart({
           <BarChart
             data={data}
             margin={{ top: 4, right: 4, bottom: 0, left: 4 }}
+            accessibilityLayer={false}
           >
             <XAxis
               dataKey="label"
               interval={2}
               tickLine={false}
+              tickMargin={10}
               axisLine={false}
               tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}
             />
@@ -57,7 +59,7 @@ export function ListeningHoursChart({
               dataKey="plays"
               name={t('activity.plays')}
               fill="hsl(var(--primary))"
-              radius={[3, 3, 0, 0]}
+              radius={6}
             />
           </BarChart>
         </ResponsiveContainer>

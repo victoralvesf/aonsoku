@@ -32,27 +32,27 @@ function cellStyle(count: number, max: number): CSSProperties {
   return { background: 'hsl(var(--primary))', opacity: LEVEL_OPACITY[level] }
 }
 
-// 2024-01-01 was a Monday, so it anchors localized weekday labels (Mon first).
-const MONDAY = dateTime('2024-01-01')
+// 2024-01-07 was a Sunday, so it anchors localized weekday labels (Sun first).
+const SUNDAY = dateTime('2024-01-07')
 
 export function HistoryHeatmap({ grid, max }: HistoryHeatmapProps) {
   const { t } = useTranslation()
 
   const weekdayLabels = Array.from({ length: 7 }, (_, index) =>
-    index === 0 || index === 2 || index === 4
-      ? MONDAY.add(index, 'day').format('dd')
+    index === 1 || index === 3 || index === 5
+      ? SUNDAY.add(index, 'day').format('ddd')
       : '',
   )
 
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-medium uppercase tracking-wide text-muted-foreground">
+        <CardTitle className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
           {t('activity.history')}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto mt-2">
           <div className="min-w-min">
             <div className="mb-1 flex gap-1 text-[10px] text-muted-foreground">
               <div className="w-6 shrink-0" />

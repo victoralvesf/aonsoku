@@ -1,3 +1,4 @@
+import { ActivityLink } from '@/app/components/activity/header-link'
 import { NavigationButtons } from '@/app/components/header/navigation-buttons'
 import { UserDropdown } from '@/app/components/header/user-dropdown'
 import { WindowControlsSpacer } from '@/app/components/header/window-controls-spacer'
@@ -19,6 +20,7 @@ export function Header() {
       </div>
       <HeaderSongInfo />
       <div className="flex justify-end items-center gap-2">
+        <ActivityLink />
         <SettingsButton />
         <UserDropdown />
         {isWindows && !isFullscreen && <WindowControlsSpacer width={122} />}
