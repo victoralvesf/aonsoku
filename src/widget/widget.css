@@ -1,0 +1,47 @@
+@config "../../tailwind.widget.config.js";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Served by the widget server from the renderer output, so the page never
+   depends on network access from inside OBS. */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/poppins-latin-ext-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/poppins-latin-ext-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/poppins-latin-ext-600-normal.woff2") format("woff2");
+}
+
+html,
+body,
+#widget-root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  /* OBS composites the browser source over the scene, so the page itself
+     must never paint a background of its own. */
+  background: transparent;
+  overflow: hidden;
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}

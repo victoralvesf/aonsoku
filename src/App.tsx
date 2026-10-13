@@ -7,6 +7,7 @@ import { MediaSessionObserver } from '@/app/observers/media-session-observer'
 import { ThemeObserver } from '@/app/observers/theme-observer'
 import { ToastContainer } from '@/app/observers/toast-container'
 import { UpdateObserver } from '@/app/observers/update-observer'
+import { WidgetObserver } from '@/app/observers/widget-observer'
 import { ZoomObserver } from '@/app/observers/zoom-observer'
 import { Mobile } from '@/app/pages/mobile'
 import { router } from '@/routes/router'
@@ -18,6 +19,7 @@ function App() {
   return (
     <>
       {isElectron() && <UpdateObserver />}
+      {isElectron() && <WidgetObserver />}
       <MediaSessionObserver />
       <LangObserver />
       <ThemeObserver />

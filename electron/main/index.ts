@@ -2,6 +2,7 @@ import { electronApp, optimizer, platform } from '@electron-toolkit/utils'
 import { app } from 'electron'
 import { createAppMenu } from './core/menu'
 import { initAutoUpdater } from './core/updater'
+import { shutdownWidgetServer } from './core/widgetSettings'
 import { createWindow, mainWindow } from './window'
 
 export let isQuitting = false
@@ -65,6 +66,7 @@ if (!instanceLock) {
 
   app.on('before-quit', () => {
     isQuitting = true
+    shutdownWidgetServer().catch(() => {})
   })
 
   app.on('window-all-closed', () => {
