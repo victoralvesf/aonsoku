@@ -12,6 +12,7 @@ import { subsonic } from '@/service/subsonic'
 import { useLang } from '@/store/lang.store'
 import { usePlayerRef, usePlayerSonglist } from '@/store/player.store'
 import { ILyric } from '@/types/responses/song'
+import { playbackClock } from '@/utils/playbackClock'
 import { queryKeys } from '@/utils/queryKeys'
 
 // disambiguates chinese language code to the user's locale if set
@@ -68,7 +69,9 @@ function SyncedLyrics({ lyrics }: LyricProps) {
   const resolvedLang = resolveLyricsLang(lyrics.lang, langCode)
 
   setTimeout(() => {
-    let newProgress = (playerRef?.currentTime || 0) * 1000
+    // Both players publish here, so this is the same smooth position whether
+    // audio comes from the <audio> element or the gapless Web Audio engine.
+    let newProgress = playbackClock.getPositionMs()
 
     if (newProgress === progress) {
       newProgress += 1 // Prevents the lyrics from getting stuck when the audio is still loading

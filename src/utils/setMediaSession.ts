@@ -109,12 +109,33 @@ function setPodcastHandlers({ handleSeekAction }: SetPodcastHandlerParams) {
   mediaSession.setActionHandler('seekforward', () => handleSeekAction(30))
 }
 
+function setPositionState(
+  duration: number,
+  position: number,
+  playbackRate = 1,
+) {
+  if (
+    !navigator.mediaSession ||
+    typeof navigator.mediaSession.setPositionState !== 'function'
+  ) {
+    return
+  }
+  if (!Number.isFinite(duration) || duration <= 0) return
+
+  navigator.mediaSession.setPositionState({
+    duration,
+    position: Math.min(Math.max(position, 0), duration),
+    playbackRate,
+  })
+}
+
 export const manageMediaSession = {
   removeMediaSession,
   setMediaSession,
   setRadioMediaSession,
   setPodcastMediaSession,
   setPlaybackState,
+  setPositionState,
   setHandlers,
   setPodcastHandlers,
 }
