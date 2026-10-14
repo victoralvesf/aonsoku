@@ -7,6 +7,8 @@ import {
   usePlayerSonglist,
 } from '@/store/player.store'
 import { QueueItem } from './queue-item'
+import { ContextMenuProvider } from '@/app/components/table/context-menu'
+import { QueueMenuOptions } from '@/app/components/queue/menu-options'
 
 export function FullscreenSongQueue() {
   const { setSongList } = usePlayerActions()
@@ -58,24 +60,28 @@ export function FullscreenSongQueue() {
         {virtualizer.getVirtualItems().map((virtualRow) => {
           const entry = currentList[virtualRow.index]
           return (
-            <QueueItem
+            <ContextMenuProvider
               key={entry.id}
-              data-row-index={virtualRow.index}
-              data-state={currentSong.id === entry.id ? 'active' : 'inactive'}
-              index={virtualRow.index}
-              song={entry}
-              isPlaying={currentSong.id === entry.id && isPlaying}
-              onClick={() => {
-                if (currentSong.id !== entry.id) {
-                  setSongList(currentList, virtualRow.index)
-                }
-              }}
-              style={{
-                position: 'absolute',
-                top: 0,
-                transform: `translateY(${virtualRow.start}px)`,
-              }}
-            />
+              options={<QueueMenuOptions song={entry} />}
+            >
+              <QueueItem
+                data-row-index={virtualRow.index}
+                data-state={currentSong.id === entry.id ? 'active' : 'inactive'}
+                index={virtualRow.index}
+                song={entry}
+                isPlaying={currentSong.id === entry.id && isPlaying}
+                onClick={() => {
+                  if (currentSong.id !== entry.id) {
+                    setSongList(currentList, virtualRow.index)
+                  }
+                }}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  transform: `translateY(${virtualRow.start}px)`,
+                }}
+              />
+            </ContextMenuProvider>
           )
         })}
       </div>

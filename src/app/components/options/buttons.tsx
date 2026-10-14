@@ -157,6 +157,22 @@ function RemoveFromPlaylist({
   )
 }
 
+function RemoveFromQueue({
+  variant = 'dropdown',
+  ...props
+}: DropdownMenuItemProps) {
+  const { t } = useTranslation()
+
+  return (
+    <MenuItemFactory
+      variant={variant}
+      icon={<Trash className="mr-2 h-4 w-4 fill-red-300 text-red-500" />}
+      label={t('queue.removeSong')}
+      {...props}
+    />
+  )
+}
+
 function SongInfo({ variant = 'dropdown', ...props }: DropdownMenuItemProps) {
   const { t } = useTranslation()
 
@@ -219,6 +235,7 @@ export const OptionsButtons = {
   EditPlaylist,
   RemovePlaylist,
   RemoveFromPlaylist,
+  RemoveFromQueue,
   SongInfo,
   MarkAsPlayed,
   GotoPodcast,
