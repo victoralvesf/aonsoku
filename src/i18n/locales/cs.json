@@ -18,7 +18,8 @@
     "miniSearch": "Hledat",
     "radios": "Rádiové stanice",
     "artists": "Umělci",
-    "genres": "Žánry"
+    "genres": "Žánry",
+    "activity": "Aktivita"
   },
   "menu": {
     "language": "Jazyk",
@@ -438,7 +439,8 @@
       "dislike": "Odebrat {{name}} z oblíbených",
       "play": "Přehrát {{name}}",
       "pause": "Pozastavit {{name}}",
-      "shuffle": "Přehrát {{name}} v náhodném pořadí"
+      "shuffle": "Přehrát {{name}} v náhodném pořadí",
+      "radio": "Spustit rádio na umělce {{name}}"
     },
     "info": {
       "about": "O {{name}}",
@@ -834,6 +836,39 @@
       "MM": "%d měsíců",
       "y": "1 rok",
       "yy": "%d let"
+    }
+  },
+  "activity": {
+    "plays": "Přehrání",
+    "dailyActivity": "Denní aktivita",
+    "listeningHours": "Hodiny poslechu",
+    "peak": "Vrchol aktivity",
+    "history": "Historie poslouchání za poslední rok",
+    "less": "Méně",
+    "more": "Více",
+    "recentPlays": "Nedávná přehrání",
+    "topAlbums": "Nejoblíbenější alba",
+    "range": {
+      "7d": "7D",
+      "30d": "30D",
+      "90d": "90D",
+      "all": "Vše"
+    },
+    "summary": {
+      "totalPlays": "Všechna přehrání",
+      "listeningTime": "Doba poslechu",
+      "uniqueArtists": "Jedinečných umělců",
+      "streak": "Série",
+      "streakValue_one": "{{count}} den",
+      "streakValue_few": "{{count}} dny",
+      "streakValue_other": "{{count}} dnů",
+      "streakBest_one": "{{count}} nejlepší den",
+      "streakBest_few": "{{count}} nejlepší dny",
+      "streakBest_other": "{{count}} nejlepších dnů"
+    },
+    "genres": {
+      "title": "Žánry",
+      "unknown": "Neznámé"
     }
   }
 }

@@ -383,7 +383,8 @@
     "goto": {
       "episode": "Gå till avsnitt",
       "podcast": "Gå till podd"
-    }
+    },
+    "startRadio": "Starta radio"
   },
   "radios": {
     "label": "Radio",
